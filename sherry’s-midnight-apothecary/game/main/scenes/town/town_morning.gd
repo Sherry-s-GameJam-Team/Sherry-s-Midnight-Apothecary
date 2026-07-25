@@ -15,10 +15,6 @@ const TITLE_SLEEP_SCALE := Vector2(0.75, 0.75)
 const TITLE_HOME_CAMERA_OFFSET := Vector2(0.0, -120.0)
 const TITLE_ROOM_CAMERA_ZOOM_MULTIPLIER := 0.75
 const TITLE_AREA_NODE_NAME := "titlearea"
-const TITLE_CAMERA_LIMIT_LEFT := -10000000
-const TITLE_CAMERA_LIMIT_TOP := -10000000
-const TITLE_CAMERA_LIMIT_RIGHT := 10000000
-const TITLE_CAMERA_LIMIT_BOTTOM := 10000000
 const LAYER_SCROLL_FACTORS := {
 	"Distant": 0.30,
 	"Middle": 0.55,
@@ -44,6 +40,7 @@ var player_was_visible := true
 @onready var camera: Camera2D = $Player/Camera2D
 @onready var player: CharacterBody2D = $Player
 @onready var foreground_mask: Node = $ForegroundMask
+@onready var camera_controller: TownCameraController = $TownCameraController
 @onready var title_menu: CanvasLayer = get_node_or_null("TitleMenuLayer") as CanvasLayer
 @onready var parallax_root: Node2D = $ParallaxLayers
 @onready var skybox: Node2D = $ParallaxLayers/Skybox
@@ -56,6 +53,7 @@ var player_was_visible := true
 
 
 func _ready() -> void:
+	parallax_root.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	camera_anchor = camera.get_screen_center_position()
 	skybox_origin = skybox.global_position
 	clouds_origin = clouds.global_position
@@ -80,6 +78,8 @@ func _ready() -> void:
 
 	if start_in_title_intro:
 		enter_title_intro()
+	else:
+		camera_controller.enter_outdoor_mode(true)
 
 	_update_parallax_layers()
 
@@ -156,13 +156,7 @@ func enter_title_intro() -> void:
 
 	_create_sleep_sprite()
 	var title_camera_center := _title_intro_camera_center()
-	camera.top_level = true
-	camera.position_smoothing_enabled = false
-	camera.limit_left = TITLE_CAMERA_LIMIT_LEFT
-	camera.limit_top = TITLE_CAMERA_LIMIT_TOP
-	camera.limit_right = TITLE_CAMERA_LIMIT_RIGHT
-	camera.limit_bottom = TITLE_CAMERA_LIMIT_BOTTOM
-	camera.global_position = title_camera_center.round()
+	camera_controller.enter_title_mode(title_camera_center)
 	_update_parallax_layers()
 
 
@@ -177,16 +171,20 @@ func play_title_intro_start() -> void:
 
 	var target_camera_center := _title_intro_room_entry_center()
 	var target_camera_zoom := _title_intro_room_entry_zoom()
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(camera, "global_position", target_camera_center, TITLE_INTRO_CAMERA_DURATION)
-	tween.tween_property(camera, "zoom", target_camera_zoom, TITLE_INTRO_CAMERA_DURATION)
 	var sleep_animation := _play_sleep_trigger_animation()
 	if sleep_sprite != null:
-		tween.tween_property(sleep_sprite, "modulate", sleep_sprite_editor_modulate, TITLE_SLEEP_FADE_IN_DURATION)
-	await tween.finished
+		var sleep_fade_in := create_tween()
+		sleep_fade_in.tween_property(
+			sleep_sprite,
+			"modulate",
+			sleep_sprite_editor_modulate,
+			TITLE_SLEEP_FADE_IN_DURATION
+		)
+	await camera_controller.transition_to_target(
+		target_camera_center,
+		target_camera_zoom,
+		TITLE_INTRO_CAMERA_DURATION
+	)
 
 	if is_instance_valid(sleep_animation) and sleep_animation.is_playing():
 		await sleep_animation.animation_finished
@@ -203,6 +201,7 @@ func play_title_intro_start() -> void:
 
 	player.global_position = title_intro_player_spawn_position.round()
 	player.velocity = Vector2.ZERO
+	player.reset_physics_interpolation()
 
 	if foreground_mask != null and foreground_mask.has_method("finish_title_room_to_inside_state"):
 		foreground_mask.call("finish_title_room_to_inside_state", target_camera_center, target_camera_zoom)

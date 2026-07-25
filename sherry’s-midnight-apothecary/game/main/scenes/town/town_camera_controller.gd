@@ -76,6 +76,7 @@ func _ready() -> void:
 	camera.position_smoothing_enabled = false
 	camera.position_smoothing_speed = 0.0
 	camera.global_position = preserved_global_position
+	_set_camera_physics_interpolation(false)
 	target_position = preserved_global_position
 	_outdoor_position_float = preserved_global_position
 	_refresh_marker_values()
@@ -86,6 +87,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	_update_debug(delta)
+
+
+func _physics_process(delta: float) -> void:
 	if camera == null or player == null:
 		return
 
@@ -99,8 +104,6 @@ func _process(delta: float) -> void:
 		CameraMode.TITLE:
 			pass
 
-	_update_debug(delta)
-
 
 func enter_title_mode(title_position: Vector2) -> void:
 	_save_outdoor_state_if_needed()
@@ -112,6 +115,7 @@ func enter_title_mode(title_position: Vector2) -> void:
 	target_position = _snap_camera_position(title_position)
 	_apply_fixed_view_limits(target_position, camera.zoom)
 	camera.global_position = target_position
+	_set_camera_physics_interpolation(false)
 	camera.force_update_scroll()
 
 
@@ -130,6 +134,7 @@ func enter_outdoor_mode(restore_immediately := false) -> void:
 		target_position = outdoor_target
 		_outdoor_position_float = outdoor_target
 		camera.global_position = _snap_camera_position(outdoor_target)
+		_set_camera_physics_interpolation(true)
 		camera.force_update_scroll()
 		return
 
@@ -157,6 +162,7 @@ func enter_indoor_mode(
 		camera.zoom = indoor_zoom
 		_apply_fixed_view_limits(target_position, indoor_zoom)
 		camera.global_position = target_position
+		_set_camera_physics_interpolation(false)
 		camera.force_update_scroll()
 		return
 
@@ -172,6 +178,7 @@ func transition_to_target(
 	target_position = _snap_camera_position(new_target_position)
 	camera.top_level = true
 	camera.position_smoothing_enabled = false
+	_set_camera_physics_interpolation(false)
 	_apply_transition_limits(camera.global_position, target_position, camera.zoom, new_target_zoom)
 
 	if duration <= 0.0:
@@ -202,8 +209,10 @@ func transition_to_target(
 	if mode == CameraMode.OUTDOOR:
 		_outdoor_position_float = target_position
 		_apply_outdoor_limits()
+		_set_camera_physics_interpolation(true)
 	elif mode == CameraMode.INDOOR:
 		_apply_fixed_view_limits(target_position, camera.zoom)
+		_set_camera_physics_interpolation(false)
 	camera.force_update_scroll()
 	transition_finished.emit(mode)
 
@@ -219,7 +228,7 @@ func is_transitioning() -> bool:
 	return _is_transitioning
 
 
-func current_mode() -> CameraMode:
+func current_mode() -> int:
 	return mode
 
 
@@ -386,6 +395,15 @@ func _snap_camera_position(value: Vector2) -> Vector2:
 
 func _set_camera_position_from_tween(value: Vector2) -> void:
 	camera.global_position = _snap_camera_position(value)
+
+
+func _set_camera_physics_interpolation(enabled: bool) -> void:
+	camera.physics_interpolation_mode = (
+		Node.PHYSICS_INTERPOLATION_MODE_ON
+		if enabled
+		else Node.PHYSICS_INTERPOLATION_MODE_OFF
+	)
+	camera.reset_physics_interpolation()
 
 
 func _on_viewport_size_changed() -> void:

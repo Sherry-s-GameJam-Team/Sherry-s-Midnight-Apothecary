@@ -11,12 +11,6 @@ const MOSAIC_DISSOLVE_SHADER = preload("res://game/main/scenes/town/shaders/mosa
 const MAP_SCENE = preload("res://game/main/scenes/doorchanger/map.tscn")
 const INTERACTION_REMINDER_MANAGER_SCRIPT = preload("res://game/src/system/reminder/interaction_reminder_manager.gd")
 const VISUAL_TRANSITION_DURATION = 0.7
-const CAMERA_TRANSITION_DURATION = 0.55
-const CAMERA_INTERIOR_LIMIT_LEFT = -10000000
-const CAMERA_INTERIOR_LIMIT_TOP = -10000000
-const CAMERA_INTERIOR_LIMIT_RIGHT = 10000000
-const CAMERA_INTERIOR_LIMIT_BOTTOM = 10000000
-const INTERIOR_CAMERA_ZOOM_MULTIPLIER = 0.75
 const INTERIOR_CAMERA_OFFSET = Vector2(0.0, -30.0)
 const DOOR_SWITCH_PADDING = 10.0
 const DOOR_SWITCH_X_OFFSET = 36.0
@@ -40,25 +34,14 @@ var is_camera_transitioning := false
 var is_route_exit_requested := false
 var is_camera_inside_view := false
 var player: CharacterBody2D = null
-var player_camera: Camera2D = null
+var camera_controller: TownCameraController = null
 var player_world_min_x := 0.0
 var player_world_max_x := 0.0
-var player_world_camera_limit_left := 0
-var player_world_camera_limit_top := 0
-var player_world_camera_limit_right := 0
-var player_world_camera_limit_bottom := 0
-var player_world_camera_zoom := Vector2.ONE
-var player_world_camera_position := Vector2.ZERO
-var player_world_camera_smoothing_enabled := false
-var player_world_camera_smoothing_speed := 0.0
-var player_world_camera_top_level := false
 var player_half_width := DEFAULT_PLAYER_HALF_WIDTH
-var camera_tween: Tween = null
 var visual_tween: Tween = null
 var map_overlay_tween: Tween = null
 var home_transition_material: ShaderMaterial = null
 var home_inside_shadow_transition_material: ShaderMaterial = null
-var camera_tween_targets_inside := false
 var has_player_world_bounds := false
 var map_overlay: CanvasLayer = null
 var map_overlay_content: Node2D = null
@@ -116,8 +99,6 @@ func _process(_delta: float) -> void:
 	var should_be_inside := _is_player_inside_side()
 	if should_be_inside != is_inside_home:
 		_set_home_state(should_be_inside)
-	elif is_inside_home and not is_transitioning and not is_camera_transitioning:
-		_lock_camera_to_interior_view()
 
 	_update_clock_interaction_feedback()
 
@@ -168,22 +149,12 @@ func _find_player() -> void:
 		return
 
 	player = body as CharacterBody2D
-	player_camera = body.get_node_or_null("Camera2D") as Camera2D
+	camera_controller = get_parent().get_node_or_null("TownCameraController") as TownCameraController
 	_read_player_half_width()
 
 	if not has_player_world_bounds:
 		player_world_min_x = float(body_min_x)
 		player_world_max_x = float(body_max_x)
-		if player_camera != null:
-			player_world_camera_limit_left = player_camera.limit_left
-			player_world_camera_limit_top = player_camera.limit_top
-			player_world_camera_limit_right = player_camera.limit_right
-			player_world_camera_limit_bottom = player_camera.limit_bottom
-			player_world_camera_zoom = player_camera.zoom
-			player_world_camera_position = player_camera.position
-			player_world_camera_smoothing_enabled = player_camera.position_smoothing_enabled
-			player_world_camera_smoothing_speed = player_camera.position_smoothing_speed
-			player_world_camera_top_level = player_camera.top_level
 		has_player_world_bounds = true
 
 
@@ -247,9 +218,7 @@ func prepare_for_arrival(from_key: String, arrival_state: Dictionary = {}) -> vo
 	if visual_tween != null:
 		visual_tween.kill()
 		visual_tween = null
-	if camera_tween != null:
-		camera_tween.kill()
-		camera_tween = null
+	_cancel_camera_transition()
 
 	is_transitioning = false
 	is_camera_transitioning = false
@@ -263,6 +232,7 @@ func prepare_for_arrival(from_key: String, arrival_state: Dictionary = {}) -> vo
 	player.velocity = Vector2.ZERO
 	player.global_position = interior_arrival_from_raintree.global_position.round()
 	_apply_arrival_relative_x(arrival_state)
+	player.reset_physics_interpolation()
 
 	if home_collision != null:
 		home_collision.disabled = true
@@ -284,6 +254,7 @@ func prepare_transition_preview_from(source_foreground: Node) -> void:
 	if player != null and source_player != null:
 		player.global_position = source_player.global_position
 		player.velocity = source_player.velocity
+		player.reset_physics_interpolation()
 
 	is_transitioning = false
 	is_camera_transitioning = false
@@ -311,9 +282,7 @@ func show_title_room_state() -> void:
 	if visual_tween != null:
 		visual_tween.kill()
 		visual_tween = null
-	if camera_tween != null:
-		camera_tween.kill()
-		camera_tween = null
+	_cancel_camera_transition()
 
 	is_title_room_preview = true
 	is_transitioning = false
@@ -337,9 +306,7 @@ func finish_title_room_to_inside_state(camera_center: Vector2, camera_zoom: Vect
 	if visual_tween != null:
 		visual_tween.kill()
 		visual_tween = null
-	if camera_tween != null:
-		camera_tween.kill()
-		camera_tween = null
+	_cancel_camera_transition()
 
 	is_title_room_preview = false
 	is_transitioning = false
@@ -361,13 +328,13 @@ func finish_title_room_to_inside_state(camera_center: Vector2, camera_zoom: Vect
 	_apply_player_bounds()
 	_apply_inside_visual_state()
 
-	if player_camera != null:
-		_apply_interior_camera_limits()
-		player_camera.top_level = true
-		player_camera.position_smoothing_enabled = false
-		player_camera.zoom = camera_zoom
-		player_camera.global_position = title_room_camera_override
-		player_camera.force_update_scroll()
+	if camera_controller != null:
+		camera_controller.enter_indoor_mode(
+			true,
+			title_room_camera_override,
+			camera_zoom,
+			true
+		)
 
 
 func restore_title_room_to_outside_state() -> void:
@@ -389,28 +356,6 @@ func _apply_arrival_relative_x(arrival_state: Dictionary) -> void:
 	var local_x := float(arrival_state["interior_local_x"])
 	var target_global_x := interior_room.to_global(Vector2(local_x, 0.0)).x
 	player.global_position.x = target_global_x
-
-
-func _copy_preview_camera_from(source_player: CharacterBody2D) -> void:
-	if player_camera == null or source_player == null:
-		return
-
-	var source_camera := source_player.get_node_or_null("Camera2D") as Camera2D
-	if source_camera == null:
-		return
-
-	player_camera.zoom = source_camera.zoom
-	player_camera.limit_left = source_camera.limit_left
-	player_camera.limit_top = source_camera.limit_top
-	player_camera.limit_right = source_camera.limit_right
-	player_camera.limit_bottom = source_camera.limit_bottom
-	player_camera.position_smoothing_enabled = false
-	player_camera.position_smoothing_speed = source_camera.position_smoothing_speed
-	player_camera.top_level = source_camera.top_level
-	if source_camera.top_level:
-		player_camera.global_position = source_camera.global_position
-	else:
-		player_camera.position = source_camera.position
 
 
 func _is_player_inside_side() -> bool:
@@ -722,78 +667,43 @@ func _apply_player_bounds() -> void:
 
 
 func _apply_camera_state() -> void:
-	if player_camera == null:
-		return
-
-	if camera_tween != null:
-		camera_tween.kill()
-
-	var target_zoom: Vector2 = player_world_camera_zoom * INTERIOR_CAMERA_ZOOM_MULTIPLIER if is_inside_home else player_world_camera_zoom
-	var start_global_position := player_camera.get_screen_center_position()
-	is_camera_transitioning = true
-	camera_tween_targets_inside = is_inside_home
-	if is_inside_home:
-		is_camera_inside_view = true
-		_apply_interior_camera_limits()
-	player_camera.position_smoothing_enabled = false
-	player_camera.top_level = true
-
-	player_camera.global_position = start_global_position
-
-	var target_global_position: Vector2 = _interior_camera_center() if is_inside_home else _outside_camera_center_after_limits()
-	camera_tween = create_tween()
-	camera_tween.set_trans(Tween.TRANS_SINE)
-	camera_tween.set_ease(Tween.EASE_IN_OUT)
-	camera_tween.tween_property(player_camera, "zoom", target_zoom, CAMERA_TRANSITION_DURATION)
-	camera_tween.parallel().tween_property(player_camera, "global_position", target_global_position, CAMERA_TRANSITION_DURATION)
-	camera_tween.finished.connect(_on_camera_transition_finished)
-
-
-func _apply_camera_state_immediate(inside: bool) -> void:
-	if player_camera == null:
-		return
-
-	if camera_tween != null:
-		camera_tween.kill()
-		camera_tween = null
-
-	is_camera_transitioning = false
-	camera_tween_targets_inside = inside
-	if inside:
-		is_camera_inside_view = true
-		_apply_interior_camera_limits()
-		player_camera.position_smoothing_enabled = false
-		player_camera.top_level = true
-		player_camera.zoom = player_world_camera_zoom * INTERIOR_CAMERA_ZOOM_MULTIPLIER
-		player_camera.global_position = _interior_camera_center()
-	else:
-		is_camera_inside_view = false
-		player_camera.zoom = player_world_camera_zoom
-		_restore_outside_camera_after_transition()
-
-
-func _on_camera_transition_finished() -> void:
-	if player_camera == null:
+	if camera_controller == null:
+		_find_player()
+	if camera_controller == null:
+		push_warning("ForegroundMask could not find TownCameraController.")
 		is_camera_transitioning = false
 		return
 
-	if camera_tween_targets_inside:
-		_lock_camera_to_interior_view()
+	_disconnect_camera_transition_signal()
+	is_camera_transitioning = true
+	camera_controller.transition_finished.connect(_on_camera_transition_finished, CONNECT_ONE_SHOT)
+	if is_inside_home:
+		is_camera_inside_view = true
+		camera_controller.enter_indoor_mode(false)
 	else:
-		_restore_outside_camera_after_transition.call_deferred()
 		is_camera_inside_view = false
+		camera_controller.enter_outdoor_mode(false)
 
-	is_camera_transitioning = false
 
-
-func _lock_camera_to_interior_view() -> void:
-	if player_camera == null:
+func _apply_camera_state_immediate(inside: bool) -> void:
+	if camera_controller == null:
+		_find_player()
+	if camera_controller == null:
+		push_warning("ForegroundMask could not find TownCameraController.")
 		return
 
-	player_camera.top_level = true
-	_apply_interior_camera_limits()
-	player_camera.position_smoothing_enabled = false
-	player_camera.global_position = _interior_camera_center()
+	_cancel_camera_transition()
+	is_camera_transitioning = false
+	if inside:
+		is_camera_inside_view = true
+		camera_controller.enter_indoor_mode(true)
+	else:
+		is_camera_inside_view = false
+		camera_controller.enter_outdoor_mode(true)
+
+
+func _on_camera_transition_finished(_mode: int) -> void:
+	is_camera_transitioning = false
 
 
 func _interior_camera_center() -> Vector2:
@@ -804,55 +714,18 @@ func _interior_camera_center() -> Vector2:
 	return home_inside.global_position + INTERIOR_CAMERA_OFFSET
 
 
-func _apply_interior_camera_limits() -> void:
-	if player_camera == null:
+func _cancel_camera_transition() -> void:
+	_disconnect_camera_transition_signal()
+	if camera_controller != null:
+		camera_controller.cancel_transition()
+	is_camera_transitioning = false
+
+
+func _disconnect_camera_transition_signal() -> void:
+	if camera_controller == null:
 		return
-
-	player_camera.limit_left = CAMERA_INTERIOR_LIMIT_LEFT
-	player_camera.limit_top = CAMERA_INTERIOR_LIMIT_TOP
-	player_camera.limit_right = CAMERA_INTERIOR_LIMIT_RIGHT
-	player_camera.limit_bottom = CAMERA_INTERIOR_LIMIT_BOTTOM
-
-
-func _restore_world_camera_limits() -> void:
-	if player_camera == null:
-		return
-
-	player_camera.limit_left = player_world_camera_limit_left
-	player_camera.limit_top = player_world_camera_limit_top
-	player_camera.limit_right = player_world_camera_limit_right
-	player_camera.limit_bottom = player_world_camera_limit_bottom
-
-
-func _outside_camera_center_after_limits() -> Vector2:
-	var target_x: float = player.global_position.x + player_world_camera_position.x
-	var target_y := _outside_camera_center_y()
-	return Vector2(target_x, target_y)
-
-
-func _restore_outside_camera_after_transition() -> void:
-	if player_camera == null:
-		return
-
-	var outside_center_y := player_camera.global_position.y
-	_restore_world_camera_limits()
-	player_camera.top_level = player_world_camera_top_level
-	player_camera.position = player_world_camera_position
-	player_camera.position_smoothing_speed = player_world_camera_smoothing_speed
-	player_camera.position_smoothing_enabled = player_world_camera_smoothing_enabled
-	_apply_player_outside_camera_center_y(outside_center_y)
-
-
-func _outside_camera_center_y() -> float:
-	if player != null and player.has_method("outside_camera_transition_center_y"):
-		return float(player.call("outside_camera_transition_center_y"))
-
-	return player.global_position.y + player_world_camera_position.y
-
-
-func _apply_player_outside_camera_center_y(center_y: float) -> void:
-	if player != null and player.has_method("apply_outside_camera_transition_center_y"):
-		player.call("apply_outside_camera_transition_center_y", center_y)
+	if camera_controller.transition_finished.is_connected(_on_camera_transition_finished):
+		camera_controller.transition_finished.disconnect(_on_camera_transition_finished)
 
 
 func _setup_transition_material() -> void:
@@ -940,8 +813,6 @@ func _apply_outside_visual_state() -> void:
 	is_inside_home = false
 	has_title_room_camera_override = false
 	_set_clock_interaction_feedback(false)
-	if player_camera != null and not is_camera_transitioning:
-		_restore_world_camera_limits()
 	home.texture = HOME_TEXTURE
 	home.visible = true
 	home.modulate.a = 1.0

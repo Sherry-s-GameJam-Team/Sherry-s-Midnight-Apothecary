@@ -33,18 +33,10 @@ const WATER_BOTTLE_PROJECTILE_SCENE := preload("res://game/src/projectiles/water
 @export var max_x := 5864.0
 @export var min_y := 220.0
 @export var max_y := 680.0
-@export var camera_y_dead_zone := 18.0
-@export var camera_y_player_weight := 0.15
-@export var camera_y_follow_speed := 3.0
-@export var camera_y_fall_follow_speed := 5.0
-@export var camera_y_return_speed := 4.0
-@export var camera_y_view_limit := 36.0
-@export var camera_y_snap_distance := 1.0
 @export var throw_cooldown := 0.45
 
 @onready var sprite_pivot: Node2D = $SpritePivot
 @onready var character_sprite: AnimatedSprite2D = $SpritePivot/WitchSprite
-@onready var player_camera: Camera2D = $Camera2D
 @onready var double_jump_particles: CPUParticles2D = $DoubleJumpParticles
 @onready var water_throw_point: Marker2D = $WaterThrowPoint
 
@@ -57,12 +49,6 @@ var input_locked := false
 var was_moving := false
 var jump_buffer_timer := 0.0
 var air_jumps_used := 0
-var camera_base_offset := Vector2.ZERO
-var camera_follow_y := 0.0
-var camera_anchor_player_y := 0.0
-var camera_anchor_center_y := 0.0
-var outside_camera_center_y := 0.0
-var camera_was_top_level := false
 var drop_through_body: PhysicsBody2D = null
 var drop_through_collision: CollisionShape2D = null
 var drop_through_collision_was_disabled := false
@@ -72,16 +58,12 @@ var water_throw_timer := 0.0
 
 
 func _ready() -> void:
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
+	reset_physics_interpolation()
 	motion_mode = CharacterBody2D.MOTION_MODE_GROUNDED
 	floor_snap_length = DEFAULT_FLOOR_SNAP_LENGTH
 	character_sprite.animation_finished.connect(_on_character_sprite_animation_finished)
 	character_sprite.play(ANIMATION_IDLE)
-	camera_base_offset = player_camera.position.round()
-	camera_follow_y = global_position.y + camera_base_offset.y
-	camera_anchor_player_y = global_position.y
-	camera_anchor_center_y = camera_follow_y
-	outside_camera_center_y = camera_follow_y
-	player_camera.position = camera_base_offset
 	_update_water_throw_point()
 
 
@@ -134,8 +116,6 @@ func _physics_process(delta: float) -> void:
 
 	if is_on_floor():
 		air_jumps_used = 0
-
-	_update_camera_follow(delta)
 
 	is_aerial = not is_on_floor()
 	if _consume_jump_buffer():
@@ -519,78 +499,3 @@ func _apply_world_bounds() -> void:
 		velocity.y = 0.0
 
 	global_position = clamped_position.round()
-
-
-func _update_camera_follow(delta: float) -> void:
-	if player_camera.top_level:
-		camera_was_top_level = true
-		return
-
-	if camera_was_top_level:
-		camera_follow_y = global_position.y + player_camera.position.y
-		_reset_camera_y_anchor()
-		camera_was_top_level = false
-
-	if is_on_floor():
-		_reset_camera_y_anchor()
-
-	var target_y := _weighted_camera_center_y()
-	var distance_y := target_y - camera_follow_y
-
-	if is_on_floor():
-		var return_weight := 1.0 - exp(-camera_y_return_speed * delta)
-		camera_follow_y = lerpf(camera_follow_y, target_y, return_weight)
-		if absf(target_y - camera_follow_y) <= camera_y_snap_distance:
-			camera_follow_y = target_y
-	elif absf(distance_y) > camera_y_dead_zone:
-		var dead_zone_edge := camera_y_dead_zone if distance_y > 0.0 else -camera_y_dead_zone
-		var desired_y := target_y - dead_zone_edge
-		var follow_speed := camera_y_fall_follow_speed if velocity.y > 0.0 else camera_y_follow_speed
-		var follow_weight := 1.0 - exp(-follow_speed * delta)
-		camera_follow_y = lerpf(camera_follow_y, desired_y, follow_weight)
-
-	var camera_y_offset := _clamped_camera_y_offset(camera_follow_y - global_position.y)
-	camera_follow_y = global_position.y + camera_y_offset
-
-	player_camera.position = Vector2(
-		camera_base_offset.x,
-		roundf(camera_y_offset)
-	)
-	outside_camera_center_y = global_position.y + player_camera.position.y
-
-
-func outside_camera_transition_center_y() -> float:
-	return outside_camera_center_y
-
-
-func apply_outside_camera_transition_center_y(center_y: float) -> void:
-	var camera_y_offset := _clamped_camera_y_offset(center_y - global_position.y)
-	camera_follow_y = global_position.y + camera_y_offset
-	_reset_camera_y_anchor()
-	camera_was_top_level = false
-	player_camera.position = Vector2(
-		camera_base_offset.x,
-		roundf(camera_y_offset)
-	)
-	outside_camera_center_y = global_position.y + player_camera.position.y
-
-
-func _clamped_camera_y_offset(camera_y_offset: float) -> float:
-	return clampf(
-		camera_y_offset,
-		camera_base_offset.y - camera_y_view_limit,
-		camera_base_offset.y + camera_y_view_limit
-	)
-
-
-func _normal_camera_center_y() -> float:
-	return global_position.y + camera_base_offset.y
-
-
-func _weighted_camera_center_y() -> float:
-	return camera_anchor_center_y + (global_position.y - camera_anchor_player_y) * camera_y_player_weight
-
-
-func _reset_camera_y_anchor() -> void:
-	camera_anchor_player_y = global_position.y
-	camera_anchor_center_y = _normal_camera_center_y()
