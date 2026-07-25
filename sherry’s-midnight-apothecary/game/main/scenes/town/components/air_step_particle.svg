@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <radialGradient id="airStepGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f7fdff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#a8e8ff" stop-opacity="0.58"/>
+      <stop offset="100%" stop-color="#7fb8ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="12" cy="12" r="11" fill="url(#airStepGlow)"/>
+</svg>

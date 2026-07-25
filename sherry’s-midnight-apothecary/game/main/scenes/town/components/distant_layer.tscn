@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" uid="uid://cl2eo5pbr0bal" path="res://game/main/scenes/town/resource/pic/distant.png" id="1_distant"]
+[ext_resource type="Shader" path="res://game/main/scenes/town/shaders/depth_atmosphere.gdshader" id="2_depth_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_distant_depth"]
+shader = ExtResource("2_depth_shader")
+shader_parameter/haze_color = Color(0.69, 0.81, 0.86, 1)
+shader_parameter/haze_strength = 0.44
+shader_parameter/desaturation = 0.34
+shader_parameter/contrast_loss = 0.24
+shader_parameter/brightness = 0.06
+shader_parameter/vertical_haze = 0.22
+
+[node name="Distant" type="Node2D"]
+z_index = -20
+
+[node name="Tile0" type="Sprite2D" parent="."]
+position = Vector2(-521, 6)
+material = SubResource("ShaderMaterial_distant_depth")
+texture = ExtResource("1_distant")
+centered = false
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)
+
+[node name="Tile1" type="Sprite2D" parent="."]
+position = Vector2(1649, 6)
+material = SubResource("ShaderMaterial_distant_depth")
+texture = ExtResource("1_distant")
+centered = false
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)
+
+[node name="Tile2" type="Sprite2D" parent="."]
+position = Vector2(4340, 0)
+material = SubResource("ShaderMaterial_distant_depth")
+texture = ExtResource("1_distant")
+centered = false
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)

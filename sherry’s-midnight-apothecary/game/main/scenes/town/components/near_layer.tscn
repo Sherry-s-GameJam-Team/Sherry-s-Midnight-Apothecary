@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dntxgckm7sky1"]
+
+[ext_resource type="Texture2D" uid="uid://bshnj2or2e61f" path="res://game/main/scenes/town/resource/pic/near2.png" id="1_2v6jt"]
+[ext_resource type="Texture2D" uid="uid://bmk4ct2v3410g" path="res://game/main/scenes/town/resource/pic/near.png" id="1_near"]
+[ext_resource type="Texture2D" uid="uid://ccecvgv5gmtbt" path="res://game/main/scenes/town/resource/pic/near_building2.png" id="2_building"]
+[ext_resource type="Shader" uid="uid://cq25cjcrssba6" path="res://game/main/scenes/town/shaders/depth_atmosphere.gdshader" id="3_depth_shader"]
+[ext_resource type="Texture2D" uid="uid://bepi8dbcolllg" path="res://game/main/scenes/town/resource/sprite/fantas/2.png" id="7_8tuu7"]
+[ext_resource type="Texture2D" uid="uid://7ih3expfxqvf" path="res://game/main/scenes/town/resource/sprite/fantas/3.png" id="8_fsr2m"]
+[ext_resource type="Texture2D" uid="uid://b0w1vmjg8k5xb" path="res://game/main/scenes/town/resource/sprite/fantas/4.png" id="9_xi7uj"]
+[ext_resource type="Texture2D" uid="uid://ve8fumylgaep" path="res://game/main/scenes/town/resource/sprite/fantas/6.png" id="10_4jg0w"]
+[ext_resource type="Texture2D" uid="uid://d1l78at0fvln7" path="res://game/main/scenes/town/resource/sprite/fantas/5.png" id="11_045st"]
+[ext_resource type="Script" uid="uid://pwbrt8w4tnsk" path="res://game/main/scenes/town/components/fantas.gd" id="12_ix1p1"]
+[ext_resource type="Texture2D" uid="uid://brhdr6u2ayy2i" path="res://game/main/scenes/town/resource/sprite/fantas/7.png" id="12_mhelo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_near_depth"]
+shader = ExtResource("3_depth_shader")
+shader_parameter/haze_color = Color(0.75, 0.83, 0.84, 1)
+shader_parameter/haze_strength = 0.03
+shader_parameter/desaturation = 0.015
+shader_parameter/contrast_loss = 0.0
+shader_parameter/brightness = 0.08
+shader_parameter/vertical_haze = 0.015
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fantas"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_8tuu7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fsr2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_xi7uj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_045st")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mhelo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4jg0w")
+}],
+"loop": true,
+"name": &"new_animation_1",
+"speed": 4.0
+}]
+
+[node name="Near" type="Node2D" unique_id=1550864706]
+z_index = -10
+
+[node name="Near2" type="Sprite2D" parent="." unique_id=204708283]
+material = SubResource("ShaderMaterial_near_depth")
+position = Vector2(-977, 343)
+texture = ExtResource("1_2v6jt")
+
+[node name="Tile0" type="Sprite2D" parent="." unique_id=862240003]
+material = SubResource("ShaderMaterial_near_depth")
+position = Vector2(25, -9)
+texture = ExtResource("1_near")
+centered = false
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)
+
+[node name="NearBuilding" type="Sprite2D" parent="." unique_id=1360877855]
+material = SubResource("ShaderMaterial_near_depth")
+position = Vector2(1919, 61)
+texture = ExtResource("2_building")
+centered = false
+
+[node name="Fantas" type="AnimatedSprite2D" parent="." unique_id=352513553]
+position = Vector2(1127.5, 428.25)
+scale = Vector2(1.0203123, 0.778125)
+sprite_frames = SubResource("SpriteFrames_fantas")
+animation = &"new_animation_1"
+frame_progress = 0.56673026
+script = ExtResource("12_ix1p1")

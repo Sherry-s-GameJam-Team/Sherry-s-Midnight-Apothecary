@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://b4ukmg2d3pdhv"]
+
+[ext_resource type="Script" uid="uid://bor7jweodmy84" path="res://game/main/scenes/doorchanger/map_wheel.gd" id="1_map_wheel"]
+[ext_resource type="Texture2D" uid="uid://bfid01klm0a05" path="res://game/main/scenes/doorchanger/pic/BG.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://dlnjb86f145ee" path="res://game/main/scenes/doorchanger/pic/map.png" id="3_route_map"]
+[ext_resource type="Texture2D" uid="uid://drybe7tytegpv" path="res://game/main/scenes/doorchanger/pic/detail.png" id="4_detail"]
+[ext_resource type="Shader" uid="uid://t6otef7dxdhi" path="res://game/main/scenes/doorchanger/route_window_mask.gdshader" id="5_route_mask_shader"]
+[ext_resource type="Texture2D" uid="uid://cd17un1roi6o5" path="res://game/main/scenes/doorchanger/pic/rocker.png" id="6_rocker"]
+[ext_resource type="PackedScene" path="res://game/src/system/reminder/operation_reminder.tscn" id="7_operation_reminder"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_route_window"]
+shader = ExtResource("5_route_mask_shader")
+shader_parameter/window_center = Vector2(-426, 18)
+shader_parameter/window_radius = 229.5
+shader_parameter/edge_softness = 2.0
+
+[node name="MapRoot" type="Node2D" unique_id=773033805]
+position = Vector2(501.705, 137.465)
+scale = Vector2(0.27, 0.27)
+script = ExtResource("1_map_wheel")
+route_root_path = NodePath("RouteMask/RouteRoot")
+player_marker_path = NodePath("PlayerMarker")
+bg_path = NodePath("BG")
+detail_path = NodePath("Detail")
+rocker_path = NodePath("Rocker")
+
+[node name="BG" type="Sprite2D" parent="." unique_id=227173247]
+z_index = -10
+position = Vector2(-114.5, 197.5)
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="RouteMask" type="Sprite2D" parent="." unique_id=371608682]
+clip_children = 1
+position = Vector2(-114.5, 197.5)
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="RouteRoot" type="Node2D" parent="RouteMask" unique_id=1635656472]
+
+[node name="RouteMap" type="Sprite2D" parent="RouteMask/RouteRoot" unique_id=1364637986]
+texture_filter = 1
+material = SubResource("ShaderMaterial_route_window")
+texture = ExtResource("3_route_map")
+
+[node name="home" type="Node2D" parent="RouteMask/RouteRoot" unique_id=1381857146]
+position = Vector2(-426, 18)
+
+[node name="point1" type="Node2D" parent="RouteMask/RouteRoot" unique_id=106449032]
+position = Vector2(-265, 17)
+
+[node name="point2" type="Node2D" parent="RouteMask/RouteRoot" unique_id=554472715]
+position = Vector2(-77, -9)
+
+[node name="point3" type="Node2D" parent="RouteMask/RouteRoot" unique_id=322758561]
+position = Vector2(99, -11)
+
+[node name="point4" type="Node2D" parent="RouteMask/RouteRoot" unique_id=457633376]
+position = Vector2(245, -10)
+
+[node name="point5" type="Node2D" parent="RouteMask/RouteRoot" unique_id=737135361]
+position = Vector2(420, -12)
+
+[node name="PlayerMarker" type="Node2D" parent="." unique_id=381607929]
+z_index = 5
+position = Vector2(512, 512)
+
+[node name="MarkerGlow" type="Polygon2D" parent="PlayerMarker" unique_id=517772110]
+z_index = -1
+color = Color(0.18, 0.94, 0.68, 0.24)
+polygon = PackedVector2Array(0, -28, 14, -24.2487, 24.2487, -14, 28, 0, 24.2487, 14, 14, 24.2487, 0, 28, -14, 24.2487, -24.2487, 14, -28, 0, -24.2487, -14, -14, -24.2487)
+
+[node name="MarkerDot" type="Polygon2D" parent="PlayerMarker" unique_id=1659301062]
+color = Color(0.13, 0.88, 0.62, 1)
+polygon = PackedVector2Array(0, -14, 7, -12.1244, 12.1244, -7, 14, 0, 12.1244, 7, 7, 12.1244, 0, 14, -7, 12.1244, -12.1244, 7, -14, 0, -12.1244, -7, -7, -12.1244)
+
+[node name="Detail" type="Sprite2D" parent="." unique_id=975318655]
+z_index = 10
+position = Vector2(-114.5, 197.5)
+texture = ExtResource("4_detail")
+centered = false
+
+[node name="Rocker" type="Node2D" parent="." unique_id=658462392]
+z_index = 12
+position = Vector2(514.012, 863.37)
+rotation = -1.553343
+
+[node name="Sprite" type="Sprite2D" parent="Rocker" unique_id=74896374]
+position = Vector2(-71, -71)
+texture = ExtResource("6_rocker")
+centered = false
+
+[node name="OperationReminder" parent="." instance=ExtResource("7_operation_reminder")]
+layer = 210
+default_hold_time = 86400.0
+auto_play_on_ready = true
+auto_play_text = "AD键或鼠标旋转把手切换场景"

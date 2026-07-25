@@ -1,0 +1,210 @@
+[gd_scene format=3 uid="uid://b03rxyba5jtw1"]
+
+[ext_resource type="Script" uid="uid://bccggnggokfri" path="res://game/main/scenes/title_menu_layer.gd" id="1_title_menu"]
+[ext_resource type="Texture2D" uid="uid://c5vwvwuokosdw" path="res://game/assets/ui/title_menu/sherrys_midnight_apothecary_title_sign.png" id="2_title_sign"]
+[ext_resource type="Texture2D" uid="uid://b12ry6opna50y" path="res://game/assets/ui/title_menu/glyphs/title_glyph_01_xue.png" id="3_xue"]
+[ext_resource type="Texture2D" uid="uid://p1fwjbvmp88u" path="res://game/assets/ui/title_menu/glyphs/title_glyph_02_li.png" id="4_li"]
+[ext_resource type="Texture2D" uid="uid://c2oiivh8vqp57" path="res://game/assets/ui/title_menu/glyphs/title_glyph_03_de.png" id="5_de"]
+[ext_resource type="Texture2D" uid="uid://cnssomqbkae3c" path="res://game/assets/ui/title_menu/glyphs/title_glyph_04_wu.png" id="6_wu"]
+[ext_resource type="Texture2D" uid="uid://b3x22woyfujp" path="res://game/assets/ui/title_menu/glyphs/title_glyph_05_ye.png" id="7_ye"]
+[ext_resource type="Texture2D" uid="uid://bho37njfaj5p4" path="res://game/assets/ui/title_menu/glyphs/title_glyph_06_yao.png" id="8_yao"]
+[ext_resource type="Texture2D" uid="uid://bbs4p21cejigt" path="res://game/assets/ui/title_menu/glyphs/title_glyph_07_shui.png" id="9_shui"]
+[ext_resource type="Texture2D" uid="uid://unfqhdp4edkv" path="res://game/assets/ui/title_menu/glyphs/title_glyph_08_pu.png" id="10_pu"]
+
+[node name="TitleMenuLayer" type="CanvasLayer" unique_id=1956760954]
+script = ExtResource("1_title_menu")
+
+[node name="Overlay" type="Control" parent="." unique_id=1245148506]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Dim" type="ColorRect" parent="Overlay" unique_id=1331081159]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.005, 0.012, 0.014, 0.18)
+
+[node name="TitleSign" type="TextureRect" parent="Overlay" unique_id=1334642002]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("2_title_sign")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph01" type="TextureRect" parent="Overlay" unique_id=1585307745]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("3_xue")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph02" type="TextureRect" parent="Overlay" unique_id=1390176496]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("4_li")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph03" type="TextureRect" parent="Overlay" unique_id=608030910]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("5_de")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph04" type="TextureRect" parent="Overlay" unique_id=277915055]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("6_wu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph05" type="TextureRect" parent="Overlay" unique_id=597991112]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("7_ye")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph06" type="TextureRect" parent="Overlay" unique_id=1704068973]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("8_yao")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph07" type="TextureRect" parent="Overlay" unique_id=1001563653]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("9_shui")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleGlyph08" type="TextureRect" parent="Overlay" unique_id=852885156]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -425.0
+offset_top = 26.0
+offset_right = 425.0
+offset_bottom = 414.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("10_pu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Menu" type="VBoxContainer" parent="Overlay" unique_id=1858217672]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = 64.0
+offset_right = 128.0
+offset_bottom = 178.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="StartButton" type="Button" parent="Overlay/Menu" unique_id=875983142]
+custom_minimum_size = Vector2(256, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.86, 0.58, 1)
+theme_override_colors/font_hover_color = Color(1, 0.95, 0.72, 1)
+theme_override_font_sizes/font_size = 24
+text = "开始游戏"
+
+[node name="QuitButton" type="Button" parent="Overlay/Menu" unique_id=391571972]
+custom_minimum_size = Vector2(256, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.86, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.9, 1, 0.88, 1)
+theme_override_font_sizes/font_size = 22
+text = "退出游戏"

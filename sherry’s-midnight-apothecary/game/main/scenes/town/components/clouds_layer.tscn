@@ -1,0 +1,23 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://bhrdvjn65nox1" path="res://game/main/scenes/town/resource/pic/cloud.png" id="1_cloud"]
+
+[node name="Clouds" type="Node2D"]
+z_index = -30
+
+[node name="Tile0" type="Sprite2D" parent="."]
+position = Vector2(-2170, 0)
+texture = ExtResource("1_cloud")
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)
+
+[node name="Tile1" type="Sprite2D" parent="."]
+texture = ExtResource("1_cloud")
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)
+
+[node name="Tile2" type="Sprite2D" parent="."]
+position = Vector2(2170, 0)
+texture = ExtResource("1_cloud")
+region_enabled = true
+region_rect = Rect2(1, 0, 2170, 724)

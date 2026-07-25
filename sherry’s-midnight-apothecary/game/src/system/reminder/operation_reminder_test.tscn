@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/src/system/reminder/operation_reminder_test.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://game/src/system/reminder/operation_reminder.tscn" id="2_reminder"]
+
+[node name="OperationReminderTest" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="OperationReminder" parent="." instance=ExtResource("2_reminder")]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.8

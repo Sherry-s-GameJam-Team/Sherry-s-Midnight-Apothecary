@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cy4gf71jici3r"]
+
+[ext_resource type="Texture2D" uid="uid://dj2viihjvl5uc" path="res://game/main/scenes/town/resource/pic/rightwall.png" id="1_wall"]
+[ext_resource type="Texture2D" uid="uid://cm326hicf8ike" path="res://game/main/scenes/town/resource/pic/home.png" id="2_tk5x1"]
+[ext_resource type="Script" uid="uid://bmwslhrfmog17" path="res://game/main/scenes/town/components/foreground_mask.gd" id="4_foreground_script"]
+[ext_resource type="PackedScene" uid="uid://b6r52gj1adldi" path="res://game/main/scenes/shared/interior_room/interior_room.tscn" id="10_interior_room"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rightwall"]
+size = Vector2(704, 724)
+
+[node name="ForegroundMask" type="Node2D" unique_id=1288908302]
+z_index = 40
+texture_filter = 1
+script = ExtResource("4_foreground_script")
+
+[node name="RightWall" type="Sprite2D" parent="." unique_id=2064291171]
+position = Vector2(3791, 11)
+texture = ExtResource("1_wall")
+centered = false
+
+[node name="RightWallBody" type="StaticBody2D" parent="." unique_id=1912672628]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWallBody" unique_id=969330262]
+position = Vector2(4255, 315)
+shape = SubResource("RectangleShape2D_rightwall")
+
+[node name="InteriorRoom" parent="." unique_id=933835824 instance=ExtResource("10_interior_room")]
+z_index = -30
+position = Vector2(-750.5, 261)
+scale = Vector2(0.97721356, 0.984375)
+
+[node name="door_location" type="Marker2D" parent="." unique_id=489966651]
+position = Vector2(-560, 427)
+
+[node name="InteriorArrivalFromRainTree" type="Marker2D" parent="." unique_id=374477618]
+position = Vector2(-620, 606)
+
+[node name="TownInteriorCameraCenter" type="Marker2D" parent="."]
+position = Vector2(-750.5, 276.90625)
+
+[node name="outdoor_location" type="Marker2D" parent="." unique_id=432246114]
+position = Vector2(-147, 606)
+
+[node name="Home" type="Sprite2D" parent="." unique_id=423313462]
+visible = false
+position = Vector2(-750.5, 261)
+scale = Vector2(0.97721356, 0.984375)
+texture = ExtResource("2_tk5x1")
+
+[node name="Homebody" type="StaticBody2D" parent="Home" unique_id=1317064648]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Home/Homebody" unique_id=1146577308]
+position = Vector2(404.00006, -249.00002)
+scale = Vector2(1.0211082, 0.9870659)
+polygon = PackedVector2Array(-25.34906, 648.49884, -206.74075, 574.3976, -206.74075, 388.11517, -108.528656, 389.14435, -187.69962, 332.5392, -138.5936, 215.21216, -140.59793, -44.142353, -772.9634, -43.113167, -778, 644)
