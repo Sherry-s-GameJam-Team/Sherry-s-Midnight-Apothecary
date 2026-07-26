@@ -7,6 +7,7 @@ enum CameraMode {
 	TITLE,
 	OUTDOOR,
 	INDOOR,
+	LAKE_REVEAL,
 }
 
 @export_category("Node References")
@@ -36,6 +37,15 @@ enum CameraMode {
 @export_category("Indoor Camera")
 @export_range(0.01, 2.0, 0.01) var interior_zoom_multiplier := 0.75
 
+@export_category("Lake Reveal Camera")
+@export var lake_reveal_target_x := 0.0
+@export var lake_reveal_zoom := 1.0
+@export var lake_reveal_normal_zoom := 1.35
+@export var lake_reveal_normal_right_limit := 1830.0
+@export var lake_reveal_right_limit := 2999.0
+@export var normal_camera_offset_y := 392.0
+@export var lake_reveal_camera_offset_y := 392.0
+
 @export_category("Debug")
 @export var debug_camera_bounds := false
 @export var debug_print_interval := 0.5
@@ -56,6 +66,8 @@ var _outdoor_position_float := Vector2.ZERO
 var _transition_tween: Tween = null
 var _is_transitioning := false
 var _debug_print_time := 0.0
+var _lake_reveal_progress := 0.0
+var _lake_reveal_active := false
 
 @onready var camera := get_node_or_null(camera_path) as Camera2D
 @onready var player := get_node_or_null(player_path) as CharacterBody2D
@@ -101,6 +113,8 @@ func _physics_process(delta: float) -> void:
 		CameraMode.INDOOR:
 			if not _is_transitioning:
 				_enforce_indoor_lock()
+		CameraMode.LAKE_REVEAL:
+			_update_lake_reveal_camera()
 		CameraMode.TITLE:
 			pass
 
@@ -121,6 +135,7 @@ func enter_title_mode(title_position: Vector2) -> void:
 
 func enter_outdoor_mode(restore_immediately := false) -> void:
 	cancel_transition()
+	_lake_reveal_active = false
 	mode = CameraMode.OUTDOOR
 	vertical_follow_active = false
 	camera.top_level = true
@@ -232,6 +247,66 @@ func current_mode() -> int:
 	return mode
 
 
+## Configured by a scene that supports the lake reveal. Town scenes leave these
+## values unused and continue through their existing TITLE/OUTDOOR/INDOOR flow.
+func configure_lake_reveal(
+	target_x: float,
+	normal_zoom_value: float,
+	reveal_zoom_value: float,
+	normal_right_limit: float,
+	reveal_right_limit: float,
+	normal_offset_y: float,
+	reveal_offset_y: float
+) -> void:
+	lake_reveal_target_x = target_x
+	lake_reveal_normal_zoom = normal_zoom_value
+	lake_reveal_zoom = reveal_zoom_value
+	lake_reveal_normal_right_limit = normal_right_limit
+	lake_reveal_right_limit = reveal_right_limit
+	normal_camera_offset_y = normal_offset_y
+	lake_reveal_camera_offset_y = reveal_offset_y
+	outdoor_right_bound = normal_right_limit
+	outdoor_zoom = Vector2.ONE * normal_zoom_value
+
+
+## Position-driven, reversible reveal. No Tween is created per frame.
+func set_lake_reveal_progress(progress: float) -> void:
+	_lake_reveal_progress = clampf(progress, 0.0, 1.0)
+	if _lake_reveal_progress <= 0.0:
+		return
+
+	cancel_transition()
+	_lake_reveal_active = true
+	mode = CameraMode.LAKE_REVEAL
+	camera.top_level = true
+	camera.position_smoothing_enabled = false
+	_set_camera_physics_interpolation(false)
+	_update_lake_reveal_camera()
+
+
+func exit_lake_reveal() -> void:
+	if not _lake_reveal_active:
+		return
+
+	_lake_reveal_progress = 0.0
+	_lake_reveal_active = false
+	mode = CameraMode.OUTDOOR
+	camera.zoom = outdoor_zoom
+	_apply_outdoor_limits()
+	_outdoor_position_float = camera.global_position
+	target_position = _calculate_outdoor_target()
+	_set_camera_physics_interpolation(true)
+	camera.force_update_scroll()
+
+
+func is_lake_reveal_active() -> bool:
+	return _lake_reveal_active
+
+
+func get_camera() -> Camera2D:
+	return camera
+
+
 func _update_outdoor_camera(delta: float) -> void:
 	_apply_outdoor_limits()
 	target_position = _calculate_outdoor_target()
@@ -248,6 +323,26 @@ func _update_outdoor_camera(delta: float) -> void:
 		_outdoor_position_float.y = target_position.y
 
 	camera.global_position = _snap_camera_position(_outdoor_position_float)
+
+
+func _update_lake_reveal_camera() -> void:
+	var eased := smoothstep(0.0, 1.0, _lake_reveal_progress)
+	var normal_target := _calculate_outdoor_target()
+	normal_target.y = normal_camera_offset_y
+	var reveal_target := Vector2(lake_reveal_target_x, lake_reveal_camera_offset_y)
+	target_position = _snap_camera_position(normal_target.lerp(reveal_target, eased))
+	camera.global_position = target_position
+	camera.zoom = Vector2.ONE * lerpf(lake_reveal_normal_zoom, lake_reveal_zoom, eased)
+	camera.limit_left = floori(outdoor_left_bound)
+	camera.limit_right = ceili(lerpf(
+		lake_reveal_normal_right_limit,
+		lake_reveal_right_limit,
+		eased
+	))
+	var half_height := _visible_world_half_size(camera.zoom).y
+	camera.limit_top = floori(minf(normal_camera_offset_y, lake_reveal_camera_offset_y) - half_height)
+	camera.limit_bottom = ceili(maxf(normal_camera_offset_y, lake_reveal_camera_offset_y) + half_height)
+	camera.force_update_scroll()
 
 
 func _calculate_outdoor_target() -> Vector2:
@@ -413,6 +508,8 @@ func _on_viewport_size_changed() -> void:
 		_apply_outdoor_limits()
 	elif mode == CameraMode.INDOOR and not _is_transitioning:
 		_apply_fixed_view_limits(_indoor_camera_position(), camera.zoom)
+	elif mode == CameraMode.LAKE_REVEAL:
+		_update_lake_reveal_camera()
 
 
 func _update_debug(delta: float) -> void:

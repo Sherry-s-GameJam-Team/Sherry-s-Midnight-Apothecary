@@ -1,100 +1,76 @@
 extends Node2D
 
-@onready var camera_controller: TownCameraController = $TownCameraController
-@onready var player: CharacterBody2D = $Player
-@onready var camera: Camera2D = $Player/Camera2D
-@onready var reveal_target: Node2D = $RightLakeRevealTrigger/CollisionShape2D
-@onready var player_sprite_pivot: Node2D = $Player/SpritePivot
-@onready var player_sprite: AnimatedSprite2D = $Player/SpritePivot/WitchSprite
+## Coordinates the lake-reveal trigger. Camera transforms remain entirely in
+## TownCameraController; this scene only turns player position into progress.
 
-const NORMAL_ZOOM := 1.35
-const LAKE_REVEAL_ZOOM := 1.0
-const NORMAL_RIGHT_BOUND := 1830.0
-const LAKE_REVEAL_RIGHT_BOUND := 2999.0
-const LAKE_REVEAL_CAMERA_OFFSET := Vector2(360.0, 0.0)
-const LAKE_REVEAL_START_X := 1450.0
-const LAKE_REVEAL_END_X := 1830.0
+@export_group("Lake Reveal")
+@export var reveal_start_x := 1450.0
+@export var reveal_end_x := 1830.0
+@export var reveal_target_offset_x := 360.0
+@export var reveal_zoom := 1.0
+@export var normal_zoom := 1.35
+@export var normal_right_limit := 1830.0
+@export var reveal_right_limit := 2999.0
+@export var normal_camera_offset_y := 392.0
+@export var lake_reveal_camera_offset_y := 392.0
 
-var saved_camera_state: Dictionary = {}
-var reveal_start_position := Vector2.ZERO
-var reveal_target_position := Vector2.ZERO
-var reveal_start_zoom := Vector2.ONE
+@export_group("Node References")
+@export_node_path("CharacterBody2D") var player_path: NodePath = NodePath("Player")
+@export_node_path("TownCameraController") var camera_controller_path: NodePath = NodePath("TownCameraController")
+@export_node_path("Node2D") var reveal_trigger_path: NodePath = NodePath("RightLakeRevealTrigger/CollisionShape2D")
+
+@export_group("Debug")
+@export var camera_debug_enabled := false
+
+@onready var player := get_node(player_path) as CharacterBody2D
+@onready var camera_controller := get_node(camera_controller_path) as TownCameraController
+@onready var reveal_trigger := get_node(reveal_trigger_path) as Node2D
+
+var reveal_progress := 0.0
 
 
 func _ready() -> void:
-	# Lake uses the same outdoor camera state machine as TownMorning.
+	if player == null or camera_controller == null or reveal_trigger == null:
+		push_error("Lake requires player, TownCameraController, and reveal trigger references.")
+		set_physics_process(false)
+		return
+
+	camera_controller.configure_lake_reveal(
+		reveal_trigger.global_position.x + reveal_target_offset_x,
+		normal_zoom,
+		reveal_zoom,
+		normal_right_limit,
+		reveal_right_limit,
+		normal_camera_offset_y,
+		lake_reveal_camera_offset_y,
+	)
 	camera_controller.enter_outdoor_mode(true)
-	process_priority = 100
-	# Keep the player render transform in the same frame as the camera reveal.
-	player.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
-	player_sprite_pivot.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
-	player_sprite.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
-	player.reset_physics_interpolation()
-	player_sprite_pivot.reset_physics_interpolation()
-	player_sprite.reset_physics_interpolation()
 
 
 func _physics_process(_delta: float) -> void:
-	if saved_camera_state.is_empty():
-		if player.global_position.x >= LAKE_REVEAL_START_X:
-			_enter_lake_reveal()
+	var next_progress := 0.0
+	if player.global_position.x >= reveal_start_x:
+		next_progress = clampf(
+			inverse_lerp(reveal_start_x, reveal_end_x, player.global_position.x),
+			0.0,
+			1.0,
+		)
+
+	reveal_progress = next_progress
+	camera_controller.set_lake_reveal_progress(reveal_progress)
+	if reveal_progress <= 0.0 and camera_controller.is_lake_reveal_active():
+		camera_controller.exit_lake_reveal()
+
+
+func _process(_delta: float) -> void:
+	if not camera_debug_enabled or player == null or camera_controller == null:
 		return
-
-	var reveal_progress := clampf(
-		inverse_lerp(LAKE_REVEAL_START_X, LAKE_REVEAL_END_X, player.global_position.x),
-		0.0,
-		1.0,
-	)
-	# Smoothstep keeps the path left-to-right linear while easing its ends.
-	var smooth_progress := reveal_progress * reveal_progress * (3.0 - 2.0 * reveal_progress)
-	camera.global_position = reveal_start_position.lerp(reveal_target_position, smooth_progress)
-	camera.zoom = reveal_start_zoom.lerp(Vector2.ONE * LAKE_REVEAL_ZOOM, smooth_progress)
-	camera.limit_left = 0
-	camera.limit_right = ceili(LAKE_REVEAL_RIGHT_BOUND)
-	camera.limit_top = -1000
-	camera.limit_bottom = 1200
-
-	if player.global_position.x < LAKE_REVEAL_START_X:
-		_exit_lake_reveal()
-
-
-func _enter_lake_reveal() -> void:
-	if not saved_camera_state.is_empty():
-		return
-
-	saved_camera_state = {
-		"position": camera.global_position,
-		"zoom": camera.zoom,
-		"limit_left": camera.limit_left,
-		"limit_right": camera.limit_right,
-		"limit_top": camera.limit_top,
-		"limit_bottom": camera.limit_bottom,
-		"position_smoothing_enabled": camera.position_smoothing_enabled,
-		"position_smoothing_speed": camera.position_smoothing_speed,
-		"outdoor_right_bound": camera_controller.outdoor_right_bound,
-	}
-
-	# Start from the editor-positioned reveal target, then bias the shot toward
-	# the lake edge so the port does not remain centered in the reveal view.
-	camera_controller.outdoor_right_bound = LAKE_REVEAL_RIGHT_BOUND
-	reveal_start_position = camera.global_position
-	reveal_start_zoom = camera.zoom
-	reveal_target_position = reveal_target.global_position + LAKE_REVEAL_CAMERA_OFFSET
-	# Freeze the Town controller while the player drives this linear reveal.
-	camera_controller.enter_title_mode(reveal_start_position)
-	# The reveal is authored in physics space; interpolation against the old
-	# camera transform causes a visible afterimage across the trigger range.
-	camera.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
-	camera.reset_physics_interpolation()
-
-
-func _exit_lake_reveal() -> void:
-	if saved_camera_state.is_empty():
-		return
-
-	camera_controller.outdoor_right_bound = NORMAL_RIGHT_BOUND
-	# Return control to the same outdoor camera state machine used by Town.
-	camera_controller.enter_outdoor_mode(false)
-	camera.position_smoothing_enabled = saved_camera_state["position_smoothing_enabled"]
-	camera.position_smoothing_speed = saved_camera_state["position_smoothing_speed"]
-	saved_camera_state.clear()
+	var lake_camera := camera_controller.get_camera()
+	if lake_camera != null:
+		print(
+			"Lake reveal progress=", snappedf(reveal_progress, 0.001),
+			" player_x=", snappedf(player.global_position.x, 0.1),
+			" camera=", lake_camera.global_position,
+			" zoom=", lake_camera.zoom.x,
+			" right_limit=", lake_camera.limit_right,
+		)

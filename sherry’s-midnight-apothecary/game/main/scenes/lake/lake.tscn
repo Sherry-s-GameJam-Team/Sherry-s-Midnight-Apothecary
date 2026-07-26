@@ -1,19 +1,37 @@
 [gd_scene format=3 uid="uid://j2hqdwkd268o"]
 
-[ext_resource type="Script" uid="uid://d0ywc0e6kxe8l" path="res://game/main/scenes/lake/cloud_drift.gd" id="1_cloud_drift"]
-[ext_resource type="Texture2D" uid="uid://cww3wvrbs2g1" path="res://game/main/scenes/lake/art/skybox.png" id="2_skybox"]
-[ext_resource type="Texture2D" uid="uid://b0uml6iraxasn" path="res://game/main/scenes/lake/art/cloud_big.png" id="3_cloud_big"]
-[ext_resource type="Texture2D" uid="uid://df8lf4ti6xtp8" path="res://game/main/scenes/lake/art/cloud_small.png" id="4_cloud_small"]
-[ext_resource type="Texture2D" uid="uid://qt4kwnuktm7h" path="res://game/main/scenes/lake/art/far_BG.png" id="5_far_bg"]
-[ext_resource type="Texture2D" uid="uid://caikgp26fbylx" path="res://game/main/scenes/lake/art/lake.png" id="6_lake"]
-[ext_resource type="Texture2D" uid="uid://hme03iidhvei" path="res://game/main/scenes/lake/art/port.png" id="7_port"]
-[ext_resource type="Texture2D" uid="uid://8k7httfisph3" path="res://game/main/scenes/lake/art/post_covered.png" id="8_post"]
+[ext_resource type="Texture2D" uid="uid://dew52oxjvomsb" path="res://game/main/scenes/lake/art/cropped/skybox.png" id="2_skybox"]
+[ext_resource type="Texture2D" uid="uid://f1ahq3e1p3tb" path="res://game/main/scenes/lake/art/cropped/cloud_big.png" id="3_cloud_big"]
+[ext_resource type="Texture2D" uid="uid://cus1vs1uojq3a" path="res://game/main/scenes/lake/art/cropped/cloud_small.png" id="4_cloud_small"]
+[ext_resource type="Texture2D" uid="uid://d1u3gnktjnl5h" path="res://game/main/scenes/lake/art/cropped/far_BG.png" id="5_far_bg"]
+[ext_resource type="Texture2D" uid="uid://c4jaf3ig68okt" path="res://game/main/scenes/lake/art/cropped/lake.png" id="6_lake"]
+[ext_resource type="Texture2D" uid="uid://bu5j1080nb1rw" path="res://game/main/scenes/lake/art/cropped/port.png" id="7_port"]
+[ext_resource type="Texture2D" uid="uid://cqwpyabl52sih" path="res://game/main/scenes/lake/art/cropped/post_covered.png" id="8_post"]
 [ext_resource type="PackedScene" uid="uid://dbopo2crqeeqs" path="res://game/main/scenes/town/components/player.tscn" id="9_player"]
-[ext_resource type="Script" path="res://game/main/scenes/lake/lake.gd" id="10_lake"]
+[ext_resource type="Script" uid="uid://n0w7scn7n70" path="res://game/main/scenes/lake/lake.gd" id="10_lake"]
 [ext_resource type="Script" uid="uid://cbukkrqw6ap22" path="res://game/main/scenes/town/town_camera_controller.gd" id="11_camera_controller"]
+[ext_resource type="Script" uid="uid://d3n14jsilrsn1" path="res://game/main/scenes/lake/lake_background_controller.gd" id="12_background_controller"]
+[ext_resource type="Script" uid="uid://li7q4yfuir41" path="res://game/main/scenes/lake/lake_water_effect.gd" id="13_water_effect"]
+[ext_resource type="Shader" uid="uid://bpqn8hkcvx6jf" path="res://game/main/scenes/lake/shaders/reflection_water.gdshader" id="14_reflection_shader"]
+[ext_resource type="Shader" uid="uid://dox01c8147djv" path="res://game/main/scenes/lake/shaders/ripple_highlight.gdshader" id="15_ripple_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_reflection"]
+resource_local_to_scene = true
+shader = ExtResource("14_reflection_shader")
+shader_parameter/ripple_strength = 0.75
+shader_parameter/reflection_strength = 0.36
+shader_parameter/reflection_fade = 0.82
+shader_parameter/pixel_size = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ripple"]
+resource_local_to_scene = true
+shader = ExtResource("15_ripple_shader")
+shader_parameter/highlight_strength = 0.1
+shader_parameter/pixel_size = 1.0
+shader_parameter/highlight_color = Color(0.76, 0.88, 0.92, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lake_reveal"]
-size = Vector2(371, 700)
+size = Vector2(229, 700)
 
 [node name="Lake" type="Node2D" unique_id=2015840097]
 texture_filter = 1
@@ -27,66 +45,91 @@ position = Vector2(0, 392)
 [node name="OutdoorUpperCameraLimit" type="Marker2D" parent="CameraMarkers" unique_id=475214754]
 position = Vector2(0, 220)
 
-[node name="CloudSmall" type="Node2D" parent="." unique_id=1762942249]
-z_index = -60
-script = ExtResource("1_cloud_drift")
-speed = 5.0
+[node name="BackgroundWorld" type="Node2D" parent="." unique_id=723625308]
 
-[node name="TileA" type="Sprite2D" parent="CloudSmall" unique_id=1749566946]
-position = Vector2(-841, 0)
-texture = ExtResource("4_cloud_small")
-centered = false
+[node name="CloudBackdrop" type="Node2D" parent="BackgroundWorld" unique_id=1531867708]
 
-[node name="TileB" type="Sprite2D" parent="CloudSmall" unique_id=287641806]
-position = Vector2(2999, 0)
-texture = ExtResource("4_cloud_small")
-centered = false
-
-[node name="CloudBig" type="Node2D" parent="." unique_id=1351870514]
+[node name="CloudBig" type="Node2D" parent="BackgroundWorld/CloudBackdrop" unique_id=319450918]
 z_index = -70
-script = ExtResource("1_cloud_drift")
-speed = 13.0
+position = Vector2(943, 0)
 
-[node name="TileA" type="Sprite2D" parent="CloudBig" unique_id=1908882629]
-position = Vector2(-841, 0)
+[node name="TileFarLeft" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudBig" unique_id=55082902]
+position = Vector2(-3230, 0)
 texture = ExtResource("3_cloud_big")
 centered = false
 
-[node name="TileB" type="Sprite2D" parent="CloudBig" unique_id=509585499]
-position = Vector2(2999, 0)
+[node name="TileLeft" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudBig" unique_id=296282553]
+position = Vector2(-1615, 0)
 texture = ExtResource("3_cloud_big")
 centered = false
 
-[node name="Skybox" type="Node2D" parent="." unique_id=73209067]
-z_index = -80
-
-[node name="SkyboxArt" type="Sprite2D" parent="Skybox" unique_id=606235258]
-position = Vector2(-841, 0)
-texture = ExtResource("2_skybox")
+[node name="TileCenter" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudBig" unique_id=1307319286]
+texture = ExtResource("3_cloud_big")
 centered = false
 
-[node name="FarBackground" type="Node2D" parent="." unique_id=492252709]
+[node name="TileRight" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudBig" unique_id=1438872861]
+position = Vector2(1615, 0)
+texture = ExtResource("3_cloud_big")
+centered = false
+
+[node name="TileFarRight" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudBig" unique_id=1757697891]
+position = Vector2(3230, 0)
+texture = ExtResource("3_cloud_big")
+centered = false
+
+[node name="CloudSmall" type="Node2D" parent="BackgroundWorld/CloudBackdrop" unique_id=418458640]
+z_index = -65
+position = Vector2(1306, 0)
+
+[node name="TileFarLeft" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudSmall" unique_id=267581726]
+position = Vector2(-3344, 0)
+texture = ExtResource("4_cloud_small")
+centered = false
+
+[node name="TileLeft" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudSmall" unique_id=93626497]
+position = Vector2(-1672, 0)
+texture = ExtResource("4_cloud_small")
+centered = false
+
+[node name="TileCenter" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudSmall" unique_id=315357797]
+texture = ExtResource("4_cloud_small")
+centered = false
+
+[node name="TileRight" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudSmall" unique_id=120536124]
+position = Vector2(1672, 0)
+texture = ExtResource("4_cloud_small")
+centered = false
+
+[node name="TileFarRight" type="Sprite2D" parent="BackgroundWorld/CloudBackdrop/CloudSmall" unique_id=273573596]
+position = Vector2(3344, 0)
+texture = ExtResource("4_cloud_small")
+centered = false
+
+[node name="FarBackground" type="Node2D" parent="BackgroundWorld" unique_id=492252709]
 z_index = -40
+position = Vector2(-705, 0)
 
-[node name="FarArt" type="Sprite2D" parent="FarBackground" unique_id=1501575441]
-position = Vector2(-841, 0)
-scale = Vector2(0.88671875, 1)
+[node name="FarArt" type="Sprite2D" parent="BackgroundWorld/FarBackground" unique_id=1501575441]
+position = Vector2(290.00003, 93)
+scale = Vector2(0.7619561, 0.90602416)
 texture = ExtResource("5_far_bg")
 centered = false
 
-[node name="LakeWater" type="Node2D" parent="." unique_id=2136232384]
-z_index = -50
+[node name="Skybox" type="CanvasLayer" parent="." unique_id=305087259]
+layer = -3
 
-[node name="LakeArt" type="Sprite2D" parent="LakeWater" unique_id=18729213]
-position = Vector2(-841, 0)
-texture = ExtResource("6_lake")
+[node name="SkyArt" type="Sprite2D" parent="Skybox" unique_id=606235258]
+position = Vector2(-2810.581, 1)
+scale = Vector2(3.2002604, 1.2351947)
+texture = ExtResource("2_skybox")
 centered = false
 
 [node name="PortGround" type="Node2D" parent="." unique_id=1509921775]
 z_index = -30
 
 [node name="PortArt" type="Sprite2D" parent="PortGround" unique_id=56032474]
-position = Vector2(-808, -9)
+position = Vector2(-793.919, 372)
+scale = Vector2(1.003125, 1)
 texture = ExtResource("7_port")
 centered = false
 
@@ -94,22 +137,84 @@ centered = false
 
 [node name="Ground" type="CollisionPolygon2D" parent="PortGround/PortBody" unique_id=254489724]
 position = Vector2(-808, -9)
-polygon = PackedVector2Array(2638, 619, 2144, 621, 2036, 623, 1877, 646, 1791, 644, 1563, 638, 1451, 628, 1311, 630, 1235, 632, 958, 604, 817, 622, 731, 623, 588, 603, 407, 606, 265, 620, 191, 630, 36, 633, 38, 677, 2638, 685)
+polygon = PackedVector2Array(2622, 619, 2144, 621, 2036, 623, 1877, 646, 1791, 644, 1563, 638, 1451, 628, 1311, 630, 1235, 632, 958, 604, 817, 622, 731, 623, 588, 603, 407, 606, 265, 620, 191, 630, 36, 633, 38, 677, 2624, 684)
+
+[node name="LakeWater" type="Node2D" parent="." unique_id=2136232384]
+z_index = -45
+script = ExtResource("13_water_effect")
+water_base_path = NodePath("WaterBase")
+reflection_display_path = NodePath("ReflectionDisplay")
+ripple_highlight_path = NodePath("RippleHighlight")
+reflection_viewport_path = NodePath("ReflectionViewport")
+reflection_camera_path = NodePath("ReflectionViewport/ReflectionCamera")
+player_path = NodePath("../Player")
+reflection_player_path = NodePath("ReflectionViewport/ReflectionWorld/PlayerCapture")
+far_source_path = NodePath("../BackgroundWorld/FarBackground/FarArt")
+port_source_path = NodePath("../PortGround/PortArt")
+posts_source_path = NodePath("../CoveredPosts/PostArt")
+far_capture_path = NodePath("ReflectionViewport/ReflectionWorld/FarCapture")
+port_capture_path = NodePath("ReflectionViewport/ReflectionWorld/PortCapture")
+posts_capture_path = NodePath("ReflectionViewport/ReflectionWorld/PostsCapture")
+
+[node name="WaterBase" type="Sprite2D" parent="LakeWater" unique_id=18729213]
+position = Vector2(-73, 640)
+scale = Vector2(1.0451797, 1.0588236)
+texture = ExtResource("6_lake")
+centered = false
+
+[node name="ReflectionViewport" type="SubViewport" parent="LakeWater"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(960, 79)
+render_target_update_mode = 4
+canvas_item_default_texture_filter = 0
+
+[node name="ReflectionWorld" type="Node2D" parent="LakeWater/ReflectionViewport"]
+
+[node name="FarCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+z_index = -40
+centered = false
+
+[node name="PortCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+z_index = -30
+centered = false
+
+[node name="PostsCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+z_index = 30
+centered = false
+
+[node name="PlayerCapture" type="AnimatedSprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+z_index = 20
+
+[node name="ReflectionCamera" type="Camera2D" parent="LakeWater/ReflectionViewport"]
+enabled = true
+
+[node name="ReflectionDisplay" type="Sprite2D" parent="LakeWater"]
+z_index = 1
+texture_filter = 1
+material = SubResource("ShaderMaterial_reflection")
+centered = false
+
+[node name="RippleHighlight" type="Sprite2D" parent="LakeWater" unique_id=1524126483]
+z_index = 2
+texture_filter = 1
+material = SubResource("ShaderMaterial_ripple")
+centered = false
 
 [node name="CoveredPosts" type="Node2D" parent="." unique_id=1957913384]
 z_index = 30
 
 [node name="PostArt" type="Sprite2D" parent="CoveredPosts" unique_id=11712877]
-position = Vector2(-813.99994, 43)
+position = Vector2(1064.365, 488.667)
 scale = Vector2(1.0028645, 0.91325295)
 texture = ExtResource("8_post")
 centered = false
 
 [node name="Player" parent="." unique_id=246737022 instance=ExtResource("9_player")]
-z_index = 20
 z_as_relative = false
 position = Vector2(430, 550)
-min_x = 20.0
+min_x = -780.0
 max_x = 1830.0
 min_y = 180.0
 max_y = 690.0
@@ -118,7 +223,7 @@ max_y = 690.0
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightLakeRevealTrigger" unique_id=1905803191]
-position = Vector2(1644.5, 450)
+position = Vector2(1698.5, 450)
 shape = SubResource("RectangleShape2D_lake_reveal")
 
 [node name="TownCameraController" type="Node2D" parent="." unique_id=952182867]
@@ -127,5 +232,13 @@ camera_path = NodePath("../Player/Camera2D")
 player_path = NodePath("../Player")
 outdoor_ground_camera_marker_path = NodePath("../CameraMarkers/OutdoorGroundCameraY")
 outdoor_upper_camera_marker_path = NodePath("../CameraMarkers/OutdoorUpperCameraLimit")
+outdoor_left_bound = -780.0
 outdoor_right_bound = 1830.0
 outdoor_ground_player_y = 623.0
+
+[node name="LakeBackgroundController" type="Node2D" parent="." unique_id=207447647]
+script = ExtResource("12_background_controller")
+camera_path = NodePath("../Player/Camera2D")
+far_background_path = NodePath("../BackgroundWorld/FarBackground")
+cloud_big_path = NodePath("../BackgroundWorld/CloudBackdrop/CloudBig")
+cloud_small_path = NodePath("../BackgroundWorld/CloudBackdrop/CloudSmall")
