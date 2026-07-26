@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="LevelDefinition" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="LevelDefinition" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://game/main/data/levels/level_definition.gd" id="1_definition"]
-[ext_resource type="PackedScene" path="res://game/main/scenes/town/town_morning.tscn" id="2_scene"]
 
 [resource]
 script = ExtResource("1_definition")
 level_id = &"town"
 display_name = "Town"
 region_id = &"town"
-scene = ExtResource("2_scene")
+scene_path = "res://game/main/scenes/town/town_morning.tscn"
 default_entry_id = &"default"
 music_id = &"market_day"
 completion_flag = &"town_completed"

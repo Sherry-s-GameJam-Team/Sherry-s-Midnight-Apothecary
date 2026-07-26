@@ -14,7 +14,7 @@ func _run() -> void:
 	if game_root.current_scene_key != "town":
 		failures.append("initial scene is not town")
 	for target in ["raintree", "lake", "town"]:
-		var old_scene := game_root.current_scene
+		var old_scene: Node = game_root.current_scene
 		game_root.request_level_change(StringName(target), &"default", {})
 		var completed := await _wait_for_scene(game_root, target)
 		if not completed:
@@ -25,7 +25,9 @@ func _run() -> void:
 			failures.append("old scene was not replaced for %s" % target)
 		if game_root.current_scene == null or game_root.current_scene.get_node_or_null("Player") == null:
 			failures.append("target %s has no player" % target)
-		var duplicate_request := game_root.request_level_change(StringName(target), &"default", {})
+		var duplicate_request: bool = bool(
+			game_root.request_level_change(StringName(target), &"default", {})
+		)
 		if duplicate_request:
 			failures.append("duplicate request was accepted for %s" % target)
 

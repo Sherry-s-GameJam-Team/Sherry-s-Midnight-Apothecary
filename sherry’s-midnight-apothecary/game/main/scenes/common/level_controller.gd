@@ -10,6 +10,11 @@ signal exit_requested(target_level_id: StringName, entry_id: StringName, transit
 @export var player_path: NodePath = NodePath("../Player")
 @export var camera_controller_path: NodePath = NodePath("../TownCameraController")
 
+## Backward-compatible property for older scene contracts.
+var level_id: StringName:
+	get:
+		return get_level_id()
+
 var _spawn_markers: Dictionary[StringName, Marker2D] = {}
 var _player: Node
 var _camera_bounds: Node
@@ -37,6 +42,10 @@ func get_spawn(entry_id: StringName = &"default") -> Marker2D:
 	if default_spawn_path != NodePath():
 		return get_node_or_null(default_spawn_path) as Marker2D
 	return null
+
+## Backward-compatible name used by existing level tests and older callers.
+func get_player_spawn() -> Marker2D:
+	return get_spawn()
 
 func get_camera_bounds() -> Node:
 	return _camera_bounds

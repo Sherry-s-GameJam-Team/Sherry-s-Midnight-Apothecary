@@ -1,8 +1,8 @@
 extends SceneTree
 
 const CASES := {
-	"market": "res://game/main/scenes/town/town_morning.tscn",
-	"forest": "res://game/main/scenes/raintree/raintree.tscn",
+	"town": "res://game/main/scenes/town/town_morning.tscn",
+	"raintree": "res://game/main/scenes/raintree/raintree.tscn",
 	"lake": "res://game/main/scenes/lake/lake.tscn",
 }
 
