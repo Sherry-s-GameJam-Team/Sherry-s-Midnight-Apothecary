@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dbopo2crqeeqs"]
 
 [ext_resource type="Script" uid="uid://hxeflvsfs6x1" path="res://game/main/scenes/town/player_controller.gd" id="1_player_script"]
-[ext_resource type="SpriteFrames" uid="uid://bghop40bkx6ac" path="res://game/src/sprite/lost_ruins_witch/lost_ruins_witch_sprite_frames.tres" id="2_witch_full_frames"]
-[ext_resource type="Texture2D" uid="uid://4odnp0kocns1" path="res://game/main/scenes/town/components/air_step_particle.svg" id="3_air_particle"]
+[ext_resource type="SpriteFrames" uid="uid://bghop40bkx6ac" path="res://game/art/shared/characters/lost_ruins_witch/lost_ruins_witch_sprite_frames.tres" id="2_witch_full_frames"]
+[ext_resource type="Texture2D" uid="uid://4odnp0kocns1" path="res://game/art/town/effects/player/air_step_particle.svg" id="3_air_particle"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(53, 102)

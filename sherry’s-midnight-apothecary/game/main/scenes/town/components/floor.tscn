@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d4k853138k8i"]
 
-[ext_resource type="Texture2D" uid="uid://wp23xtbja6do" path="res://game/main/scenes/town/resource/pic/floor.png" id="1_floor"]
+[ext_resource type="Texture2D" uid="uid://wp23xtbja6do" path="res://game/art/town/backgrounds/floor.png" id="1_floor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(5928, 63)

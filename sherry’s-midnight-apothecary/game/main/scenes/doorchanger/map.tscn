@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b4ukmg2d3pdhv"]
 
 [ext_resource type="Script" uid="uid://bor7jweodmy84" path="res://game/main/scenes/doorchanger/map_wheel.gd" id="1_map_wheel"]
-[ext_resource type="Texture2D" uid="uid://bfid01klm0a05" path="res://game/main/scenes/doorchanger/pic/BG.png" id="2_bg"]
-[ext_resource type="Texture2D" uid="uid://dlnjb86f145ee" path="res://game/main/scenes/doorchanger/pic/map.png" id="3_route_map"]
-[ext_resource type="Texture2D" uid="uid://drybe7tytegpv" path="res://game/main/scenes/doorchanger/pic/detail.png" id="4_detail"]
+[ext_resource type="Texture2D" uid="uid://bfid01klm0a05" path="res://game/art/doorchanger/BG.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://dlnjb86f145ee" path="res://game/art/doorchanger/map.png" id="3_route_map"]
+[ext_resource type="Texture2D" uid="uid://drybe7tytegpv" path="res://game/art/doorchanger/detail.png" id="4_detail"]
 [ext_resource type="Shader" uid="uid://t6otef7dxdhi" path="res://game/main/scenes/doorchanger/route_window_mask.gdshader" id="5_route_mask_shader"]
-[ext_resource type="Texture2D" uid="uid://cd17un1roi6o5" path="res://game/main/scenes/doorchanger/pic/rocker.png" id="6_rocker"]
+[ext_resource type="Texture2D" uid="uid://cd17un1roi6o5" path="res://game/art/doorchanger/rocker.png" id="6_rocker"]
 [ext_resource type="PackedScene" path="res://game/src/system/reminder/operation_reminder.tscn" id="7_operation_reminder"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_route_window"]

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://chi5racxm01tk"]
+
+[ext_resource type="SpriteFrames" path="res://game/art/shared/environment/grass/magic_grass/magic_grass_frames.tres" id="1_frames"]
+
+[node name="magic_grass" type="Node2D" unique_id=977539695]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=601172356]
+position = Vector2(2, -78)
+scale = Vector2(0.5422535, 0.5422535)
+sprite_frames = ExtResource("1_frames")
+autoplay = "default"
+frame_progress = 0.48595497

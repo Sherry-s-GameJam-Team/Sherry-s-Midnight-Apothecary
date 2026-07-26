@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 const MODE_GROUND := 0
 const MODE_FLIGHT := 1
-const TOWN_FRAMES = preload("res://game/src/sprite/lost_ruins_witch/lost_ruins_witch_sprite_frames.tres")
-const FLIGHT_FRAMES = preload("res://game/src/sprite/witch/witch_sprite_frames.tres")
+const TOWN_FRAMES = preload("res://game/art/shared/characters/lost_ruins_witch/lost_ruins_witch_sprite_frames.tres")
+const FLIGHT_FRAMES = preload("res://game/art/shared/characters/witch/witch_sprite_frames.tres")
 const ANIMATION_IDLE := &"idle"
 const ANIMATION_RUN := &"run"
 const ANIMATION_JUMP := &"jump"

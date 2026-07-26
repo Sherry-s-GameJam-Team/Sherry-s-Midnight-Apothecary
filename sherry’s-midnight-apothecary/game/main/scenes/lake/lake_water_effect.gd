@@ -40,7 +40,7 @@ const WATER_SURFACE_SHADER := preload(
 
 @export_group("Ripple Masks")
 ## Directory containing ripple_mask_01.png ... ripple_mask_06.png.
-@export_dir var ripple_masks_directory := "res://game/main/scenes/lake/art/ripple_masks"
+@export_dir var ripple_masks_directory := "res://game/art/lake/ripple_masks"
 
 @export_group("Node References")
 @export_node_path("Sprite2D") var water_base_path: NodePath = NodePath("WaterBase")

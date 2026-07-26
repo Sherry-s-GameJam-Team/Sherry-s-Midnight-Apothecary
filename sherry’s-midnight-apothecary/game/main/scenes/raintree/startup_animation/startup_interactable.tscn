@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b1joh4t8xmx7x"]
 
 [ext_resource type="Script" uid="uid://lm3hikbcbmu0" path="res://game/main/scenes/raintree/startup_animation/startup_interactable.gd" id="1_startup_script"]
-[ext_resource type="Texture2D" uid="uid://ee4ksf85s0bt" path="res://game/main/scenes/raintree/switch.png" id="2_0odps"]
-[ext_resource type="SpriteFrames" path="res://game/main/scenes/raintree/startup_animation/startup_sprite_frames.tres" id="2_startup_frames"]
+[ext_resource type="Texture2D" uid="uid://ee4ksf85s0bt" path="res://game/art/raintree/environment/switch.png" id="2_0odps"]
+[ext_resource type="SpriteFrames" path="res://game/art/raintree/startup_animation/startup_sprite_frames.tres" id="2_startup_frames"]
 
 [node name="StartupInteractable" type="Node2D" unique_id=758121927]
 z_index = 9

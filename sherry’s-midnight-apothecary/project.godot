@@ -13,7 +13,7 @@ config_version=5
 config/name="Sherry’s Midnight Apothecary"
 run/main_scene="res://game/main/scenes/game_root.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://game/art/shared/ui/icon.svg"
 
 [display]
 
