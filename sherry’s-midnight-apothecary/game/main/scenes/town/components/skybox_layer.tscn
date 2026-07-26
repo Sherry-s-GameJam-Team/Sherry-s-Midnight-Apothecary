@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://jhjv3xlrrkq"]
 
-[ext_resource type="Texture2D" uid="uid://56vofauw4ihw" path="res://game/art/town/backgrounds/skybox.png" id="1_skybox"]
-[ext_resource type="Texture2D" uid="uid://cebcx60mhofaj" path="res://game/art/town/backgrounds/skybox2.png" id="2_ramkf"]
+[ext_resource type="Texture2D" uid="uid://56vofauw4ihw" path="res://art/town/backgrounds/skybox.png" id="1_skybox"]
+[ext_resource type="Texture2D" uid="uid://cebcx60mhofaj" path="res://art/town/backgrounds/skybox2.png" id="2_ramkf"]
 
 [node name="Skybox" type="Node2D" unique_id=628440504]
 z_index = -40

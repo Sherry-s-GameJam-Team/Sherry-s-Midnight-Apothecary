@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cy4gf71jici3r" path="res://game/main/scenes/town/components/foreground_mask.tscn" id="4_foreground"]
 [ext_resource type="PackedScene" uid="uid://dbopo2crqeeqs" path="res://game/main/scenes/town/components/player.tscn" id="5_player"]
 [ext_resource type="PackedScene" uid="uid://b03rxyba5jtw1" path="res://game/main/scenes/title_menu_layer.tscn" id="6_title_menu"]
-[ext_resource type="PackedScene" uid="uid://cty1ka17j130u" path="res://game/art/shared/interactions/sleep/bed_sleep_trigger/bed_sleep_trigger.tscn" id="7_sleep_trigger"]
+[ext_resource type="PackedScene" uid="uid://cty1ka17j130u" path="res://art/shared/interactions/sleep/bed_sleep_trigger/bed_sleep_trigger.tscn" id="7_sleep_trigger"]
 [ext_resource type="Script" uid="uid://cbukkrqw6ap22" path="res://game/main/scenes/town/town_camera_controller.gd" id="8_camera_controller"]
 [ext_resource type="Script" uid="uid://buwosakb66vla" path="res://game/main/scenes/common/level_controller.gd" id="9_level_controller"]
 [ext_resource type="Resource" path="res://game/main/data/levels/town_level.tres" id="10_level_definition"]

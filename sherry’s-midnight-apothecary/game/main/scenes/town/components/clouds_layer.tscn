@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" uid="uid://bhrdvjn65nox1" path="res://game/art/town/backgrounds/cloud.png" id="1_cloud"]
+[ext_resource type="Texture2D" uid="uid://bhrdvjn65nox1" path="res://art/town/backgrounds/cloud.png" id="1_cloud"]
 
 [node name="Clouds" type="Node2D"]
 z_index = -30

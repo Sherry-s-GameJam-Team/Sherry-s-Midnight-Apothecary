@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="SpriteFrames" path="res://art/shared/environment/grass/fern_patch/fern_patch_frames.tres" id="1_frames"]
+
+[node name="fern_patch" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -130.500000)
+sprite_frames = ExtResource("1_frames")
+animation = &"default"
+autoplay = "default"
+centered = true
+playing = true

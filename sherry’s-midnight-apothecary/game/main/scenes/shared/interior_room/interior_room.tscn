@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b6r52gj1adldi"]
 
-[ext_resource type="Texture2D" uid="uid://dgb1r5ywtox7d" path="res://game/art/town/backgrounds/home_inside.png" id="1_home_inside"]
-[ext_resource type="Texture2D" uid="uid://2clhcvtmjyfo" path="res://game/art/town/backgrounds/home_inside_shadow.png" id="2_home_inside_shadow"]
-[ext_resource type="Texture2D" uid="uid://dphjkcxg4rb76" path="res://game/art/town/backgrounds/clock.png" id="3_clock"]
-[ext_resource type="Texture2D" uid="uid://bpqhir82xk4p2" path="res://game/art/town/props/pot/pot_4frames.png" id="4_pot_sheet"]
-[ext_resource type="Texture2D" uid="uid://bvwl7irpqd7h4" path="res://game/art/town/backgrounds/door_leaf_0.png" id="5_town_room_leaf"]
-[ext_resource type="Texture2D" uid="uid://4y2d73kws4lo" path="res://game/art/raintree/environment/doorleaf_1.png" id="6_raintree_room_leaf"]
+[ext_resource type="Texture2D" uid="uid://dgb1r5ywtox7d" path="res://art/town/backgrounds/home_inside.png" id="1_home_inside"]
+[ext_resource type="Texture2D" uid="uid://2clhcvtmjyfo" path="res://art/town/backgrounds/home_inside_shadow.png" id="2_home_inside_shadow"]
+[ext_resource type="Texture2D" uid="uid://dphjkcxg4rb76" path="res://art/town/backgrounds/clock.png" id="3_clock"]
+[ext_resource type="Texture2D" uid="uid://bpqhir82xk4p2" path="res://art/town/props/pot/pot_4frames.png" id="4_pot_sheet"]
+[ext_resource type="Texture2D" uid="uid://bvwl7irpqd7h4" path="res://art/town/backgrounds/door_leaf_0.png" id="5_town_room_leaf"]
+[ext_resource type="Texture2D" uid="uid://4y2d73kws4lo" path="res://art/raintree/environment/doorleaf_1.png" id="6_raintree_room_leaf"]
 [ext_resource type="Script" uid="uid://c7ieow843f1d3" path="res://game/main/scenes/town/components/pot.gd" id="7_pot_script"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b5hvc"]

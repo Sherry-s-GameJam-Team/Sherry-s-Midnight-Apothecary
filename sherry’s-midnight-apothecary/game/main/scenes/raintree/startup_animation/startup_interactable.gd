@@ -5,7 +5,7 @@ signal startup_finished
 signal close_started
 signal close_finished
 
-const FRAME_DIR := "res://game/art/raintree/startup_animation/frames"
+const FRAME_DIR := "res://art/raintree/startup_animation/frames"
 const STARTUP_ANIMATION := "startup"
 const CLOSE_ANIMATION := "close"
 const INTERACTION_REMINDER_MANAGER_SCRIPT = preload("res://game/src/system/reminder/interaction_reminder_manager.gd")

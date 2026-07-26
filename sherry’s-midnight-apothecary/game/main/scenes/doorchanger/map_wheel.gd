@@ -4,10 +4,10 @@ signal destination_changed(from_node: String, to_node: String, from_index: int, 
 signal route_progress_changed(from_node: String, to_node: String, from_index: int, to_index: int, progress: float)
 signal route_return_finished()
 
-const BG_TEXTURE_PATH := "res://game/art/doorchanger/BG.png"
-const DETAIL_TEXTURE_PATH := "res://game/art/doorchanger/detail.png"
-const ROUTE_TEXTURE_PATH := "res://game/art/doorchanger/map.png"
-const ROCKER_TEXTURE_PATH := "res://game/art/doorchanger/rocker.png"
+const BG_TEXTURE_PATH := "res://art/doorchanger/BG.png"
+const DETAIL_TEXTURE_PATH := "res://art/doorchanger/detail.png"
+const ROUTE_TEXTURE_PATH := "res://art/doorchanger/map.png"
+const ROCKER_TEXTURE_PATH := "res://art/doorchanger/rocker.png"
 const ROUTE_MASK_SHADER_PATH := "res://game/main/scenes/doorchanger/route_window_mask.gdshader"
 const OVERLAY_WINDOW_CENTER := Vector2(626.5, 314.5)
 const OVERLAY_WHEEL_CENTER := Vector2(626.5, 626.5)

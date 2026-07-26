@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cy4gf71jici3r"]
 
-[ext_resource type="Texture2D" uid="uid://dj2viihjvl5uc" path="res://game/art/town/backgrounds/rightwall.png" id="1_wall"]
-[ext_resource type="Texture2D" uid="uid://cm326hicf8ike" path="res://game/art/town/backgrounds/home.png" id="2_tk5x1"]
+[ext_resource type="Texture2D" uid="uid://dj2viihjvl5uc" path="res://art/town/backgrounds/rightwall.png" id="1_wall"]
+[ext_resource type="Texture2D" uid="uid://cm326hicf8ike" path="res://art/town/backgrounds/home.png" id="2_tk5x1"]
 [ext_resource type="Script" uid="uid://bmwslhrfmog17" path="res://game/main/scenes/town/components/foreground_mask.gd" id="4_foreground_script"]
 [ext_resource type="PackedScene" uid="uid://b6r52gj1adldi" path="res://game/main/scenes/shared/interior_room/interior_room.tscn" id="10_interior_room"]
 

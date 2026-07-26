@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bbbs68m0emuva"]
 
-[ext_resource type="Texture2D" uid="uid://qsn6gtdnhh5x" path="res://game/art/raintree/environment/holl.png" id="1_lpmkb"]
+[ext_resource type="Texture2D" uid="uid://qsn6gtdnhh5x" path="res://art/raintree/environment/holl.png" id="1_lpmkb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lpmkb"]
 size = Vector2(292.95166, 46.069523)

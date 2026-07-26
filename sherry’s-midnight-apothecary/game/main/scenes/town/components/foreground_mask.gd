@@ -4,9 +4,9 @@ signal changer_transition_requested(from_node: String, to_node: String, from_ind
 signal interior_exit_to_destination(destination_key: String)
 signal interior_transition_progress_changed(destination_key: String, progress: float)
 
-const HOME_TEXTURE = preload("res://game/art/town/backgrounds/home.png")
-const HOME_INSIDE_TEXTURE = preload("res://game/art/town/backgrounds/home_inside.png")
-const HOME_INSIDE_SHADOW_TEXTURE = preload("res://game/art/town/backgrounds/home_inside_shadow.png")
+const HOME_TEXTURE = preload("res://art/town/backgrounds/home.png")
+const HOME_INSIDE_TEXTURE = preload("res://art/town/backgrounds/home_inside.png")
+const HOME_INSIDE_SHADOW_TEXTURE = preload("res://art/town/backgrounds/home_inside_shadow.png")
 const MOSAIC_DISSOLVE_SHADER = preload("res://game/main/scenes/town/shaders/mosaic_dissolve.gdshader")
 const MAP_SCENE = preload("res://game/main/scenes/doorchanger/map.tscn")
 const INTERACTION_REMINDER_MANAGER_SCRIPT = preload("res://game/src/system/reminder/interaction_reminder_manager.gd")

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bb3uc0qgybbj6"]
 
 [ext_resource type="Script" path="res://game/main/scenes/raintree/flying_witch_controller.gd" id="1_controller"]
-[ext_resource type="SpriteFrames" uid="uid://bghop40bkx6ac" path="res://game/art/shared/characters/lost_ruins_witch/lost_ruins_witch_sprite_frames.tres" id="2_witch_frames"]
-[ext_resource type="Texture2D" path="res://game/art/town/effects/player/air_step_particle.svg" id="3_air_particle"]
+[ext_resource type="SpriteFrames" uid="uid://bghop40bkx6ac" path="res://art/shared/characters/lost_ruins_witch/lost_ruins_witch_sprite_frames.tres" id="2_witch_frames"]
+[ext_resource type="Texture2D" path="res://art/town/effects/player/air_step_particle.svg" id="3_air_particle"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(48, 96)

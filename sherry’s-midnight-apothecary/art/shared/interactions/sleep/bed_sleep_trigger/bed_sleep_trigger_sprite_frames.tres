@@ -1,0 +1,230 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dt7sm3a2cvyb0"]
+
+[ext_resource type="Texture2D" uid="uid://bqp0bycl0txgc" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0000.png" id="1_frame"]
+[ext_resource type="Texture2D" uid="uid://ded0nw7goqias" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0001.png" id="2_frame"]
+[ext_resource type="Texture2D" uid="uid://imasa4jf2gyb" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0002.png" id="3_frame"]
+[ext_resource type="Texture2D" uid="uid://cmr5gohd56ppp" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0003.png" id="4_frame"]
+[ext_resource type="Texture2D" uid="uid://db3tofpcwuirr" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0004.png" id="5_frame"]
+[ext_resource type="Texture2D" uid="uid://cwqvjc8c3njij" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0005.png" id="6_frame"]
+[ext_resource type="Texture2D" uid="uid://cqpev67cdt5qs" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0006.png" id="7_frame"]
+[ext_resource type="Texture2D" uid="uid://bsf6vxlhcubxy" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0007.png" id="8_frame"]
+[ext_resource type="Texture2D" uid="uid://dxxrumh34mxme" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0008.png" id="9_frame"]
+[ext_resource type="Texture2D" uid="uid://s75qu2drshec" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0009.png" id="10_frame"]
+[ext_resource type="Texture2D" uid="uid://bfq4y0y31v4m6" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0010.png" id="11_frame"]
+[ext_resource type="Texture2D" uid="uid://wfk48nl1ou8k" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0011.png" id="12_frame"]
+[ext_resource type="Texture2D" uid="uid://dg756dg1mumup" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0012.png" id="13_frame"]
+[ext_resource type="Texture2D" uid="uid://db2o0ugf7d2ju" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0013.png" id="14_frame"]
+[ext_resource type="Texture2D" uid="uid://n20xlgx4xeff" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0014.png" id="15_frame"]
+[ext_resource type="Texture2D" uid="uid://cph85siiomcbq" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0015.png" id="16_frame"]
+[ext_resource type="Texture2D" uid="uid://bhl5l1k6nqru3" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0016.png" id="17_frame"]
+[ext_resource type="Texture2D" uid="uid://cjxhce174pn1r" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0017.png" id="18_frame"]
+[ext_resource type="Texture2D" uid="uid://dkk2ae2cpr3x8" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0018.png" id="19_frame"]
+[ext_resource type="Texture2D" uid="uid://byjobtltp5ans" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0019.png" id="20_frame"]
+[ext_resource type="Texture2D" uid="uid://d0xwbr1ldnnl3" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0020.png" id="21_frame"]
+[ext_resource type="Texture2D" uid="uid://txto3fm00ips" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0021.png" id="22_frame"]
+[ext_resource type="Texture2D" uid="uid://cxwlbfpjkvv2x" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0022.png" id="23_frame"]
+[ext_resource type="Texture2D" uid="uid://dosp6riachp1r" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0023.png" id="24_frame"]
+[ext_resource type="Texture2D" uid="uid://br40kbwe70uwq" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0024.png" id="25_frame"]
+[ext_resource type="Texture2D" uid="uid://w5qncm223x6m" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0025.png" id="26_frame"]
+[ext_resource type="Texture2D" uid="uid://blaufugq3t0fu" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0026.png" id="27_frame"]
+[ext_resource type="Texture2D" uid="uid://ca872jdl4aypd" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0027.png" id="28_frame"]
+[ext_resource type="Texture2D" uid="uid://do6ejqxry1cc5" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0028.png" id="29_frame"]
+[ext_resource type="Texture2D" uid="uid://dqao1nrhm7jmw" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0029.png" id="30_frame"]
+[ext_resource type="Texture2D" uid="uid://cpnjsiyfp3sy" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0030.png" id="31_frame"]
+[ext_resource type="Texture2D" uid="uid://dqlpebjnjk36n" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0031.png" id="32_frame"]
+[ext_resource type="Texture2D" uid="uid://ycday70rtma3" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0032.png" id="33_frame"]
+[ext_resource type="Texture2D" uid="uid://b4hjcwq1xq2ke" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0033.png" id="34_frame"]
+[ext_resource type="Texture2D" uid="uid://ylef2b0pcbjw" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0034.png" id="35_frame"]
+[ext_resource type="Texture2D" uid="uid://b4bwcmp26penc" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0035.png" id="36_frame"]
+[ext_resource type="Texture2D" uid="uid://2b26hv1xt2pg" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0036.png" id="37_frame"]
+[ext_resource type="Texture2D" uid="uid://dqmlmgrk1wqui" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0037.png" id="38_frame"]
+[ext_resource type="Texture2D" uid="uid://b6onj71a4ed0i" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0038.png" id="39_frame"]
+[ext_resource type="Texture2D" uid="uid://c4awkw7rjla15" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0039.png" id="40_frame"]
+[ext_resource type="Texture2D" uid="uid://dx6d7r7p1l8oj" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0040.png" id="41_frame"]
+[ext_resource type="Texture2D" uid="uid://xloh21xfhxun" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0041.png" id="42_frame"]
+[ext_resource type="Texture2D" uid="uid://clqym3blpaym7" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0042.png" id="43_frame"]
+[ext_resource type="Texture2D" uid="uid://ckw1s1xury1t" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0043.png" id="44_frame"]
+[ext_resource type="Texture2D" uid="uid://bg4kn8kvmk4xo" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0044.png" id="45_frame"]
+[ext_resource type="Texture2D" uid="uid://mouuputuyiqd" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0045.png" id="46_frame"]
+[ext_resource type="Texture2D" uid="uid://c38p3f2qt5spo" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0046.png" id="47_frame"]
+[ext_resource type="Texture2D" uid="uid://br3b4asf5qbj0" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0047.png" id="48_frame"]
+[ext_resource type="Texture2D" uid="uid://mw3rm3e0nvjt" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0048.png" id="49_frame"]
+[ext_resource type="Texture2D" uid="uid://d2u1lpkdanisj" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0049.png" id="50_frame"]
+[ext_resource type="Texture2D" uid="uid://dq0skdkhs2xpd" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0050.png" id="51_frame"]
+[ext_resource type="Texture2D" uid="uid://d024tqo1ysgm8" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0051.png" id="52_frame"]
+[ext_resource type="Texture2D" uid="uid://dtt5ury6jjchb" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0052.png" id="53_frame"]
+[ext_resource type="Texture2D" uid="uid://das4g8ydjcib3" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0053.png" id="54_frame"]
+[ext_resource type="Texture2D" uid="uid://d2di6glmwub8x" path="res://art/shared/interactions/sleep/bed_sleep_trigger/frames/0054.png" id="55_frame"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("55_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_frame")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_frame")
+}],
+"loop": false,
+"name": &"awake",
+"speed": 8.0
+}]

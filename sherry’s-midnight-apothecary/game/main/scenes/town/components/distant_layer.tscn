@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3]
 
-[ext_resource type="Texture2D" uid="uid://cl2eo5pbr0bal" path="res://game/art/town/backgrounds/distant.png" id="1_distant"]
+[ext_resource type="Texture2D" uid="uid://cl2eo5pbr0bal" path="res://art/town/backgrounds/distant.png" id="1_distant"]
 [ext_resource type="Shader" path="res://game/main/scenes/town/shaders/depth_atmosphere.gdshader" id="2_depth_shader"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_distant_depth"]

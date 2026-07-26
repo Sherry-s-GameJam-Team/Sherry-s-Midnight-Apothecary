@@ -4,7 +4,7 @@ signal changer_transition_requested(from_node: String, to_node: String, from_ind
 signal interior_exit_to_destination(destination_key: String)
 signal interior_transition_progress_changed(destination_key: String, progress: float)
 
-const SLEEP_TRIGGER_SCENE := preload("res://game/art/shared/interactions/sleep/bed_sleep_trigger/bed_sleep_trigger.tscn")
+const SLEEP_TRIGGER_SCENE := preload("res://art/shared/interactions/sleep/bed_sleep_trigger/bed_sleep_trigger.tscn")
 const TEXTURE_WIDTH := 2170.0
 const CLOUD_SCROLL_SPEED := 28.0
 const TITLE_INTRO_CAMERA_DURATION := 1.4

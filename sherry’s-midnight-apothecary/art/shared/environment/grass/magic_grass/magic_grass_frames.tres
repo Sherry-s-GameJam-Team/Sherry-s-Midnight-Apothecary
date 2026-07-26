@@ -1,0 +1,1211 @@
+[gd_resource type="SpriteFrames" load_steps=241 format=3]
+
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0000.png" id="1_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0001.png" id="2_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0002.png" id="3_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0003.png" id="4_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0004.png" id="5_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0005.png" id="6_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0006.png" id="7_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0007.png" id="8_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0008.png" id="9_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0009.png" id="10_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0010.png" id="11_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0011.png" id="12_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0012.png" id="13_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0013.png" id="14_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0014.png" id="15_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0015.png" id="16_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0016.png" id="17_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0017.png" id="18_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0018.png" id="19_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0019.png" id="20_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0020.png" id="21_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0021.png" id="22_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0022.png" id="23_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0023.png" id="24_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0024.png" id="25_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0025.png" id="26_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0026.png" id="27_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0027.png" id="28_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0028.png" id="29_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0029.png" id="30_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0030.png" id="31_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0031.png" id="32_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0032.png" id="33_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0033.png" id="34_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0034.png" id="35_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0035.png" id="36_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0036.png" id="37_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0037.png" id="38_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0038.png" id="39_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0039.png" id="40_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0040.png" id="41_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0041.png" id="42_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0042.png" id="43_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0043.png" id="44_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0044.png" id="45_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0045.png" id="46_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0046.png" id="47_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0047.png" id="48_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0048.png" id="49_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0049.png" id="50_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0050.png" id="51_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0051.png" id="52_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0052.png" id="53_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0053.png" id="54_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0054.png" id="55_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0055.png" id="56_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0056.png" id="57_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0057.png" id="58_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0058.png" id="59_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0059.png" id="60_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0060.png" id="61_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0061.png" id="62_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0062.png" id="63_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0063.png" id="64_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0064.png" id="65_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0065.png" id="66_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0066.png" id="67_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0067.png" id="68_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0068.png" id="69_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0069.png" id="70_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0070.png" id="71_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0071.png" id="72_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0072.png" id="73_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0073.png" id="74_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0074.png" id="75_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0075.png" id="76_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0076.png" id="77_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0077.png" id="78_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0078.png" id="79_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0079.png" id="80_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0080.png" id="81_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0081.png" id="82_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0082.png" id="83_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0083.png" id="84_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0084.png" id="85_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0085.png" id="86_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0086.png" id="87_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0087.png" id="88_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0088.png" id="89_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0089.png" id="90_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0090.png" id="91_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0091.png" id="92_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0092.png" id="93_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0093.png" id="94_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0094.png" id="95_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0095.png" id="96_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0096.png" id="97_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0097.png" id="98_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0098.png" id="99_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0099.png" id="100_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0100.png" id="101_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0101.png" id="102_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0102.png" id="103_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0103.png" id="104_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0104.png" id="105_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0105.png" id="106_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0106.png" id="107_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0107.png" id="108_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0108.png" id="109_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0109.png" id="110_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0110.png" id="111_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0111.png" id="112_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0112.png" id="113_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0113.png" id="114_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0114.png" id="115_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0115.png" id="116_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0116.png" id="117_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0117.png" id="118_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0118.png" id="119_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0119.png" id="120_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0120.png" id="121_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0121.png" id="122_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0122.png" id="123_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0123.png" id="124_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0124.png" id="125_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0125.png" id="126_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0126.png" id="127_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0127.png" id="128_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0128.png" id="129_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0129.png" id="130_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0130.png" id="131_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0131.png" id="132_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0132.png" id="133_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0133.png" id="134_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0134.png" id="135_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0135.png" id="136_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0136.png" id="137_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0137.png" id="138_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0138.png" id="139_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0139.png" id="140_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0140.png" id="141_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0141.png" id="142_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0142.png" id="143_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0143.png" id="144_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0144.png" id="145_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0145.png" id="146_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0146.png" id="147_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0147.png" id="148_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0148.png" id="149_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0149.png" id="150_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0150.png" id="151_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0151.png" id="152_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0152.png" id="153_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0153.png" id="154_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0154.png" id="155_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0155.png" id="156_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0156.png" id="157_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0157.png" id="158_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0158.png" id="159_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0159.png" id="160_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0160.png" id="161_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0161.png" id="162_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0162.png" id="163_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0163.png" id="164_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0164.png" id="165_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0165.png" id="166_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0166.png" id="167_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0167.png" id="168_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0168.png" id="169_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0169.png" id="170_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0170.png" id="171_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0171.png" id="172_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0172.png" id="173_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0173.png" id="174_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0174.png" id="175_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0175.png" id="176_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0176.png" id="177_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0177.png" id="178_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0178.png" id="179_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0179.png" id="180_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0180.png" id="181_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0181.png" id="182_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0182.png" id="183_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0183.png" id="184_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0184.png" id="185_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0185.png" id="186_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0186.png" id="187_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0187.png" id="188_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0188.png" id="189_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0189.png" id="190_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0190.png" id="191_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0191.png" id="192_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0192.png" id="193_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0193.png" id="194_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0194.png" id="195_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0195.png" id="196_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0196.png" id="197_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0197.png" id="198_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0198.png" id="199_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0199.png" id="200_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0200.png" id="201_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0201.png" id="202_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0202.png" id="203_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0203.png" id="204_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0204.png" id="205_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0205.png" id="206_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0206.png" id="207_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0207.png" id="208_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0208.png" id="209_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0209.png" id="210_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0210.png" id="211_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0211.png" id="212_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0212.png" id="213_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0213.png" id="214_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0214.png" id="215_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0215.png" id="216_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0216.png" id="217_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0217.png" id="218_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0218.png" id="219_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0219.png" id="220_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0220.png" id="221_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0221.png" id="222_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0222.png" id="223_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0223.png" id="224_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0224.png" id="225_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0225.png" id="226_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0226.png" id="227_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0227.png" id="228_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0228.png" id="229_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0229.png" id="230_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0230.png" id="231_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0231.png" id="232_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0232.png" id="233_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0233.png" id="234_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0234.png" id="235_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0235.png" id="236_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0236.png" id="237_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0237.png" id="238_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0238.png" id="239_frame"]
+[ext_resource type="Texture2D" path="res://art/shared/environment/grass/magic_grass/frames/0239.png" id="240_frame"]
+
+[resource]
+animations = [{
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("2_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("3_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("4_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("5_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("6_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("7_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("8_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("9_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("10_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("11_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("12_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("13_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("14_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("15_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("16_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("17_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("18_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("19_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("20_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("21_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("22_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("23_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("24_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("25_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("26_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("27_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("28_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("29_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("30_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("31_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("32_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("33_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("34_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("35_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("36_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("37_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("38_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("39_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("40_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("41_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("42_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("43_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("44_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("45_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("46_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("47_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("48_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("49_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("50_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("51_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("52_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("53_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("54_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("55_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("56_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("57_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("58_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("59_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("60_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("61_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("62_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("63_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("64_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("65_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("66_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("67_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("68_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("69_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("70_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("71_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("72_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("73_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("74_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("75_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("76_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("77_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("78_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("79_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("80_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("81_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("82_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("83_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("84_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("85_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("86_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("87_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("88_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("89_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("90_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("91_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("92_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("93_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("94_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("95_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("96_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("97_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("98_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("99_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("100_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("101_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("102_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("103_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("104_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("105_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("106_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("107_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("108_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("109_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("110_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("111_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("112_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("113_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("114_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("115_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("116_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("117_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("118_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("119_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("120_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("121_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("122_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("123_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("124_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("125_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("126_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("127_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("128_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("129_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("130_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("131_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("132_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("133_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("134_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("135_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("136_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("137_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("138_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("139_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("140_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("141_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("142_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("143_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("144_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("145_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("146_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("147_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("148_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("149_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("150_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("151_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("152_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("153_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("154_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("155_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("156_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("157_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("158_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("159_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("160_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("161_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("162_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("163_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("164_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("165_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("166_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("167_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("168_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("169_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("170_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("171_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("172_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("173_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("174_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("175_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("176_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("177_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("178_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("179_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("180_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("181_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("182_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("183_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("184_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("185_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("186_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("187_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("188_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("189_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("190_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("191_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("192_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("193_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("194_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("195_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("196_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("197_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("198_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("199_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("200_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("201_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("202_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("203_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("204_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("205_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("206_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("207_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("208_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("209_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("210_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("211_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("212_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("213_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("214_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("215_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("216_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("217_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("218_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("219_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("220_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("221_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("222_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("223_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("224_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("225_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("226_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("227_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("228_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("229_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("230_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("231_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("232_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("233_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("234_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("235_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("236_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("237_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("238_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("239_frame")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("240_frame")
+}
+],
+"loop": true,
+"name": &"default",
+"speed": 24.000000
+}]

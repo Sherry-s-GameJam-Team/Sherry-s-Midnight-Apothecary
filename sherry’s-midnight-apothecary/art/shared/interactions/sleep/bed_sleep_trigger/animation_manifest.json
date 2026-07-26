@@ -1,0 +1,15 @@
+{
+  "source_video": "C:\\Users\\jisub\\Desktop\\7月6日.mp4",
+  "fps": 8,
+  "frames": 55,
+  "size": [
+    412,
+    320
+  ],
+  "background": "near-white pixels converted to alpha",
+  "stabilization": "green blanket bbox scaled and translated to first-frame anchor",
+  "animation": "awake",
+  "playback": "reverse",
+  "sprite_frames": "res://art/shared/interactions/sleep/bed_sleep_trigger/bed_sleep_trigger_sprite_frames.tres",
+  "scene": "res://art/shared/interactions/sleep/bed_sleep_trigger/bed_sleep_trigger.tscn"
+}
