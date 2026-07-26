@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(53, 102)
 
-[node name="Player" type="CharacterBody2D" unique_id=2063925179]
+[node name="Player" type="CharacterBody2D" unique_id=2063925179 groups=["player_character"]]
 z_index = 20
 script = ExtResource("1_player_script")
 

@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://bbbs68m0emuva"]
+
+[ext_resource type="Texture2D" uid="uid://qsn6gtdnhh5x" path="res://game/main/scenes/raintree/holl.png" id="1_lpmkb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpmkb"]
+size = Vector2(292.95166, 46.069523)
+
+[node name="Holl" type="Node2D" unique_id=1427741152]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1622386346]
+scale = Vector2(1.9806631, 1.4139041)
+texture = ExtResource("1_lpmkb")
+
+[node name="PlatformBody" type="StaticBody2D" parent="." unique_id=827724636]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBody" unique_id=1219981001]
+position = Vector2(172.00002, 1104.0001)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PlatformBody" unique_id=1569571350]
+position = Vector2(-187.00002, 955.99994)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="PlatformBody" unique_id=1090531852]
+position = Vector2(205, 802.99994)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="PlatformBody" unique_id=1068529029]
+position = Vector2(-209, 600)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="PlatformBody" unique_id=1827784376]
+position = Vector2(205, 351.99997)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="PlatformBody" unique_id=967167720]
+position = Vector2(-242, 161.99998)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="PlatformBody" unique_id=1051304221]
+position = Vector2(197, -80.000015)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="PlatformBody" unique_id=1067582769]
+position = Vector2(-233.00002, -312)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="PlatformBody" unique_id=7044312]
+position = Vector2(202, -508.99997)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="PlatformBody" unique_id=190567433]
+position = Vector2(-193, -697)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="PlatformBody" unique_id=2016159125]
+position = Vector2(-184, 1257.0001)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="PlatformBody" unique_id=1501415726]
+position = Vector2(239, -863)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="PlatformBody" unique_id=1729245989]
+position = Vector2(-212, -1060)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="PlatformBody" unique_id=1389523570]
+position = Vector2(-508, -1126)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D15" type="CollisionShape2D" parent="PlatformBody" unique_id=1970675342]
+position = Vector2(219, -1086)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D16" type="CollisionShape2D" parent="PlatformBody" unique_id=225617264]
+position = Vector2(399.52417, -1214)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D17" type="CollisionShape2D" parent="PlatformBody" unique_id=551646367]
+position = Vector2(-395, -1262)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true
+
+[node name="CollisionShape2D18" type="CollisionShape2D" parent="PlatformBody" unique_id=1509953547]
+position = Vector2(18, -1313)
+shape = SubResource("RectangleShape2D_lpmkb")
+one_way_collision = true

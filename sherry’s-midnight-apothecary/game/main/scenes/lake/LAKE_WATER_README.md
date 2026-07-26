@@ -1,12 +1,12 @@
 # Godot 4.x 像素湖面水波与倒影
 
-本方案已经接入 `lake.tscn`。湖水贴图保持静止；6 帧灰度蒙版仅驱动低振幅横向反射扰动和短线高光。
+本方案已经接入 `lake.tscn`。湖水几何保持静止；6 帧灰度蒙版同步驱动全部水面资源的极弱明暗变化、低振幅横向反射扰动和短线高光。
 
 ## 节点结构
 
 ```text
 LakeWater (Node2D, lake_water_effect.gd)
-├── WaterBase (Sprite2D)                         # 静止湖面本体
+├── WaterBase (Sprite2D, lake_water_surface)     # 全水面轻微明暗波纹
 ├── ReflectionViewport (SubViewport)            # 低分辨率反射捕获
 │   ├── ReflectionWorld (Node2D)
 │   │   ├── FarCapture (Sprite2D)
@@ -27,6 +27,7 @@ LakeWater (Node2D, lake_water_effect.gd)
 - `reflection_strength`：倒影整体不透明度。静湖建议 `0.25–0.45`。
 - `reflection_fade`：倒影从岸边向下衰减所占水深比例；越小越快消失。
 - `highlight_strength`：水面短线高光强度。建议保持在 `0.06–0.14`。
+- `surface_ripple_strength`：作用于全部水面资源的基础明暗波纹，默认 `0.035`。
 - `pixel_size`：一个逻辑像素包含的采样像素数。默认 `1`；更粗的像素块可用 `2`。
 - `reflection_resolution_width`：反射 viewport 宽度。默认 `960`，低配置可降到 `640`。
 - `ripple_masks_directory`：6 帧蒙版目录，默认指向现有 `ripple_masks`。
@@ -44,8 +45,9 @@ ripple_mask_01.png ... ripple_mask_06.png
 ## 像素风约束
 
 - `project.godot` 的 `textures/canvas_textures/default_texture_filter=0` 已启用全局最近邻。
-- 两个 shader 的 sampler 均显式使用 `filter_nearest, repeat_disable`。
+- 三个 shader 的 sampler 均显式使用 `filter_nearest, repeat_disable`。
 - 反射位移先按 `pixel_size` 对齐逻辑像素行，再以纹理 texel 计算 UV 位移。
+- 所有加入 `lake_water_surface` 分组的 Sprite2D 都会同步使用整面水波 shader。
 - 反射只做横向、交替行的细碎扰动，不做垂直大浪和真实流体模拟。
 - 高光只有两个离散亮度等级，保留有限色盘和横向短线语言。
 - `water_region_mask` 使用 `WaterBase` 的 alpha 限制反射区域。
@@ -59,6 +61,7 @@ ripple_mask_01.png ... ripple_mask_06.png
 lake_water_effect.gd
 shaders/reflection_water.gdshader
 shaders/ripple_highlight.gdshader
+shaders/water_surface_ripple.gdshader
 ```
 
-给 `WaterBase` 设置湖面贴图，并在 Inspector 中重新指定源精灵和捕获精灵的 NodePath。若使用单独反射贴图，只需赋值 `reflection_texture`，源/捕获节点路径可以留空。
+给 `WaterBase` 设置湖面贴图，并在 Inspector 中重新指定源精灵和捕获精灵的 NodePath。额外的水面 Sprite2D 只需加入 `lake_water_surface` 分组，即可同步获得整面波纹。若使用单独反射贴图，只需赋值 `reflection_texture`，源/捕获节点路径可以留空。

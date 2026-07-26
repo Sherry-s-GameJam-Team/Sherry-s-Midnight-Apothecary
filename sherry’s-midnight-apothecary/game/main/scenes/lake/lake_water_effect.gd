@@ -1,6 +1,10 @@
 class_name LakeWaterEffect
 extends Node2D
 
+const WATER_SURFACE_SHADER := preload(
+	"res://game/main/scenes/lake/shaders/water_surface_ripple.gdshader"
+)
+
 ## Lightweight pixel-art lake reflection.
 ##
 ## The six grayscale masks are loaded from [member ripple_masks_directory].
@@ -18,8 +22,13 @@ extends Node2D
 @export_range(0.05, 1.0, 0.01) var reflection_fade := 0.82
 ## Brightness of short ripple highlights. Keep this low to avoid flashing.
 @export_range(0.0, 0.5, 0.01) var highlight_strength := 0.10
+## Subtle light/dark variation applied to every registered water-surface sprite.
+## This is intentionally much weaker than the discrete short-line highlights.
+@export_range(0.0, 0.15, 0.005) var surface_ripple_strength := 0.035
 ## Size of one logical pixel used for UV snapping and displacement.
 @export_range(1.0, 8.0, 1.0) var pixel_size := 1.0
+## Every Sprite2D in this group receives the full-surface ripple treatment.
+@export var water_surface_group: StringName = &"lake_water_surface"
 
 @export_group("Reflection Source")
 ## Optional upright reflection artwork. When empty, the SubViewport captures the
@@ -67,6 +76,7 @@ var _animation_position := 0.0
 var _frame_index := -1
 var _reflection_material: ShaderMaterial
 var _highlight_material: ShaderMaterial
+var _water_surface_materials: Array[ShaderMaterial] = []
 
 
 func _ready() -> void:
@@ -84,6 +94,7 @@ func _ready() -> void:
 	if _ripple_masks.size() != 6:
 		push_warning("LakeWaterEffect expected 6 ripple masks, found %d." % _ripple_masks.size())
 
+	_configure_water_surface_materials()
 	# Each lake instance owns its parameters; editing one instance cannot mutate another.
 	_reflection_material = _make_local_material(reflection_display)
 	_highlight_material = _make_local_material(ripple_highlight)
@@ -137,6 +148,29 @@ func _make_local_material(sprite: Sprite2D) -> ShaderMaterial:
 	shader_material = shader_material.duplicate() as ShaderMaterial
 	sprite.material = shader_material
 	return shader_material
+
+
+## Registers every intentionally tagged water sprite. Water sprites can therefore
+## be split into several art resources without adding another animation script.
+func _configure_water_surface_materials() -> void:
+	var water_surfaces: Array[Sprite2D] = []
+	for node in get_tree().get_nodes_in_group(water_surface_group):
+		var surface := node as Sprite2D
+		if surface != null:
+			water_surfaces.append(surface)
+	if not water_surfaces.has(water_base):
+		water_surfaces.append(water_base)
+
+	for surface in water_surfaces:
+		var surface_material := surface.material as ShaderMaterial
+		if surface_material == null or surface_material.shader != WATER_SURFACE_SHADER:
+			surface_material = ShaderMaterial.new()
+			surface_material.shader = WATER_SURFACE_SHADER
+		else:
+			surface_material = surface_material.duplicate() as ShaderMaterial
+		surface.material = surface_material
+		surface.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		_water_surface_materials.append(surface_material)
 
 
 func _configure_reflection_source() -> void:
@@ -201,6 +235,12 @@ func _apply_static_shader_parameters() -> void:
 	_reflection_material.set_shader_parameter("pixel_size", pixel_size)
 	_highlight_material.set_shader_parameter("highlight_strength", highlight_strength)
 	_highlight_material.set_shader_parameter("pixel_size", pixel_size)
+	for surface_material in _water_surface_materials:
+		surface_material.set_shader_parameter(
+			"surface_ripple_strength",
+			surface_ripple_strength,
+		)
+		surface_material.set_shader_parameter("pixel_size", pixel_size)
 
 
 func _apply_animation_frame(index: int, blend: float) -> void:
@@ -221,8 +261,19 @@ func _apply_animation_frame(index: int, blend: float) -> void:
 			"ripple_mask_next",
 			_ripple_masks[next_index],
 		)
+		for surface_material in _water_surface_materials:
+			surface_material.set_shader_parameter(
+				"ripple_mask_current",
+				_ripple_masks[current_index],
+			)
+			surface_material.set_shader_parameter(
+				"ripple_mask_next",
+				_ripple_masks[next_index],
+			)
 	_reflection_material.set_shader_parameter("frame_blend", blend)
 	_highlight_material.set_shader_parameter("frame_blend", blend)
+	for surface_material in _water_surface_materials:
+		surface_material.set_shader_parameter("frame_blend", blend)
 
 
 func _sync_capture_sources() -> void:
@@ -236,9 +287,17 @@ func _copy_sprite(source: Sprite2D, capture: Sprite2D) -> void:
 	if source == null or capture == null:
 		return
 	capture.texture = source.texture
-	capture.global_position = source.global_position
-	capture.global_scale = source.global_scale
-	capture.global_rotation = source.global_rotation
+	# Copy the transform matrix as one value. Splitting position, scale, and
+	# rotation is unsafe for mirrored parents: Godot may decompose a negative X
+	# scale as a negative Y scale plus 180 degrees, reversing the reflection.
+	capture.global_transform = source.global_transform
+	capture.centered = source.centered
+	capture.offset = source.offset
+	capture.region_enabled = source.region_enabled
+	capture.region_rect = source.region_rect
+	capture.hframes = source.hframes
+	capture.vframes = source.vframes
+	capture.frame = source.frame
 	capture.flip_h = source.flip_h
 	capture.flip_v = source.flip_v
 	capture.modulate = source.modulate
@@ -254,9 +313,11 @@ func _sync_player_capture() -> void:
 		return
 
 	reflection_player.visible = player_sprite.visible
-	reflection_player.global_position = player_sprite.global_position
-	reflection_player.global_scale = player_sprite.global_scale
-	reflection_player.global_rotation = player_sprite.global_rotation
+	# SpritePivot uses a negative X scale when the player faces left. Preserving
+	# the complete matrix prevents that mirror from being decomposed and inverted.
+	reflection_player.global_transform = player_sprite.global_transform
+	reflection_player.centered = player_sprite.centered
+	reflection_player.offset = player_sprite.offset
 	reflection_player.sprite_frames = player_sprite.sprite_frames
 	reflection_player.animation = player_sprite.animation
 	reflection_player.frame = player_sprite.frame

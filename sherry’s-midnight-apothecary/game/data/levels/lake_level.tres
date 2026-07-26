@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LevelDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/data/levels/level_definition.gd" id="1_definition"]
+[ext_resource type="PackedScene" path="res://game/main/scenes/lake/lake.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_definition")
+level_id = &"lake"
+display_name = "Lake"
+region_id = &"lake"
+scene = ExtResource("2_scene")
+default_entry_id = &"default"
+music_id = &"lake_day"
+completion_flag = &"lake_completed"

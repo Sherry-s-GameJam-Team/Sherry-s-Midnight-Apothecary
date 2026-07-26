@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://cury76ue4amll"]
+
+[ext_resource type="Texture2D" uid="uid://dke4h717nycly" path="res://game/main/scenes/raintree/skybox.png" id="1_skybox"]
+[ext_resource type="PackedScene" path="res://game/src/sprite/grass/broadleaf_bush/broadleaf_bush.tscn" id="3_7an34"]
+[ext_resource type="PackedScene" path="res://game/src/sprite/grass/fern_patch/fern_patch.tscn" id="4_ehwb1"]
+[ext_resource type="Texture2D" uid="uid://bp6vtyy4bmj6o" path="res://game/main/scenes/raintree/ground.png" id="4_ground"]
+[ext_resource type="Texture2D" uid="uid://bvgpnpaw3i74w" path="res://game/main/scenes/raintree/tree4.png" id="7_tree4"]
+[ext_resource type="PackedScene" uid="uid://dbopo2crqeeqs" path="res://game/main/scenes/town/components/player.tscn" id="8_ub67i"]
+[ext_resource type="Script" uid="uid://dk6mbga6pk5hn" path="res://game/main/scenes/raintree/raintree.gd" id="10_raintree"]
+[ext_resource type="Texture2D" uid="uid://dxr2nagudqpv" path="res://game/main/scenes/raintree/room.png" id="11_ehwb1"]
+[ext_resource type="Texture2D" uid="uid://dmpaqoglsq3h0" path="res://game/main/scenes/raintree/room_shader.png" id="12_room_shader"]
+[ext_resource type="Texture2D" uid="uid://4y2d73kws4lo" path="res://game/main/scenes/raintree/doorleaf_1.png" id="14_ehwb1"]
+[ext_resource type="PackedScene" uid="uid://chi5racxm01tk" path="res://game/src/sprite/grass/magic_grass/magic_grass.tscn" id="15_1qjha"]
+[ext_resource type="PackedScene" uid="uid://b6r52gj1adldi" path="res://game/main/scenes/shared/interior_room/interior_room.tscn" id="15_interior_room"]
+[ext_resource type="PackedScene" uid="uid://b1joh4t8xmx7x" path="res://game/main/scenes/raintree/startup_animation/startup_interactable.tscn" id="17_startup_interactable"]
+[ext_resource type="PackedScene" path="res://game/main/scenes/title_reveal/title_reveal_demo.tscn" id="18_title_reveal_demo"]
+[ext_resource type="Script" uid="uid://cbukkrqw6ap22" path="res://game/main/scenes/town/town_camera_controller.gd" id="19_camera_controller"]
+[ext_resource type="Script" path="res://game/main/scenes/common/level_controller.gd" id="20_level_controller"]
+[ext_resource type="Resource" path="res://game/main/data/levels/raintree_level.tres" id="21_level_definition"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(6516, 72)
+
+[node name="RainTree" type="Node2D" unique_id=853284639]
+script = ExtResource("10_raintree")
+
+[node name="CameraMarkers" type="Node2D" parent="."]
+
+[node name="OutdoorGroundCameraY" type="Marker2D" parent="CameraMarkers"]
+position = Vector2(0, 350)
+
+[node name="OutdoorUpperCameraLimit" type="Marker2D" parent="CameraMarkers"]
+position = Vector2(0, -1963)
+
+[node name="Skybox" type="Node2D" parent="." unique_id=1343324135]
+z_index = -40
+texture_filter = 1
+
+[node name="TileLeft" type="Sprite2D" parent="Skybox" unique_id=96471950]
+position = Vector2(-2172, -551)
+texture = ExtResource("1_skybox")
+centered = false
+
+[node name="Tile0" type="Sprite2D" parent="Skybox" unique_id=799143454]
+position = Vector2(-735, -548)
+texture = ExtResource("1_skybox")
+centered = false
+
+[node name="TileRight" type="Sprite2D" parent="Skybox" unique_id=1984065722]
+position = Vector2(1371, -552)
+texture = ExtResource("1_skybox")
+centered = false
+
+[node name="RoomBackdrop" type="Node2D" parent="." unique_id=1203376228]
+z_index = 10
+texture_filter = 1
+position = Vector2(0, 32)
+
+[node name="broadleaf_bush" parent="RoomBackdrop" unique_id=468126672 instance=ExtResource("3_7an34")]
+position = Vector2(1421.9999, 590.99994)
+scale = Vector2(0.275, 0.275)
+
+[node name="fern_patch" parent="RoomBackdrop" unique_id=2133130068 instance=ExtResource("4_ehwb1")]
+position = Vector2(1807, 620.99994)
+scale = Vector2(0.695, 0.695)
+
+[node name="fern_patch2" parent="RoomBackdrop" unique_id=1204479544 instance=ExtResource("4_ehwb1")]
+position = Vector2(1585.9999, 613.99994)
+scale = Vector2(0.565, 0.565)
+
+[node name="Room" type="Sprite2D" parent="RoomBackdrop" unique_id=1755644418]
+position = Vector2(-425.36975, 362.00006)
+scale = Vector2(0.9466591, 0.9613261)
+texture = ExtResource("11_ehwb1")
+
+[node name="StartupInteractable" parent="." unique_id=1268376161 instance=ExtResource("17_startup_interactable")]
+position = Vector2(560, 521)
+
+[node name="Ground" type="Node2D" parent="." unique_id=606054979]
+z_index = 5
+texture_filter = 1
+
+[node name="TileLeft" type="Sprite2D" parent="Ground" unique_id=1401529545]
+position = Vector2(-2172, 612)
+texture = ExtResource("4_ground")
+centered = false
+
+[node name="Tile0" type="Sprite2D" parent="Ground" unique_id=2119518078]
+position = Vector2(0, 612)
+texture = ExtResource("4_ground")
+centered = false
+
+[node name="Tile1" type="Sprite2D" parent="Ground" unique_id=14459770]
+position = Vector2(2172, 612)
+texture = ExtResource("4_ground")
+centered = false
+
+[node name="GroundBody" type="StaticBody2D" parent="Ground" unique_id=576090192]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground/GroundBody" unique_id=976553324]
+position = Vector2(1086, 652)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Near" type="Node2D" parent="." unique_id=963904315]
+z_index = 8
+texture_filter = 1
+
+[node name="Tree4NearLeft" type="Sprite2D" parent="Near" unique_id=600728128]
+position = Vector2(-1727, -227.00002)
+scale = Vector2(1.08, 1.3759351)
+texture = ExtResource("7_tree4")
+centered = false
+
+[node name="magic_grass" parent="Near" unique_id=2104632848 instance=ExtResource("15_1qjha")]
+position = Vector2(781, 611)
+
+[node name="Player" parent="." unique_id=2063925179 instance=ExtResource("8_ub67i")]
+position = Vector2(-64, 565)
+
+[node name="TownCameraController" type="Node2D" parent="." groups=["player_camera_controller"]]
+script = ExtResource("19_camera_controller")
+camera_path = NodePath("../Player/Camera2D")
+player_path = NodePath("../Player")
+interior_camera_center_path = NodePath("../RoomInteriorCameraCenter")
+outdoor_ground_camera_marker_path = NodePath("../CameraMarkers/OutdoorGroundCameraY")
+outdoor_upper_camera_marker_path = NodePath("../CameraMarkers/OutdoorUpperCameraLimit")
+outdoor_left_bound = -2172.0
+outdoor_right_bound = 4344.0
+outdoor_ground_player_y = 565.0
+vertical_follow_ratio = 1.0
+vertical_follow_speed = 3.5
+vertical_return_speed = 4.5
+
+[node name="LevelController" type="Node2D" parent="." groups=["level_controller"]]
+script = ExtResource("20_level_controller")
+definition = ExtResource("21_level_definition")
+default_spawn_path = NodePath("../PlayerSpawn")
+camera_bounds_path = NodePath("../CameraBounds")
+
+[node name="PlayerSpawn" type="Marker2D" parent="." groups=["player_spawn", "level_entry"]]
+position = Vector2(-64, 565)
+metadata/entry_id = "default"
+
+[node name="CameraBounds" type="Node2D" parent="." groups=["camera_bounds"]]
+position = Vector2(1086, 100)
+
+[node name="RoomInteriorHost" parent="." unique_id=1095718263 instance=ExtResource("15_interior_room")]
+z_index = 10
+position = Vector2(-120.99999, 247)
+scale = Vector2(0.97721356, 0.984375)
+
+[node name="ForegroundMask" type="Node2D" parent="." unique_id=1183042978]
+z_index = 40
+texture_filter = 1
+
+[node name="RoomShader" type="Sprite2D" parent="ForegroundMask" unique_id=1981132105]
+visible = false
+z_index = 4
+position = Vector2(-436.5001, 374.0549)
+scale = Vector2(0.98296493, 1.0167261)
+texture = ExtResource("12_room_shader")
+
+[node name="Doorleaf1" type="Sprite2D" parent="ForegroundMask" unique_id=1276275088]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 5
+position = Vector2(174, 430.5)
+scale = Vector2(0.67473876, 0.67473876)
+texture = ExtResource("14_ehwb1")
+
+[node name="RoomDoorLocation" type="Marker2D" parent="." unique_id=1258323248]
+position = Vector2(267, 609)
+
+[node name="RoomInteriorCameraCenter" type="Marker2D" parent="." unique_id=1173654176]
+position = Vector2(-125, 283)
+
+[node name="TitleRevealDemo" parent="." unique_id=1151896133 instance=ExtResource("18_title_reveal_demo")]
+input_enabled = false
+hint_visible = false
+auto_fade_seconds = 5.0

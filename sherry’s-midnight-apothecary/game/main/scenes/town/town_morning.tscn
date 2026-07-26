@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" path="res://game/main/scenes/title_menu_layer.tscn" id="6_title_menu"]
 [ext_resource type="PackedScene" uid="uid://cty1ka17j130u" path="res://game/src/sprite/sleep/bed_sleep_trigger/bed_sleep_trigger.tscn" id="7_sleep_trigger"]
 [ext_resource type="Script" uid="uid://cbukkrqw6ap22" path="res://game/main/scenes/town/town_camera_controller.gd" id="8_camera_controller"]
+[ext_resource type="Script" path="res://game/main/scenes/common/level_controller.gd" id="9_level_controller"]
+[ext_resource type="Resource" path="res://game/main/data/levels/town_level.tres" id="10_level_definition"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d5nw8"]
 size = Vector2(1291, 792)
@@ -39,7 +41,7 @@ scale = Vector2(0.733, 0.738)
 [node name="Player" parent="." unique_id=1783690260 instance=ExtResource("5_player")]
 position = Vector2(-319, 278)
 
-[node name="TownCameraController" type="Node2D" parent="."]
+[node name="TownCameraController" type="Node2D" parent="." groups=["player_camera_controller"]]
 script = ExtResource("8_camera_controller")
 camera_path = NodePath("../Player/Camera2D")
 player_path = NodePath("../Player")
@@ -50,6 +52,19 @@ outdoor_left_bound = 0.0
 outdoor_right_bound = 5928.0
 outdoor_ground_player_y = 627.0
 max_ground_vertical_shift = 0.0
+
+[node name="LevelController" type="Node2D" parent="." groups=["level_controller"]]
+script = ExtResource("9_level_controller")
+definition = ExtResource("10_level_definition")
+default_spawn_path = NodePath("../PlayerSpawn")
+camera_bounds_path = NodePath("../CameraBounds")
+
+[node name="PlayerSpawn" type="Marker2D" parent="." groups=["player_spawn", "level_entry"]]
+position = Vector2(-319, 278)
+metadata/entry_id = "default"
+
+[node name="CameraBounds" type="Node2D" parent="." groups=["camera_bounds"]]
+position = Vector2(2964, 100)
 
 [node name="TitleMenuLayer" parent="." unique_id=1136082998 instance=ExtResource("6_title_menu")]
 

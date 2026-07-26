@@ -14,6 +14,9 @@
 [ext_resource type="Script" uid="uid://li7q4yfuir41" path="res://game/main/scenes/lake/lake_water_effect.gd" id="13_water_effect"]
 [ext_resource type="Shader" uid="uid://bpqn8hkcvx6jf" path="res://game/main/scenes/lake/shaders/reflection_water.gdshader" id="14_reflection_shader"]
 [ext_resource type="Shader" uid="uid://dox01c8147djv" path="res://game/main/scenes/lake/shaders/ripple_highlight.gdshader" id="15_ripple_shader"]
+[ext_resource type="Shader" uid="uid://cvj3sk0ftmi5v" path="res://game/main/scenes/lake/shaders/water_surface_ripple.gdshader" id="16_surface_ripple_shader"]
+[ext_resource type="Script" uid="uid://buwosakb66vla" path="res://game/main/scenes/common/level_controller.gd" id="17_level_controller"]
+[ext_resource type="Resource" path="res://game/main/data/levels/lake_level.tres" id="18_level_definition"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_reflection"]
 resource_local_to_scene = true
@@ -22,13 +25,22 @@ shader_parameter/ripple_strength = 0.75
 shader_parameter/reflection_strength = 0.36
 shader_parameter/reflection_fade = 0.82
 shader_parameter/pixel_size = 1.0
+shader_parameter/frame_blend = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ripple"]
 resource_local_to_scene = true
 shader = ExtResource("15_ripple_shader")
+shader_parameter/frame_blend = 0.0
 shader_parameter/highlight_strength = 0.1
 shader_parameter/pixel_size = 1.0
 shader_parameter/highlight_color = Color(0.76, 0.88, 0.92, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_surface_ripple"]
+resource_local_to_scene = true
+shader = ExtResource("16_surface_ripple_shader")
+shader_parameter/surface_ripple_strength = 0.035
+shader_parameter/pixel_size = 1.0
+shader_parameter/ripple_tint = Color(0.66, 0.78, 0.82, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lake_reveal"]
 size = Vector2(229, 700)
@@ -142,11 +154,6 @@ polygon = PackedVector2Array(2622, 619, 2144, 621, 2036, 623, 1877, 646, 1791, 6
 [node name="LakeWater" type="Node2D" parent="." unique_id=2136232384]
 z_index = -45
 script = ExtResource("13_water_effect")
-water_base_path = NodePath("WaterBase")
-reflection_display_path = NodePath("ReflectionDisplay")
-ripple_highlight_path = NodePath("RippleHighlight")
-reflection_viewport_path = NodePath("ReflectionViewport")
-reflection_camera_path = NodePath("ReflectionViewport/ReflectionCamera")
 player_path = NodePath("../Player")
 reflection_player_path = NodePath("ReflectionViewport/ReflectionWorld/PlayerCapture")
 far_source_path = NodePath("../BackgroundWorld/FarBackground/FarArt")
@@ -156,41 +163,42 @@ far_capture_path = NodePath("ReflectionViewport/ReflectionWorld/FarCapture")
 port_capture_path = NodePath("ReflectionViewport/ReflectionWorld/PortCapture")
 posts_capture_path = NodePath("ReflectionViewport/ReflectionWorld/PostsCapture")
 
-[node name="WaterBase" type="Sprite2D" parent="LakeWater" unique_id=18729213]
+[node name="WaterBase" type="Sprite2D" parent="LakeWater" groups=["lake_water_surface"] unique_id=18729213]
 position = Vector2(-73, 640)
 scale = Vector2(1.0451797, 1.0588236)
+texture_filter = 1
+material = SubResource("ShaderMaterial_surface_ripple")
 texture = ExtResource("6_lake")
 centered = false
 
-[node name="ReflectionViewport" type="SubViewport" parent="LakeWater"]
+[node name="ReflectionViewport" type="SubViewport" parent="LakeWater" unique_id=739427794]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(960, 79)
 render_target_update_mode = 4
-canvas_item_default_texture_filter = 0
 
-[node name="ReflectionWorld" type="Node2D" parent="LakeWater/ReflectionViewport"]
+[node name="ReflectionWorld" type="Node2D" parent="LakeWater/ReflectionViewport" unique_id=1806089574]
 
-[node name="FarCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+[node name="FarCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld" unique_id=1608604723]
 z_index = -40
 centered = false
 
-[node name="PortCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+[node name="PortCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld" unique_id=974475980]
 z_index = -30
 centered = false
 
-[node name="PostsCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+[node name="PostsCapture" type="Sprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld" unique_id=955062316]
 z_index = 30
 centered = false
 
-[node name="PlayerCapture" type="AnimatedSprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld"]
+[node name="PlayerCapture" type="AnimatedSprite2D" parent="LakeWater/ReflectionViewport/ReflectionWorld" unique_id=1735889296]
 z_index = 20
 
-[node name="ReflectionCamera" type="Camera2D" parent="LakeWater/ReflectionViewport"]
-enabled = true
+[node name="ReflectionCamera" type="Camera2D" parent="LakeWater/ReflectionViewport" unique_id=560556912 groups=["effect_camera"]]
 
-[node name="ReflectionDisplay" type="Sprite2D" parent="LakeWater"]
+[node name="ReflectionDisplay" type="Sprite2D" parent="LakeWater" unique_id=967878519]
 z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_reflection")
@@ -213,7 +221,7 @@ centered = false
 
 [node name="Player" parent="." unique_id=246737022 instance=ExtResource("9_player")]
 z_as_relative = false
-position = Vector2(430, 550)
+position = Vector2(428, 598)
 min_x = -780.0
 max_x = 1830.0
 min_y = 180.0
@@ -226,7 +234,7 @@ collision_layer = 0
 position = Vector2(1698.5, 450)
 shape = SubResource("RectangleShape2D_lake_reveal")
 
-[node name="TownCameraController" type="Node2D" parent="." unique_id=952182867]
+[node name="TownCameraController" type="Node2D" parent="." unique_id=952182867 groups=["player_camera_controller"]]
 script = ExtResource("11_camera_controller")
 camera_path = NodePath("../Player/Camera2D")
 player_path = NodePath("../Player")
@@ -242,3 +250,16 @@ camera_path = NodePath("../Player/Camera2D")
 far_background_path = NodePath("../BackgroundWorld/FarBackground")
 cloud_big_path = NodePath("../BackgroundWorld/CloudBackdrop/CloudBig")
 cloud_small_path = NodePath("../BackgroundWorld/CloudBackdrop/CloudSmall")
+
+[node name="LevelController" type="Node2D" parent="." unique_id=548119301 groups=["level_controller"]]
+script = ExtResource("17_level_controller")
+definition = ExtResource("18_level_definition")
+default_spawn_path = NodePath("../PlayerSpawn")
+camera_bounds_path = NodePath("../CameraBounds")
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1979940082 groups=["level_entry", "player_spawn"]]
+position = Vector2(430, 550)
+metadata/entry_id = "default"
+
+[node name="CameraBounds" type="Node2D" parent="." unique_id=1858047859 groups=["camera_bounds"]]
+position = Vector2(525, 100)
