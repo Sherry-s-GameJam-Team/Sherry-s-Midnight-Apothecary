@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://app/app_root.gd" id="1_app_root"]
+[ext_resource type="Script" path="res://core/flow/game_flow.gd" id="2_game_flow"]
+
+[node name="AppRoot" type="Node"]
+script = ExtResource("1_app_root")
+
+[node name="GameFlow" type="Node" parent="."]
+script = ExtResource("2_game_flow")
+
+[node name="CurrentModeSlot" type="Node" parent="."]
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+layer = 90
+
+[node name="GlobalUILayer" type="CanvasLayer" parent="."]
+layer = 80
+
+[node name="AudioRoot" type="Node" parent="."]
+
+[node name="DebugLayer" type="CanvasLayer" parent="."]
+layer = 100
