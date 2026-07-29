@@ -90,4 +90,3 @@ static func _string_name_array(value: Variant) -> Array[StringName]:
 		for item: Variant in value:
 			result.append(StringName(str(item)))
 	return result
-
