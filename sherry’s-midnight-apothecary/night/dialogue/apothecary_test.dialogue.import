@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b88a0mpahokhl"
+path="res://.godot/imported/apothecary_test.dialogue-47d1ec4352ea38fa88899b92ffe4a439.tres"
+
+[deps]
+
+source_file="res://night/dialogue/apothecary_test.dialogue"
+dest_files=["res://.godot/imported/apothecary_test.dialogue-47d1ec4352ea38fa88899b92ffe4a439.tres"]
+
+[params]
+
+defaults=true

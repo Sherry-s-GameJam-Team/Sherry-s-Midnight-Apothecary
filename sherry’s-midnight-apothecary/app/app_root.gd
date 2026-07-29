@@ -5,6 +5,7 @@ extends Node
 
 @onready var game_flow: GameFlow = $GameFlow
 @onready var current_runtime_slot: Node = $CurrentRuntime
+@onready var pause_menu: PauseMenu = $GlobalUI/PauseMenu
 
 var player_data: PlayerData
 var save_service: SaveService
@@ -43,3 +44,9 @@ func load_game() -> bool:
 
 func _on_save_requested(_day: int, _mode: GameFlow.Mode) -> void:
 	save_game()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and not pause_menu.visible:
+		pause_menu.open()
+		get_viewport().set_input_as_handled()

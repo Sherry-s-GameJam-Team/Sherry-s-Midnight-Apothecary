@@ -11,6 +11,7 @@ static func run(test: TestSupport) -> void:
 		"res://app/app_root.tscn",
 		"res://day/day_runtime.tscn",
 		"res://night/night_runtime.tscn",
+		"res://night/ui/pause_menu/pause_menu.tscn",
 	]:
 		var scene := load(scene_path) as PackedScene
 		test.expect(scene != null, "%s can be loaded." % scene_path)
