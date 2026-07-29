@@ -44,7 +44,7 @@ for frame_no, idx in enumerate(indices, 1):
 
     # Clear pale background/shadow regions that are connected to the image border.
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    pale = ((hsv[:, :, 1] < 32) & (hsv[:, :, 2] > 218)).astype(np.uint8)
+    pale = ((hsv[:, :, 1] < 45) & (hsv[:, :, 2] > 170)).astype(np.uint8)
     n, labels, stats, _ = cv2.connectedComponentsWithStats(pale, 8)
     border_labels = set()
     for x, y, w, h, area in stats[1:]:

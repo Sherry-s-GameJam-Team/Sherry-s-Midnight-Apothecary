@@ -1,42 +1,45 @@
 class_name AppRoot
 extends Node
 
-const GameSessionScript := preload("res://core/state/game_session.gd")
-const SceneFlowScript := preload("res://core/scene_flow/scene_flow.gd")
-const DataRegistryScript := preload("res://core/data_registry/data_registry.gd")
+@export var start_automatically := true
 
-@export var static_definitions: Array[Resource] = []
-@onready var current_mode_slot: Node = $CurrentModeSlot
+@onready var game_flow: GameFlow = $GameFlow
+@onready var current_runtime_slot: Node = $CurrentRuntime
 
-var session: GameSession
-var game_flow: GameFlow
-var scene_flow: SceneFlow
-var data_registry: DataRegistry
+var player_data: PlayerData
+var save_service: SaveService
 
 
 func _ready() -> void:
-	data_registry = DataRegistryScript.new()
-	data_registry.register_all(static_definitions)
-	scene_flow = SceneFlowScript.new()
-	scene_flow.name = "SceneFlow"
-	add_child(scene_flow)
-	scene_flow.configure(current_mode_slot)
-
-	session = GameSessionScript.new()
-	game_flow = $GameFlow as GameFlow
-	game_flow.configure(session, scene_flow)
+	save_service = SaveService.new()
+	player_data = PlayerData.new()
+	game_flow.configure(current_runtime_slot, player_data)
+	game_flow.save_requested.connect(_on_save_requested)
+	if start_automatically:
+		start_new_game()
 
 
 func start_new_game() -> void:
-	session.reset_to_new_game()
+	player_data.reset()
+	game_flow.configure(current_runtime_slot, player_data)
 	game_flow.start_new_game()
 
 
-func load_game(save_data: Dictionary) -> void:
-	session = GameSessionScript.from_save_data(save_data)
-	game_flow.configure(session, scene_flow)
-	game_flow.resume_from_session()
+func save_game() -> Error:
+	return save_service.save_game(game_flow.current_day, game_flow.current_mode, player_data)
 
 
-func get_save_data() -> Dictionary:
-	return session.to_save_data()
+func load_game() -> bool:
+	var save_data := save_service.load_game()
+	if save_data.is_empty():
+		return false
+	player_data = PlayerData.from_save_data(save_data.get("player", {}))
+	game_flow.configure(current_runtime_slot, player_data)
+	return game_flow.resume_game(
+		int(save_data.get("day", 1)),
+		int(save_data.get("mode", GameFlow.Mode.DAY)) as GameFlow.Mode
+	)
+
+
+func _on_save_requested(_day: int, _mode: GameFlow.Mode) -> void:
+	save_game()

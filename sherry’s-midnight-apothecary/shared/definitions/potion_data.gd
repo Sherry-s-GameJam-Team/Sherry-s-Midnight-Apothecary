@@ -1,0 +1,10 @@
+class_name PotionData
+extends Resource
+
+@export var id: StringName
+@export var display_name: String
+@export var color_id: StringName
+@export var effect_id: StringName
+@export var sell_value := 0
+@export var icon: Texture2D
+

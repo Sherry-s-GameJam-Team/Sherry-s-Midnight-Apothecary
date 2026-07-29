@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/day_runtime.gd" id="1_day"]
+
+[node name="DayRuntime" type="Node"]
+script = ExtResource("1_day")
+
+[node name="LevelSlot" type="Node" parent="."]
+
+[node name="PlayerSlot" type="Node" parent="."]
+
+[node name="CameraSlot" type="Node" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
