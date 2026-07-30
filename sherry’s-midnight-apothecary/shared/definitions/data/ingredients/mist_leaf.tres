@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"mist_leaf"
+display_name = "雾露叶"
+base_value = 8
+spectrum_start = 0.5
+spectrum_end = 0.68
+base_quality = 1.0
+base_concentration = 0.85

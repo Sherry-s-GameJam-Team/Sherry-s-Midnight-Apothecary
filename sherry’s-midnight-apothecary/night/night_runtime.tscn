@@ -1,11 +1,14 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://night/night_runtime.gd" id="1_night"]
+[ext_resource type="PackedScene" path="res://night/alchemy/alchemy_runtime.tscn" id="2_alchemy"]
 
 [node name="NightRuntime" type="Node"]
 script = ExtResource("1_night")
 
 [node name="AlchemySlot" type="Node" parent="."]
+
+[node name="AlchemyRuntime" parent="AlchemySlot" instance=ExtResource("2_alchemy")]
 
 [node name="CustomerSlot" type="Node" parent="."]
 
@@ -13,3 +16,4 @@ script = ExtResource("1_night")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[connection signal="request_close" from="AlchemySlot/AlchemyRuntime" to="." method="_on_alchemy_request_close"]

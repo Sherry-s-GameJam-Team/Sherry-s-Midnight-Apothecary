@@ -1,7 +1,7 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 
 var max_health := 100
 var health := 100
@@ -27,7 +27,7 @@ func reset() -> void:
 func apply_day_result(result: DayResult) -> void:
 	health = clampi(result.remaining_health, 0, max_health)
 	_add_counts(inventory, result.collected_items)
-	potions = result.remaining_potions.duplicate(true)
+	potions = _normalize_potions(result.remaining_potions)
 	if result.unlocked_level_id != &"" and not unlocked_levels.has(result.unlocked_level_id):
 		unlocked_levels.append(result.unlocked_level_id)
 
@@ -35,8 +35,8 @@ func apply_day_result(result: DayResult) -> void:
 func apply_night_result(result: NightResult) -> void:
 	money += result.earned_money
 	_subtract_counts(inventory, result.spent_ingredients)
-	_add_counts(potions, result.produced_potions)
-	_subtract_counts(potions, result.sold_potions)
+	_append_potions(potions, result.produced_potions)
+	_remove_potions(potions, result.sold_potions)
 
 
 func to_save_data() -> Dictionary:
@@ -46,10 +46,10 @@ func to_save_data() -> Dictionary:
 		"health": health,
 		"money": money,
 		"debt": debt,
-		"inventory": inventory.duplicate(true),
-		"potions": potions.duplicate(true),
-		"upgrades": upgrades.duplicate(),
-		"unlocked_levels": unlocked_levels.duplicate(),
+		"inventory": _serialize_counts(inventory),
+		"potions": _serialize_potions(potions),
+		"upgrades": upgrades.map(func(value: StringName) -> String: return str(value)),
+		"unlocked_levels": unlocked_levels.map(func(value: StringName) -> String: return str(value)),
 	}
 
 
@@ -59,8 +59,8 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.health = clampi(int(data.get("health", result.max_health)), 0, result.max_health)
 	result.money = int(data.get("money", 0))
 	result.debt = int(data.get("debt", 0))
-	result.inventory = _dictionary_copy(data.get("inventory", {}))
-	result.potions = _dictionary_copy(data.get("potions", {}))
+	result.inventory = _count_dictionary(data.get("inventory", {}))
+	result.potions = _normalize_potions(data.get("potions", {}))
 	result.upgrades = _string_name_array(data.get("upgrades", []))
 	result.unlocked_levels = _string_name_array(data.get("unlocked_levels", [&"market"]))
 	return result
@@ -80,8 +80,85 @@ func _subtract_counts(target: Dictionary, removals: Dictionary) -> void:
 			target[stable_id] = remaining
 
 
-static func _dictionary_copy(value: Variant) -> Dictionary:
-	return (value as Dictionary).duplicate(true) if value is Dictionary else {}
+func _append_potions(target: Dictionary, additions: Dictionary) -> void:
+	for potion_key: Variant in additions:
+		var potion_id := StringName(str(potion_key))
+		var existing := _potion_array(potion_id, target.get(potion_id, []))
+		var incoming := _potion_array(potion_id, additions[potion_key])
+		existing.append_array(incoming)
+		target[potion_id] = existing
+
+
+func _remove_potions(target: Dictionary, removals: Dictionary) -> void:
+	for potion_key: Variant in removals:
+		var potion_id := StringName(str(potion_key))
+		var existing := _potion_array(potion_id, target.get(potion_id, []))
+		var remove_count := maxi(int(removals[potion_key]), 0)
+		for _index in range(mini(remove_count, existing.size())):
+			existing.pop_front()
+		if existing.is_empty():
+			target.erase(potion_id)
+		else:
+			target[potion_id] = existing
+
+
+static func _normalize_potions(value: Variant) -> Dictionary:
+	var result: Dictionary = {}
+	if value is not Dictionary:
+		return result
+	for potion_key: Variant in value:
+		var potion_id := StringName(str(potion_key))
+		result[potion_id] = _potion_array(potion_id, value[potion_key])
+	return result
+
+
+static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	if value is Array:
+		for item: Variant in value:
+			if item is Dictionary:
+				var normalized := (item as Dictionary).duplicate(true)
+				normalized["potion_id"] = str(normalized.get("potion_id", potion_id))
+				normalized["mixed_x"] = clampf(float(normalized.get("mixed_x", 0.0)), 0.0, 1.0)
+				normalized["secondary_effect_id"] = str(normalized.get("secondary_effect_id", ""))
+				normalized["quality"] = clampf(float(normalized.get("quality", 1.0)), 0.1, 1.5)
+				normalized["created_day"] = maxi(int(normalized.get("created_day", 1)), 1)
+				result.append(normalized)
+	elif value is int or value is float:
+		for _index in range(maxi(int(value), 0)):
+			result.append({
+				"potion_id": str(potion_id),
+				"mixed_x": 0.0,
+				"secondary_effect_id": "",
+				"quality": 1.0,
+				"created_day": 1,
+			})
+	return result
+
+
+static func _count_dictionary(value: Variant) -> Dictionary:
+	var result: Dictionary = {}
+	if value is Dictionary:
+		for key: Variant in value:
+			var count := maxi(int(value[key]), 0)
+			if count > 0:
+				result[StringName(str(key))] = count
+	return result
+
+
+static func _serialize_counts(value: Dictionary) -> Dictionary:
+	var result: Dictionary = {}
+	for key: Variant in value:
+		result[str(key)] = maxi(int(value[key]), 0)
+	return result
+
+
+static func _serialize_potions(value: Dictionary) -> Dictionary:
+	var result: Dictionary = {}
+	for key: Variant in value:
+		var potion_id := StringName(str(key))
+		result[str(potion_id)] = _potion_array(potion_id, value[key])
+	return result
 
 
 static func _string_name_array(value: Variant) -> Array[StringName]:

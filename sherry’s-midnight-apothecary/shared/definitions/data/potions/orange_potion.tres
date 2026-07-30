@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PotionData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/potion_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"orange_potion"
+display_name = "橙风药水"
+color_name = "橙"
+display_color = Color(0.95, 0.43, 0.1, 1)
+main_effect_id = &"speed"
+spectrum_center_x = 0.17
+effect_ranges = Array[Vector2]([Vector2(0.11, 0.22)])
+base_price = 20

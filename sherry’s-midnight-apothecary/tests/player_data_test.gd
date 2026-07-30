@@ -23,12 +23,12 @@ static func run(test: TestSupport) -> void:
 
 	test.expect_equal(player.money, 50, "Night earnings are applied.")
 	test.expect_equal(player.inventory[&"moon_mint"], 2, "Night ingredient costs are applied.")
-	test.expect_equal(player.potions[&"blue_tonic"], 2, "Night potion production is applied.")
+	test.expect_equal(player.potions[&"blue_tonic"].size(), 2, "Night potion production is applied.")
 	test.expect(not player.potions.has(&"healing_tonic"), "Sold potions are removed at zero.")
 
 	var restored := PlayerData.from_save_data(player.to_save_data())
 	test.expect_equal(restored.health, 72, "Player health round-trips.")
 	test.expect_equal(restored.inventory[&"moon_mint"], 2, "Player inventory round-trips.")
+	test.expect_equal(restored.potions[&"blue_tonic"].size(), 2, "Dynamic potion arrays round-trip.")
 	restored.inventory[&"moon_mint"] = 99
 	test.expect_equal(player.inventory[&"moon_mint"], 2, "Restored dictionaries do not alias the source.")
-

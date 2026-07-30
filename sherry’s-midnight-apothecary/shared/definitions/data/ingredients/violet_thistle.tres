@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"violet_thistle"
+display_name = "紫晶蓟"
+base_value = 10
+spectrum_start = 0.78
+spectrum_end = 0.96
+base_quality = 1.15
+base_concentration = 1.05

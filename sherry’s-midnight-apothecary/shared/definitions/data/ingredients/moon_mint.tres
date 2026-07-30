@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"moon_mint"
+display_name = "月露薄荷"
+base_value = 8
+spectrum_start = 0.4
+spectrum_end = 0.56
+base_quality = 1.05
+base_concentration = 1.0

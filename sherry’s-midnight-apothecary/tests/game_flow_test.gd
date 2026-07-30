@@ -21,6 +21,8 @@ static func run(test: TestSupport) -> void:
 	test.expect(flow.complete_day(day_result), "Completing daytime enters night.")
 	test.expect(flow.current_runtime is NightRuntime, "NightRuntime is active.")
 	test.expect(flow.current_runtime.player_data == player, "NightRuntime receives the same PlayerData instance.")
+	test.expect(flow.current_runtime.current_night_result != null, "NightRuntime owns one current NightResult.")
+	test.expect(flow.current_runtime.alchemy_runtime.night_result == flow.current_runtime.current_night_result, "AlchemyRuntime receives NightRuntime's exact NightResult instance.")
 	test.expect_equal(player.inventory[&"moon_mint"], 3, "Day result is applied before night.")
 
 	var night_result := NightResult.new()
