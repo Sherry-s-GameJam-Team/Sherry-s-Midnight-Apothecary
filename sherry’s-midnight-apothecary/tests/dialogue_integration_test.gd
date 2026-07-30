@@ -75,6 +75,20 @@ static func run(test: TestSupport) -> void:
 	tree.root.add_child(balloon)
 	test.expect(balloon.get_node("%DialogueLabel") is DialogueLabel, "Balloon contains DialogueLabel.")
 	test.expect(balloon.get_node("%ResponsesMenu") is DialogueResponsesMenu, "Balloon contains DialogueResponsesMenu.")
+	var progress := balloon.get_node("%Progress") as Control
+	test.expect(progress != null, "Balloon contains the animated progress indicator.")
+	var progress_mark := progress.get_node("AnimatedMark") as DialogueProgressIndicator
+	test.expect(progress_mark.texture != null, "Progress indicator has a transparent sprite sheet.")
+	test.expect_equal(progress_mark.hframes * progress_mark.vframes, 100, "Progress sprite sheet exposes all frame cells.")
+	test.expect_equal(progress_mark.frame_count, 97, "Progress animation uses the processed MP4 frames.")
+	test.expect_equal(progress_mark.frames_per_second, 12.0, "Progress animation uses the MP4 playback rate.")
+	progress_mark.frame = 24
+	progress_mark.set_playing(false)
+	test.expect_equal(progress_mark.frame, 0, "Paused progress indicator displays its first frame.")
+	test.expect(not progress_mark.is_playing(), "Progress indicator can hold its first frame.")
+	test.expect(balloon.get_node("%FrameDock") is AspectRatioContainer, "Balloon has an animated frame dock.")
+	test.expect(balloon.enter_duration > 0.0, "Balloon entrance transition has a duration.")
+	test.expect(balloon.exit_duration > 0.0, "Balloon exit transition has a duration.")
 
 	for button_name: String in ["FastButton", "AutoButton", "BackButton", "SettingsButton", "LoadButton"]:
 		var button := balloon.get_node("%" + button_name) as TextureButton

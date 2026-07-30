@@ -10,12 +10,17 @@ signal settings_requested
 @export var will_block_other_input: bool = true
 @export var next_action: StringName = &"ui_accept"
 @export var skip_action: StringName = &"ui_cancel"
+@export_range(0.0, 2.0, 0.01) var enter_duration := 0.42
+@export_range(0.0, 2.0, 0.01) var exit_duration := 0.32
+@export var transition_offset := 72.0
 
 @onready var balloon: Control = %Balloon
+@onready var frame_dock: AspectRatioContainer = %FrameDock
 @onready var character_label: RichTextLabel = %CharacterLabel
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
-@onready var progress: Label = %Progress
+@onready var progress: Control = %Progress
+@onready var progress_mark: DialogueProgressIndicator = %AnimatedMark
 @onready var auto_button: TextureButton = %AutoButton
 @onready var history_panel: PanelContainer = %HistoryPanel
 @onready var history_label: RichTextLabel = %HistoryLabel
@@ -31,10 +36,8 @@ var dialogue_line: DialogueLine:
 		dialogue_line = value
 		if value:
 			apply_dialogue_line()
-		elif owner == null:
-			queue_free()
 		else:
-			hide()
+			_close_balloon()
 	get:
 		return dialogue_line
 
@@ -42,6 +45,10 @@ var _history: Array[String] = []
 var _locale := TranslationServer.get_locale()
 var _mutation_cooldown := Timer.new()
 var _status_tween: Tween
+var _transition_tween: Tween
+var _has_entered := false
+var _is_transitioning := false
+var _is_closing := false
 
 
 func _ready() -> void:
@@ -58,11 +65,17 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_instance_valid(dialogue_line):
-		progress.visible = (
-			not dialogue_label.is_typing
+		var show_static_frame := dialogue_label.is_typing
+		var play_progress_animation := (
+			not show_static_frame
 			and dialogue_line.responses.is_empty()
 			and is_waiting_for_input
 		)
+		progress.visible = show_static_frame or play_progress_animation
+		progress_mark.set_playing(play_progress_animation)
+	else:
+		progress.hide()
+		progress_mark.set_playing(false)
 
 
 func _unhandled_input(_event: InputEvent) -> void:
@@ -104,9 +117,8 @@ func start(
 func apply_dialogue_line() -> void:
 	_mutation_cooldown.stop()
 	progress.hide()
+	progress_mark.set_playing(false)
 	is_waiting_for_input = false
-	balloon.focus_mode = Control.FOCUS_ALL
-	balloon.grab_focus()
 
 	character_label.visible = not dialogue_line.character.is_empty()
 	character_label.text = tr(dialogue_line.character, "dialogue")
@@ -116,10 +128,15 @@ func apply_dialogue_line() -> void:
 	responses_menu.responses = dialogue_line.responses
 	_append_history(dialogue_line)
 
-	balloon.show()
 	will_hide_balloon = false
-	dialogue_label.show()
 	var current_line_id := dialogue_line.id
+	if not _has_entered:
+		await _play_enter_transition()
+		if not is_instance_valid(dialogue_line) or dialogue_line.id != current_line_id:
+			return
+	balloon.focus_mode = Control.FOCUS_ALL
+	balloon.grab_focus()
+	dialogue_label.show()
 	if not dialogue_line.text.is_empty():
 		dialogue_label.type_out()
 		await dialogue_label.finished_typing
@@ -144,8 +161,96 @@ func apply_dialogue_line() -> void:
 
 
 func next(next_id: String) -> void:
+	if _is_transitioning or _is_closing:
+		return
 	history_panel.hide()
 	dialogue_line = await dialogue_resource.get_next_dialogue_line(next_id, temporary_game_states)
+
+
+func is_transitioning() -> bool:
+	return _is_transitioning
+
+
+func _play_enter_transition() -> void:
+	_kill_transition_tween()
+	_is_transitioning = true
+	balloon.show()
+	await get_tree().process_frame
+	var rest_position := frame_dock.position
+	var travel_distance := maxf(frame_dock.size.y, 1.0) + transition_offset
+	frame_dock.position = rest_position + Vector2(0.0, travel_distance)
+	frame_dock.modulate.a = 0.0
+	_transition_tween = create_tween()
+	_transition_tween.set_parallel(true)
+	_transition_tween.tween_property(
+		frame_dock,
+		"position",
+		rest_position,
+		enter_duration
+	).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+	_transition_tween.tween_property(
+		frame_dock,
+		"modulate:a",
+		1.0,
+		enter_duration * 0.72
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await _transition_tween.finished
+	_transition_tween = null
+	frame_dock.position = rest_position
+	frame_dock.modulate.a = 1.0
+	_has_entered = true
+	_is_transitioning = false
+
+
+func _play_exit_transition() -> void:
+	_kill_transition_tween()
+	_is_transitioning = true
+	var rest_position := frame_dock.position
+	var travel_distance := maxf(frame_dock.size.y, 1.0) + transition_offset
+	_transition_tween = create_tween()
+	_transition_tween.set_parallel(true)
+	_transition_tween.tween_property(
+		frame_dock,
+		"position",
+		rest_position + Vector2(0.0, travel_distance),
+		exit_duration
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_transition_tween.tween_property(
+		frame_dock,
+		"modulate:a",
+		0.0,
+		exit_duration * 0.8
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	await _transition_tween.finished
+	_transition_tween = null
+	_is_transitioning = false
+	frame_dock.position = rest_position
+	frame_dock.modulate.a = 1.0
+
+
+func _close_balloon() -> void:
+	if _is_closing:
+		return
+	_is_closing = true
+	is_waiting_for_input = false
+	progress.hide()
+	progress_mark.set_playing(false)
+	responses_menu.hide()
+	if _has_entered and balloon.visible:
+		await _play_exit_transition()
+	_has_entered = false
+	balloon.hide()
+	if owner == null:
+		queue_free()
+	else:
+		hide()
+	_is_closing = false
+
+
+func _kill_transition_tween() -> void:
+	if _transition_tween and _transition_tween.is_valid():
+		_transition_tween.kill()
+	_transition_tween = null
 
 
 func _append_history(line: DialogueLine) -> void:
@@ -157,6 +262,8 @@ func _append_history(line: DialogueLine) -> void:
 
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
+	if _is_transitioning or _is_closing:
+		return
 	if dialogue_label.is_typing:
 		var clicked: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed()
 		if clicked or event.is_action_pressed(skip_action):
@@ -174,6 +281,8 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 
 
 func _on_fast_pressed() -> void:
+	if _is_transitioning or _is_closing:
+		return
 	if dialogue_label.is_typing:
 		dialogue_label.skip_typing()
 	elif is_waiting_for_input and is_instance_valid(dialogue_line):
@@ -181,6 +290,8 @@ func _on_fast_pressed() -> void:
 
 
 func _on_auto_pressed() -> void:
+	if _is_transitioning or _is_closing:
+		return
 	auto_mode = not auto_mode
 	auto_button.modulate = Color(1.12, 0.93, 0.58) if auto_mode else Color.WHITE
 	_show_status("自动播放：开启" if auto_mode else "自动播放：关闭")
@@ -192,6 +303,8 @@ func _on_auto_pressed() -> void:
 
 
 func _on_back_pressed() -> void:
+	if _is_transitioning or _is_closing:
+		return
 	history_panel.visible = not history_panel.visible
 	if history_panel.visible:
 		history_label.text = "\n\n".join(_history)
@@ -199,6 +312,8 @@ func _on_back_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
+	if _is_transitioning or _is_closing:
+		return
 	history_panel.hide()
 	settings_requested.emit()
 	var pause_menu := get_tree().get_first_node_in_group("pause_menu") as PauseMenu
@@ -209,6 +324,8 @@ func _on_settings_pressed() -> void:
 
 
 func _on_load_pressed() -> void:
+	if _is_transitioning or _is_closing:
+		return
 	load_requested.emit()
 	var current_scene := get_tree().current_scene
 	if is_instance_valid(current_scene) and current_scene.has_method("load_game"):
@@ -229,6 +346,8 @@ func _show_status(message: String) -> void:
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
+	if _is_transitioning or _is_closing:
+		return
 	next(response.next_id)
 
 
