@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="HerbColorLayerData" load_steps=14 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="2_piece_script"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_01.tres" id="3_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_02.tres" id="4_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_03.tres" id="5_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_04.tres" id="6_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_05.tres" id="7_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_06.tres" id="8_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_07.tres" id="9_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_08.tres" id="10_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_09.tres" id="11_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_10.tres" id="12_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/pieces/thallus_11.tres" id="13_piece"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"old_mans_noose_thalli_layer"
+display_name = "垂地衣层"
+color_id = &"lichen_green"
+display_color = Color(0.49, 0.65, 0.48, 1)
+spectrum_x = 0.44
+layer_yield_multiplier = 1.0
+pieces = Array[ExtResource("2_piece_script")]([ExtResource("3_piece"), ExtResource("4_piece"), ExtResource("5_piece"), ExtResource("6_piece"), ExtResource("7_piece"), ExtResource("8_piece"), ExtResource("9_piece"), ExtResource("10_piece"), ExtResource("11_piece"), ExtResource("12_piece"), ExtResource("13_piece")])

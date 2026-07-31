@@ -1,0 +1,10 @@
+Dew-Flask Herb / 露水水囊草
+Reference canvas: 4096 x 4096
+
+water/dew_flask      Rect2i(1652, 70, 858, 938)    source: peari.png
+foliage/upper_stem   Rect2i(1575, 806, 940, 1322)  source: leaf.png
+foliage/left_foliage Rect2i(398, 496, 2299, 1732)  source: leaf01.png
+foliage/lower_foliage Rect2i(1102, 1877, 1804, 2047) source: leaf02.png
+foliage/right_leaf   Rect2i(2030, 1160, 1748, 1350) source: leaf03.png
+
+The five transparent source layers reconstruct source/whole_reference.png.

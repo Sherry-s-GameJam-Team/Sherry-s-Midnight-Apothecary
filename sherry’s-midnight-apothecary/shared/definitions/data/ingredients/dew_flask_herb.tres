@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/dew_flask_herb/preview/herb_slot_thumb.png" id="3_icon"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/dew_flask_herb/preview/herb_preview.png" id="4_preview"]
+[ext_resource type="Resource" path="res://night/art/herbs/dew_flask_herb/data/water_layer.tres" id="5_water"]
+[ext_resource type="Resource" path="res://night/art/herbs/dew_flask_herb/data/foliage_layer.tres" id="6_foliage"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"dew_flask_herb"
+display_name = "露水水囊草"
+english_name = "Dew-Flask Herb"
+description = "顶端悬浮的蓝色水珠像植物天生背着的天然小水壶。水珠极度纯净，带有淡淡的薄荷甘甜，能解渴并迅速提神。"
+lore = "草原和荒野上的牧羊人与旅人称它为“清晨的留客饮”。采药人若在野外迷路，只要找到一片露水水囊草便不用担心脱水；取走水珠后，只要根茎完好，次日清晨又会重新凝结出一颗新的蓝色水珠。"
+icon = ExtResource("3_icon")
+preview_texture = ExtResource("4_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer_script")]([ExtResource("5_water"), ExtResource("6_foliage")])
+base_value = 16
+spectrum_start = 0.45
+spectrum_end = 0.75
+base_quality = 1.15
+base_concentration = 1.0
+

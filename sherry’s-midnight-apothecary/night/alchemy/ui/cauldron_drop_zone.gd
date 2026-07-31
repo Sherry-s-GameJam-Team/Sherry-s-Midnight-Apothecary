@@ -2,6 +2,7 @@ class_name CauldronDropZone
 extends PanelContainer
 
 signal ingredient_dropped(ingredient: ProcessedIngredient)
+signal powder_dropped(instance_id: StringName)
 
 @export var art_mode := false
 
@@ -29,15 +30,19 @@ func _ready() -> void:
 
 
 func _can_drop_data(_position: Vector2, data: Variant) -> bool:
+	if data is not Dictionary:
+		return false
 	return (
-		data is Dictionary
-		and data.get("kind") == &"processed_ingredient"
-		and data.get("ingredient") is ProcessedIngredient
+		(data.get("kind") == &"processed_ingredient" and data.get("ingredient") is ProcessedIngredient)
+		or (data.get("kind") == &"powder" and not str(data.get("instance_id", "")).is_empty())
 	)
 
 
 func _drop_data(_position: Vector2, data: Variant) -> void:
-	ingredient_dropped.emit(data.get("ingredient"))
+	if data.get("kind") == &"powder":
+		powder_dropped.emit(StringName(str(data.get("instance_id", ""))))
+	else:
+		ingredient_dropped.emit(data.get("ingredient"))
 
 
 func show_count(count: int) -> void:

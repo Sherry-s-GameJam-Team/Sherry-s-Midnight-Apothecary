@@ -4,6 +4,11 @@ extends Control
 signal request_close
 signal batch_committed(potion_instance: Dictionary)
 
+enum PanelMode {
+	BREWING,
+	PRODUCTION,
+}
+
 const MINIMUM_CUT_WIDTH := 0.01
 const MINIMUM_BREW_WEIGHT := 0.001
 const GRIND_CONCENTRATION := 1.20
@@ -24,24 +29,45 @@ var night_result: NightResult
 var day := 1
 var temperature := 55.0
 var current_batch_reserved: Dictionary = {}
+var production_reserved: Dictionary = {}
 var processing_ingredient: ProcessedIngredient
 var cauldron_ingredients: Array[ProcessedIngredient] = []
 var last_prediction: Dictionary = {}
+var powder_shelf_state := PowderShelfState.new()
+var cauldron_powders: Dictionary = {}
+var current_panel := PanelMode.BREWING
+var _stage_tween: Tween
+var standalone_developer_console: DeveloperConsole
 
 var _ingredient_by_id: Dictionary = {}
 
-@onready var herb_grid: GridContainer = get_node_or_null("ArtBoard/HerbInventoryPanel/HerbMargin/HerbGrid")
-@onready var processor: IngredientProcessor = get_node_or_null("ArtBoard/IngredientProcessor")
-@onready var cauldron: CauldronDropZone = get_node_or_null("ArtBoard/CauldronDropZone")
-@onready var analyzer: SpectrumAnalyzer = get_node_or_null("ArtBoard/SpectrumAnalyzer")
-@onready var temperature_slider: HSlider = get_node_or_null("ArtBoard/TemperatureControl/TemperatureSlider")
-@onready var temperature_value: Label = get_node_or_null("ArtBoard/TemperatureControl/TemperatureValue")
-@onready var batch_list: VBoxContainer = get_node_or_null("ArtBoard/BatchPanel/BatchMargin/IngredientList")
-@onready var brew_button: Button = get_node_or_null("ArtBoard/BrewButton")
-@onready var result_popup: AcceptDialog = get_node_or_null("ResultPopup")
+@onready var horizontal_stage: Control = $StageRoot/HorizontalStage
+@onready var brewing_panel: Control = $StageRoot/HorizontalStage/BrewingPanel
+@onready var production_panel: ProductionPanel = $StageRoot/HorizontalStage/ProductionPanel
+@onready var unified_powder_shelf: PowderShelfView = %UnifiedPowderShelf
+@onready var processor: IngredientProcessor = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/IngredientProcessor")
+@onready var cauldron: CauldronDropZone = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CauldronDropZone")
+@onready var analyzer: SpectrumAnalyzer = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/SpectrumAnalyzer")
+@onready var temperature_control: AlchemyTemperatureControl = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl")
+@onready var temperature_slider: HSlider = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl/TemperatureSlider")
+@onready var temperature_value: Label = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl/TemperatureValue")
+@onready var bellows_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BellowsButton")
+@onready var batch_list: VBoxContainer = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BatchPanel/BatchMargin/IngredientList")
+@onready var brew_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BrewButton")
+@onready var cancel_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CancelButton")
+@onready var finish_night_button: BaseButton = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/FinishNightButton")
+@onready var result_popup: AcceptDialog = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ResultPopup")
+@onready var to_production_arrow: Button = $StageRoot/HorizontalStage/BrewingPanel/ArtBoard/ToProductionArrow
+@onready var back_to_brewing_arrow: Button = $StageRoot/HorizontalStage/ProductionPanel/BackToBrewingArrow
 
 
 func _ready() -> void:
+	_connect_button(brew_button, brew)
+	_connect_button(cancel_button, cancel_batch)
+	_connect_button(finish_night_button, _on_finish_night_pressed)
+	_connect_button(bellows_button, pump_bellows)
+	_connect_button(to_production_arrow, show_production_panel)
+	_connect_button(back_to_brewing_arrow, show_brewing_panel)
 	_build_lookup()
 	if processor != null:
 		processor.herb_dropped.connect(_on_herb_dropped)
@@ -49,10 +75,51 @@ func _ready() -> void:
 		processor.tool_requested.connect(apply_tool)
 	if cauldron != null:
 		cauldron.ingredient_dropped.connect(add_processing_to_cauldron)
+		cauldron.powder_dropped.connect(add_powder_to_cauldron)
+	if temperature_control != null:
+		temperature_control.temperature_requested.connect(set_temperature)
+		temperature_control.set_temperature(temperature)
 	if temperature_slider != null:
-		temperature_slider.value_changed.connect(set_temperature)
-		temperature_slider.value = temperature
+		temperature_slider.set_value_no_signal(temperature)
+	unified_powder_shelf.setup(powder_shelf_state)
+	production_panel.setup(self, ingredients, powder_shelf_state)
+	_update_navigation_arrows()
 	_refresh_ui()
+	call_deferred("_ensure_standalone_console")
+
+
+func _ensure_standalone_console() -> void:
+	if is_instance_valid(standalone_developer_console) or _night_runtime_ancestor() != null:
+		return
+	var console_scene := load("res://night/ui/developer_console/developer_console.tscn") as PackedScene
+	if console_scene == null:
+		push_error("Unable to load the standalone developer console.")
+		return
+	var console_layer := CanvasLayer.new()
+	console_layer.name = "StandaloneDeveloperConsoleLayer"
+	console_layer.layer = 220
+	add_child(console_layer)
+	standalone_developer_console = console_scene.instantiate() as DeveloperConsole
+	console_layer.add_child(standalone_developer_console)
+	standalone_developer_console.setup_alchemy(self)
+
+
+func _night_runtime_ancestor() -> NightRuntime:
+	var ancestor := get_parent()
+	while ancestor != null:
+		if ancestor is NightRuntime:
+			return ancestor as NightRuntime
+		ancestor = ancestor.get_parent()
+	return null
+
+
+func _connect_button(button: BaseButton, callback: Callable) -> void:
+	if button != null and not button.pressed.is_connected(callback):
+		button.pressed.connect(callback)
+
+
+func _on_finish_night_pressed() -> void:
+	request_close.emit()
 
 
 func setup(shared_player_data: PlayerData, current_night_result: NightResult, current_day: int) -> void:
@@ -62,7 +129,91 @@ func setup(shared_player_data: PlayerData, current_night_result: NightResult, cu
 	if night_result == null:
 		push_error("AlchemyRuntime requires NightRuntime's current NightResult.")
 	_build_lookup()
+	if production_panel != null:
+		production_panel.setup(self, ingredients, powder_shelf_state)
 	cancel_batch()
+
+
+func ingredient_by_id(ingredient_id: StringName) -> IngredientData:
+	return _ingredient_by_id.get(ingredient_id)
+
+
+func reserve_production_ingredient(ingredient_id: StringName) -> bool:
+	if available_count(ingredient_id) <= 0 or ingredient_by_id(ingredient_id) == null:
+		return false
+	production_reserved[ingredient_id] = int(production_reserved.get(ingredient_id, 0)) + 1
+	_refresh_inventory_views()
+	return true
+
+
+func release_production_reservation(ingredient_id: StringName) -> void:
+	var count := int(production_reserved.get(ingredient_id, 0))
+	if count <= 1:
+		production_reserved.erase(ingredient_id)
+	else:
+		production_reserved[ingredient_id] = count - 1
+	_refresh_inventory_views()
+
+
+func commit_production_powder(ingredient_id: StringName, powder: PowderInstanceData) -> bool:
+	return commit_production_powder_batch({ingredient_id: 1}, powder)
+
+
+func commit_production_powder_batch(ingredient_counts: Dictionary, powder: PowderInstanceData) -> bool:
+	if night_result == null or powder == null or ingredient_counts.is_empty():
+		return false
+	for ingredient_key: Variant in ingredient_counts:
+		var ingredient_id := StringName(str(ingredient_key))
+		var count := int(ingredient_counts[ingredient_key])
+		if count <= 0 or ingredient_by_id(ingredient_id) == null or int(production_reserved.get(ingredient_id, 0)) < count:
+			return false
+	if not powder_shelf_state.add_powder(powder):
+		return false
+	for ingredient_key: Variant in ingredient_counts:
+		var ingredient_id := StringName(str(ingredient_key))
+		var count := int(ingredient_counts[ingredient_key])
+		night_result.spent_ingredients[ingredient_id] = int(night_result.spent_ingredients.get(ingredient_id, 0)) + count
+		var remaining := int(production_reserved.get(ingredient_id, 0)) - count
+		if remaining <= 0:
+			production_reserved.erase(ingredient_id)
+		else:
+			production_reserved[ingredient_id] = remaining
+	_refresh_inventory_views()
+	return true
+
+
+func show_production_panel() -> void:
+	_slide_to_panel(PanelMode.PRODUCTION)
+
+
+func show_brewing_panel() -> void:
+	_slide_to_panel(PanelMode.BREWING)
+
+
+func _slide_to_panel(mode: PanelMode) -> void:
+	if horizontal_stage == null or current_panel == mode:
+		return
+	if production_panel != null:
+		production_panel.cancel_piece_drag()
+	current_panel = mode
+	_update_navigation_arrows()
+	if _stage_tween != null and _stage_tween.is_running():
+		_stage_tween.kill()
+	var target_x := -production_panel.position.x if mode == PanelMode.PRODUCTION else 0.0
+	var shelf_left := 0.015 if mode == PanelMode.PRODUCTION else 0.738
+	var shelf_right := 0.275 if mode == PanelMode.PRODUCTION else 0.995
+	_stage_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_stage_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	_stage_tween.tween_property(horizontal_stage, "position:x", target_x, 0.45)
+	_stage_tween.parallel().tween_property(unified_powder_shelf, "anchor_left", shelf_left, 0.45)
+	_stage_tween.parallel().tween_property(unified_powder_shelf, "anchor_right", shelf_right, 0.45)
+
+
+func _update_navigation_arrows() -> void:
+	if to_production_arrow != null:
+		to_production_arrow.visible = current_panel == PanelMode.BREWING
+	if back_to_brewing_arrow != null:
+		back_to_brewing_arrow.visible = current_panel == PanelMode.PRODUCTION
 
 
 func available_count(ingredient_id: StringName) -> int:
@@ -71,7 +222,8 @@ func available_count(ingredient_id: StringName) -> int:
 	return maxi(
 		int(player_data.inventory.get(ingredient_id, 0))
 		- int(night_result.spent_ingredients.get(ingredient_id, 0) if night_result != null else 0)
-		- int(current_batch_reserved.get(ingredient_id, 0)),
+		- int(current_batch_reserved.get(ingredient_id, 0))
+		- int(production_reserved.get(ingredient_id, 0)),
 		0
 	)
 
@@ -152,17 +304,53 @@ func add_processing_to_cauldron(processed: ProcessedIngredient = null) -> bool:
 func remove_from_cauldron(index: int) -> bool:
 	if index < 0 or index >= cauldron_ingredients.size() or processing_ingredient != null:
 		return false
-	processing_ingredient = cauldron_ingredients[index]
+	var ingredient := cauldron_ingredients[index]
 	cauldron_ingredients.remove_at(index)
+	if cauldron_powders.has(ingredient):
+		powder_shelf_state.return_powder(cauldron_powders[ingredient])
+		cauldron_powders.erase(ingredient)
+	else:
+		processing_ingredient = ingredient
+	_refresh_ui()
+	return true
+
+
+func add_powder_to_cauldron(instance_id: StringName) -> bool:
+	var powder := powder_shelf_state.take_powder(instance_id)
+	if powder == null:
+		return false
+	var source := ingredient_by_id(powder.source_ingredient_id)
+	if source == null:
+		powder_shelf_state.return_powder(powder)
+		return false
+	var ingredient := ProcessedIngredient.from_ingredient(source)
+	ingredient.spectrum_x = powder.spectrum_x
+	ingredient.quality = powder.quality
+	ingredient.concentration = 1.0
+	ingredient.extraction_ratio = powder.amount
+	ingredient.applied_tools = [&"powder"]
+	cauldron_ingredients.append(ingredient)
+	cauldron_powders[ingredient] = powder
 	_refresh_ui()
 	return true
 
 
 func set_temperature(value: float) -> void:
 	temperature = clampf(value, 0.0, 100.0)
+	if temperature_control != null and not is_equal_approx(temperature_control.temperature, temperature):
+		temperature_control.set_temperature(temperature)
+	if temperature_slider != null and not is_equal_approx(temperature_slider.value, temperature):
+		temperature_slider.set_value_no_signal(temperature)
 	if temperature_value != null:
 		temperature_value.text = "%d °C" % roundi(temperature)
 	_refresh_prediction()
+
+
+func pump_bellows() -> void:
+	if temperature_control != null:
+		temperature_control.pump()
+	else:
+		set_temperature(temperature + 5.0)
 
 
 func calculate_prediction() -> Dictionary:
@@ -244,6 +432,7 @@ func brew() -> Dictionary:
 	night_result.produced_potions[potion_id] = produced
 	current_batch_reserved.clear()
 	cauldron_ingredients.clear()
+	cauldron_powders.clear()
 	processing_ingredient = null
 	batch_committed.emit(instance_data)
 	if result_popup != null:
@@ -259,6 +448,9 @@ func brew() -> Dictionary:
 
 
 func cancel_batch() -> void:
+	for powder: PowderInstanceData in cauldron_powders.values():
+		powder_shelf_state.return_powder(powder)
+	cauldron_powders.clear()
 	current_batch_reserved.clear()
 	cauldron_ingredients.clear()
 	processing_ingredient = null
@@ -343,7 +535,7 @@ func _temperature_modifier() -> float:
 
 
 func _refresh_ui() -> void:
-	_refresh_inventory()
+	_refresh_inventory_views()
 	if processor != null:
 		processor.show_ingredient(processing_ingredient)
 	if cauldron != null:
@@ -352,19 +544,9 @@ func _refresh_ui() -> void:
 	_refresh_prediction()
 
 
-func _refresh_inventory() -> void:
-	if herb_grid == null:
-		return
-	for child: Node in herb_grid.get_children():
-		child.queue_free()
-	for data: IngredientData in ingredients:
-		if data == null:
-			continue
-		var card := HerbCard.new()
-		card.compact_visual = true
-		card.custom_minimum_size = Vector2(82, 102)
-		card.setup(data, available_count(data.id))
-		herb_grid.add_child(card)
+func _refresh_inventory_views() -> void:
+	if production_panel != null:
+		production_panel.refresh_inventory()
 
 
 func _refresh_batch_list() -> void:

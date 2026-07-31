@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="HerbPieceData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/praise_star_maple/pieces/fruit/fruit_06.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"praise_star_maple_fruit_06"
+display_name = "带绳星果 6"
+kind = 0
+texture = ExtResource("2_texture")
+source_rect = Rect2i(2742, 1307, 220, 243)
+area_ratio = 0.12018902
+detachable = true
+grindable = true
+color_id = &"gold"
+spectrum_x = 0.14
+display_color = Color(0.95, 0.72, 0.19, 1)
+yield_multiplier = 1.0
+quality_multiplier = 1.05
+concentration_multiplier = 1.18
+z_order = 20

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/old_mans_noose/preview/herb_slot_thumb.png" id="3_icon"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/old_mans_noose/preview/herb_preview.png" id="4_preview"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/host_layer.tres" id="5_host"]
+[ext_resource type="Resource" path="res://night/art/herbs/old_mans_noose/data/thalli_layer.tres" id="6_thalli"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"old_mans_noose"
+display_name = "绞索老汉"
+english_name = "Old Man’s Noose"
+description = "一种垂挂在老树枝上的温和药用地衣，带状地衣体末端会卷成松散的绳套。樵夫常将它缠在伤口上，利用天然地衣酸快速凝血并防止溃烂。"
+lore = "村里的老人常拿它吓唬贪玩的小孩，说这是林子里迷路的老鬼留下的绳子。它其实毫无攻击性，反而是林中最寻常、最温和的天然止血带。"
+icon = ExtResource("3_icon")
+preview_texture = ExtResource("4_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer_script")]([ExtResource("5_host"), ExtResource("6_thalli")])
+base_value = 14
+spectrum_start = 0.35
+spectrum_end = 0.53
+base_quality = 1.12
+base_concentration = 1.05

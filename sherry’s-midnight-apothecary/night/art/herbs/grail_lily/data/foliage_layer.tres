@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="HerbColorLayerData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="2_piece_script"]
+[ext_resource type="Resource" path="res://night/art/herbs/grail_lily/data/pieces/leaf_01.tres" id="3_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/grail_lily/data/pieces/leaf_02.tres" id="4_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/grail_lily/data/pieces/leaf_03.tres" id="5_piece"]
+[ext_resource type="Resource" path="res://night/art/herbs/grail_lily/data/pieces/leaf_04.tres" id="6_piece"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"grail_lily_foliage_layer"
+display_name = "修道院叶丛层"
+color_id = &"green"
+display_color = Color(0.34, 0.74, 0.48, 1)
+spectrum_x = 0.49
+layer_yield_multiplier = 0.65
+pieces = Array[ExtResource("2_piece_script")]([ExtResource("3_piece"), ExtResource("4_piece"), ExtResource("5_piece"), ExtResource("6_piece")])

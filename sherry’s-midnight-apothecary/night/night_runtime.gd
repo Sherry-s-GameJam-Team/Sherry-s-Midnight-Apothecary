@@ -8,6 +8,11 @@ var day := 1
 var current_night_result := NightResult.new()
 
 @onready var alchemy_runtime: AlchemyRuntime = $AlchemySlot/AlchemyRuntime
+@onready var developer_console: DeveloperConsole = $UI/DeveloperConsole
+
+
+func _ready() -> void:
+	developer_console.setup(self)
 
 
 func configure(shared_player_data: PlayerData, current_day: int) -> void:
@@ -20,6 +25,12 @@ func configure(shared_player_data: PlayerData, current_day: int) -> void:
 		return
 	alchemy_runtime = alchemy
 	alchemy_runtime.setup(player_data, current_night_result, day)
+	var console := get_node_or_null("UI/DeveloperConsole") as DeveloperConsole
+	if console == null:
+		push_error("NightRuntime is missing its DeveloperConsole scene.")
+		return
+	developer_console = console
+	developer_console.setup(self)
 
 
 func finish_night(result: NightResult = null) -> void:

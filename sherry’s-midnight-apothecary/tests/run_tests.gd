@@ -2,10 +2,12 @@ extends SceneTree
 
 const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/project_parse_test.gd"),
+	preload("res://tests/developer_console_test.gd"),
 	preload("res://tests/player_data_test.gd"),
 	preload("res://tests/game_flow_test.gd"),
 	preload("res://tests/save_service_test.gd"),
 	preload("res://tests/alchemy_test.gd"),
+	preload("res://tests/production_test.gd"),
 	preload("res://tests/pause_menu_test.gd"),
 	preload("res://tests/dialogue_integration_test.gd"),
 ]

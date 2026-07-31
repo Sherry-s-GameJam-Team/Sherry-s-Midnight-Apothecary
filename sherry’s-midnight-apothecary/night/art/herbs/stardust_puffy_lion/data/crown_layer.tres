@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HerbColorLayerData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="2_piece_script"]
+[ext_resource type="Resource" path="res://night/art/herbs/stardust_puffy_lion/data/pieces/flower_head.tres" id="3_piece"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"stardust_puffy_lion_crown_layer"
+display_name = "星屑冠毛层"
+color_id = &"white"
+display_color = Color(0.74, 0.91, 0.98, 1)
+spectrum_x = 0.58
+layer_yield_multiplier = 0.55
+pieces = Array[ExtResource("2_piece_script")]([ExtResource("3_piece")])
+

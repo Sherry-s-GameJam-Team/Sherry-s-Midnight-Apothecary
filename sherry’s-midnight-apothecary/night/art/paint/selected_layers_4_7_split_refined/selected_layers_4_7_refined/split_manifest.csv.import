@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cactol2de5nko"
+
+[deps]
+
+files=["res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.name.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.area.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.file.translation"]
+
+source_file="res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.csv"
+dest_files=["res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.name.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.bbox.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.area.translation", "res://night/art/paint/selected_layers_4_7_split_refined/selected_layers_4_7_refined/split_manifest.file.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

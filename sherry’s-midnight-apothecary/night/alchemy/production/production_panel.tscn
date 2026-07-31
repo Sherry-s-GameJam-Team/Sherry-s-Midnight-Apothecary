@@ -1,0 +1,511 @@
+[gd_scene format=3 uid="uid://by3yavaxxiny4"]
+
+[ext_resource type="Script" uid="uid://bocavswhl6wgy" path="res://night/alchemy/production/production_panel.gd" id="1_panel"]
+[ext_resource type="Script" uid="uid://dtrg2phuyhw1" path="res://night/alchemy/production/process_board.gd" id="2_board"]
+[ext_resource type="Texture2D" uid="uid://d1r8nyft1gvmu" path="res://night/art/alchemy_background.png" id="4_background"]
+[ext_resource type="Texture2D" uid="uid://dhwumxp0the" path="res://night/art/ui/herb_inventory.png" id="5_herbs"]
+[ext_resource type="Texture2D" uid="uid://vw1wqxlqemm6" path="res://night/art/ui/production/pestle.png" id="6_pestle"]
+[ext_resource type="Texture2D" uid="uid://b6c0d6cabpjie" path="res://night/art/ui/production/paper.png" id="7_paper"]
+[ext_resource type="Texture2D" uid="uid://d0bhgwbqxg3ka" path="res://night/art/ui/production/flour.png" id="8_flour"]
+[ext_resource type="Texture2D" uid="uid://eqqnj338cmlq" path="res://night/art/ui/alchemy_workspace.png" id="9_workspace"]
+[ext_resource type="Texture2D" uid="uid://clkpnwav0wwxs" path="res://night/art/ui/production/drag_button.png" id="10_drag"]
+[ext_resource type="Texture2D" uid="uid://b1mg4yn4v0n8j" path="res://night/art/ui/production/separat_button.png" id="11_separate"]
+[ext_resource type="Texture2D" uid="uid://ciub84obwpglp" path="res://night/art/ui/production/grind_button.png" id="12_grind"]
+[ext_resource type="Texture2D" uid="uid://ct8c1cxs7yh3w" path="res://night/art/ui/production/flour_button.png" id="13_pack"]
+[ext_resource type="Texture2D" uid="uid://c40c6ef5wma3b" path="res://night/art/ui/production/redo_button.png" id="14_redo"]
+[ext_resource type="Script" path="res://night/alchemy/production/herb_magnet_controller.gd" id="15_magnet"]
+
+[sub_resource type="StyleBoxFlat" id="Style_status"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+bg_color = Color(0.12, 0.075, 0.04, 0.75)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="Style_board_empty"]
+
+[node name="ProductionPanel" type="Control" unique_id=1925901393]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_panel")
+
+[node name="PackTimer" type="Timer" parent="." unique_id=1307717559]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Background" type="TextureRect" parent="." unique_id=1235351286]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_background")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="." unique_id=590251009]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31
+anchor_top = 0.025
+anchor_right = 0.69
+anchor_bottom = 0.085
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.25, 0.14, 0.065, 1)
+theme_override_font_sizes/font_size = 26
+text = "草药加工区 · HERB PROCESSING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PestleArt" type="TextureRect" parent="." unique_id=1707310105]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33
+anchor_top = 0.13
+anchor_right = 0.66
+anchor_bottom = 0.56
+offset_left = -54.400024
+offset_top = -21.599998
+offset_right = -54.400024
+offset_bottom = 40.19998
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_pestle")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="SpectrumFrame" type="PanelContainer" parent="." unique_id=141340732]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.08
+anchor_right = 0.7
+anchor_bottom = 0.145
+offset_top = -40.6
+offset_bottom = -37.399994
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("Style_status")
+
+[node name="SpectrumPreview" type="ColorRect" parent="SpectrumFrame" unique_id=2143976487]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+color = Color(0.42, 0.36, 0.28, 0.55)
+
+[node name="SpectrumLabel" type="Label" parent="SpectrumFrame/SpectrumPreview" unique_id=1443512988]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 2.0
+offset_right = -4.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0.12, 0.06, 0.02, 1)
+text = "等待加工结果"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HerbInventoryArt" type="TextureRect" parent="." unique_id=185994241]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.12
+anchor_right = 0.99
+anchor_bottom = 0.68
+offset_left = -3.6000366
+offset_top = -76.4
+offset_right = -3.6000977
+offset_bottom = -76.399994
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_herbs")
+expand_mode = 1
+
+[node name="HerbGrid" type="GridContainer" parent="HerbInventoryArt" unique_id=1562721040]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.066
+anchor_top = 0.22
+anchor_right = 0.929
+anchor_bottom = 0.869
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 7
+columns = 4
+
+[node name="ProcessBoard" type="PanelContainer" parent="." unique_id=2083389324]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28
+anchor_top = 0.69200003
+anchor_right = 0.82900006
+anchor_bottom = 0.88500005
+offset_left = -238.4
+offset_top = -81.24002
+offset_right = 66.87988
+offset_bottom = 35.799988
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("Style_board_empty")
+script = ExtResource("2_board")
+
+[node name="MagnetController" type="Node" parent="ProcessBoard"]
+script = ExtResource("15_magnet")
+
+[node name="Sprite2D" type="Sprite2D" parent="ProcessBoard" unique_id=2015751210]
+
+[node name="WorkspaceArt" type="TextureRect" parent="ProcessBoard/Sprite2D" unique_id=229133258]
+unique_name_in_owner = true
+offset_left = 102.40001
+offset_top = 36.80002
+offset_right = 864.4
+offset_bottom = 213.80002
+mouse_filter = 2
+texture = ExtResource("9_workspace")
+expand_mode = 1
+
+[node name="Zones" type="Control" parent="ProcessBoard/Sprite2D" unique_id=605924801]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 157.40001
+offset_top = -0.19998169
+offset_right = 859.4
+offset_bottom = 172.80002
+mouse_filter = 2
+
+[node name="PieceMovementBounds" type="Control" parent="ProcessBoard/Sprite2D/Zones" unique_id=2064374544]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PieceDragLayer" type="Control" parent="ProcessBoard/Sprite2D/Zones" unique_id=1519221606]
+unique_name_in_owner = true
+z_index = 50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.400024
+offset_top = 42.19998
+offset_right = -10.400024
+offset_bottom = 42.19998
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WasteZone" type="PanelContainer" parent="ProcessBoard/Sprite2D/Zones" unique_id=1009194929]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.045
+anchor_top = 0.1
+anchor_right = 0.265
+anchor_bottom = 0.9
+offset_left = -29.590002
+offset_top = 44.700012
+offset_right = -60.029984
+offset_bottom = 41.30002
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_board_empty")
+
+[node name="WasteColumn" type="VBoxContainer" parent="ProcessBoard/Sprite2D/Zones/WasteZone" unique_id=1652369825]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="ProcessBoard/Sprite2D/Zones/WasteZone/WasteColumn" unique_id=738024315]
+layout_mode = 2
+text = "废弃区"
+horizontal_alignment = 1
+
+[node name="WasteItems" type="VBoxContainer" parent="ProcessBoard/Sprite2D/Zones/WasteZone/WasteColumn" unique_id=47558586]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="BoardZone" type="PanelContainer" parent="ProcessBoard/Sprite2D/Zones" unique_id=1327817385]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22900002
+anchor_top = 0.30800003
+anchor_right = 0.75600004
+anchor_bottom = 1.08
+offset_left = -1.7580109
+offset_top = 1.7160034
+offset_right = 18.287964
+offset_bottom = 0.1599884
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_board_empty")
+
+[node name="BoardItems" type="HFlowContainer" parent="ProcessBoard/Sprite2D/Zones/BoardZone" unique_id=1132978907]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="WholeHerbLabel" type="Label" parent="ProcessBoard/Sprite2D/Zones/BoardZone" unique_id=535260730]
+unique_name_in_owner = true
+layout_mode = 2
+text = "拖入药材"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GrindZone" type="PanelContainer" parent="ProcessBoard/Sprite2D/Zones" unique_id=1423319126]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.81600004
+anchor_top = 0.38300002
+anchor_right = 0.95500004
+anchor_bottom = 1.057
+offset_left = -4.8320313
+offset_top = -5.2589874
+offset_right = 19.589966
+offset_bottom = 7.1390076
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_board_empty")
+
+[node name="GrindColumn" type="VBoxContainer" parent="ProcessBoard/Sprite2D/Zones/GrindZone" unique_id=1537259955]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="ProcessBoard/Sprite2D/Zones/GrindZone/GrindColumn" unique_id=562669302]
+layout_mode = 2
+text = "研磨区"
+horizontal_alignment = 1
+
+[node name="GrindItems" type="VBoxContainer" parent="ProcessBoard/Sprite2D/Zones/GrindZone/GrindColumn" unique_id=1029719351]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PaperPreview" type="TextureRect" parent="." unique_id=1586884980]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.34
+anchor_top = 0.59
+anchor_right = 0.66
+anchor_bottom = 0.87
+offset_left = 62.799988
+offset_top = 55.200012
+offset_right = -103.80005
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_paper")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PowderPreview" type="TextureRect" parent="." unique_id=272787440]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.42
+anchor_top = 0.65
+anchor_right = 0.58
+anchor_bottom = 0.82
+offset_left = -24.599976
+offset_top = 5.0000305
+offset_right = -24.599976
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_flour")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Toolbar" type="HBoxContainer" parent="." unique_id=282269083]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015
+anchor_top = 0.82
+anchor_right = 0.285
+anchor_bottom = 0.96
+offset_left = -18.199999
+offset_top = 49.599976
+offset_right = 914.2
+offset_bottom = 29.799988
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="DragAction" type="VBoxContainer" parent="Toolbar" unique_id=2143790791]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DragButton" type="TextureButton" parent="Toolbar/DragAction" unique_id=1254410116]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 56)
+layout_mode = 2
+tooltip_text = "拖拽模式"
+texture_normal = ExtResource("10_drag")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Toolbar/DragAction" unique_id=1132257102]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24, 0.13, 0.06, 1)
+theme_override_font_sizes/font_size = 15
+text = "拖拽"
+horizontal_alignment = 1
+
+[node name="SeparateAction" type="VBoxContainer" parent="Toolbar" unique_id=1080497113]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SeparateButton" type="TextureButton" parent="Toolbar/SeparateAction" unique_id=553854087]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 56)
+layout_mode = 2
+tooltip_text = "摘离"
+texture_normal = ExtResource("11_separate")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Toolbar/SeparateAction" unique_id=960743945]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24, 0.13, 0.06, 1)
+theme_override_font_sizes/font_size = 15
+text = "摘离"
+horizontal_alignment = 1
+
+[node name="GrindAction" type="VBoxContainer" parent="Toolbar" unique_id=1543921416]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="GrindButton" type="TextureButton" parent="Toolbar/GrindAction" unique_id=2144165364]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 56)
+layout_mode = 2
+tooltip_text = "研磨"
+texture_normal = ExtResource("12_grind")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Toolbar/GrindAction" unique_id=1409833842]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24, 0.13, 0.06, 1)
+theme_override_font_sizes/font_size = 15
+text = "研磨"
+horizontal_alignment = 1
+
+[node name="PackAction" type="VBoxContainer" parent="Toolbar" unique_id=449660070]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PackPowderButton" type="TextureButton" parent="Toolbar/PackAction" unique_id=491549415]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 56)
+layout_mode = 2
+tooltip_text = "装粉"
+texture_normal = ExtResource("13_pack")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Toolbar/PackAction" unique_id=219324865]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24, 0.13, 0.06, 1)
+theme_override_font_sizes/font_size = 15
+text = "装粉"
+horizontal_alignment = 1
+
+[node name="RedoAction" type="VBoxContainer" parent="Toolbar" unique_id=730073172]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="RedoButton" type="TextureButton" parent="Toolbar/RedoAction" unique_id=561955678]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 56)
+layout_mode = 2
+tooltip_text = "重做"
+texture_normal = ExtResource("14_redo")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Toolbar/RedoAction" unique_id=2073222808]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24, 0.13, 0.06, 1)
+theme_override_font_sizes/font_size = 15
+text = "重做"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1279858247]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.91
+anchor_right = 0.7
+anchor_bottom = 0.975
+offset_left = -463.0
+offset_top = -7.200012
+offset_right = -463.0
+offset_bottom = -7.200012
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.28, 0.16, 0.075, 1)
+theme_override_font_sizes/font_size = 16
+text = "从右侧选择药材并拖到中央垫板。"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BackToBrewingArrow" type="Button" parent="." unique_id=829426454]
+z_index = 10
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.008
+anchor_top = 0.45
+anchor_right = 0.055
+anchor_bottom = 0.56
+offset_left = -0.24000072
+offset_top = 169.0
+offset_right = -0.23999786
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "←"

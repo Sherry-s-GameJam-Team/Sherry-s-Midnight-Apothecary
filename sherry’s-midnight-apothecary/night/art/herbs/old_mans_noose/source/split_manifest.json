@@ -1,0 +1,156 @@
+{
+  "herb_id": "old_mans_noose",
+  "display_name_zh": "绞索老汉",
+  "display_name_en": "Old Man’s Noose",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "source_reference": "6.png",
+  "generated_master": "source/master_4096.png",
+  "host_piece": {
+    "id": "old_mans_noose_lichen_branch",
+    "role": "lichen_branch",
+    "source_rect": [
+      45,
+      241,
+      3993,
+      3447
+    ],
+    "path": "pieces/host/lichen_branch.png"
+  },
+  "thallus_pieces": [
+    {
+      "id": "old_mans_noose_thallus_01",
+      "role": "thallus_01",
+      "source_rect": [
+        318,
+        1746,
+        495,
+        1300
+      ],
+      "area_ratio": 0.07878451,
+      "path": "pieces/thalli/thallus_01.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_02",
+      "role": "thallus_02",
+      "source_rect": [
+        638,
+        1619,
+        389,
+        1914
+      ],
+      "area_ratio": 0.08218093,
+      "path": "pieces/thalli/thallus_02.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_03",
+      "role": "thallus_03",
+      "source_rect": [
+        1119,
+        1481,
+        216,
+        1555
+      ],
+      "area_ratio": 0.05977408,
+      "path": "pieces/thalli/thallus_03.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_04",
+      "role": "thallus_04",
+      "source_rect": [
+        1194,
+        1412,
+        595,
+        2271
+      ],
+      "area_ratio": 0.12065294,
+      "path": "pieces/thalli/thallus_04.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_05",
+      "role": "thallus_05",
+      "source_rect": [
+        1821,
+        1298,
+        160,
+        954
+      ],
+      "area_ratio": 0.03255897,
+      "path": "pieces/thalli/thallus_05.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_06",
+      "role": "thallus_06",
+      "source_rect": [
+        1784,
+        1223,
+        478,
+        2427
+      ],
+      "area_ratio": 0.13283995,
+      "path": "pieces/thalli/thallus_06.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_07",
+      "role": "thallus_07",
+      "source_rect": [
+        2259,
+        1167,
+        417,
+        1836
+      ],
+      "area_ratio": 0.09396396,
+      "path": "pieces/thalli/thallus_07.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_08",
+      "role": "thallus_08",
+      "source_rect": [
+        2461,
+        1100,
+        138,
+        698
+      ],
+      "area_ratio": 0.02604432,
+      "path": "pieces/thalli/thallus_08.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_09",
+      "role": "thallus_09",
+      "source_rect": [
+        2674,
+        935,
+        554,
+        2584
+      ],
+      "area_ratio": 0.14547193,
+      "path": "pieces/thalli/thallus_09.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_10",
+      "role": "thallus_10",
+      "source_rect": [
+        3020,
+        857,
+        454,
+        2206
+      ],
+      "area_ratio": 0.1339434,
+      "path": "pieces/thalli/thallus_10.png"
+    },
+    {
+      "id": "old_mans_noose_thallus_11",
+      "role": "thallus_11",
+      "source_rect": [
+        3542,
+        775,
+        337,
+        2584
+      ],
+      "area_ratio": 0.093785,
+      "path": "pieces/thalli/thallus_11.png"
+    }
+  ]
+}

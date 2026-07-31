@@ -1,0 +1,204 @@
+{
+  "source_psd": "/mnt/data/ghostwriter_images/context/b1729352-9af6-55c2-b3a5-2bc52341c943.psd",
+  "layer7_fruits": {
+    "source_layer": "图层 7",
+    "count": 11,
+    "items": [
+      {
+        "name": "fruit_01",
+        "bbox_canvas": [
+          1585,
+          1603,
+          1880,
+          1890
+        ],
+        "area_px": 56084,
+        "file": "layer7_fruits/fruit_01.png"
+      },
+      {
+        "name": "fruit_02",
+        "bbox_canvas": [
+          2454,
+          1521,
+          2746,
+          1790
+        ],
+        "area_px": 59574,
+        "file": "layer7_fruits/fruit_02.png"
+      },
+      {
+        "name": "fruit_03",
+        "bbox_canvas": [
+          899,
+          1851,
+          1143,
+          2103
+        ],
+        "area_px": 44804,
+        "file": "layer7_fruits/fruit_03.png"
+      },
+      {
+        "name": "fruit_04",
+        "bbox_canvas": [
+          2316,
+          1933,
+          2638,
+          2250
+        ],
+        "area_px": 62972,
+        "file": "layer7_fruits/fruit_04.png"
+      },
+      {
+        "name": "fruit_05",
+        "bbox_canvas": [
+          1427,
+          2213,
+          1686,
+          2480
+        ],
+        "area_px": 46480,
+        "file": "layer7_fruits/fruit_05.png"
+      },
+      {
+        "name": "fruit_06",
+        "bbox_canvas": [
+          1269,
+          2266,
+          1542,
+          2570
+        ],
+        "area_px": 57458,
+        "file": "layer7_fruits/fruit_06.png"
+      },
+      {
+        "name": "fruit_07",
+        "bbox_canvas": [
+          3060,
+          2308,
+          3296,
+          2585
+        ],
+        "area_px": 38912,
+        "file": "layer7_fruits/fruit_07.png"
+      },
+      {
+        "name": "fruit_08",
+        "bbox_canvas": [
+          916,
+          2659,
+          1119,
+          2922
+        ],
+        "area_px": 36016,
+        "file": "layer7_fruits/fruit_08.png"
+      },
+      {
+        "name": "fruit_09",
+        "bbox_canvas": [
+          1707,
+          2591,
+          2046,
+          2930
+        ],
+        "area_px": 74690,
+        "file": "layer7_fruits/fruit_09.png"
+      },
+      {
+        "name": "fruit_10",
+        "bbox_canvas": [
+          2405,
+          2582,
+          2656,
+          2934
+        ],
+        "area_px": 60065,
+        "file": "layer7_fruits/fruit_10.png"
+      },
+      {
+        "name": "fruit_11",
+        "bbox_canvas": [
+          2573,
+          2723,
+          2832,
+          2989
+        ],
+        "area_px": 45226,
+        "file": "layer7_fruits/fruit_11.png"
+      }
+    ],
+    "notes": "水果群已切分为 11 个独立个体。"
+  },
+  "layer4_bush": {
+    "source_layer": "图层 4",
+    "count": 6,
+    "items": [
+      {
+        "name": "bush_chunk_01",
+        "bbox_canvas": [
+          1505,
+          1140,
+          2541,
+          1975
+        ],
+        "area_px": 585661,
+        "file": "layer4_bush/bush_chunk_01.png"
+      },
+      {
+        "name": "bush_chunk_02",
+        "bbox_canvas": [
+          2470,
+          1139,
+          3518,
+          2107
+        ],
+        "area_px": 544478,
+        "file": "layer4_bush/bush_chunk_02.png"
+      },
+      {
+        "name": "bush_chunk_03",
+        "bbox_canvas": [
+          697,
+          1275,
+          1527,
+          2032
+        ],
+        "area_px": 330384,
+        "file": "layer4_bush/bush_chunk_03.png"
+      },
+      {
+        "name": "bush_chunk_04",
+        "bbox_canvas": [
+          455,
+          1982,
+          1508,
+          3124
+        ],
+        "area_px": 875794,
+        "file": "layer4_bush/bush_chunk_04.png"
+      },
+      {
+        "name": "bush_chunk_05",
+        "bbox_canvas": [
+          1418,
+          1905,
+          2565,
+          3131
+        ],
+        "area_px": 1156913,
+        "file": "layer4_bush/bush_chunk_05.png"
+      },
+      {
+        "name": "bush_chunk_06",
+        "bbox_canvas": [
+          2329,
+          2107,
+          3561,
+          3242
+        ],
+        "area_px": 1053194,
+        "file": "layer4_bush/bush_chunk_06.png"
+      }
+    ],
+    "notes": "灌木背景已适当切分为 6 块。"
+  }
+}

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="HerbPieceData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/stardust_puffy_lion/pieces/foliage/bg_right_mid.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"stardust_puffy_lion_bg_right_mid"
+display_name = "右中叶丛"
+kind = 1
+texture = ExtResource("2_texture")
+source_rect = Rect2i(2101, 1347, 1420, 1796)
+area_ratio = 0.04646748
+detachable = true
+grindable = true
+color_id = &"green"
+spectrum_x = 0.47
+display_color = Color(0.29, 0.68, 0.45, 1)
+yield_multiplier = 1
+quality_multiplier = 0.95
+concentration_multiplier = 0.85
+z_order = 10
+

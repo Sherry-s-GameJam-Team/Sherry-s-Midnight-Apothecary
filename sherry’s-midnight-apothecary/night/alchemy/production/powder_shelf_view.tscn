@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://night/alchemy/production/powder_shelf_view.gd" id="1_view"]
+[ext_resource type="Texture2D" path="res://night/art/ui/production/shelter.png" id="2_shelf"]
+[ext_resource type="Texture2D" path="res://night/art/ui/production/flour.png" id="3_flour"]
+[ext_resource type="Texture2D" path="res://night/art/ui/production/paper.png" id="4_paper"]
+
+[sub_resource type="StyleBoxEmpty" id="Style_empty"]
+
+[node name="PowderShelfView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_view")
+flour_texture = ExtResource("3_flour")
+paper_texture = ExtResource("4_paper")
+
+[node name="ShelfArt" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_shelf")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ItemGrid" type="GridContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = 78.0
+offset_right = -42.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 3
+
+[node name="EmptyLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.82, 0.72, 0.56, 0.85)
+theme_override_colors/font_shadow_color = Color(0.12, 0.07, 0.035, 1)
+theme_override_font_sizes/font_size = 18
+text = "粉架为空"
+horizontal_alignment = 1
+vertical_alignment = 1

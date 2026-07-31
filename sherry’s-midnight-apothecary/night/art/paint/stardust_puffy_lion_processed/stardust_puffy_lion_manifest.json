@@ -1,0 +1,217 @@
+{
+  "herb_id": "stardust_puffy_lion",
+  "display_name_zh": "星屑蒲公英",
+  "display_name_en": "Stardust Puffy-Lion",
+  "naming_logic": "使用了“Puffy-Lion”这个古老的西欧民间对蒲公英的俗称（源自法语音译“狮子牙齿”），加上“星屑”来描述其发光般的魔幻质感。",
+  "lore": "这是一种被认为吸收了满月月光的植物。它的冠毛不随风飘散，而是会被光线吸引。在深夜，它看起来就像是从天空掉落并扎根的星光。",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "main_layer_source": "图层 9",
+  "background_layer_source": "图层 14",
+  "main_pieces": [
+    {
+      "name": "stardust_puffy_lion_flower_head",
+      "role": "flower_head",
+      "bbox": [
+        1270,
+        571,
+        2843,
+        2075
+      ],
+      "area_px": 987834,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_flower_head.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_flower_head.png"
+    },
+    {
+      "name": "stardust_puffy_lion_upper_leaf_left",
+      "role": "upper_leaf_left",
+      "bbox": [
+        292,
+        287,
+        2848,
+        2462
+      ],
+      "area_px": 682434,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_upper_leaf_left.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_upper_leaf_left.png"
+    },
+    {
+      "name": "stardust_puffy_lion_lower_leaf_left",
+      "role": "lower_leaf_left",
+      "bbox": [
+        77,
+        2451,
+        2068,
+        4096
+      ],
+      "area_px": 1244866,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_lower_leaf_left.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_lower_leaf_left.png"
+    },
+    {
+      "name": "stardust_puffy_lion_leaf_mid_center",
+      "role": "leaf_mid_center",
+      "bbox": [
+        1875,
+        2071,
+        2557,
+        4048
+      ],
+      "area_px": 440988,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_leaf_mid_center.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_leaf_mid_center.png"
+    },
+    {
+      "name": "stardust_puffy_lion_leaf_right_tall",
+      "role": "leaf_right_tall",
+      "bbox": [
+        2284,
+        1347,
+        3669,
+        3695
+      ],
+      "area_px": 564560,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_leaf_right_tall.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_leaf_right_tall.png"
+    },
+    {
+      "name": "stardust_puffy_lion_leaf_lower_right",
+      "role": "leaf_lower_right",
+      "bbox": [
+        2062,
+        3235,
+        3349,
+        4096
+      ],
+      "area_px": 387659,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_leaf_lower_right.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_leaf_lower_right.png"
+    },
+    {
+      "name": "stardust_puffy_lion_stem_cluster",
+      "role": "stem_cluster",
+      "bbox": [
+        1044,
+        2014,
+        1875,
+        3730
+      ],
+      "area_px": 347551,
+      "full_canvas": "main_pieces/full_canvas/stardust_puffy_lion_stem_cluster.png",
+      "cropped": "main_pieces/cropped/stardust_puffy_lion_stem_cluster.png"
+    }
+  ],
+  "background_pieces": [
+    {
+      "name": "stardust_puffy_lion_bg_left_far",
+      "role": "bg_left_far",
+      "bbox": [
+        0,
+        1814,
+        960,
+        4096
+      ],
+      "area_px": 313557,
+      "full_canvas": "background_pieces/full_canvas/stardust_puffy_lion_bg_left_far.png",
+      "cropped": "background_pieces/cropped/stardust_puffy_lion_bg_left_far.png"
+    },
+    {
+      "name": "stardust_puffy_lion_bg_left_mid",
+      "role": "bg_left_mid",
+      "bbox": [
+        216,
+        734,
+        1920,
+        2101
+      ],
+      "area_px": 457582,
+      "full_canvas": "background_pieces/full_canvas/stardust_puffy_lion_bg_left_mid.png",
+      "cropped": "background_pieces/cropped/stardust_puffy_lion_bg_left_mid.png"
+    },
+    {
+      "name": "stardust_puffy_lion_bg_center_left",
+      "role": "bg_center_left",
+      "bbox": [
+        785,
+        1742,
+        2101,
+        3529
+      ],
+      "area_px": 612579,
+      "full_canvas": "background_pieces/full_canvas/stardust_puffy_lion_bg_center_left.png",
+      "cropped": "background_pieces/cropped/stardust_puffy_lion_bg_center_left.png"
+    },
+    {
+      "name": "stardust_puffy_lion_bg_center",
+      "role": "bg_center",
+      "bbox": [
+        491,
+        2600,
+        2709,
+        4096
+      ],
+      "area_px": 1553506,
+      "full_canvas": "background_pieces/full_canvas/stardust_puffy_lion_bg_center.png",
+      "cropped": "background_pieces/cropped/stardust_puffy_lion_bg_center.png"
+    },
+    {
+      "name": "stardust_puffy_lion_bg_right_mid",
+      "role": "bg_right_mid",
+      "bbox": [
+        2101,
+        1347,
+        3521,
+        3143
+      ],
+      "area_px": 336255,
+      "full_canvas": "background_pieces/full_canvas/stardust_puffy_lion_bg_right_mid.png",
+      "cropped": "background_pieces/cropped/stardust_puffy_lion_bg_right_mid.png"
+    },
+    {
+      "name": "stardust_puffy_lion_bg_right_far",
+      "role": "bg_right_far",
+      "bbox": [
+        2608,
+        2231,
+        3592,
+        4093
+      ],
+      "area_px": 294814,
+      "full_canvas": "background_pieces/full_canvas/stardust_puffy_lion_bg_right_far.png",
+      "cropped": "background_pieces/cropped/stardust_puffy_lion_bg_right_far.png"
+    }
+  ],
+  "godot_suggestion": {
+    "folder": "res://night/art/herbs/stardust_puffy_lion/",
+    "ingredient_id": "stardust_puffy_lion",
+    "main_color_layers": [
+      {
+        "id": "stardust_puffy_lion_crown_layer",
+        "color_id": "white",
+        "spectrum_x": 0.58
+      },
+      {
+        "id": "stardust_puffy_lion_foliage_layer",
+        "color_id": "green",
+        "spectrum_x": 0.47
+      }
+    ],
+    "piece_roles": [
+      "flower_head",
+      "upper_leaf_left",
+      "lower_leaf_left",
+      "leaf_mid_center",
+      "leaf_right_tall",
+      "leaf_lower_right",
+      "stem_cluster",
+      "bg_left_far",
+      "bg_left_mid",
+      "bg_center_left",
+      "bg_center",
+      "bg_right_mid",
+      "bg_right_far"
+    ]
+  }
+}

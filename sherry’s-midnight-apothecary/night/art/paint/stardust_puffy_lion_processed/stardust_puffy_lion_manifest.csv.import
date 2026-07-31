@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dmjmvc244jftg"
+
+[deps]
+
+files=["res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.name.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.role.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.area.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.cropped.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.full.translation"]
+
+source_file="res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.csv"
+dest_files=["res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.name.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.role.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.bbox.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.area.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.cropped.translation", "res://night/art/paint/stardust_puffy_lion_processed/stardust_puffy_lion_manifest.full.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

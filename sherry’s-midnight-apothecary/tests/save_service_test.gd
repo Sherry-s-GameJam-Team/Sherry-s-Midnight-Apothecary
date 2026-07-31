@@ -6,7 +6,7 @@ static func run(test: TestSupport) -> void:
 	service.delete_save()
 	var player := PlayerData.new()
 	player.money = 88
-	player.inventory = {&"moon_mint": 5}
+	player.inventory = {&"herdsmans_loaf_bush": 5}
 	player.potions = {
 		&"green_potion": [{
 			"potion_id": "green_potion",
@@ -23,7 +23,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(int(loaded.get("mode", -1)), GameFlow.Mode.NIGHT, "SaveService restores the mode.")
 	var restored := PlayerData.from_save_data(loaded.get("player", {}))
 	test.expect_equal(restored.money, 88, "SaveService restores shared player data.")
-	test.expect_equal(restored.inventory[&"moon_mint"], 5, "SaveService restores inventory.")
+	test.expect_equal(restored.inventory[&"herdsmans_loaf_bush"], 5, "SaveService restores inventory.")
 	test.expect_equal(restored.potions[&"green_potion"][0]["secondary_effect_id"], "speed", "Potion secondary effect survives JSON.")
 	test.expect_float_close(restored.potions[&"green_potion"][0]["quality"], 1.17, 0.001, "Potion quality survives JSON.")
 	var migrated := PlayerData.from_save_data({"potions": {"legacy_tonic": 2}})

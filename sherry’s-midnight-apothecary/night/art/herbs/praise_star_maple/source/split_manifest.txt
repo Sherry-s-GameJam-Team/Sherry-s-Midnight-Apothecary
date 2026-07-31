@@ -1,0 +1,16 @@
+Praise-Star Maple / 礼赞五角槭
+Reference canvas: 4096 x 4096
+
+fruit/fruit_01 Rect2i(1592, 255, 153, 193)
+fruit/fruit_02 Rect2i(1009, 836, 196, 242)
+fruit/fruit_03 Rect2i(2299, 972, 243, 243)
+fruit/fruit_04 Rect2i(1942, 1199, 201, 235)
+fruit/fruit_05 Rect2i(1098, 1323, 224, 246)
+fruit/fruit_06 Rect2i(2742, 1307, 220, 243)
+fruit/fruit_07 Rect2i(673, 1434, 206, 250)
+fruit/fruit_08 Rect2i(1377, 1767, 222, 246)
+fruit/fruit_09 Rect2i(2265, 2375, 211, 242)
+
+Only the nine complete tied star-fruits from fruit_source.png are production pieces.
+Loose yellow leaf fragments are intentionally excluded.
+tree_reference.png is used only for the inventory thumbnail and future compendium preview.

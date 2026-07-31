@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="HerbPieceData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://night/art/herbs/old_mans_noose/pieces/host/lichen_branch.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"old_mans_noose_lichen_branch"
+display_name = "附生枯枝"
+kind = 2
+texture = ExtResource("2_texture")
+source_rect = Rect2i(45, 241, 3993, 3447)
+area_ratio = 0.0
+detachable = true
+grindable = false
+color_id = &"brown"
+spectrum_x = 0.18
+display_color = Color(0.43, 0.29, 0.16, 1)
+yield_multiplier = 0.0
+quality_multiplier = 0.5
+concentration_multiplier = 0.5
+z_order = 10

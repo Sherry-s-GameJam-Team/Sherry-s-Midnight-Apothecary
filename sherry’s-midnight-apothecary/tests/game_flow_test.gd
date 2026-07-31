@@ -17,13 +17,13 @@ static func run(test: TestSupport) -> void:
 
 	var day_result := DayResult.new()
 	day_result.remaining_health = 80
-	day_result.collected_items = {&"moon_mint": 3}
+	day_result.collected_items = {&"herdsmans_loaf_bush": 3}
 	test.expect(flow.complete_day(day_result), "Completing daytime enters night.")
 	test.expect(flow.current_runtime is NightRuntime, "NightRuntime is active.")
 	test.expect(flow.current_runtime.player_data == player, "NightRuntime receives the same PlayerData instance.")
 	test.expect(flow.current_runtime.current_night_result != null, "NightRuntime owns one current NightResult.")
 	test.expect(flow.current_runtime.alchemy_runtime.night_result == flow.current_runtime.current_night_result, "AlchemyRuntime receives NightRuntime's exact NightResult instance.")
-	test.expect_equal(player.inventory[&"moon_mint"], 3, "Day result is applied before night.")
+	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 3, "Day result is applied before night.")
 
 	var night_result := NightResult.new()
 	night_result.earned_money = 20
