@@ -70,7 +70,7 @@ func complete_night(result: NightResult) -> bool:
 
 func shutdown() -> void:
 	if is_instance_valid(current_runtime):
-		current_runtime.free()
+		current_runtime.queue_free()
 	current_runtime = null
 
 
@@ -79,7 +79,9 @@ func _load_mode(mode: Mode) -> bool:
 		return false
 	_switching = true
 	if is_instance_valid(current_runtime):
-		current_runtime.free()
+		# Completion signals are handled synchronously. queue_free() is required
+		# here because the runtime can still be locked while emitting `finished`.
+		current_runtime.queue_free()
 	current_runtime = null
 	current_mode = mode
 

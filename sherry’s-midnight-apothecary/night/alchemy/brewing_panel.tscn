@@ -1,55 +1,46 @@
 [gd_scene format=3 uid="uid://c75u6ry8guokh"]
 
-[ext_resource type="Script" uid="uid://dg2borfmc5vn8" path="res://night/alchemy/ui/ingredient_processor.gd" id="2_processor"]
 [ext_resource type="Script" uid="uid://cdh8hhmid5g6g" path="res://night/alchemy/ui/cauldron_drop_zone.gd" id="3_cauldron"]
+[ext_resource type="PackedScene" uid="uid://bafylchhjgj2p" path="res://game/apothecary/fire_visual/furnace_fire_controller.tscn" id="4_furnace_fire"]
 [ext_resource type="Script" uid="uid://balpj32ent121" path="res://night/alchemy/ui/spectrum_analyzer.gd" id="4_spectrum"]
 [ext_resource type="Texture2D" uid="uid://d1r8nyft1gvmu" path="res://night/art/alchemy_background.png" id="5_background"]
 [ext_resource type="Texture2D" uid="uid://cms7tyb8hha3a" path="res://night/art/ui/potion_spectrum_analyzer.png" id="6_analyzer"]
 [ext_resource type="Texture2D" uid="uid://uuqu0nm5bdcp" path="res://night/art/ui/alchemy_equipment.png" id="7_equipment"]
+[ext_resource type="Texture2D" uid="uid://ba5haxra3rbq6" path="res://night/art/ui/cover.png" id="8_distill_cover"]
+[ext_resource type="Texture2D" uid="uid://bc4js6rntetap" path="res://night/art/ui/equip1.png" id="8_fiajc"]
 [ext_resource type="Texture2D" uid="uid://il3fpo85c1n1" path="res://night/art/ui/brewing_notes.png" id="9_notes"]
 [ext_resource type="Texture2D" uid="uid://dhwumxp0the" path="res://night/art/ui/herb_inventory.png" id="10_herb_art"]
 [ext_resource type="Texture2D" uid="uid://dyw30dotal625" path="res://night/art/ui/menu_tabs.png" id="11_tabs"]
 [ext_resource type="Texture2D" uid="uid://v1h8h0rik61s" path="res://night/art/ui/apothecary_banner.png" id="12_banner"]
-[ext_resource type="Texture2D" uid="uid://opgrdubtstlk" path="res://night/art/ui/cauldron_water.png" id="12_water"]
 [ext_resource type="Texture2D" uid="uid://d1ifpehwfbcq2" path="res://night/art/ui/buttons/button_rect_green_normal.png" id="13_green_normal"]
 [ext_resource type="Texture2D" uid="uid://bfwprgko7mxvn" path="res://night/art/ui/buttons/button_rect_green_hover.png" id="14_green_hover"]
 [ext_resource type="Texture2D" uid="uid://bkhas81ylh8ta" path="res://night/art/ui/buttons/button_rect_green_pressed.png" id="15_green_pressed"]
 [ext_resource type="Texture2D" uid="uid://blyk7tlctbg2c" path="res://night/art/ui/buttons/button_rect_red_normal.png" id="16_red_normal"]
 [ext_resource type="Texture2D" uid="uid://rsn6g3hq58y4" path="res://night/art/ui/buttons/button_rect_red_hover.png" id="17_red_hover"]
+[ext_resource type="Texture2D" uid="uid://cdmjba0okefw4" path="res://night/art/alchemy/shader.png" id="17_u6obb"]
 [ext_resource type="Texture2D" uid="uid://dgdn3avo661xh" path="res://night/art/ui/buttons/button_rect_red_pressed.png" id="18_red_pressed"]
 [ext_resource type="Texture2D" uid="uid://c6ivmou61gv5c" path="res://night/art/ui/buttons/button_round_compass_hover.png" id="19_compass_hover"]
 [ext_resource type="Texture2D" uid="uid://dk2xo6o8mcc7i" path="res://night/art/ui/buttons/button_round_compass_normal.png" id="19_compass_normal"]
 [ext_resource type="Texture2D" uid="uid://dk6hdx0e8g66l" path="res://night/art/ui/buttons/button_round_compass_pressed.png" id="19_compass_pressed"]
 [ext_resource type="Texture2D" uid="uid://ck4v32b7vdfaq" path="res://night/art/ui/spectrum_pointer.png" id="20_spectrum_pointer"]
-[ext_resource type="Script" path="res://night/alchemy/ui/temperature_control.gd" id="21_temperature_control"]
 [ext_resource type="Texture2D" uid="uid://cpvqdavg41gff" path="res://night/art/ui/temperature_gauge_face.svg" id="22_temperature_face"]
 [ext_resource type="Texture2D" uid="uid://took11ewwkf8" path="res://night/art/ui/temperature_needle.svg" id="23_temperature_needle"]
+[ext_resource type="PackedScene" uid="uid://bvhp6k1j1wfa0" path="res://night/alchemy/heat/temperature_gauge.tscn" id="24_temperature_gauge"]
+[ext_resource type="Script" uid="uid://b7hq68olw43vl" path="res://night/alchemy/heat/bellows_control.gd" id="25_bellows_control"]
+[ext_resource type="Shader" uid="uid://bne57tjfx6itd" path="res://game/night/alchemy/shaders/distillation_fill.gdshader" id="26_distill_shader"]
+[ext_resource type="Script" uid="uid://bh80ck64hb7yc" path="res://game/night/alchemy/components/distillation_fill_controller.gd" id="27_distill_controller"]
+[ext_resource type="Texture2D" uid="uid://o3maag2y6uia" path="res://game/night/alchemy/assets/distillation/flow_order.png" id="28_distill_flow_order"]
+[ext_resource type="Texture2D" uid="uid://dypueff06sx0s" path="res://night/art/alchemy/bellows/bellows_pump_sheet.png" id="29_bellows_sprite"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_distillation_fill"]
+shader = ExtResource("26_distill_shader")
+shader_parameter/flow_order_texture = ExtResource("28_distill_flow_order")
+shader_parameter/fill_progress = 0.0
+shader_parameter/liquid_color = Color(0.2, 0.65, 0.95, 0.58)
+shader_parameter/front_color = Color(0.62, 0.88, 1, 0.7)
+shader_parameter/edge_softness = 0.018
 
 [sub_resource type="StyleBoxEmpty" id="Style_empty"]
-
-[sub_resource type="StyleBoxFlat" id="Style_bellows_pressed"]
-bg_color = Color(0.75, 0.36, 0.08, 0.24)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(1, 0.73, 0.3, 0.9)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-
-[sub_resource type="StyleBoxFlat" id="Style_bellows_hover"]
-bg_color = Color(0.93, 0.62, 0.2, 0.12)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.91, 0.67, 0.27, 0.72)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
 
 [sub_resource type="StyleBoxFlat" id="Style_parchment"]
 content_margin_left = 10.0
@@ -94,6 +85,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Background" type="TextureRect" parent="." unique_id=2079895585]
+z_index = -2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -132,7 +124,7 @@ anchor_left = 0.205
 anchor_top = 0.035
 anchor_right = 0.695
 anchor_bottom = 0.276
-offset_left = -44.399994
+offset_left = 170.6
 offset_top = -12.200001
 offset_right = 23.400024
 offset_bottom = 15.279999
@@ -143,6 +135,7 @@ texture = ExtResource("6_analyzer")
 expand_mode = 1
 
 [node name="MenuTabsArt" type="TextureRect" parent="ArtBoard" unique_id=543867390]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.688
@@ -172,23 +165,6 @@ mouse_filter = 2
 texture = ExtResource("9_notes")
 expand_mode = 1
 
-[node name="CauldronWaterArt" type="TextureRect" parent="ArtBoard" unique_id=1391677986]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.38
-anchor_top = 0.37
-anchor_right = 0.568
-anchor_bottom = 0.448
-offset_left = 19.0
-offset_top = 4.600006
-offset_right = 19.0
-offset_bottom = 12.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("12_water")
-expand_mode = 1
-
 [node name="EquipmentArt" type="TextureRect" parent="ArtBoard" unique_id=400920110]
 layout_mode = 1
 anchors_preset = -1
@@ -196,15 +172,39 @@ anchor_left = 0.215
 anchor_top = 0.285
 anchor_right = 0.708
 anchor_bottom = 0.73
-offset_left = 18.799988
-offset_top = 4.800003
-offset_right = 18.799988
-offset_bottom = 4.799988
+offset_left = 123.79999
+offset_top = -45.199997
+offset_right = -207.23999
+offset_bottom = -45.200012
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("7_equipment")
 expand_mode = 1
+
+[node name="OVEN" parent="ArtBoard" unique_id=611099740 instance=ExtResource("4_furnace_fire")]
+z_index = -1
+position = Vector2(394, 319)
+scale = Vector2(0.37453875, 0.32461536)
+maximum_temperature = 100.0
+current_temperature = 20.0
+target_temperature = 20.0
+
+[node name="DistillationDevice" type="Node2D" parent="ArtBoard" unique_id=1111892292]
+position = Vector2(842.25, 429)
+scale = Vector2(0.4633334, 0.48632815)
+script = ExtResource("27_distill_controller")
+liquid_layer_path = NodePath("WaterFill")
+flow_order_texture = ExtResource("28_distill_flow_order")
+
+[node name="WaterFill" type="Sprite2D" parent="ArtBoard/DistillationDevice" unique_id=899055477]
+material = SubResource("ShaderMaterial_distillation_fill")
+position = Vector2(-140.28766, 0)
+texture = ExtResource("8_distill_cover")
+
+[node name="EquipmentFront" type="Sprite2D" parent="ArtBoard/DistillationDevice" unique_id=489314954]
+position = Vector2(-138.66913, 1.1444092e-05)
+texture = ExtResource("8_fiajc")
 
 [node name="HerbInventoryArt" type="TextureRect" parent="ArtBoard" unique_id=799272018]
 visible = false
@@ -220,18 +220,23 @@ mouse_filter = 2
 texture = ExtResource("10_herb_art")
 expand_mode = 1
 
-[node name="TemperatureControl" type="Control" parent="ArtBoard" unique_id=446886424]
+[node name="TemperatureControl" parent="ArtBoard" unique_id=446886424 instance=ExtResource("24_temperature_gauge")]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.213
 anchor_top = 0.055
 anchor_right = 0.352
 anchor_bottom = 0.252
+offset_left = 418.36
+offset_top = 386.4
+offset_right = 464.44
+offset_bottom = 450.56
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("21_temperature_control")
 
-[node name="GaugeFace" type="TextureRect" parent="ArtBoard/TemperatureControl" unique_id=1745836651]
+[node name="LegacyGaugeFace" type="TextureRect" parent="ArtBoard/TemperatureControl" unique_id=1745836651]
 visible = false
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.215
@@ -240,7 +245,7 @@ anchor_right = 0.8
 anchor_bottom = 0.78
 offset_left = -46.892822
 offset_top = -15.513996
-offset_right = -20.976013
+offset_right = -18.976013
 offset_bottom = 23.764801
 grow_horizontal = 2
 grow_vertical = 2
@@ -248,17 +253,18 @@ mouse_filter = 2
 texture = ExtResource("22_temperature_face")
 expand_mode = 1
 
-[node name="TemperatureNeedle" type="TextureRect" parent="ArtBoard/TemperatureControl" unique_id=1215947180]
+[node name="LegacyTemperatureNeedle" type="TextureRect" parent="ArtBoard/TemperatureControl" unique_id=1215947180]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.29700002
 anchor_top = 0.505
 anchor_right = 0.34
 anchor_bottom = 0.545
-offset_left = -3.482254
-offset_top = -51.229195
-offset_right = 2.8671913
-offset_bottom = 5.0971985
+offset_left = 5.9319916
+offset_top = -42.614174
+offset_right = 12.281436
+offset_bottom = 13.712223
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(7, 56)
@@ -267,7 +273,8 @@ texture = ExtResource("23_temperature_needle")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TemperatureSlider" type="HSlider" parent="ArtBoard/TemperatureControl" unique_id=1159306410]
+[node name="LegacyTemperatureSlider" type="HSlider" parent="ArtBoard/TemperatureControl" unique_id=1159306410]
+visible = false
 modulate = Color(1, 1, 1, 0.01)
 layout_mode = 1
 anchors_preset = 12
@@ -283,17 +290,18 @@ grow_vertical = 0
 tooltip_text = "拖动调节温度"
 value = 55.0
 
-[node name="TemperatureValue" type="Label" parent="ArtBoard/TemperatureControl" unique_id=1276652355]
+[node name="LegacyTemperatureValue" type="Label" parent="ArtBoard/TemperatureControl" unique_id=1276652355]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.31
 anchor_top = 0.79
 anchor_right = 0.72
 anchor_bottom = 0.995
-offset_left = -32.795197
-offset_top = 10.346405
-offset_right = -32.795197
-offset_bottom = 10.346405
+offset_left = -6.640004
+offset_top = 14.316395
+offset_right = 8.319996
+offset_bottom = 24.354202
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.9211133, 0.84385943, 0.34329766, 1)
@@ -302,27 +310,86 @@ text = "55 °C"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BellowsButton" type="Button" parent="ArtBoard" unique_id=528570465]
-z_index = 12
+[node name="LegacyFirePowerLabel" type="Label" parent="ArtBoard/TemperatureControl" unique_id=1791120887]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.245
-anchor_top = 0.43
-anchor_right = 0.36
-anchor_bottom = 0.66
+anchor_left = 0.24
+anchor_top = 0.69
+anchor_right = 0.79
+anchor_bottom = 0.78
+offset_left = 251.6592
+offset_top = 491.53043
+offset_right = 251.65921
+offset_bottom = 492.76483
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "点击鼓风 +5 °C；温度会缓慢回落"
-focus_mode = 0
+theme_override_colors/font_color = Color(0.92, 0.55, 0.25, 1)
+theme_override_font_sizes/font_size = 10
+text = "火势 0%"
+horizontal_alignment = 1
+
+[node name="LegacyBrewTimeLabel" type="Label" parent="ArtBoard/TemperatureControl" unique_id=1322681537]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24
+anchor_top = 0.76
+anchor_right = 0.79
+anchor_bottom = 0.85
+offset_left = -10.559973
+offset_top = 64.48163
+offset_right = 8.240025
+offset_bottom = 74.98602
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.81, 0.7, 0.46, 1)
+theme_override_font_sizes/font_size = 10
+text = "0.0 / 0.0s"
+horizontal_alignment = 1
+
+[node name="LegacyHeatStatusLabel" type="Label" parent="ArtBoard/TemperatureControl" unique_id=1210166332]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12
+anchor_top = 0.84
+anchor_right = 0.9
+anchor_bottom = 0.99
+offset_left = 253.00958
+offset_top = 480.25436
+offset_right = 253.0096
+offset_bottom = 480.25436
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "等待炼制"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="bellowshader" type="Sprite2D" parent="ArtBoard" unique_id=1333424904]
+position = Vector2(486, 627)
+scale = Vector2(0.4236114, 0.4236114)
+texture = ExtResource("17_u6obb")
+
+[node name="BellowsControl" type="Control" parent="ArtBoard" unique_id=528570465]
+z_index = 12
+layout_mode = 1
+anchor_left = 0.25800002
+anchor_top = 0.44000003
+anchor_right = 0.37300003
+anchor_bottom = 0.67
+offset_left = 15.759979
+offset_top = 206.19998
+offset_right = 86.55997
+offset_bottom = 246.19995
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "单击风箱，完成一次鼓风"
 mouse_default_cursor_shape = 2
-theme_override_colors/font_color = Color(0.93, 0.79, 0.5, 0.92)
-theme_override_colors/font_pressed_color = Color(1, 0.82, 0.4, 1)
-theme_override_colors/font_hover_color = Color(1, 0.9, 0.62, 1)
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("Style_empty")
-theme_override_styles/pressed = SubResource("Style_bellows_pressed")
-theme_override_styles/hover = SubResource("Style_bellows_hover")
-text = "鼓风"
+script = ExtResource("25_bellows_control")
+bellows_sprite_sheet = ExtResource("29_bellows_sprite")
+sprite_flip_horizontal = true
 
 [node name="SpectrumAnalyzer" type="Control" parent="ArtBoard" unique_id=1502851479]
 custom_minimum_size = Vector2(480, 92)
@@ -331,16 +398,35 @@ anchor_left = 0.36
 anchor_top = 0.055
 anchor_right = 0.686
 anchor_bottom = 0.26000002
-offset_left = -25.799652
-offset_top = 17.400002
-offset_right = 36.92041
-offset_bottom = 2.7999878
+offset_left = -29.800018
+offset_top = -2.5999985
+offset_right = 36.920044
+offset_bottom = 28.799988
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("4_spectrum")
 use_art_background = true
+title_label_path = NodePath("../SpectrumAnalyzerTitle")
 pointer_texture = ExtResource("20_spectrum_pointer")
+
+[node name="SpectrumAnalyzerTitle" type="Label" parent="ArtBoard" unique_id=114709384]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36
+anchor_top = 0.02
+anchor_right = 0.686
+anchor_bottom = 0.055
+offset_left = -24.800018
+offset_top = 136.6
+offset_right = 41.920044
+offset_bottom = 136.6
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.31, 0.19, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+text = "药谱分析仪 · 加入材料以分析药水功效"
+horizontal_alignment = 1
 
 [node name="BatchPanel" type="PanelContainer" parent="ArtBoard" unique_id=1406677584]
 layout_mode = 1
@@ -371,10 +457,10 @@ anchor_left = 0.365
 anchor_top = 0.36
 anchor_right = 0.578
 anchor_bottom = 0.65
-offset_left = 19.799988
-offset_top = 19.799988
-offset_right = 19.799988
-offset_bottom = 19.799988
+offset_left = -62.200012
+offset_top = -35.200012
+offset_right = -62.200012
+offset_bottom = -35.200043
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("Style_empty")
@@ -422,31 +508,18 @@ tooltip_text = "前往草药加工区"
 theme_override_font_sizes/font_size = 32
 text = "→"
 
-[node name="IngredientProcessor" type="PanelContainer" parent="ArtBoard" unique_id=208235961]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.282
-anchor_top = 0.755
-anchor_right = 0.647
-anchor_bottom = 0.985
-offset_left = -28.960022
-offset_top = -1.5999756
-offset_right = -28.960022
-offset_bottom = -1.5999756
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("Style_empty")
-script = ExtResource("2_processor")
-art_mode = true
-
 [node name="SelectedIngredientsPanel" type="PanelContainer" parent="ArtBoard" unique_id=27174385]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7
 anchor_top = 0.7
 anchor_right = 0.985
 anchor_bottom = 0.845
-offset_right = -107.80005
+offset_left = -755.0
+offset_top = 69.0
+offset_right = -814.80005
+offset_bottom = 78.599976
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("Style_parchment")
@@ -477,6 +550,10 @@ anchor_left = 0.725
 anchor_top = 0.868
 anchor_right = 0.858
 anchor_bottom = 0.97
+offset_left = 10.0
+offset_top = 10.040039
+offset_right = 10.0
+offset_bottom = 10.040039
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -500,6 +577,10 @@ anchor_left = 0.862
 anchor_top = 0.868
 anchor_right = 0.99
 anchor_bottom = 0.97
+offset_left = -1.3599854
+offset_top = 12.040039
+offset_right = 8.800049
+offset_bottom = 12.040039
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0

@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://dvjhvqomh7spp"]
+
+[ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://d4m0odyfft5d7" path="res://day/art/raintree/environment/skybox.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://b270qrb1kcin4" path="res://day/art/raintree/environment/background.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://6bl5wbapt837" path="res://day/art/raintree/environment/ground.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://b6rcvoun3hf32" path="res://day/art/raintree/environment/tree4.png" id="5"]
+
+[node name="RainTreeEnvironment" type="Node2D" unique_id=1643441979]
+texture_filter = 1
+script = ExtResource("1")
+
+[node name="Sky" type="Sprite2D" parent="." unique_id=397200192]
+z_index = -30
+texture = ExtResource("2")
+centered = false
+
+[node name="Forest" type="Sprite2D" parent="." unique_id=1136398512]
+z_index = -20
+position = Vector2(-3, 277)
+texture = ExtResource("3")
+centered = false
+
+[node name="Ground" type="Sprite2D" parent="." unique_id=770133202]
+visible = false
+position = Vector2(0, 892)
+texture = ExtResource("4")
+centered = false
+
+[node name="TreeLeft" type="Sprite2D" parent="." unique_id=1595614099]
+visible = false
+z_index = 5
+position = Vector2(400, 272)
+texture = ExtResource("5")
+centered = false
+
+[node name="TreeRight" type="Sprite2D" parent="." unique_id=49179168]
+visible = false
+z_index = 5
+position = Vector2(1026, 274)
+texture = ExtResource("5")
+centered = false
+flip_h = true

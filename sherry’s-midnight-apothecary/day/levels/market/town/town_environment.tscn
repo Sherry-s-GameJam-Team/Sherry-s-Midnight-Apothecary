@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://day/level_environment.gd" id="1"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/skybox.png" id="2"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/cloud.png" id="3"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/distant.png" id="4"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/middle_loop.png" id="5"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/near.png" id="6"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/floor.png" id="7"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/home.png" id="8"]
+[ext_resource type="Texture2D" path="res://day/art/town/backgrounds/rightwall.png" id="9"]
+
+[node name="TownEnvironment" type="Node2D"]
+script = ExtResource("1")
+texture_filter = 1
+
+[node name="Sky" type="Sprite2D" parent="."]
+position = Vector2(0, 0)
+texture = ExtResource("2")
+centered = false
+z_index = -30
+[node name="Clouds" type="Sprite2D" parent="."]
+position = Vector2(0, 80)
+texture = ExtResource("3")
+centered = false
+z_index = -25
+[node name="Distant" type="Sprite2D" parent="."]
+position = Vector2(0, 170)
+texture = ExtResource("4")
+centered = false
+z_index = -20
+[node name="Middle" type="Sprite2D" parent="."]
+position = Vector2(0, 220)
+texture = ExtResource("5")
+centered = false
+z_index = -15
+[node name="Near" type="Sprite2D" parent="."]
+position = Vector2(0, 250)
+texture = ExtResource("6")
+centered = false
+z_index = -10
+[node name="Floor" type="Sprite2D" parent="."]
+position = Vector2(0, 526)
+texture = ExtResource("7")
+centered = false
+[node name="Home" type="Sprite2D" parent="."]
+position = Vector2(100, 160)
+texture = ExtResource("8")
+centered = false
+[node name="RightWall" type="Sprite2D" parent="."]
+position = Vector2(970, 170)
+texture = ExtResource("9")
+centered = false

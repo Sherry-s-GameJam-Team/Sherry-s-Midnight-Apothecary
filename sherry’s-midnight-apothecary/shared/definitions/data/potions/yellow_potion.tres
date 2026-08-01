@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="PotionData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://br1irs40yuhxt"]
 
-[ext_resource type="Script" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://hqa1qlsr7gos" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Resource" path="res://shared/definitions/data/heat_profiles/yellow_purify.tres" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -12,3 +13,4 @@ main_effect_id = &"purify"
 spectrum_center_x = 0.3
 effect_ranges = Array[Vector2]([Vector2(0.23, 0.37)])
 base_price = 21
+heat_profile = ExtResource("2")

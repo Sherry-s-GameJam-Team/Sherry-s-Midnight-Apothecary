@@ -4,7 +4,14 @@ extends RefCounted
 var potion_id: StringName
 var mixed_x := 0.0
 var secondary_effect_id: StringName
+var secondary_effect_multiplier := 1.0
 var quality := 0.1
+var potency := 1.0
+var duration := 1.0
+var price_multiplier := 1.0
+var thermal_score := 1.0
+var temperature_grade: StringName = &"stable_brew"
+var was_burned := false
 var created_day := 1
 
 
@@ -13,7 +20,14 @@ func to_dict() -> Dictionary:
 		"potion_id": str(potion_id),
 		"mixed_x": mixed_x,
 		"secondary_effect_id": str(secondary_effect_id),
+		"secondary_effect_multiplier": clampf(secondary_effect_multiplier, 0.0, 1.0),
 		"quality": quality,
+		"potency": clampf(potency, 0.5, 1.25),
+		"duration": clampf(duration, 0.4, 1.3),
+		"price_multiplier": maxf(price_multiplier, 0.1),
+		"thermal_score": clampf(thermal_score, 0.0, 1.0),
+		"temperature_grade": str(temperature_grade),
+		"was_burned": was_burned,
 		"created_day": created_day,
 	}
 
@@ -23,6 +37,13 @@ static func from_dict(data: Dictionary) -> PotionInstanceData:
 	result.potion_id = StringName(str(data.get("potion_id", "")))
 	result.mixed_x = clampf(float(data.get("mixed_x", 0.0)), 0.0, 1.0)
 	result.secondary_effect_id = StringName(str(data.get("secondary_effect_id", "")))
+	result.secondary_effect_multiplier = clampf(float(data.get("secondary_effect_multiplier", 1.0)), 0.0, 1.0)
 	result.quality = clampf(float(data.get("quality", 0.1)), 0.1, 1.5)
+	result.potency = clampf(float(data.get("potency", 1.0)), 0.5, 1.25)
+	result.duration = clampf(float(data.get("duration", 1.0)), 0.4, 1.3)
+	result.price_multiplier = maxf(float(data.get("price_multiplier", 1.0)), 0.1)
+	result.thermal_score = clampf(float(data.get("thermal_score", 1.0)), 0.0, 1.0)
+	result.temperature_grade = StringName(str(data.get("temperature_grade", "stable_brew")))
+	result.was_burned = bool(data.get("was_burned", false))
 	result.created_day = maxi(int(data.get("created_day", 1)), 1)
 	return result

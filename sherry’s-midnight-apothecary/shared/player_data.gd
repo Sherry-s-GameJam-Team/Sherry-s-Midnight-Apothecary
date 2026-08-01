@@ -122,6 +122,13 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				normalized["mixed_x"] = clampf(float(normalized.get("mixed_x", 0.0)), 0.0, 1.0)
 				normalized["secondary_effect_id"] = str(normalized.get("secondary_effect_id", ""))
 				normalized["quality"] = clampf(float(normalized.get("quality", 1.0)), 0.1, 1.5)
+				normalized["secondary_effect_multiplier"] = clampf(float(normalized.get("secondary_effect_multiplier", 1.0)), 0.0, 1.0)
+				normalized["potency"] = clampf(float(normalized.get("potency", 1.0)), 0.5, 1.25)
+				normalized["duration"] = clampf(float(normalized.get("duration", 1.0)), 0.4, 1.3)
+				normalized["price_multiplier"] = maxf(float(normalized.get("price_multiplier", 1.0)), 0.1)
+				normalized["thermal_score"] = clampf(float(normalized.get("thermal_score", 1.0)), 0.0, 1.0)
+				normalized["temperature_grade"] = str(normalized.get("temperature_grade", "stable_brew"))
+				normalized["was_burned"] = bool(normalized.get("was_burned", false))
 				normalized["created_day"] = maxi(int(normalized.get("created_day", 1)), 1)
 				result.append(normalized)
 	elif value is int or value is float:
@@ -131,6 +138,13 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				"mixed_x": 0.0,
 				"secondary_effect_id": "",
 				"quality": 1.0,
+				"secondary_effect_multiplier": 1.0,
+				"potency": 1.0,
+				"duration": 1.0,
+				"price_multiplier": 1.0,
+				"thermal_score": 1.0,
+				"temperature_grade": "stable_brew",
+				"was_burned": false,
 				"created_day": 1,
 			})
 	return result

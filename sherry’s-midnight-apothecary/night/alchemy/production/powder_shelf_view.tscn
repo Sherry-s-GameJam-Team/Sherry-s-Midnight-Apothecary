@@ -1,17 +1,16 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://deq7wn0hm1s5b"]
 
-[ext_resource type="Script" path="res://night/alchemy/production/powder_shelf_view.gd" id="1_view"]
-[ext_resource type="Texture2D" path="res://night/art/ui/production/shelter.png" id="2_shelf"]
-[ext_resource type="Texture2D" path="res://night/art/ui/production/flour.png" id="3_flour"]
-[ext_resource type="Texture2D" path="res://night/art/ui/production/paper.png" id="4_paper"]
+[ext_resource type="Script" uid="uid://bbhqdgek0kfau" path="res://night/alchemy/production/powder_shelf_view.gd" id="1_view"]
+[ext_resource type="Texture2D" uid="uid://voq1rplpqy5s" path="res://night/art/ui/production/shelter.png" id="2_shelf"]
+[ext_resource type="Texture2D" uid="uid://d0bhgwbqxg3ka" path="res://night/art/ui/production/flour.png" id="3_flour"]
+[ext_resource type="Texture2D" uid="uid://b6c0d6cabpjie" path="res://night/art/ui/production/paper.png" id="4_paper"]
 
-[sub_resource type="StyleBoxEmpty" id="Style_empty"]
-
-[node name="PowderShelfView" type="Control"]
+[node name="PowderShelfView" type="Control" unique_id=1424572138]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.35500002
+anchor_bottom = 1.014
+offset_right = 821.6
+offset_bottom = -0.08001709
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -19,11 +18,14 @@ script = ExtResource("1_view")
 flour_texture = ExtResource("3_flour")
 paper_texture = ExtResource("4_paper")
 
-[node name="ShelfArt" type="TextureRect" parent="."]
+[node name="ShelfArt" type="TextureRect" parent="." unique_id=302490766]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_right = 0.35000002
+anchor_bottom = 0.915
+offset_left = -4.0
+offset_right = -3.0517578e-05
+offset_bottom = 0.2000122
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -31,31 +33,35 @@ texture = ExtResource("2_shelf")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="ItemGrid" type="GridContainer" parent="."]
+[node name="ItemGrid" type="GridContainer" parent="." unique_id=1191701156]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 42.0
-offset_top = 78.0
-offset_right = -42.0
-offset_bottom = -62.0
+anchors_preset = -1
+anchor_right = 0.32200003
+anchor_bottom = 0.81700003
+offset_left = 57.0
+offset_top = 109.0
+offset_right = -0.16003418
+offset_bottom = -77.24005
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 3
 
-[node name="EmptyLabel" type="Label" parent="."]
+[node name="EmptyLabel" type="Label" parent="." unique_id=604126164]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 82.0
+offset_top = 237.0
+offset_right = -103.0
+offset_bottom = 812.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.82, 0.72, 0.56, 0.85)
 theme_override_colors/font_shadow_color = Color(0.12, 0.07, 0.035, 1)
 theme_override_font_sizes/font_size = 18

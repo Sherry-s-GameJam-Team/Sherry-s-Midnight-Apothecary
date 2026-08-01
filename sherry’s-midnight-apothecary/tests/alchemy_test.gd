@@ -34,8 +34,9 @@ static func run(test: TestSupport) -> void:
 	var prediction := runtime.calculate_prediction()
 	test.expect_equal(prediction.get("potion_id"), &"green_potion", "A hit in green's first non-contiguous range produces green potion.")
 	var inventory_before := player.inventory.duplicate(true)
-	var first := runtime.brew()
+	var first := _brew_to_completion(runtime)
 	test.expect(not first.is_empty(), "A valid batch produces an instance.")
+	test.expect(first.has("thermal_score") and first.has("potency") and first.has("duration"), "Brewed instances persist their thermal treatment attributes.")
 	test.expect_equal(player.inventory, inventory_before, "Brewing does not directly mutate PlayerData inventory.")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 1, "Committed batch records one ingredient exactly once.")
 	test.expect_equal(result.produced_potions[&"green_potion"].size(), 1, "Committed batch appends a dynamic potion instance.")
@@ -43,7 +44,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime.reserve_ingredient(&"herdsmans_loaf_bush"), "A second batch can start in the same night.")
 	test.expect(runtime.set_processing_selection(0.40, 0.46), "Second batch can be cut.")
 	test.expect(runtime.add_processing_to_cauldron(), "Second batch ingredient enters cauldron.")
-	test.expect(not runtime.brew().is_empty(), "Second batch brews.")
+	test.expect(not _brew_to_completion(runtime).is_empty(), "Second batch brews.")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 2, "Two committed batches spend two, without double subtraction.")
 	test.expect_equal(result.produced_potions[&"green_potion"].size(), 2, "Two potion instances are preserved.")
 
@@ -52,7 +53,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime.add_processing_to_cauldron(), "Failure candidate enters cauldron.")
 	var failed_prediction := runtime.calculate_prediction()
 	test.expect_equal(failed_prediction.get("potion_id"), &"black_potion", "A spectrum gap produces black potion.")
-	test.expect(not runtime.brew().is_empty(), "Black potion is still a valid committed product.")
+	test.expect(not _brew_to_completion(runtime).is_empty(), "Black potion is still a valid committed product.")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 3, "Black potion still consumes its material.")
 	test.expect_equal(result.produced_potions[&"black_potion"].size(), 1, "Black potion is written to production.")
 
@@ -65,28 +66,20 @@ static func run(test: TestSupport) -> void:
 	blue_component.extraction_ratio = 0.40
 	blue_component.concentration = 1.0
 	runtime.cauldron_ingredients.assign([green_component, blue_component])
-	test.expect(runtime.temperature_control != null, "Alchemy exposes the rotating temperature gauge.")
+	test.expect(runtime.temperature_gauge != null, "Alchemy exposes the rotating temperature gauge.")
 	runtime.set_temperature(0.0)
-	var cold_angle := runtime.temperature_control.needle_angle_degrees()
+	var cold_angle := runtime.temperature_gauge.needle_angle_degrees()
 	runtime.set_temperature(50.0)
-	var middle_angle := runtime.temperature_control.needle_angle_degrees()
+	var middle_angle := runtime.temperature_gauge.needle_angle_degrees()
 	runtime.set_temperature(100.0)
-	var hot_angle := runtime.temperature_control.needle_angle_degrees()
+	var hot_angle := runtime.temperature_gauge.needle_angle_degrees()
 	test.expect(cold_angle < middle_angle and middle_angle < hot_angle, "Temperature rotates the gauge needle across its full arc.")
 	runtime.set_temperature(55.0)
-	test.expect(runtime.bellows_button != null, "The artwork bellows has an interactive control.")
-	runtime.bellows_button.pressed.emit()
-	test.expect_float_close(runtime.temperature, 60.0, 0.001, "Clicking the bellows raises temperature by five degrees.")
-	runtime.set_temperature(98.0)
-	runtime.pump_bellows()
-	test.expect_float_close(runtime.temperature, 100.0, 0.001, "Bellows heat is clamped at the gauge maximum.")
-	runtime.set_temperature(55.0)
+	test.expect(runtime.bellows_control != null, "The artwork bellows has an interactive control.")
 	var secondary_prediction := runtime.calculate_prediction()
 	test.expect_equal(secondary_prediction.get("potion_id"), &"green_potion", "Weighted continuous color determines the main potion.")
 	test.expect_equal(secondary_prediction.get("secondary_effect_id"), &"mana", "Second color contribution above 20% becomes secondary effect.")
-	var ideal_quality := float(secondary_prediction.get("quality", 0.0))
-	runtime.set_temperature(0.0)
-	test.expect(float(runtime.calculate_prediction().get("quality", 0.0)) < ideal_quality, "Temperature outside the ideal range lowers quality.")
+	test.expect(float(secondary_prediction.get("quality", 0.0)) > 0.0, "Color preview remains independent of heat processing.")
 	runtime.cancel_batch()
 
 	player.apply_night_result(result)
@@ -94,3 +87,21 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(player.potions[&"green_potion"].size(), 2, "Night settlement appends both dynamic potion instances.")
 	test.expect_equal(player.potions[&"black_potion"].size(), 1, "Night settlement includes failed potion product.")
 	runtime.free()
+
+
+static func _brew_to_completion(runtime: AlchemyRuntime) -> Dictionary:
+	runtime.heat_controller.cooling_rate = 0.0
+	runtime.set_temperature(50.0)
+	var started := runtime.brew()
+	if started.is_empty():
+		return {}
+	var pump_count := 0
+	while runtime._distillation_fill_target < 0.999 and pump_count < 16:
+		runtime.pump_bellows()
+		pump_count += 1
+	if runtime._distillation_fill_target < 0.999:
+		return {}
+	runtime.distillation_fill.stop_animation()
+	runtime.distillation_fill.set_fill_progress(1.0)
+	runtime._on_distillation_fill_animation_finished(1.0)
+	return runtime.last_brewed_instance

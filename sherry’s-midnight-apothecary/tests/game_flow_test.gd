@@ -11,6 +11,12 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(flow.current_day, 1, "A new game starts on day one.")
 	test.expect(flow.current_runtime is DayRuntime, "DayRuntime is active.")
 	test.expect(flow.current_runtime.player_data == player, "DayRuntime receives the shared PlayerData instance.")
+	var emitted_day_result := DayResult.new()
+	emitted_day_result.remaining_health = 95
+	(flow.current_runtime as DayRuntime).finish_day(emitted_day_result)
+	test.expect(flow.current_runtime is NightRuntime, "A DayRuntime completion signal can safely transition to night.")
+	test.expect_equal(player.health, 95, "Signal-driven daytime completion applies its result.")
+	test.expect(flow.resume_game(1, GameFlow.Mode.DAY), "The signal-driven transition can rebuild day mode.")
 	test.expect(flow.resume_game(1, GameFlow.Mode.DAY), "Resuming the current mode rebuilds its runtime.")
 	test.expect_equal(flow.current_day, 1, "Same-mode resume restores the requested day.")
 	test.expect(flow.current_runtime.player_data == player, "A rebuilt runtime still receives shared PlayerData.")

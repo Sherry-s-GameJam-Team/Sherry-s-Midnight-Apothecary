@@ -462,7 +462,15 @@ static func run(test: TestSupport) -> void:
 	var powder_id := runtime.powder_shelf_state.items[0].source_instance_id
 	test.expect(runtime.add_powder_to_cauldron(powder_id), "Brewing can take the processed powder from the shared shelf.")
 	var spent_before_brew := int(result.spent_ingredients.get(HERB_ID, 0))
-	test.expect(not runtime.brew().is_empty(), "Processed powder completes the existing brewing flow.")
+	runtime.heat_controller.cooling_rate = 0.0
+	runtime.set_temperature(50.0)
+	test.expect(not runtime.brew().is_empty(), "Processed powder starts the bellows distillation flow.")
+	for pump_index in 6:
+		runtime.pump_bellows()
+	runtime.distillation_fill.stop_animation()
+	runtime.distillation_fill.set_fill_progress(1.0)
+	runtime._on_distillation_fill_animation_finished(1.0)
+	test.expect(not runtime.last_brewed_instance.is_empty(), "A filled distillation vessel commits a processed powder potion.")
 	test.expect_equal(result.spent_ingredients.get(HERB_ID), spent_before_brew, "Brewing powder does not deduct its source plant twice.")
 	player.apply_night_result(result)
 	test.expect_equal(player.inventory[HERB_ID], 2, "Night settlement applies production consumption once.")

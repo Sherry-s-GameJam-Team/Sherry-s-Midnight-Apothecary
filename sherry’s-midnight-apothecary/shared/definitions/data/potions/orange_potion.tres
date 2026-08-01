@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="PotionData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://cjpd17ajhmdg7"]
 
-[ext_resource type="Script" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://hqa1qlsr7gos" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Resource" path="res://shared/definitions/data/heat_profiles/orange_speed.tres" id="2"]
 
 [resource]
 script = ExtResource("1")
@@ -12,3 +13,4 @@ main_effect_id = &"speed"
 spectrum_center_x = 0.17
 effect_ranges = Array[Vector2]([Vector2(0.11, 0.22)])
 base_price = 20
+heat_profile = ExtResource("2")

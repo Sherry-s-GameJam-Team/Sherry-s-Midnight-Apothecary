@@ -10,3 +10,4 @@ extends Resource
 @export var effect_ranges: Array[Vector2] = []
 @export var base_price := 0
 @export var icon: Texture2D
+@export var heat_profile: HeatProfileData

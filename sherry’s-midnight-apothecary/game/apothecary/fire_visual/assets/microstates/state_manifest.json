@@ -1,0 +1,18 @@
+{
+  "format_version": 1,
+  "canvas": { "width": 834, "height": 1112 },
+  "state_count": 9,
+  "microstate_fps": 15,
+  "microstate_frame_count": 12,
+  "states": [
+    { "id": 0, "name": "extinguished", "normalized_heat": 0.0, "fps": 15, "frame_count": 12 },
+    { "id": 1, "name": "embers", "normalized_heat": 0.125, "fps": 15, "frame_count": 12 },
+    { "id": 2, "name": "tiny_flame", "normalized_heat": 0.25, "fps": 15, "frame_count": 12 },
+    { "id": 3, "name": "low_flame", "normalized_heat": 0.375, "fps": 15, "frame_count": 12 },
+    { "id": 4, "name": "low_medium", "normalized_heat": 0.5, "fps": 15, "frame_count": 12 },
+    { "id": 5, "name": "normal", "normalized_heat": 0.625, "fps": 15, "frame_count": 12 },
+    { "id": 6, "name": "normal_high", "normalized_heat": 0.75, "fps": 15, "frame_count": 12 },
+    { "id": 7, "name": "strong", "normalized_heat": 0.875, "fps": 15, "frame_count": 12 },
+    { "id": 8, "name": "maximum", "normalized_heat": 1.0, "fps": 15, "frame_count": 12 }
+  ]
+}

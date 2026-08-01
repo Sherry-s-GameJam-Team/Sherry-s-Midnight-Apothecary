@@ -3,6 +3,11 @@ class_name SpectrumAnalyzer
 extends Control
 
 @export var use_art_background := false
+@export_node_path("Label") var title_label_path: NodePath
+@export var show_detail_explanation := false:
+	set(value):
+		show_detail_explanation = value
+		queue_redraw()
 
 @export_group("Spectrum Alignment")
 @export_range(0.0, 1.0, 0.001) var spectrum_left_ratio := 0.08:
@@ -42,16 +47,44 @@ extends Control
 		queue_redraw()
 
 var prediction: Dictionary = {}
+@onready var title_label: Label = get_node_or_null(title_label_path)
 
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(480, 92)
+	_update_title()
 	queue_redraw()
 
 
 func set_prediction(value: Dictionary) -> void:
 	prediction = value
+	_update_title()
 	queue_redraw()
+
+
+func _update_title() -> void:
+	if title_label == null:
+		return
+	if prediction.is_empty():
+		title_label.text = "药谱分析仪 · 加入材料以分析药水功效"
+		return
+	if bool(prediction.get("failed", false)):
+		title_label.text = "药谱分析仪 · 配方失衡，可能生成失败药水"
+		return
+	var effect_id := StringName(str(prediction.get("main_effect_id", "")))
+	title_label.text = "药谱分析仪 · %s" % _effect_explanation(effect_id)
+
+
+func _effect_explanation(effect_id: StringName) -> String:
+	match effect_id:
+		&"attack": return "强化攻击效果"
+		&"speed": return "提升行动速度"
+		&"purify": return "净化异常状态"
+		&"healing": return "恢复生命与伤势"
+		&"shield": return "生成防护屏障"
+		&"mana": return "恢复魔力"
+		&"concealment": return "提供隐匿效果"
+		_: return "正在解析药水功效"
 
 
 func _spectrum_band() -> Rect2:
@@ -81,9 +114,9 @@ func _draw() -> void:
 	elif show_alignment_guides:
 		_draw_alignment_guides(band)
 
-	var text_y := size.y * 0.82 if use_art_background else 70.0
 	if prediction.is_empty():
-		if not use_art_background:
+		if not use_art_background and show_detail_explanation:
+			var text_y := 70.0
 			draw_string(ThemeDB.fallback_font, Vector2(size.x * 0.08, text_y), "加入材料后显示预测结果", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#4a301c"))
 		return
 
@@ -97,12 +130,14 @@ func _draw() -> void:
 	)
 	_draw_pointer(Vector2(marker_x, band.get_center().y))
 
-	var main_text := "失败药水" if bool(prediction.get("failed", false)) else str(prediction.get("main_effect_id", ""))
-	var secondary := str(prediction.get("secondary_effect_id", ""))
-	var text := "色值 %.3f　主效：%s　副效：%s　品质 %.2f" % [
-		mixed_x, main_text, secondary if not secondary.is_empty() else "无", float(prediction.get("quality", 0.0)),
-	]
-	draw_string(ThemeDB.fallback_font, Vector2(size.x * 0.08, text_y), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#4a301c"))
+	if show_detail_explanation:
+		var text_y := size.y * 0.82 if use_art_background else 70.0
+		var main_text := "失败药水" if bool(prediction.get("failed", false)) else str(prediction.get("main_effect_id", ""))
+		var secondary := str(prediction.get("secondary_effect_id", ""))
+		var text := "色值 %.3f　主效：%s　副效：%s　品质 %.2f" % [
+			mixed_x, main_text, secondary if not secondary.is_empty() else "无", float(prediction.get("quality", 0.0)),
+		]
+		draw_string(ThemeDB.fallback_font, Vector2(size.x * 0.08, text_y), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#4a301c"))
 
 
 func _draw_alignment_guides(band: Rect2) -> void:

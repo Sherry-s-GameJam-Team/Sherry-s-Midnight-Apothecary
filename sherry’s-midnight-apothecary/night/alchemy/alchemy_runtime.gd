@@ -19,15 +19,22 @@ const DISTILL_QUALITY := 1.05
 const DILUTE_CONCENTRATION := 0.75
 const DILUTE_QUALITY := 1.03
 const MAX_DILUTIONS := 3
+const DISTILLATION_FILL_PER_FULL_PUMP := 0.25
+const DISTILLATION_BASE_SECONDS := 10.0
+const DISTILLATION_MIN_SECONDS := 7.0
+const DISTILLATION_MAX_SECONDS := 14.0
 
 @export var ingredients: Array[IngredientData] = []
 @export var potions: Array[PotionData] = []
 @export var failed_potion: PotionData
+@export var default_heat_profile: HeatProfileData
 
 var player_data: PlayerData
 var night_result: NightResult
 var day := 1
-var temperature := 55.0
+var temperature := 20.0
+var active_prediction: Dictionary = {}
+var last_brewed_instance: Dictionary = {}
 var current_batch_reserved: Dictionary = {}
 var production_reserved: Dictionary = {}
 var processing_ingredient: ProcessedIngredient
@@ -38,6 +45,9 @@ var cauldron_powders: Dictionary = {}
 var current_panel := PanelMode.BREWING
 var _stage_tween: Tween
 var standalone_developer_console: DeveloperConsole
+var _distillation_fill_target := 0.0
+var _distillation_completion_queued := false
+var _distillation_total_seconds := DISTILLATION_BASE_SECONDS
 
 var _ingredient_by_id: Dictionary = {}
 
@@ -45,13 +55,16 @@ var _ingredient_by_id: Dictionary = {}
 @onready var brewing_panel: Control = $StageRoot/HorizontalStage/BrewingPanel
 @onready var production_panel: ProductionPanel = $StageRoot/HorizontalStage/ProductionPanel
 @onready var unified_powder_shelf: PowderShelfView = %UnifiedPowderShelf
-@onready var processor: IngredientProcessor = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/IngredientProcessor")
 @onready var cauldron: CauldronDropZone = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CauldronDropZone")
+@onready var cauldron_water_art: TextureRect = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CauldronWaterArt")
 @onready var analyzer: SpectrumAnalyzer = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/SpectrumAnalyzer")
-@onready var temperature_control: AlchemyTemperatureControl = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl")
+@onready var heat_controller: HeatController = $HeatController
+@onready var temperature_gauge: TemperatureGauge = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl")
 @onready var temperature_slider: HSlider = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl/TemperatureSlider")
 @onready var temperature_value: Label = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/TemperatureControl/TemperatureValue")
-@onready var bellows_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BellowsButton")
+@onready var bellows_control: BellowsControl = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BellowsControl")
+@onready var furnace_fire: FireTemperatureController = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/OVEN")
+@onready var distillation_fill: DistillationFillController = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/DistillationDevice")
 @onready var batch_list: VBoxContainer = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BatchPanel/BatchMargin/IngredientList")
 @onready var brew_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BrewButton")
 @onready var cancel_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CancelButton")
@@ -65,26 +78,29 @@ func _ready() -> void:
 	_connect_button(brew_button, brew)
 	_connect_button(cancel_button, cancel_batch)
 	_connect_button(finish_night_button, _on_finish_night_pressed)
-	_connect_button(bellows_button, pump_bellows)
 	_connect_button(to_production_arrow, show_production_panel)
 	_connect_button(back_to_brewing_arrow, show_brewing_panel)
 	_build_lookup()
-	if processor != null:
-		processor.herb_dropped.connect(_on_herb_dropped)
-		processor.selection_changed.connect(set_processing_selection)
-		processor.tool_requested.connect(apply_tool)
 	if cauldron != null:
 		cauldron.ingredient_dropped.connect(add_processing_to_cauldron)
 		cauldron.powder_dropped.connect(add_powder_to_cauldron)
-	if temperature_control != null:
-		temperature_control.temperature_requested.connect(set_temperature)
-		temperature_control.set_temperature(temperature)
+	if heat_controller != null:
+		heat_controller.temperature_updated.connect(_on_heat_updated)
+		heat_controller.brew_finished.connect(_on_heat_finished)
+		heat_controller.temperature = temperature
+		heat_controller.previous_temperature = temperature
+	if bellows_control != null:
+		bellows_control.bellows_pumped.connect(_on_bellows_pumped)
+		bellows_control.set_pumping_enabled(false)
+	if distillation_fill != null:
+		distillation_fill.fill_animation_finished.connect(_on_distillation_fill_animation_finished)
 	if temperature_slider != null:
 		temperature_slider.set_value_no_signal(temperature)
 	unified_powder_shelf.setup(powder_shelf_state)
 	production_panel.setup(self, ingredients, powder_shelf_state)
 	_update_navigation_arrows()
 	_refresh_ui()
+	_sync_heat_ui()
 	call_deferred("_ensure_standalone_console")
 
 
@@ -229,7 +245,7 @@ func available_count(ingredient_id: StringName) -> int:
 
 
 func reserve_ingredient(ingredient_id: StringName) -> bool:
-	if processing_ingredient != null:
+	if is_brewing() or processing_ingredient != null:
 		push_warning("Finish the current ingredient before processing another.")
 		return false
 	var data: IngredientData = _ingredient_by_id.get(ingredient_id)
@@ -249,7 +265,7 @@ func reserve_ingredient(ingredient_id: StringName) -> bool:
 
 
 func set_processing_selection(start_x: float, end_x: float) -> bool:
-	if processing_ingredient == null:
+	if is_brewing() or processing_ingredient == null:
 		return false
 	var changed := processing_ingredient.set_selection(start_x, end_x, MINIMUM_CUT_WIDTH)
 	if changed:
@@ -258,7 +274,7 @@ func set_processing_selection(start_x: float, end_x: float) -> bool:
 
 
 func apply_tool(tool_id: StringName) -> bool:
-	if processing_ingredient == null:
+	if is_brewing() or processing_ingredient == null:
 		return false
 	match tool_id:
 		&"grind":
@@ -285,13 +301,13 @@ func apply_tool(tool_id: StringName) -> bool:
 	processing_ingredient.concentration = clampf(processing_ingredient.concentration, 0.05, 2.0)
 	processing_ingredient.quality = clampf(processing_ingredient.quality, 0.1, 1.5)
 	processing_ingredient.applied_tools.append(tool_id)
-	if processor != null:
-		processor.show_ingredient(processing_ingredient)
 	_refresh_prediction()
 	return true
 
 
 func add_processing_to_cauldron(processed: ProcessedIngredient = null) -> bool:
+	if is_brewing():
+		return false
 	var candidate := processed if processed != null else processing_ingredient
 	if candidate == null or candidate != processing_ingredient or candidate.weight() <= 0.0:
 		return false
@@ -302,7 +318,7 @@ func add_processing_to_cauldron(processed: ProcessedIngredient = null) -> bool:
 
 
 func remove_from_cauldron(index: int) -> bool:
-	if index < 0 or index >= cauldron_ingredients.size() or processing_ingredient != null:
+	if is_brewing() or index < 0 or index >= cauldron_ingredients.size() or processing_ingredient != null:
 		return false
 	var ingredient := cauldron_ingredients[index]
 	cauldron_ingredients.remove_at(index)
@@ -316,6 +332,8 @@ func remove_from_cauldron(index: int) -> bool:
 
 
 func add_powder_to_cauldron(instance_id: StringName) -> bool:
+	if is_brewing():
+		return false
 	var powder := powder_shelf_state.take_powder(instance_id)
 	if powder == null:
 		return false
@@ -337,20 +355,20 @@ func add_powder_to_cauldron(instance_id: StringName) -> bool:
 
 func set_temperature(value: float) -> void:
 	temperature = clampf(value, 0.0, 100.0)
-	if temperature_control != null and not is_equal_approx(temperature_control.temperature, temperature):
-		temperature_control.set_temperature(temperature)
+	if heat_controller != null:
+		heat_controller.temperature = clampf(temperature, heat_controller.ambient_temperature, heat_controller.maximum_temperature)
+		heat_controller.previous_temperature = heat_controller.temperature
 	if temperature_slider != null and not is_equal_approx(temperature_slider.value, temperature):
 		temperature_slider.set_value_no_signal(temperature)
 	if temperature_value != null:
 		temperature_value.text = "%d °C" % roundi(temperature)
 	_refresh_prediction()
+	_sync_heat_ui()
 
 
 func pump_bellows() -> void:
-	if temperature_control != null:
-		temperature_control.pump()
-	else:
-		set_temperature(temperature + 5.0)
+	if bellows_control != null:
+		bellows_control.pump_for_test()
 
 
 func calculate_prediction() -> Dictionary:
@@ -390,7 +408,7 @@ func calculate_prediction() -> Dictionary:
 		if second != null and float(contributions.get(second.id, 0.0)) / total_weight >= 0.20:
 			secondary_effect = second.main_effect_id
 	var average_quality := weighted_quality / total_weight
-	var final_quality := average_quality * lerpf(0.70, 1.15, purity) * _temperature_modifier()
+	var final_quality := average_quality * lerpf(0.70, 1.15, purity)
 	final_quality = clampf(final_quality, 0.1, 1.5)
 	if failed:
 		final_quality = minf(final_quality, 0.45)
@@ -408,17 +426,66 @@ func calculate_prediction() -> Dictionary:
 
 
 func brew() -> Dictionary:
-	if night_result == null or cauldron_ingredients.is_empty():
+	if is_brewing() or night_result == null or cauldron_ingredients.is_empty():
 		return {}
 	var prediction := calculate_prediction()
-	if prediction.is_empty():
+	var profile := _heat_profile_for(prediction.get("potion"))
+	if prediction.is_empty() or profile == null or heat_controller == null:
 		return {}
+	active_prediction = prediction.duplicate(true)
+	if not heat_controller.start_brew(profile, false):
+		active_prediction.clear()
+		return {}
+	_distillation_fill_target = 0.0
+	_distillation_completion_queued = false
+	_distillation_total_seconds = _distillation_duration_for(prediction)
+	if distillation_fill != null:
+		distillation_fill.stop_animation()
+		distillation_fill.set_fill_progress(0.0)
+		distillation_fill.set_liquid_color(_cauldron_liquid_color(prediction))
+	if bellows_control != null:
+		bellows_control.set_pumping_enabled(true)
+	_refresh_prediction()
+	_sync_heat_ui()
+	return {"brewing": true}
+
+
+func is_brewing() -> bool:
+	return heat_controller != null and heat_controller.state == HeatController.HeatState.BREWING
+
+
+func _on_heat_finished(heat_result: HeatResult) -> void:
+	if bellows_control != null:
+		bellows_control.set_pumping_enabled(false)
+	_sync_heat_ui()
+	if active_prediction.is_empty() or night_result == null:
+		return
+	var source_potion: PotionData = active_prediction.get("potion")
+	var result_potion: PotionData = failed_potion if heat_result.is_burned else source_potion
+	if result_potion == null:
+		active_prediction.clear()
+		return
 	var instance := PotionInstanceData.new()
-	instance.potion_id = prediction["potion_id"]
-	instance.mixed_x = prediction["mixed_x"]
-	instance.secondary_effect_id = prediction["secondary_effect_id"]
-	instance.quality = prediction["quality"]
+	instance.potion_id = result_potion.id
+	instance.mixed_x = float(active_prediction.get("mixed_x", 0.0))
+	instance.secondary_effect_id = (
+		StringName(active_prediction.get("secondary_effect_id", ""))
+		if not heat_result.is_burned and heat_result.preserve_secondary_effect
+		else StringName()
+	)
+	instance.secondary_effect_multiplier = heat_result.secondary_effect_multiplier if instance.secondary_effect_id != &"" else 0.0
+	instance.quality = clampf(float(active_prediction.get("quality", 0.1)) * heat_result.quality_multiplier, 0.1, 1.5)
+	instance.potency = heat_result.potency_multiplier
+	instance.duration = heat_result.duration_multiplier
+	instance.price_multiplier = instance.quality * instance.potency * (1.0 + 0.15 * instance.secondary_effect_multiplier)
+	instance.thermal_score = heat_result.thermal_score
+	instance.temperature_grade = heat_result.temperature_grade()
+	instance.was_burned = heat_result.is_burned
 	instance.created_day = day
+	_commit_brew_instance(instance, result_potion)
+
+
+func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> void:
 	var instance_data := instance.to_dict()
 	for ingredient_key: Variant in current_batch_reserved:
 		var ingredient_id := StringName(str(ingredient_key))
@@ -434,20 +501,23 @@ func brew() -> Dictionary:
 	cauldron_ingredients.clear()
 	cauldron_powders.clear()
 	processing_ingredient = null
+	active_prediction.clear()
+	last_brewed_instance = instance_data.duplicate(true)
 	batch_committed.emit(instance_data)
 	if result_popup != null:
-		var potion: PotionData = prediction["potion"]
-		result_popup.dialog_text = "%s\n品质：%s（%.2f）" % [
+		result_popup.dialog_text = "%s\n%s\n品质：%s（%.2f）" % [
 			potion.display_name,
+			"烧焦" if instance.was_burned else _temperature_grade_name(instance.temperature_grade),
 			_quality_name(instance.quality),
 			instance.quality,
 		]
 		result_popup.popup_centered()
 	_refresh_ui()
-	return instance_data
 
 
 func cancel_batch() -> void:
+	if is_brewing():
+		return
 	for powder: PowderInstanceData in cauldron_powders.values():
 		powder_shelf_state.return_powder(powder)
 	cauldron_powders.clear()
@@ -527,17 +597,115 @@ func _secondary_potion(contributions: Dictionary, main_id: StringName) -> Potion
 	return second
 
 
-func _temperature_modifier() -> float:
-	if temperature >= 45.0 and temperature <= 65.0:
-		return 1.0
-	var distance := 45.0 - temperature if temperature < 45.0 else temperature - 65.0
-	return maxf(0.65, 1.0 - distance * 0.01)
+func _heat_profile_for(potion: PotionData) -> HeatProfileData:
+	if potion != null and potion.heat_profile != null and potion.heat_profile.is_valid():
+		return potion.heat_profile
+	if default_heat_profile != null and default_heat_profile.is_valid():
+		push_warning("Potion is missing a valid heat profile; using the explicit default profile.")
+		return default_heat_profile
+	push_warning("AlchemyRuntime has no valid heat profile for this brew.")
+	return null
+
+
+func _on_bellows_pumped(effective_strength: float) -> void:
+	if not is_brewing() or heat_controller == null:
+		return
+	heat_controller.add_bellows_pump(effective_strength)
+	if distillation_fill == null or bellows_control == null:
+		push_error("AlchemyRuntime: DistillationDevice fill controller is required for bellows brewing.")
+		return
+	var normalized_pump := effective_strength / maxf(bellows_control.bellows_strength, 0.001)
+	_distillation_fill_target = clampf(
+		_distillation_fill_target + normalized_pump * DISTILLATION_FILL_PER_FULL_PUMP,
+		0.0,
+		1.0,
+	)
+	var remaining_fill := maxf(_distillation_fill_target - distillation_fill.fill_progress, 0.0)
+	var fill_duration := maxf(remaining_fill * _distillation_total_seconds, 0.12)
+	distillation_fill.animate_to(_distillation_fill_target, fill_duration)
+	if is_equal_approx(_distillation_fill_target, 1.0):
+		_distillation_completion_queued = true
+
+
+func _on_distillation_fill_animation_finished(target_progress: float) -> void:
+	if not _distillation_completion_queued or target_progress < 0.999 or not is_brewing():
+		return
+	_distillation_completion_queued = false
+	if heat_controller != null:
+		heat_controller.complete_brew()
+
+
+func _cauldron_liquid_color(prediction: Dictionary) -> Color:
+	var potion: PotionData = prediction.get("potion")
+	if potion != null:
+		var color := potion.display_color
+		color.a = 0.62
+		return color
+	return Color(0.45, 0.62, 0.86, 0.62)
+
+
+func _distillation_duration_for(prediction: Dictionary) -> float:
+	var powder_amount := maxf(float(prediction.get("total_weight", 0.0)), 0.01)
+	var amount_factor := clampf(0.75 + sqrt(powder_amount) * 0.35, 0.75, 1.35)
+	var quality := clampf(float(prediction.get("quality", 1.0)), 0.1, 1.5)
+	var quality_ratio := inverse_lerp(0.1, 1.5, quality)
+	var quality_factor := lerpf(1.18, 0.84, quality_ratio)
+	return clampf(
+		DISTILLATION_BASE_SECONDS * amount_factor * quality_factor,
+		DISTILLATION_MIN_SECONDS,
+		DISTILLATION_MAX_SECONDS,
+	)
+
+
+func _on_heat_updated(next_temperature: float, fire_power: float) -> void:
+	temperature = next_temperature
+	_sync_heat_ui(fire_power)
+
+
+func _sync_heat_ui(fire_power := -1.0) -> void:
+	if heat_controller == null:
+		return
+	var current_fire := heat_controller.fire_power if fire_power < 0.0 else fire_power
+	var profile := heat_controller.current_profile
+	var ideal_ratio := heat_controller.time_in_ideal_range / maxf(heat_controller.brew_duration, 0.001)
+	if temperature_gauge != null:
+		temperature_gauge.set_heat_state(
+			heat_controller.temperature,
+			current_fire,
+			profile,
+			heat_controller.brew_elapsed,
+			heat_controller.brew_duration,
+			ideal_ratio,
+		)
+	if temperature_value != null:
+		temperature_value.text = "%d °C" % roundi(heat_controller.temperature)
+	if furnace_fire != null:
+		furnace_fire.set_temperature(heat_controller.temperature)
+	if cauldron_water_art != null:
+		if heat_controller.state == HeatController.HeatState.BURNED:
+			cauldron_water_art.modulate = Color(0.38, 0.31, 0.28, 1.0)
+		else:
+			var heat_ratio := clampf((heat_controller.temperature - heat_controller.ambient_temperature) / 80.0, 0.0, 1.0)
+			cauldron_water_art.modulate = Color(
+				lerpf(0.72, 1.18, heat_ratio),
+				lerpf(0.78, 0.55, heat_ratio),
+				lerpf(0.92, 0.46, heat_ratio),
+				1.0,
+			)
+
+
+func _temperature_grade_name(grade: StringName) -> String:
+	match grade:
+		&"perfect_control": return "完美控温"
+		&"stable_brew": return "稳定熬制"
+		&"qualified": return "基本合格"
+		&"unstable": return "温度失控"
+		&"failed_extraction": return "萃取失败"
+		_: return "烧焦"
 
 
 func _refresh_ui() -> void:
 	_refresh_inventory_views()
-	if processor != null:
-		processor.show_ingredient(processing_ingredient)
 	if cauldron != null:
 		cauldron.show_count(cauldron_ingredients.size())
 	_refresh_batch_list()
@@ -573,7 +741,7 @@ func _refresh_prediction() -> void:
 	if analyzer != null:
 		analyzer.set_prediction(last_prediction)
 	if brew_button != null:
-		brew_button.disabled = last_prediction.is_empty()
+		brew_button.disabled = last_prediction.is_empty() or is_brewing()
 
 
 func _quality_name(value: float) -> String:
@@ -586,7 +754,3 @@ func _quality_name(value: float) -> String:
 	if value < 1.3:
 		return "卓越"
 	return "完美"
-
-
-func _on_herb_dropped(ingredient_id: StringName) -> void:
-	reserve_ingredient(ingredient_id)

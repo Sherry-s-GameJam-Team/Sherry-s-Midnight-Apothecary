@@ -1,0 +1,16 @@
+{
+  "state_count": 9,
+  "source_fps": 24.1196,
+  "animation_fps": 15,
+  "states": [
+    {"id":0,"name":"extinguished","normalized_heat":0.0,"frame_count":12,"playback_speed":0.65,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.0,"distortion":0.0,"spark_amount":0.0},
+    {"id":1,"name":"embers","normalized_heat":0.125,"frame_count":12,"playback_speed":0.72,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.08,"distortion":0.0,"spark_amount":0.0},
+    {"id":2,"name":"low_flicker","normalized_heat":0.25,"frame_count":12,"playback_speed":0.78,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.16,"distortion":0.0,"spark_amount":0.0},
+    {"id":3,"name":"small_flame","normalized_heat":0.375,"frame_count":12,"playback_speed":0.86,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.28,"distortion":0.02,"spark_amount":0.0},
+    {"id":4,"name":"medium_low","normalized_heat":0.5,"frame_count":12,"playback_speed":0.95,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.45,"distortion":0.05,"spark_amount":0.04},
+    {"id":5,"name":"steady","normalized_heat":0.625,"frame_count":12,"playback_speed":1.04,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.62,"distortion":0.08,"spark_amount":0.10},
+    {"id":6,"name":"hot","normalized_heat":0.75,"frame_count":12,"playback_speed":1.14,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.78,"distortion":0.12,"spark_amount":0.25},
+    {"id":7,"name":"roaring","normalized_heat":0.875,"frame_count":12,"playback_speed":1.25,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":0.92,"distortion":0.17,"spark_amount":0.55},
+    {"id":8,"name":"maximum","normalized_heat":1.0,"frame_count":12,"playback_speed":1.35,"upper_offset":[0,0],"lower_offset":[0,0],"light_energy":1.0,"distortion":0.22,"spark_amount":0.85}
+  ]
+}
