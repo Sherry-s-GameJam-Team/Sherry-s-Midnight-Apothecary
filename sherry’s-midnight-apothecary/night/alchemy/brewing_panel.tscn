@@ -183,12 +183,9 @@ texture = ExtResource("7_equipment")
 expand_mode = 1
 
 [node name="OVEN" parent="ArtBoard" unique_id=611099740 instance=ExtResource("4_furnace_fire")]
-z_index = -1
 position = Vector2(394, 319)
 scale = Vector2(0.37453875, 0.32461536)
 maximum_temperature = 100.0
-current_temperature = 20.0
-target_temperature = 20.0
 
 [node name="DistillationDevice" type="Node2D" parent="ArtBoard" unique_id=1111892292]
 position = Vector2(842.25, 429)
@@ -368,7 +365,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="bellowshader" type="Sprite2D" parent="ArtBoard" unique_id=1333424904]
-position = Vector2(486, 627)
+position = Vector2(483.00003, 621)
 scale = Vector2(0.4236114, 0.4236114)
 texture = ExtResource("17_u6obb")
 
@@ -379,10 +376,10 @@ anchor_left = 0.25800002
 anchor_top = 0.44000003
 anchor_right = 0.37300003
 anchor_bottom = 0.67
-offset_left = 15.759979
-offset_top = 206.19998
-offset_right = 86.55997
-offset_bottom = 246.19995
+offset_left = 11.759979
+offset_top = 192.19998
+offset_right = 91.55997
+offset_bottom = 230.59998
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "单击风箱，完成一次鼓风"
