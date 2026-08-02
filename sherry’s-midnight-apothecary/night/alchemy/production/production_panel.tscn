@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://ciub84obwpglp" path="res://night/art/ui/production/grind_button.png" id="12_grind"]
 [ext_resource type="Texture2D" uid="uid://ct8c1cxs7yh3w" path="res://night/art/ui/production/flour_button.png" id="13_pack"]
 [ext_resource type="Texture2D" uid="uid://c40c6ef5wma3b" path="res://night/art/ui/production/redo_button.png" id="14_redo"]
-[ext_resource type="Script" path="res://night/alchemy/production/herb_magnet_controller.gd" id="15_magnet"]
+[ext_resource type="Script" uid="uid://c6l8thi6u5sm7" path="res://night/alchemy/production/herb_magnet_controller.gd" id="15_magnet"]
 
 [sub_resource type="StyleBoxFlat" id="Style_status"]
 content_margin_left = 10.0
@@ -255,14 +255,14 @@ mouse_filter = 2
 [node name="BoardZone" type="PanelContainer" parent="ProcessBoard/Sprite2D/Zones" unique_id=1327817385]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.22900002
-anchor_top = 0.30800003
+anchor_left = 0.22600001
+anchor_top = 0.091000006
 anchor_right = 0.75600004
-anchor_bottom = 1.08
-offset_left = -1.7580109
-offset_top = -39.284
+anchor_bottom = 0.85400003
+offset_left = 0.34799194
+offset_top = -0.006996155
 offset_right = 18.287964
-offset_bottom = -40.84001
+offset_bottom = 0.06599426
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -380,10 +380,10 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(62, 56)
 layout_mode = 2
 tooltip_text = "拖拽模式"
+toggle_mode = true
 texture_normal = ExtResource("10_drag")
 ignore_texture_size = true
 stretch_mode = 5
-toggle_mode = true
 
 [node name="Label" type="Label" parent="Toolbar/DragAction" unique_id=1132257102]
 layout_mode = 2
