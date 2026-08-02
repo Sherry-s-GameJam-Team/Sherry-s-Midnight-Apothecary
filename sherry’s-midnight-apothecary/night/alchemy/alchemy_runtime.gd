@@ -23,6 +23,7 @@ const DISTILLATION_FILL_PER_FULL_PUMP := 0.25
 const DISTILLATION_BASE_SECONDS := 10.0
 const DISTILLATION_MIN_SECONDS := 7.0
 const DISTILLATION_MAX_SECONDS := 14.0
+const BURNT_LIQUID_COLOR := Color(0.0, 0.0, 0.0, 0.90)
 
 @export var ingredients: Array[IngredientData] = []
 @export var potions: Array[PotionData] = []
@@ -455,6 +456,13 @@ func is_brewing() -> bool:
 
 
 func _on_heat_finished(heat_result: HeatResult) -> void:
+	if heat_result.is_burned and distillation_fill != null:
+		# Burning ends the brew immediately; freeze the current fill and show the
+		# failed liquid instead of allowing the queued distillation animation to
+		# finish with the original potion color.
+		_distillation_completion_queued = false
+		distillation_fill.stop_animation()
+		distillation_fill.set_liquid_color(BURNT_LIQUID_COLOR)
 	if bellows_control != null:
 		bellows_control.set_pumping_enabled(false)
 	_sync_heat_ui()

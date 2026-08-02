@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://deq7wn0hm1s5b"]
 
 [ext_resource type="Script" uid="uid://bbhqdgek0kfau" path="res://night/alchemy/production/powder_shelf_view.gd" id="1_view"]
-[ext_resource type="Texture2D" uid="uid://voq1rplpqy5s" path="res://night/art/ui/production/shelter.png" id="2_shelf"]
 [ext_resource type="Texture2D" uid="uid://d0bhgwbqxg3ka" path="res://night/art/ui/production/flour.png" id="3_flour"]
+[ext_resource type="Texture2D" uid="uid://n7i0okqc41xm" path="res://night/art/ui/shelter.png" id="4_jae7q"]
 [ext_resource type="Texture2D" uid="uid://b6c0d6cabpjie" path="res://night/art/ui/production/paper.png" id="4_paper"]
 
 [node name="PowderShelfView" type="Control" unique_id=1424572138]
@@ -29,7 +29,7 @@ offset_bottom = 0.2000122
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_shelf")
+texture = ExtResource("4_jae7q")
 expand_mode = 1
 stretch_mode = 6
 

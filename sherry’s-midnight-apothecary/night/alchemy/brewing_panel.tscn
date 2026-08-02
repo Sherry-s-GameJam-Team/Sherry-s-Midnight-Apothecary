@@ -119,16 +119,15 @@ texture = ExtResource("12_banner")
 expand_mode = 1
 
 [node name="SpectrumArt" type="TextureRect" parent="ArtBoard" unique_id=324969135]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.205
 anchor_top = 0.035
 anchor_right = 0.695
 anchor_bottom = 0.276
-offset_left = 170.6
+offset_left = -261.4
 offset_top = -12.200001
-offset_right = 23.400024
+offset_right = -399.59998
 offset_bottom = -0.7200012
 grow_horizontal = 2
 grow_vertical = 2
@@ -155,13 +154,14 @@ texture = ExtResource("11_tabs")
 expand_mode = 1
 
 [node name="NotesArt" type="TextureRect" parent="ArtBoard" unique_id=1641903715]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.01
 anchor_top = 0.29
 anchor_right = 0.226
 anchor_bottom = 0.7
+offset_left = -6.0
+offset_right = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -175,10 +175,10 @@ anchor_left = 0.215
 anchor_top = 0.285
 anchor_right = 0.708
 anchor_bottom = 0.73
-offset_left = 110.79999
-offset_top = -6.199997
-offset_right = -195.23999
-offset_bottom = -35.600037
+offset_left = 154.79999
+offset_top = -64.2
+offset_right = -151.23999
+offset_bottom = -93.60004
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -186,7 +186,7 @@ texture = ExtResource("7_equipment")
 expand_mode = 1
 
 [node name="OVEN" parent="ArtBoard" unique_id=611099740 instance=ExtResource("4_furnace_fire")]
-position = Vector2(393, 351)
+position = Vector2(437, 293)
 scale = Vector2(0.37453875, 0.32461536)
 maximum_temperature = 100.0
 
@@ -199,12 +199,13 @@ flow_order_texture = ExtResource("28_distill_flow_order")
 
 [node name="WaterFill" type="Sprite2D" parent="ArtBoard/DistillationDevice" unique_id=899055477]
 material = SubResource("ShaderMaterial_distillation_fill")
-position = Vector2(-123.055, 4.715)
+position = Vector2(9.172607, -70.93982)
+scale = Vector2(1.0906473, 1.1265056)
 texture = ExtResource("8_distill_cover")
 
 [node name="EquipmentFront" type="Sprite2D" parent="ArtBoard/DistillationDevice" unique_id=489314954]
-position = Vector2(-123.56116, 4.6264954)
-scale = Vector2(1, 1.0251004)
+position = Vector2(8.093506, -74.02417)
+scale = Vector2(0.46887037, 0.4806392)
 texture = ExtResource("8_fiajc")
 
 [node name="HerbInventoryArt" type="TextureRect" parent="ArtBoard" unique_id=799272018]
@@ -228,10 +229,10 @@ anchor_left = 0.213
 anchor_top = 0.055
 anchor_right = 0.352
 anchor_bottom = 0.252
-offset_left = 427.36
-offset_top = 388.4
-offset_right = 473.44
-offset_bottom = 452.56
+offset_left = 443.36
+offset_top = 416.4
+offset_right = 489.44
+offset_bottom = 480.56
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -369,7 +370,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="bellowshader" type="Sprite2D" parent="ArtBoard" unique_id=1333424904]
-position = Vector2(483.00003, 621)
+position = Vector2(511, 569)
 scale = Vector2(0.4236114, 0.4236114)
 texture = ExtResource("17_u6obb")
 
@@ -380,10 +381,10 @@ anchor_left = 0.25800002
 anchor_top = 0.44000003
 anchor_right = 0.37300003
 anchor_bottom = 0.67
-offset_left = 11.759979
-offset_top = 192.19998
-offset_right = 91.55997
-offset_bottom = 230.59998
+offset_left = 61.75998
+offset_top = 120.19998
+offset_right = 141.55997
+offset_bottom = 158.59998
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "单击风箱，完成一次鼓风"
@@ -393,17 +394,16 @@ bellows_sprite_sheet = ExtResource("29_bellows_sprite")
 sprite_flip_horizontal = true
 
 [node name="SpectrumAnalyzer" type="Control" parent="ArtBoard" unique_id=1502851479]
-visible = false
 custom_minimum_size = Vector2(480, 92)
 layout_mode = 1
 anchor_left = 0.36
 anchor_top = 0.055
 anchor_right = 0.686
 anchor_bottom = 0.26000002
-offset_left = -31.800018
+offset_left = -456.80002
 offset_top = -2.5999985
-offset_right = 36.920044
-offset_bottom = 9.799988
+offset_right = -394.07996
+offset_bottom = 11.799988
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -428,7 +428,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.31, 0.19, 0.08, 1)
 theme_override_font_sizes/font_size = 16
-text = "加入材料以分析药水功效"
+text = "药谱分析仪 · 加入材料以分析药水功效"
 horizontal_alignment = 1
 
 [node name="BatchPanel" type="PanelContainer" parent="ArtBoard" unique_id=1406677584]
@@ -460,10 +460,10 @@ anchor_left = 0.365
 anchor_top = 0.36
 anchor_right = 0.578
 anchor_bottom = 0.65
-offset_left = -57.200012
-offset_top = -3.2000122
-offset_right = -49.200012
-offset_bottom = -3.2000427
+offset_left = -13.200012
+offset_top = -61.200012
+offset_right = -5.200012
+offset_bottom = -61.200043
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("Style_empty")
@@ -548,7 +548,6 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="BrewButton" type="Button" parent="ArtBoard" unique_id=1078876307]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.725
@@ -576,7 +575,6 @@ disabled = true
 text = "酿 造"
 
 [node name="CancelButton" type="Button" parent="ArtBoard" unique_id=1972018855]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.862
@@ -601,13 +599,16 @@ theme_override_styles/hover = SubResource("Style_red_hover")
 text = "取 消"
 
 [node name="FinishNightButton" type="TextureButton" parent="ArtBoard" unique_id=1117583123]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.035
-anchor_top = 0.855
-anchor_right = 0.098
-anchor_bottom = 0.97
+anchor_left = 0.016
+anchor_top = 0.878
+anchor_right = 0.079
+anchor_bottom = 0.99300003
+offset_left = 0.51999855
+offset_top = -0.16003418
+offset_right = 0.51999664
+offset_bottom = -0.16003418
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "结束夜晚"

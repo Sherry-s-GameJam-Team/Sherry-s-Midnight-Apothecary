@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://rphyn1qck6bs" path="res://night/alchemy/heat/temperature_gauge.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bbcyn2g3x3hb" path="res://night/art/ui/wheel.png" id="2_wheel"]
 [ext_resource type="Texture2D" uid="uid://took11ewwkf8" path="res://night/art/ui/temperature_needle.svg" id="3_needle"]
+[ext_resource type="Script" path="res://night/alchemy/heat/temperature_range_overlay.gd" id="4_ranges"]
 
 [node name="TemperatureControl" type="Control" unique_id=405220842]
 custom_minimum_size = Vector2(180, 180)
@@ -30,24 +31,38 @@ texture = ExtResource("2_wheel")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="TemperatureRanges" type="Control" parent="." unique_id=510248999]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = 43.0
+offset_right = -26.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_ranges")
+
 [node name="TemperatureNeedle" type="TextureRect" parent="." unique_id=307453699]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.531
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.531
-offset_left = -7.0
-offset_top = -58.58
-offset_right = 4.9583282
-offset_bottom = 23.419998
+anchor_bottom = 0.5
+offset_left = -11.5
+offset_top = -69.14
+offset_right = 8.5
+offset_bottom = 11.86
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(7, 86)
+pivot_offset = Vector2(10, 73.64)
 mouse_filter = 2
 texture = ExtResource("3_needle")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 0
 
 [node name="TemperatureValue" type="Label" parent="." unique_id=266449567]
 layout_mode = 1

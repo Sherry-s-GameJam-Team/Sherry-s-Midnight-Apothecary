@@ -171,7 +171,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("Style_board_empty")
 script = ExtResource("2_board")
 
-[node name="MagnetController" type="Node" parent="ProcessBoard"]
+[node name="MagnetController" type="Node" parent="ProcessBoard" unique_id=94816497]
 script = ExtResource("15_magnet")
 
 [node name="Sprite2D" type="Sprite2D" parent="ProcessBoard" unique_id=2015751210]
@@ -241,6 +241,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="ProcessBoard/Sprite2D/Zones/WasteZone/WasteColumn" unique_id=738024315]
+visible = false
 layout_mode = 2
 text = "废弃区"
 horizontal_alignment = 1
@@ -275,6 +276,7 @@ alignment = 1
 
 [node name="WholeHerbLabel" type="Label" parent="ProcessBoard/Sprite2D/Zones/BoardZone" unique_id=535260730]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "拖入药材"
 horizontal_alignment = 1
@@ -301,6 +303,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Label" type="Label" parent="ProcessBoard/Sprite2D/Zones/GrindZone/GrindColumn" unique_id=562669302]
+visible = false
 layout_mode = 2
 text = "研磨区"
 horizontal_alignment = 1
