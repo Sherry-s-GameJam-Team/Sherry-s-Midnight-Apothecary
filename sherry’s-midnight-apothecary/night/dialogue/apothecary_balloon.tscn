@@ -218,7 +218,7 @@ mouse_filter = 2
 [node name="AnimatedMark" type="Sprite2D" parent="Balloon/FrameDock/DesignRoot/Progress" unique_id=738580291]
 unique_name_in_owner = true
 texture_filter = 2
-position = Vector2(91.999954, 54.00003)
+position = Vector2(96.999954, 59.00003)
 scale = Vector2(0.2823864, 0.28069675)
 texture = ExtResource("20_progress")
 hframes = 10

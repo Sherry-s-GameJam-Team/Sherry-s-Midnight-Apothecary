@@ -32,6 +32,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="TemperatureRanges" type="Control" parent="." unique_id=510248999]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -58,21 +59,19 @@ offset_right = 8.5
 offset_bottom = 11.86
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.515, 0.515)
 pivot_offset = Vector2(10, 73.64)
 mouse_filter = 2
 texture = ExtResource("3_needle")
 expand_mode = 1
-stretch_mode = 0
 
 [node name="TemperatureValue" type="Label" parent="." unique_id=266449567]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 2.0
-offset_top = 150.0
-offset_right = 2.0
-offset_bottom = 90.0
+offset_top = 164.0
+offset_bottom = 104.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.9551949, 0.6834471, 0.51408374, 1)

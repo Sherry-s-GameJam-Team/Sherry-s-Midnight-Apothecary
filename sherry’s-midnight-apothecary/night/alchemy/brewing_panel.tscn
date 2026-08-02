@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c75u6ry8guokh"]
 
 [ext_resource type="Script" uid="uid://cdh8hhmid5g6g" path="res://night/alchemy/ui/cauldron_drop_zone.gd" id="3_cauldron"]
+[ext_resource type="Texture2D" uid="uid://bgkk4r2cfjclb" path="res://night/art/ui/STOVE_cover.png" id="3_t22a6"]
 [ext_resource type="PackedScene" uid="uid://bafylchhjgj2p" path="res://game/apothecary/fire_visual/furnace_fire_controller.tscn" id="4_furnace_fire"]
 [ext_resource type="Script" uid="uid://balpj32ent121" path="res://night/alchemy/ui/spectrum_analyzer.gd" id="4_spectrum"]
 [ext_resource type="Texture2D" uid="uid://d1r8nyft1gvmu" path="res://night/art/alchemy_background.png" id="5_background"]
@@ -90,6 +91,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 567.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -117,6 +120,11 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("12_banner")
 expand_mode = 1
+
+[node name="StoveCover" type="Sprite2D" parent="ArtBoard" unique_id=1271073147]
+position = Vector2(493, 457.00003)
+scale = Vector2(0.102050774, 0.09179688)
+texture = ExtResource("3_t22a6")
 
 [node name="SpectrumArt" type="TextureRect" parent="ArtBoard" unique_id=324969135]
 layout_mode = 1
@@ -161,7 +169,8 @@ anchor_top = 0.29
 anchor_right = 0.226
 anchor_bottom = 0.7
 offset_left = -6.0
-offset_right = -6.0
+offset_right = -25.279999
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -175,10 +184,10 @@ anchor_left = 0.215
 anchor_top = 0.285
 anchor_right = 0.708
 anchor_bottom = 0.73
-offset_left = 154.79999
-offset_top = -64.2
-offset_right = -151.23999
-offset_bottom = -93.60004
+offset_left = 56.799988
+offset_top = -83.2
+offset_right = -249.23999
+offset_bottom = -112.60004
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -186,12 +195,12 @@ texture = ExtResource("7_equipment")
 expand_mode = 1
 
 [node name="OVEN" parent="ArtBoard" unique_id=611099740 instance=ExtResource("4_furnace_fire")]
-position = Vector2(437, 293)
+position = Vector2(338, 273)
 scale = Vector2(0.37453875, 0.32461536)
 maximum_temperature = 100.0
 
 [node name="DistillationDevice" type="Node2D" parent="ArtBoard" unique_id=1111892292]
-position = Vector2(842.25, 429)
+position = Vector2(743.25, 411)
 scale = Vector2(0.4633334, 0.48632815)
 script = ExtResource("27_distill_controller")
 liquid_layer_path = NodePath("WaterFill")
@@ -229,10 +238,10 @@ anchor_left = 0.213
 anchor_top = 0.055
 anchor_right = 0.352
 anchor_bottom = 0.252
-offset_left = 443.36
-offset_top = 416.4
-offset_right = 489.44
-offset_bottom = 480.56
+offset_left = 394.36
+offset_top = 340.4
+offset_right = 440.44
+offset_bottom = 404.56
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -370,7 +379,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="bellowshader" type="Sprite2D" parent="ArtBoard" unique_id=1333424904]
-position = Vector2(511, 569)
+position = Vector2(412, 551)
 scale = Vector2(0.4236114, 0.4236114)
 texture = ExtResource("17_u6obb")
 
@@ -381,10 +390,10 @@ anchor_left = 0.25800002
 anchor_top = 0.44000003
 anchor_right = 0.37300003
 anchor_bottom = 0.67
-offset_left = 61.75998
-offset_top = 120.19998
-offset_right = 141.55997
-offset_bottom = 158.59998
+offset_left = -61.24002
+offset_top = 133.19998
+offset_right = 18.559967
+offset_bottom = 193.59998
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "单击风箱，完成一次鼓风"
@@ -460,10 +469,10 @@ anchor_left = 0.365
 anchor_top = 0.36
 anchor_right = 0.578
 anchor_bottom = 0.65
-offset_left = -13.200012
-offset_top = -61.200012
-offset_right = -5.200012
-offset_bottom = -61.200043
+offset_left = -112.20001
+offset_top = -80.20001
+offset_right = -104.20001
+offset_bottom = -80.20004
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("Style_empty")
