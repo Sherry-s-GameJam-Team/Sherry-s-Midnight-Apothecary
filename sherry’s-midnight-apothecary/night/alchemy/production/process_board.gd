@@ -41,10 +41,12 @@ func _draw() -> void:
 	if magnet_controller == null or not magnet_controller.should_draw_radius():
 		return
 	var local_pointer := get_global_transform().affine_inverse() * magnet_controller.pointer_global
+	var global_scale := get_global_transform().get_scale().abs()
+	var local_radius := magnet_controller.multi_capture_radius / maxf(minf(global_scale.x, global_scale.y), 0.001)
 	var fill := Color(0.96, 0.82, 0.38, 0.055)
 	var rim := Color(1.0, 0.88, 0.5, 0.28)
-	draw_circle(local_pointer, magnet_controller.candidate_radius, fill)
-	draw_arc(local_pointer, magnet_controller.candidate_radius, 0.0, TAU, 48, rim, 1.2, true)
+	draw_circle(local_pointer, local_radius, fill)
+	draw_arc(local_pointer, local_radius, 0.0, TAU, 48, rim, 1.2, true)
 
 
 func _notification(what: int) -> void:
@@ -344,6 +346,18 @@ func _move_piece_view(view: ProductionPieceView, desired_global_position: Vector
 
 func move_piece_view(view: ProductionPieceView, desired_global_position: Vector2) -> void:
 	_move_piece_view(view, desired_global_position)
+
+
+func raise_piece_view(view: ProductionPieceView) -> void:
+	if view == null:
+		return
+	piece_stack_serial += 1
+	view.z_index = piece_stack_serial
+	view.piece.stack_z = piece_stack_serial
+
+
+func finish_piece_drag(view: ProductionPieceView) -> void:
+	_on_piece_drag_finished(view)
 
 
 func _piece_display_size(piece: ProductionRuntimeTypes.HerbPieceRuntime, herb: IngredientData) -> Vector2:

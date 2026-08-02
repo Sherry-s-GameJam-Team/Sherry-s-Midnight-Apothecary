@@ -86,6 +86,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Background" type="TextureRect" parent="." unique_id=2079895585]
+visible = false
 z_index = -2
 layout_mode = 1
 anchors_preset = 15
@@ -379,7 +380,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="bellowshader" type="Sprite2D" parent="ArtBoard" unique_id=1333424904]
-position = Vector2(412, 551)
+position = Vector2(426, 571)
 scale = Vector2(0.4236114, 0.4236114)
 texture = ExtResource("17_u6obb")
 
@@ -390,10 +391,10 @@ anchor_left = 0.25800002
 anchor_top = 0.44000003
 anchor_right = 0.37300003
 anchor_bottom = 0.67
-offset_left = -61.24002
-offset_top = 133.19998
-offset_right = 18.559967
-offset_bottom = 193.59998
+offset_left = -47.24002
+offset_top = 144.19998
+offset_right = 32.559967
+offset_bottom = 204.59998
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "单击风箱，完成一次鼓风"
@@ -507,14 +508,17 @@ theme_override_constants/v_separation = 1
 columns = 4
 
 [node name="ToProductionArrow" type="Button" parent="ArtBoard" unique_id=1011623894]
-visible = false
 z_index = 10
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.945
-anchor_top = 0.7
-anchor_right = 0.992
-anchor_bottom = 0.81
+anchor_left = 0.93500006
+anchor_top = 0.75600004
+anchor_right = 0.98200005
+anchor_bottom = 0.86600006
+offset_left = 23.199951
+offset_top = 10.679993
+offset_right = 23.199951
+offset_bottom = 10.679993
 grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "前往草药加工区"

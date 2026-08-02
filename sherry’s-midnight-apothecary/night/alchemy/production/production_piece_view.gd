@@ -8,8 +8,14 @@ signal drag_finished(view: ProductionPieceView)
 const OUTLINE_SHADER := preload("res://night/alchemy/production/shaders/herb_piece_outline.gdshader")
 const VISUAL_PADDING := 5.0
 
+enum OutlineState { NONE, HOVER, MULTI_CANDIDATE, GRABBED }
+
 @export var hover_outline_color := Color(1.0, 0.86, 0.45, 0.95)
 @export_range(1.0, 8.0) var hover_outline_width := 2.0
+@export_range(0.0, 1.0, 0.01) var interaction_alpha_threshold := 0.03
+@export_range(0, 16, 1) var interaction_dilation_pixels := 5
+@export_range(0, 16, 1) var small_piece_extra_dilation := 3
+@export_range(0, 32, 1) var interaction_hole_fill_radius := 2
 
 var piece: ProductionRuntimeTypes.HerbPieceRuntime
 var is_dragging := false
@@ -21,7 +27,12 @@ var magnet_pickup_blocked := false
 var artwork: TextureRect
 var hover_outline: TextureRect
 var _alpha_bitmap: BitMap
+var _interaction_bitmap: BitMap
 var _texture_size := Vector2i.ZERO
+var _interaction_edge_pixels: Array[Vector2i] = []
+var _visual_alpha_pixels := 0
+var _interaction_area_pixels := 0
+var _outline_state := OutlineState.NONE
 var _outline_material: ShaderMaterial
 var _pickup_anchor_normalized := Vector2(0.5, 0.5)
 var _base_scale := Vector2.ONE
@@ -39,12 +50,10 @@ func setup(value: ProductionRuntimeTypes.HerbPieceRuntime, display_size := Vecto
 	size = display_size
 	_base_scale = scale
 	_build_visual()
-	_build_alpha_bitmap()
+	build_interaction_mask()
 	_update_state_visual()
 	rotation_degrees = piece.scatter_rotation if piece != null else 0.0
 	tooltip_text = _piece_tooltip()
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
 
 
 func _build_visual() -> void:
@@ -91,8 +100,77 @@ func _build_alpha_bitmap() -> void:
 		return
 	_texture_size = image.get_size()
 	_alpha_bitmap = BitMap.new()
-	_alpha_bitmap.create_from_image_alpha(image, 0.1)
+	_alpha_bitmap.create_from_image_alpha(image, interaction_alpha_threshold)
 	_cache_pickup_anchor(image)
+
+
+func rebuild_interaction_mask() -> void:
+	_build_alpha_bitmap()
+	_interaction_bitmap = null
+	_interaction_edge_pixels.clear()
+	_visual_alpha_pixels = 0
+	_interaction_area_pixels = 0
+	if _alpha_bitmap == null or _texture_size.x <= 0 or _texture_size.y <= 0:
+		return
+	_interaction_bitmap = BitMap.new()
+	_interaction_bitmap.create(_texture_size)
+	for y in _texture_size.y:
+		for x in _texture_size.x:
+			if _alpha_bitmap.get_bit(x, y):
+				_visual_alpha_pixels += 1
+	var image_area := _texture_size.x * _texture_size.y
+	var small_piece := _visual_alpha_pixels <= maxi(256, floori(float(image_area) * 0.12))
+	var extra := small_piece_extra_dilation if small_piece else 0
+	var radius := interaction_dilation_pixels + extra
+	for y in _texture_size.y:
+		for x in _texture_size.x:
+			if _alpha_bitmap.get_bit(x, y) or _is_small_hole_pixel(x, y):
+				_fill_interaction_disc(Vector2i(x, y), radius)
+	# Keep an explicit edge cache. Runtime hover/magnet checks never read Image data.
+	for y in _texture_size.y:
+		for x in _texture_size.x:
+			if not _interaction_bitmap.get_bit(x, y):
+				continue
+			_interaction_area_pixels += 1
+			if _is_interaction_edge(x, y):
+				_interaction_edge_pixels.append(Vector2i(x, y))
+
+
+func build_interaction_mask() -> void:
+	rebuild_interaction_mask()
+
+
+func _fill_interaction_disc(center: Vector2i, radius: int) -> void:
+	for offset_y in range(-radius, radius + 1):
+		var remaining := radius * radius - offset_y * offset_y
+		var span := floori(sqrt(maxi(remaining, 0)))
+		for offset_x in range(-span, span + 1):
+			var point: Vector2i = center + Vector2i(offset_x, offset_y)
+			if point.x >= 0 and point.y >= 0 and point.x < _texture_size.x and point.y < _texture_size.y:
+				_interaction_bitmap.set_bit(point.x, point.y, true)
+
+
+func _is_small_hole_pixel(x: int, y: int) -> bool:
+	if interaction_hole_fill_radius <= 0 or _alpha_bitmap == null or _alpha_bitmap.get_bit(x, y):
+		return false
+	var left := false
+	var right := false
+	var up := false
+	var down := false
+	for offset in range(1, interaction_hole_fill_radius + 1):
+		left = left or (x - offset >= 0 and _alpha_bitmap.get_bit(x - offset, y))
+		right = right or (x + offset < _texture_size.x and _alpha_bitmap.get_bit(x + offset, y))
+		up = up or (y - offset >= 0 and _alpha_bitmap.get_bit(x, y - offset))
+		down = down or (y + offset < _texture_size.y and _alpha_bitmap.get_bit(x, y + offset))
+	return left and right and up and down
+
+
+func _is_interaction_edge(x: int, y: int) -> bool:
+	for offset in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+		var point: Vector2i = Vector2i(x, y) + offset
+		if point.x < 0 or point.y < 0 or point.x >= _texture_size.x or point.y >= _texture_size.y or not _interaction_bitmap.get_bit(point.x, point.y):
+			return true
+	return false
 
 
 func _cache_pickup_anchor(image: Image) -> void:
@@ -134,6 +212,17 @@ func _has_point(point: Vector2) -> bool:
 	return _alpha_bitmap.get_bit(pixel.x, pixel.y)
 
 
+func global_point_to_mask_pixel(global_point: Vector2) -> Vector2i:
+	if _texture_size.x <= 0 or _texture_size.y <= 0:
+		return Vector2i(-1, -1)
+	var local_point: Vector2 = get_global_transform().affine_inverse() * global_point
+	var draw_rect := _texture_draw_rect()
+	if not draw_rect.has_point(local_point):
+		return Vector2i(-1, -1)
+	var uv: Vector2 = (local_point - draw_rect.position) / draw_rect.size
+	return Vector2i(clampi(floori(uv.x * _texture_size.x), 0, _texture_size.x - 1), clampi(floori(uv.y * _texture_size.y), 0, _texture_size.y - 1))
+
+
 func _texture_draw_rect() -> Rect2:
 	var available := Rect2(
 		Vector2(VISUAL_PADDING, VISUAL_PADDING),
@@ -151,7 +240,26 @@ func get_local_content_rect() -> Rect2:
 
 
 func contains_global_point(global_point: Vector2) -> bool:
-	return _has_point(get_global_transform().affine_inverse() * global_point)
+	var pixel := global_point_to_mask_pixel(global_point)
+	return pixel.x >= 0 and _interaction_bitmap != null and _interaction_bitmap.get_bit(pixel.x, pixel.y)
+
+
+func distance_to_interaction_area(global_point: Vector2) -> float:
+	if contains_global_point(global_point):
+		return 0.0
+	if _interaction_edge_pixels.is_empty() or _texture_size.x <= 0 or _texture_size.y <= 0:
+		return INF
+	var local_point: Vector2 = get_global_transform().affine_inverse() * global_point
+	var draw_rect := _texture_draw_rect()
+	if draw_rect.size.x <= 0.0 or draw_rect.size.y <= 0.0:
+		return INF
+	var pixel_point := (local_point - draw_rect.position) / draw_rect.size * Vector2(_texture_size)
+	var nearest := INF
+	for edge: Vector2i in _interaction_edge_pixels:
+		nearest = minf(nearest, pixel_point.distance_to(Vector2(edge)))
+	var scale := get_global_transform().get_scale().abs()
+	var pixels_to_global := minf(draw_rect.size.x / _texture_size.x * scale.x, draw_rect.size.y / _texture_size.y * scale.y)
+	return nearest * pixels_to_global
 
 
 func get_global_content_rect() -> Rect2:
@@ -180,12 +288,24 @@ func set_magnet_emphasis(enabled: bool, enlarge := false) -> void:
 	pivot_offset = size * 0.5
 	scale = _base_scale * (1.025 if enabled and enlarge else 1.0)
 	global_position = preserved_global_position
-	set_outline_enabled(enabled)
+	set_outline_state(OutlineState.GRABBED if enabled else OutlineState.NONE)
 
 
 func set_outline_enabled(enabled: bool) -> void:
-	if _outline_material != null:
-		_outline_material.set_shader_parameter("outline_enabled", enabled)
+	set_outline_state(OutlineState.HOVER if enabled else OutlineState.NONE)
+
+
+func set_outline_state(value: OutlineState) -> void:
+	_outline_state = value
+	if _outline_material == null:
+		return
+	_outline_material.set_shader_parameter("outline_enabled", value != OutlineState.NONE)
+	if value == OutlineState.MULTI_CANDIDATE:
+		_outline_material.set_shader_parameter("outline_color", Color(0.75, 0.86, 1.0, 0.62))
+	elif value == OutlineState.GRABBED:
+		_outline_material.set_shader_parameter("outline_color", Color(1.0, 0.9, 0.42, 1.0))
+	else:
+		_outline_material.set_shader_parameter("outline_color", hover_outline_color)
 
 
 func refresh_state_visual() -> void:
@@ -277,14 +397,8 @@ func _is_piece_movable() -> bool:
 	]
 
 
-func _on_mouse_entered() -> void:
-	if _is_piece_movable():
-		set_outline_enabled(true)
-
-
-func _on_mouse_exited() -> void:
-	if not is_dragging:
-		set_outline_enabled(false)
+func is_movable() -> bool:
+	return _is_piece_movable()
 
 
 func _piece_tooltip() -> String:

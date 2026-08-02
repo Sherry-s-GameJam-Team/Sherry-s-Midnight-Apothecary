@@ -87,7 +87,7 @@ offset_right = 1208.0
 offset_bottom = 124.0
 theme_override_colors/font_color = Color(0.82, 0.75, 0.9, 1)
 theme_override_font_sizes/font_size = 18
-text = "← / → 移动    Shift + 方向键 跑步    Space 投掷    H 受击    F 倒地    镜头固定"
+text = "A / D 移动    Shift + A / D 跑步    W 跳跃    Space 投掷    H 受击    F 倒地    镜头固定"
 horizontal_alignment = 1
 
 [node name="StateLabel" type="Label" parent="." unique_id=973404724]

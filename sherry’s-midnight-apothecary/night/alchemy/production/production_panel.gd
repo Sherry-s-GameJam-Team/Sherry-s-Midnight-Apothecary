@@ -15,6 +15,7 @@ var pieces: Array[ProductionRuntimeTypes.HerbPieceRuntime] = []
 var ground_powder: PowderInstanceData
 var drag_mode := true
 var packing := false
+var drag_button: TextureButton
 
 @onready var herb_grid: GridContainer = %HerbGrid
 @onready var process_board: ProcessBoard = %ProcessBoard
@@ -23,7 +24,7 @@ var packing := false
 @onready var paper_preview: TextureRect = %PaperPreview
 @onready var powder_preview: TextureRect = %PowderPreview
 @onready var status_label: Label = %StatusLabel
-@onready var drag_button: TextureButton = %DragButton
+@onready var grab_mode_button: TextureButton = %GrabModeButton
 @onready var separate_button: TextureButton = %SeparateButton
 @onready var grind_button: TextureButton = %GrindButton
 @onready var pack_button: TextureButton = %PackPowderButton
@@ -32,9 +33,10 @@ var packing := false
 
 
 func _ready() -> void:
+	drag_button = grab_mode_button # Backwards-compatible script API for callers.
 	process_board.herb_dropped.connect(_on_herb_dropped)
 	process_board.piece_moved.connect(_on_piece_moved)
-	drag_button.pressed.connect(set_drag_mode)
+	grab_mode_button.pressed.connect(toggle_grab_mode)
 	separate_button.pressed.connect(separate_herb)
 	grind_button.pressed.connect(grind_selected_pieces)
 	pack_button.pressed.connect(pack_powder)
@@ -51,9 +53,22 @@ func setup(runtime: AlchemyRuntime, definitions: Array[IngredientData], state: P
 
 
 func set_drag_mode() -> void:
+	if process_board != null and process_board.magnet_controller != null:
+		process_board.magnet_controller.set_grab_mode(HerbMagnetController.GrabMode.SINGLE)
 	drag_mode = true
-	status_label.text = "拖拽模式：可移动整株药材或已摘离部位。"
-	drag_button.modulate = Color(1.2, 1.12, 0.72, 1.0)
+	grab_mode_button.button_pressed = false
+	grab_mode_button.tooltip_text = "单个抓取"
+
+
+func toggle_grab_mode() -> void:
+	if process_board == null or process_board.magnet_controller == null:
+		return
+	var multi := grab_mode_button.button_pressed
+	process_board.magnet_controller.set_grab_mode(HerbMagnetController.GrabMode.MULTI_MAGNET if multi else HerbMagnetController.GrabMode.SINGLE)
+	drag_mode = not multi
+	grab_mode_button.tooltip_text = "长按左键，吸附范围内的全部部件" if multi else "单个抓取"
+	grab_mode_button.modulate = Color(1.2, 1.12, 0.72, 1.0) if multi else Color.WHITE
+	status_label.text = "多物体磁吸模式已开启。" if multi else "单个抓取模式已开启。"
 
 
 func separate_herb() -> bool:

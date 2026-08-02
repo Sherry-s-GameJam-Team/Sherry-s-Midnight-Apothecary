@@ -29,6 +29,8 @@ const BURNT_LIQUID_COLOR := Color(0.0, 0.0, 0.0, 0.90)
 @export var potions: Array[PotionData] = []
 @export var failed_potion: PotionData
 @export var default_heat_profile: HeatProfileData
+@export_group("Shared Alchemy Background")
+@export var pan_background_with_stage := true
 
 var player_data: PlayerData
 var night_result: NightResult
@@ -53,6 +55,8 @@ var _distillation_total_seconds := DISTILLATION_BASE_SECONDS
 var _ingredient_by_id: Dictionary = {}
 
 @onready var horizontal_stage: Control = $StageRoot/HorizontalStage
+@onready var stage_root: Control = $StageRoot
+@onready var alchemy_background: Sprite2D = $AlchemyBackground
 @onready var brewing_panel: Control = $StageRoot/HorizontalStage/BrewingPanel
 @onready var production_panel: ProductionPanel = $StageRoot/HorizontalStage/ProductionPanel
 @onready var unified_powder_shelf: PowderShelfView = %UnifiedPowderShelf
@@ -76,6 +80,8 @@ var _ingredient_by_id: Dictionary = {}
 
 
 func _ready() -> void:
+	if stage_root != null and not stage_root.resized.is_connected(_sync_alchemy_background):
+		stage_root.resized.connect(_sync_alchemy_background)
 	_connect_button(brew_button, brew)
 	_connect_button(cancel_button, cancel_batch)
 	_connect_button(finish_night_button, _on_finish_night_pressed)
@@ -102,7 +108,32 @@ func _ready() -> void:
 	_update_navigation_arrows()
 	_refresh_ui()
 	_sync_heat_ui()
+	call_deferred("_sync_alchemy_background")
 	call_deferred("_ensure_standalone_console")
+
+
+func _process(_delta: float) -> void:
+	_sync_alchemy_background()
+
+
+func _sync_alchemy_background() -> void:
+	if not pan_background_with_stage or alchemy_background == null or stage_root == null or horizontal_stage == null:
+		return
+	var background_texture := alchemy_background.texture
+	if background_texture == null or stage_root.size.x <= 0.0:
+		return
+	var background_size := background_texture.get_size() * alchemy_background.scale.abs()
+	if background_size.x <= 0.0:
+		return
+	var stage_width := stage_root.size.x
+	var production_offset := production_panel.position.x if production_panel != null else stage_width
+	var travel_progress := clampf(-horizontal_stage.position.x / maxf(production_offset, 0.001), 0.0, 1.0)
+	# At brewing, the background's left edge is flush with the viewport.
+	# At production, its right edge is flush with the viewport.
+	var left_aligned_center := background_size.x * 0.5
+	var right_aligned_center := stage_width - background_size.x * 0.5
+	alchemy_background.position.x = lerpf(left_aligned_center, right_aligned_center, travel_progress)
+	alchemy_background.position.y = stage_root.size.y * 0.5
 
 
 func _ensure_standalone_console() -> void:

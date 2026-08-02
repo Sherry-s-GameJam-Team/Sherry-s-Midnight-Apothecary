@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://deq7wn0hm1s5b" path="res://night/alchemy/production/powder_shelf_view.tscn" id="4_shelf"]
 [ext_resource type="Script" uid="uid://hqa1qlsr7gos" path="res://shared/definitions/potion_data.gd" id="11_hti2p"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/herdsmans_loaf_bush.tres" id="18_herdsman"]
+[ext_resource type="Texture2D" uid="uid://d1r8nyft1gvmu" path="res://night/art/alchemy_background.png" id="19_hti2p"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/stardust_puffy_lion.tres" id="19_stardust"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/grail_lily.tres" id="20_grail"]
 [ext_resource type="Resource" uid="uid://bdvuhhuwtuomn" path="res://shared/definitions/data/potions/red_potion.tres" id="20_red"]
@@ -35,6 +36,11 @@ ingredients = Array[ExtResource("2_1vxw6")]([ExtResource("18_herdsman"), ExtReso
 potions = Array[ExtResource("11_hti2p")]([ExtResource("20_red"), ExtResource("21_orange"), ExtResource("22_yellow"), ExtResource("23_green"), ExtResource("24_cyan"), ExtResource("25_blue"), ExtResource("26_purple")])
 failed_potion = ExtResource("27_black")
 default_heat_profile = ExtResource("34_default_heat")
+
+[node name="AlchemyBackground" type="Sprite2D" parent="." unique_id=2064679371]
+z_index = -2
+position = Vector2(1088, 360)
+texture = ExtResource("19_hti2p")
 
 [node name="HeatController" type="Node" parent="." unique_id=1179023410]
 script = ExtResource("33_heat_controller")
@@ -73,7 +79,7 @@ anchor_left = 0.738
 anchor_top = 0.13
 anchor_right = 0.995
 anchor_bottom = 0.66
-offset_left = 58.360046
-offset_top = 16.400002
-offset_right = 472.40002
-offset_bottom = 85.79999
+offset_left = 12.360046
+offset_top = -55.6
+offset_right = 572.4
+offset_bottom = 90.79999

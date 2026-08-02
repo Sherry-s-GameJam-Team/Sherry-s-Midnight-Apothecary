@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://n7i0okqc41xm"
-path="res://.godot/imported/shelter.png-17103d3b79936954d0fc84ca9f0524fa.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://night/art/ui/shelter.png"
-dest_files=["res://.godot/imported/shelter.png-17103d3b79936954d0fc84ca9f0524fa.ctex"]
 
 [params]
 
