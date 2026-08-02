@@ -9,6 +9,8 @@ const WALK_JUMP_GRAVITY := 925.0
 const RUN_JUMP_GRAVITY := 850.0
 const AIR_CONTROL_ACCELERATION := 700.0
 const AIR_DRAG := 90.0
+const DOUBLE_TAP_WINDOW_MS := 260
+const ROLL_SPEED_MULTIPLIER := 1.8
 
 @export_group("Character Tuning")
 @export_range(0.3, 1.2, 0.01) var character_scale := 0.4:
@@ -33,6 +35,10 @@ var _horizontal_velocity := 0.0
 var _jump_speed_ratio := 0.0
 var _is_airborne := false
 var _facing_right := false
+var _is_rolling := false
+var _roll_direction := 0.0
+var _last_a_tap_ms := -10000
+var _last_d_tap_ms := -10000
 
 
 func _ready() -> void:
@@ -50,6 +56,8 @@ func _process(delta: float) -> void:
 	if not is_zero_approx(direction):
 		_facing_right = direction > 0.0
 		_apply_facing()
+	if _is_rolling:
+		sprite.position.x = clampf(sprite.position.x + _roll_direction * run_speed * ROLL_SPEED_MULTIPLIER * delta, STAGE_LEFT, STAGE_RIGHT)
 	if not _is_airborne and _state in ["walk", "run"]:
 		var speed := _current_move_speed()
 		sprite.position.x = clampf(sprite.position.x + direction * speed * delta, STAGE_LEFT, STAGE_RIGHT)
@@ -86,10 +94,11 @@ func _is_transition() -> bool:
 
 
 func _on_animation_finished() -> void:
-	if _state == "jump_takeoff":
+	if _state == "roll":
+		_is_rolling = false
+		_play(_ground_action_for(_get_input_direction()))
+	elif _state == "jump_takeoff":
 		_play("jump_fall")
-	elif _state == "land":
-		_play("idle")
 	elif _is_transition():
 		_play(_transition_target)
 
@@ -99,12 +108,14 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if key_event == null or not key_event.pressed or key_event.echo or _is_transition():
 		return
 	match key_event.keycode:
+		KEY_A, KEY_D:
+			_try_start_roll(key_event.keycode)
 		KEY_SPACE:
 			_play_one_shot("throw")
 		KEY_H:
 			_play_one_shot("hit")
 		KEY_F:
-			_play_one_shot("fall")
+			_play_one_shot("cast")
 		KEY_W:
 			_start_jump()
 
@@ -115,7 +126,7 @@ func _play_one_shot(action: String) -> void:
 
 
 func _start_jump() -> void:
-	if _is_airborne:
+	if _is_airborne or _is_rolling:
 		return
 	var takeoff_speed := absf(_get_input_direction()) * _current_move_speed()
 	_jump_speed_ratio = clampf(takeoff_speed / run_speed, 0.0, 1.0)
@@ -123,6 +134,25 @@ func _start_jump() -> void:
 	_vertical_velocity = lerpf(WALK_JUMP_VELOCITY, RUN_JUMP_VELOCITY, _jump_speed_ratio)
 	_horizontal_velocity = _get_input_direction() * takeoff_speed
 	_play("jump_takeoff")
+
+
+func _try_start_roll(keycode: int) -> void:
+	if _is_airborne or _is_rolling:
+		return
+	var now := Time.get_ticks_msec()
+	var previous_tap := _last_a_tap_ms if keycode == KEY_A else _last_d_tap_ms
+	if now - previous_tap > DOUBLE_TAP_WINDOW_MS:
+		if keycode == KEY_A:
+			_last_a_tap_ms = now
+		else:
+			_last_d_tap_ms = now
+		return
+	_last_a_tap_ms = -10000
+	_last_d_tap_ms = -10000
+	_roll_direction = -1.0 if keycode == KEY_A else 1.0
+	_facing_right = _roll_direction > 0.0
+	_is_rolling = true
+	_play("roll")
 
 
 func _update_jump(delta: float, direction: float) -> void:
@@ -142,7 +172,7 @@ func _update_jump(delta: float, direction: float) -> void:
 		_horizontal_velocity = 0.0
 		_jump_speed_ratio = 0.0
 		_is_airborne = false
-		_play("land")
+		_play(_ground_action_for(direction))
 
 
 func _apply_action_scale() -> void:
@@ -167,6 +197,12 @@ func _is_running() -> bool:
 
 func _current_move_speed() -> float:
 	return run_speed if _is_running() else walk_speed
+
+
+func _ground_action_for(direction: float) -> String:
+	if is_zero_approx(direction):
+		return "idle"
+	return "run" if _is_running() else "walk"
 
 
 func _sync_debug_panel() -> void:

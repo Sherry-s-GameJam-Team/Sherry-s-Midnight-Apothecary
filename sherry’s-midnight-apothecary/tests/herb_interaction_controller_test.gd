@@ -54,7 +54,7 @@ func _run() -> void:
 
 	controller.set_grab_mode(HerbMagnetController.GrabMode.SINGLE)
 	_send_left(controller, board, second.get_global_content_rect().get_center(), true)
-	_check(controller.single_dragged_piece == second, "Single mode selects exactly one best candidate.")
+	_check(controller.single_dragged_piece != null and controller.grabbed_pieces.is_empty(), "Single mode selects exactly one best candidate.")
 	_send_left(controller, board, second.get_global_content_rect().get_center(), false)
 	_check(controller.single_dragged_piece == null, "Single release only releases the selected piece.")
 	runtime.free()

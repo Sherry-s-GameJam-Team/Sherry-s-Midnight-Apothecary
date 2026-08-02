@@ -2,11 +2,11 @@
 
 ## 测试场景
 
-运行 `res://art/characters/sherry/sherry_test_scene.tscn` 可打开固定镜头的主角动作测试。使用 A/D 移动，按住 Shift + A/D 跑步，W 跳跃。舞台边界固定在画面内，便于直接检查角色的比例、脚底对齐和动作衔接。
+运行 `res://art/characters/sherry/sherry_test_scene.tscn` 可打开固定镜头的主角动作测试。使用 A/D 移动，双击 A 或 D 翻滚，按住 Shift + A/D 跑步，W 跳跃，F 施法。舞台边界固定在画面内，便于直接检查角色的比例、脚底对齐和动作衔接。
 
 右上角的“角色调试参数”面板会实时写入 `sherry_test_scene.gd` 的 `character_scale`、`walk_speed` 与 `run_speed` 导出参数。可直接输入或用箭头微调，改动立即生效；“恢复默认参数”会还原 0.4 / 50 / 200。测试精灵下挂一个随移动与缩放同步的 Area2D 碰撞盒，设计上覆盖躯干与腿部，不包含帽檐。
 
-`sherry_test_scene.gd` 只处理移动、状态切换和边界；它不引用任何具体图片。所有帧范围、播放速度与循环规则统一维护在 `sherry_animation_library.gd` 的 `ACTIONS`。测试场景还可按 W 跳跃、Space 预览投掷、H 预览受击、F 预览倒地。跳跃流程依次为起跳、下落、落地，碰撞箱会随精灵一起升降。起跳会继承 A/D 的水平速度；Shift 跑步起跳相比步行起跳更高、更远，空中仍可用 A/D 微调方向。
+`sherry_test_scene.gd` 只处理移动、状态切换和边界；它不引用任何具体图片。所有帧范围、播放速度与循环规则统一维护在 `sherry_animation_library.gd` 的 `ACTIONS`。测试场景还可按 W 跳跃、Space 预览投掷、H 预览受击、F 预览倒地。跳跃流程依次为起跳、下落，然后直接按当前输入切回 idle、walk 或 run；碰撞箱会随精灵一起升降。起跳会继承 A/D 的水平速度；Shift 跑步起跳相比步行起跳更高、更远，空中仍可用 A/D 微调方向。
 
 ## 当前动作表
 
@@ -20,7 +20,9 @@
 | `fall` | `frames/06_fall/` | 否 | 倒地 |
 | `jump_takeoff` | `frames/07_jump/` | 否 | 跳跃前 10 帧，起跳 |
 | `jump_fall` | `frames/07_jump/` | 是 | 跳跃后 14 帧，下落 |
-| `land` | `frames/08_land/` | 否 | 落地后播放，再回到待机 |
+| `land` | `frames/08_land/` | 否 | 已导入，当前测试状态机禁用 |
+| `roll` | `frames/09_roll/` | 否 | 双击 A/D，向该方向冲刺翻滚 |
+| `cast` | `frames/10_cast/` | 否 | F 施法，结束后回到待机 |
 
 ## 更换贴图
 

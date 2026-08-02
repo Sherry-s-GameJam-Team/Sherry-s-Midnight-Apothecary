@@ -122,10 +122,7 @@ func rebuild_interaction_mask() -> void:
 	var small_piece := _visual_alpha_pixels <= maxi(256, floori(float(image_area) * 0.12))
 	var extra := small_piece_extra_dilation if small_piece else 0
 	var radius := interaction_dilation_pixels + extra
-	for y in _texture_size.y:
-		for x in _texture_size.x:
-			if _alpha_bitmap.get_bit(x, y) or _is_small_hole_pixel(x, y):
-				_fill_interaction_disc(Vector2i(x, y), radius)
+	_build_dilated_interaction_mask(radius)
 	# Keep an explicit edge cache. Runtime hover/magnet checks never read Image data.
 	for y in _texture_size.y:
 		for x in _texture_size.x:
@@ -140,14 +137,34 @@ func build_interaction_mask() -> void:
 	rebuild_interaction_mask()
 
 
-func _fill_interaction_disc(center: Vector2i, radius: int) -> void:
-	for offset_y in range(-radius, radius + 1):
-		var remaining := radius * radius - offset_y * offset_y
-		var span := floori(sqrt(maxi(remaining, 0)))
-		for offset_x in range(-span, span + 1):
-			var point: Vector2i = center + Vector2i(offset_x, offset_y)
-			if point.x >= 0 and point.y >= 0 and point.x < _texture_size.x and point.y < _texture_size.y:
-				_interaction_bitmap.set_bit(point.x, point.y, true)
+func _build_dilated_interaction_mask(radius: int) -> void:
+	# A two-pass Manhattan distance field is linear in the image size. The old
+	# "paint a disc for every opaque pixel" approach became prohibitively slow
+	# when a dense herb was separated into many high-resolution pieces.
+	var width := _texture_size.x
+	var height := _texture_size.y
+	var distances := PackedInt32Array()
+	distances.resize(width * height)
+	distances.fill(radius + 1)
+	for y in height:
+		for x in width:
+			var index := y * width + x
+			if _alpha_bitmap.get_bit(x, y) or _is_small_hole_pixel(x, y):
+				distances[index] = 0
+				continue
+			if x > 0:
+				distances[index] = mini(distances[index], distances[index - 1] + 1)
+			if y > 0:
+				distances[index] = mini(distances[index], distances[index - width] + 1)
+	for y in range(height - 1, -1, -1):
+		for x in range(width - 1, -1, -1):
+			var index := y * width + x
+			if x + 1 < width:
+				distances[index] = mini(distances[index], distances[index + 1] + 1)
+			if y + 1 < height:
+				distances[index] = mini(distances[index], distances[index + width] + 1)
+			if distances[index] <= radius:
+				_interaction_bitmap.set_bit(x, y, true)
 
 
 func _is_small_hole_pixel(x: int, y: int) -> bool:

@@ -32,9 +32,32 @@ var _current_herb: IngredientData
 @onready var magnet_controller: HerbMagnetController = $MagnetController
 
 
+func _ready() -> void:
+	# Sprite2D offsets the visible board above the PanelContainer's own layout
+	# rectangle. Zones is therefore the authoritative interactive footprint.
+	zones.mouse_filter = Control.MOUSE_FILTER_STOP
+	zones.gui_input.connect(_on_zones_gui_input)
+
+
 func _gui_input(event: InputEvent) -> void:
 	if magnet_controller != null and magnet_controller.handle_board_input(event):
 		accept_event()
+
+
+func _on_zones_gui_input(event: InputEvent) -> void:
+	if magnet_controller == null:
+		return
+	var global_point := zones.get_global_transform() * _event_local_position(event)
+	if magnet_controller.handle_global_pointer_input(event, global_point):
+		accept_event()
+
+
+func _event_local_position(event: InputEvent) -> Vector2:
+	if event is InputEventMouseMotion:
+		return (event as InputEventMouseMotion).position
+	if event is InputEventMouseButton:
+		return (event as InputEventMouseButton).position
+	return Vector2.ZERO
 
 
 func _draw() -> void:

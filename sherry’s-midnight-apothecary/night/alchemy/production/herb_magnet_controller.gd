@@ -33,7 +33,9 @@ var locked_piece: ProductionPieceView
 var state: MagnetState:
 	get:
 		if _legacy_searching:
-			return MagnetState.SNAPPING if locked_piece != null else MagnetState.SEARCHING
+			if locked_piece == null:
+				return MagnetState.SEARCHING
+			return MagnetState.DRAGGING if _legacy_snap_elapsed >= snap_duration else MagnetState.SNAPPING
 		if multi_state == MultiGrabState.IDLE and single_dragged_piece == null:
 			return MagnetState.IDLE
 		if multi_state == MultiGrabState.HOLD_PENDING:
@@ -48,6 +50,7 @@ var _operation_serial := 0
 var _recent_operations: Dictionary = {}
 var _legacy_searching := false
 var _legacy_elapsed := 0.0
+var _legacy_snap_elapsed := 0.0
 
 
 func _ready() -> void:
@@ -78,11 +81,23 @@ func handle_board_input(event: InputEvent) -> bool:
 	if _board == null:
 		return false
 	if event is InputEventMouseMotion:
-		update_pointer(_board.get_global_transform() * (event as InputEventMouseMotion).position)
+		return handle_global_pointer_input(event, _board.get_global_transform() * (event as InputEventMouseMotion).position)
+	if event is InputEventMouseButton:
+		return handle_global_pointer_input(event, _board.get_global_transform() * (event as InputEventMouseButton).position)
+	if event is InputEventKey:
+		var key := event as InputEventKey
+		if key.pressed and not key.echo and key.keycode == KEY_ESCAPE and (single_dragged_piece != null or multi_state != MultiGrabState.IDLE):
+			cancel_current_grab()
+			return true
+	return false
+
+
+func handle_global_pointer_input(event: InputEvent, global_point: Vector2) -> bool:
+	if event is InputEventMouseMotion:
+		update_pointer(global_point)
 		return single_dragged_piece != null or multi_state != MultiGrabState.IDLE
 	if event is InputEventMouseButton:
 		var button := event as InputEventMouseButton
-		var global_point := _board.get_global_transform() * button.position
 		if button.button_index == MOUSE_BUTTON_LEFT:
 			if button.pressed:
 				if not _board.get_movement_rect().has_point(global_point):
@@ -103,11 +118,6 @@ func handle_board_input(event: InputEvent) -> bool:
 				release_multi_grab()
 				return true
 		elif button.button_index == MOUSE_BUTTON_RIGHT and button.pressed and (single_dragged_piece != null or multi_state != MultiGrabState.IDLE):
-			cancel_current_grab()
-			return true
-	if event is InputEventKey:
-		var key := event as InputEventKey
-		if key.pressed and not key.echo and key.keycode == KEY_ESCAPE and (single_dragged_piece != null or multi_state != MultiGrabState.IDLE):
 			cancel_current_grab()
 			return true
 	return false
@@ -143,13 +153,20 @@ func begin_search(global_point: Vector2) -> bool:
 	candidate_piece = _find_best_candidate(global_point, candidate_radius)
 	_legacy_searching = true
 	_legacy_elapsed = 0.0
-	if candidate_piece != null and candidate_piece.contains_global_point(global_point):
+	_legacy_snap_elapsed = 0.0
+	var direct_hit := candidate_piece != null and candidate_piece.contains_global_point(global_point)
+	if candidate_piece != null:
+		candidate_piece.set_magnet_emphasis(true, true)
+	if direct_hit:
 		_begin_legacy_drag()
 	return true
 
 
 func advance(delta: float) -> void:
-	if not _legacy_searching or locked_piece != null:
+	if not _legacy_searching:
+		return
+	if locked_piece != null:
+		_legacy_snap_elapsed += maxf(delta, 0.0)
 		return
 	_legacy_elapsed += maxf(delta, 0.0)
 	if candidate_piece != null and _legacy_elapsed >= candidate_hold_time:
@@ -161,28 +178,44 @@ func _begin_legacy_drag() -> void:
 		return
 	begin_single_drag(candidate_piece)
 	locked_piece = single_dragged_piece
+	_legacy_snap_elapsed = 0.0
 
 
 func release_piece() -> void:
 	if locked_piece != null:
 		release_single_drag()
+	if is_instance_valid(candidate_piece):
+		candidate_piece.set_magnet_emphasis(false)
 	locked_piece = null
 	candidate_piece = null
 	_legacy_searching = false
+	_legacy_snap_elapsed = 0.0
 
 
 func cancel_interaction() -> void:
 	cancel_current_grab()
+	if is_instance_valid(candidate_piece):
+		candidate_piece.set_magnet_emphasis(false)
 	locked_piece = null
 	candidate_piece = null
 	_legacy_searching = false
+	_legacy_snap_elapsed = 0.0
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).keycode == KEY_ESCAPE:
 		cancel_interaction()
-	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
-		cancel_interaction()
+	elif event is InputEventMouseButton:
+		var button := event as InputEventMouseButton
+		if button.pressed and button.button_index == MOUSE_BUTTON_RIGHT:
+			cancel_interaction()
+		elif not button.pressed and button.button_index == MOUSE_BUTTON_LEFT:
+			if _board != null:
+				pointer_global = _board.get_global_mouse_position()
+			if single_dragged_piece != null:
+				release_single_drag()
+			elif multi_state != MultiGrabState.IDLE:
+				release_multi_grab()
 
 
 func find_best_single_candidate(cursor_global: Vector2) -> ProductionPieceView:
