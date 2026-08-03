@@ -1,7 +1,7 @@
-extends Control
+extends Node2D
 
-const STAGE_LEFT := 120.0
-const STAGE_RIGHT := 1160.0
+## Town-world adaptation of sherry_test_scene.gd. It intentionally uses the
+## same animation library and input behaviour without the test scene UI.
 const WALK_JUMP_VELOCITY := -405.0
 const RUN_JUMP_VELOCITY := -450.0
 const WALK_JUMP_GRAVITY := 925.0
@@ -11,26 +11,18 @@ const AIR_DRAG := 90.0
 const DOUBLE_TAP_WINDOW_MS := 260
 const ROLL_SPEED_MULTIPLIER := 1.8
 
-@export_group("Character Tuning")
-@export_range(0.3, 1.2, 0.01) var character_scale := 0.4:
-	set(value):
-		character_scale = value
-		if is_instance_valid(sprite):
-			sprite.scale = Vector2.ONE * character_scale
-@export_range(50.0, 500.0, 5.0) var walk_speed := 50.0
-@export_range(50.0, 700.0, 5.0) var run_speed := 200.0
+@export var street_left := 96.0
+@export var street_right := 4248.0
+@export_range(0.3, 1.2, 0.01) var character_scale := 0.4
+@export_range(50.0, 500.0, 5.0) var walk_speed := 120.0
+@export_range(50.0, 700.0, 5.0) var run_speed := 360.0
 
 @onready var sprite: Node2D = %SherrySprite
-@onready var visual: Sprite2D = %SherryVisual
 @onready var animation_player: AnimationPlayer = %SherryAnimationPlayer
-@onready var state_label: Label = %StateLabel
-@onready var scale_spin: SpinBox = %ScaleSpin
-@onready var walk_speed_spin: SpinBox = %WalkSpeedSpin
-@onready var run_speed_spin: SpinBox = %RunSpeedSpin
 
 var _state := "idle"
 var _transition_target := "idle"
-var _ground_y := 515.0
+var _ground_y := 0.0
 var _vertical_velocity := 0.0
 var _horizontal_velocity := 0.0
 var _jump_speed_ratio := 0.0
@@ -44,9 +36,8 @@ var _last_d_tap_ms := -10000
 
 func _ready() -> void:
 	animation_player.animation_finished.connect(_on_animation_finished)
-	_ground_y = sprite.position.y
+	_ground_y = position.y
 	sprite.scale = Vector2.ONE * character_scale
-	_sync_debug_panel()
 	_play("idle")
 
 
@@ -61,13 +52,28 @@ func _process(delta: float) -> void:
 		_transition_target = _ground_action_for(direction)
 		_play(_transition_target)
 	if _is_rolling:
-		sprite.position.x = clampf(sprite.position.x + _roll_direction * run_speed * ROLL_SPEED_MULTIPLIER * delta, STAGE_LEFT, STAGE_RIGHT)
+		position.x = clampf(position.x + _roll_direction * run_speed * ROLL_SPEED_MULTIPLIER * delta, street_left, street_right)
 	if not _is_airborne and _state in ["walk", "run"]:
-		var speed := _current_move_speed()
-		sprite.position.x = clampf(sprite.position.x + direction * speed * delta, STAGE_LEFT, STAGE_RIGHT)
+		position.x = clampf(position.x + direction * _current_move_speed() * delta, street_left, street_right)
 	if not _is_transition() and not _is_airborne:
 		_update_locomotion(direction)
-	_update_status(direction)
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	var key_event := event as InputEventKey
+	if key_event == null or not key_event.pressed or key_event.echo or _is_transition():
+		return
+	match key_event.keycode:
+		KEY_A, KEY_D:
+			_try_start_roll(key_event.keycode)
+		KEY_SPACE:
+			_play_one_shot("throw")
+		KEY_H:
+			_play_one_shot("hit")
+		KEY_F:
+			_play_one_shot("cast")
+		KEY_W:
+			_start_jump()
 
 
 func _update_locomotion(direction: float) -> void:
@@ -76,12 +82,8 @@ func _update_locomotion(direction: float) -> void:
 			_play("idle")
 		return
 	var wants_run := _is_running()
-	if _state == "idle":
+	if _state == "idle" or (_state == "walk" and wants_run) or (_state == "run" and not wants_run):
 		_play("run" if wants_run else "walk")
-	elif _state == "walk" and wants_run:
-		_play("run")
-	elif _state == "run" and not wants_run:
-		_play("walk")
 
 
 func _play(action: String) -> void:
@@ -89,7 +91,7 @@ func _play(action: String) -> void:
 	if _state == action and animation_player.current_animation == animation_name and animation_player.is_playing():
 		return
 	_state = action
-	_apply_action_scale()
+	sprite.scale = Vector2.ONE * character_scale
 	animation_player.play(animation_name)
 
 
@@ -113,23 +115,6 @@ func _on_animation_finished(_animation_name: StringName) -> void:
 		_play(_ground_action_for(_get_input_direction()))
 	elif _is_transition():
 		_play(_transition_target)
-
-
-func _unhandled_key_input(event: InputEvent) -> void:
-	var key_event := event as InputEventKey
-	if key_event == null or not key_event.pressed or key_event.echo or _is_transition():
-		return
-	match key_event.keycode:
-		KEY_A, KEY_D:
-			_try_start_roll(key_event.keycode)
-		KEY_SPACE:
-			_play_one_shot("throw")
-		KEY_H:
-			_play_one_shot("hit")
-		KEY_F:
-			_play_one_shot("cast")
-		KEY_W:
-			_start_jump()
 
 
 func _play_one_shot(action: String) -> void:
@@ -170,16 +155,15 @@ func _try_start_roll(keycode: int) -> void:
 func _update_jump(delta: float, direction: float) -> void:
 	if not _is_airborne:
 		return
-	var air_speed := _current_move_speed()
 	if not is_zero_approx(direction):
-		_horizontal_velocity = move_toward(_horizontal_velocity, direction * air_speed, AIR_CONTROL_ACCELERATION * delta)
+		_horizontal_velocity = move_toward(_horizontal_velocity, direction * _current_move_speed(), AIR_CONTROL_ACCELERATION * delta)
 	else:
 		_horizontal_velocity = move_toward(_horizontal_velocity, 0.0, AIR_DRAG * delta)
-	sprite.position.y += _vertical_velocity * delta
-	sprite.position.x = clampf(sprite.position.x + _horizontal_velocity * delta, STAGE_LEFT, STAGE_RIGHT)
+	position.y += _vertical_velocity * delta
+	position.x = clampf(position.x + _horizontal_velocity * delta, street_left, street_right)
 	_vertical_velocity += lerpf(WALK_JUMP_GRAVITY, RUN_JUMP_GRAVITY, _jump_speed_ratio) * delta
-	if sprite.position.y >= _ground_y:
-		sprite.position.y = _ground_y
+	if position.y >= _ground_y:
+		position.y = _ground_y
 		_vertical_velocity = 0.0
 		_horizontal_velocity = 0.0
 		_jump_speed_ratio = 0.0
@@ -188,13 +172,9 @@ func _update_jump(delta: float, direction: float) -> void:
 		_play("land")
 
 
-func _apply_action_scale() -> void:
-	sprite.scale = Vector2.ONE * character_scale
-
-
 func _get_input_direction() -> float:
-	var left := 1.0 if Input.is_key_pressed(KEY_A) else 0.0
-	var right := 1.0 if Input.is_key_pressed(KEY_D) else 0.0
+	var left := 1.0 if Input.is_key_pressed(KEY_A) or Input.is_action_pressed("ui_left") else 0.0
+	var right := 1.0 if Input.is_key_pressed(KEY_D) or Input.is_action_pressed("ui_right") else 0.0
 	return right - left
 
 
@@ -210,39 +190,3 @@ func _ground_action_for(direction: float) -> String:
 	if is_zero_approx(direction):
 		return "idle"
 	return "run" if _is_running() else "walk"
-
-
-func _sync_debug_panel() -> void:
-	scale_spin.value = character_scale
-	walk_speed_spin.value = walk_speed
-	run_speed_spin.value = run_speed
-
-
-func _on_scale_spin_value_changed(value: float) -> void:
-	character_scale = value
-	_apply_action_scale()
-
-
-func _on_walk_speed_spin_value_changed(value: float) -> void:
-	walk_speed = value
-
-
-func _on_run_speed_spin_value_changed(value: float) -> void:
-	run_speed = value
-
-
-func _on_reset_tuning_pressed() -> void:
-	character_scale = 0.4
-	walk_speed = 50.0
-	run_speed = 200.0
-	_apply_action_scale()
-	_sync_debug_panel()
-
-
-func _update_status(direction: float) -> void:
-	var direction_text := "静止"
-	if direction < 0.0:
-		direction_text = "向左"
-	elif direction > 0.0:
-		direction_text = "向右"
-	state_label.text = "当前动作：%s  ·  %s" % [_state, direction_text]

@@ -1,21 +1,140 @@
 [gd_scene format=3 uid="uid://rvrl1rgl5r61"]
 
-[ext_resource type="Texture2D" uid="uid://chtl655prehoi" path="res://day/art/town/CS/town.png" id="1_wmuj7"]
+[ext_resource type="Texture2D" uid="uid://b54mr2bxi3gaf" path="res://day/art/town/FS/BG.png" id="1_fs_bg"]
+[ext_resource type="Script" uid="uid://bqxg1a8juh8ew" path="res://day/art/town/town_player.gd" id="1_player"]
+[ext_resource type="Texture2D" uid="uid://b57ln8afc42ex" path="res://day/art/town/FS/cloud.png" id="2_fs_cloud"]
+[ext_resource type="Texture2D" uid="uid://m3b6x28606g4" path="res://day/art/town/FS/town.png" id="3_fs_town"]
+[ext_resource type="Texture2D" uid="uid://dxyrs7kygp0en" path="res://day/art/town/MS/part.png" id="4_ms"]
+[ext_resource type="Texture2D" uid="uid://uhtmpmxhrukj" path="res://day/art/town/CS/center.png" id="5_cs"]
+[ext_resource type="Texture2D" uid="uid://chtl655prehoi" path="res://day/art/town/CS/town.png" id="6_cs_town"]
+[ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://art/characters/sherry/frames/12_land_to_idle/01.png" id="6_sherry"]
+[ext_resource type="Shader" uid="uid://b4kwt7ueiol0s" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="7_outline"]
+[ext_resource type="AnimationLibrary" uid="uid://c8p0f21s0sefx" path="res://art/characters/sherry/sherry_animations.tres" id="8_animations"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6svhe"]
-distance = -45.006695
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sherry_outline"]
+shader = ExtResource("7_outline")
+shader_parameter/outline_color = Color(0.12, 0.055, 0.19, 0.92)
+shader_parameter/outline_width = 1.0
 
-[node name="Town" type="Node2D" unique_id=1073758289]
+[sub_resource type="Animation" id="Animation_cloud_drift_reset"]
+resource_name = "RESET"
+length = 0.001
 
-[node name="CS" type="Node2D" parent="." unique_id=1056309552]
+[sub_resource type="Animation" id="Animation_cloud_drift"]
+resource_name = "cloud_drift"
+length = 110.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FS/CloudDrift:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 110),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2172, 0)]
+}
 
-[node name="Town" type="Sprite2D" parent="CS" unique_id=60854622]
-position = Vector2(1093, 350)
-texture = ExtResource("1_wmuj7")
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_clouds"]
+_data = {
+&"RESET": SubResource("Animation_cloud_drift_reset"),
+&"cloud_drift": SubResource("Animation_cloud_drift")
+}
 
-[node name="Area2D" type="Area2D" parent="CS" unique_id=1163179976]
-position = Vector2(7, 664)
+[node name="Town" type="Node2D" unique_id=926977197]
+texture_filter = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/Area2D" unique_id=203005537]
-position = Vector2(-7, -20)
-shape = SubResource("WorldBoundaryShape2D_6svhe")
+[node name="FS" type="Parallax2D" parent="." unique_id=1600265163]
+z_index = -20
+scroll_scale = Vector2(0.12, 0.12)
+
+[node name="Background" type="Sprite2D" parent="FS" unique_id=552597500]
+scale = Vector2(1.9755987, 1)
+texture = ExtResource("1_fs_bg")
+centered = false
+
+[node name="CloudDrift" type="Node2D" parent="FS" unique_id=540081489]
+
+[node name="Clouds" type="Sprite2D" parent="FS/CloudDrift" unique_id=668432697]
+texture = ExtResource("2_fs_cloud")
+centered = false
+
+[node name="CloudsRepeat" type="Sprite2D" parent="FS/CloudDrift" unique_id=1915558642]
+position = Vector2(2172, 0)
+texture = ExtResource("2_fs_cloud")
+centered = false
+
+[node name="DistantTown" type="Parallax2D" parent="." unique_id=394254282]
+z_index = -19
+scroll_scale = Vector2(0.5, 0.5)
+
+[node name="Artwork" type="Sprite2D" parent="DistantTown" unique_id=484273327]
+texture = ExtResource("3_fs_town")
+centered = false
+
+[node name="Artwork" type="Sprite2D" parent="DistantTown/Artwork" unique_id=765967371]
+position = Vector2(2172, 1)
+texture = ExtResource("3_fs_town")
+centered = false
+
+[node name="MS" type="Parallax2D" parent="." unique_id=980200588]
+z_index = -10
+scroll_scale = Vector2(0.68, 0.68)
+
+[node name="BuildingFacade2" type="Sprite2D" parent="MS" unique_id=474122343]
+position = Vector2(1881, 325)
+scale = Vector2(0.5787294, 0.5165746)
+texture = ExtResource("4_ms")
+centered = false
+
+[node name="BuildingFacade" type="Sprite2D" parent="MS" unique_id=659077273]
+position = Vector2(2603.0005, 329)
+scale = Vector2(0.61095756, 0.5096685)
+texture = ExtResource("4_ms")
+centered = false
+
+[node name="CS" type="Parallax2D" parent="." unique_id=1003396534]
+scroll_scale = Vector2(0.82, 0.82)
+
+[node name="TownLeft" type="Sprite2D" parent="CS" unique_id=1049310137]
+position = Vector2(1, 27)
+texture = ExtResource("6_cs_town")
+centered = false
+
+[node name="Center" type="Sprite2D" parent="CS" unique_id=1441064153]
+position = Vector2(1997, 116)
+texture = ExtResource("5_cs")
+centered = false
+
+[node name="Player" type="Node2D" parent="." unique_id=1816946551]
+z_index = 10
+position = Vector2(1086, 651)
+script = ExtResource("1_player")
+
+[node name="SherrySprite" type="Node2D" parent="Player" unique_id=797219683]
+unique_name_in_owner = true
+scale = Vector2(0.4, 0.4)
+
+[node name="SherryVisual" type="Sprite2D" parent="Player/SherrySprite" unique_id=372832376]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sherry_outline")
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("6_sherry")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=880853876]
+position = Vector2(112, -291)
+limit_left = 0
+limit_top = 0
+limit_right = 4344
+limit_bottom = 724
+position_smoothing_enabled = true
+
+[node name="SherryAnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=999933410]
+unique_name_in_owner = true
+libraries/ = ExtResource("8_animations")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1547737807]
+libraries/ = SubResource("AnimationLibrary_clouds")
+autoplay = &"cloud_drift"

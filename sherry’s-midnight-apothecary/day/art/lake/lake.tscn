@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://60b3qvvmovbl"]
+
+[ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="1_environment"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://bd0vlwhgvvean" path="res://day/art/lake/FS/skybox.png" id="3_skybox"]
+[ext_resource type="Texture2D" uid="uid://ck1h3kayl74h" path="res://day/art/lake/FS/BG.png" id="4_background"]
+[ext_resource type="Texture2D" uid="uid://dfh8am6be8ckp" path="res://day/art/lake/FS/wall.png" id="5_wall"]
+[ext_resource type="Texture2D" uid="uid://by6q655fmay87" path="res://day/art/lake/CS/fish_town.png" id="6_3e1oy"]
+[ext_resource type="Texture2D" uid="uid://db6iwtjb555mr" path="res://day/art/lake/CS/cast.png" id="6_castle"]
+[ext_resource type="Texture2D" uid="uid://i7qkrsbpy6pn" path="res://day/art/lake/CS/rock face.png" id="7_rock_face"]
+[ext_resource type="Shader" uid="uid://b4kwt7ueiol0s" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="8_outline"]
+[ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://art/characters/sherry/frames/12_land_to_idle/01.png" id="9_sherry"]
+[ext_resource type="AnimationLibrary" uid="uid://c8p0f21s0sefx" path="res://art/characters/sherry/sherry_animations.tres" id="10_animations"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="11_camera_bounds"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
+distance = -314.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
+size = Vector2(96, 1448)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry"]
+size = Vector2(76, 113)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sherry_outline"]
+shader = ExtResource("8_outline")
+shader_parameter/outline_color = Color(0.12, 0.055, 0.19, 0.92)
+shader_parameter/outline_width = 1.0
+
+[node name="Lake" type="Node2D" unique_id=288656714]
+texture_filter = 1
+position = Vector2(0, 91)
+script = ExtResource("1_environment")
+
+[node name="Sky" type="Parallax2D" parent="." unique_id=321884295]
+z_index = -40
+scroll_scale = Vector2(0.12, 0.12)
+
+[node name="SkyboxRepeat" type="Sprite2D" parent="Sky" unique_id=44801664]
+position = Vector2(-1035, -287)
+scale = Vector2(4.239411, 1.4557486)
+texture = ExtResource("3_skybox")
+centered = false
+
+[node name="FarLandscape" type="Parallax2D" parent="." unique_id=105499858]
+z_index = -30
+scroll_scale = Vector2(0.42, 0.42)
+
+[node name="Background" type="Sprite2D" parent="FarLandscape" unique_id=634367481]
+position = Vector2(180, -42)
+texture = ExtResource("4_background")
+centered = false
+
+[node name="BackgroundRepeat" type="Sprite2D" parent="FarLandscape" unique_id=1216344203]
+position = Vector2(4790, -15)
+scale = Vector2(1.0603131, 1)
+texture = ExtResource("4_background")
+centered = false
+
+[node name="BackgroundRepeat" type="Sprite2D" parent="FarLandscape/BackgroundRepeat" unique_id=1972714163]
+position = Vector2(-2301.2068, -25)
+scale = Vector2(1.0603131, 1)
+texture = ExtResource("4_background")
+centered = false
+
+[node name="Wall" type="Parallax2D" parent="." unique_id=348442243]
+z_index = -20
+scroll_scale = Vector2(0.64, 0.64)
+
+[node name="Wall" type="Sprite2D" parent="Wall" unique_id=127576558]
+position = Vector2(2039, 318)
+texture = ExtResource("5_wall")
+centered = false
+
+[node name="Ruins" type="Parallax2D" parent="." unique_id=714252074]
+z_index = -10
+scroll_scale = Vector2(0.82, 0.82)
+
+[node name="RockFace" type="Sprite2D" parent="Ruins" unique_id=405210011]
+position = Vector2(2129, 257)
+scale = Vector2(1.1316758, 1)
+texture = ExtResource("7_rock_face")
+centered = false
+
+[node name="Castle" type="Sprite2D" parent="Ruins" unique_id=1691083690]
+position = Vector2(86, -112)
+texture = ExtResource("6_3e1oy")
+centered = false
+
+[node name="Cast" type="Sprite2D" parent="Ruins" unique_id=2127979085]
+visible = false
+position = Vector2(1373, 497.00003)
+scale = Vector2(1, 0.7985939)
+texture = ExtResource("6_castle")
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=904010662]
+
+[node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1874567714]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1689202300]
+shape = SubResource("WorldBoundaryShape2D_ground")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1364934736]
+position = Vector2(48, 362)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=1859728944]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1455587599]
+position = Vector2(4296, 362)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1555765709]
+position = Vector2(2910, 67)
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=2024346040]
+z_index = 10
+position = Vector2(234, 231)
+script = ExtResource("2_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1478947864]
+position = Vector2(-10, 19.5)
+shape = SubResource("RectangleShape2D_sherry")
+
+[node name="SherrySprite" type="Node2D" parent="Player" unique_id=1152122606]
+unique_name_in_owner = true
+position = Vector2(50.999996, 7.9999995)
+scale = Vector2(0.4, 0.4)
+
+[node name="SherryVisual" type="Sprite2D" parent="Player/SherrySprite" unique_id=1339648589]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sherry_outline")
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("9_sherry")
+
+[node name="SherryAnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=624168620]
+unique_name_in_owner = true
+libraries/ = ExtResource("10_animations")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1998518796]
+position = Vector2(0, -86)
+limit_left = 98
+limit_top = -211
+limit_right = 4250
+limit_bottom = 513
+script = ExtResource("11_camera_bounds")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")

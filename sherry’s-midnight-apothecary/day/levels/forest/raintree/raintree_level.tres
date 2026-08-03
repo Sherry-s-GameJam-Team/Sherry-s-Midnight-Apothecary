@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dbw3de7r8xilv"]
 
-[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1"]
-[ext_resource type="PackedScene" path="res://day/levels/forest/raintree/raintree_environment.tscn" id="2"]
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cpg2dlpo68lpe" path="res://day/art/raintree/raintree.tscn" id="2"]
 
 [resource]
 script = ExtResource("1")
