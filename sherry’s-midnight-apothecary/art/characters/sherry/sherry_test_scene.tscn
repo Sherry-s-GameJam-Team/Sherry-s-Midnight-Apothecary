@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cfppiv3jkbjyx"]
 
 [ext_resource type="Script" uid="uid://bfjhh4x6qr3yf" path="res://art/characters/sherry/sherry_test_scene.gd" id="1_script"]
-[ext_resource type="Shader" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="2_outline"]
+[ext_resource type="Shader" uid="uid://b4kwt7ueiol0s" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="2_outline"]
 
 [sub_resource type="Gradient" id="Gradient_background"]
 colors = PackedColorArray(0.04, 0.025, 0.09, 1, 0.17, 0.08, 0.19, 1)
@@ -13,10 +13,12 @@ height = 720
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_sherry"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sherry_outline"]
 shader = ExtResource("2_outline")
+shader_parameter/outline_color = Color(0.12, 0.055, 0.19, 0.92)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sherry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry_hitbox"]
 size = Vector2(160, 270)
@@ -57,7 +59,7 @@ offset_top = 315.0
 offset_right = 1208.0
 offset_bottom = 648.0
 mouse_filter = 2
-color = Color(0.08, 0.045, 0.12, 0.8)
+color = Color(1, 1, 1, 0.8)
 
 [node name="FloorLine" type="ColorRect" parent="." unique_id=1606631773]
 layout_mode = 0
@@ -103,52 +105,51 @@ horizontal_alignment = 1
 
 [node name="SherrySprite" type="AnimatedSprite2D" parent="." unique_id=1068927545]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sherry_outline")
 position = Vector2(640, 515)
 scale = Vector2(0.4, 0.4)
-material = SubResource("ShaderMaterial_sherry_outline")
 sprite_frames = SubResource("SpriteFrames_sherry")
 
-[node name="Hitbox" type="Area2D" parent="SherrySprite"]
-collision_layer = 1
+[node name="Hitbox" type="Area2D" parent="SherrySprite" unique_id=222275984]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SherrySprite/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SherrySprite/Hitbox" unique_id=169889006]
 position = Vector2(0, 55)
 shape = SubResource("RectangleShape2D_sherry_hitbox")
 
-[node name="DebugPanel" type="PanelContainer" parent="."]
+[node name="DebugPanel" type="PanelContainer" parent="." unique_id=1134160554]
 layout_mode = 0
 offset_left = 918.0
 offset_top = 146.0
 offset_right = 1208.0
 offset_bottom = 300.0
 
-[node name="Margin" type="MarginContainer" parent="DebugPanel"]
+[node name="Margin" type="MarginContainer" parent="DebugPanel" unique_id=409594967]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 10
 
-[node name="Rows" type="VBoxContainer" parent="DebugPanel/Margin"]
+[node name="Rows" type="VBoxContainer" parent="DebugPanel/Margin" unique_id=369500433]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="Title" type="Label" parent="DebugPanel/Margin/Rows"]
+[node name="Title" type="Label" parent="DebugPanel/Margin/Rows" unique_id=1301907180]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.84, 0.57, 1)
 theme_override_font_sizes/font_size = 17
 text = "角色调试参数（实时注入）"
 
-[node name="ScaleRow" type="HBoxContainer" parent="DebugPanel/Margin/Rows"]
+[node name="ScaleRow" type="HBoxContainer" parent="DebugPanel/Margin/Rows" unique_id=409217748]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="DebugPanel/Margin/Rows/ScaleRow"]
+[node name="Label" type="Label" parent="DebugPanel/Margin/Rows/ScaleRow" unique_id=1779013697]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "大小"
 
-[node name="ScaleSpin" type="SpinBox" parent="DebugPanel/Margin/Rows/ScaleRow"]
+[node name="ScaleSpin" type="SpinBox" parent="DebugPanel/Margin/Rows/ScaleRow" unique_id=1261516763]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(108, 0)
 layout_mode = 2
@@ -157,15 +158,15 @@ max_value = 1.2
 step = 0.01
 value = 0.4
 
-[node name="WalkRow" type="HBoxContainer" parent="DebugPanel/Margin/Rows"]
+[node name="WalkRow" type="HBoxContainer" parent="DebugPanel/Margin/Rows" unique_id=1511130889]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="DebugPanel/Margin/Rows/WalkRow"]
+[node name="Label" type="Label" parent="DebugPanel/Margin/Rows/WalkRow" unique_id=283929525]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "步行速度"
 
-[node name="WalkSpeedSpin" type="SpinBox" parent="DebugPanel/Margin/Rows/WalkRow"]
+[node name="WalkSpeedSpin" type="SpinBox" parent="DebugPanel/Margin/Rows/WalkRow" unique_id=1699478893]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(108, 0)
 layout_mode = 2
@@ -174,15 +175,15 @@ max_value = 500.0
 step = 5.0
 value = 50.0
 
-[node name="RunRow" type="HBoxContainer" parent="DebugPanel/Margin/Rows"]
+[node name="RunRow" type="HBoxContainer" parent="DebugPanel/Margin/Rows" unique_id=1719281212]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="DebugPanel/Margin/Rows/RunRow"]
+[node name="Label" type="Label" parent="DebugPanel/Margin/Rows/RunRow" unique_id=1106485510]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "跑步速度"
 
-[node name="RunSpeedSpin" type="SpinBox" parent="DebugPanel/Margin/Rows/RunRow"]
+[node name="RunSpeedSpin" type="SpinBox" parent="DebugPanel/Margin/Rows/RunRow" unique_id=1815896233]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(108, 0)
 layout_mode = 2
@@ -191,7 +192,7 @@ max_value = 700.0
 step = 5.0
 value = 200.0
 
-[node name="ResetTuning" type="Button" parent="DebugPanel/Margin/Rows"]
+[node name="ResetTuning" type="Button" parent="DebugPanel/Margin/Rows" unique_id=847099298]
 layout_mode = 2
 text = "恢复默认参数"
 
