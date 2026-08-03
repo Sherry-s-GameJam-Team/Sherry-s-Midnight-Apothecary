@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ckch5r1m2f8oo"]
+
+[ext_resource type="Shader" uid="uid://6rlmlioft12x" path="res://assets/shader/shader.gdshader" id="1_hd81n"]
+[ext_resource type="Texture2D" uid="uid://b6cjmch52s2x0" path="res://assets/shader/shader-texture_2.png" id="2_28brt"]
+
+[resource]
+shader = ExtResource("1_hd81n")
+shader_parameter/overlay = ExtResource("2_28brt")
+shader_parameter/fg_color = Color(1, 0, 0, 1)
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/tolerance = 0.0
+shader_parameter/tile_size = 144.0
