@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bfjhh4x6qr3yf" path="res://art/characters/sherry/sherry_test_scene.gd" id="1_script"]
 [ext_resource type="Shader" uid="uid://b4kwt7ueiol0s" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="2_outline"]
+[ext_resource type="AnimationLibrary" uid="uid://c8p0f21s0sefx" path="res://art/characters/sherry/sherry_animations.tres" id="3_animations"]
+[ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://art/characters/sherry/frames/12_land_to_idle/01.png" id="3_g36oi"]
 
 [sub_resource type="Gradient" id="Gradient_background"]
 colors = PackedColorArray(0.04, 0.025, 0.09, 1, 0.17, 0.08, 0.19, 1)
@@ -18,10 +20,8 @@ shader = ExtResource("2_outline")
 shader_parameter/outline_color = Color(0.12, 0.055, 0.19, 0.92)
 shader_parameter/outline_width = 1.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_sherry"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry_hitbox"]
-size = Vector2(160, 270)
+size = Vector2(193.4079, 280.3402)
 
 [node name="SherryTestScene" type="Control" unique_id=391606325]
 layout_mode = 3
@@ -103,19 +103,28 @@ theme_override_colors/font_color = Color(0.93, 0.78, 0.53, 1)
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
 
-[node name="SherrySprite" type="AnimatedSprite2D" parent="." unique_id=1068927545]
+[node name="SherrySprite" type="Node2D" parent="." unique_id=1068927545]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_sherry_outline")
 position = Vector2(640, 515)
 scale = Vector2(0.4, 0.4)
-sprite_frames = SubResource("SpriteFrames_sherry")
 
-[node name="Hitbox" type="Area2D" parent="SherrySprite" unique_id=222275984]
+[node name="SherryVisual" type="Sprite2D" parent="SherrySprite" unique_id=177691841]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sherry_outline")
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("3_g36oi")
+
+[node name="Hitbox" type="Area2D" parent="SherrySprite/SherryVisual" unique_id=222275984]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SherrySprite/Hitbox" unique_id=169889006]
-position = Vector2(0, 55)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SherrySprite/SherryVisual/Hitbox" unique_id=169889006]
+position = Vector2(-5.555518, 47.222237)
+scale = Vector2(1.0000002, 1.0000002)
 shape = SubResource("RectangleShape2D_sherry_hitbox")
+
+[node name="SherryAnimationPlayer" type="AnimationPlayer" parent="." unique_id=1676909020]
+unique_name_in_owner = true
+libraries/ = ExtResource("3_animations")
 
 [node name="DebugPanel" type="PanelContainer" parent="." unique_id=1134160554]
 layout_mode = 0

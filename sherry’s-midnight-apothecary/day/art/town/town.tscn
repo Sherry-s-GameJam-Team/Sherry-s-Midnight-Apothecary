@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://rvrl1rgl5r61"]
+
+[ext_resource type="Texture2D" uid="uid://chtl655prehoi" path="res://day/art/town/CS/town.png" id="1_wmuj7"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6svhe"]
+distance = -45.006695
+
+[node name="Town" type="Node2D" unique_id=1073758289]
+
+[node name="CS" type="Node2D" parent="." unique_id=1056309552]
+
+[node name="Town" type="Sprite2D" parent="CS" unique_id=60854622]
+position = Vector2(1093, 350)
+texture = ExtResource("1_wmuj7")
+
+[node name="Area2D" type="Area2D" parent="CS" unique_id=1163179976]
+position = Vector2(7, 664)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/Area2D" unique_id=203005537]
+position = Vector2(-7, -20)
+shape = SubResource("WorldBoundaryShape2D_6svhe")

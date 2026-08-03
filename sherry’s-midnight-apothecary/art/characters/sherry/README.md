@@ -1,42 +1,25 @@
-# Sherry 主角贴图与动作约定
+# Sherry 角色动画
 
-## 测试场景
+## 编辑逐帧动画
 
-运行 `res://art/characters/sherry/sherry_test_scene.tscn` 可打开固定镜头的主角动作测试。使用 A/D 移动，双击 A 或 D 翻滚，按住 Shift + A/D 跑步，W 跳跃，F 施法。舞台边界固定在画面内，便于直接检查角色的比例、脚底对齐和动作衔接。
+打开 `res://art/characters/sherry/sherry_test_scene.tscn`，在场景树中选择 `SherryAnimationPlayer`。底部的 **Animation** 面板会显示所有动作及其逐帧关键帧。
 
-右上角的“角色调试参数”面板会实时写入 `sherry_test_scene.gd` 的 `character_scale`、`walk_speed` 与 `run_speed` 导出参数。可直接输入或用箭头微调，改动立即生效；“恢复默认参数”会还原 0.4 / 50 / 200。测试精灵下挂一个随移动与缩放同步的 Area2D 碰撞盒，设计上覆盖躯干与腿部，不包含帽檐。
+每个动作都有三条显式轨道：
 
-`sherry_test_scene.gd` 只处理移动、状态切换和边界；它不引用任何具体图片。所有帧范围、播放速度与循环规则统一维护在 `sherry_animation_library.gd` 的 `ACTIONS`。测试场景还可按 W 跳跃、Space 预览投掷、H 预览受击、F 预览倒地。跳跃流程依次为起跳、下落，然后直接按当前输入切回 idle、walk 或 run；碰撞箱会随精灵一起升降。起跳会继承 A/D 的水平速度；Shift 跑步起跳相比步行起跳更高、更远，空中仍可用 A/D 微调方向。
+- `SherryVisual:texture`：该帧显示的贴图；
+- `SherryVisual:position`：该帧相对于角色根节点的局部位置；
+- `SherryVisual:scale`：该帧的局部缩放。
 
-## 当前动作表
+在时间轴上选中任意关键帧后，可直接在 Inspector 或画布中调整 `SherryVisual` 的位置与缩放。角色根节点 `SherrySprite` 的位置由移动和跳跃算法控制，请不要用它来进行逐帧对位。
 
-| 动作名 | 贴图目录 | 循环 | 用途 |
-| --- | --- | --- | --- |
-| `idle` | `frames/01_idle/` | 是 | 默认待机，顺序循环 |
-| `walk` | `frames/02_walk/` | 是 | 普通移动 |
-| `run` | `frames/03_run/` | 是 | 跑步移动 |
-| `throw` | `frames/04_throw/` | 否 | 投掷 |
-| `hit` | `frames/05_hit/` | 否 | 受击（48 FPS，约 0.29 秒） |
-| `fall` | `frames/06_fall/` | 否 | 倒地 |
-| `jump_takeoff` | `frames/07_jump/` | 否 | 跳跃前 10 帧，起跳 |
-| `jump_fall` | `frames/07_jump/` | 是 | 跳跃后 14 帧，下落 |
-| `land` | `frames/08_land/` | 否 | 已导入，当前测试状态机禁用 |
-| `roll` | `frames/09_roll/` | 否 | 双击 A/D，向该方向冲刺翻滚 |
-| `cast` | `frames/10_cast/` | 否 | F 施法，结束后回到待机 |
+## 动作流程
 
-## 更换贴图
+- `idle`、`walk`、`run`：循环动作。
+- 跳跃：`prejump → jump_takeoff → jump_fall`。
+- 落地：`jump_fall → land → land_to_idle → idle / walk / run`。
+- `prejump` 的运动与跳跃物理同时进行，不会静止。
+- `land_to_idle` 以 18 FPS 播放；`prejump` 为 12 FPS。
 
-保持动作名和帧数量不变时，直接以同名 PNG 覆盖 `frames/` 下对应目录文件；重新运行场景即可。若帧数量变化，只需修改动画库中动作条目的 `first` 和 `last`。`idle` 从 `idle_001` 顺序播放至 `idle_024` 后循环。当前贴图为 480×432，并在测试场景以 0.62 倍缩放显示。
+所有动画帧和关键帧均保存在 `sherry_animations.tres`，而非运行时脚本生成。
 
-测试场景使用 `sherry_inset_outline.gdshader` 在角色轮廓内侧绘制深紫勾线，不改写贴图像素，也不会扩展角色外轮廓。可在 ShaderMaterial 中调整 `outline_color` 和 `outline_width`。
-
-若新贴图的默认朝向与当前贴图不同，修改 `sherry_test_scene.gd` 顶部的 `FACE_RIGHT_REQUIRES_FLIP`；无需改动状态机。
-
-## 增加新动作
-
-1. 在 `frames/` 下创建动作目录，例如 `07_brew/`，并使用 `brew_000.png` 这类三位连续编号。
-2. 在 `SherryAnimationLibrary.ACTIONS` 新增同名条目，填写目录、文件前缀、首尾编号、`fps` 与 `loop`。
-3. 在 `sherry_test_scene.gd` 的状态机中定义进入条件；一次性动作设置 `_transition_target = "idle"` 后调用 `_play("brew")`，循环动作直接调用 `_play("brew")`。
-4. 运行测试场景，确认首尾帧、脚底位置和结束后目标动作。
-
-新增动作不必改动场景节点或重新配置 `AnimatedSprite2D`；动画库会在运行时把所有条目安装到精灵帧集合中。
+每个左向动作都有对应的 `*_right` 动画轨道。右向轨道复用相同的左向 PNG 与位置关键帧，只在 `SherryVisual:scale` 的逐帧关键帧中设置负 X 缩放；角色脚本仅选择显式动画名称，不会再镜像节点或贴图。

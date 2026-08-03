@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://xee4rh3e4gnk"]
+[gd_resource type="TileSet" format=3 uid="uid://xee4rh3e4gnk"]
 
 [ext_resource type="Texture2D" uid="uid://c5yogecrq5jqd" path="res://assets/Hex Dual Vert Tall Standard - 96x128tri 128x110hex.png" id="1_oqnn8"]
 [ext_resource type="Texture2D" uid="uid://0tjyg7bu5ijr" path="res://assets/Hex Full Tiles Logo.png" id="2_0grct"]

@@ -1,6 +1,5 @@
 extends Control
 
-const SherryFrames := preload("res://art/characters/sherry/sherry_animation_library.gd")
 const STAGE_LEFT := 120.0
 const STAGE_RIGHT := 1160.0
 const WALK_JUMP_VELOCITY := -405.0
@@ -21,7 +20,9 @@ const ROLL_SPEED_MULTIPLIER := 1.8
 @export_range(50.0, 500.0, 5.0) var walk_speed := 50.0
 @export_range(50.0, 700.0, 5.0) var run_speed := 200.0
 
-@onready var sprite: AnimatedSprite2D = %SherrySprite
+@onready var sprite: Node2D = %SherrySprite
+@onready var visual: Sprite2D = %SherryVisual
+@onready var animation_player: AnimationPlayer = %SherryAnimationPlayer
 @onready var state_label: Label = %StateLabel
 @onready var scale_spin: SpinBox = %ScaleSpin
 @onready var walk_speed_spin: SpinBox = %WalkSpeedSpin
@@ -42,8 +43,7 @@ var _last_d_tap_ms := -10000
 
 
 func _ready() -> void:
-	SherryFrames.install_into(sprite.sprite_frames)
-	sprite.animation_finished.connect(_on_animation_finished)
+	animation_player.animation_finished.connect(_on_animation_finished)
 	_ground_y = sprite.position.y
 	sprite.scale = Vector2.ONE * character_scale
 	_sync_debug_panel()
@@ -53,9 +53,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var direction := _get_input_direction()
 	_update_jump(delta, direction)
-	if not is_zero_approx(direction):
+	if not is_zero_approx(direction) and _facing_right != (direction > 0.0):
 		_facing_right = direction > 0.0
-		_apply_facing()
+		if not _is_transition():
+			_play(_state)
 	if _is_rolling:
 		sprite.position.x = clampf(sprite.position.x + _roll_direction * run_speed * ROLL_SPEED_MULTIPLIER * delta, STAGE_LEFT, STAGE_RIGHT)
 	if not _is_airborne and _state in ["walk", "run"]:
@@ -81,24 +82,31 @@ func _update_locomotion(direction: float) -> void:
 
 
 func _play(action: String) -> void:
-	if _state == action and sprite.is_playing():
+	var animation_name := "%s_right" % action if _facing_right else action
+	if _state == action and animation_player.current_animation == animation_name and animation_player.is_playing():
 		return
 	_state = action
 	_apply_action_scale()
-	_apply_facing()
-	sprite.play(action)
+	animation_player.play(animation_name)
 
 
 func _is_transition() -> bool:
-	return not SherryFrames.ACTIONS[_state]["loop"]
+	var animation := animation_player.get_animation(_state)
+	return animation == null or animation.loop_mode == Animation.LOOP_NONE
 
 
-func _on_animation_finished() -> void:
+func _on_animation_finished(_animation_name: StringName) -> void:
 	if _state == "roll":
 		_is_rolling = false
 		_play(_ground_action_for(_get_input_direction()))
+	elif _state == "prejump":
+		_play("jump_takeoff")
 	elif _state == "jump_takeoff":
 		_play("jump_fall")
+	elif _state == "land":
+		_play("land_to_idle")
+	elif _state == "land_to_idle":
+		_play(_transition_target)
 	elif _is_transition():
 		_play(_transition_target)
 
@@ -133,7 +141,7 @@ func _start_jump() -> void:
 	_is_airborne = true
 	_vertical_velocity = lerpf(WALK_JUMP_VELOCITY, RUN_JUMP_VELOCITY, _jump_speed_ratio)
 	_horizontal_velocity = _get_input_direction() * takeoff_speed
-	_play("jump_takeoff")
+	_play("prejump")
 
 
 func _try_start_roll(keycode: int) -> void:
@@ -172,17 +180,12 @@ func _update_jump(delta: float, direction: float) -> void:
 		_horizontal_velocity = 0.0
 		_jump_speed_ratio = 0.0
 		_is_airborne = false
-		_play(_ground_action_for(direction))
+		_transition_target = _ground_action_for(direction)
+		_play("land")
 
 
 func _apply_action_scale() -> void:
-	var scale_multiplier: float = SherryFrames.ACTIONS[_state].get("scale_multiplier", 1.0)
-	sprite.scale = Vector2.ONE * character_scale * scale_multiplier
-
-
-func _apply_facing() -> void:
-	var faces_right_by_default: bool = SherryFrames.ACTIONS[_state].get("faces_right_by_default", false)
-	sprite.flip_h = _facing_right != faces_right_by_default
+	sprite.scale = Vector2.ONE * character_scale
 
 
 func _get_input_direction() -> float:
