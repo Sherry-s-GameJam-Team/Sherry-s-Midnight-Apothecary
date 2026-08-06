@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://6h55aginnmsp"]
+[gd_resource type="TileSet" format=3 uid="uid://6h55aginnmsp"]
 
 [ext_resource type="Texture2D" uid="uid://b12nreyobada4" path="res://assets/shader/shader-atlas.tres" id="1_w18rg"]
 

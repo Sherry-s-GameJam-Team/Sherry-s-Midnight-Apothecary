@@ -12,15 +12,234 @@
 [ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://art/characters/sherry/frames/12_land_to_idle/01.png" id="9_sherry"]
 [ext_resource type="AnimationLibrary" uid="uid://c8p0f21s0sefx" path="res://art/characters/sherry/sherry_animations.tres" id="10_animations"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="11_camera_bounds"]
+[ext_resource type="Texture2D" uid="uid://bfx1h6e4sg8hu" path="res://examples/replace.png" id="12_replace_tiles"]
+[ext_resource type="Texture2D" uid="uid://m6r6wdeqb1h3" path="res://examples/re2.png" id="13_re2_tiles"]
+[ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="14_tile_ghost"]
+[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="15_tile_dual"]
+[ext_resource type="Script" uid="uid://d4mqw3dv3l4ye" path="res://day/art/lake/lake_tile_edit_algorithm.gd" id="16_tile_algorithm"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
-distance = -314.0
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lake_replace"]
+texture = ExtResource("12_replace_tiles")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrains_peering_bit/bottom_right_corner = 0
+0:0/0/terrains_peering_bit/bottom_left_corner = 1
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 1
+1:0/0/terrains_peering_bit/bottom_left_corner = 0
+1:0/0/terrains_peering_bit/top_left_corner = 0
+1:0/0/terrains_peering_bit/top_right_corner = 1
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 1
+2:0/0/terrains_peering_bit/bottom_left_corner = 1
+2:0/0/terrains_peering_bit/top_left_corner = 1
+2:0/0/terrains_peering_bit/top_right_corner = 0
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrains_peering_bit/bottom_right_corner = 1
+3:0/0/terrains_peering_bit/bottom_left_corner = 1
+3:0/0/terrains_peering_bit/top_left_corner = 0
+3:0/0/terrains_peering_bit/top_right_corner = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/bottom_right_corner = 1
+0:1/0/terrains_peering_bit/bottom_left_corner = 0
+0:1/0/terrains_peering_bit/top_left_corner = 1
+0:1/0/terrains_peering_bit/top_right_corner = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrains_peering_bit/bottom_right_corner = 1
+1:1/0/terrains_peering_bit/bottom_left_corner = 1
+1:1/0/terrains_peering_bit/top_left_corner = 0
+1:1/0/terrains_peering_bit/top_right_corner = 1
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrain = 1
+2:1/0/terrains_peering_bit/bottom_right_corner = 1
+2:1/0/terrains_peering_bit/bottom_left_corner = 1
+2:1/0/terrains_peering_bit/top_left_corner = 1
+2:1/0/terrains_peering_bit/top_right_corner = 1
+3:1/0 = 0
+3:1/0/terrain_set = 0
+3:1/0/terrains_peering_bit/bottom_right_corner = 0
+3:1/0/terrains_peering_bit/bottom_left_corner = 1
+3:1/0/terrains_peering_bit/top_left_corner = 1
+3:1/0/terrains_peering_bit/top_right_corner = 1
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrains_peering_bit/bottom_right_corner = 0
+0:2/0/terrains_peering_bit/bottom_left_corner = 0
+0:2/0/terrains_peering_bit/top_left_corner = 0
+0:2/0/terrains_peering_bit/top_right_corner = 1
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/bottom_right_corner = 0
+1:2/0/terrains_peering_bit/bottom_left_corner = 0
+1:2/0/terrains_peering_bit/top_left_corner = 1
+1:2/0/terrains_peering_bit/top_right_corner = 1
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/terrains_peering_bit/bottom_right_corner = 1
+2:2/0/terrains_peering_bit/bottom_left_corner = 0
+2:2/0/terrains_peering_bit/top_left_corner = 1
+2:2/0/terrains_peering_bit/top_right_corner = 1
+3:2/0 = 0
+3:2/0/terrain_set = 0
+3:2/0/terrains_peering_bit/bottom_right_corner = 0
+3:2/0/terrains_peering_bit/bottom_left_corner = 1
+3:2/0/terrains_peering_bit/top_left_corner = 1
+3:2/0/terrains_peering_bit/top_right_corner = 0
+0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/terrain = 0
+0:3/0/terrains_peering_bit/bottom_right_corner = 0
+0:3/0/terrains_peering_bit/bottom_left_corner = 0
+0:3/0/terrains_peering_bit/top_left_corner = 0
+0:3/0/terrains_peering_bit/top_right_corner = 0
+1:3/0 = 0
+1:3/0/terrain_set = 0
+1:3/0/terrains_peering_bit/bottom_right_corner = 1
+1:3/0/terrains_peering_bit/bottom_left_corner = 0
+1:3/0/terrains_peering_bit/top_left_corner = 0
+1:3/0/terrains_peering_bit/top_right_corner = 0
+2:3/0 = 0
+2:3/0/terrain_set = 0
+2:3/0/terrains_peering_bit/bottom_right_corner = 0
+2:3/0/terrains_peering_bit/bottom_left_corner = 1
+2:3/0/terrains_peering_bit/top_left_corner = 0
+2:3/0/terrains_peering_bit/top_right_corner = 1
+3:3/0 = 0
+3:3/0/terrain_set = 0
+3:3/0/terrains_peering_bit/bottom_right_corner = 0
+3:3/0/terrains_peering_bit/bottom_left_corner = 0
+3:3/0/terrains_peering_bit/top_left_corner = 1
+3:3/0/terrains_peering_bit/top_right_corner = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lake_re2"]
+texture = ExtResource("13_re2_tiles")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrains_peering_bit/bottom_right_corner = 0
+0:0/0/terrains_peering_bit/bottom_left_corner = 1
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 1
+1:0/0/terrains_peering_bit/bottom_left_corner = 0
+1:0/0/terrains_peering_bit/top_left_corner = 0
+1:0/0/terrains_peering_bit/top_right_corner = 1
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 1
+2:0/0/terrains_peering_bit/bottom_left_corner = 1
+2:0/0/terrains_peering_bit/top_left_corner = 1
+2:0/0/terrains_peering_bit/top_right_corner = 0
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrains_peering_bit/bottom_right_corner = 1
+3:0/0/terrains_peering_bit/bottom_left_corner = 1
+3:0/0/terrains_peering_bit/top_left_corner = 0
+3:0/0/terrains_peering_bit/top_right_corner = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/bottom_right_corner = 1
+0:1/0/terrains_peering_bit/bottom_left_corner = 0
+0:1/0/terrains_peering_bit/top_left_corner = 1
+0:1/0/terrains_peering_bit/top_right_corner = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrains_peering_bit/bottom_right_corner = 1
+1:1/0/terrains_peering_bit/bottom_left_corner = 1
+1:1/0/terrains_peering_bit/top_left_corner = 0
+1:1/0/terrains_peering_bit/top_right_corner = 1
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrain = 1
+2:1/0/terrains_peering_bit/bottom_right_corner = 1
+2:1/0/terrains_peering_bit/bottom_left_corner = 1
+2:1/0/terrains_peering_bit/top_left_corner = 1
+2:1/0/terrains_peering_bit/top_right_corner = 1
+3:1/0 = 0
+3:1/0/terrain_set = 0
+3:1/0/terrains_peering_bit/bottom_right_corner = 0
+3:1/0/terrains_peering_bit/bottom_left_corner = 1
+3:1/0/terrains_peering_bit/top_left_corner = 1
+3:1/0/terrains_peering_bit/top_right_corner = 1
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrains_peering_bit/bottom_right_corner = 0
+0:2/0/terrains_peering_bit/bottom_left_corner = 0
+0:2/0/terrains_peering_bit/top_left_corner = 0
+0:2/0/terrains_peering_bit/top_right_corner = 1
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/bottom_right_corner = 0
+1:2/0/terrains_peering_bit/bottom_left_corner = 0
+1:2/0/terrains_peering_bit/top_left_corner = 1
+1:2/0/terrains_peering_bit/top_right_corner = 1
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/terrains_peering_bit/bottom_right_corner = 1
+2:2/0/terrains_peering_bit/bottom_left_corner = 0
+2:2/0/terrains_peering_bit/top_left_corner = 1
+2:2/0/terrains_peering_bit/top_right_corner = 1
+3:2/0 = 0
+3:2/0/terrain_set = 0
+3:2/0/terrains_peering_bit/bottom_right_corner = 0
+3:2/0/terrains_peering_bit/bottom_left_corner = 1
+3:2/0/terrains_peering_bit/top_left_corner = 1
+3:2/0/terrains_peering_bit/top_right_corner = 0
+0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/terrain = 0
+0:3/0/terrains_peering_bit/bottom_right_corner = 0
+0:3/0/terrains_peering_bit/bottom_left_corner = 0
+0:3/0/terrains_peering_bit/top_left_corner = 0
+0:3/0/terrains_peering_bit/top_right_corner = 0
+1:3/0 = 0
+1:3/0/terrain_set = 0
+1:3/0/terrains_peering_bit/bottom_right_corner = 1
+1:3/0/terrains_peering_bit/bottom_left_corner = 0
+1:3/0/terrains_peering_bit/top_left_corner = 0
+1:3/0/terrains_peering_bit/top_right_corner = 0
+2:3/0 = 0
+2:3/0/terrain_set = 0
+2:3/0/terrains_peering_bit/bottom_right_corner = 0
+2:3/0/terrains_peering_bit/bottom_left_corner = 1
+2:3/0/terrains_peering_bit/top_left_corner = 0
+2:3/0/terrains_peering_bit/top_right_corner = 1
+3:3/0 = 0
+3:3/0/terrain_set = 0
+3:3/0/terrains_peering_bit/bottom_right_corner = 0
+3:3/0/terrains_peering_bit/bottom_left_corner = 0
+3:3/0/terrains_peering_bit/top_left_corner = 1
+3:3/0/terrains_peering_bit/top_right_corner = 0
+
+[sub_resource type="TileSet" id="TileSet_lake_editor"]
+tile_size = Vector2i(32, 32)
+terrain_set_0/mode = 1
+terrain_set_0/terrain_0/name = "<any>"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "Stone"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+sources/0 = SubResource("TileSetAtlasSource_lake_replace")
+sources/1 = SubResource("TileSetAtlasSource_lake_re2")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3e1oy"]
+size = Vector2(2511.5, 323)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1448)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry"]
-size = Vector2(76, 113)
+size = Vector2(76, 122.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sherry_outline"]
 shader = ExtResource("8_outline")
@@ -51,14 +270,14 @@ position = Vector2(180, -42)
 texture = ExtResource("4_background")
 centered = false
 
-[node name="BackgroundRepeat" type="Sprite2D" parent="FarLandscape" unique_id=1216344203]
-position = Vector2(4790, -15)
-scale = Vector2(1.0603131, 1)
+[node name="BackgroundRepeat2" type="Sprite2D" parent="FarLandscape" unique_id=1972714163]
+position = Vector2(2377.9998, -32)
+scale = Vector2(1.1242639, 1)
 texture = ExtResource("4_background")
 centered = false
 
-[node name="BackgroundRepeat" type="Sprite2D" parent="FarLandscape/BackgroundRepeat" unique_id=1972714163]
-position = Vector2(-2301.2068, -25)
+[node name="BackgroundRepeat" type="Sprite2D" parent="FarLandscape" unique_id=1216344203]
+position = Vector2(4819, -32)
 scale = Vector2(1.0603131, 1)
 texture = ExtResource("4_background")
 centered = false
@@ -72,12 +291,17 @@ position = Vector2(2039, 318)
 texture = ExtResource("5_wall")
 centered = false
 
+[node name="Wall" type="Sprite2D" parent="Wall/Wall" unique_id=859509878]
+position = Vector2(-1878, -2)
+texture = ExtResource("5_wall")
+centered = false
+
 [node name="Ruins" type="Parallax2D" parent="." unique_id=714252074]
 z_index = -10
 scroll_scale = Vector2(0.82, 0.82)
 
 [node name="RockFace" type="Sprite2D" parent="Ruins" unique_id=405210011]
-position = Vector2(2129, 257)
+position = Vector2(2104, 302)
 scale = Vector2(1.1316758, 1)
 texture = ExtResource("7_rock_face")
 centered = false
@@ -93,12 +317,25 @@ position = Vector2(1373, 497.00003)
 scale = Vector2(1, 0.7985939)
 texture = ExtResource("6_castle")
 
+[node name="TileEditSurface" type="TileMapLayer" parent="." unique_id=686232628]
+z_index = 1
+material = ExtResource("14_tile_ghost")
+position = Vector2(1368, 76)
+tile_set = SubResource("TileSet_lake_editor")
+script = ExtResource("15_tile_dual")
+godot_4_3_compatibility = false
+
+[node name="TileEditAlgorithm" type="Node" parent="." unique_id=1840726412]
+script = ExtResource("16_tile_algorithm")
+
 [node name="WorldBounds" type="Node2D" parent="." unique_id=904010662]
 
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1874567714]
+position = Vector2(9, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1689202300]
-shape = SubResource("WorldBoundaryShape2D_ground")
+position = Vector2(1361.25, 523.5)
+shape = SubResource("RectangleShape2D_3e1oy")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1364934736]
 position = Vector2(48, 362)
@@ -115,11 +352,11 @@ shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2024346040]
 z_index = 10
-position = Vector2(234, 231)
+position = Vector2(235, 265)
 script = ExtResource("2_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1478947864]
-position = Vector2(-10, 19.5)
+position = Vector2(-2, 35.25)
 shape = SubResource("RectangleShape2D_sherry")
 
 [node name="SherrySprite" type="Node2D" parent="Player" unique_id=1152122606]
@@ -130,7 +367,7 @@ scale = Vector2(0.4, 0.4)
 [node name="SherryVisual" type="Sprite2D" parent="Player/SherrySprite" unique_id=1339648589]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_sherry_outline")
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.88181823, 0.9)
 texture = ExtResource("9_sherry")
 
 [node name="SherryAnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=624168620]
