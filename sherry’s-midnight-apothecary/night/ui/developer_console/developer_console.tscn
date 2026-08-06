@@ -39,7 +39,7 @@ text = "SHERRY DEV CONSOLE"
 [node name="Hint" type="Label" parent="ConsoleLayout/Header"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.64, 0.66, 1)
-text = "~ / F1 开关    ↑↓ 历史    help 命令列表"
+text = "~ / F1 开关    打开后独占键盘 / Esc 关闭并返回操控"
 
 [node name="Output" type="RichTextLabel" parent="ConsoleLayout"]
 unique_name_in_owner = true

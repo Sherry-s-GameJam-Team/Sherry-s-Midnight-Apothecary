@@ -13,6 +13,8 @@ const ROLL_SPEED_MULTIPLIER := 1.8
 
 @export var street_left := 96.0
 @export var street_right := 4248.0
+@export_node_path("CollisionShape2D") var left_barrier_path: NodePath
+@export_node_path("CollisionShape2D") var right_barrier_path: NodePath
 @export_range(0.3, 1.2, 0.01) var character_scale := 0.4
 @export_range(50.0, 500.0, 5.0) var walk_speed := 120.0
 @export_range(50.0, 700.0, 5.0) var run_speed := 360.0
@@ -36,9 +38,24 @@ var _last_d_tap_ms := -10000
 
 func _ready() -> void:
 	animation_player.animation_finished.connect(_on_animation_finished)
+	_sync_street_bounds()
 	_ground_y = position.y
 	sprite.scale = Vector2.ONE * character_scale
 	_play("idle")
+
+
+func _sync_street_bounds() -> void:
+	street_left = _inner_barrier_edge(left_barrier_path, true, street_left)
+	street_right = _inner_barrier_edge(right_barrier_path, false, street_right)
+
+
+func _inner_barrier_edge(barrier_path: NodePath, is_left: bool, fallback: float) -> float:
+	var collision_shape := get_node_or_null(barrier_path) as CollisionShape2D
+	if collision_shape == null or not collision_shape.shape is RectangleShape2D:
+		return fallback
+	var rectangle := collision_shape.shape as RectangleShape2D
+	var half_width := rectangle.size.x * 0.5
+	return collision_shape.global_position.x + half_width if is_left else collision_shape.global_position.x - half_width
 
 
 func _process(delta: float) -> void:

@@ -16,8 +16,9 @@ const ROLL_SPEED_MULTIPLIER := 1.8
 @export_range(50.0, 500.0, 5.0) var walk_speed := 120.0
 @export_range(50.0, 700.0, 5.0) var run_speed := 360.0
 
-@onready var sprite: Node2D = %SherrySprite
-@onready var animation_player: AnimationPlayer = %SherryAnimationPlayer
+@onready var sprite: Node2D = $SherryPresentation/SherrySprite
+@onready var animation_player: AnimationPlayer = $SherryPresentation/SherryAnimationPlayer
+@onready var potion_thrower: Node = get_node_or_null("PotionThrower")
 
 var _state := "idle"
 var _transition_target := "idle"
@@ -31,9 +32,12 @@ var _last_a_tap_ms := -10000
 var _last_d_tap_ms := -10000
 var _coyote_timer := 0.0
 var _jump_buffer_timer := 0.0
+var _potion_action_locked := false
+var _potion_cast_active := false
 
 
 func _ready() -> void:
+	add_to_group("potion_friendly")
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
 	sprite.scale = Vector2.ONE * character_scale
@@ -41,7 +45,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var direction := _get_input_direction()
+	var direction := 0.0 if _potion_action_locked else _get_input_direction()
 	_update_jump_timers(delta)
 	_try_consume_buffered_jump()
 	_update_facing(direction)
@@ -55,7 +59,7 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	var key_event := event as InputEventKey
-	if key_event == null or not key_event.pressed or key_event.echo or _is_transition():
+	if key_event == null or not key_event.pressed or key_event.echo or _is_transition() or _potion_action_locked or _is_text_input_focused():
 		return
 	match key_event.keycode:
 		KEY_A, KEY_D:
@@ -133,6 +137,10 @@ func _update_landing(direction: float) -> void:
 	_horizontal_velocity = 0.0
 	_jump_speed_ratio = 0.0
 	_is_airborne = false
+	if _potion_action_locked:
+		if not _potion_cast_active:
+			_play("idle")
+		return
 	_transition_target = _ground_action_for(direction)
 	_play("land")
 
@@ -162,6 +170,13 @@ func _is_transition() -> bool:
 
 
 func _on_animation_finished(_animation_name: StringName) -> void:
+	if _state == "cast" and _potion_cast_active:
+		_potion_cast_active = false
+		_potion_action_locked = false
+		if potion_thrower != null and potion_thrower.has_method("on_cast_animation_finished"):
+			potion_thrower.call("on_cast_animation_finished")
+		_play("jump_fall" if _is_airborne else _ground_action_for(_get_input_direction()))
+		return
 	if _state == "roll":
 		_is_rolling = false
 		_play(_ground_action_for(_get_input_direction()))
@@ -214,20 +229,113 @@ func _try_start_roll(keycode: int) -> void:
 
 
 func _get_input_direction() -> float:
+	if _is_text_input_focused():
+		return 0.0
 	var left := 1.0 if Input.is_key_pressed(KEY_A) or Input.is_action_pressed("ui_left") else 0.0
 	var right := 1.0 if Input.is_key_pressed(KEY_D) or Input.is_action_pressed("ui_right") else 0.0
 	return right - left
 
 
 func _is_running() -> bool:
-	return Input.is_key_pressed(KEY_SHIFT)
+	return not _is_text_input_focused() and Input.is_key_pressed(KEY_SHIFT)
 
 
 func _current_move_speed() -> float:
-	return run_speed if _is_running() else walk_speed
+	var base_speed := run_speed if _is_running() else walk_speed
+	return base_speed * _active_speed_multiplier()
 
 
 func _ground_action_for(direction: float) -> String:
 	if is_zero_approx(direction):
 		return "idle"
 	return "run" if _is_running() else "walk"
+
+
+func can_start_potion_aim(allow_air_aim: bool = false) -> bool:
+	if _potion_action_locked or _is_rolling or _potion_cast_active:
+		return false
+	if not is_on_floor() or _is_airborne:
+		return allow_air_aim and _state in ["jump_takeoff", "jump_fall", "fall"]
+	return not _is_transition() and _state in ["idle", "walk", "run"]
+
+
+func set_potion_action_locked(locked: bool) -> void:
+	_potion_action_locked = locked
+	if locked:
+		velocity.x = 0.0
+		_horizontal_velocity = 0.0
+
+
+func is_facing_right() -> bool:
+	return _facing_right
+
+
+func set_potion_aim_facing(facing_right: bool) -> void:
+	if _potion_cast_active or _facing_right == facing_right:
+		return
+	_facing_right = facing_right
+	if _potion_action_locked and _state in ["idle", "walk", "run"]:
+		_play("idle")
+
+
+func play_potion_cast() -> void:
+	_potion_cast_active = true
+	_potion_action_locked = true
+	_transition_target = "idle"
+	_play("cast")
+
+
+func potion_cast_release() -> void:
+	if _potion_cast_active and potion_thrower != null and potion_thrower.has_method("on_cast_release"):
+		potion_thrower.call("on_cast_release")
+
+
+func apply_potion_effect(effect_id: StringName, context: Dictionary) -> void:
+	var shared_player_data := _get_shared_player_data()
+	var amount := float(context.get("amount", 0.0))
+	match effect_id:
+		&"attack":
+			var shield := _active_shield()
+			var absorbed := minf(shield, amount)
+			set_meta("potion_shield", shield - absorbed)
+			if shared_player_data != null:
+				shared_player_data.health = maxi(shared_player_data.health - roundi(amount - absorbed), 0)
+		&"healing":
+			if shared_player_data != null:
+				shared_player_data.health = mini(shared_player_data.health + roundi(amount), shared_player_data.max_health)
+		&"speed":
+			set_meta("potion_speed_multiplier", 1.0 + amount)
+			set_meta("potion_speed_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))
+		&"shield":
+			set_meta("potion_shield", float(get_meta("potion_shield", 0.0)) + amount)
+			set_meta("potion_shield_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))
+		&"mana": set_meta("potion_mana", float(get_meta("potion_mana", 0.0)) + amount)
+		&"concealment": set_meta("potion_concealed_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))
+		&"purify":
+			remove_meta("corrupted")
+			remove_meta("negative_statuses")
+
+
+func _active_speed_multiplier() -> float:
+	if Time.get_ticks_msec() > int(get_meta("potion_speed_until_ms", 0)):
+		return 1.0
+	return maxf(float(get_meta("potion_speed_multiplier", 1.0)), 0.1)
+
+
+func _active_shield() -> float:
+	if Time.get_ticks_msec() > int(get_meta("potion_shield_until_ms", 0)):
+		set_meta("potion_shield", 0.0)
+		return 0.0
+	return maxf(float(get_meta("potion_shield", 0.0)), 0.0)
+
+
+func _get_shared_player_data() -> PlayerData:
+	var current: Node = self
+	while current != null and not current.has_method("get_player_data"):
+		current = current.get_parent()
+	return current.call("get_player_data") as PlayerData if current != null else null
+
+
+func _is_text_input_focused() -> bool:
+	var focused := get_viewport().gui_get_focus_owner()
+	return focused is LineEdit or focused is TextEdit

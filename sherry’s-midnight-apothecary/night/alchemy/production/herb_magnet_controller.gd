@@ -56,6 +56,7 @@ var _legacy_snap_elapsed := 0.0
 func _ready() -> void:
 	_board = get_parent() as ProcessBoard
 	set_process(true)
+	set_process_input(true)
 
 
 func _process(delta: float) -> void:
@@ -100,15 +101,20 @@ func handle_global_pointer_input(event: InputEvent, global_point: Vector2) -> bo
 		var button := event as InputEventMouseButton
 		if button.button_index == MOUSE_BUTTON_LEFT:
 			if button.pressed:
-				if not _board.get_movement_rect().has_point(global_point):
-					return false
 				pointer_global = global_point
 				if grab_mode == GrabMode.SINGLE:
 					var candidate := find_best_single_candidate(global_point)
 					if candidate == null:
 						return false
+					# A piece may visually extend beyond the movement rectangle while
+					# its center remains correctly clamped inside it. Direct opaque-mask
+					# hits on that visible edge must remain draggable.
+					if not _board.get_movement_rect().has_point(global_point) and not candidate.contains_global_point(global_point):
+						return false
 					begin_single_drag(candidate)
 					return true
+				if not _board.get_movement_rect().has_point(global_point):
+					return false
 				begin_multi_hold()
 				return true
 			if single_dragged_piece != null:
@@ -205,17 +211,33 @@ func cancel_interaction() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).keycode == KEY_ESCAPE:
 		cancel_interaction()
-	elif event is InputEventMouseButton:
-		var button := event as InputEventMouseButton
-		if button.pressed and button.button_index == MOUSE_BUTTON_RIGHT:
+		return
+	if _board == null or event is not InputEventMouse:
+		return
+	var mouse_event := event as InputEventMouse
+	var canvas_point := _root_viewport_to_board_canvas(mouse_event.global_position)
+	if event is InputEventMouseMotion:
+		# Global motion avoids depending on which nested Control happened to win
+		# GUI hit testing. The movement rectangle remains the sole boundary.
+		if single_dragged_piece != null or multi_state != MultiGrabState.IDLE or _board.get_movement_rect().has_point(canvas_point):
+			update_pointer(canvas_point)
+		return
+	var button := event as InputEventMouseButton
+	if button.button_index == MOUSE_BUTTON_RIGHT and button.pressed:
+		if single_dragged_piece != null or multi_state != MultiGrabState.IDLE:
 			cancel_interaction()
-		elif not button.pressed and button.button_index == MOUSE_BUTTON_LEFT:
-			if _board != null:
-				pointer_global = _board.get_global_mouse_position()
-			if single_dragged_piece != null:
-				release_single_drag()
-			elif multi_state != MultiGrabState.IDLE:
-				release_multi_grab()
+			get_viewport().set_input_as_handled()
+		return
+	if button.button_index != MOUSE_BUTTON_LEFT:
+		return
+	if handle_global_pointer_input(button, canvas_point):
+		get_viewport().set_input_as_handled()
+
+
+func _root_viewport_to_board_canvas(root_viewport_position: Vector2) -> Vector2:
+	if _board == null:
+		return root_viewport_position
+	return _board.get_canvas_transform().affine_inverse() * root_viewport_position
 
 
 func find_best_single_candidate(cursor_global: Vector2) -> ProductionPieceView:

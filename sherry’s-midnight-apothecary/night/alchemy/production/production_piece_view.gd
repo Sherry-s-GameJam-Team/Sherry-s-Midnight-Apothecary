@@ -16,6 +16,7 @@ enum OutlineState { NONE, HOVER, MULTI_CANDIDATE, GRABBED }
 @export_range(0, 16, 1) var interaction_dilation_pixels := 5
 @export_range(0, 16, 1) var small_piece_extra_dilation := 3
 @export_range(0, 32, 1) var interaction_hole_fill_radius := 2
+@export_range(64, 512, 1) var interaction_mask_max_dimension := 96
 
 var piece: ProductionRuntimeTypes.HerbPieceRuntime
 var is_dragging := false
@@ -98,6 +99,18 @@ func _build_alpha_bitmap() -> void:
 	var image := artwork.texture.get_image()
 	if image == null or image.is_empty():
 		return
+	# Interaction only needs a faithful silhouette, not every source-art pixel.
+	# Some herb pieces are several thousand pixels wide; processing those images
+	# synchronously for every detached piece causes a visible main-thread stall.
+	var longest_side := maxi(image.get_width(), image.get_height())
+	if longest_side > interaction_mask_max_dimension:
+		image = image.duplicate()
+		var sample_scale := float(interaction_mask_max_dimension) / float(longest_side)
+		image.resize(
+			maxi(1, roundi(float(image.get_width()) * sample_scale)),
+			maxi(1, roundi(float(image.get_height()) * sample_scale)),
+			Image.INTERPOLATE_BILINEAR
+		)
 	_texture_size = image.get_size()
 	_alpha_bitmap = BitMap.new()
 	_alpha_bitmap.create_from_image_alpha(image, interaction_alpha_threshold)

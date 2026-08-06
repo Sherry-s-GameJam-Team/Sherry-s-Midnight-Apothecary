@@ -1,6 +1,7 @@
 extends RefCounted
 
 const NIGHT_SCENE := preload("res://night/night_runtime.tscn")
+const DAY_SCENE := preload("res://day/day_runtime.tscn")
 
 
 static func run(test: TestSupport) -> void:
@@ -54,3 +55,14 @@ static func run(test: TestSupport) -> void:
 	scene_tree.paused = false
 
 	runtime.free()
+
+	var day_runtime := DAY_SCENE.instantiate() as DayRuntime
+	scene_tree.root.add_child(day_runtime)
+	var day_console := day_runtime.developer_console
+	test.expect(day_console != null, "DayRuntime owns the developer console.")
+	test.expect_equal(day_console.execute_command("scene town"), "scene = Town", "Console opens Town during the day.")
+	test.expect_equal(day_console.execute_command("scene raintree"), "scene = Rain Tree", "Console opens RainTree during the day.")
+	test.expect_equal(day_console.execute_command("scene lake"), "scene = Lake", "Console opens Lake during the day.")
+	test.expect_equal(day_console.execute_command("title"), "标题动画已播放：Lake", "Console replays the current scene title.")
+	test.expect(day_console.execute_command("status").contains("mode=DAY"), "Day status reports the active scene.")
+	day_runtime.free()

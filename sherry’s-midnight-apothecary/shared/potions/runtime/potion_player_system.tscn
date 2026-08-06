@@ -1,0 +1,36 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://shared/potions/runtime/potion_thrower.gd" id="1"]
+[ext_resource type="Script" path="res://shared/potions/runtime/potion_magic_circle.gd" id="2"]
+[ext_resource type="Script" path="res://shared/potions/runtime/potion_trajectory_preview.gd" id="3"]
+[ext_resource type="Script" path="res://shared/potions/runtime/potion_camera_director.gd" id="4"]
+[ext_resource type="PackedScene" path="res://shared/potions/ui/potion_hotbar.tscn" id="5"]
+[ext_resource type="Resource" path="res://shared/potions/tuning/potion_throw_tuning.tres" id="6"]
+[ext_resource type="Resource" path="res://shared/potions/tuning/potion_effect_tuning.tres" id="7"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/red_potion.tres" id="8"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/orange_potion.tres" id="9"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/yellow_potion.tres" id="10"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/green_potion.tres" id="11"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/cyan_potion.tres" id="12"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/blue_potion.tres" id="13"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/purple_potion.tres" id="14"]
+
+[node name="PotionThrower" type="Node2D"]
+script = ExtResource("1")
+throw_tuning = ExtResource("6")
+effect_tuning = ExtResource("7")
+potion_definitions = Array[PotionData]([ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13"), ExtResource("14")])
+
+[node name="AimOrigin" type="Node2D" parent="."]
+position = Vector2(-105, -28)
+
+[node name="MagicCircle" type="Node2D" parent="AimOrigin"]
+script = ExtResource("2")
+
+[node name="TrajectoryPreview" type="Node2D" parent="."]
+script = ExtResource("3")
+
+[node name="CameraDirector" type="Node" parent="."]
+script = ExtResource("4")
+
+[node name="PotionHotbar" parent="." instance=ExtResource("5")]

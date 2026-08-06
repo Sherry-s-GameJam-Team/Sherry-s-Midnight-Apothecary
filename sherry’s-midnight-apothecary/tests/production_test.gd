@@ -177,7 +177,22 @@ static func run(test: TestSupport) -> void:
 
 	test.expect(not board._can_drop_data(Vector2.ZERO, herb_drag), "Whole herbs are rejected by the artwork side trays.")
 	test.expect(board._can_drop_data(board.size * 0.5, herb_drag), "The center workbench accepts the formal herb payload.")
-	board._drop_data(board.size * 0.5, herb_drag)
+	var drop_surface: Control = panel.get_node("HerbDropSurface") as Control
+	test.expect(drop_surface != null and drop_surface.has_method("_can_drop_data") and drop_surface.has_method("_drop_data"), "A top-level surface delegates native herb drag-and-drop to ProcessBoard.")
+	test.expect_equal(drop_surface.mouse_filter, Control.MOUSE_FILTER_STOP, "The top-level herb surface participates in native GUI drag targeting.")
+	var board_center_global := board.get_global_control_rect(board.board_zone).get_center()
+	var surface_center: Vector2 = drop_surface.get_global_transform().affine_inverse() * board_center_global
+	test.expect(bool(drop_surface.call("_can_drop_data", surface_center, herb_drag)), "The top-level drop surface accepts the herb over the center board.")
+	var board_zone_rect := board.get_global_control_rect(board.board_zone)
+	var drop_surface_rect := board.get_global_control_rect(drop_surface)
+	test.expect(drop_surface_rect.position.is_equal_approx(board_zone_rect.position) and drop_surface_rect.size.is_equal_approx(board_zone_rect.size), "The native herb drop surface exactly follows the full visible board rectangle.")
+	var zones_rect := board.get_global_control_rect(board.zones)
+	test.expect(is_equal_approx(board_zone_rect.position.y, zones_rect.position.y) and is_equal_approx(board_zone_rect.end.y, zones_rect.end.y), "The board drop mask spans the complete visual workspace height.")
+	for vertical_ratio: float in [0.05, 0.5, 0.95]:
+		var global_probe := Vector2(board_zone_rect.get_center().x, lerpf(board_zone_rect.position.y, board_zone_rect.end.y, vertical_ratio))
+		var surface_probe: Vector2 = drop_surface.get_global_transform().affine_inverse() * global_probe
+		test.expect(bool(drop_surface.call("_can_drop_data", surface_probe, herb_drag)), "The herb drop surface accepts the full board height at %.0f%%." % (vertical_ratio * 100.0))
+	drop_surface.call("_drop_data", surface_center, herb_drag)
 	test.expect_equal(runtime.available_count(HERB_ID), 2, "Dragging reserves exactly one source plant.")
 	test.expect_equal(player.inventory[HERB_ID], 3, "Reservation never mutates PlayerData directly.")
 	test.expect_equal(result.spent_ingredients.size(), 0, "Reservation does not write NightResult spending.")
@@ -217,12 +232,31 @@ static func run(test: TestSupport) -> void:
 	fruit_view.set_outline_enabled(false)
 	var magnet := board.magnet_controller
 	test.expect(magnet != null, "The production board owns one generic herb magnet controller.")
+	test.expect(magnet.is_processing_input(), "The magnet explicitly receives global mouse input instead of relying on a partial GUI hit area.")
+	test.expect_equal(board.mouse_filter, Control.MOUSE_FILTER_IGNORE, "The displaced outer board never creates a second magnet input surface.")
+	test.expect_equal(board.zones.mouse_filter, Control.MOUSE_FILTER_IGNORE, "Nested visual zones cannot recreate a partial native drop surface.")
 	test.expect_float_close(magnet.candidate_radius, 72.0, 0.001, "The magnet exposes the requested candidate radius.")
 	test.expect_float_close(magnet.acquire_radius, 42.0, 0.001, "The magnet exposes the requested acquire radius.")
 	test.expect_float_close(magnet.candidate_hold_time, 0.05, 0.001, "Candidate stability uses the requested short hold time.")
 	test.expect_float_close(magnet.snap_duration, 0.08, 0.001, "Pickup snapping uses the requested short duration.")
 	test.expect_equal(fruit_view.mouse_filter, Control.MOUSE_FILTER_IGNORE, "Piece controls do not steal input from empty-space magnet searching.")
 	var movement_bounds := board.get_movement_rect()
+	magnet.set_grab_mode(HerbMagnetController.GrabMode.MULTI_MAGNET)
+	var upper_board_point := Vector2(movement_bounds.get_center().x, movement_bounds.position.y + movement_bounds.size.y * 0.1)
+	var upper_press := InputEventMouseButton.new()
+	upper_press.button_index = MOUSE_BUTTON_LEFT
+	upper_press.pressed = true
+	upper_press.global_position = board.get_canvas_transform() * upper_board_point
+	upper_press.position = upper_press.global_position
+	magnet._input(upper_press)
+	test.expect_equal(magnet.state, HerbMagnetController.MagnetState.SEARCHING, "The upper tenth of the visible movement bounds accepts magnetic left-button input.")
+	var upper_release := InputEventMouseButton.new()
+	upper_release.button_index = MOUSE_BUTTON_LEFT
+	upper_release.pressed = false
+	upper_release.global_position = upper_press.global_position
+	upper_release.position = upper_press.position
+	magnet._input(upper_release)
+	magnet.set_grab_mode(HerbMagnetController.GrabMode.SINGLE)
 	var empty_search_point := movement_bounds.position + Vector2(2.0, 2.0)
 	test.expect(magnet.begin_search(empty_search_point), "Holding left mouse from an empty workbench point enters magnet searching.")
 	test.expect_equal(magnet.state, HerbMagnetController.MagnetState.SEARCHING, "Empty-space press remains SEARCHING without a target.")
@@ -232,6 +266,20 @@ static func run(test: TestSupport) -> void:
 	test.expect(not magnet.begin_search(panel.drag_button.get_global_rect().get_center()), "Tool buttons cannot start a magnet search.")
 	for magnet_view: ProductionPieceView in board.get_piece_views():
 		magnet_view.magnet_pickup_blocked = magnet_view != fruit_view
+	var lower_edge_original_position := fruit_view.global_position
+	var opaque_local: Vector2 = alpha_points.get("opaque", fruit_view.size * 0.5)
+	var lower_edge_opaque_global: Vector2 = fruit_view.get_global_transform() * opaque_local
+	fruit_view.global_position += Vector2(0.0, movement_bounds.end.y + 2.0 - lower_edge_opaque_global.y)
+	lower_edge_opaque_global = fruit_view.get_global_transform() * opaque_local
+	test.expect(not movement_bounds.has_point(lower_edge_opaque_global) and fruit_view.contains_global_point(lower_edge_opaque_global), "A visible opaque piece pixel can extend just below the rectangular movement mask.")
+	var lower_edge_press := InputEventMouseButton.new()
+	lower_edge_press.button_index = MOUSE_BUTTON_LEFT
+	lower_edge_press.pressed = true
+	test.expect(magnet.handle_global_pointer_input(lower_edge_press, lower_edge_opaque_global), "The lower visible piece edge remains draggable through its Alpha interaction mask.")
+	magnet.cancel_current_grab()
+	fruit_view.global_position = lower_edge_original_position
+	fruit_piece.workspace_position = fruit_view.position
+	fruit_piece.has_workspace_position = true
 	var magnet_test_start := fruit_view.global_position
 	var transparent_global: Vector2 = fruit_view.get_global_transform() * alpha_points.get("transparent", Vector2.ZERO)
 	test.expect(not fruit_view.contains_global_point(transparent_global), "The magnet's public Alpha test rejects a transparent texture pixel.")

@@ -11,7 +11,8 @@ static func run(test: TestSupport) -> void:
 		"res://app/app_root.tscn",
 		"res://night/ui/developer_console/developer_console.tscn",
 		"res://day/day_runtime.tscn",
-		"res://day/levels/market/town/town_environment.tscn",
+		"res://day/ui/scene_title_card.tscn",
+		"res://day/art/town/town.tscn",
 		"res://day/art/raintree/raintree.tscn",
 		"res://day/art/lake/lake.tscn",
 		"res://night/night_runtime.tscn",
@@ -21,6 +22,10 @@ static func run(test: TestSupport) -> void:
 		"res://night/alchemy/production/powder_shelf_view.tscn",
 		"res://night/ui/pause_menu/pause_menu.tscn",
 		"res://art/characters/sherry/sherry_test_scene.tscn",
+		"res://shared/potions/runtime/potion_player_system.tscn",
+		"res://shared/potions/runtime/potion_projectile.tscn",
+		"res://shared/potions/ui/potion_hotbar.tscn",
+		"res://shared/potions/ui/potion_order_panel.tscn",
 	]:
 		var scene := load(scene_path) as PackedScene
 		test.expect(scene != null, "%s can be loaded." % scene_path)

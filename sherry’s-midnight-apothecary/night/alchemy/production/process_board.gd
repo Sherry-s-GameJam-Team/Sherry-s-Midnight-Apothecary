@@ -10,9 +10,6 @@ enum PieceRegion {
 	GRIND,
 }
 
-const BOARD_START_RATIO := 0.28
-const BOARD_END_RATIO := 0.80
-
 @export var waste_detection_margin := Vector4(35.0, 35.0, 35.0, 35.0)
 @export var grind_detection_margin := Vector4(35.0, 35.0, 35.0, 35.0)
 @export_range(0.0, 1.0) var zone_overlap_threshold := 0.25
@@ -33,31 +30,11 @@ var _current_herb: IngredientData
 
 
 func _ready() -> void:
-	# Sprite2D offsets the visible board above the PanelContainer's own layout
-	# rectangle. Zones is therefore the authoritative interactive footprint.
-	zones.mouse_filter = Control.MOUSE_FILTER_STOP
-	zones.gui_input.connect(_on_zones_gui_input)
-
-
-func _gui_input(event: InputEvent) -> void:
-	if magnet_controller != null and magnet_controller.handle_board_input(event):
-		accept_event()
-
-
-func _on_zones_gui_input(event: InputEvent) -> void:
-	if magnet_controller == null:
-		return
-	var global_point := zones.get_global_transform() * _event_local_position(event)
-	if magnet_controller.handle_global_pointer_input(event, global_point):
-		accept_event()
-
-
-func _event_local_position(event: InputEvent) -> Vector2:
-	if event is InputEventMouseMotion:
-		return (event as InputEventMouseMotion).position
-	if event is InputEventMouseButton:
-		return (event as InputEventMouseButton).position
-	return Vector2.ZERO
+	# Sprite2D offsets the visible board above the PanelContainer's own layout.
+	# Native herb drops use ProductionPanel's top-level HerbDropSurface.
+	# Magnetic pointer input is global and is gated by PieceMovementBounds.
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	zones.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func _draw() -> void:
@@ -86,16 +63,14 @@ func _can_drop_data(position: Vector2, data: Variant) -> bool:
 		return true
 	if data.get("kind") != &"herb":
 		return false
-	var ratio := position.x / maxf(size.x, 1.0)
-	return ratio >= BOARD_START_RATIO and ratio <= BOARD_END_RATIO
+	return _board_position_is_over_herb_drop_zone(position)
 
 
 func _drop_data(position: Vector2, data: Variant) -> void:
 	if data is not Dictionary:
 		return
 	if data.get("kind") == &"herb":
-		var herb_ratio := position.x / maxf(size.x, 1.0)
-		if herb_ratio >= BOARD_START_RATIO and herb_ratio <= BOARD_END_RATIO:
+		if _board_position_is_over_herb_drop_zone(position):
 			herb_dropped.emit(StringName(str(data.get("ingredient_id", ""))))
 		return
 	var piece := data.get("piece") as ProductionRuntimeTypes.HerbPieceRuntime
@@ -105,6 +80,11 @@ func _drop_data(position: Vector2, data: Variant) -> void:
 	var target_global := get_global_transform() * position
 	_move_piece_view(view, target_global - view.size * 0.5)
 	_apply_piece_region(view, classify_piece_region(view))
+
+
+func _board_position_is_over_herb_drop_zone(board_position: Vector2) -> bool:
+	var global_point := get_global_transform() * board_position
+	return get_global_control_rect(board_zone).has_point(global_point)
 
 
 func show_state(whole_herb: IngredientData, pieces: Array[ProductionRuntimeTypes.HerbPieceRuntime]) -> void:

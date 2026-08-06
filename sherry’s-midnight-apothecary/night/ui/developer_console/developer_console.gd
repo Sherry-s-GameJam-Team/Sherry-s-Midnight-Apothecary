@@ -1,7 +1,19 @@
 class_name DeveloperConsole
 extends Control
 
+const POTION_IDS_BY_NUMBER: Array[StringName] = [
+	&"red_potion",
+	&"orange_potion",
+	&"yellow_potion",
+	&"green_potion",
+	&"cyan_potion",
+	&"blue_potion",
+	&"purple_potion",
+]
+
 var night_runtime: NightRuntime
+var day_runtime: Node
+var day_scene: Node
 var alchemy_runtime_override: AlchemyRuntime
 var _previous_tree_paused := false
 var _history: Array[String] = []
@@ -17,16 +29,35 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_process_input(true)
 	set_process(true)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hide()
 	command_input.text_submitted.connect(_on_command_submitted)
 
 
 func setup(runtime: NightRuntime) -> void:
+	day_runtime = null
+	day_scene = null
 	night_runtime = runtime
 	alchemy_runtime_override = runtime.alchemy_runtime if runtime != null else null
 
 
+func setup_day(runtime: Node) -> void:
+	night_runtime = null
+	alchemy_runtime_override = null
+	day_scene = null
+	day_runtime = runtime
+
+
+func setup_day_scene(scene: Node) -> void:
+	night_runtime = null
+	alchemy_runtime_override = null
+	day_runtime = null
+	day_scene = scene
+
+
 func setup_alchemy(runtime: AlchemyRuntime) -> void:
+	day_runtime = null
+	day_scene = null
 	night_runtime = null
 	alchemy_runtime_override = runtime
 
@@ -36,7 +67,9 @@ func open() -> void:
 		command_input.grab_focus()
 		return
 	_previous_tree_paused = get_tree().paused
-	get_tree().paused = true
+	if not _uses_live_day_controls():
+		get_tree().paused = true
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	show()
 	move_to_front()
 	if not _welcomed:
@@ -49,7 +82,9 @@ func open() -> void:
 func close() -> void:
 	if not visible:
 		return
+	command_input.release_focus()
 	hide()
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	get_tree().paused = _previous_tree_paused
 
 
@@ -85,6 +120,7 @@ func _input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed("ui_cancel"):
 		close()
 		get_viewport().set_input_as_handled()
+		return
 
 
 func _is_console_key(event: InputEventKey) -> bool:
@@ -100,6 +136,17 @@ func _is_console_key(event: InputEventKey) -> bool:
 		or event.unicode == 96
 		or event.unicode == 126
 	)
+
+
+func _uses_live_day_controls() -> bool:
+	return day_runtime != null or day_scene != null
+
+
+func _exit_tree() -> void:
+	if command_input != null and command_input.is_inside_tree() and command_input.has_focus():
+		command_input.release_focus()
+	if visible and get_tree() != null:
+		get_tree().paused = _previous_tree_paused
 
 
 func execute_command(raw_command: String) -> String:
@@ -129,6 +176,10 @@ func execute_command(raw_command: String) -> String:
 			result = _potion_command(parts)
 		"temp":
 			result = _temperature_command(parts)
+		"scene", "level":
+			result = _scene_command(parts)
+		"title":
+			result = _title_command(parts)
 		"clear":
 			if output != null:
 				output.clear()
@@ -257,7 +308,9 @@ func _potion_command(parts: PackedStringArray) -> String:
 	var player := _player()
 	if player == null:
 		return "错误：PlayerData 尚未初始化。"
-	var potion_id := StringName(parts[1])
+	var potion_id := _resolve_potion_id(parts[1])
+	if potion_id == &"":
+		return "错误：药水序号必须在 1–%d 之间。" % POTION_IDS_BY_NUMBER.size()
 	var instances: Array = player.potions.get(potion_id, [])
 	for _index in count:
 		instances.append({
@@ -281,7 +334,63 @@ func _temperature_command(parts: PackedStringArray) -> String:
 	return "temp = %.1f" % alchemy.temperature
 
 
+func _scene_command(parts: PackedStringArray) -> String:
+	if day_runtime == null and day_scene == null:
+		return "错误：场景切换仅可在日间模式使用。"
+	if parts.size() != 2:
+		return "错误：用法 scene <town|raintree|lake>"
+	var requested := parts[1].to_lower()
+	var level_id := ""
+	match requested:
+		"town", "market":
+			level_id = "market"
+		"raintree", "rain_tree", "forest":
+			level_id = "forest"
+		"lake":
+			level_id = "lake"
+		_:
+			return "错误：未知场景。可用：town、raintree、lake。"
+	if day_runtime != null:
+		if not day_runtime.switch_to_level(level_id):
+			return "错误：无法切换到场景 %s。" % requested
+		return "scene = %s" % day_runtime.current_level.display_name
+	var scene_path := {
+		"market": "res://day/art/town/town.tscn",
+		"forest": "res://day/art/raintree/raintree.tscn",
+		"lake": "res://day/art/lake/lake.tscn",
+	}.get(level_id, "") as String
+	if scene_path.is_empty() or get_tree().change_scene_to_file(scene_path) != OK:
+		return "错误：无法切换到场景 %s。" % requested
+	return "scene = %s" % requested
+
+
+func _title_command(parts: PackedStringArray) -> String:
+	if day_runtime == null and day_scene == null:
+		return "错误：标题动画仅可在日间模式使用。"
+	if parts.size() != 1:
+		return "错误：用法 title"
+	if day_runtime != null:
+		day_runtime.replay_scene_title()
+		return "标题动画已播放：%s" % day_runtime.current_level.display_name
+	day_scene.replay_scene_title()
+	return "标题动画已播放：%s" % day_scene.debug_location_name
+
+
 func _status_text() -> String:
+	if day_runtime != null:
+		var level: LevelData = day_runtime.current_level
+		if level == null:
+			return "错误：日间场景尚未初始化。"
+		return "day=%d  mode=DAY  location=%s  disaster=%s" % [
+			day_runtime.day,
+			level.display_name,
+			level.disaster_name,
+		]
+	if day_scene != null:
+		return "day=1  mode=DAY  location=%s  disaster=%s" % [
+			day_scene.debug_location_name,
+			day_scene.debug_disaster_name,
+		]
 	var player := _player()
 	if player == null or _alchemy() == null:
 		return "错误：游戏尚未初始化。"
@@ -297,6 +406,12 @@ func _status_text() -> String:
 
 
 func _help_text() -> String:
+	return """Day scene commands:
+  scene <town|raintree|lake>
+  title
+
+Other commands:
+  status, get, set, add, give, take, potion, temp, clear, close"""
 	return """可用命令：
   status
   get <参数>
@@ -312,6 +427,12 @@ func _help_text() -> String:
 
 
 func _player() -> PlayerData:
+	if day_runtime != null:
+		if day_runtime.player_data == null:
+			day_runtime.player_data = PlayerData.new()
+		return day_runtime.player_data
+	if day_scene != null and day_scene.has_method("get_player_data"):
+		return day_scene.call("get_player_data") as PlayerData
 	if night_runtime != null:
 		if night_runtime.player_data == null:
 			night_runtime.configure(PlayerData.new(), night_runtime.day)
@@ -326,6 +447,13 @@ func _player() -> PlayerData:
 	return alchemy_runtime_override.player_data
 
 
+func _resolve_potion_id(raw_id: String) -> StringName:
+	if not raw_id.is_valid_int():
+		return StringName(raw_id)
+	var index := int(raw_id) - 1
+	return POTION_IDS_BY_NUMBER[index] if index >= 0 and index < POTION_IDS_BY_NUMBER.size() else &""
+
+
 func _alchemy() -> AlchemyRuntime:
 	if alchemy_runtime_override != null:
 		return alchemy_runtime_override
@@ -333,6 +461,10 @@ func _alchemy() -> AlchemyRuntime:
 
 
 func _day() -> int:
+	if day_runtime != null:
+		return day_runtime.day
+	if day_scene != null:
+		return 1
 	var alchemy := _alchemy()
 	return night_runtime.day if night_runtime != null else (alchemy.day if alchemy != null else 1)
 

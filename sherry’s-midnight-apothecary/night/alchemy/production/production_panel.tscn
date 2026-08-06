@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://ct8c1cxs7yh3w" path="res://night/art/ui/production/flour_button.png" id="13_pack"]
 [ext_resource type="Texture2D" uid="uid://c40c6ef5wma3b" path="res://night/art/ui/production/redo_button.png" id="14_redo"]
 [ext_resource type="Script" uid="uid://c6l8thi6u5sm7" path="res://night/alchemy/production/herb_magnet_controller.gd" id="15_magnet"]
+[ext_resource type="Script" path="res://night/alchemy/production/process_board_drop_surface.gd" id="16_drop_surface"]
 
 [sub_resource type="StyleBoxFlat" id="Style_status"]
 content_margin_left = 10.0
@@ -27,6 +28,42 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxEmpty" id="Style_board_empty"]
+
+[sub_resource type="StyleBoxFlat" id="Style_zone_waste_debug"]
+bg_color = Color(0.72, 0.18, 0.12, 0.18)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.92, 0.34, 0.24, 0.48)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_zone_board_debug"]
+bg_color = Color(0.78, 0.55, 0.18, 0.14)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.95, 0.72, 0.34, 0.42)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="Style_zone_grind_debug"]
+bg_color = Color(0.18, 0.62, 0.25, 0.18)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.36, 0.82, 0.42, 0.48)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="ProductionPanel" type="Control" unique_id=1925901393]
 layout_mode = 3
@@ -234,7 +271,7 @@ offset_bottom = -0.06700134
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("Style_board_empty")
+theme_override_styles/panel = SubResource("Style_zone_waste_debug")
 
 [node name="WasteColumn" type="VBoxContainer" parent="ProcessBoard/Sprite2D/Zones/WasteZone" unique_id=1652369825]
 layout_mode = 2
@@ -256,17 +293,17 @@ mouse_filter = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.22600001
-anchor_top = 0.091000006
+anchor_top = 0.0
 anchor_right = 0.75600004
-anchor_bottom = 0.85400003
+anchor_bottom = 1.0
 offset_left = 0.34799194
-offset_top = -0.006996155
+offset_top = 0.0
 offset_right = 18.287964
-offset_bottom = 0.06599426
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("Style_board_empty")
+theme_override_styles/panel = SubResource("Style_zone_board_debug")
 
 [node name="BoardItems" type="HFlowContainer" parent="ProcessBoard/Sprite2D/Zones/BoardZone" unique_id=1132978907]
 unique_name_in_owner = true
@@ -296,7 +333,7 @@ offset_bottom = -0.057998657
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("Style_board_empty")
+theme_override_styles/panel = SubResource("Style_zone_grind_debug")
 
 [node name="GrindColumn" type="VBoxContainer" parent="ProcessBoard/Sprite2D/Zones/GrindZone" unique_id=1537259955]
 layout_mode = 2
@@ -496,6 +533,15 @@ text = "从右侧选择药材并拖到中央垫板。"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="HerbDropSurface" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = 9
+layout_mode = 0
+mouse_filter = 0
+script = ExtResource("16_drop_surface")
+process_board_path = NodePath("../ProcessBoard")
+follow_control_path = NodePath("../ProcessBoard/Sprite2D/Zones/BoardZone")
 
 [node name="BackToBrewingArrow" type="Button" parent="." unique_id=829426454]
 z_index = 10

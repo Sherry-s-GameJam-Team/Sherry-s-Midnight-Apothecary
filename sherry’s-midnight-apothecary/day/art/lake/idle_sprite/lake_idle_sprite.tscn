@@ -1,0 +1,68 @@
+[gd_scene load_steps=47 format=3]
+
+[ext_resource type="Script" path="res://day/art/lake/idle_sprite/lake_idle_sprite.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_000.png" id="2_frame_000"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_001.png" id="3_frame_001"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_002.png" id="4_frame_002"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_003.png" id="5_frame_003"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_004.png" id="6_frame_004"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_005.png" id="7_frame_005"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_006.png" id="8_frame_006"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_007.png" id="9_frame_007"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_008.png" id="10_frame_008"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_009.png" id="11_frame_009"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_010.png" id="12_frame_010"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_011.png" id="13_frame_011"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_012.png" id="14_frame_012"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_013.png" id="15_frame_013"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_014.png" id="16_frame_014"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_015.png" id="17_frame_015"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_016.png" id="18_frame_016"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_017.png" id="19_frame_017"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_018.png" id="20_frame_018"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_019.png" id="21_frame_019"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_020.png" id="22_frame_020"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_021.png" id="23_frame_021"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_022.png" id="24_frame_022"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_023.png" id="25_frame_023"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_024.png" id="26_frame_024"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_025.png" id="27_frame_025"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_026.png" id="28_frame_026"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_027.png" id="29_frame_027"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_028.png" id="30_frame_028"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_029.png" id="31_frame_029"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_030.png" id="32_frame_030"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_031.png" id="33_frame_031"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_032.png" id="34_frame_032"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_033.png" id="35_frame_033"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_034.png" id="36_frame_034"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_035.png" id="37_frame_035"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_036.png" id="38_frame_036"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_037.png" id="39_frame_037"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_038.png" id="40_frame_038"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_039.png" id="41_frame_039"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_040.png" id="42_frame_040"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_041.png" id="43_frame_041"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_042.png" id="44_frame_042"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_043.png" id="45_frame_043"]
+[ext_resource type="Texture2D" path="res://day/art/lake/idle_sprite/frames/idle_044.png" id="46_frame_044"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_idle_loop"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("2_frame_000")}, {"duration": 1.0, "texture": ExtResource("3_frame_001")}, {"duration": 1.0, "texture": ExtResource("4_frame_002")}, {"duration": 1.0, "texture": ExtResource("5_frame_003")}, {"duration": 1.0, "texture": ExtResource("6_frame_004")}, {"duration": 1.0, "texture": ExtResource("7_frame_005")}, {"duration": 1.0, "texture": ExtResource("8_frame_006")}, {"duration": 1.0, "texture": ExtResource("9_frame_007")}, {"duration": 1.0, "texture": ExtResource("10_frame_008")}, {"duration": 1.0, "texture": ExtResource("11_frame_009")}, {"duration": 1.0, "texture": ExtResource("12_frame_010")}, {"duration": 1.0, "texture": ExtResource("13_frame_011")}, {"duration": 1.0, "texture": ExtResource("14_frame_012")}, {"duration": 1.0, "texture": ExtResource("15_frame_013")}, {"duration": 1.0, "texture": ExtResource("16_frame_014")}, {"duration": 1.0, "texture": ExtResource("17_frame_015")}, {"duration": 1.0, "texture": ExtResource("18_frame_016")}, {"duration": 1.0, "texture": ExtResource("19_frame_017")}, {"duration": 1.0, "texture": ExtResource("20_frame_018")}, {"duration": 1.0, "texture": ExtResource("21_frame_019")}, {"duration": 1.0, "texture": ExtResource("22_frame_020")}, {"duration": 1.0, "texture": ExtResource("23_frame_021")}, {"duration": 1.0, "texture": ExtResource("24_frame_022")}, {"duration": 1.0, "texture": ExtResource("25_frame_023")}, {"duration": 1.0, "texture": ExtResource("26_frame_024")}, {"duration": 1.0, "texture": ExtResource("27_frame_025")}, {"duration": 1.0, "texture": ExtResource("28_frame_026")}, {"duration": 1.0, "texture": ExtResource("29_frame_027")}, {"duration": 1.0, "texture": ExtResource("30_frame_028")}, {"duration": 1.0, "texture": ExtResource("31_frame_029")}, {"duration": 1.0, "texture": ExtResource("32_frame_030")}, {"duration": 1.0, "texture": ExtResource("33_frame_031")}, {"duration": 1.0, "texture": ExtResource("34_frame_032")}, {"duration": 1.0, "texture": ExtResource("35_frame_033")}, {"duration": 1.0, "texture": ExtResource("36_frame_034")}, {"duration": 1.0, "texture": ExtResource("37_frame_035")}, {"duration": 1.0, "texture": ExtResource("38_frame_036")}, {"duration": 1.0, "texture": ExtResource("39_frame_037")}, {"duration": 1.0, "texture": ExtResource("40_frame_038")}, {"duration": 1.0, "texture": ExtResource("41_frame_039")}, {"duration": 1.0, "texture": ExtResource("42_frame_040")}, {"duration": 1.0, "texture": ExtResource("43_frame_041")}, {"duration": 1.0, "texture": ExtResource("44_frame_042")}, {"duration": 1.0, "texture": ExtResource("45_frame_043")}, {"duration": 1.0, "texture": ExtResource("46_frame_044")}],
+"loop": true,
+"name": &"idle_loop",
+"speed": 12.0
+}]
+
+[node name="LakeIdleSprite" type="Node2D"]
+position = Vector2(720, 300)
+scale = Vector2(0.32, 0.32)
+z_index = 5
+script = ExtResource("1_script")
+
+[node name="IdleLoop" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_idle_loop")
+animation = &"idle_loop"
+autoplay = "idle_loop"

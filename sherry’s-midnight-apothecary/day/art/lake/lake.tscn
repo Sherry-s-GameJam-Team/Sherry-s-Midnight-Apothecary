@@ -17,6 +17,12 @@
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="14_tile_ghost"]
 [ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="15_tile_dual"]
 [ext_resource type="Script" uid="uid://d4mqw3dv3l4ye" path="res://day/art/lake/lake_tile_edit_algorithm.gd" id="16_tile_algorithm"]
+[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="17_title_card"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="19_potions"]
+[ext_resource type="PackedScene" path="res://day/art/lake/idle_sprite/lake_idle_sprite.tscn" id="20_idle_sprite"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="21_sherry_presentation"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="22_sherry_collision"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lake_replace"]
 texture = ExtResource("12_replace_tiles")
@@ -250,6 +256,8 @@ shader_parameter/outline_width = 1.0
 texture_filter = 1
 position = Vector2(0, 91)
 script = ExtResource("1_environment")
+debug_scene_id = "lake"
+debug_location_name = "Lake"
 
 [node name="Sky" type="Parallax2D" parent="." unique_id=321884295]
 z_index = -40
@@ -298,7 +306,6 @@ centered = false
 
 [node name="Ruins" type="Parallax2D" parent="." unique_id=714252074]
 z_index = -10
-scroll_scale = Vector2(0.82, 0.82)
 
 [node name="RockFace" type="Sprite2D" parent="Ruins" unique_id=405210011]
 position = Vector2(2104, 302)
@@ -328,6 +335,10 @@ godot_4_3_compatibility = false
 [node name="TileEditAlgorithm" type="Node" parent="." unique_id=1840726412]
 script = ExtResource("16_tile_algorithm")
 
+[node name="IdleLoopSprite" parent="." unique_id=2007978007 instance=ExtResource("20_idle_sprite")]
+position = Vector2(1380, 295)
+scale = Vector2(0.175, 0.175)
+
 [node name="WorldBounds" type="Node2D" parent="." unique_id=904010662]
 
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1874567714]
@@ -352,34 +363,32 @@ shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2024346040]
 z_index = 10
-position = Vector2(235, 265)
+position = Vector2(235, 289)
 script = ExtResource("2_player")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1478947864]
-position = Vector2(-2, 35.25)
-shape = SubResource("RectangleShape2D_sherry")
+[node name="SherryCollision" parent="Player" instance=ExtResource("22_sherry_collision")]
 
-[node name="SherrySprite" type="Node2D" parent="Player" unique_id=1152122606]
-unique_name_in_owner = true
-position = Vector2(50.999996, 7.9999995)
-scale = Vector2(0.4, 0.4)
+[node name="SherryPresentation" parent="Player" instance=ExtResource("21_sherry_presentation")]
 
-[node name="SherryVisual" type="Sprite2D" parent="Player/SherrySprite" unique_id=1339648589]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_sherry_outline")
-scale = Vector2(0.88181823, 0.9)
-texture = ExtResource("9_sherry")
-
-[node name="SherryAnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=624168620]
-unique_name_in_owner = true
-libraries/ = ExtResource("10_animations")
+[node name="PotionThrower" parent="Player" unique_id=878258365 instance=ExtResource("19_potions")]
+position = Vector2(-4, 18)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1998518796]
-position = Vector2(0, -86)
+position = Vector2(0, 100)
 limit_left = 98
-limit_top = -211
+limit_top = 96
 limit_right = 4250
-limit_bottom = 513
+limit_bottom = 816
 script = ExtResource("11_camera_bounds")
 left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="SceneTitleCard" parent="." unique_id=268295762 instance=ExtResource("17_title_card")]
+visible = false
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=902300887]
+layer = 200
+visible = false
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1470565557 instance=ExtResource("18_console")]
+anchors_preset = -1
