@@ -10,22 +10,29 @@ extends Control
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	set_process(not follow_control_path.is_empty())
 	_sync_follow_control()
-
-
-func _process(_delta: float) -> void:
-	_sync_follow_control()
+	if follow_control != null and not follow_control.item_rect_changed.is_connected(_sync_follow_control):
+		follow_control.item_rect_changed.connect(_sync_follow_control)
+	var parent_control := get_parent() as Control
+	if parent_control != null and not parent_control.resized.is_connected(_sync_follow_control):
+		parent_control.resized.connect(_sync_follow_control)
 
 
 func _can_drop_data(position: Vector2, data: Variant) -> bool:
-	if process_board == null:
+	if process_board == null or data is not Dictionary:
 		return false
+	# This Control already is the exact drop boundary. Rechecking a transformed
+	# position here caused valid native drag callbacks to be rejected.
+	if data.get("kind") == &"herb":
+		return true
 	return process_board._can_drop_data(_to_board_position(position), data)
 
 
 func _drop_data(position: Vector2, data: Variant) -> void:
-	if process_board == null:
+	if process_board == null or data is not Dictionary:
+		return
+	if data.get("kind") == &"herb":
+		process_board.herb_dropped.emit(StringName(str(data.get("ingredient_id", ""))))
 		return
 	process_board._drop_data(_to_board_position(position), data)
 

@@ -22,6 +22,8 @@ var current_level: LevelData
 
 
 func get_player_data() -> PlayerData:
+	if player_data == null:
+		player_data = PlayerData.new()
 	return player_data
 
 

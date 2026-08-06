@@ -71,6 +71,27 @@ func _run() -> void:
 	_expect(standalone_console.execute_command("potion 1 1") == "potions.red_potion = 1", "Standalone day scenes create PlayerData and accept numeric potion IDs.")
 	_expect(standalone_level.get_player_data().potions.has(&"red_potion"), "Standalone console and level share the same PlayerData.")
 	standalone_level.queue_free()
+	await process_frame
+	for scene_path in [
+		"res://day/art/town/town.tscn",
+		"res://day/art/raintree/raintree.tscn",
+		"res://day/art/lake/lake.tscn",
+	]:
+		var standalone_scene: DayLevelEnvironment = load(scene_path).instantiate()
+		root.add_child(standalone_scene)
+		await process_frame
+		await process_frame
+		var embedded_console: DeveloperConsole = standalone_scene.get_node("DebugUI/DeveloperConsole")
+		_expect(embedded_console.day_scene == standalone_scene, "%s embedded console is connected to its standalone scene." % scene_path)
+		embedded_console.day_scene = null
+		embedded_console.day_runtime = null
+		_expect(embedded_console.execute_command("potion 1 1") == "potions.red_potion = 1", "%s embedded console can add a potion." % scene_path)
+		var standalone_thrower: PotionThrower = standalone_scene.get_node("Player/PotionThrower")
+		_expect(standalone_thrower.inventory_service != null, "%s standalone thrower receives PlayerData." % scene_path)
+		if standalone_thrower.inventory_service != null:
+			_expect(standalone_thrower.inventory_service.player_data == standalone_scene.get_player_data(), "%s console and thrower share PlayerData." % scene_path)
+		standalone_scene.queue_free()
+		await process_frame
 	await _verify_loaded_level(runtime, "Town")
 	_expect(runtime.switch_to_level("forest"), "RainTree level can be selected.")
 	await process_frame

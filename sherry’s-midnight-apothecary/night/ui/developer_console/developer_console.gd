@@ -20,6 +20,7 @@ var _history: Array[String] = []
 var _history_index := 0
 var _welcomed := false
 var _toggle_key_was_down := false
+var _fallback_player_data: PlayerData
 
 @onready var output: RichTextLabel = %Output
 @onready var command_input: LineEdit = %CommandInput
@@ -428,9 +429,7 @@ Other commands:
 
 func _player() -> PlayerData:
 	if day_runtime != null:
-		if day_runtime.player_data == null:
-			day_runtime.player_data = PlayerData.new()
-		return day_runtime.player_data
+		return day_runtime.call("get_player_data") as PlayerData
 	if day_scene != null and day_scene.has_method("get_player_data"):
 		return day_scene.call("get_player_data") as PlayerData
 	if night_runtime != null:
@@ -438,13 +437,23 @@ func _player() -> PlayerData:
 			night_runtime.configure(PlayerData.new(), night_runtime.day)
 			_write("NightRuntime 未经 GameFlow 配置，已创建独立测试用 PlayerData。", Color("#e7c878"))
 		return night_runtime.player_data
-	if alchemy_runtime_override == null:
-		return null
-	if alchemy_runtime_override.player_data == null:
+	if alchemy_runtime_override != null and alchemy_runtime_override.player_data == null:
 		var player := PlayerData.new()
 		alchemy_runtime_override.setup(player, NightResult.new(), alchemy_runtime_override.day)
 		_write("AlchemyRuntime 独立运行：已创建测试用 PlayerData。", Color("#e7c878"))
-	return alchemy_runtime_override.player_data
+	if alchemy_runtime_override != null:
+		return alchemy_runtime_override.player_data
+	var host := get_parent()
+	while host != null:
+		if host.has_method("get_player_data"):
+			var discovered := host.call("get_player_data") as PlayerData
+			if discovered != null:
+				return discovered
+		host = host.get_parent()
+	if _fallback_player_data == null:
+		_fallback_player_data = PlayerData.new()
+		_write("控制台未绑定运行时，已创建独立测试用 PlayerData。", Color("#e7c878"))
+	return _fallback_player_data
 
 
 func _resolve_potion_id(raw_id: String) -> StringName:

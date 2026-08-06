@@ -180,6 +180,8 @@ static func run(test: TestSupport) -> void:
 	var drop_surface: Control = panel.get_node("HerbDropSurface") as Control
 	test.expect(drop_surface != null and drop_surface.has_method("_can_drop_data") and drop_surface.has_method("_drop_data"), "A top-level surface delegates native herb drag-and-drop to ProcessBoard.")
 	test.expect_equal(drop_surface.mouse_filter, Control.MOUSE_FILTER_STOP, "The top-level herb surface participates in native GUI drag targeting.")
+	test.expect_equal(runtime.unified_powder_shelf.mouse_filter, Control.MOUSE_FILTER_IGNORE, "The powder shelf's transparent root cannot obstruct the production board.")
+	test.expect_equal(runtime.unified_powder_shelf.item_grid.mouse_filter, Control.MOUSE_FILTER_IGNORE, "Empty powder-grid space cannot obstruct a native herb drop.")
 	var board_center_global := board.get_global_control_rect(board.board_zone).get_center()
 	var surface_center: Vector2 = drop_surface.get_global_transform().affine_inverse() * board_center_global
 	test.expect(bool(drop_surface.call("_can_drop_data", surface_center, herb_drag)), "The top-level drop surface accepts the herb over the center board.")
@@ -192,6 +194,7 @@ static func run(test: TestSupport) -> void:
 		var global_probe := Vector2(board_zone_rect.get_center().x, lerpf(board_zone_rect.position.y, board_zone_rect.end.y, vertical_ratio))
 		var surface_probe: Vector2 = drop_surface.get_global_transform().affine_inverse() * global_probe
 		test.expect(bool(drop_surface.call("_can_drop_data", surface_probe, herb_drag)), "The herb drop surface accepts the full board height at %.0f%%." % (vertical_ratio * 100.0))
+	test.expect(bool(drop_surface.call("_can_drop_data", Vector2(-9999.0, -9999.0), herb_drag)), "Once the exact top-level surface is hit, callback-local coordinates cannot reject a valid herb payload.")
 	drop_surface.call("_drop_data", surface_center, herb_drag)
 	test.expect_equal(runtime.available_count(HERB_ID), 2, "Dragging reserves exactly one source plant.")
 	test.expect_equal(player.inventory[HERB_ID], 3, "Reservation never mutates PlayerData directly.")
