@@ -8,9 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://by6q655fmay87" path="res://day/art/lake/CS/fish_town.png" id="6_3e1oy"]
 [ext_resource type="Texture2D" uid="uid://db6iwtjb555mr" path="res://day/art/lake/CS/cast.png" id="6_castle"]
 [ext_resource type="Texture2D" uid="uid://i7qkrsbpy6pn" path="res://day/art/lake/CS/rock face.png" id="7_rock_face"]
-[ext_resource type="Shader" uid="uid://b4kwt7ueiol0s" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="8_outline"]
-[ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://art/characters/sherry/frames/12_land_to_idle/01.png" id="9_sherry"]
-[ext_resource type="AnimationLibrary" uid="uid://c8p0f21s0sefx" path="res://art/characters/sherry/sherry_animations.tres" id="10_animations"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="11_camera_bounds"]
 [ext_resource type="Texture2D" uid="uid://bfx1h6e4sg8hu" path="res://examples/replace.png" id="12_replace_tiles"]
 [ext_resource type="Texture2D" uid="uid://m6r6wdeqb1h3" path="res://examples/re2.png" id="13_re2_tiles"]
@@ -244,14 +241,6 @@ size = Vector2(2511.5, 323)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1448)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry"]
-size = Vector2(76, 122.5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sherry_outline"]
-shader = ExtResource("8_outline")
-shader_parameter/outline_color = Color(0.12, 0.055, 0.19, 0.92)
-shader_parameter/outline_width = 1.0
-
 [node name="Lake" type="Node2D" unique_id=288656714]
 texture_filter = 1
 position = Vector2(0, 91)
@@ -366,9 +355,9 @@ z_index = 10
 position = Vector2(235, 289)
 script = ExtResource("2_player")
 
-[node name="SherryCollision" parent="Player" instance=ExtResource("22_sherry_collision")]
+[node name="SherryCollision" parent="Player" unique_id=603891695 instance=ExtResource("22_sherry_collision")]
 
-[node name="SherryPresentation" parent="Player" instance=ExtResource("21_sherry_presentation")]
+[node name="SherryPresentation" parent="Player" unique_id=1608600665 instance=ExtResource("21_sherry_presentation")]
 
 [node name="PotionThrower" parent="Player" unique_id=878258365 instance=ExtResource("19_potions")]
 position = Vector2(-4, 18)
