@@ -1,24 +1,24 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene format=3 uid="uid://cjjrmkffyyu24"]
 
-[ext_resource type="Script" path="res://night/ui/pause_menu/pause_menu.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/pause_book.png" id="2_book"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_settings_normal.png" id="3_settings_n"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_settings_hover.png" id="4_settings_h"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_settings_pressed.png" id="5_settings_p"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_codex_normal.png" id="6_codex_n"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_codex_hover.png" id="7_codex_h"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_codex_pressed.png" id="8_codex_p"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_return_normal.png" id="9_return_n"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_return_hover.png" id="10_return_h"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_return_pressed.png" id="11_return_p"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_notes_normal.png" id="12_notes_n"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_notes_hover.png" id="13_notes_h"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_notes_pressed.png" id="14_notes_p"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_help_normal.png" id="15_help_n"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_help_hover.png" id="16_help_h"]
-[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/bookmark_help_pressed.png" id="17_help_p"]
+[ext_resource type="Script" uid="uid://coi8omhjtq2m0" path="res://night/ui/pause_menu/pause_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cvwo0h7n2wjj3" path="res://night/art/ui/pause_menu/pause_book.png" id="2_book"]
+[ext_resource type="Texture2D" uid="uid://5ij43fheepdv" path="res://night/art/ui/pause_menu/bookmark_settings_normal.png" id="3_settings_n"]
+[ext_resource type="Texture2D" uid="uid://b3qc6hvvm5uw0" path="res://night/art/ui/pause_menu/bookmark_settings_hover.png" id="4_settings_h"]
+[ext_resource type="Texture2D" uid="uid://baiwcptdwdok" path="res://night/art/ui/pause_menu/bookmark_settings_pressed.png" id="5_settings_p"]
+[ext_resource type="Texture2D" uid="uid://cpkk7yi8g4pw0" path="res://night/art/ui/pause_menu/bookmark_codex_normal.png" id="6_codex_n"]
+[ext_resource type="Texture2D" uid="uid://hwl1wfuoxakr" path="res://night/art/ui/pause_menu/bookmark_codex_hover.png" id="7_codex_h"]
+[ext_resource type="Texture2D" uid="uid://b85nosr1cxstq" path="res://night/art/ui/pause_menu/bookmark_codex_pressed.png" id="8_codex_p"]
+[ext_resource type="Texture2D" uid="uid://sq6fnw0awsej" path="res://night/art/ui/pause_menu/bookmark_return_normal.png" id="9_return_n"]
+[ext_resource type="Texture2D" uid="uid://dludgvudrw2bt" path="res://night/art/ui/pause_menu/bookmark_return_hover.png" id="10_return_h"]
+[ext_resource type="Texture2D" uid="uid://xkd7cmvmufj6" path="res://night/art/ui/pause_menu/bookmark_return_pressed.png" id="11_return_p"]
+[ext_resource type="Texture2D" uid="uid://bbbtr82agvnff" path="res://night/art/ui/pause_menu/bookmark_notes_normal.png" id="12_notes_n"]
+[ext_resource type="Texture2D" uid="uid://qyg5okb7oeng" path="res://night/art/ui/pause_menu/bookmark_notes_hover.png" id="13_notes_h"]
+[ext_resource type="Texture2D" uid="uid://gvqf20ad0s4r" path="res://night/art/ui/pause_menu/bookmark_notes_pressed.png" id="14_notes_p"]
+[ext_resource type="Texture2D" uid="uid://cm5rbvgw6t4yk" path="res://night/art/ui/pause_menu/bookmark_help_normal.png" id="15_help_n"]
+[ext_resource type="Texture2D" uid="uid://datostvfbhjaf" path="res://night/art/ui/pause_menu/bookmark_help_hover.png" id="16_help_h"]
+[ext_resource type="Texture2D" uid="uid://d0fcnn1823fhq" path="res://night/art/ui/pause_menu/bookmark_help_pressed.png" id="17_help_p"]
 
-[node name="PauseMenu" type="Control" groups=["pause_menu"]]
+[node name="PauseMenu" type="Control" unique_id=1917758603 groups=["pause_menu"]]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -30,7 +30,7 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_script")
 
-[node name="Dimmer" type="ColorRect" parent="."]
+[node name="Dimmer" type="ColorRect" parent="." unique_id=473019363]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,13 +40,13 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.035, 0.027, 0.02, 0.72)
 
-[node name="DesignRoot" type="Control" parent="."]
-layout_mode = 0
+[node name="DesignRoot" type="Control" parent="." unique_id=1721697587]
+anchors_preset = 0
 offset_right = 1554.0
 offset_bottom = 1086.0
 mouse_filter = 1
 
-[node name="Book" type="TextureRect" parent="DesignRoot"]
+[node name="Book" type="TextureRect" parent="DesignRoot" unique_id=2091879834]
 layout_mode = 0
 offset_right = 1554.0
 offset_bottom = 1086.0
@@ -54,7 +54,7 @@ mouse_filter = 2
 texture = ExtResource("2_book")
 expand_mode = 1
 
-[node name="PageTitle" type="Label" parent="DesignRoot"]
+[node name="PageTitle" type="Label" parent="DesignRoot" unique_id=251356373]
 layout_mode = 0
 offset_left = 164.0
 offset_top = 137.0
@@ -69,7 +69,7 @@ text = "设置"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PageBody" type="RichTextLabel" parent="DesignRoot"]
+[node name="PageBody" type="RichTextLabel" parent="DesignRoot" unique_id=1947011019]
 layout_mode = 0
 offset_left = 198.0
 offset_top = 260.0
@@ -79,10 +79,10 @@ mouse_filter = 2
 theme_override_colors/default_color = Color(0.31, 0.235, 0.145, 1)
 theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
-fit_content = true
 text = "[center]页面内容[/center]"
+fit_content = true
 
-[node name="SettingsPanel" type="VBoxContainer" parent="DesignRoot"]
+[node name="SettingsPanel" type="VBoxContainer" parent="DesignRoot" unique_id=1065603437]
 layout_mode = 0
 offset_left = 300.0
 offset_top = 270.0
@@ -90,20 +90,20 @@ offset_right = 1045.0
 offset_bottom = 740.0
 theme_override_constants/separation = 26
 
-[node name="VolumeLabel" type="Label" parent="DesignRoot/SettingsPanel"]
+[node name="VolumeLabel" type="Label" parent="DesignRoot/SettingsPanel" unique_id=1509500317]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.31, 0.235, 0.145, 1)
 theme_override_font_sizes/font_size = 27
 text = "主音量"
 
-[node name="MasterVolume" type="HSlider" parent="DesignRoot/SettingsPanel"]
+[node name="MasterVolume" type="HSlider" parent="DesignRoot/SettingsPanel" unique_id=1156588396]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.8
 
-[node name="FullscreenToggle" type="CheckButton" parent="DesignRoot/SettingsPanel"]
+[node name="FullscreenToggle" type="CheckButton" parent="DesignRoot/SettingsPanel" unique_id=1321250593]
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.31, 0.235, 0.145, 1)
@@ -111,83 +111,78 @@ theme_override_colors/font_hover_color = Color(0.49, 0.34, 0.13, 1)
 theme_override_font_sizes/font_size = 25
 text = "全屏显示"
 
-[node name="PauseHint" type="Label" parent="DesignRoot/SettingsPanel"]
+[node name="PauseHint" type="Label" parent="DesignRoot/SettingsPanel" unique_id=1712926249]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
 theme_override_font_sizes/font_size = 21
 text = "按 Esc 或点击右侧“返回”继续游戏"
 
-[node name="BookmarkSettings" type="TextureButton" parent="DesignRoot"]
+[node name="BookmarkSettings" type="TextureButton" parent="DesignRoot" unique_id=223089211]
 layout_mode = 0
 offset_left = 1274.0
 offset_top = 116.0
 offset_right = 1488.0
 offset_bottom = 261.0
-focus_mode = 2
+tooltip_text = "设置"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_settings_n")
 texture_pressed = ExtResource("5_settings_p")
 texture_hover = ExtResource("4_settings_h")
 ignore_texture_size = true
 stretch_mode = 0
-tooltip_text = "设置"
 
-[node name="BookmarkCodex" type="TextureButton" parent="DesignRoot"]
+[node name="BookmarkCodex" type="TextureButton" parent="DesignRoot" unique_id=1915322569]
 layout_mode = 0
 offset_left = 1275.0
 offset_top = 273.0
 offset_right = 1488.0
 offset_bottom = 423.0
-focus_mode = 2
+tooltip_text = "图鉴"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("6_codex_n")
 texture_pressed = ExtResource("8_codex_p")
 texture_hover = ExtResource("7_codex_h")
 ignore_texture_size = true
 stretch_mode = 0
-tooltip_text = "图鉴"
 
-[node name="BookmarkReturn" type="TextureButton" parent="DesignRoot"]
+[node name="BookmarkReturn" type="TextureButton" parent="DesignRoot" unique_id=1559154094]
 layout_mode = 0
 offset_left = 1275.0
 offset_top = 435.0
 offset_right = 1488.0
 offset_bottom = 584.0
-focus_mode = 2
+tooltip_text = "返回游戏"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("9_return_n")
 texture_pressed = ExtResource("11_return_p")
 texture_hover = ExtResource("10_return_h")
 ignore_texture_size = true
 stretch_mode = 0
-tooltip_text = "返回游戏"
 
-[node name="BookmarkNotes" type="TextureButton" parent="DesignRoot"]
+[node name="BookmarkNotes" type="TextureButton" parent="DesignRoot" unique_id=332640948]
 layout_mode = 0
 offset_left = 1275.0
 offset_top = 596.0
 offset_right = 1483.0
 offset_bottom = 730.0
-focus_mode = 2
+tooltip_text = "炼药记录"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("12_notes_n")
 texture_pressed = ExtResource("14_notes_p")
 texture_hover = ExtResource("13_notes_h")
 ignore_texture_size = true
 stretch_mode = 0
-tooltip_text = "炼药记录"
 
-[node name="BookmarkHelp" type="TextureButton" parent="DesignRoot"]
+[node name="BookmarkHelp" type="TextureButton" parent="DesignRoot" unique_id=75960355]
 layout_mode = 0
 offset_left = 1275.0
 offset_top = 742.0
 offset_right = 1487.0
 offset_bottom = 878.0
-focus_mode = 2
+tooltip_text = "操作说明"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("15_help_n")
 texture_pressed = ExtResource("17_help_p")
 texture_hover = ExtResource("16_help_h")
 ignore_texture_size = true
 stretch_mode = 0
-tooltip_text = "操作说明"

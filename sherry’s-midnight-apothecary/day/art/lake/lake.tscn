@@ -251,9 +251,10 @@ debug_location_name = "Lake"
 [node name="Sky" type="Parallax2D" parent="." unique_id=321884295]
 z_index = -40
 scroll_scale = Vector2(0.12, 0.12)
+scroll_offset = Vector2(0, 55)
 
 [node name="SkyboxRepeat" type="Sprite2D" parent="Sky" unique_id=44801664]
-position = Vector2(-1035, -287)
+position = Vector2(-1055, -286)
 scale = Vector2(4.239411, 1.4557486)
 texture = ExtResource("3_skybox")
 centered = false
@@ -261,6 +262,7 @@ centered = false
 [node name="FarLandscape" type="Parallax2D" parent="." unique_id=105499858]
 z_index = -30
 scroll_scale = Vector2(0.42, 0.42)
+scroll_offset = Vector2(0, 55)
 
 [node name="Background" type="Sprite2D" parent="FarLandscape" unique_id=634367481]
 position = Vector2(180, -42)
@@ -268,7 +270,7 @@ texture = ExtResource("4_background")
 centered = false
 
 [node name="BackgroundRepeat2" type="Sprite2D" parent="FarLandscape" unique_id=1972714163]
-position = Vector2(2377.9998, -32)
+position = Vector2(2345, -27)
 scale = Vector2(1.1242639, 1)
 texture = ExtResource("4_background")
 centered = false
@@ -284,7 +286,7 @@ z_index = -20
 scroll_scale = Vector2(0.64, 0.64)
 
 [node name="Wall" type="Sprite2D" parent="Wall" unique_id=127576558]
-position = Vector2(2039, 318)
+position = Vector2(2079, 455)
 texture = ExtResource("5_wall")
 centered = false
 
@@ -297,13 +299,13 @@ centered = false
 z_index = -10
 
 [node name="RockFace" type="Sprite2D" parent="Ruins" unique_id=405210011]
-position = Vector2(2104, 302)
+position = Vector2(2197, 511)
 scale = Vector2(1.1316758, 1)
 texture = ExtResource("7_rock_face")
 centered = false
 
 [node name="Castle" type="Sprite2D" parent="Ruins" unique_id=1691083690]
-position = Vector2(86, -112)
+position = Vector2(82, 95)
 texture = ExtResource("6_3e1oy")
 centered = false
 
@@ -325,7 +327,7 @@ godot_4_3_compatibility = false
 script = ExtResource("16_tile_algorithm")
 
 [node name="IdleLoopSprite" parent="." unique_id=2007978007 instance=ExtResource("20_idle_sprite")]
-position = Vector2(1380, 295)
+position = Vector2(1349, 502)
 scale = Vector2(0.175, 0.175)
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=904010662]
@@ -334,7 +336,7 @@ scale = Vector2(0.175, 0.175)
 position = Vector2(9, 3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1689202300]
-position = Vector2(1361.25, 523.5)
+position = Vector2(1361, 730)
 shape = SubResource("RectangleShape2D_3e1oy")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1364934736]
@@ -352,18 +354,19 @@ shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2024346040]
 z_index = 10
-position = Vector2(235, 289)
+position = Vector2(234, 482)
 script = ExtResource("2_player")
 
 [node name="SherryCollision" parent="Player" unique_id=603891695 instance=ExtResource("22_sherry_collision")]
 
 [node name="SherryPresentation" parent="Player" unique_id=1608600665 instance=ExtResource("21_sherry_presentation")]
+position = Vector2(-6, 16)
 
 [node name="PotionThrower" parent="Player" unique_id=878258365 instance=ExtResource("19_potions")]
-position = Vector2(-4, 18)
+position = Vector2(-1, 18)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1998518796]
-position = Vector2(0, 100)
+position = Vector2(-9, 75)
 limit_left = 98
 limit_top = 96
 limit_right = 4250

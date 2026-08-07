@@ -17,7 +17,7 @@ func _sync_limits() -> void:
 func _inner_edge(barrier_path: NodePath, is_left: bool) -> float:
 	var collision_shape := get_node_or_null(barrier_path) as CollisionShape2D
 	if collision_shape == null or not collision_shape.shape is RectangleShape2D:
-		push_error("Rain Tree camera barrier is missing or is not rectangular: %s" % barrier_path)
+		push_error("camera barrier is missing or is not rectangular: %s" % barrier_path)
 		return 0.0
 	var rectangle := collision_shape.shape as RectangleShape2D
 	var half_width := rectangle.size.x * 0.5
