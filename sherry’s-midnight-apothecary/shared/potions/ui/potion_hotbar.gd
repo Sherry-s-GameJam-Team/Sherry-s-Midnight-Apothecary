@@ -7,27 +7,19 @@ var inventory_service: PotionInventoryService
 var potion_definitions: Dictionary = {}
 var dose_per_throw := 0.0
 var _slot_buttons: Array[Button] = []
-var _slots: HBoxContainer
-var _order_panel: PotionOrderPanel
+@onready var _slots: HBoxContainer = %Slots
+@onready var _order_panel: PotionOrderPanel = %OrderPanel
 var _refresh_accumulator := 0.0
 
 
 func _ready() -> void:
-	layer = 90
-	var full := Control.new()
-	full.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	full.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(full)
-	_slots = HBoxContainer.new()
-	_slots.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	_slots.position = Vector2(-270, -112)
-	_slots.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	_slots.add_theme_constant_override("separation", 10)
-	full.add_child(_slots)
-	_order_panel = preload("res://shared/potions/ui/potion_order_panel.tscn").instantiate()
-	_order_panel.set_anchors_preset(Control.PRESET_CENTER)
-	_order_panel.position = Vector2(-195, -150)
-	full.add_child(_order_panel)
+	_slot_buttons.assign([
+		%Slot1, %Slot2, %Slot3, %Slot4,
+		%Slot5, %Slot6, %Slot7, %Slot8,
+	])
+	for slot_index in range(_slot_buttons.size()):
+		_slot_buttons[slot_index].pressed.connect(_on_slot_pressed.bind(slot_index))
+	_order_panel.hide()
 
 
 func setup(service: PotionInventoryService, definitions: Dictionary, configured_dose_per_throw: float) -> void:
@@ -56,27 +48,22 @@ func _process(delta: float) -> void:
 func _rebuild_slots() -> void:
 	if _slots == null or inventory_service == null or inventory_service.player_data == null:
 		return
-	for child in _slots.get_children():
-		child.queue_free()
-	_slot_buttons.clear()
-	for slot_index in range(inventory_service.player_data.potion_slot_count):
-		var button := Button.new()
-		button.custom_minimum_size = Vector2(128, 92)
-		button.expand_icon = true
-		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.pressed.connect(_on_slot_pressed.bind(slot_index))
-		_slots.add_child(button)
-		_slot_buttons.append(button)
+	for slot_index in range(_slot_buttons.size()):
+		_slot_buttons[slot_index].visible = slot_index < inventory_service.player_data.potion_slot_count
 	_refresh_slots()
 
 
 func _refresh_slots() -> void:
 	if inventory_service == null or inventory_service.player_data == null:
 		return
-	if _slot_buttons.size() != inventory_service.player_data.potion_slot_count:
+	if inventory_service.player_data.potion_slot_count > _slot_buttons.size():
+		push_warning("PotionHotbar only has %d editor-defined slots." % _slot_buttons.size())
+		return
+	var visible_slots := _slot_buttons.filter(func(button: Button) -> bool: return button.visible).size()
+	if visible_slots != inventory_service.player_data.potion_slot_count:
 		_rebuild_slots()
 		return
-	for index in range(_slot_buttons.size()):
+	for index in range(inventory_service.player_data.potion_slot_count):
 		var potion_id: StringName = inventory_service.player_data.equipped_potion_ids[index] if index < inventory_service.player_data.equipped_potion_ids.size() else &""
 		var total := inventory_service.get_total_dose(potion_id) if potion_id != &"" else 0.0
 		var next := inventory_service.get_next_instance(potion_id) if potion_id != &"" else {}

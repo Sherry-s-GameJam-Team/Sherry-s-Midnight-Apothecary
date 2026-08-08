@@ -7,7 +7,7 @@ signal page_changed(page: Page)
 enum Page {
 	SETTINGS,
 	CODEX,
-	NOTES,
+	BACKPACK,
 	HELP,
 }
 
@@ -20,11 +20,12 @@ const DESIGN_SIZE := Vector2(1554.0, 1086.0)
 @onready var settings_panel: VBoxContainer = $DesignRoot/SettingsPanel
 @onready var master_volume: HSlider = $DesignRoot/SettingsPanel/MasterVolume
 @onready var fullscreen_toggle: CheckButton = $DesignRoot/SettingsPanel/FullscreenToggle
+@onready var inventory_page: PauseInventoryPage = %InventoryPage
 
 @onready var bookmark_settings: TextureButton = $DesignRoot/BookmarkSettings
 @onready var bookmark_codex: TextureButton = $DesignRoot/BookmarkCodex
 @onready var bookmark_return: TextureButton = $DesignRoot/BookmarkReturn
-@onready var bookmark_notes: TextureButton = $DesignRoot/BookmarkNotes
+@onready var bookmark_backpack: TextureButton = $DesignRoot/BookmarkBackpack
 @onready var bookmark_help: TextureButton = $DesignRoot/BookmarkHelp
 
 var active_page := Page.SETTINGS
@@ -39,7 +40,7 @@ func _ready() -> void:
 	bookmark_settings.pressed.connect(select_page.bind(Page.SETTINGS))
 	bookmark_codex.pressed.connect(select_page.bind(Page.CODEX))
 	bookmark_return.pressed.connect(close)
-	bookmark_notes.pressed.connect(select_page.bind(Page.NOTES))
+	bookmark_backpack.pressed.connect(select_page.bind(Page.BACKPACK))
 	bookmark_help.pressed.connect(select_page.bind(Page.HELP))
 	master_volume.value_changed.connect(_on_master_volume_changed)
 	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
@@ -91,19 +92,28 @@ func toggle() -> void:
 		open(active_page)
 
 
+func bind_player_data(shared_player_data: PlayerData) -> void:
+	if is_node_ready():
+		inventory_page.bind_player_data(shared_player_data)
+	else:
+		await ready
+		inventory_page.bind_player_data(shared_player_data)
+
+
 func select_page(page: Page) -> void:
 	active_page = page
 	settings_panel.visible = page == Page.SETTINGS
-	page_body.visible = page != Page.SETTINGS
+	inventory_page.visible = page == Page.BACKPACK
+	page_body.visible = page == Page.CODEX or page == Page.HELP
 	match page:
 		Page.SETTINGS:
 			page_title.text = "设置"
 		Page.CODEX:
 			page_title.text = "图鉴"
 			page_body.text = "[center][font_size=30]材料 · 药水 · 配方[/font_size]\n\n发现的炼药资料将在这里陈列。[/center]"
-		Page.NOTES:
-			page_title.text = "炼药记录"
-			page_body.text = "[center][font_size=30]午夜手记[/font_size]\n\n今日的订单、配方与探索记录。[/center]"
+		Page.BACKPACK:
+			page_title.text = "背包"
+			inventory_page.refresh()
 		Page.HELP:
 			page_title.text = "操作说明"
 			page_body.text = "[center][font_size=30]右侧书签可切换页面[/font_size]\n\n按 Esc 或点击“返回”继续游戏。[/center]"
@@ -170,8 +180,8 @@ func _active_bookmark() -> TextureButton:
 			return bookmark_settings
 		Page.CODEX:
 			return bookmark_codex
-		Page.NOTES:
-			return bookmark_notes
+		Page.BACKPACK:
+			return bookmark_backpack
 		_:
 			return bookmark_help
 
@@ -180,7 +190,7 @@ func _update_bookmark_highlight() -> void:
 	for button: TextureButton in [
 		bookmark_settings,
 		bookmark_codex,
-		bookmark_notes,
+		bookmark_backpack,
 		bookmark_help,
 	]:
 		button.self_modulate = Color.WHITE

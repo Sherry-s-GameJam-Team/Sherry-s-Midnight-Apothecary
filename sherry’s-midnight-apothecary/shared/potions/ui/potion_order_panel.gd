@@ -3,30 +3,17 @@ extends PanelContainer
 
 signal order_changed(potion_id: StringName, ordered_uids: Array[String])
 
+const ORDER_ROW_SCENE := preload("res://shared/potions/ui/potion_order_row.tscn")
+
 var inventory_service: PotionInventoryService
 var potion_id: StringName
-var _rows: VBoxContainer
-var _title: Label
+@onready var _rows: VBoxContainer = %Rows
+@onready var _title: Label = %Title
+@onready var _close_button: Button = %CloseButton
 
 
 func _ready() -> void:
-	custom_minimum_size = Vector2(390, 300)
-	var root := VBoxContainer.new()
-	add_child(root)
-	var header := HBoxContainer.new()
-	root.add_child(header)
-	_title = Label.new()
-	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(_title)
-	var close_button := Button.new()
-	close_button.text = "关闭"
-	close_button.pressed.connect(hide)
-	header.add_child(close_button)
-	var hint := Label.new()
-	hint.text = "越靠上越先消耗；调整会立即保存。"
-	root.add_child(hint)
-	_rows = VBoxContainer.new()
-	root.add_child(_rows)
+	_close_button.pressed.connect(hide)
 	hide()
 
 
@@ -51,22 +38,16 @@ func _rebuild() -> void:
 	instances.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return order.find(str(a.get("instance_uid", ""))) < order.find(str(b.get("instance_uid", ""))))
 	for index in range(instances.size()):
 		var instance: Dictionary = instances[index]
-		var row := HBoxContainer.new()
+		var row := ORDER_ROW_SCENE.instantiate()
 		_rows.add_child(row)
-		var label := Label.new()
-		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var label: Label = row.get_node("%Details")
 		label.text = "%d. 品质 %.2f  剩余 %.2f  %s" % [index + 1, float(instance.get("quality", 1.0)), float(instance.get("remaining_dose", 1.0)), str(instance.get("instance_uid", ""))]
-		row.add_child(label)
-		var up := Button.new()
-		up.text = "↑"
+		var up: Button = row.get_node("%MoveUp")
 		up.disabled = index == 0
 		up.pressed.connect(_move_uid.bind(str(instance.get("instance_uid", "")), -1))
-		row.add_child(up)
-		var down := Button.new()
-		down.text = "↓"
+		var down: Button = row.get_node("%MoveDown")
 		down.disabled = index == instances.size() - 1
 		down.pressed.connect(_move_uid.bind(str(instance.get("instance_uid", "")), 1))
-		row.add_child(down)
 
 
 func _move_uid(uid: String, direction: int) -> void:
@@ -85,4 +66,3 @@ func _move_uid(uid: String, direction: int) -> void:
 	inventory_service.set_throw_order(potion_id, order)
 	order_changed.emit(potion_id, order)
 	_rebuild()
-

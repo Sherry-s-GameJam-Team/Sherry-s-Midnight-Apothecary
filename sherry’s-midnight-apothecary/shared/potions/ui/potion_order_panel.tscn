@@ -1,7 +1,33 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://shared/potions/ui/potion_order_panel.gd" id="1"]
+[ext_resource type="Script" path="res://shared/potions/ui/potion_order_panel.gd" id="1_order_panel"]
 
 [node name="PotionOrderPanel" type="PanelContainer"]
-script = ExtResource("1")
+custom_minimum_size = Vector2(390, 300)
+script = ExtResource("1_order_panel")
 
+[node name="Root" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Root/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "药水投掷顺序"
+
+[node name="CloseButton" type="Button" parent="Root/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "关闭"
+
+[node name="Hint" type="Label" parent="Root"]
+layout_mode = 2
+text = "越靠上越先消耗；调整会立即保存。"
+
+[node name="Rows" type="VBoxContainer" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3

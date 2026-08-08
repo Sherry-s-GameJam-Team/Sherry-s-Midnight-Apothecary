@@ -7,6 +7,8 @@ extends Area2D
 @export var destination_entry_id: StringName = &"default"
 @export_file("*.tscn") var fallback_scene_path := ""
 @export_node_path("Sprite2D") var visual_path: NodePath
+@export var interaction_hint_enabled := false
+@export var interaction_hint_text := "按[E]进入药水铺"
 
 var visual: Sprite2D
 var _outline_material: Material
@@ -42,12 +44,14 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":
 		_player_is_inside = true
 		_set_active(true)
+		_show_interaction_hint()
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":
 		_player_is_inside = false
 		_set_active(false)
+		_hide_interaction_hint()
 
 
 func _is_interact_event(event: InputEvent) -> bool:
@@ -71,3 +75,33 @@ func _find_day_runtime() -> Node:
 			return current
 		current = current.get_parent()
 	return null
+
+
+func _show_interaction_hint() -> void:
+	if not interaction_hint_enabled:
+		return
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.show_interaction_hint(_hint_id(), interaction_hint_text)
+
+
+func _hide_interaction_hint() -> void:
+	if not interaction_hint_enabled:
+		return
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.hide_interaction_hint(_hint_id())
+
+
+func _find_top_hint() -> TopHintUI:
+	var current: Node = self
+	while current != null:
+		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
+		if top_hint != null:
+			return top_hint
+		current = current.get_parent()
+	return null
+
+
+func _hint_id() -> String:
+	return "interaction_%s" % get_instance_id()

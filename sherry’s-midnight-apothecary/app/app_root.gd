@@ -16,6 +16,7 @@ func _ready() -> void:
 	save_service = SaveService.new()
 	player_data = PlayerData.new()
 	top_hint_ui.bind_player_data(player_data)
+	pause_menu.bind_player_data(player_data)
 	game_flow.configure(current_runtime_slot, player_data)
 	game_flow.save_requested.connect(_on_save_requested)
 	if start_automatically:
@@ -25,6 +26,7 @@ func _ready() -> void:
 func start_new_game() -> void:
 	player_data.reset()
 	top_hint_ui.bind_player_data(player_data)
+	pause_menu.bind_player_data(player_data)
 	game_flow.configure(current_runtime_slot, player_data)
 	game_flow.start_new_game()
 
@@ -39,6 +41,7 @@ func load_game() -> bool:
 		return false
 	player_data = PlayerData.from_save_data(save_data.get("player", {}))
 	top_hint_ui.bind_player_data(player_data)
+	pause_menu.bind_player_data(player_data)
 	game_flow.configure(current_runtime_slot, player_data)
 	return game_flow.resume_game(
 		int(save_data.get("day", 1)),

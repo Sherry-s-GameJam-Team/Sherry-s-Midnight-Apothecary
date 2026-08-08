@@ -15,7 +15,7 @@ static func run(test: TestSupport) -> void:
 		"DesignRoot/BookmarkSettings",
 		"DesignRoot/BookmarkCodex",
 		"DesignRoot/BookmarkReturn",
-		"DesignRoot/BookmarkNotes",
+		"DesignRoot/BookmarkBackpack",
 		"DesignRoot/BookmarkHelp",
 	]
 	for path: String in bookmark_paths:
@@ -36,8 +36,9 @@ static func run(test: TestSupport) -> void:
 
 	menu.bookmark_codex.pressed.emit()
 	test.expect_equal(menu.active_page, PauseMenu.Page.CODEX, "Codex bookmark switches page.")
-	menu.bookmark_notes.pressed.emit()
-	test.expect_equal(menu.active_page, PauseMenu.Page.NOTES, "Notes bookmark switches page.")
+	menu.bookmark_backpack.pressed.emit()
+	test.expect_equal(menu.active_page, PauseMenu.Page.BACKPACK, "Backpack bookmark switches page.")
+	test.expect(menu.inventory_page.visible, "Backpack page is visible when its bookmark is selected.")
 	menu.bookmark_help.pressed.emit()
 	test.expect_equal(menu.active_page, PauseMenu.Page.HELP, "Help bookmark switches page.")
 	menu.bookmark_settings.pressed.emit()

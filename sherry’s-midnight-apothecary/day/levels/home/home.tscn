@@ -9,6 +9,10 @@
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="7_door_portal"]
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="8_door_outline"]
 [ext_resource type="Texture2D" uid="uid://bspflplmb646m" path="res://day/levels/home/table.png" id="9_8dq4v"]
+[ext_resource type="Script" uid="uid://cvvsurytalq5u" path="res://day/levels/alchemy_station.gd" id="10_alchemy_station"]
+[ext_resource type="Texture2D" uid="uid://b0cq20puj1m7o" path="res://day/levels/home/equip.png" id="11_equip"]
+[ext_resource type="PackedScene" uid="uid://q2mlpc4fa1do" path="res://night/alchemy/alchemy_runtime.tscn" id="12_alchemy_runtime"]
+[ext_resource type="Texture2D" uid="uid://c0ql7o82wld7t" path="res://day/levels/home/transsformer.png" id="13_ga1c4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1728)
@@ -20,6 +24,14 @@ shader_parameter/outline_width = 2.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(255.75, 493)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_equip_outline"]
+shader = ExtResource("8_door_outline")
+shader_parameter/outline_color = Color(1, 0.84, 0.3, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_equip"]
+size = Vector2(540, 577)
 
 [node name="Home" type="Node2D" unique_id=729989334]
 texture_filter = 1
@@ -79,6 +91,7 @@ script = ExtResource("7_door_portal")
 destination_level = &"market"
 destination_entry_id = &"from_home"
 fallback_scene_path = "res://day/levels/market/town/town.tscn"
+interaction_hint_enabled = true
 
 [node name="Visual" type="Sprite2D" parent="Door" unique_id=931369178]
 material = SubResource("ShaderMaterial_door_outline")
@@ -89,6 +102,21 @@ texture = ExtResource("6_door")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=500275799]
 position = Vector2(-24, 1)
 shape = SubResource("RectangleShape2D_door")
+
+[node name="Equip" type="Area2D" parent="." unique_id=1274751298]
+position = Vector2(1407, 510)
+script = ExtResource("10_alchemy_station")
+alchemy_scene = ExtResource("12_alchemy_runtime")
+
+[node name="Visual" type="Sprite2D" parent="Equip" unique_id=542806976]
+material = SubResource("ShaderMaterial_equip_outline")
+position = Vector2(-4.5000086, 10.999989)
+scale = Vector2(0.6274285, 0.63058823)
+texture = ExtResource("11_equip")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Equip" unique_id=20259292]
+position = Vector2(4, 42)
+shape = SubResource("RectangleShape2D_equip")
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=861958384]
 
@@ -103,3 +131,8 @@ z_index = 11
 position = Vector2(810, 667)
 scale = Vector2(0.50658125, 0.5065813)
 texture = ExtResource("9_8dq4v")
+
+[node name="Transsformer" type="Sprite2D" parent="." unique_id=303685540]
+position = Vector2(2217.784, 523.4146)
+scale = Vector2(0.8276242, 0.82674414)
+texture = ExtResource("13_ga1c4")

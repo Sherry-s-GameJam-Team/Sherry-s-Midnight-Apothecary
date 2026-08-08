@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="14_camera_bounds"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="15_environment"]
 [ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="16_title_card"]
-[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
+[ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="20_sherry_collision"]
@@ -152,6 +152,7 @@ destination_level = &"home"
 destination_entry_id = &"from_market"
 fallback_scene_path = "res://day/levels/home/home.tscn"
 visual_path = NodePath("../CS/DoorVisual")
+interaction_hint_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=304733270]
 position = Vector2(-5, 44.5)
@@ -216,4 +217,3 @@ autoplay = &"cloud_drift"
 layer = 200
 
 [node name="DeveloperConsole" parent="DebugUI" unique_id=2024486634 instance=ExtResource("17_console")]
-anchors_preset = -1

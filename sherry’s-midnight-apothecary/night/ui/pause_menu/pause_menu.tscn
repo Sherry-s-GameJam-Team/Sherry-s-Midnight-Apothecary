@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://cm5rbvgw6t4yk" path="res://night/art/ui/pause_menu/bookmark_help_normal.png" id="15_help_n"]
 [ext_resource type="Texture2D" uid="uid://datostvfbhjaf" path="res://night/art/ui/pause_menu/bookmark_help_hover.png" id="16_help_h"]
 [ext_resource type="Texture2D" uid="uid://d0fcnn1823fhq" path="res://night/art/ui/pause_menu/bookmark_help_pressed.png" id="17_help_p"]
+[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_inventory_page.tscn" id="18_inventory"]
+[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/inventory/backpack.svg" id="19_backpack_icon"]
 
 [node name="PauseMenu" type="Control" unique_id=1917758603 groups=["pause_menu"]]
 process_mode = 3
@@ -117,6 +119,15 @@ theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
 theme_override_font_sizes/font_size = 21
 text = "按 Esc 或点击右侧“返回”继续游戏"
 
+[node name="InventoryPage" parent="DesignRoot" instance=ExtResource("18_inventory")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 174.0
+offset_top = 215.0
+offset_right = 1188.0
+offset_bottom = 882.0
+
 [node name="BookmarkSettings" type="TextureButton" parent="DesignRoot" unique_id=223089211]
 layout_mode = 0
 offset_left = 1274.0
@@ -159,19 +170,45 @@ texture_hover = ExtResource("10_return_h")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="BookmarkNotes" type="TextureButton" parent="DesignRoot" unique_id=332640948]
+[node name="BookmarkBackpack" type="TextureButton" parent="DesignRoot" unique_id=332640948]
 layout_mode = 0
 offset_left = 1275.0
 offset_top = 596.0
 offset_right = 1483.0
 offset_bottom = 730.0
-tooltip_text = "炼药记录"
+tooltip_text = "背包"
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource("12_notes_n")
 texture_pressed = ExtResource("14_notes_p")
 texture_hover = ExtResource("13_notes_h")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="DesignRoot/BookmarkBackpack"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 38.0
+offset_right = 70.0
+offset_bottom = 86.0
+mouse_filter = 2
+texture = ExtResource("19_backpack_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="DesignRoot/BookmarkBackpack"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 30.0
+offset_right = 190.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.88, 0.8, 0.61, 1)
+theme_override_colors/font_shadow_color = Color(0.2, 0.14, 0.08, 0.7)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 29
+text = "背包"
+vertical_alignment = 1
 
 [node name="BookmarkHelp" type="TextureButton" parent="DesignRoot" unique_id=75960355]
 layout_mode = 0

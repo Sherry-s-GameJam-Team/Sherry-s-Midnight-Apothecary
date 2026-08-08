@@ -22,6 +22,7 @@ static func run(test: TestSupport) -> void:
 		"res://night/alchemy/production/production_panel.tscn",
 		"res://night/alchemy/production/powder_shelf_view.tscn",
 		"res://night/ui/pause_menu/pause_menu.tscn",
+		"res://night/ui/pause_menu/pause_inventory_page.tscn",
 		"res://night/ui/top_hint/top_hint_ui.tscn",
 		"res://tests/top_hint_ui_demo.tscn",
 		"res://art/characters/sherry/sherry_test_scene.tscn",

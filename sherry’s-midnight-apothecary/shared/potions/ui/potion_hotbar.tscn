@@ -1,7 +1,110 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://shared/potions/ui/potion_hotbar.gd" id="1"]
+[ext_resource type="Script" path="res://shared/potions/ui/potion_hotbar.gd" id="1_hotbar"]
+[ext_resource type="PackedScene" path="res://shared/potions/ui/potion_order_panel.tscn" id="2_order_panel"]
 
 [node name="PotionHotbar" type="CanvasLayer"]
-script = ExtResource("1")
+layer = 90
+script = ExtResource("1_hotbar")
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Slots" type="HBoxContainer" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -270.0
+offset_top = -112.0
+offset_right = 270.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="Slot1" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot2" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot3" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot4" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot5" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot6" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot7" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="Slot8" type="Button" parent="UI/Slots"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 92)
+layout_mode = 2
+toggle_mode = true
+alignment = 0
+expand_icon = true
+
+[node name="OrderPanel" parent="UI" instance=ExtResource("2_order_panel")]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.0
+offset_top = -150.0
+offset_right = 195.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,16 +1,17 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 4
+const SAVE_VERSION := 5
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
-const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"red_potion", &"green_potion", &"orange_potion"]
+const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
 
 var max_health := 100
 var health := 100
 var money := 0
 var debt := 0
 var inventory: Dictionary = {}
+var story_items: Dictionary = {}
 var potions: Dictionary = {}
 var potion_slot_count := DEFAULT_POTION_SLOT_COUNT
 var equipped_potion_ids: Array[StringName] = DEFAULT_EQUIPPED_POTIONS.duplicate()
@@ -27,6 +28,7 @@ func reset() -> void:
 	money = 0
 	debt = 0
 	inventory = {}
+	story_items = {}
 	potions = {}
 	potion_slot_count = DEFAULT_POTION_SLOT_COUNT
 	equipped_potion_ids = DEFAULT_EQUIPPED_POTIONS.duplicate()
@@ -62,6 +64,7 @@ func to_save_data() -> Dictionary:
 		"money": money,
 		"debt": debt,
 		"inventory": _serialize_counts(inventory),
+		"story_items": _serialize_counts(story_items),
 		"potions": _serialize_potions(potions),
 		"potion_slot_count": potion_slot_count,
 		"equipped_potion_ids": equipped_potion_ids.map(func(value: StringName) -> String: return str(value)),
@@ -80,6 +83,7 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.money = int(data.get("money", 0))
 	result.debt = int(data.get("debt", 0))
 	result.inventory = _count_dictionary(data.get("inventory", {}))
+	result.story_items = _count_dictionary(data.get("story_items", {}))
 	result.potions = _normalize_potions(data.get("potions", {}))
 	result.potion_slot_count = clampi(int(data.get("potion_slot_count", DEFAULT_POTION_SLOT_COUNT)), DEFAULT_POTION_SLOT_COUNT, MAX_POTION_SLOT_COUNT)
 	result.equipped_potion_ids = _string_name_array(data.get("equipped_potion_ids", DEFAULT_EQUIPPED_POTIONS))
@@ -110,6 +114,18 @@ func equip_potion(slot_index: int, potion_id: StringName) -> bool:
 	return true
 
 
+func move_equip_potion(slot_index: int, potion_id: StringName) -> bool:
+	if slot_index < 0 or slot_index >= potion_slot_count or potion_id == &"" or potion_id == &"black_potion":
+		return false
+	while equipped_potion_ids.size() < potion_slot_count:
+		equipped_potion_ids.append(&"")
+	for index in range(equipped_potion_ids.size()):
+		if index != slot_index and equipped_potion_ids[index] == potion_id:
+			equipped_potion_ids[index] = &""
+	equipped_potion_ids[slot_index] = potion_id
+	return true
+
+
 func unequip_potion(slot_index: int) -> void:
 	if slot_index >= 0 and slot_index < equipped_potion_ids.size():
 		equipped_potion_ids[slot_index] = &""
@@ -118,6 +134,22 @@ func unequip_potion(slot_index: int) -> void:
 func select_potion_slot(slot_index: int) -> void:
 	if slot_index >= 0 and slot_index < potion_slot_count:
 		selected_potion_slot = slot_index
+
+
+func add_story_item(item_id: StringName, amount: int = 1) -> void:
+	if item_id == &"" or amount <= 0:
+		return
+	story_items[item_id] = int(story_items.get(item_id, 0)) + amount
+
+
+func remove_story_item(item_id: StringName, amount: int = 1) -> void:
+	if item_id == &"" or amount <= 0:
+		return
+	var remaining := maxi(int(story_items.get(item_id, 0)) - amount, 0)
+	if remaining == 0:
+		story_items.erase(item_id)
+	else:
+		story_items[item_id] = remaining
 
 
 func _add_counts(target: Dictionary, additions: Dictionary) -> void:

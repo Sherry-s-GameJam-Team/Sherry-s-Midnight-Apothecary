@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/inventory/blue_bell.svg" id="2_icon"]
 
 [resource]
 script = ExtResource("1")
 id = &"blue_bell"
 display_name = "蓝铃花"
+icon = ExtResource("2_icon")
 base_value = 9
 spectrum_start = 0.64
 spectrum_end = 0.82

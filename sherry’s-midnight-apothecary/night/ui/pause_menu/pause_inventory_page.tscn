@@ -1,0 +1,273 @@
+[gd_scene load_steps=31 format=3]
+
+[ext_resource type="Script" path="res://night/ui/pause_menu/pause_inventory_page.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://night/ui/pause_menu/potion_loadout_slot.tscn" id="2_slot"]
+[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/inventory/lock.svg" id="3_lock"]
+[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/inventory/empty_slot.svg" id="4_empty"]
+[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/inventory/story_item.svg" id="5_story"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/red_potion.tres" id="10_red"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/orange_potion.tres" id="11_orange"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/yellow_potion.tres" id="12_yellow"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/green_potion.tres" id="13_green"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/cyan_potion.tres" id="14_cyan"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/blue_potion.tres" id="15_blue"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/purple_potion.tres" id="16_purple"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/black_potion.tres" id="17_black"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/amber_root.tres" id="20_amber"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/blue_bell.tres" id="21_blue_bell"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/dew_flask_herb.tres" id="22_dew"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/grail_lily.tres" id="23_grail"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/herdsmans_loaf_bush.tres" id="24_loaf"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/mist_leaf.tres" id="25_mist"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/moon_mint.tres" id="26_mint"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/old_mans_noose.tres" id="27_noose"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/praise_star_maple.tres" id="28_maple"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/red_berry.tres" id="29_berry"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/stardust_puffy_lion.tres" id="30_lion"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/star_lavender.tres" id="31_lavender"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/sun_daisy.tres" id="32_daisy"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/violet_thistle.tres" id="33_thistle"]
+
+[node name="PauseInventoryPage" type="Control"]
+script = ExtResource("1_script")
+potion_definitions = Array[PotionData]([ExtResource("10_red"), ExtResource("11_orange"), ExtResource("12_yellow"), ExtResource("13_green"), ExtResource("14_cyan"), ExtResource("15_blue"), ExtResource("16_purple"), ExtResource("17_black")])
+ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle")])
+lock_icon = ExtResource("3_lock")
+empty_slot_icon = ExtResource("4_empty")
+story_item_placeholder = ExtResource("5_story")
+
+[node name="SubTabs" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 48.0
+grow_horizontal = 2
+alignment = 1
+theme_override_constants/separation = 18
+
+[node name="PotionTab" type="Button" parent="SubTabs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 44)
+layout_mode = 2
+toggle_mode = true
+button_group = null
+theme_override_colors/font_color = Color(0.33, 0.235, 0.12, 1)
+theme_override_font_sizes/font_size = 23
+text = "药水"
+
+[node name="ItemTab" type="Button" parent="SubTabs"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 44)
+layout_mode = 2
+toggle_mode = true
+theme_override_colors/font_color = Color(0.33, 0.235, 0.12, 1)
+theme_override_font_sizes/font_size = 23
+text = "物品"
+
+[node name="PotionPanel" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryColumn" type="VBoxContainer" parent="PotionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.47
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Heading" type="Label" parent="PotionPanel/InventoryColumn"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.36, 0.25, 0.12, 1)
+theme_override_font_sizes/font_size = 24
+text = "药水背包"
+horizontal_alignment = 1
+
+[node name="PotionScroll" type="ScrollContainer" parent="PotionPanel/InventoryColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="PotionEntries" type="VBoxContainer" parent="PotionPanel/InventoryColumn/PotionScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="PotionEmpty" type="Label" parent="PotionPanel/InventoryColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
+theme_override_font_sizes/font_size = 20
+text = "当前没有可用药水"
+horizontal_alignment = 1
+
+[node name="LoadoutColumn" type="VBoxContainer" parent="PotionPanel"]
+layout_mode = 1
+anchor_left = 0.53
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Heading" type="Label" parent="PotionPanel/LoadoutColumn"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.36, 0.25, 0.12, 1)
+theme_override_font_sizes/font_size = 24
+text = "药水档位"
+horizontal_alignment = 1
+
+[node name="SelectionHint" type="Label" parent="PotionPanel/LoadoutColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.9)
+theme_override_font_sizes/font_size = 17
+text = "先从左页选择药水，再点击右页档位装填。"
+autowrap_mode = 2
+
+[node name="SlotScroll" type="ScrollContainer" parent="PotionPanel/LoadoutColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SlotRows" type="VBoxContainer" parent="PotionPanel/LoadoutColumn/SlotScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 7
+
+[node name="Slot1" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot2" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot3" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot4" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot5" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot6" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot7" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+[node name="Slot8" parent="PotionPanel/LoadoutColumn/SlotScroll/SlotRows" instance=ExtResource("2_slot")]
+layout_mode = 2
+
+[node name="ItemPanel" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Lists" type="VBoxContainer" parent="ItemPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.47
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="MaterialHeading" type="Label" parent="ItemPanel/Lists"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.36, 0.25, 0.12, 1)
+theme_override_font_sizes/font_size = 23
+text = "炼药材料"
+
+[node name="MaterialScroll" type="ScrollContainer" parent="ItemPanel/Lists"]
+custom_minimum_size = Vector2(0, 210)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MaterialEntries" type="VBoxContainer" parent="ItemPanel/Lists/MaterialScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 7
+
+[node name="MaterialEmpty" type="Label" parent="ItemPanel/Lists"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "当前没有炼药材料"
+
+[node name="StoryHeading" type="Label" parent="ItemPanel/Lists"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.36, 0.25, 0.12, 1)
+theme_override_font_sizes/font_size = 23
+text = "剧情道具"
+
+[node name="StoryScroll" type="ScrollContainer" parent="ItemPanel/Lists"]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="StoryEntries" type="VBoxContainer" parent="ItemPanel/Lists/StoryScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 7
+
+[node name="StoryEmpty" type="Label" parent="ItemPanel/Lists"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "当前没有剧情道具"
+
+[node name="Detail" type="VBoxContainer" parent="ItemPanel"]
+layout_mode = 1
+anchor_left = 0.55
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="DetailIcon" type="TextureRect" parent="ItemPanel/Detail"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+texture = ExtResource("5_story")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="DetailName" type="Label" parent="ItemPanel/Detail"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.31, 0.21, 0.1, 1)
+theme_override_font_sizes/font_size = 27
+text = "选择左页条目查看详情"
+horizontal_alignment = 1
+
+[node name="DetailCount" type="Label" parent="ItemPanel/Detail"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.31, 0.18, 1)
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+
+[node name="DetailDescription" type="Label" parent="ItemPanel/Detail"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.31, 0.235, 0.145, 1)
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 2
+vertical_alignment = 1

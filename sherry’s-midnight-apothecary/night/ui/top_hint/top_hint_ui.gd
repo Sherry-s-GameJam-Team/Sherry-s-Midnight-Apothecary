@@ -1,5 +1,5 @@
 class_name TopHintUI
-extends CanvasLayer
+extends Control
 
 signal hint_started(hint_id: String)
 signal hint_finished(hint_id: String)
@@ -11,6 +11,7 @@ signal image_closed(hint_id: String)
 @export var punctuation_pause_multiplier := 4.0
 @export_group("Motion")
 @export_range(0.05, 1.0, 0.01) var reveal_duration := 0.22
+@export_range(0.05, 1.0, 0.01) var text_fade_duration := 0.18
 @export_range(120.0, 520.0, 1.0) var image_reveal_height := 300.0
 @export_group("Behavior")
 @export var default_auto_hide_seconds := 4.0
@@ -26,11 +27,13 @@ var _current: Dictionary = {}
 var _seen_image_ids: Dictionary = {}
 var _typewriter_tween: Tween
 var _reveal_tween: Tween
+var _text_fade_tween: Tween
 var _is_typing := false
 var _image_expanded := false
 var _current_has_image := false
 
 @onready var _top_dock: VBoxContainer = %TopDock
+@onready var _hint_panel: PanelContainer = %HintPanel
 @onready var _hint_label: RichTextLabel = %HintLabel
 @onready var _expand_row: HBoxContainer = %ExpandRow
 @onready var _expand_key: Label = %ExpandKey
@@ -66,6 +69,24 @@ func push_text(text: String, hint_id: String = "", auto_hide_seconds: float = -1
 	push_hint(text, null, hint_id, "", image_once_by_default, auto_hide_seconds)
 
 
+## Shows a non-expiring world interaction prompt until its source leaves range.
+func show_interaction_hint(hint_id: String, text: String) -> void:
+	if hint_id.is_empty():
+		return
+	_remove_queued_hint(hint_id)
+	if not _current.is_empty() and String(_current.get("id", "")) == hint_id:
+		return
+	push_text(text, hint_id, 0.0)
+
+
+func hide_interaction_hint(hint_id: String) -> void:
+	if hint_id.is_empty():
+		return
+	_remove_queued_hint(hint_id)
+	if not _current.is_empty() and String(_current.get("id", "")) == hint_id:
+		dismiss_current()
+
+
 func push_image_hint(text: String, image: Texture2D, hint_id: String, caption: String = "", image_once: bool = true, auto_hide_seconds: float = -1.0) -> void:
 	push_hint(text, image, hint_id, caption, image_once, auto_hide_seconds)
 
@@ -78,6 +99,7 @@ func dismiss_current() -> void:
 		_set_image_expanded(false, true)
 		await get_tree().create_timer(reveal_duration).timeout
 	var finished_id: String = _current.get("id", "")
+	await _fade_text_box(false)
 	_top_dock.hide()
 	_current.clear()
 	_current_has_image = false
@@ -89,6 +111,7 @@ func clear_all() -> void:
 	_queue.clear()
 	_kill_tweens()
 	_auto_hide_timer.stop()
+	_hint_panel.modulate.a = 1.0
 	_image_reveal.custom_minimum_size.y = 0.0
 	_image_reveal.hide()
 	_top_dock.hide()
@@ -125,6 +148,8 @@ func _play_next() -> void:
 	_current_has_image = texture != null and (not once or not has_seen_image(id))
 	_image_expanded = false
 	_top_dock.show()
+	_hint_panel.modulate.a = 0.0
+	_fade_text_box(true)
 	_image_reveal.hide()
 	_image_reveal.custom_minimum_size.y = 0.0
 	_image_texture.texture = texture
@@ -135,6 +160,10 @@ func _play_next() -> void:
 	_expand_text.text = "展开图示"
 	hint_started.emit(id)
 	_start_typewriter(String(_current.get("text", "")))
+
+
+func _remove_queued_hint(hint_id: String) -> void:
+	_queue = _queue.filter(func(hint: Dictionary) -> bool: return String(hint.get("id", "")) != hint_id)
 
 
 func _start_typewriter(text: String) -> void:
@@ -225,8 +254,9 @@ func _mark_image_seen(hint_id: String) -> void:
 func _update_safe_width() -> void:
 	if _top_dock == null:
 		return
-	var viewport_width := float(get_viewport().get_visible_rect().size.x)
-	_top_dock.custom_minimum_size.x = minf(max_width, maxf(320.0, viewport_width - horizontal_safe_margin * 2.0))
+	# TopDock is inside a CenterContainer, so its width follows the text's minimum
+	# size instead of reserving a fixed-width panel.
+	_top_dock.custom_minimum_size.x = 0.0
 
 
 func _ensure_default_input_action(action: StringName, physical_key: Key) -> void:
@@ -252,6 +282,7 @@ func _format_action_key(action: StringName) -> String:
 func _kill_tweens() -> void:
 	_kill_typewriter()
 	_kill_reveal()
+	_kill_text_fade()
 
 
 func _kill_typewriter() -> void:
@@ -262,6 +293,18 @@ func _kill_typewriter() -> void:
 func _kill_reveal() -> void:
 	if _reveal_tween != null and _reveal_tween.is_valid():
 		_reveal_tween.kill()
+
+
+func _fade_text_box(fade_in: bool) -> Signal:
+	_kill_text_fade()
+	_text_fade_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT if fade_in else Tween.EASE_IN)
+	_text_fade_tween.tween_property(_hint_panel, "modulate:a", 1.0 if fade_in else 0.0, text_fade_duration)
+	return _text_fade_tween.finished
+
+
+func _kill_text_fade() -> void:
+	if _text_fade_tween != null and _text_fade_tween.is_valid():
+		_text_fade_tween.kill()
 
 
 func _build_ui_legacy() -> void:

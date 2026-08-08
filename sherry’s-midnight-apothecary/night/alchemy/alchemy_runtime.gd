@@ -31,6 +31,7 @@ const BURNT_LIQUID_COLOR := Color(0.0, 0.0, 0.0, 0.90)
 @export var default_heat_profile: HeatProfileData
 @export_group("Shared Alchemy Background")
 @export var pan_background_with_stage := true
+@export var enable_standalone_console := true
 
 var player_data: PlayerData
 var night_result: NightResult
@@ -137,7 +138,7 @@ func _sync_alchemy_background() -> void:
 
 
 func _ensure_standalone_console() -> void:
-	if is_instance_valid(standalone_developer_console) or _night_runtime_ancestor() != null:
+	if not enable_standalone_console or is_instance_valid(standalone_developer_console) or _night_runtime_ancestor() != null:
 		return
 	var console_scene := load("res://night/ui/developer_console/developer_console.tscn") as PackedScene
 	if console_scene == null:
