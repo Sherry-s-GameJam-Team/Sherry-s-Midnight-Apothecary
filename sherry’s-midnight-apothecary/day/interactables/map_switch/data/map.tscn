@@ -13,43 +13,44 @@ texture = ExtResource("1_rfk06")
 [node name="AnchorPoints" type="Node2D" parent="." unique_id=1079564064]
 
 [node name="Anchor01" type="Node2D" parent="AnchorPoints" unique_id=31535025]
-position = Vector2(471, 558)
+position = Vector2(485, 616)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_01"
-display_name = "Anchor 01"
+display_name = "翡翠原"
+danger = "低"
 
 [node name="Anchor02" type="Node2D" parent="AnchorPoints" unique_id=1067454492]
-position = Vector2(576, 518)
+position = Vector2(537, 545)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_02"
 display_name = "Anchor 02"
 
 [node name="Anchor03" type="Node2D" parent="AnchorPoints" unique_id=752553803]
-position = Vector2(612, 509)
+position = Vector2(511, 403)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_03"
 display_name = "Anchor 03"
 
 [node name="Anchor04" type="Node2D" parent="AnchorPoints" unique_id=155104425]
-position = Vector2(615, 446)
+position = Vector2(613, 372)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_04"
 display_name = "Anchor 04"
 
 [node name="Anchor05" type="Node2D" parent="AnchorPoints" unique_id=78806156]
-position = Vector2(682, 382)
+position = Vector2(659, 314)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_05"
 display_name = "Anchor 05"
 
 [node name="Anchor06" type="Node2D" parent="AnchorPoints" unique_id=1469521683]
-position = Vector2(709, 311)
+position = Vector2(616, 216)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_06"
 display_name = "Anchor 06"
 
 [node name="Anchor07" type="Node2D" parent="AnchorPoints" unique_id=989418085]
-position = Vector2(766, 231)
+position = Vector2(706, 195)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_07"
 display_name = "Anchor 07"

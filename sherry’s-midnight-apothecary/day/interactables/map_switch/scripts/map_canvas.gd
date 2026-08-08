@@ -5,6 +5,10 @@ signal candidate_changed(index: int, strength: float)
 
 const VIEW_SIZE := Vector2(512.0, 512.0)
 const CENTER := VIEW_SIZE * 0.5
+## Screen-space correction: this transform maps +X/-Y to visible left/down.
+const ANCHOR_ALIGNMENT_OFFSET := Vector2(3.0, -3.0)
+const MAGNET_PULL_MIN := 0.015
+const MAGNET_PULL_MAX := 0.040
 
 @onready var map_scene: Node2D = $Map
 
@@ -68,17 +72,21 @@ func pan_by_keyboard(direction: Vector2, delta: float, speed: float) -> void:
 	if direction.is_zero_approx():
 		return
 	pan_offset += direction.normalized() * speed * delta
+	_update_magnetic_candidate()
 
 func drag_by(delta_in_viewport: Vector2, magnetic_radius: float = 92.0) -> void:
 	if not dragging:
 		return
 	pan_offset += delta_in_viewport
+	_update_magnetic_candidate(magnetic_radius)
+
+func _update_magnetic_candidate(magnetic_radius: float = 92.0) -> void:
 	var nearest := get_nearest_destination()
 	candidate_index = int(nearest["index"])
 	candidate_strength = 0.0
 	if candidate_index >= 0 and float(nearest["distance"]) < magnetic_radius:
 		candidate_strength = 1.0 - float(nearest["distance"]) / magnetic_radius
-		pan_offset -= (nearest["screen_position"] as Vector2 - CENTER) * (0.035 + candidate_strength * 0.12)
+		pan_offset -= (nearest["screen_position"] as Vector2 - _selection_target()) * lerpf(MAGNET_PULL_MIN, MAGNET_PULL_MAX, candidate_strength)
 	_refresh_anchor_visuals()
 	candidate_changed.emit(candidate_index, candidate_strength)
 
@@ -110,7 +118,7 @@ func get_nearest_destination() -> Dictionary:
 	var result := {"index": -1, "distance": INF, "screen_position": CENTER}
 	for i in destinations.size():
 		var screen_pos := _destination_screen_position(i)
-		var distance := screen_pos.distance_to(CENTER)
+		var distance := screen_pos.distance_to(_selection_target())
 		if distance < float(result["distance"]):
 			result = {"index": i, "distance": distance, "screen_position": screen_pos}
 	return result
@@ -138,7 +146,10 @@ func _apply_map_transform() -> void:
 	queue_redraw()
 
 func _pan_to_center(map_position: Vector2) -> Vector2:
-	return (CENTER - map_position) * map_zoom
+	return (_selection_target() - map_position) * map_zoom
+
+func _selection_target() -> Vector2:
+	return CENTER + ANCHOR_ALIGNMENT_OFFSET
 
 func _refresh_anchor_visuals() -> void:
 	for index in anchors.size():

@@ -10,6 +10,8 @@ const MAP_VIEWPORT_SIZE := Vector2i(512, 512)
 const SNAP_RADIUS := 108.0
 const MAGNET_RADIUS := 94.0
 const KEYBOARD_PAN_SPEED := 360.0
+const ACTIVE_DEVICE_SCALE := 1.0
+const ACTIVE_DISPLAY_SCREEN_CENTER := Vector2(320.0, 360.0)
 
 @export var open_on_ready := false
 @export var device_scale := 0.42
@@ -43,13 +45,16 @@ var destinations: Array = [
 var _is_active := false
 var _is_transitioning := false
 var _dragging_map := false
+var _keyboard_panning := false
 var _last_map_mouse := Vector2.ZERO
 var _selected_index := -1
 var _locked_player: CharacterBody2D
 var _locked_player_physics := false
+var _dormant_device_position := Vector2.ZERO
 
 func _ready() -> void:
 	device_stage.scale = Vector2.ONE * device_scale
+	_dormant_device_position = device_stage.position
 	# Assign the live texture from the actual viewport node. This is deliberately
 	# explicit so an inherited test scene cannot lose the ViewportTexture path.
 	circular_display.texture = map_viewport.get_texture()
@@ -59,7 +64,7 @@ func _ready() -> void:
 	lever.committed.connect(_on_lever_committed)
 	lever.pull_changed.connect(_on_lever_pull_changed)
 	activate_button.pressed.connect(activate)
-	reset_button.pressed.connect(reset_to_dial)
+	reset_button.pressed.connect(close)
 	_set_ui_dormant()
 	if open_on_ready:
 		show()
@@ -89,6 +94,8 @@ func activate() -> void:
 	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_method(_set_transition_progress, 0.0, 1.0, 1.35)
 	tween.parallel().tween_method(_set_magic_intensity, 1.0, 0.0, 1.55)
+	tween.parallel().tween_property(device_stage, "scale", Vector2.ONE * ACTIVE_DEVICE_SCALE, 0.55)
+	tween.parallel().tween_property(device_stage, "position", _active_device_position(), 0.55)
 	tween.finished.connect(func() -> void:
 		_is_transitioning = false
 		_is_active = true
@@ -109,6 +116,8 @@ func reset_to_dial() -> void:
 	display_material.set_shader_parameter("transition_progress", 0.0)
 	magic_overlay.intensity = 0.0
 	activate_button.disabled = false
+	device_stage.scale = Vector2.ONE * device_scale
+	device_stage.position = _dormant_device_position
 	_set_ui_dormant()
 
 func configure_destinations(new_destinations: Array) -> void:
@@ -159,10 +168,20 @@ func _process(delta: float) -> void:
 	if not visible or not _is_active or _is_transitioning or _dragging_map:
 		return
 	var direction := Vector2(
-		float(Input.is_key_pressed(KEY_D)) - float(Input.is_key_pressed(KEY_A)),
-		float(Input.is_key_pressed(KEY_S)) - float(Input.is_key_pressed(KEY_W))
+		float(Input.is_key_pressed(KEY_A)) - float(Input.is_key_pressed(KEY_D)),
+		float(Input.is_key_pressed(KEY_W)) - float(Input.is_key_pressed(KEY_S))
 	)
-	map_canvas.pan_by_keyboard(direction, delta, KEYBOARD_PAN_SPEED)
+	if not direction.is_zero_approx():
+		if not _keyboard_panning:
+			_clear_selection_for_drag()
+			_keyboard_panning = true
+			map_canvas.begin_drag()
+		map_canvas.drag_by(direction.normalized() * KEYBOARD_PAN_SPEED * delta, MAGNET_RADIUS)
+	elif _keyboard_panning:
+		_keyboard_panning = false
+		var snap_index: int = map_canvas.end_drag(SNAP_RADIUS)
+		if snap_index >= 0:
+			_select_destination(snap_index)
 
 func _clear_selection_for_drag() -> void:
 	if _selected_index < 0:
@@ -264,3 +283,6 @@ func _find_player() -> CharacterBody2D:
 		if node is CharacterBody2D and node.name == "Player":
 			return node
 	return null
+
+func _active_device_position() -> Vector2:
+	return ACTIVE_DISPLAY_SCREEN_CENTER - DEVICE_DISPLAY_CENTER * ACTIVE_DEVICE_SCALE

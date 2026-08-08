@@ -10,12 +10,21 @@ float hash(vec2 p) {
 
 void fragment() {
 	vec4 sprite = texture(TEXTURE, UV);
-	float noise = hash(floor(UV * vec2(80.0, 180.0)));
-	float visible = smoothstep(dissolve - 0.035, dissolve + 0.035, noise);
-	float edge = 1.0 - smoothstep(0.0, 0.07, abs(noise - dissolve));
-	float transition = smoothstep(0.01, 0.08, dissolve) * (1.0 - smoothstep(0.92, 0.99, dissolve));
-	edge *= transition;
-	vec3 color = mix(sprite.rgb, mix(magic_color.rgb, edge_color.rgb, noise), edge * 0.9);
-	float alpha = max(sprite.a * visible, edge * sprite.a * 0.9);
-	COLOR = vec4(color, alpha);
+	// Keep the barrier texture completely intact while idle. Without this guard,
+	// the smoothstep transition still removes the handful of pixels whose noise
+	// is close to zero even when dissolve is exactly 0.
+	if (dissolve >= 0.999) {
+		discard;
+	} else if (dissolve <= 0.001) {
+		COLOR = sprite;
+	} else {
+		float noise = hash(floor(UV * vec2(80.0, 180.0)));
+		float visible = smoothstep(dissolve - 0.035, dissolve + 0.035, noise);
+		float edge = 1.0 - smoothstep(0.0, 0.07, abs(noise - dissolve));
+		float transition = smoothstep(0.01, 0.08, dissolve) * (1.0 - smoothstep(0.92, 0.99, dissolve));
+		edge *= transition;
+		vec3 color = mix(sprite.rgb, mix(magic_color.rgb, edge_color.rgb, noise), edge * 0.9);
+		float alpha = max(sprite.a * visible, edge * sprite.a * 0.9);
+		COLOR = vec4(color, alpha);
+	}
 }
