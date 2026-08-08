@@ -3,4 +3,5 @@
 [ext_resource type="PackedScene" path="res://day/interactables/map_switch/map_switch_interaction.tscn" id="1_interaction"]
 
 [node name="MapSwitchDemo" instance=ExtResource("1_interaction")]
+visible = true
 open_on_ready = true

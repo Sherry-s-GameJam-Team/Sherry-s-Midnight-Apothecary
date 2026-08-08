@@ -14,7 +14,7 @@ extends Node
 @export_node_path("Sprite2D") var barrier_visual_path: NodePath
 @export var bedroom_right_limit := 256
 @export_range(0.1, 1.0, 0.05) var barrier_transition_seconds := 0.35
-@export_range(400.0, 5000.0, 100.0) var pan_speed := 1800.0
+@export_range(400.0, 5000.0, 100.0) var pan_speed := 3000.0
 @export var interaction_hint_text := "按[E]进入卧室"
 
 var _player: CharacterBody2D
@@ -29,10 +29,17 @@ var _bedroom_active := false
 var _crossed_into_bedroom := false
 var _main_camera_restored := false
 var _barrier_tween: Tween
+var _camera_in_bedroom := false
+var _camera_transitioning := false
+var _camera_top := 0.0
+var _camera_bottom := 0.0
+var _main_room_left := 0.0
+var _main_room_right := 0.0
+var _bedroom_left := 0.0
 
 
 func _ready() -> void:
-	call_deferred("_initialize")
+	_initialize()
 
 
 func _initialize() -> void:
@@ -49,25 +56,37 @@ func _initialize() -> void:
 		return
 	_entrance_area.body_entered.connect(_on_entrance_body_entered)
 	_entrance_area.body_exited.connect(_on_entrance_body_exited)
-	_camera.top_level = false
-	_camera.position_smoothing_enabled = true
-	_camera.position_smoothing_speed = pan_speed
-	_camera.limit_smoothed = true
-	_apply_camera_limits(false)
+	_main_room_right = _inner_edge(right_barrier_path, false)
+	_bedroom_left = _inner_edge(left_barrier_path, true)
+	_camera_top = _camera.limit_top
+	_camera_bottom = _camera.limit_bottom
+	# Home owns one top-level camera. Its transform is calculated here instead of
+	# combining an inherited Player transform, changing limits and Camera2D's
+	# internal smoothing cache; that combination caused the gray viewport.
+	_camera.enabled = true
+	_camera.make_current()
+	_camera.top_level = true
+	_camera.position_smoothing_enabled = false
+	_camera.limit_smoothed = false
+	_camera_in_bedroom = false
+	_camera_transitioning = false
+	_set_native_horizontal_limits(false)
+	_camera.global_position = _camera_target_position()
+	_camera.force_update_scroll()
 	_set_barrier_dissolve(0.0)
 
 
-func _process(_delta: float) -> void:
-	if not _bedroom_active or _player == null:
+func _process(delta: float) -> void:
+	if _player == null or _camera == null:
 		return
-	if not _crossed_into_bedroom and _player.global_position.x < 0.0:
+	if _bedroom_active and not _crossed_into_bedroom and _player.global_position.x < 0.0:
 		_crossed_into_bedroom = true
-		_apply_camera_limits(true)
-		return
-	if _crossed_into_bedroom and not _main_camera_restored and _player.global_position.x >= 0.0:
+		_begin_camera_transition(true)
+	elif _bedroom_active and _crossed_into_bedroom and not _main_camera_restored and _player.global_position.x >= 0.0:
 		_main_camera_restored = true
-		_apply_camera_limits(false)
-	if _player.global_position.x > _main_room_side_x():
+		_begin_camera_transition(false)
+	_update_camera(delta)
+	if _bedroom_active and _player.global_position.x > _main_room_side_x():
 		_return_to_main_room()
 
 
@@ -99,7 +118,8 @@ func _return_to_main_room() -> void:
 	_entrance_collision.set_deferred("disabled", false)
 	_blocker_collision.set_deferred("disabled", false)
 	_entrance_area.set_deferred("monitoring", true)
-	_apply_camera_limits(false)
+	if _camera_in_bedroom:
+		_begin_camera_transition(false)
 	_animate_barrier(0.0)
 
 
@@ -115,15 +135,46 @@ func _on_entrance_body_exited(body: Node2D) -> void:
 		_hide_interaction_hint()
 
 
-func _apply_camera_limits(is_bedroom: bool) -> void:
-	_camera.limit_left = roundi(_inner_edge(left_barrier_path, true)) if is_bedroom else 0
-	_camera.limit_right = bedroom_right_limit if is_bedroom else roundi(_inner_edge(right_barrier_path, false))
-	# The one permanent Player/Camera2D owns all motion. Switching limits gives
-	# Godot a new target while its fixed smoothing settings perform the pan.
-	_camera.top_level = false
-	_camera.position_smoothing_enabled = true
-	_camera.position_smoothing_speed = pan_speed
-	_camera.limit_smoothed = true
+func _begin_camera_transition(is_bedroom: bool) -> void:
+	_camera_in_bedroom = is_bedroom
+	_camera_transitioning = true
+	# Release only horizontal native limits during the cross-room pan. The target
+	# remains manually clamped to the destination room.
+	_camera.limit_left = -10000000
+	_camera.limit_right = 10000000
+
+
+func _update_camera(delta: float) -> void:
+	var target := _camera_target_position()
+	_camera.global_position = _camera.global_position.move_toward(target, pan_speed * delta)
+	if _camera_transitioning and _camera.global_position.distance_to(target) <= 0.5:
+		_camera.global_position = target
+		_camera_transitioning = false
+		_set_native_horizontal_limits(_camera_in_bedroom)
+	_camera.force_update_scroll()
+
+
+func _camera_target_position() -> Vector2:
+	var half_width := _viewport_half_size().x
+	var room_left := _bedroom_left if _camera_in_bedroom else _main_room_left
+	var room_right := float(bedroom_right_limit) if _camera_in_bedroom else _main_room_right
+	var minimum_center := room_left + half_width
+	var maximum_center := room_right - half_width
+	var target_x := clampf(_player.global_position.x, minimum_center, maximum_center)
+	return Vector2(target_x, (_camera_top + _camera_bottom) * 0.5)
+
+
+func _viewport_half_size() -> Vector2:
+	var viewport_size := get_viewport().get_visible_rect().size
+	return Vector2(
+		viewport_size.x * 0.5 / maxf(absf(_camera.zoom.x), 0.001),
+		viewport_size.y * 0.5 / maxf(absf(_camera.zoom.y), 0.001)
+	)
+
+
+func _set_native_horizontal_limits(is_bedroom: bool) -> void:
+	_camera.limit_left = roundi(_bedroom_left) if is_bedroom else roundi(_main_room_left)
+	_camera.limit_right = bedroom_right_limit if is_bedroom else roundi(_main_room_right)
 
 
 func _animate_barrier(target_dissolve: float) -> void:

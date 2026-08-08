@@ -103,9 +103,6 @@ func _instantiate_current_level(entry_id: StringName) -> Node:
 	var player := level.get_node_or_null("Player") as CharacterBody2D
 	if entry != null and player != null:
 		player.global_position = entry.global_position
-		var door := level.get_node_or_null("Door") as Node2D
-		if door != null:
-			player.global_position.x = door.global_position.x
 	return level
 
 

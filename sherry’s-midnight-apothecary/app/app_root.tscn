@@ -22,3 +22,4 @@ layer = 200
 [node name="PauseMenu" parent="GlobalUI" instance=ExtResource("3_pause")]
 
 [node name="MapSwitchInteraction" parent="GlobalUI" instance=ExtResource("5_map_switch")]
+visible = false

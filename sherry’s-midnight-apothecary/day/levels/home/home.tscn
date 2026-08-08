@@ -82,7 +82,7 @@ shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=780675265]
 z_index = 10
-position = Vector2(595, 667)
+position = Vector2(2554, 715)
 script = ExtResource("3_player")
 depth_scale_enabled = true
 
@@ -98,9 +98,6 @@ limit_left = 0
 limit_top = 144
 limit_right = 4416
 limit_bottom = 864
-position_smoothing_enabled = true
-position_smoothing_speed = 1800.0
-limit_smoothed = true
 
 [node name="HomeCameraDirector" type="Node" parent="." unique_id=1155188782]
 script = ExtResource("15_camera_director")
@@ -149,19 +146,19 @@ shape = SubResource("RectangleShape2D_equip")
 [node name="EntryPoints" type="Node2D" parent="." unique_id=861958384]
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=1518116055]
-position = Vector2(595, 746)
+position = Vector2(2531, 748)
 
 [node name="from_market" type="Marker2D" parent="EntryPoints" unique_id=1070510327]
-position = Vector2(2595, 746)
+position = Vector2(2549, 724)
 
 [node name="Table" type="Sprite2D" parent="." unique_id=40416591]
 z_index = 11
-position = Vector2(810, 667)
+position = Vector2(808, 663)
 scale = Vector2(0.50658125, 0.5065813)
 texture = ExtResource("9_8dq4v")
 
 [node name="Transsformer" type="Sprite2D" parent="." unique_id=303685540]
-position = Vector2(2217.784, 523.4146)
+position = Vector2(2217, 526)
 scale = Vector2(0.8276242, 0.82674414)
 texture = ExtResource("13_ga1c4")
 

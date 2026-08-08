@@ -4,7 +4,13 @@ Reusable day-mode modal interaction. It renders `MagicMapCanvas` to a 512x512 `S
 
 The authored scene exposes `DimBackground`, `DeviceStage` (`InstrumentSprite`, `CircularDisplay`, `MagicOverlay`, `FixedSelectionCursor`), `MapViewport/MagicMapCanvas`, `DestinationPanel`, and `TravelConfirmLever` directly in the editor. Adjust layout and presentation there; the controller no longer creates these nodes at runtime.
 
+The live map is the authored `data/map.tscn` scene. Its `Map/AnchorPoints/Anchor01` through `Anchor10` nodes are `MapSwitchAnchor` nodes: drag them in the 2D editor to position destinations, then edit each node's `destination_id`, `display_name`, subtitle, danger, distance, environment, and description in the Inspector.
+
+The authored map starts at 2x zoom. Once activated, use the mouse wheel inside the circular display to zoom (0.5x–4x) and WASD to pan the map; these controls affect only the modal map.
+
 Open `res://day/interactables/map_switch/map_switch_demo.tscn` by itself for visual interaction testing. In normal play, call `AppRoot/GlobalUI/MapSwitchInteraction.open()` from the future world-device interaction.
+
+`map_switch_interaction.tscn` is also directly runnable for layout preview. It remains hidden only on the `AppRoot/GlobalUI` instance, so normal gameplay still requires `open()`.
 
 `MapSwitchInteraction` exposes:
 

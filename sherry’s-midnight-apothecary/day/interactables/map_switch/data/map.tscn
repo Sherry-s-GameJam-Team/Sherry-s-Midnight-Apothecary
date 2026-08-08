@@ -1,10 +1,73 @@
 [gd_scene format=3 uid="uid://bd22ulo0g5k61"]
 
-[ext_resource type="Texture2D" uid="uid://bjjxb04v2pi05" path="res://day/interactables/map_switch/data/world_map_vectorized_exact64.svg" id="1_rfk06"]
+[ext_resource type="Texture2D" uid="uid://djvgqlbwrm52s" path="res://day/interactables/map_switch/assets/map.png" id="1_rfk06"]
+[ext_resource type="Script" uid="uid://7kx5nyjcoiof" path="res://day/interactables/map_switch/scripts/map_switch_anchor.gd" id="2_anchor"]
 
 [node name="Map" type="Node2D" unique_id=122830537]
 
-[node name="WorldMapVectorizedExact64" type="Sprite2D" parent="." unique_id=693155044]
-position = Vector2(463.5, 361.5)
-scale = Vector2(0.53018224, 0.5512232)
+[node name="Map" type="Sprite2D" parent="." unique_id=792139629]
+position = Vector2(616.00006, 365)
+scale = Vector2(0.6899414, 0.6899414)
 texture = ExtResource("1_rfk06")
+
+[node name="AnchorPoints" type="Node2D" parent="." unique_id=1079564064]
+
+[node name="Anchor01" type="Node2D" parent="AnchorPoints" unique_id=31535025]
+position = Vector2(471, 558)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_01"
+display_name = "Anchor 01"
+
+[node name="Anchor02" type="Node2D" parent="AnchorPoints" unique_id=1067454492]
+position = Vector2(576, 518)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_02"
+display_name = "Anchor 02"
+
+[node name="Anchor03" type="Node2D" parent="AnchorPoints" unique_id=752553803]
+position = Vector2(612, 509)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_03"
+display_name = "Anchor 03"
+
+[node name="Anchor04" type="Node2D" parent="AnchorPoints" unique_id=155104425]
+position = Vector2(615, 446)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_04"
+display_name = "Anchor 04"
+
+[node name="Anchor05" type="Node2D" parent="AnchorPoints" unique_id=78806156]
+position = Vector2(682, 382)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_05"
+display_name = "Anchor 05"
+
+[node name="Anchor06" type="Node2D" parent="AnchorPoints" unique_id=1469521683]
+position = Vector2(709, 311)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_06"
+display_name = "Anchor 06"
+
+[node name="Anchor07" type="Node2D" parent="AnchorPoints" unique_id=989418085]
+position = Vector2(766, 231)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_07"
+display_name = "Anchor 07"
+
+[node name="Anchor08" type="Node2D" parent="AnchorPoints" unique_id=598385129]
+position = Vector2(523, 159)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_08"
+display_name = "Anchor 08"
+
+[node name="Anchor09" type="Node2D" parent="AnchorPoints" unique_id=1087916940]
+position = Vector2(805, 133)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_09"
+display_name = "Anchor 09"
+
+[node name="Anchor10" type="Node2D" parent="AnchorPoints" unique_id=661926372]
+position = Vector2(845, 174)
+script = ExtResource("2_anchor")
+destination_id = &"anchor_10"
+display_name = "Anchor 10"

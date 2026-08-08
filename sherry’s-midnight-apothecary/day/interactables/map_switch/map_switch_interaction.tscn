@@ -9,9 +9,7 @@
 [ext_resource type="Script" path="res://day/interactables/map_switch/scripts/magic_overlay.gd" id="7_overlay"]
 [ext_resource type="Script" path="res://day/interactables/map_switch/scripts/crosshair.gd" id="8_crosshair"]
 [ext_resource type="Script" path="res://day/interactables/map_switch/scripts/lever_confirm.gd" id="9_lever"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_map"]
-viewport_path = NodePath("../../MapViewport")
+[ext_resource type="PackedScene" path="res://day/interactables/map_switch/data/map.tscn" id="10_map"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_display"]
 shader = ExtResource("5_shader")
@@ -96,7 +94,7 @@ centered = false
 unique_name_in_owner = true
 position = Vector2(543, 337)
 scale = Vector2(0.828125, 0.828125)
-texture = SubResource("ViewportTexture_map")
+texture = ExtResource("3_wheel")
 material = SubResource("ShaderMaterial_display")
 
 [node name="MagicOverlay" type="Node2D" parent="DeviceStage"]
@@ -119,6 +117,8 @@ render_target_update_mode = 4
 [node name="MagicMapCanvas" type="Node2D" parent="MapViewport"]
 unique_name_in_owner = true
 script = ExtResource("6_canvas")
+
+[node name="Map" parent="MapViewport/MagicMapCanvas" instance=ExtResource("10_map")]
 
 [node name="DestinationPanel" type="PanelContainer" parent="."]
 offset_left = 760.0

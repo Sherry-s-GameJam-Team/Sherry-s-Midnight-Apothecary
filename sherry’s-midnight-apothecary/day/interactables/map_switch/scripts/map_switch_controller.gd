@@ -9,6 +9,7 @@ const DEVICE_DISPLAY_DIAMETER := 424.0
 const MAP_VIEWPORT_SIZE := Vector2i(512, 512)
 const SNAP_RADIUS := 108.0
 const MAGNET_RADIUS := 94.0
+const KEYBOARD_PAN_SPEED := 360.0
 
 @export var open_on_ready := false
 @export var device_scale := 0.42
@@ -21,7 +22,9 @@ var destinations: Array = [
 ]
 
 @onready var device_stage: Node2D = %DeviceStage
+@onready var map_viewport: SubViewport = %MapViewport
 @onready var map_canvas: MagicMapCanvas = %MagicMapCanvas
+@onready var circular_display: Sprite2D = %CircularDisplay
 @onready var display_material: ShaderMaterial = %CircularDisplay.material as ShaderMaterial
 @onready var crosshair: MapCrosshair = %FixedSelectionCursor
 @onready var magic_overlay: DialMagicOverlay = %MagicOverlay
@@ -47,6 +50,10 @@ var _locked_player_physics := false
 
 func _ready() -> void:
 	device_stage.scale = Vector2.ONE * device_scale
+	# Assign the live texture from the actual viewport node. This is deliberately
+	# explicit so an inherited test scene cannot lose the ViewportTexture path.
+	circular_display.texture = map_viewport.get_texture()
+	destinations = map_canvas.get_authored_destinations(destinations)
 	map_canvas.set_destinations(destinations)
 	map_canvas.candidate_changed.connect(_on_map_candidate_changed)
 	lever.committed.connect(_on_lever_committed)
@@ -55,9 +62,8 @@ func _ready() -> void:
 	reset_button.pressed.connect(reset_to_dial)
 	_set_ui_dormant()
 	if open_on_ready:
-		open()
-	else:
-		hide()
+		show()
+		reset_to_dial()
 
 func open() -> void:
 	if visible:
@@ -141,6 +147,22 @@ func _gui_input(event: InputEvent) -> void:
 		_last_map_mouse = mouse_device
 		map_canvas.drag_by(delta_viewport, MAGNET_RADIUS)
 		accept_event()
+	elif event is InputEventMouseButton and inside_display:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			map_canvas.zoom_by(1.15)
+			accept_event()
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			map_canvas.zoom_by(1.0 / 1.15)
+			accept_event()
+
+func _process(delta: float) -> void:
+	if not visible or not _is_active or _is_transitioning or _dragging_map:
+		return
+	var direction := Vector2(
+		float(Input.is_key_pressed(KEY_D)) - float(Input.is_key_pressed(KEY_A)),
+		float(Input.is_key_pressed(KEY_S)) - float(Input.is_key_pressed(KEY_W))
+	)
+	map_canvas.pan_by_keyboard(direction, delta, KEYBOARD_PAN_SPEED)
 
 func _clear_selection_for_drag() -> void:
 	if _selected_index < 0:
