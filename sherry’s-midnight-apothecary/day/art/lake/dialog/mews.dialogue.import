@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://ckx5mf1qg4pkj"
+path="res://.godot/imported/mews.dialogue-4138d9acb269609aabe5081552d6e13a.tres"
+
+[deps]
+
+source_file="res://day/art/lake/dialog/mews.dialogue"
+dest_files=["res://.godot/imported/mews.dialogue-4138d9acb269609aabe5081552d6e13a.tres"]
+
+[params]
+
+defaults=true

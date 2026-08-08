@@ -30,5 +30,9 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(restored.health, 72, "Player health round-trips.")
 	test.expect_equal(restored.inventory[&"herdsmans_loaf_bush"], 2, "Player inventory round-trips.")
 	test.expect_equal(restored.potions[&"blue_tonic"].size(), 2, "Dynamic potion arrays round-trip.")
+	player.tutorial_flags["potion_throw_controls_shown"] = true
+	player.tutorial_flags["throw_diagram_seen"] = true
+	var tutorial_restored := PlayerData.from_save_data(player.to_save_data())
+	test.expect(bool(tutorial_restored.tutorial_flags.get("throw_diagram_seen", false)), "Tutorial flags round-trip with PlayerData saves.")
 	restored.inventory[&"herdsmans_loaf_bush"] = 99
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 2, "Restored dictionaries do not alias the source.")

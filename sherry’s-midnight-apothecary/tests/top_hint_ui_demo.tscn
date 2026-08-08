@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://uyele6mmmfvp"]
+
+[ext_resource type="Script" uid="uid://1oxopp6pg6fl" path="res://tests/top_hint_ui_demo.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://night/ui/top_hint/top_hint_ui.tscn" id="2_top_hint"]
+
+[node name="TopHintUIDemo" type="Control" unique_id=538743083]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=579606022]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.06, 0.045, 1)
+
+[node name="Instructions" type="Label" parent="." unique_id=1624862229]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 118.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.88, 0.79, 0.61, 1)
+theme_override_font_sizes/font_size = 18
+text = "TopHintUI 可编辑演示：Space 跳过打字；图片提示使用 E 展开与收起。"
+horizontal_alignment = 1
+
+[node name="Controls" type="HBoxContainer" parent="." unique_id=1461827128]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TextButton" type="Button" parent="Controls" unique_id=1165424919]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "播放文字提示"
+
+[node name="ImageButton" type="Button" parent="Controls" unique_id=428292239]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "播放图片提示"
+
+[node name="TopHintUI" parent="." unique_id=1292131530 instance=ExtResource("2_top_hint")]
+
+[connection signal="pressed" from="Controls/TextButton" to="." method="_on_text_button_pressed"]
+[connection signal="pressed" from="Controls/ImageButton" to="." method="_on_image_button_pressed"]

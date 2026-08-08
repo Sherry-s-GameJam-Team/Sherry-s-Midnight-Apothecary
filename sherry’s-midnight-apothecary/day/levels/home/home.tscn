@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://yqkapq3dix0r"]
+
+[ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="1_environment"]
+[ext_resource type="Texture2D" uid="uid://dqt6dhtwjsxy4" path="res://day/levels/home/home.png" id="2_18uk7"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="4_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="5_presentation"]
+[ext_resource type="Texture2D" uid="uid://cl0tw0r5ojcmq" path="res://day/levels/home/door.png" id="6_door"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="7_door_portal"]
+[ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="8_door_outline"]
+[ext_resource type="Texture2D" uid="uid://bspflplmb646m" path="res://day/levels/home/table.png" id="9_8dq4v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
+size = Vector2(96, 1728)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_door_outline"]
+shader = ExtResource("8_door_outline")
+shader_parameter/outline_color = Color(1, 0.84, 0.3, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(255.75, 493)
+
+[node name="Home" type="Node2D" unique_id=729989334]
+texture_filter = 1
+script = ExtResource("1_environment")
+debug_scene_id = "home"
+debug_location_name = "Home"
+
+[node name="Interior" type="Sprite2D" parent="." unique_id=508247289]
+z_index = -10
+position = Vector2(2.9999998, 146)
+scale = Vector2(0.62720853, 0.62720853)
+texture = ExtResource("2_18uk7")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1495383979]
+
+[node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1967546524]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1416155739]
+polygon = PackedVector2Array(4, 854, 3633, 857, 3633, 831, 1184, 836, 1030, 795, 919, 738, 689, 737, 609, 784, 458, 833, 3, 831)
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1633258588]
+position = Vector2(-48, 432)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=896764743]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1294443687]
+position = Vector2(3669, 493)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=541855407]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=780675265]
+z_index = 10
+position = Vector2(595, 667)
+script = ExtResource("3_player")
+depth_scale_enabled = true
+
+[node name="SherryCollision" parent="Player" unique_id=843162247 instance=ExtResource("4_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=1617229915 instance=ExtResource("5_presentation")]
+position = Vector2(-5, -34)
+scale = Vector2(1.585, 1.585)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1539167542]
+position = Vector2(0, -210)
+limit_left = 0
+limit_top = 144
+limit_right = 4416
+limit_bottom = 864
+
+[node name="Door" type="Area2D" parent="." unique_id=1755164246]
+position = Vector2(2595, 601)
+script = ExtResource("7_door_portal")
+destination_level = &"market"
+destination_entry_id = &"from_home"
+fallback_scene_path = "res://day/levels/market/town/town.tscn"
+
+[node name="Visual" type="Sprite2D" parent="Door" unique_id=931369178]
+material = SubResource("ShaderMaterial_door_outline")
+position = Vector2(-27.548603, -32.847775)
+scale = Vector2(0.8225825, 0.8159701)
+texture = ExtResource("6_door")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=500275799]
+position = Vector2(-24, 1)
+shape = SubResource("RectangleShape2D_door")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=861958384]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1518116055]
+position = Vector2(595, 746)
+
+[node name="from_market" type="Marker2D" parent="EntryPoints" unique_id=1070510327]
+position = Vector2(2595, 746)
+
+[node name="Table" type="Sprite2D" parent="." unique_id=40416591]
+z_index = 11
+position = Vector2(810, 667)
+scale = Vector2(0.50658125, 0.5065813)
+texture = ExtResource("9_8dq4v")

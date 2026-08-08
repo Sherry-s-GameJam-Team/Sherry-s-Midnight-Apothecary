@@ -345,6 +345,8 @@ func _scene_command(parts: PackedStringArray) -> String:
 	match requested:
 		"town", "market":
 			level_id = "market"
+		"home":
+			level_id = "home"
 		"raintree", "rain_tree", "forest":
 			level_id = "forest"
 		"lake":
@@ -356,7 +358,8 @@ func _scene_command(parts: PackedStringArray) -> String:
 			return "错误：无法切换到场景 %s。" % requested
 		return "scene = %s" % day_runtime.current_level.display_name
 	var scene_path := {
-		"market": "res://day/art/town/town.tscn",
+		"market": "res://day/levels/market/town/town.tscn",
+		"home": "res://day/levels/home/home.tscn",
 		"forest": "res://day/art/raintree/raintree.tscn",
 		"lake": "res://day/art/lake/lake.tscn",
 	}.get(level_id, "") as String

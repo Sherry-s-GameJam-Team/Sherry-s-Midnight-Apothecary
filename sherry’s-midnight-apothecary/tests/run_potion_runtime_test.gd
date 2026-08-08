@@ -63,6 +63,26 @@ func _run() -> void:
 	escape_event.pressed = true
 	day_console._input(escape_event)
 	_expect(not day_console.visible and not day_console.command_input.has_focus(), "Escape closes the daytime console and returns keyboard control to gameplay.")
+	_expect(focused_thrower._begin_aim(), "A stocked selected potion can begin aiming.")
+	if focused_thrower._aiming:
+		var cast_observation := {"projectile": null, "texture": null, "received_splash": false}
+		focused_thrower.projectile_spawned.connect(func(projectile: PotionProjectile) -> void:
+			cast_observation["projectile"] = projectile
+			cast_observation["texture"] = projectile.bottle_sprite.texture
+			projectile.broken.connect(func(_point: Vector2, _normal: Vector2) -> void: cast_observation["received_splash"] = true)
+		)
+		focused_thrower._aiming = false
+		focused_thrower._casting = true
+		focused_thrower._pending_velocity = Vector2(440.0, -260.0)
+		focused_player.play_potion_cast()
+		await create_timer(0.9, true, false, true).timeout
+		var spawned_projectile := cast_observation["projectile"] as PotionProjectile
+		_expect(spawned_projectile != null, "Cast release frame spawns a potion projectile.")
+		_expect(cast_observation["texture"] != null, "Spawned potion projectile has a bottle texture.")
+		if spawned_projectile != null and is_instance_valid(spawned_projectile):
+			spawned_projectile._break(spawned_projectile.global_position, Vector2.UP)
+			await process_frame
+		_expect(bool(cast_observation["received_splash"]), "Broken potion projectile creates splash feedback.")
 	var standalone_level := DayLevelEnvironment.new()
 	var standalone_console: DeveloperConsole = preload("res://night/ui/developer_console/developer_console.tscn").instantiate()
 	root.add_child(standalone_level)
@@ -73,7 +93,8 @@ func _run() -> void:
 	standalone_level.queue_free()
 	await process_frame
 	for scene_path in [
-		"res://day/art/town/town.tscn",
+		"res://day/levels/market/town/town.tscn",
+		"res://day/levels/home/home.tscn",
 		"res://day/art/raintree/raintree.tscn",
 		"res://day/art/lake/lake.tscn",
 	]:
@@ -107,7 +128,7 @@ func _run() -> void:
 		var has_release_method := false
 		for track_index in range(animation.get_track_count()):
 			if animation.track_get_type(track_index) == Animation.TYPE_METHOD and animation.method_track_get_name(track_index, 0) == &"potion_cast_release":
-				has_release_method = true
+				has_release_method = animation.track_get_path(track_index) == NodePath("..")
 		_expect(has_release_method, "%s has an explicit release method frame." % animation_name)
 	runtime.queue_free()
 	await process_frame

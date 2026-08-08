@@ -1,7 +1,7 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"red_potion", &"green_potion", &"orange_potion"]
@@ -18,6 +18,7 @@ var selected_potion_slot := 0
 var potion_throw_orders: Dictionary = {}
 var upgrades: Array[StringName] = []
 var unlocked_levels: Array[StringName] = [&"market"]
+var tutorial_flags: Dictionary = {}
 
 
 func reset() -> void:
@@ -33,6 +34,7 @@ func reset() -> void:
 	potion_throw_orders = {}
 	upgrades = []
 	unlocked_levels = [&"market"]
+	tutorial_flags = {}
 
 
 func apply_day_result(result: DayResult) -> void:
@@ -67,6 +69,7 @@ func to_save_data() -> Dictionary:
 		"potion_throw_orders": _serialize_throw_orders(potion_throw_orders),
 		"upgrades": upgrades.map(func(value: StringName) -> String: return str(value)),
 		"unlocked_levels": unlocked_levels.map(func(value: StringName) -> String: return str(value)),
+		"tutorial_flags": tutorial_flags.duplicate(),
 	}
 
 
@@ -84,6 +87,7 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.potion_throw_orders = _normalize_throw_orders(data.get("potion_throw_orders", {}))
 	result.upgrades = _string_name_array(data.get("upgrades", []))
 	result.unlocked_levels = _string_name_array(data.get("unlocked_levels", [&"market"]))
+	result.tutorial_flags = _bool_dictionary(data.get("tutorial_flags", {}))
 	result._cleanup_potion_configuration()
 	return result
 
@@ -220,6 +224,15 @@ static func _count_dictionary(value: Variant) -> Dictionary:
 			var count := maxi(int(value[key]), 0)
 			if count > 0:
 				result[StringName(str(key))] = count
+	return result
+
+
+static func _bool_dictionary(value: Variant) -> Dictionary:
+	var result: Dictionary = {}
+	if value is Dictionary:
+		for key: Variant in value:
+			if bool(value[key]):
+				result[str(key)] = true
 	return result
 
 

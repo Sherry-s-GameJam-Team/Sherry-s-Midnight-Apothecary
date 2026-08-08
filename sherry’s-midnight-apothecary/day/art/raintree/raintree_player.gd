@@ -11,10 +11,17 @@ const COYOTE_TIME := 0.12
 const JUMP_BUFFER_TIME := 0.12
 const DOUBLE_TAP_WINDOW_MS := 260
 const ROLL_SPEED_MULTIPLIER := 1.8
+const POTION_CAST_RELEASE_TIME := 0.708333
 
 @export_range(0.3, 1.2, 0.01) var character_scale := 0.4
 @export_range(50.0, 500.0, 5.0) var walk_speed := 120.0
 @export_range(50.0, 700.0, 5.0) var run_speed := 360.0
+## Optional scene-local perspective scaling. At/under [depth_scale_min_y] the
+## character reaches [depth_scale_min_multiplier] of its normal visual size.
+@export var depth_scale_enabled := false
+@export var depth_scale_max_y := 834.0
+@export var depth_scale_min_y := 776.0
+@export_range(0.1, 1.0, 0.01) var depth_scale_min_multiplier := 0.9
 
 @onready var sprite: Node2D = $SherryPresentation/SherrySprite
 @onready var animation_player: AnimationPlayer = $SherryPresentation/SherryAnimationPlayer
@@ -40,7 +47,7 @@ func _ready() -> void:
 	add_to_group("potion_friendly")
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
-	sprite.scale = Vector2.ONE * character_scale
+	_apply_visual_scale()
 	_play("idle")
 
 
@@ -52,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	_update_ground_transition(direction)
 	_update_velocity(delta, direction)
 	move_and_slide()
+	_apply_visual_scale()
 	_update_landing(direction)
 	if not _is_transition() and not _is_airborne and not _is_rolling:
 		_update_locomotion(direction)
@@ -160,8 +168,18 @@ func _play(action: String) -> void:
 	if _state == action and animation_player.current_animation == animation_name and animation_player.is_playing():
 		return
 	_state = action
-	sprite.scale = Vector2.ONE * character_scale
+	_apply_visual_scale()
 	animation_player.play(animation_name)
+
+
+func _apply_visual_scale() -> void:
+	var scale_multiplier := 1.0
+	if depth_scale_enabled:
+		var y_range := depth_scale_max_y - depth_scale_min_y
+		if not is_zero_approx(y_range):
+			var depth_progress := clampf((global_position.y - depth_scale_min_y) / y_range, 0.0, 1.0)
+			scale_multiplier = lerpf(depth_scale_min_multiplier, 1.0, depth_progress)
+	sprite.scale = Vector2.ONE * character_scale * scale_multiplier
 
 
 func _is_transition() -> bool:
@@ -283,6 +301,9 @@ func play_potion_cast() -> void:
 	_potion_action_locked = true
 	_transition_target = "idle"
 	_play("cast")
+	# The cast animation also contains a method track, but the explicit timer keeps
+	# the gameplay release reliable when an inherited AnimationPlayer retargets it.
+	get_tree().create_timer(POTION_CAST_RELEASE_TIME, true, false, true).timeout.connect(potion_cast_release, CONNECT_ONE_SHOT)
 
 
 func potion_cast_release() -> void:

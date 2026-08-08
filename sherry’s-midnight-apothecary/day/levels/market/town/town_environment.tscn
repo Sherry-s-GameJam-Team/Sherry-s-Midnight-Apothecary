@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dn223l23avjba"]
+[gd_scene format=3 uid="uid://cr1ggtdboncpr"]
 
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cw62x6c2su2r1" path="res://day/art/town/backgrounds/skybox.png" id="2"]

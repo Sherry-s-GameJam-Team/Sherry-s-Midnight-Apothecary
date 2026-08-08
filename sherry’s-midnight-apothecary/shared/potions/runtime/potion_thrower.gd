@@ -3,6 +3,8 @@ extends Node2D
 
 const PROJECTILE_SCENE := preload("res://shared/potions/runtime/potion_projectile.tscn")
 
+signal projectile_spawned(projectile: PotionProjectile)
+
 @export var throw_tuning: PotionThrowTuning
 @export var effect_tuning: PotionEffectTuning
 @export var potion_definitions: Array[PotionData] = []
@@ -89,6 +91,7 @@ func on_cast_release() -> void:
 		return
 	projectile.configure(_pending_velocity, payload, potion, throw_tuning, effect_tuning)
 	_active_projectile = projectile
+	projectile_spawned.emit(projectile)
 	projectile.broken.connect(_on_projectile_broken)
 	projectile.tree_exiting.connect(_on_projectile_exiting.bind(projectile), CONNECT_ONE_SHOT)
 	Engine.time_scale = throw_tuning.flight_time_scale
@@ -144,6 +147,7 @@ func _begin_aim() -> bool:
 	_original_time_scale = Engine.time_scale
 	Engine.time_scale = throw_tuning.aim_time_scale
 	_aiming = true
+	_show_throw_tutorial_once()
 	_drag_start_mouse = get_global_mouse_position()
 	_update_origin()
 	var potion: PotionData = _definition_by_id[potion_id]
@@ -258,6 +262,19 @@ func _restore_time() -> void:
 func _is_text_input_focused() -> bool:
 	var focused := get_viewport().gui_get_focus_owner()
 	return focused is LineEdit or focused is TextEdit
+
+
+func _show_throw_tutorial_once() -> void:
+	var player_data := inventory_service.player_data
+	const FLAG := "potion_throw_controls_shown"
+	if bool(player_data.tutorial_flags.get(FLAG, false)):
+		return
+	var app_root := get_tree().current_scene
+	var top_hint := app_root.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI if app_root != null else null
+	if top_hint == null:
+		return
+	player_data.tutorial_flags[FLAG] = true
+	top_hint.push_text("按住鼠标左键后向反方向拖拽，松开即可投掷药水。", FLAG)
 
 
 func _should_block_for_console(event: InputEvent) -> bool:

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ckd8kmnf2vugc"]
+[gd_scene format=3 uid="uid://cxf4skcv5navd"]
 
 [ext_resource type="Texture2D" uid="uid://b54mr2bxi3gaf" path="res://day/art/town/FS/BG.png" id="1_fs_bg"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="1_player"]
@@ -17,6 +17,16 @@
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="20_sherry_collision"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="21_door_portal"]
+[ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="22_door_outline"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_door_outline"]
+shader = ExtResource("22_door_outline")
+shader_parameter/outline_color = Color(1, 0.84, 0.3, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(120, 225)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -727.0
@@ -129,10 +139,31 @@ position = Vector2(3560, 100)
 texture = ExtResource("5_cs")
 centered = false
 
-[node name="Door" type="Sprite2D" parent="CS" unique_id=1216820119]
+[node name="DoorVisual" type="Sprite2D" parent="CS" unique_id=1216820119]
+material = SubResource("ShaderMaterial_door_outline")
 position = Vector2(635, 585)
 scale = Vector2(0.6593961, 0.6593961)
 texture = ExtResource("8_56gmp")
+
+[node name="Door" type="Area2D" parent="." unique_id=1830731207]
+position = Vector2(635, 585)
+script = ExtResource("21_door_portal")
+destination_level = &"home"
+destination_entry_id = &"from_market"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+visual_path = NodePath("../CS/DoorVisual")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=304733270]
+position = Vector2(-5, 44.5)
+shape = SubResource("RectangleShape2D_door")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=263991943]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=95260127]
+position = Vector2(1086, 651)
+
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=203064288]
+position = Vector2(735, 651)
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=405597964]
 
