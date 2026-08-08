@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://app/game_flow.gd" id="2_game_flow"]
 [ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="3_pause"]
 [ext_resource type="PackedScene" path="res://night/ui/top_hint/top_hint_ui.tscn" id="4_top_hint"]
+[ext_resource type="PackedScene" path="res://day/interactables/map_switch/map_switch_interaction.tscn" id="5_map_switch"]
 
 [node name="AppRoot" type="Node"]
 script = ExtResource("1_app_root")
@@ -19,3 +20,5 @@ layer = 200
 [node name="TopHintUI" parent="GlobalUI" instance=ExtResource("4_top_hint")]
 
 [node name="PauseMenu" parent="GlobalUI" instance=ExtResource("3_pause")]
+
+[node name="MapSwitchInteraction" parent="GlobalUI" instance=ExtResource("5_map_switch")]

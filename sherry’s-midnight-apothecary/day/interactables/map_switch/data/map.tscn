@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bd22ulo0g5k61"]
+
+[ext_resource type="Texture2D" uid="uid://bjjxb04v2pi05" path="res://day/interactables/map_switch/data/world_map_vectorized_exact64.svg" id="1_rfk06"]
+
+[node name="Map" type="Node2D" unique_id=122830537]
+
+[node name="WorldMapVectorizedExact64" type="Sprite2D" parent="." unique_id=693155044]
+position = Vector2(463.5, 361.5)
+scale = Vector2(0.53018224, 0.5512232)
+texture = ExtResource("1_rfk06")

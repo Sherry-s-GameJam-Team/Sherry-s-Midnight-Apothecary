@@ -153,6 +153,7 @@ destination_entry_id = &"from_market"
 fallback_scene_path = "res://day/levels/home/home.tscn"
 visual_path = NodePath("../CS/DoorVisual")
 interaction_hint_enabled = true
+interaction_hint_text = "按[E]进入药水铺"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=304733270]
 position = Vector2(-5, 44.5)

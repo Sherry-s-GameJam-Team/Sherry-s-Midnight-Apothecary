@@ -13,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://b0cq20puj1m7o" path="res://day/levels/home/equip.png" id="11_equip"]
 [ext_resource type="PackedScene" uid="uid://q2mlpc4fa1do" path="res://night/alchemy/alchemy_runtime.tscn" id="12_alchemy_runtime"]
 [ext_resource type="Texture2D" uid="uid://c0ql7o82wld7t" path="res://day/levels/home/transsformer.png" id="13_ga1c4"]
+[ext_resource type="Texture2D" uid="uid://c2ywnit3lhswg" path="res://day/levels/home/bedroom.png" id="14_k5h2p"]
+[ext_resource type="Script" uid="uid://j1cxm2tmwnyr" path="res://day/levels/home/home_camera_director.gd" id="15_camera_director"]
+[ext_resource type="Shader" uid="uid://cqj6mkygmcjps" path="res://day/levels/home/bedroom_barrier_dissolve.gdshader" id="17_barrier_shader"]
+[ext_resource type="Texture2D" uid="uid://x303tlcn0gfs" path="res://day/levels/home/shader.png" id="18_li0wu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1728)
@@ -33,15 +37,25 @@ shader_parameter/outline_width = 2.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_equip"]
 size = Vector2(540, 577)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bedroom_barrier"]
+shader = ExtResource("17_barrier_shader")
+shader_parameter/dissolve = 0.0
+shader_parameter/magic_color = Color(0.42, 0.22, 1, 1)
+shader_parameter/edge_color = Color(0.18, 0.9, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bedroom_entrance"]
+size = Vector2(55.826057, 747.25)
+
 [node name="Home" type="Node2D" unique_id=729989334]
 texture_filter = 1
+position = Vector2(0, 7)
 script = ExtResource("1_environment")
 debug_scene_id = "home"
 debug_location_name = "Home"
 
 [node name="Interior" type="Sprite2D" parent="." unique_id=508247289]
 z_index = -10
-position = Vector2(2.9999998, 146)
+position = Vector2(2.9999998, 149)
 scale = Vector2(0.62720853, 0.62720853)
 texture = ExtResource("2_18uk7")
 centered = false
@@ -51,10 +65,10 @@ centered = false
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1967546524]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1416155739]
-polygon = PackedVector2Array(4, 854, 3633, 857, 3633, 831, 1184, 836, 1030, 795, 919, 738, 689, 737, 609, 784, 458, 833, 3, 831)
+polygon = PackedVector2Array(-2545, 867, 3633, 857, 3633, 831, 1184, 836, 1030, 795, 919, 738, 689, 737, 609, 784, 458, 833, -2541, 837)
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1633258588]
-position = Vector2(-48, 432)
+position = Vector2(-2583.67, 432)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=896764743]
 shape = SubResource("RectangleShape2D_side_barrier")
@@ -84,6 +98,20 @@ limit_left = 0
 limit_top = 144
 limit_right = 4416
 limit_bottom = 864
+position_smoothing_enabled = true
+position_smoothing_speed = 1800.0
+limit_smoothed = true
+
+[node name="HomeCameraDirector" type="Node" parent="." unique_id=1155188782]
+script = ExtResource("15_camera_director")
+player_path = NodePath("../Player")
+camera_path = NodePath("../Player/Camera2D")
+left_barrier_path = NodePath("../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../WorldBounds/RightBarrier/CollisionShape2D")
+entrance_area_path = NodePath("../BedroomEntrance")
+entrance_collision_path = NodePath("../BedroomEntrance/CollisionShape2D")
+blocker_collision_path = NodePath("../BedroomBlocker/CollisionShape2D")
+barrier_visual_path = NodePath("../Shader")
 
 [node name="Door" type="Area2D" parent="." unique_id=1755164246]
 position = Vector2(2595, 601)
@@ -136,3 +164,31 @@ texture = ExtResource("9_8dq4v")
 position = Vector2(2217.784, 523.4146)
 scale = Vector2(0.8276242, 0.82674414)
 texture = ExtResource("13_ga1c4")
+
+[node name="Bedroom" type="Sprite2D" parent="." unique_id=523818523]
+position = Vector2(-1050.0004, 508.99994)
+scale = Vector2(0.8853435, 0.82870364)
+texture = ExtResource("14_k5h2p")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=135241443]
+position = Vector2(148, 527)
+
+[node name="Shader" type="Sprite2D" parent="." unique_id=1822030358]
+material = SubResource("ShaderMaterial_bedroom_barrier")
+position = Vector2(104.347885, 509.12497)
+scale = Vector2(0.5031788, 0.6185953)
+texture = ExtResource("18_li0wu")
+
+[node name="BedroomEntrance" type="Area2D" parent="." unique_id=766253254]
+position = Vector2(104.347885, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomEntrance" unique_id=712955122]
+position = Vector2(-28.347885, -58.375)
+shape = SubResource("RectangleShape2D_bedroom_entrance")
+
+[node name="BedroomBlocker" type="StaticBody2D" parent="." unique_id=1021805823]
+position = Vector2(104.347885, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomBlocker" unique_id=503967931]
+position = Vector2(-37.347885, -127)
+shape = SubResource("RectangleShape2D_bedroom_entrance")

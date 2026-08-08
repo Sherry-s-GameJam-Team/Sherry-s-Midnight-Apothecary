@@ -43,7 +43,7 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if inventory_service == null or throw_tuning == null:
+	if get_tree().has_meta("day_modal_input_locked") or inventory_service == null or throw_tuning == null:
 		return
 	if _should_block_for_console(event):
 		return
@@ -58,7 +58,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if inventory_service == null or throw_tuning == null:
+	if get_tree().has_meta("day_modal_input_locked") or inventory_service == null or throw_tuning == null:
 		return
 	if _should_block_for_console(event):
 		return

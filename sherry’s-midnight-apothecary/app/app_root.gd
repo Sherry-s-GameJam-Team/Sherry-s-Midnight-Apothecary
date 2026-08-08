@@ -7,6 +7,7 @@ extends Node
 @onready var current_runtime_slot: Node = $CurrentRuntime
 @onready var pause_menu: PauseMenu = $GlobalUI/PauseMenu
 @onready var top_hint_ui: TopHintUI = $GlobalUI/TopHintUI
+@onready var map_switch: Control = $GlobalUI/MapSwitchInteraction
 
 var player_data: PlayerData
 var save_service: SaveService
@@ -18,6 +19,7 @@ func _ready() -> void:
 	top_hint_ui.bind_player_data(player_data)
 	pause_menu.bind_player_data(player_data)
 	game_flow.configure(current_runtime_slot, player_data)
+	map_switch.travel_requested.connect(_on_map_switch_travel_requested)
 	game_flow.save_requested.connect(_on_save_requested)
 	if start_automatically:
 		start_new_game()
@@ -51,6 +53,10 @@ func load_game() -> bool:
 
 func _on_save_requested(_day: int, _mode: GameFlow.Mode) -> void:
 	save_game()
+
+
+func _on_map_switch_travel_requested(destination_id: StringName, _destination_data: Dictionary) -> void:
+	print("[MapSwitch] travel requested: ", destination_id)
 
 
 func _unhandled_input(event: InputEvent) -> void:

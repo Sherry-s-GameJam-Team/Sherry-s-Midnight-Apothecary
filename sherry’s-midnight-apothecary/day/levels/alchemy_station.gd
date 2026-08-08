@@ -30,7 +30,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not _player_is_inside or not _is_interact_event(event) or is_instance_valid(_alchemy_layer):
+	if get_tree().has_meta("day_modal_input_locked") or not _player_is_inside or not _is_interact_event(event) or is_instance_valid(_alchemy_layer):
 		return
 	get_viewport().set_input_as_handled()
 	_open_alchemy()

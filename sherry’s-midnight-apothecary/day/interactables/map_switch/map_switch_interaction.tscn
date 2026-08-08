@@ -1,0 +1,254 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://day/interactables/map_switch/scripts/map_switch_controller.gd" id="1_controller"]
+[ext_resource type="Texture2D" path="res://day/interactables/map_switch/assets/device/transsformer.png" id="2_device"]
+[ext_resource type="Texture2D" path="res://day/interactables/map_switch/assets/device/wheel.png" id="3_wheel"]
+[ext_resource type="Texture2D" path="res://day/interactables/map_switch/assets/device/switch.png" id="4_switch"]
+[ext_resource type="Shader" path="res://day/interactables/map_switch/shaders/dial_to_map.gdshader" id="5_shader"]
+[ext_resource type="Script" path="res://day/interactables/map_switch/scripts/map_canvas.gd" id="6_canvas"]
+[ext_resource type="Script" path="res://day/interactables/map_switch/scripts/magic_overlay.gd" id="7_overlay"]
+[ext_resource type="Script" path="res://day/interactables/map_switch/scripts/crosshair.gd" id="8_crosshair"]
+[ext_resource type="Script" path="res://day/interactables/map_switch/scripts/lever_confirm.gd" id="9_lever"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_map"]
+viewport_path = NodePath("../../MapViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_display"]
+shader = ExtResource("5_shader")
+shader_parameter/dial_texture = ExtResource("3_wheel")
+shader_parameter/transition_progress = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.055, 0.045, 0.085, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.58, 0.43, 0.22, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 24.0
+content_margin_top = 22.0
+content_margin_right = 24.0
+content_margin_bottom = 22.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_lever_plate"]
+bg_color = Color(0.06, 0.05, 0.085, 0.86)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.28, 0.16, 0.95)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MapSwitchInteraction" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_controller")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.025, 0.07, 0.98)
+
+[node name="Heading" type="Label" parent="."]
+offset_left = 42.0
+offset_top = 18.0
+offset_right = 720.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.84, 0.71, 0.43, 1)
+theme_override_font_sizes/font_size = 22
+text = "VIALIA ARCANE MAP SWITCH / GODOT 4.6"
+
+[node name="Help" type="Label" parent="."]
+offset_left = 42.0
+offset_top = 47.0
+offset_right = 720.0
+offset_bottom = 68.0
+theme_override_colors/font_color = Color(0.72, 0.72, 0.8, 1)
+theme_override_font_sizes/font_size = 15
+text = "Activate → drag the map → lock a route node → pull the lever."
+
+[node name="DeviceStage" type="Node2D" parent="." groups=["map_switch_device"]]
+unique_name_in_owner = true
+position = Vector2(42, 64)
+
+[node name="InstrumentSprite" type="Sprite2D" parent="DeviceStage"]
+texture = ExtResource("2_device")
+centered = false
+
+[node name="CircularDisplay" type="Sprite2D" parent="DeviceStage"]
+unique_name_in_owner = true
+position = Vector2(543, 337)
+scale = Vector2(0.828125, 0.828125)
+texture = SubResource("ViewportTexture_map")
+material = SubResource("ShaderMaterial_display")
+
+[node name="MagicOverlay" type="Node2D" parent="DeviceStage"]
+unique_name_in_owner = true
+position = Vector2(543, 337)
+script = ExtResource("7_overlay")
+radius = 212.0
+
+[node name="FixedSelectionCursor" type="Node2D" parent="DeviceStage"]
+unique_name_in_owner = true
+position = Vector2(543, 337)
+script = ExtResource("8_crosshair")
+
+[node name="MapViewport" type="SubViewport" parent="."]
+unique_name_in_owner = true
+size = Vector2i(512, 512)
+transparent_bg = false
+render_target_update_mode = 4
+
+[node name="MagicMapCanvas" type="Node2D" parent="MapViewport"]
+unique_name_in_owner = true
+script = ExtResource("6_canvas")
+
+[node name="DestinationPanel" type="PanelContainer" parent="."]
+offset_left = 760.0
+offset_top = 100.0
+offset_right = 1230.0
+offset_bottom = 520.0
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="DestinationColumn" type="VBoxContainer" parent="DestinationPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ReadoutLabel" type="Label" parent="DestinationPanel/DestinationColumn"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.616, 0.514, 0.788, 1)
+theme_override_font_sizes/font_size = 13
+text = "DESTINATION READOUT"
+
+[node name="DestinationTitle" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.886, 0.761, 0.49, 1)
+theme_override_font_sizes/font_size = 30
+autowrap_mode = 2
+
+[node name="DestinationSubtitle" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.75, 0.9, 1)
+theme_override_font_sizes/font_size = 17
+
+[node name="Separator" type="HSeparator" parent="DestinationPanel/DestinationColumn"]
+layout_mode = 2
+
+[node name="DangerLabel" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="DistanceLabel" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="EnvironmentLabel" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="DescriptionLabel" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 94)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.82, 0.88, 1)
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+vertical_alignment = 0
+
+[node name="StatusLabel" type="Label" parent="DestinationPanel/DestinationColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.455, 0.851, 1, 1)
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+
+[node name="LeverPlate" type="Panel" parent="."]
+offset_left = 610.0
+offset_top = 214.0
+offset_right = 750.0
+offset_bottom = 634.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_lever_plate")
+
+[node name="LeverTitle" type="Label" parent="."]
+offset_left = 630.0
+offset_top = 230.0
+offset_right = 730.0
+offset_bottom = 250.0
+theme_override_colors/font_color = Color(0.784, 0.655, 0.424, 1)
+theme_override_font_sizes/font_size = 14
+text = "CONFIRM"
+
+[node name="TravelConfirmLever" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(666, 370)
+script = ExtResource("9_lever")
+
+[node name="LeverSprite" type="Sprite2D" parent="TravelConfirmLever"]
+texture = ExtResource("4_switch")
+scale = Vector2(0.8, 0.8)
+
+[node name="LeverHint" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 612.0
+offset_top = 530.0
+offset_right = 724.0
+offset_bottom = 584.0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.68, 1)
+theme_override_font_sizes/font_size = 12
+text = "LOCK A NODE FIRST"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ActivateButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 760.0
+offset_top = 545.0
+offset_right = 980.0
+offset_bottom = 589.0
+theme_override_font_sizes/font_size = 16
+text = "ACTIVATE DEVICE"
+
+[node name="ResetButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 1000.0
+offset_top = 545.0
+offset_right = 1220.0
+offset_bottom = 589.0
+theme_override_font_sizes/font_size = 16
+text = "RESET TO DIAL"
+
+[node name="NoTravelNote" type="Label" parent="."]
+offset_left = 760.0
+offset_top = 608.0
+offset_right = 1220.0
+offset_bottom = 662.0
+theme_override_colors/font_color = Color(0.66, 0.66, 0.74, 1)
+theme_override_font_sizes/font_size = 14
+text = "Signal-only: travel_requested(...) does not change the scene."
+autowrap_mode = 2
