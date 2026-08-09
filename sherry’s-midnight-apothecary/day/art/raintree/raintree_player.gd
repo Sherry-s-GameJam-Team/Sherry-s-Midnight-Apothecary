@@ -76,17 +76,17 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	var key_event := event as InputEventKey
 	if key_event == null or not key_event.pressed or key_event.echo or _is_transition() or _potion_action_locked or _is_text_input_focused():
 		return
+	if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
+		_try_start_roll("move_left" if event.is_action_pressed("move_left") else "move_right")
+	if event.is_action_pressed("jump"):
+		_request_jump()
 	match key_event.keycode:
-		KEY_A, KEY_D:
-			_try_start_roll(key_event.keycode)
 		KEY_SPACE:
 			_play_one_shot("throw")
 		KEY_H:
 			_play_one_shot("hit")
 		KEY_F:
 			_play_one_shot("cast")
-		KEY_W:
-			_request_jump()
 
 
 func _update_jump_timers(delta: float) -> void:
@@ -236,20 +236,20 @@ func _start_jump() -> void:
 	_play("prejump")
 
 
-func _try_start_roll(keycode: int) -> void:
+func _try_start_roll(action_name: StringName) -> void:
 	if _is_airborne or _is_rolling or not is_on_floor():
 		return
 	var now := Time.get_ticks_msec()
-	var previous_tap := _last_a_tap_ms if keycode == KEY_A else _last_d_tap_ms
+	var previous_tap := _last_a_tap_ms if action_name == "move_left" else _last_d_tap_ms
 	if now - previous_tap > DOUBLE_TAP_WINDOW_MS:
-		if keycode == KEY_A:
+		if action_name == "move_left":
 			_last_a_tap_ms = now
 		else:
 			_last_d_tap_ms = now
 		return
 	_last_a_tap_ms = -10000
 	_last_d_tap_ms = -10000
-	_roll_direction = -1.0 if keycode == KEY_A else 1.0
+	_roll_direction = -1.0 if action_name == "move_left" else 1.0
 	_facing_right = _roll_direction > 0.0
 	_is_rolling = true
 	_play("roll")
@@ -258,13 +258,11 @@ func _try_start_roll(keycode: int) -> void:
 func _get_input_direction() -> float:
 	if _is_text_input_focused():
 		return 0.0
-	var left := 1.0 if Input.is_key_pressed(KEY_A) or Input.is_action_pressed("ui_left") else 0.0
-	var right := 1.0 if Input.is_key_pressed(KEY_D) or Input.is_action_pressed("ui_right") else 0.0
-	return right - left
+	return Input.get_axis("move_left", "move_right")
 
 
 func _is_running() -> bool:
-	return not _is_text_input_focused() and Input.is_key_pressed(KEY_SHIFT)
+	return not _is_text_input_focused() and Input.is_action_pressed("move_run")
 
 
 func _current_move_speed() -> float:
