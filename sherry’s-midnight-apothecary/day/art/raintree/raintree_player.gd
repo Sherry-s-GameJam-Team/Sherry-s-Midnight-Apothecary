@@ -1,22 +1,29 @@
 extends CharacterBody2D
 
-const WALK_JUMP_VELOCITY := -405.0
-const RUN_JUMP_VELOCITY := -450.0
-const WALK_JUMP_GRAVITY := 925.0
-const RUN_JUMP_GRAVITY := 850.0
-const AIR_CONTROL_ACCELERATION := 700.0
-const AIR_DRAG := 90.0
+const WALK_JUMP_VELOCITY := -550.0
+const RUN_JUMP_VELOCITY := -620.0
+const WALK_JUMP_GRAVITY := 950.0
+const RUN_JUMP_GRAVITY := 900.0
 const MAX_FALL_SPEED := 900.0
+
+const JUMP_CUT_GRAVITY_MULTIPLIER := 2.8
+
+const GROUND_ACCELERATION := 1800.0
+const GROUND_FRICTION := 1600.0
+const AIR_ACCELERATION := 900.0
+const AIR_FRICTION := 500.0
+
 const COYOTE_TIME := 0.12
 const JUMP_BUFFER_TIME := 0.12
 const DOUBLE_TAP_WINDOW_MS := 260
-const ROLL_SPEED_MULTIPLIER := 1.8
+const ROLL_SPEED_MULTIPLIER := 1.3
 const POTION_CAST_RELEASE_TIME := 0.708333
 
 @export_range(0.3, 1.2, 0.01) var character_scale := 0.4
-@export_range(50.0, 500.0, 5.0) var walk_speed := 120.0
-@export_range(50.0, 700.0, 5.0) var run_speed := 360.0
+@export_range(50.0, 600.0, 5.0) var walk_speed := 220.0 
+@export_range(50.0, 900.0, 5.0) var run_speed := 420.0
 @export var initial_facing_right := false
+
 ## Optional scene-local perspective scaling. At/under [depth_scale_min_y] the
 ## character reaches [depth_scale_min_multiplier] of its normal visual size.
 @export var depth_scale_enabled := false
@@ -70,13 +77,17 @@ func _physics_process(delta: float) -> void:
 	_update_landing(direction)
 	if not _is_transition() and not _is_airborne and not _is_rolling:
 		_update_locomotion(direction)
+	
+	_update_animation_speed()
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	var key_event := event as InputEventKey
 	if key_event == null or not key_event.pressed or key_event.echo or _is_transition() or _potion_action_locked or _is_text_input_focused():
 		return
-	if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
+	if event.is_action_pressed("roll"):
+		_try_start_roll("roll")
+	elif event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
 		_try_start_roll("move_left" if event.is_action_pressed("move_left") else "move_right")
 	if event.is_action_pressed("jump"):
 		_request_jump()
@@ -130,16 +141,28 @@ func _update_ground_transition(direction: float) -> void:
 func _update_velocity(delta: float, direction: float) -> void:
 	if _is_rolling:
 		velocity.x = _roll_direction * run_speed * ROLL_SPEED_MULTIPLIER
+		_horizontal_velocity = velocity.x
 	elif _is_airborne:
 		if not is_zero_approx(direction):
-			_horizontal_velocity = move_toward(_horizontal_velocity, direction * _current_move_speed(), AIR_CONTROL_ACCELERATION * delta)
+			_horizontal_velocity = move_toward(_horizontal_velocity, direction * _current_move_speed(), AIR_ACCELERATION * delta)
 		else:
-			_horizontal_velocity = move_toward(_horizontal_velocity, 0.0, AIR_DRAG * delta)
+			_horizontal_velocity = move_toward(_horizontal_velocity, 0.0, AIR_FRICTION * delta)
 		velocity.x = _horizontal_velocity
 	else:
-		velocity.x = direction * _current_move_speed() if _state in ["walk", "run"] else 0.0
+		var target_speed := 0.0
+		if _state in ["walk", "run"] or not is_zero_approx(direction):
+			target_speed = direction * _current_move_speed()
+		
+		var accel := GROUND_ACCELERATION if not is_zero_approx(direction) else GROUND_FRICTION
+		_horizontal_velocity = move_toward(_horizontal_velocity, target_speed, accel * delta)
+		velocity.x = _horizontal_velocity
+
 	if not is_on_floor():
 		var gravity := lerpf(WALK_JUMP_GRAVITY, RUN_JUMP_GRAVITY, _jump_speed_ratio)
+		
+		if velocity.y < 0.0 and not Input.is_action_pressed("jump"):
+			gravity *= JUMP_CUT_GRAVITY_MULTIPLIER
+			
 		velocity.y = minf(velocity.y + gravity * delta, MAX_FALL_SPEED)
 	elif velocity.y > 0.0:
 		velocity.y = 0.0
@@ -149,7 +172,7 @@ func _update_landing(direction: float) -> void:
 	if not _is_airborne or not is_on_floor():
 		return
 	velocity.y = 0.0
-	_horizontal_velocity = 0.0
+	_horizontal_velocity = velocity.x
 	_jump_speed_ratio = 0.0
 	_is_airborne = false
 	if _potion_action_locked:
@@ -161,13 +184,23 @@ func _update_landing(direction: float) -> void:
 
 
 func _update_locomotion(direction: float) -> void:
-	if is_zero_approx(direction):
+	if is_zero_approx(direction) and is_zero_approx(velocity.x):
 		if _state != "idle":
 			_play("idle")
 		return
 	var wants_run := _is_running()
 	if _state == "idle" or (_state == "walk" and wants_run) or (_state == "run" and not wants_run):
 		_play("run" if wants_run else "walk")
+
+
+func _update_animation_speed() -> void:
+	if _state in ["walk", "run"] and not _is_airborne:
+		var target_base_speed := run_speed if _state == "run" else walk_speed
+		if target_base_speed > 0.0:
+			var speed_ratio := absf(velocity.x) / target_base_speed
+			animation_player.speed_scale = maxf(speed_ratio, 0.2)
+	else:
+		animation_player.speed_scale = 1.0
 
 
 func _play(action: String) -> void:
@@ -232,12 +265,26 @@ func _start_jump() -> void:
 	_jump_speed_ratio = clampf(takeoff_speed / run_speed, 0.0, 1.0)
 	_is_airborne = true
 	velocity.y = lerpf(WALK_JUMP_VELOCITY, RUN_JUMP_VELOCITY, _jump_speed_ratio)
-	_horizontal_velocity = _get_input_direction() * takeoff_speed
+	_horizontal_velocity = velocity.x
 	_play("prejump")
 
 
 func _try_start_roll(action_name: StringName) -> void:
 	if _is_airborne or _is_rolling or not is_on_floor():
+		return
+	var direction := 0.0
+	if action_name == "move_left":
+		direction = -1.0
+	elif action_name == "move_right":
+		direction = 1.0
+	elif action_name == "roll":
+		direction = _get_input_direction()
+		if is_zero_approx(direction):
+			direction = 1.0 if _facing_right else -1.0
+		_roll_direction = direction
+		_facing_right = _roll_direction > 0.0
+		_is_rolling = true
+		_play("roll")
 		return
 	var now := Time.get_ticks_msec()
 	var previous_tap := _last_a_tap_ms if action_name == "move_left" else _last_d_tap_ms
@@ -249,7 +296,7 @@ func _try_start_roll(action_name: StringName) -> void:
 		return
 	_last_a_tap_ms = -10000
 	_last_d_tap_ms = -10000
-	_roll_direction = -1.0 if action_name == "move_left" else 1.0
+	_roll_direction = direction
 	_facing_right = _roll_direction > 0.0
 	_is_rolling = true
 	_play("roll")
@@ -308,8 +355,6 @@ func play_potion_cast() -> void:
 	_potion_action_locked = true
 	_transition_target = "idle"
 	_play("cast")
-	# The cast animation also contains a method track, but the explicit timer keeps
-	# the gameplay release reliable when an inherited AnimationPlayer retargets it.
 	get_tree().create_timer(POTION_CAST_RELEASE_TIME, true, false, true).timeout.connect(potion_cast_release, CONNECT_ONE_SHOT)
 
 
