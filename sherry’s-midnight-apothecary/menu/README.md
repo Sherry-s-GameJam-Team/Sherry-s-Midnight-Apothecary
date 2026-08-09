@@ -84,7 +84,7 @@ Resolver 选择 `start_day <= 当前 day` 的最近 Profile。`world_state.sky_p
 
 天空 Shader 的 `top_color`、`horizon_color` 和 `bottom_color` 完全由 Profile 设置。此前逐像素变化的哈希噪声已经移除；`noise_strength` 暂时保留只为兼容旧 Profile，不再影响天空画面。如需纸张纹理，应通过可控的正式 overlay texture 添加。
 
-运镜 Marker 位于 `menu.tscn/World`：`MenuCameraStart`、`CloudPassPoint`、`ForestPassPoint`、`RoofTransitionPoint`。调整 Marker 的 Y 改变经过位置；调整 `MenuCameraDirector.play_descent()`三段 Tween 时长可改变总下降速度。当前约为 4.4 秒运镜加 0.34 秒屋檐覆盖。
+运镜 Marker 位于 `menu.tscn/World`：`MenuCameraStart`、`CloudPassPoint`、`ForestPassPoint`、`RoofTransitionPoint`。调整 Marker 的位置会改变镜头经过的路径；`MenuCameraDirector` 在 0.35 秒停顿后，用 4.05 秒单一连续二次曲线完成下降，前半程匀加速、后半程匀减速，经过 Marker 时不会发生速度跳变。可在 Inspector 调整 `descent_delay` 和 `descent_duration`；屋檐覆盖另需 0.34 秒。
 
 视差系数在 `MenuCameraDirector.parallax_factors`，当前为 1.0、1.15、1.4、1.7。场景遵循项目现有 1280×720 和 `canvas_items` stretch，不应改成 3D 或 Perspective Camera。
 

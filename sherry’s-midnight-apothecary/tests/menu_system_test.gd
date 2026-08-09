@@ -20,6 +20,9 @@ static func run(test: TestSupport) -> void:
 	var tree_bottom := tree_silhouette.global_position.y + tree_silhouette.texture.get_height() * tree_silhouette.global_scale.y
 	var room_mask_edge: float = roof_marker.global_position.y + menu.get_viewport().get_visible_rect().size.y * 0.5
 	test.expect_float_close(tree_bottom, room_mask_edge + silhouette_director.roof_mask_overlap, 0.1, "Tree mask overlaps the room mask at the final frame bottom edge.")
+	test.expect_float_close(MenuCameraDirector.ease_uniform_accel_decel(0.25), 0.125, 0.0001, "Camera uses constant acceleration in the first half.")
+	test.expect_float_close(MenuCameraDirector.ease_uniform_accel_decel(0.5), 0.5, 0.0001, "Camera reaches half distance at half time.")
+	test.expect_float_close(MenuCameraDirector.ease_uniform_accel_decel(0.75), 0.875, 0.0001, "Camera uses symmetric constant deceleration in the second half.")
 	test.expect(not bird_silhouette.visible, "Bird flock stays hidden while the menu is idle.")
 	test.expect(silhouette_director.get_bird_start_x() > tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock starts completely beyond the right edge.")
 	test.expect(silhouette_director.get_bird_end_x() < -tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock finishes completely beyond the left edge.")

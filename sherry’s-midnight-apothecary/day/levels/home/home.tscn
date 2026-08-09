@@ -102,13 +102,12 @@ shape = SubResource("RectangleShape2D_side_barrier")
 z_index = 10
 position = Vector2(2554, 715)
 script = ExtResource("3_player")
-depth_scale_enabled = true
+character_scale = 0.8
 
 [node name="SherryCollision" parent="Player" unique_id=843162247 instance=ExtResource("4_collision")]
 
 [node name="SherryPresentation" parent="Player" unique_id=1617229915 instance=ExtResource("5_presentation")]
 position = Vector2(-5, -34)
-scale = Vector2(1.585, 1.585)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1539167542]
 position = Vector2(0, -210)

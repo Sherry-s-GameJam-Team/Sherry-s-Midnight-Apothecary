@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func play_footstep(speed_ratio: float = 1.0) -> void:
 	var speed_pitch := lerpf(0.94, 1.06, clampf(speed_ratio, 0.0, 1.0))
-	_play_one_shot(FOOTSTEP, -13.0, speed_pitch * randf_range(0.94, 1.06))
+	_play_one_shot(FOOTSTEP, -10.0, speed_pitch * randf_range(0.94, 1.06))
 
 
 func play_spell_cast() -> void:
@@ -52,7 +52,7 @@ func play_ui_hover() -> void:
 	if now - _last_ui_hover_ms < MIN_UI_HOVER_INTERVAL_MS:
 		return
 	_last_ui_hover_ms = now
-	_play_one_shot(UI_HOVER, -18.0, randf_range(1.02, 1.08))
+	_play_one_shot(UI_HOVER, -15.0, randf_range(1.02, 1.08))
 
 
 func _play_door_close() -> void:
