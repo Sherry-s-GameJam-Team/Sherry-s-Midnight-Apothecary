@@ -13,13 +13,15 @@ script = ExtResource("1_night")
 
 [node name="NightHome" parent="ShopSlot" instance=ExtResource("4_home")]
 
-[node name="CustomerSlot" type="Node2D" parent="."]
+[node name="CustomerSlot" type="CanvasLayer" parent="."]
+layer = 210
 process_mode = 4
 visible = false
 
 [node name="BusinessPlaceholder" parent="CustomerSlot" instance=ExtResource("5_business")]
 
-[node name="AlchemySlot" type="Node2D" parent="."]
+[node name="AlchemySlot" type="CanvasLayer" parent="."]
+layer = 210
 process_mode = 4
 visible = false
 

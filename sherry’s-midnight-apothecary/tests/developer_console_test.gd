@@ -60,6 +60,11 @@ static func run(test: TestSupport) -> void:
 	scene_tree.root.add_child(day_runtime)
 	var day_console := day_runtime.developer_console
 	test.expect(day_console != null, "DayRuntime owns the developer console.")
+	test.expect(day_runtime.developer_console_layer.layer > 210, "Day console renders above the shared alchemy CanvasLayer.")
+	day_console._input(fallback_event)
+	test.expect(day_console.visible and not scene_tree.paused and day_console.command_input.has_focus(), "F1 opens a usable live daytime console without pausing DayRuntime.")
+	day_console._input(fallback_event)
+	test.expect(not day_console.visible and not scene_tree.paused, "F1 closes the daytime console cleanly.")
 	test.expect_equal(day_console.execute_command("scene town"), "scene = Town", "Console opens Town during the day.")
 	test.expect_equal(day_console.execute_command("scene raintree"), "scene = Rain Tree", "Console opens RainTree during the day.")
 	test.expect_equal(day_console.execute_command("scene lake"), "scene = Lake", "Console opens Lake during the day.")

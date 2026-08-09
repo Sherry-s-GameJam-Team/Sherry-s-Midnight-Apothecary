@@ -10,9 +10,9 @@ var _standalone_player_data: PlayerData
 
 @onready var shop_slot: Node2D = $ShopSlot
 @onready var night_home: NightHome = $ShopSlot/NightHome
-@onready var customer_slot: Node2D = $CustomerSlot
+@onready var customer_slot: CanvasLayer = $CustomerSlot
 @onready var business_placeholder: BusinessPlaceholder = $CustomerSlot/BusinessPlaceholder
-@onready var alchemy_slot: Node2D = $AlchemySlot
+@onready var alchemy_slot: CanvasLayer = $AlchemySlot
 @onready var alchemy_runtime: AlchemyRuntime = $AlchemySlot/AlchemyRuntime
 @onready var developer_console: DeveloperConsole = $UI/DeveloperConsole
 
@@ -140,9 +140,9 @@ func _show_shop() -> void:
 func _resolve_scene_nodes() -> void:
 	shop_slot = get_node_or_null("ShopSlot") as Node2D
 	night_home = get_node_or_null("ShopSlot/NightHome") as NightHome
-	customer_slot = get_node_or_null("CustomerSlot") as Node2D
+	customer_slot = get_node_or_null("CustomerSlot") as CanvasLayer
 	business_placeholder = get_node_or_null("CustomerSlot/BusinessPlaceholder") as BusinessPlaceholder
-	alchemy_slot = get_node_or_null("AlchemySlot") as Node2D
+	alchemy_slot = get_node_or_null("AlchemySlot") as CanvasLayer
 	alchemy_runtime = get_node_or_null("AlchemySlot/AlchemyRuntime") as AlchemyRuntime
 
 

@@ -10,7 +10,11 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime != null, "The night runtime scene instantiates.")
 	if runtime == null:
 		return
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.add_child(runtime)
 	runtime.configure(PlayerData.new(), 3)
+	test.expect(runtime.customer_slot is CanvasLayer, "Night business runs in screen space instead of through the world camera.")
+	test.expect(runtime.alchemy_slot is CanvasLayer, "Night alchemy runs in screen space instead of through the world camera.")
 
 	var home := runtime.get_node("ShopSlot/NightHome") as NightHome
 	var player := home.get_node("Player") as CharacterBody2D
@@ -42,5 +46,6 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime.alchemy_slot.visible, "Equip opens the existing night alchemy runtime.")
 	test.expect(not runtime.shop_slot.visible, "Opening production hides the shop scene.")
 	test.expect_equal(runtime.alchemy_runtime.current_panel, AlchemyRuntime.PanelMode.PRODUCTION, "Equip lands directly on the production panel.")
+	test.expect(runtime.alchemy_runtime.size.x > 0.0 and runtime.alchemy_runtime.size.y > 0.0, "Night production fills a real viewport-sized Control canvas.")
 
 	runtime.free()

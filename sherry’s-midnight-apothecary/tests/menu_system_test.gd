@@ -10,6 +10,23 @@ static func run(test: TestSupport) -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(menu)
 	menu.configure({})
+	var tree_silhouette := menu.get_node("World/SilhouetteLayers/TreeSilhouette") as Sprite2D
+	var bird_silhouette := menu.get_node("World/SilhouetteLayers/BirdSilhouette") as Sprite2D
+	var silhouette_director := menu.get_node("MenuSilhouetteDirector") as MenuSilhouetteDirector
+	var roof_marker := menu.get_node("World/RoofTransitionPoint") as Marker2D
+	test.expect_equal(tree_silhouette.texture.resource_path, "res://art/effects/tree.png", "Menu tree uses the supplied silhouette texture.")
+	test.expect_equal(bird_silhouette.texture.resource_path, "res://art/effects/bird.png", "Menu birds use the supplied silhouette texture.")
+	test.expect_equal(tree_silhouette.scale, bird_silhouette.scale, "Tree and bird masks share one canvas scale.")
+	var tree_bottom := tree_silhouette.global_position.y + tree_silhouette.texture.get_height() * tree_silhouette.global_scale.y
+	test.expect_float_close(tree_bottom, roof_marker.global_position.y - silhouette_director.roof_clearance, 0.1, "Tree mask ends just above the roof marker.")
+	test.expect(not bird_silhouette.visible, "Bird flock stays hidden while the menu is idle.")
+	test.expect(silhouette_director.get_bird_start_x() > tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock starts completely beyond the right edge.")
+	test.expect(silhouette_director.get_bird_end_x() < -tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock finishes completely beyond the left edge.")
+	var bird_material := bird_silhouette.material as ShaderMaterial
+	test.expect(bird_material != null and bird_material.shader.resource_path == "res://menu/shaders/menu_bird_trail.gdshader", "Bird flock uses the horizontal afterimage shader.")
+	test.expect_equal(bird_material.get_shader_parameter("trail_offsets_px"), Vector3(18, 36, 54), "Bird trail uses the approved three soft offsets.")
+	test.expect(silhouette_director.play(), "Bird flight starts once from the idle state.")
+	test.expect(not silhouette_director.play(), "A running bird flight rejects duplicate playback.")
 	for silhouette_path: NodePath in [
 		NodePath("World/DistantForest"),
 		NodePath("World/TreeCanopyForeground"),
@@ -45,6 +62,8 @@ static func run(test: TestSupport) -> void:
 	var day_runtime := flow.current_runtime as DayRuntime
 	test.expect(day_runtime != null, "Bedroom startup creates DayRuntime.")
 	if day_runtime != null:
+		var day_console_layer := day_runtime.get_node("DeveloperConsoleLayer") as CanvasLayer
+		test.expect(day_console_layer.layer > 210, "The daytime developer console renders above the shared alchemy interface.")
 		test.expect_equal(day_runtime.current_level.id, &"bedroom", "Bedroom is the selected initial level.")
 		var executor := day_runtime.current_level_instance.get_node("SleepToWakeExecutor") as AnimationPresentationExecutor
 		var player := day_runtime.current_level_instance.get_node("Player") as CharacterBody2D
@@ -55,6 +74,8 @@ static func run(test: TestSupport) -> void:
 		test.expect(not day_runtime.current_level.show_title_card, "Bedroom does not display a level title card.")
 		test.expect(day_runtime.switch_to_level("home", &"bedroomdoor"), "Bedroom exit can load Home at its bedroom door.")
 		var home_director := day_runtime.current_level_instance.get_node("HomeCameraDirector") as HomeCameraDirector
+		var home_equip := day_runtime.current_level_instance.get_node("Equip") as AlchemyStation
+		test.expect_equal(home_equip.alchemy_scene.resource_path, "res://night/alchemy/alchemy_runtime.tscn", "Day Home Equip uses the shared AlchemyRuntime scene.")
 		var home_camera := day_runtime.current_level_instance.get_node("Player/Camera2D") as Camera2D
 		var home_player := day_runtime.current_level_instance.get_node("Player") as CharacterBody2D
 		var home_player_sprite := home_player.get_node("SherryPresentation/SherrySprite") as Node2D

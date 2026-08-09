@@ -27,7 +27,8 @@ const DAILY_LEVELS: Array[LevelData] = [
 @onready var level_title: Label = $UI/LevelTitle
 @onready var finish_button: Button = $UI/FinishDayButton
 @onready var scene_title_card: SceneTitleCard = $SceneTitleCard
-@onready var developer_console: Node = $UI/DeveloperConsole
+@onready var developer_console_layer: CanvasLayer = $DeveloperConsoleLayer
+@onready var developer_console: Node = $DeveloperConsoleLayer/DeveloperConsole
 
 var current_level: LevelData
 var current_level_instance: Node
@@ -79,6 +80,7 @@ func set_intro_locked(locked: bool) -> void:
 	_intro_locked = locked
 	if is_node_ready():
 		gameplay_ui.visible = not locked
+		developer_console_layer.visible = not locked
 
 
 func _load_level() -> void:

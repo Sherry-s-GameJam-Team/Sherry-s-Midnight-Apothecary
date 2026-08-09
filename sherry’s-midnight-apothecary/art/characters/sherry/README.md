@@ -16,9 +16,9 @@
 
 - `idle`、`walk`、`run`：循环动作。
 - 跳跃：`prejump → jump_takeoff → jump_fall`。
-- 落地：`jump_fall → land → land_to_idle → idle / walk / run`。
+- 落地：`jump_fall → land → idle / walk / run`。非移动落地直接切到 idle，禁用 `land_to_idle` 的三帧过渡。
 - `prejump` 的运动与跳跃物理同时进行，不会静止。
-- `land_to_idle` 以 18 FPS 播放；`prejump` 为 12 FPS。
+- `prejump` 为 12 FPS；`land_to_idle` 三帧仅保留为资源，不由测试状态机播放。
 
 所有动画帧和关键帧均保存在 `sherry_animations.tres`，而非运行时脚本生成。
 

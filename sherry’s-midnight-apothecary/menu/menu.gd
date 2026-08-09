@@ -18,6 +18,7 @@ enum MenuState {
 @onready var sky_controller: MenuSkyController = %SkyController
 @onready var profile_resolver: SkyProfileResolver = %SkyProfileResolver
 @onready var camera_director: MenuCameraDirector = %MenuCameraDirector
+@onready var silhouette_director: MenuSilhouetteDirector = %MenuSilhouetteDirector
 @onready var transition_director: MenuTransitionDirector = %MenuTransitionDirector
 @onready var bedroom_bridge: BedroomIntroBridge = %BedroomIntroBridge
 
@@ -74,6 +75,7 @@ func fail_transition(message: String) -> void:
 	push_error(message)
 	state = MenuState.IDLE
 	world.visible = true
+	silhouette_director.reset()
 	menu_ui.modulate.a = 1.0
 	menu_ui.set_menu_enabled(true)
 
@@ -85,6 +87,7 @@ func _begin_transition(continue_game: bool) -> void:
 	menu_ui.set_menu_enabled(false)
 	menu_ui.fade_out()
 	transition_director.play_shadow()
+	silhouette_director.play()
 	camera_director.play_descent()
 	await camera_director.descent_finished
 	state = MenuState.LOADING

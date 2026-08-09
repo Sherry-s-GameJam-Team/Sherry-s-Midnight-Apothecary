@@ -31,8 +31,20 @@ func _run() -> void:
 	var saw_bedroom_camera_own_viewport := false
 	var saw_intro_ui_locked := false
 	var saw_indoor_title := false
+	var saw_bird_flight := false
+	var saw_bird_move_left := false
+	var saw_bird_finish := false
+	var bird_start_x := INF
 	for _frame_index in range(900):
 		await process_frame
+		if is_instance_valid(app.menu_controller):
+			var silhouette_director := app.menu_controller.silhouette_director
+			var bird := app.menu_controller.get_node("World/SilhouetteLayers/BirdSilhouette") as Sprite2D
+			bird_start_x = silhouette_director.get_bird_start_x()
+			if bird.visible:
+				saw_bird_flight = true
+				saw_bird_move_left = saw_bird_move_left or bird.global_position.x < bird_start_x
+			saw_bird_finish = saw_bird_finish or silhouette_director.has_completed()
 		var active_runtime := app.game_flow.current_runtime as DayRuntime
 		if active_runtime != null and active_runtime.current_level_instance != null:
 			var wake_animation := active_runtime.current_level_instance.get_node_or_null("SleepToWake") as AnimatedSprite2D
@@ -77,6 +89,9 @@ func _run() -> void:
 		return
 	if saw_indoor_title:
 		_fail("Bedroom displayed a level title card during the menu intro.")
+		return
+	if not saw_bird_flight or not saw_bird_move_left or not saw_bird_finish:
+		_fail("Menu bird silhouette did not complete its single right-to-left flight.")
 		return
 	app.save_service.delete_save()
 	Engine.time_scale = 1.0

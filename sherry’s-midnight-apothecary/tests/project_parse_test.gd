@@ -46,3 +46,10 @@ static func run(test: TestSupport) -> void:
 			var instance := scene.instantiate()
 			test.expect(instance != null, "%s can be instantiated." % scene_path)
 			instance.free()
+	for resource_path: String in [
+		"res://art/effects/tree.png",
+		"res://art/effects/bird.png",
+		"res://menu/menu_silhouette_director.gd",
+		"res://menu/shaders/menu_bird_trail.gdshader",
+	]:
+		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

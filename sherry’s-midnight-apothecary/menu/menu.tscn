@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene load_steps=28 format=3]
 
 [ext_resource type="Script" path="res://menu/menu.gd" id="1_menu"]
 [ext_resource type="Script" path="res://menu/sky/sky_controller.gd" id="2_sky"]
@@ -19,6 +19,10 @@
 [ext_resource type="Script" path="res://menu/sky/sky_profile.gd" id="17_profile"]
 [ext_resource type="Script" path="res://menu/sky/menu_moon.gd" id="18_moon"]
 [ext_resource type="Resource" path="res://menu/sky/profiles/night_default.tres" id="19_night"]
+[ext_resource type="Texture2D" path="res://art/effects/tree.png" id="20_tree"]
+[ext_resource type="Texture2D" path="res://art/effects/bird.png" id="21_bird"]
+[ext_resource type="Script" path="res://menu/menu_silhouette_director.gd" id="22_silhouette_director"]
+[ext_resource type="Shader" path="res://menu/shaders/menu_bird_trail.gdshader" id="23_bird_trail"]
 
 [sub_resource type="ShaderMaterial" id="SkyMaterial"]
 shader = ExtResource("10_sky_shader")
@@ -42,6 +46,12 @@ shader_parameter/progress = 0.0
 shader_parameter/softness = 0.18
 shader_parameter/noise_strength = 0.032
 shader_parameter/shadow_color = Color(0.055, 0.035, 0.12, 0.94)
+
+[sub_resource type="ShaderMaterial" id="BirdTrailMaterial"]
+shader = ExtResource("23_bird_trail")
+shader_parameter/silhouette_color = Color(0.09, 0.06, 0.15, 0.92)
+shader_parameter/trail_offsets_px = Vector3(18, 36, 54)
+shader_parameter/trail_opacities = Vector3(0.24, 0.13, 0.06)
 
 [node name="Menu" type="Node"]
 script = ExtResource("1_menu")
@@ -95,6 +105,22 @@ lifetime = 8.0
 preprocess = 8.0
 visibility_rect = Rect2(-1280, -400, 2560, 800)
 process_material = SubResource("MagicParticleMaterial")
+
+[node name="SilhouetteLayers" type="Node2D" parent="World"]
+
+[node name="TreeSilhouette" type="Sprite2D" parent="World/SilhouetteLayers"]
+unique_name_in_owner = true
+z_index = 20
+texture = ExtResource("20_tree")
+centered = false
+
+[node name="BirdSilhouette" type="Sprite2D" parent="World/SilhouetteLayers"]
+unique_name_in_owner = true
+visible = false
+z_index = 22
+material = SubResource("BirdTrailMaterial")
+texture = ExtResource("21_bird")
+centered = false
 
 [node name="DistantForest" type="Polygon2D" parent="World"]
 unique_name_in_owner = true
@@ -168,6 +194,13 @@ forest_marker_path = NodePath("../World/ForestPassPoint")
 roof_marker_path = NodePath("../World/RoofTransitionPoint")
 parallax_layer_paths = Array[NodePath]([NodePath("../World/FarCloud"), NodePath("../World/NearCloud"), NodePath("../World/DistantForest"), NodePath("../World/TreeCanopyForeground")])
 parallax_factors = Array[float]([1.0, 1.15, 1.4, 1.7])
+
+[node name="MenuSilhouetteDirector" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("22_silhouette_director")
+tree_path = NodePath("../World/SilhouetteLayers/TreeSilhouette")
+bird_path = NodePath("../World/SilhouetteLayers/BirdSilhouette")
+roof_marker_path = NodePath("../World/RoofTransitionPoint")
 
 [node name="BedroomIntroBridge" type="Node" parent="."]
 unique_name_in_owner = true

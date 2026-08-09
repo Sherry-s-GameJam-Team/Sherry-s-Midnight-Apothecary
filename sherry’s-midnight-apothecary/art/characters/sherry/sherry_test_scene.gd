@@ -57,7 +57,7 @@ func _process(delta: float) -> void:
 		_facing_right = direction > 0.0
 		if not _is_transition():
 			_play(_state)
-	if not _is_airborne and _state in ["land", "land_to_idle"] and not is_zero_approx(direction):
+	if not _is_airborne and _state == "land" and not is_zero_approx(direction):
 		_transition_target = _ground_action_for(direction)
 		_play(_transition_target)
 	if _is_rolling:
@@ -107,9 +107,6 @@ func _on_animation_finished(_animation_name: StringName) -> void:
 	elif _state == "jump_takeoff":
 		_play("jump_fall")
 	elif _state == "land":
-		_transition_target = _ground_action_for(_get_input_direction())
-		_play(_transition_target if _transition_target in ["walk", "run"] else "land_to_idle")
-	elif _state == "land_to_idle":
 		_play(_ground_action_for(_get_input_direction()))
 	elif _is_transition():
 		_play(_transition_target)
