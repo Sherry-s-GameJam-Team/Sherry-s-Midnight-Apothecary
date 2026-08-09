@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dy7mc0aye5abs"]
+
+[ext_resource type="Script" uid="uid://dk1cp8d87apvc" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_npc.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c84skhnl1fynb" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_npc_idle_30f.png" id="2_atlas"]
+[ext_resource type="Resource" uid="uid://b7jahkfkksu8t" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound.dialogue" id="3_dialogue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(316, 131.5)
+
+[node name="SleepingHoundNPC" type="Area2D" unique_id=364052313]
+z_index = 8
+script = ExtResource("1_script")
+dialogue_resource = ExtResource("3_dialogue")
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=1016594832]
+position = Vector2(0, -88)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("2_atlas")
+hframes = 5
+vframes = 6
+
+[node name="InteractionShape" type="CollisionShape2D" parent="." unique_id=1431746858]
+position = Vector2(6, -76)
+scale = Vector2(0.595, 0.595)
+shape = SubResource("RectangleShape2D_interaction")

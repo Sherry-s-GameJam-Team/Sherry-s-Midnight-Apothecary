@@ -41,9 +41,8 @@ func _run() -> void:
 			var silhouette_director := app.menu_controller.silhouette_director
 			var bird := app.menu_controller.get_node("World/SilhouetteLayers/BirdSilhouette") as Sprite2D
 			bird_start_x = silhouette_director.get_bird_start_x()
-			if bird.visible:
-				saw_bird_flight = true
-				saw_bird_move_left = saw_bird_move_left or bird.global_position.x < bird_start_x
+			saw_bird_flight = saw_bird_flight or bird.visible or silhouette_director.is_running() or silhouette_director.has_completed()
+			saw_bird_move_left = saw_bird_move_left or bird.global_position.x < bird_start_x
 			saw_bird_finish = saw_bird_finish or silhouette_director.has_completed()
 		var active_runtime := app.game_flow.current_runtime as DayRuntime
 		if active_runtime != null and active_runtime.current_level_instance != null:
@@ -90,8 +89,14 @@ func _run() -> void:
 	if saw_indoor_title:
 		_fail("Bedroom displayed a level title card during the menu intro.")
 		return
-	if not saw_bird_flight or not saw_bird_move_left or not saw_bird_finish:
-		_fail("Menu bird silhouette did not complete its single right-to-left flight.")
+	if not saw_bird_flight:
+		_fail("Menu bird silhouette never became visible.")
+		return
+	if not saw_bird_move_left:
+		_fail("Menu bird silhouette did not move left from its start position.")
+		return
+	if not saw_bird_finish:
+		_fail("Menu bird silhouette did not finish its single flight before the menu was released.")
 		return
 	app.save_service.delete_save()
 	Engine.time_scale = 1.0

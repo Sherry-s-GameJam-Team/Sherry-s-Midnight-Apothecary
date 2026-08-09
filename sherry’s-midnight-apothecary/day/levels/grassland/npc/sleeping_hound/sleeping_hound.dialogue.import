@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b7jahkfkksu8t"
+path="res://.godot/imported/sleeping_hound.dialogue-1f0893dae7d17c977afaa7c6e7319477.tres"
+
+[deps]
+
+source_file="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound.dialogue"
+dest_files=["res://.godot/imported/sleeping_hound.dialogue-1f0893dae7d17c977afaa7c6e7319477.tres"]
+
+[params]
+
+defaults=true

@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="9_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="10_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="11_sherry_collision"]
+[ext_resource type="PackedScene" uid="uid://dy7mc0aye5abs" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_npc.tscn" id="12_sleeping_hound"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -689.0
@@ -42,6 +43,7 @@ repeat_size = Vector2(2168, 0)
 repeat_times = 2
 
 [node name="Artwork" type="Sprite2D" parent="FarGrass" unique_id=315423540]
+visible = false
 position = Vector2(15, 192)
 texture = ExtResource("2_far_grass")
 centered = false
@@ -55,6 +57,18 @@ centered = false
 [node name="GrassLoop3" type="Sprite2D" parent="FarGrass" unique_id=1616363413]
 position = Vector2(662.99994, 538)
 scale = Vector2(0.2841329, 0.2230014)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="GrassLoop4" type="Sprite2D" parent="FarGrass" unique_id=978257695]
+position = Vector2(1269, 538)
+scale = Vector2(0.2472325, 0.2230014)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="GrassLoop5" type="Sprite2D" parent="FarGrass" unique_id=1045811809]
+position = Vector2(1411, 534)
+scale = Vector2(0.2998155, 0.2286115)
 texture = ExtResource("3_foreground_grass")
 centered = false
 
@@ -102,6 +116,11 @@ right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 [node name="PotionThrower" parent="Player" unique_id=820947329 instance=ExtResource("9_potions")]
 visible = false
 
+[node name="SleepingHoundNPC" parent="." unique_id=1045050158 instance=ExtResource("12_sleeping_hound")]
+position = Vector2(1545, 744)
+interaction_hint_text = "按[E]交谈"
+animation_fps = 5.0
+
 [node name="Foreground" type="Node2D" parent="." unique_id=1625435170]
 z_index = 20
 
@@ -113,6 +132,18 @@ centered = false
 
 [node name="GrassLoop" type="Sprite2D" parent="Foreground" unique_id=1298010657]
 position = Vector2(724.00006, 577)
+scale = Vector2(0.49907744, 0.20056096)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="GrassLoop3" type="Sprite2D" parent="Foreground" unique_id=1208266337]
+position = Vector2(1788, 566)
+scale = Vector2(0.41210675, 0.21593575)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="GrassLoop4" type="Sprite2D" parent="Foreground" unique_id=674109980]
+position = Vector2(2652.9998, 577)
 scale = Vector2(0.49907744, 0.20056096)
 texture = ExtResource("3_foreground_grass")
 centered = false

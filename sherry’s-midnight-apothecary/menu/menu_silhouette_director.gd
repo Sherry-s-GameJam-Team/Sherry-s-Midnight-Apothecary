@@ -6,7 +6,7 @@ signal bird_flight_finished
 @export_node_path("Sprite2D") var tree_path: NodePath
 @export_node_path("Sprite2D") var bird_path: NodePath
 @export_node_path("Marker2D") var roof_marker_path: NodePath
-@export_range(0.0, 200.0, 1.0) var roof_clearance := 20.0
+@export_range(0.0, 200.0, 1.0) var roof_mask_overlap := 24.0
 @export_range(0.0, 2.0, 0.05) var bird_delay := 0.2
 @export_range(0.1, 5.0, 0.05) var bird_duration := 1.45
 @export_range(0.0, 300.0, 1.0) var flight_padding := 64.0
@@ -81,13 +81,17 @@ func _layout_layers() -> void:
 	if not _has_valid_layers():
 		return
 	var viewport_width := get_viewport().get_visible_rect().size.x
+	var viewport_height := get_viewport().get_visible_rect().size.y
 	var texture_size := _tree.texture.get_size()
-	if viewport_width <= 0.0 or texture_size.x <= 0.0 or texture_size.y <= 0.0:
+	if viewport_width <= 0.0 or viewport_height <= 0.0 or texture_size.x <= 0.0 or texture_size.y <= 0.0:
 		return
 	var layer_scale := viewport_width / texture_size.x
+	# RoofTransitionPoint is the final camera centre. The room mask enters from
+	# that frame's bottom edge, so extend the shared canvas to meet it.
+	var room_mask_edge := _roof_marker.global_position.y + viewport_height * 0.5
 	var layer_position := Vector2(
 		-viewport_width * 0.5,
-		_roof_marker.global_position.y - roof_clearance - texture_size.y * layer_scale
+		room_mask_edge + roof_mask_overlap - texture_size.y * layer_scale
 	)
 	_tree.scale = Vector2.ONE * layer_scale
 	_tree.global_position = layer_position

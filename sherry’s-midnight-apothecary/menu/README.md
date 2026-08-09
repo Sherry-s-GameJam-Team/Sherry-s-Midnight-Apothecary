@@ -29,7 +29,7 @@ Bedroom 仍是 `res://day/levels/home/bedroom.tscn`，起床动画仍是 `SleepT
 
 ## 主菜单剪影层
 
-`res://art/effects/tree.png` 与 `bird.png` 是同一个 1056×2019 透明画布的两层剪影。`MenuSilhouetteDirector` 按 viewport 宽度统一缩放，并将画布底边对齐到 `RoofTransitionPoint` 上方 20px。因此 bird 的有效区域位于天空/云层段，tree 的有效区域位于树冠到屋檐段。
+`res://art/effects/tree.png` 与 `bird.png` 是同一个 1056×2019 透明画布的两层剪影。`MenuSilhouetteDirector` 按 viewport 宽度统一缩放。`RoofTransitionPoint` 是最终镜头中心，画布底边因此对齐到该镜头的 viewport 底边，并向房间遮罩内重叠 24px，防止运镜尾段露出断层。因此 bird 的有效区域位于天空/云层段，tree 的有效区域位于树冠到屋檐段。
 
 剪影只在 Start/Continue 成功锁定输入后播放：鸟群延迟 0.2 秒，在 1.45 秒内从右侧屏外线性飞到左侧屏外。`menu_bird_trail.gdshader` 向运动反方向采样 18/36/54px 的三层低透明残影。旧的 Polygon 占位剪影保持 `visible = false`，`TransitionLayer/RoofOccluder` 仍位于所有世界剪影之上。
 

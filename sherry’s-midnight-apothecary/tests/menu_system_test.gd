@@ -18,7 +18,8 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(bird_silhouette.texture.resource_path, "res://art/effects/bird.png", "Menu birds use the supplied silhouette texture.")
 	test.expect_equal(tree_silhouette.scale, bird_silhouette.scale, "Tree and bird masks share one canvas scale.")
 	var tree_bottom := tree_silhouette.global_position.y + tree_silhouette.texture.get_height() * tree_silhouette.global_scale.y
-	test.expect_float_close(tree_bottom, roof_marker.global_position.y - silhouette_director.roof_clearance, 0.1, "Tree mask ends just above the roof marker.")
+	var room_mask_edge: float = roof_marker.global_position.y + menu.get_viewport().get_visible_rect().size.y * 0.5
+	test.expect_float_close(tree_bottom, room_mask_edge + silhouette_director.roof_mask_overlap, 0.1, "Tree mask overlaps the room mask at the final frame bottom edge.")
 	test.expect(not bird_silhouette.visible, "Bird flock stays hidden while the menu is idle.")
 	test.expect(silhouette_director.get_bird_start_x() > tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock starts completely beyond the right edge.")
 	test.expect(silhouette_director.get_bird_end_x() < -tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock finishes completely beyond the left edge.")
@@ -50,6 +51,21 @@ static func run(test: TestSupport) -> void:
 	var override := resolver.get_profile_for_day(1, {"sky_profile_id": "day_14_anomaly"})
 	test.expect_equal(override.profile_id, &"day_14_anomaly", "World state can override the day mapping.")
 	menu.free()
+	for viewport_size: Vector2i in [Vector2i(1280, 800), Vector2i(1680, 720)]:
+		var preview_viewport := SubViewport.new()
+		preview_viewport.size = viewport_size
+		tree.root.add_child(preview_viewport)
+		var preview_menu := menu_scene.instantiate() as MenuController
+		preview_viewport.add_child(preview_menu)
+		var preview_tree := preview_menu.get_node("World/SilhouetteLayers/TreeSilhouette") as Sprite2D
+		var preview_director := preview_menu.get_node("MenuSilhouetteDirector") as MenuSilhouetteDirector
+		var preview_roof := preview_menu.get_node("World/RoofTransitionPoint") as Marker2D
+		var scaled_width := preview_tree.texture.get_width() * preview_tree.global_scale.x
+		var scaled_bottom := preview_tree.global_position.y + preview_tree.texture.get_height() * preview_tree.global_scale.y
+		var expected_bottom: float = preview_roof.global_position.y + viewport_size.y * 0.5 + preview_director.roof_mask_overlap
+		test.expect_float_close(scaled_width, viewport_size.x, 0.1, "Tree canvas spans the full viewport width at %s." % viewport_size)
+		test.expect_float_close(scaled_bottom, expected_bottom, 0.1, "Tree canvas overlaps the room mask at %s." % viewport_size)
+		preview_viewport.free()
 
 	var host := Node.new()
 	tree.root.add_child(host)
