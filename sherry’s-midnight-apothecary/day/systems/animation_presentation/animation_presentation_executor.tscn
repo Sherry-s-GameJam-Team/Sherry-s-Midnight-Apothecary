@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/systems/animation_presentation/animation_presentation_executor.gd" id="1_executor"]
+
+[node name="AnimationPresentationExecutor" type="Node"]
+script = ExtResource("1_executor")

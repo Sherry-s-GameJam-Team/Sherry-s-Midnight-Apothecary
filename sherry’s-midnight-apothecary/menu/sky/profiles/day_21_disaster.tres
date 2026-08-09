@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MenuSkyProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://menu/sky/sky_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+profile_id = &"day_21_disaster"
+display_name = "Day 21 · Disaster"
+start_day = 21
+top_color = Color(0.12, 0.025, 0.08, 1)
+horizon_color = Color(0.48, 0.17, 0.17, 1)
+bottom_color = Color(0.78, 0.43, 0.25, 1)
+ambient_tint = Color(1, 0.57, 0.44, 1)
+cloud_opacity = 0.43
+cloud_speed = 4.8
+secondary_cloud_speed = -2.8
+moon_opacity = 0.4
+star_density = 34
+star_opacity = 0.2
+magic_particle_amount = 68
+magic_particle_color = Color(1, 0.34, 0.24, 0.7)
+foreground_tint = Color(0.16, 0.035, 0.055, 1)
+shadow_strength = 0.76
+noise_strength = 0.035

@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://night/shop/business_placeholder.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://night/art/ui/ornament.svg" id="2_ornament"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.075, 0.055, 0.105, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.66, 0.49, 0.28, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 52.0
+content_margin_top = 40.0
+content_margin_right = 52.0
+content_margin_bottom = 40.0
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 12
+
+[node name="BusinessPlaceholder" type="Control"]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.025, 0.02, 0.06, 0.96)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(560, 310)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="Content" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Ornament" type="TextureRect" parent="Center/Panel/Content"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+texture = ExtResource("2_ornament")
+expand_mode = 3
+stretch_mode = 5
+modulate = Color(0.93, 0.78, 0.48, 0.85)
+
+[node name="Title" type="Label" parent="Center/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.86, 0.68, 1)
+theme_override_font_sizes/font_size = 32
+text = "营业场景"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="Center/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.71, 0.82, 1)
+theme_override_font_sizes/font_size = 18
+text = "营业系统将在这里继续扩展"
+horizontal_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="Center/Panel/Content"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "返回店内"
+
+[connection signal="pressed" from="Center/Panel/Content/ReturnButton" to="." method="_on_return_button_pressed"]

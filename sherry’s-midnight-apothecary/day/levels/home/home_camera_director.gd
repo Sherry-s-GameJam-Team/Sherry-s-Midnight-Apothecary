@@ -58,6 +58,7 @@ func _initialize() -> void:
 	_entrance_area.body_exited.connect(_on_entrance_body_exited)
 	_main_room_right = _inner_edge(right_barrier_path, false)
 	_bedroom_left = _inner_edge(left_barrier_path, true)
+	_main_room_left = _camera.limit_left
 	_camera_top = _camera.limit_top
 	_camera_bottom = _camera.limit_bottom
 	# Home owns one top-level camera. Its transform is calculated here instead of
@@ -74,6 +75,38 @@ func _initialize() -> void:
 	_camera.global_position = _camera_target_position()
 	_camera.force_update_scroll()
 	_set_barrier_dissolve(0.0)
+
+
+func on_level_entered(entry_id: StringName) -> void:
+	if _player == null or _camera == null:
+		return
+	if entry_id == &"bedroomdoor":
+		_bedroom_active = true
+		_crossed_into_bedroom = true
+		_main_camera_restored = false
+		_camera_in_bedroom = true
+		_camera_transitioning = false
+		_player_near_entrance = false
+		_entrance_area.set_deferred("monitoring", false)
+		_entrance_collision.set_deferred("disabled", true)
+		_blocker_collision.set_deferred("disabled", true)
+		_set_barrier_dissolve(1.0)
+		_barrier_visual.visible = false
+	else:
+		_bedroom_active = false
+		_crossed_into_bedroom = false
+		_main_camera_restored = false
+		_camera_in_bedroom = false
+		_camera_transitioning = false
+		_set_barrier_dissolve(0.0)
+		_barrier_visual.visible = true
+	_set_native_horizontal_limits(_camera_in_bedroom)
+	_camera.global_position = _camera_target_position()
+	_camera.force_update_scroll()
+
+
+func is_camera_in_bedroom() -> bool:
+	return _camera_in_bedroom
 
 
 func _process(delta: float) -> void:

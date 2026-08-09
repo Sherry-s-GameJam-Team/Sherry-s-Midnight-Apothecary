@@ -1,0 +1,150 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://menu/ui/menu_ui.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormal"]
+bg_color = Color(0.105, 0.075, 0.17, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.68, 0.57, 0.78, 0.72)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="ButtonHover"]
+bg_color = Color(0.23, 0.16, 0.31, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.93, 0.75, 0.69, 0.95)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="MenuUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="TitleGroup" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 78.0
+offset_bottom = 216.0
+grow_horizontal = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="ChineseTitle" type="Label" parent="TitleGroup"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.9, 0.77, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.12, 0.2, 0.5)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 48
+text = "雪莉的午夜药水铺"
+horizontal_alignment = 1
+
+[node name="EnglishTitle" type="Label" parent="TitleGroup"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83, 0.76, 0.91, 0.95)
+theme_override_font_sizes/font_size = 21
+text = "SHERRY'S MIDNIGHT APOTHECARY"
+horizontal_alignment = 1
+
+[node name="MenuButtons" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.0
+offset_top = -12.0
+offset_right = 142.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="ContinueButton" type="Button" parent="MenuButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(284, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonHover")
+text = "继续游戏"
+
+[node name="StartButton" type="Button" parent="MenuButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(284, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonHover")
+text = "开始游戏"
+
+[node name="SettingsButton" type="Button" parent="MenuButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(284, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonHover")
+text = "设置"
+
+[node name="QuitButton" type="Button" parent="MenuButtons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(284, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+theme_override_styles/focus = SubResource("ButtonHover")
+text = "退出游戏"
+
+[node name="DebugProfiles" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PreviousProfileButton" type="Button" parent="DebugProfiles"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "‹"
+
+[node name="ProfileLabel" type="Label" parent="DebugProfiles"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+text = "Sky Profile"
+horizontal_alignment = 1
+
+[node name="NextProfileButton" type="Button" parent="DebugProfiles"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "›"

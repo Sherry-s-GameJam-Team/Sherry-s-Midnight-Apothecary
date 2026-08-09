@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MenuSkyProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://menu/sky/sky_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+profile_id = &"day_30_finale"
+display_name = "Day 30 · Finale"
+start_day = 30
+top_color = Color(0.018, 0.01, 0.06, 1)
+horizon_color = Color(0.24, 0.035, 0.31, 1)
+bottom_color = Color(0.92, 0.28, 0.28, 1)
+ambient_tint = Color(0.94, 0.38, 1, 1)
+cloud_opacity = 0.55
+cloud_speed = 6.0
+secondary_cloud_speed = -3.5
+moon_opacity = 0.88
+star_density = 120
+star_opacity = 0.62
+magic_particle_amount = 100
+magic_particle_color = Color(0.88, 0.2, 1, 0.78)
+foreground_tint = Color(0.055, 0.01, 0.08, 1)
+shadow_strength = 0.86
+noise_strength = 0.045

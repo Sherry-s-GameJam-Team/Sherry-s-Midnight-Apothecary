@@ -1,16 +1,21 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://app/app_root.gd" id="1_app_root"]
 [ext_resource type="Script" path="res://app/game_flow.gd" id="2_game_flow"]
 [ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="3_pause"]
 [ext_resource type="PackedScene" path="res://night/ui/top_hint/top_hint_ui.tscn" id="4_top_hint"]
 [ext_resource type="PackedScene" path="res://day/interactables/map_switch/map_switch_interaction.tscn" id="5_map_switch"]
+[ext_resource type="PackedScene" path="res://menu/menu.tscn" id="6_menu"]
 
 [node name="AppRoot" type="Node"]
 script = ExtResource("1_app_root")
 
 [node name="GameFlow" type="Node" parent="."]
 script = ExtResource("2_game_flow")
+
+[node name="MenuSlot" type="Node" parent="."]
+
+[node name="Menu" parent="MenuSlot" instance=ExtResource("6_menu")]
 
 [node name="CurrentRuntime" type="Node" parent="."]
 

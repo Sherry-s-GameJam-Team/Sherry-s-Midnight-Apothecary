@@ -29,6 +29,11 @@ static func run(test: TestSupport) -> void:
 	test.expect(flow.current_runtime.player_data == player, "NightRuntime receives the same PlayerData instance.")
 	test.expect(flow.current_runtime.current_night_result != null, "NightRuntime owns one current NightResult.")
 	test.expect(flow.current_runtime.alchemy_runtime.night_result == flow.current_runtime.current_night_result, "AlchemyRuntime receives NightRuntime's exact NightResult instance.")
+	test.expect(flow.current_runtime.shop_slot.visible, "The night shop is the default visible night scene.")
+	test.expect(not flow.current_runtime.alchemy_slot.visible, "Alchemy stays hidden until the player uses its station.")
+	var night_player := flow.current_runtime.night_home.get_node("Player") as CharacterBody2D
+	var night_entry := flow.current_runtime.night_home.get_node("EntryPoints/default") as Marker2D
+	test.expect_equal(night_player.global_position, night_entry.global_position, "Day completion places the player at the night default marker.")
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 3, "Day result is applied before night.")
 
 	var night_result := NightResult.new()

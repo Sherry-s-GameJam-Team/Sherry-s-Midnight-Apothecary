@@ -181,6 +181,8 @@ func execute_command(raw_command: String) -> String:
 			result = _scene_command(parts)
 		"title":
 			result = _title_command(parts)
+		"to":
+			result = _environment_texture_command(parts)
 		"clear":
 			if output != null:
 				output.clear()
@@ -380,6 +382,32 @@ func _title_command(parts: PackedStringArray) -> String:
 	return "标题动画已播放：%s" % day_scene.debug_location_name
 
 
+func _environment_texture_command(parts: PackedStringArray) -> String:
+	if parts.size() != 2 or parts[1].to_lower() not in ["normal", "corrupted"]:
+		return "Error: use to <normal|corrupted>"
+	var environment := _texture_switch_environment()
+	if environment == null:
+		return "Error: the current scene does not support texture-state switching."
+	var corrupted := parts[1].to_lower() == "corrupted"
+	environment.call("set_corrupted", corrupted)
+	return "environment = %s" % ("corrupted" if corrupted else "normal")
+
+
+func _texture_switch_environment() -> Node:
+	if day_scene != null and day_scene.has_method("set_corrupted"):
+		return day_scene
+	if day_runtime != null and day_runtime.level_slot != null:
+		for child in day_runtime.level_slot.get_children():
+			if child.has_method("set_corrupted"):
+				return child
+	var current := get_parent()
+	while current != null:
+		if current.has_method("set_corrupted"):
+			return current
+		current = current.get_parent()
+	return null
+
+
 func _status_text() -> String:
 	if day_runtime != null:
 		var level: LevelData = day_runtime.current_level
@@ -413,6 +441,8 @@ func _help_text() -> String:
 	return """Day scene commands:
   scene <town|raintree|lake>
   title
+  to normal
+  to corrupted
 
 Other commands:
   status, get, set, add, give, take, potion, temp, clear, close"""

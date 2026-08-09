@@ -28,22 +28,32 @@ func configure(runtime_slot: Node, shared_player_data: PlayerData) -> void:
 	player_data = shared_player_data
 
 
-func start_new_game() -> bool:
+func start_new_game(
+	initial_day_level_id: StringName = &"",
+	defer_day_presentation := false,
+	defer_day_title := false
+) -> bool:
 	if _switching or _runtime_slot == null or player_data == null:
 		return false
 	shutdown()
 	current_day = 1
-	return _load_mode(Mode.DAY)
+	return _load_mode(Mode.DAY, initial_day_level_id, defer_day_presentation, defer_day_title)
 
 
-func resume_game(day: int, mode: Mode) -> bool:
+func resume_game(
+	day: int,
+	mode: Mode,
+	initial_day_level_id: StringName = &"",
+	defer_day_presentation := false,
+	defer_day_title := false
+) -> bool:
 	if _switching or _runtime_slot == null or player_data == null:
 		return false
 	if not Mode.values().has(int(mode)):
 		return false
 	shutdown()
 	current_day = clampi(day, 1, FINAL_DAY)
-	return _load_mode(mode)
+	return _load_mode(mode, initial_day_level_id, defer_day_presentation, defer_day_title)
 
 
 func complete_day(result: DayResult) -> bool:
@@ -74,7 +84,12 @@ func shutdown() -> void:
 	current_runtime = null
 
 
-func _load_mode(mode: Mode) -> bool:
+func _load_mode(
+	mode: Mode,
+	initial_day_level_id: StringName = &"",
+	defer_day_presentation := false,
+	defer_day_title := false
+) -> bool:
 	if _switching or current_mode == mode and is_instance_valid(current_runtime):
 		return false
 	_switching = true
@@ -88,8 +103,18 @@ func _load_mode(mode: Mode) -> bool:
 	if mode != Mode.ENDING:
 		var scene: PackedScene = DAY_SCENE if mode == Mode.DAY else NIGHT_SCENE
 		current_runtime = scene.instantiate()
-		_runtime_slot.add_child(current_runtime)
-		current_runtime.configure(player_data, current_day)
+		if mode == Mode.DAY:
+			current_runtime.configure(
+				player_data,
+				current_day,
+				initial_day_level_id,
+				defer_day_presentation,
+				defer_day_title
+			)
+			_runtime_slot.add_child(current_runtime)
+		else:
+			_runtime_slot.add_child(current_runtime)
+			current_runtime.configure(player_data, current_day)
 		if mode == Mode.DAY:
 			current_runtime.finished.connect(complete_day)
 		else:

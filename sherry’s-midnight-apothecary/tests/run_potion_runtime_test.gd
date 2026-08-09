@@ -18,6 +18,7 @@ func _run() -> void:
 	for action_name in ["potion_aim", "potion_cancel", "potion_slot_1", "potion_slot_8", "potion_next_slot", "potion_previous_slot"]:
 		_expect(InputMap.has_action(action_name) and not InputMap.action_get_events(action_name).is_empty(), "%s has a default InputMap binding." % action_name)
 	var player := PlayerData.from_save_data({
+		"equipped_potion_ids": ["red_potion", "green_potion", ""],
 		"potions": {
 			"red_potion": [{"instance_uid": "runtime-red", "remaining_dose": 1.0, "quality": 0.9}],
 			"green_potion": [{"instance_uid": "runtime-green", "remaining_dose": 0.5, "quality": 1.1}],

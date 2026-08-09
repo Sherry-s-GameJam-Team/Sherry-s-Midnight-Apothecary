@@ -1,6 +1,8 @@
 class_name SceneTitleCard
 extends CanvasLayer
 
+signal presentation_finished
+
 const BASE_SIZE := Vector2(1080.0, 680.0)
 const ANIMATION_NAME := &"reveal"
 
@@ -17,6 +19,7 @@ const ANIMATION_NAME := &"reveal"
 @onready var subtitle_label: Label = %SubtitleLabel
 
 var _hide_tween: Tween
+var _presenting := false
 
 
 func _ready() -> void:
@@ -27,9 +30,16 @@ func _ready() -> void:
 	_hide_immediately()
 
 
-func show_title(day: int, location: String, disaster: String, description: String) -> void:
+func show_title(
+	day: int,
+	location: String,
+	disaster: String,
+	description: String,
+	immediate_text := false
+) -> void:
 	if _hide_tween != null:
 		_hide_tween.kill()
+	_presenting = true
 	day_label.text = "第 %d 天" % maxi(day, 1)
 	location_label.text = location if not location.is_empty() else "未知地点"
 	var resolved_disaster := disaster if not disaster.is_empty() else "灾难未定"
@@ -49,7 +59,7 @@ func show_title(day: int, location: String, disaster: String, description: Strin
 	border_animation.play(ANIMATION_NAME)
 
 	var text_tween := create_tween()
-	text_tween.tween_interval(2.35)
+	text_tween.tween_interval(0.12 if immediate_text else 2.35)
 	text_tween.tween_property(day_label, "modulate:a", 1.0, 0.25)
 	text_tween.tween_interval(0.12)
 	text_tween.tween_property(location_label, "modulate:a", 1.0, 0.30)
@@ -72,6 +82,9 @@ func _hide_immediately() -> void:
 	border_animation.visible = false
 	screen_root.visible = false
 	screen_root.modulate = Color.WHITE
+	if _presenting:
+		_presenting = false
+		presentation_finished.emit()
 
 
 func _update_layout() -> void:

@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://caxmsy6rwo0p"]
+
+[ext_resource type="Texture2D" uid="uid://bh02yxswvwykq" path="res://day/levels/grassland/art/skybox.png" id="1_skybox"]
+[ext_resource type="Texture2D" uid="uid://j4tlbsxhlimv" path="res://day/levels/grassland/art/fs_grass.png" id="2_far_grass"]
+[ext_resource type="Texture2D" uid="uid://3i1bvii0rgfx" path="res://day/levels/grassland/art/grass_loop.png" id="3_foreground_grass"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="4_player"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="5_camera_bounds"]
+[ext_resource type="Script" path="res://day/levels/grassland/grass_environment.gd" id="6_environment"]
+[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="7_title_card"]
+[ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
+[ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="9_potions"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="10_sherry_presentation"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="11_sherry_collision"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
+distance = -689.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
+size = Vector2(96, 1448)
+
+[node name="Grass" type="Node2D" unique_id=444373538]
+texture_filter = 1
+script = ExtResource("6_environment")
+debug_scene_id = "grassland"
+debug_location_name = "Grassland"
+
+[node name="Skybox" type="Parallax2D" parent="." unique_id=1367240776]
+z_index = -40
+scroll_scale = Vector2(0, 0)
+repeat_size = Vector2(2168, 0)
+repeat_times = 2
+
+[node name="Artwork" type="Sprite2D" parent="Skybox" unique_id=2027588924]
+position = Vector2(0, 7)
+texture = ExtResource("1_skybox")
+centered = false
+
+[node name="FarGrass" type="Parallax2D" parent="." unique_id=1634259246]
+z_index = -20
+scroll_scale = Vector2(0.45, 1)
+repeat_size = Vector2(2168, 0)
+repeat_times = 2
+
+[node name="Artwork" type="Sprite2D" parent="FarGrass" unique_id=315423540]
+position = Vector2(15, 192)
+texture = ExtResource("2_far_grass")
+centered = false
+
+[node name="GrassLoop2" type="Sprite2D" parent="FarGrass" unique_id=1912569995]
+position = Vector2(-139, 534)
+scale = Vector2(0.41118428, 0.2286115)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="GrassLoop3" type="Sprite2D" parent="FarGrass" unique_id=1616363413]
+position = Vector2(662.99994, 538)
+scale = Vector2(0.2841329, 0.2230014)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=160190252]
+
+[node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1461124595]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/GroundWorldBoundary" unique_id=299817054]
+position = Vector2(0, 23)
+shape = SubResource("WorldBoundaryShape2D_ground")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=271720390]
+position = Vector2(-48, 362)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=46254276]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1674331883]
+position = Vector2(2216, 362)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1006906215]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1043951829]
+z_index = 10
+position = Vector2(988, 481)
+script = ExtResource("4_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1181825080 instance=ExtResource("11_sherry_collision")]
+position = Vector2(0, 23)
+
+[node name="SherryPresentation" parent="Player" unique_id=2056010217 instance=ExtResource("10_sherry_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=362910047]
+visible = false
+position = Vector2(112, -291)
+limit_left = 0
+limit_top = 0
+limit_right = 2168
+limit_bottom = 724
+script = ExtResource("5_camera_bounds")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=820947329 instance=ExtResource("9_potions")]
+visible = false
+
+[node name="Foreground" type="Node2D" parent="." unique_id=1625435170]
+z_index = 20
+
+[node name="GrassLoop2" type="Sprite2D" parent="Foreground" unique_id=245951206]
+position = Vector2(-141, 566)
+scale = Vector2(0.41210675, 0.21593575)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="GrassLoop" type="Sprite2D" parent="Foreground" unique_id=1298010657]
+position = Vector2(724.00006, 577)
+scale = Vector2(0.49907744, 0.20056096)
+texture = ExtResource("3_foreground_grass")
+centered = false
+
+[node name="SceneTitleCard" parent="." unique_id=545322281 instance=ExtResource("7_title_card")]
+visible = false
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=429653190]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1608055672 instance=ExtResource("8_console")]

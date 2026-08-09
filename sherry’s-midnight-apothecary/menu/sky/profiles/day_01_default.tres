@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MenuSkyProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://menu/sky/sky_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+profile_id = &"day_01_default"
+display_name = "Day · Clear morning"
+start_day = 1
+top_color = Color(0.35, 0.67, 0.86, 1)
+horizon_color = Color(0.69, 0.84, 0.91, 1)
+bottom_color = Color(0.96, 0.83, 0.66, 1)
+ambient_tint = Color(1, 0.93, 0.8, 1)
+cloud_opacity = 0.16
+cloud_speed = 2.6
+secondary_cloud_speed = -1.2
+moon_visible = false
+moon_position = Vector2(350, 175)
+moon_opacity = 0.0
+star_density = 0
+star_opacity = 0.0
+magic_particle_amount = 8
+magic_particle_color = Color(1, 0.88, 0.58, 0.42)
+foreground_tint = Color(0.12, 0.25, 0.3, 1)
+shadow_strength = 0.42
+noise_strength = 0.0

@@ -1,0 +1,226 @@
+[gd_scene format=3 uid="uid://ch87l8i0g5q13"]
+
+[ext_resource type="Texture2D" uid="uid://p6ook1obxojq" path="res://day/levels/home/player_bedroom.png" id="1_background"]
+[ext_resource type="Texture2D" uid="uid://c38rienp1ms02" path="res://day/levels/home/bed.png" id="2_4c46v"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="2_player"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="3_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="4_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="5_camera_bounds"]
+[ext_resource type="Texture2D" uid="uid://d3ly4jh14ckgm" path="res://day/art/spite/sleep_to_wake/1.png" id="5_frame_01"]
+[ext_resource type="Script" uid="uid://chqxmatbytqmt" path="res://day/levels/home/bedroom_exit.gd" id="6_exit"]
+[ext_resource type="Texture2D" uid="uid://dbkqyllr5ruyq" path="res://day/art/spite/sleep_to_wake/2.png" id="6_frame_02"]
+[ext_resource type="PackedScene" path="res://day/systems/animation_presentation/animation_presentation_executor.tscn" id="7_animation_executor"]
+[ext_resource type="Texture2D" uid="uid://c23t3txl1fraw" path="res://day/art/spite/sleep_to_wake/3.png" id="7_frame_03"]
+[ext_resource type="Texture2D" uid="uid://vs5jwap5j0vp" path="res://day/art/spite/sleep_to_wake/4.png" id="8_frame_04"]
+[ext_resource type="Texture2D" uid="uid://ceyhx2jw5eqlc" path="res://day/art/spite/sleep_to_wake/5.png" id="9_frame_05"]
+[ext_resource type="Texture2D" uid="uid://dnfxkdrpdnf3n" path="res://day/art/spite/sleep_to_wake/6.png" id="10_frame_06"]
+[ext_resource type="Texture2D" uid="uid://bai8bafitl3ee" path="res://day/art/spite/sleep_to_wake/7.png" id="11_frame_07"]
+[ext_resource type="Texture2D" uid="uid://exom0u5vv3do" path="res://day/art/spite/sleep_to_wake/8.png" id="12_frame_08"]
+[ext_resource type="Texture2D" uid="uid://bf8ny4axftvp4" path="res://day/art/spite/sleep_to_wake/9.png" id="13_frame_09"]
+[ext_resource type="Texture2D" uid="uid://b6w3hai1fwq44" path="res://day/art/spite/sleep_to_wake/10.png" id="14_frame_10"]
+[ext_resource type="Texture2D" uid="uid://bffdma037msv2" path="res://day/art/spite/sleep_to_wake/11.png" id="15_frame_11"]
+[ext_resource type="Texture2D" uid="uid://cw5jg821gfd2v" path="res://day/art/spite/sleep_to_wake/12.png" id="16_frame_12"]
+[ext_resource type="Texture2D" uid="uid://c6oudo5soe6cu" path="res://day/art/spite/sleep_to_wake/13.png" id="17_frame_13"]
+[ext_resource type="Texture2D" uid="uid://clvuhcp1ph6di" path="res://day/art/spite/sleep_to_wake/14.png" id="18_frame_14"]
+[ext_resource type="Texture2D" uid="uid://d3m7yh14ckc3p" path="res://day/art/spite/sleep_to_wake/15.png" id="19_frame_15"]
+[ext_resource type="Texture2D" uid="uid://cennuay5ejlgo" path="res://day/art/spite/sleep_to_wake/16.png" id="20_frame_16"]
+[ext_resource type="Texture2D" uid="uid://bminifrric8yb" path="res://day/art/spite/sleep_to_wake/17.png" id="21_frame_17"]
+[ext_resource type="Texture2D" uid="uid://dv7sodelipwgc" path="res://day/art/spite/sleep_to_wake/18.png" id="22_frame_18"]
+[ext_resource type="Texture2D" uid="uid://c1h7jijfdovvs" path="res://day/art/spite/sleep_to_wake/19.png" id="23_frame_19"]
+[ext_resource type="Texture2D" uid="uid://cwlmmrb3cmq04" path="res://day/art/spite/sleep_to_wake/20.png" id="24_frame_20"]
+[ext_resource type="Texture2D" uid="uid://dgrttmjqmjxr4" path="res://day/art/spite/sleep_to_wake/21.png" id="25_frame_21"]
+[ext_resource type="Texture2D" uid="uid://4d3ixsx3kic0" path="res://day/art/spite/sleep_to_wake/22.png" id="26_frame_22"]
+[ext_resource type="Texture2D" uid="uid://b3yfvu5i8vbd4" path="res://day/art/spite/sleep_to_wake/23.png" id="27_frame_23"]
+[ext_resource type="Texture2D" uid="uid://dfmec56f8jlp0" path="res://day/art/spite/sleep_to_wake/24.png" id="28_frame_24"]
+[ext_resource type="Texture2D" uid="uid://b8gfevt711xik" path="res://day/art/spite/sleep_to_wake/25.png" id="29_frame_25"]
+[ext_resource type="Texture2D" uid="uid://u4dyifvyh0ux" path="res://day/art/spite/sleep_to_wake/26.png" id="30_frame_26"]
+[ext_resource type="Texture2D" uid="uid://cp2corlbf2jp7" path="res://day/art/spite/sleep_to_wake/27.png" id="31_frame_27"]
+[ext_resource type="Texture2D" uid="uid://cybdduca1dmjk" path="res://day/art/spite/sleep_to_wake/28.png" id="32_frame_28"]
+[ext_resource type="Texture2D" uid="uid://bwuoybb8dll1o" path="res://day/art/spite/sleep_to_wake/29.png" id="33_frame_29"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sleep_to_wake"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_frame_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_frame_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_frame_03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_frame_04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_frame_05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_frame_06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_frame_07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_frame_08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_frame_09")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_frame_10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_frame_11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_frame_12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_frame_13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_frame_14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_frame_15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_frame_16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_frame_17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_frame_18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_frame_19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_frame_20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_frame_21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_frame_22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_frame_23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_frame_24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_frame_25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_frame_26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_frame_27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_frame_28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_frame_29")
+}],
+"loop": false,
+"name": &"sleep_to_wake",
+"speed": 8.0
+}]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_w63pd"]
+distance = 13.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
+size = Vector2(96, 1448)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(70, 720)
+
+[node name="Bedroom" type="Node2D" unique_id=903013001]
+texture_filter = 1
+
+[node name="Background" type="Sprite2D" parent="." unique_id=904110592]
+z_index = -10
+texture = ExtResource("1_background")
+centered = false
+
+[node name="Bed" type="Sprite2D" parent="." unique_id=662699771]
+position = Vector2(719, 527)
+scale = Vector2(-0.413669, 0.3989963)
+texture = ExtResource("2_4c46v")
+
+[node name="SleepToWake" type="AnimatedSprite2D" parent="." unique_id=2113836827]
+position = Vector2(719, 528)
+scale = Vector2(-0.41327515, 0.3991217)
+sprite_frames = SubResource("SpriteFrames_sleep_to_wake")
+animation = &"sleep_to_wake"
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=2096902884]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=1099365388]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=157646567]
+position = Vector2(1063, 621)
+shape = SubResource("WorldBoundaryShape2D_w63pd")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=444753365]
+position = Vector2(-48, 362)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=942245781]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=963640026]
+position = Vector2(2220, 362)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1692267482]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="RightExit" type="Area2D" parent="." unique_id=2028510784]
+position = Vector2(2172, 360)
+script = ExtResource("6_exit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightExit" unique_id=639744109]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1953653742]
+z_index = 10
+position = Vector2(720, 490)
+script = ExtResource("2_player")
+character_scale = 0.8
+initial_facing_right = true
+
+[node name="SherryCollision" parent="Player" unique_id=1772222330 instance=ExtResource("3_collision")]
+position = Vector2(5, 59)
+
+[node name="SherryPresentation" parent="Player" unique_id=33202871 instance=ExtResource("4_presentation")]
+position = Vector2(0, 6)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=667768939]
+position = Vector2(0, -174)
+limit_top = 0
+limit_bottom = 724
+script = ExtResource("5_camera_bounds")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=1560519192]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=2135421014]
+position = Vector2(721, 490)
+
+[node name="right_side" type="Marker2D" parent="EntryPoints" unique_id=1120631178]
+position = Vector2(2025, 490)
+
+[node name="SleepToWakeExecutor" parent="." unique_id=895436264 instance=ExtResource("7_animation_executor")]
+animation_path = NodePath("../SleepToWake")
+player_path = NodePath("../Player")
+player_visual_path = NodePath("../Player/SherryPresentation")
+spawn_point_path = NodePath("../EntryPoints/default")
+one_shot_per_day = true
+daily_flag_id = &"sleep_to_wake"

@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://bx6r2ebd6dk5p"]
 
-[ext_resource type="Script" path="res://shared/potions/ui/potion_hotbar.gd" id="1_hotbar"]
+[ext_resource type="Script" uid="uid://caw1r5b7oadjx" path="res://shared/potions/ui/potion_hotbar.gd" id="1_hotbar"]
 [ext_resource type="PackedScene" path="res://shared/potions/ui/potion_order_panel.tscn" id="2_order_panel"]
+[ext_resource type="PackedScene" path="res://shared/potions/ui/potion_hotbar_slot.tscn" id="3_slot"]
 
-[node name="PotionHotbar" type="CanvasLayer"]
+[node name="PotionHotbar" type="CanvasLayer" unique_id=1186992884]
 layer = 90
 script = ExtResource("1_hotbar")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1659099618]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,86 +17,51 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Slots" type="HBoxContainer" parent="UI"]
+[node name="Slots" type="VBoxContainer" parent="UI" unique_id=1889774531]
 unique_name_in_owner = true
 layout_mode = 0
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -270.0
-offset_top = -112.0
-offset_right = 270.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 10
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 18.0
+offset_top = -318.0
+offset_right = 94.0
+offset_bottom = 318.0
+grow_vertical = 2
+theme_override_constants/separation = 4
 
-[node name="Slot1" type="Button" parent="UI/Slots"]
+[node name="Slot1" parent="UI/Slots" unique_id=169140056 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot2" type="Button" parent="UI/Slots"]
+[node name="Slot2" parent="UI/Slots" unique_id=446317350 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot3" type="Button" parent="UI/Slots"]
+[node name="Slot3" parent="UI/Slots" unique_id=1711042976 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot4" type="Button" parent="UI/Slots"]
+[node name="Slot4" parent="UI/Slots" unique_id=974060657 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot5" type="Button" parent="UI/Slots"]
+[node name="Slot5" parent="UI/Slots" unique_id=2007666027 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot6" type="Button" parent="UI/Slots"]
+[node name="Slot6" parent="UI/Slots" unique_id=1926063176 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot7" type="Button" parent="UI/Slots"]
+[node name="Slot7" parent="UI/Slots" unique_id=950690570 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="Slot8" type="Button" parent="UI/Slots"]
+[node name="Slot8" parent="UI/Slots" unique_id=106053203 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 92)
 layout_mode = 2
-toggle_mode = true
-alignment = 0
-expand_icon = true
 
-[node name="OrderPanel" parent="UI" instance=ExtResource("2_order_panel")]
+[node name="OrderPanel" parent="UI" unique_id=489319207 instance=ExtResource("2_order_panel")]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_left = 0.5

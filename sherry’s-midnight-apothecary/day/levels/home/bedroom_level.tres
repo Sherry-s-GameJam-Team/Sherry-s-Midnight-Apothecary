@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/home/bedroom.tscn" id="2_bedroom_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"bedroom"
+display_name = "Bedroom"
+content_scene = ExtResource("2_bedroom_scene")
+default_entry_id = &"right_side"
+show_title_card = false

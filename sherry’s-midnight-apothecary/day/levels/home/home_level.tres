@@ -9,3 +9,4 @@ id = &"home"
 display_name = "Home"
 content_scene = ExtResource("2_home_scene")
 default_entry_id = &"default"
+show_title_card = false

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="MenuSkyProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://menu/sky/sky_profile.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+profile_id = &"day_14_anomaly"
+display_name = "Day 14 · Anomaly"
+start_day = 14
+top_color = Color(0.11, 0.035, 0.2, 1)
+horizon_color = Color(0.42, 0.24, 0.56, 1)
+bottom_color = Color(0.62, 0.56, 0.69, 1)
+ambient_tint = Color(0.79, 0.61, 0.95, 1)
+cloud_opacity = 0.3
+cloud_speed = 3.8
+secondary_cloud_speed = -2.1
+moon_opacity = 0.76
+star_density = 90
+star_opacity = 0.48
+magic_particle_amount = 52
+magic_particle_color = Color(0.88, 0.47, 1, 0.72)
+foreground_tint = Color(0.14, 0.045, 0.19, 1)
+shadow_strength = 0.68
+noise_strength = 0.028

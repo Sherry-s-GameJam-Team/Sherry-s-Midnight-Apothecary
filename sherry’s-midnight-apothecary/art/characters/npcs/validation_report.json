@@ -1,0 +1,456 @@
+{
+  "npc_count": 18,
+  "valid": true,
+  "assets": [
+    {
+      "folder": "01_young_villager",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            109,
+            389
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.3961,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5948,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "02_herbalist",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            146,
+            375
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.457,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1154,
+            1363
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5721,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "03_blacksmith",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            154,
+            397
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4753,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5498,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "04_scholar",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            123,
+            385
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4344,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.6656,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "05_monk",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            122,
+            376
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.3238,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4742,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "06_town_guard",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            183,
+            440
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4877,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1055,
+            1491
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5412,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "07_ranger",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            183,
+            389
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5857,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1339,
+            1175
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5899,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "08_innkeeper",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            119,
+            362
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4096,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.6506,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "09_traveling_merchant",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            164,
+            387
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4534,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1402,
+            1122
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5165,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "10_village_boy",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            100,
+            376
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4355,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.6192,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "11_elder",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            149,
+            368
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.3703,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1172,
+            1342
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5013,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "12_baker",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            157,
+            403
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1122,
+            1402
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5373,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "13_water_carrier",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            145,
+            378
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4382,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1148,
+            1370
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5786,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "14_scribe",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            139,
+            397
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.3621,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5737,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "15_nobleman",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            186,
+            402
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4493,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1100,
+            1429
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4258,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "16_bard",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            164,
+            398
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4631,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1254,
+            1254
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5026,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "17_nun",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            155,
+            380
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4762,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1122,
+            1402
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.5254,
+          "transparent_corners": true
+        }
+      }
+    },
+    {
+      "folder": "18_hooded_stranger",
+      "files": {
+        "source_cutout.png": {
+          "exists": true,
+          "size": [
+            137,
+            395
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.3477,
+          "transparent_corners": true
+        },
+        "frontal_bust.png": {
+          "exists": true,
+          "size": [
+            1143,
+            1376
+          ],
+          "mode": "RGBA",
+          "transparent_fraction": 0.4082,
+          "transparent_corners": true
+        }
+      }
+    }
+  ]
+}

@@ -9,6 +9,7 @@ var day := 1
 const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
 	preload("res://day/levels/home/home_level.tres"),
+	preload("res://day/levels/home/bedroom_level.tres"),
 	preload("res://day/levels/forest/raintree/raintree_level.tres"),
 	preload("res://day/levels/lake/lake_level.tres"),
 ]
@@ -22,12 +23,18 @@ const DAILY_LEVELS: Array[LevelData] = [
 ]
 
 @onready var level_slot: Node = $LevelSlot
+@onready var gameplay_ui: CanvasLayer = $UI
 @onready var level_title: Label = $UI/LevelTitle
 @onready var finish_button: Button = $UI/FinishDayButton
 @onready var scene_title_card: SceneTitleCard = $SceneTitleCard
 @onready var developer_console: Node = $UI/DeveloperConsole
 
 var current_level: LevelData
+var current_level_instance: Node
+var _initial_level_id: StringName = &""
+var _defer_initial_presentation := false
+var _defer_initial_title := false
+var _intro_locked := false
 
 
 func get_player_data() -> PlayerData:
@@ -36,9 +43,18 @@ func get_player_data() -> PlayerData:
 	return player_data
 
 
-func configure(shared_player_data: PlayerData, current_day: int) -> void:
+func configure(
+	shared_player_data: PlayerData,
+	current_day: int,
+	initial_level_id: StringName = &"",
+	defer_initial_presentation := false,
+	defer_initial_title := false
+) -> void:
 	player_data = shared_player_data
 	day = current_day
+	_initial_level_id = initial_level_id
+	_defer_initial_presentation = defer_initial_presentation
+	_defer_initial_title = defer_initial_title
 	_load_level()
 
 
@@ -49,6 +65,8 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _intro_locked:
+		return
 	var focused := get_viewport().gui_get_focus_owner()
 	if focused is LineEdit or focused is TextEdit:
 		return
@@ -57,20 +75,28 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func set_intro_locked(locked: bool) -> void:
+	_intro_locked = locked
+	if is_node_ready():
+		gameplay_ui.visible = not locked
+
+
 func _load_level() -> void:
 	if not is_node_ready() or DAILY_LEVELS.is_empty():
 		return
 	for child in level_slot.get_children():
 		child.queue_free()
-	current_level = DAILY_LEVELS[posmod(day - 1, DAILY_LEVELS.size())]
+	current_level = _find_level(_initial_level_id)
+	if current_level == null:
+		current_level = DAILY_LEVELS[posmod(day - 1, DAILY_LEVELS.size())]
 	_instantiate_current_level(&"default")
-	scene_title_card.show_title(
-		day,
-		current_level.display_name,
-		current_level.disaster_name,
-		current_level.scene_description
-	)
+	if not _defer_initial_title and current_level.show_title_card:
+		replay_scene_title()
 	level_title.text = "Day %d · %s" % [day, current_level.display_name]
+	level_title.visible = current_level.show_title_card
+	_initial_level_id = &""
+	_defer_initial_presentation = false
+	_defer_initial_title = false
 
 
 func _finish_current_level() -> void:
@@ -91,30 +117,53 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		current_level = level_data
 		_instantiate_current_level(entry_id)
 		level_title.text = "Day %d 路 %s" % [day, current_level.display_name]
-		replay_scene_title()
+		level_title.visible = current_level.show_title_card
+		if current_level.show_title_card:
+			replay_scene_title()
 		return true
 	return false
 
 
 func _instantiate_current_level(entry_id: StringName) -> Node:
 	var level := current_level.content_scene.instantiate()
+	var deferred_presentations: Array[AnimationPresentationExecutor] = []
+	if _defer_initial_presentation:
+		for presentation: Node in level.find_children("*", "AnimationPresentationExecutor", true, false):
+			var executor := presentation as AnimationPresentationExecutor
+			executor.auto_start = false
+			deferred_presentations.append(executor)
 	level_slot.add_child(level)
+	current_level_instance = level
+	for presentation: AnimationPresentationExecutor in deferred_presentations:
+		presentation.prepare()
 	var entry := level.get_node_or_null("EntryPoints/%s" % entry_id) as Marker2D
 	var player := level.get_node_or_null("Player") as CharacterBody2D
 	if entry != null and player != null:
 		player.global_position = entry.global_position
+	level.propagate_call(&"on_level_entered", [entry_id], true)
 	return level
 
 
-func replay_scene_title() -> void:
-	if current_level == null:
-		return
+func _find_level(level_id: StringName) -> LevelData:
+	if level_id == &"":
+		return null
+	for level_data: LevelData in LEVELS:
+		if level_data.id == level_id:
+			return level_data
+	return null
+
+
+func replay_scene_title(immediate_text := false) -> bool:
+	if current_level == null or not current_level.show_title_card:
+		return false
 	scene_title_card.show_title(
 		day,
 		current_level.display_name,
 		current_level.disaster_name,
-		current_level.scene_description
+		current_level.scene_description,
+		immediate_text
 	)
+	return true
 
 
 func finish_day(result: DayResult) -> void:

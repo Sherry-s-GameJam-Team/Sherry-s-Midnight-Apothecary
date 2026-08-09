@@ -3,22 +3,27 @@ extends CanvasLayer
 
 signal slot_selected(slot_index: int)
 
+@export_range(0.03, 0.5, 0.01) var refresh_interval := 0.1
+
 var inventory_service: PotionInventoryService
 var potion_definitions: Dictionary = {}
 var dose_per_throw := 0.0
 var _slot_buttons: Array[Button] = []
-@onready var _slots: HBoxContainer = %Slots
+var _slot_views: Array[PotionHotbarSlot] = []
+@onready var _slots: VBoxContainer = %Slots
 @onready var _order_panel: PotionOrderPanel = %OrderPanel
 var _refresh_accumulator := 0.0
 
 
 func _ready() -> void:
-	_slot_buttons.assign([
+	_slot_views.assign([
 		%Slot1, %Slot2, %Slot3, %Slot4,
 		%Slot5, %Slot6, %Slot7, %Slot8,
 	])
-	for slot_index in range(_slot_buttons.size()):
-		_slot_buttons[slot_index].pressed.connect(_on_slot_pressed.bind(slot_index))
+	for slot_index in range(_slot_views.size()):
+		var slot_view := _slot_views[slot_index]
+		slot_view.set_slot_number(slot_index + 1)
+		slot_view.button.pressed.connect(_on_slot_pressed.bind(slot_index))
 	_order_panel.hide()
 
 
@@ -40,7 +45,7 @@ func close_detail() -> void:
 
 func _process(delta: float) -> void:
 	_refresh_accumulator += delta
-	if _refresh_accumulator >= 0.2:
+	if _refresh_accumulator >= refresh_interval:
 		_refresh_accumulator = 0.0
 		_refresh_slots()
 
@@ -48,36 +53,58 @@ func _process(delta: float) -> void:
 func _rebuild_slots() -> void:
 	if _slots == null or inventory_service == null or inventory_service.player_data == null:
 		return
-	for slot_index in range(_slot_buttons.size()):
-		_slot_buttons[slot_index].visible = slot_index < inventory_service.player_data.potion_slot_count
+	_slot_buttons.clear()
+	for slot_index in range(_slot_views.size()):
+		var visible_slot := slot_index < inventory_service.player_data.potion_slot_count
+		_slot_views[slot_index].visible = visible_slot
+		if visible_slot:
+			_slot_buttons.append(_slot_views[slot_index].button)
 	_refresh_slots()
 
 
 func _refresh_slots() -> void:
 	if inventory_service == null or inventory_service.player_data == null:
 		return
-	if inventory_service.player_data.potion_slot_count > _slot_buttons.size():
-		push_warning("PotionHotbar only has %d editor-defined slots." % _slot_buttons.size())
+	var player_data := inventory_service.player_data
+	if player_data.potion_slot_count > _slot_views.size():
+		push_warning("PotionHotbar only has %d editor-defined slots." % _slot_views.size())
 		return
-	var visible_slots := _slot_buttons.filter(func(button: Button) -> bool: return button.visible).size()
-	if visible_slots != inventory_service.player_data.potion_slot_count:
+	if _slot_buttons.size() != player_data.potion_slot_count:
 		_rebuild_slots()
 		return
-	for index in range(inventory_service.player_data.potion_slot_count):
-		var potion_id: StringName = inventory_service.player_data.equipped_potion_ids[index] if index < inventory_service.player_data.equipped_potion_ids.size() else &""
-		var total := inventory_service.get_total_dose(potion_id) if potion_id != &"" else 0.0
-		var next := inventory_service.get_next_instance(potion_id) if potion_id != &"" else {}
+	for index in range(player_data.potion_slot_count):
+		var potion_id: StringName = player_data.equipped_potion_ids[index] if index < player_data.equipped_potion_ids.size() else &""
+		var equipped := potion_id != &"" and potion_id != &"black_potion"
+		var total := inventory_service.get_total_dose(potion_id) if equipped else 0.0
+		var next := inventory_service.get_next_instance(potion_id) if equipped else {}
 		var potion: PotionData = potion_definitions.get(potion_id)
-		var label := potion.display_name if potion != null else ("空槽位" if potion_id == &"" else str(potion_id))
-		var insufficient := total + PotionInventoryService.DOSE_EPSILON < dose_per_throw
-		_slot_buttons[index].text = "%d  %s%s\n剂量 %.2f  下瓶 %.2f" % [index + 1, label, " [不足]" if insufficient else "", total, float(next.get("quality", 0.0))]
-		_slot_buttons[index].disabled = potion_id == &"" or potion_id == &"black_potion"
-		_slot_buttons[index].button_pressed = index == inventory_service.player_data.selected_potion_slot
-		_slot_buttons[index].modulate = Color(1.18, 1.12, 0.72) if index == inventory_service.player_data.selected_potion_slot else (Color(0.62, 0.62, 0.62) if insufficient else Color.WHITE)
-		if potion != null:
-			var visual_instance := next if not next.is_empty() else {"quality": 1.0, "potency": 1.0, "mixed_x": potion.spectrum_center_x}
-			var color := PotionColorResolver.resolve(potion, visual_instance)
-			_slot_buttons[index].icon = PotionSvgRenderer.get_bottle_texture(color, 64, minf(total, 1.0), float(visual_instance.get("potency", 1.0)))
+		var label := potion.display_name if potion != null else ("空槽位" if not equipped else str(potion_id))
+		var insufficient := equipped and total + PotionInventoryService.DOSE_EPSILON < dose_per_throw
+		var current_bottle_ratio := clampf(float(next.get("remaining_dose", 0.0)), 0.0, 1.0)
+		var visual_instance: Dictionary = next if not next.is_empty() else {
+			"quality": 1.0,
+			"potency": 1.0,
+			"mixed_x": potion.spectrum_center_x if potion != null else 0.0,
+		}
+		var color := PotionColorResolver.resolve(potion, visual_instance) if potion != null else Color(0.42, 0.46, 0.54)
+		var texture := PotionSvgRenderer.get_bottle_texture(
+			color,
+			64,
+			current_bottle_ratio,
+			float(visual_instance.get("potency", 0.65 if not equipped else 1.0))
+		)
+		var tooltip := "%d · %s\n当前瓶 %.0f%% · 总剂量 %.2f" % [index + 1, label, current_bottle_ratio * 100.0, total]
+		if insufficient:
+			tooltip += "\n剂量不足"
+		_slot_views[index].set_display(
+			texture,
+			current_bottle_ratio,
+			color,
+			index == player_data.selected_potion_slot,
+			equipped,
+			insufficient,
+			tooltip
+		)
 
 
 func _on_slot_pressed(slot_index: int) -> void:

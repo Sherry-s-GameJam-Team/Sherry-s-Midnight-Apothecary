@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://shared/potions/ui/potion_hotbar_slot.gd" id="1_script"]
+[ext_resource type="Shader" path="res://shared/potions/ui/potion_circle_mask.gdshader" id="2_mask"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleEmpty"]
+
+[sub_resource type="ShaderMaterial" id="MaskMaterial"]
+shader = ExtResource("2_mask")
+
+[node name="PotionHotbarSlot" type="Control"]
+custom_minimum_size = Vector2(76, 76)
+mouse_filter = 1
+script = ExtResource("1_script")
+
+[node name="BottleView" type="TextureRect" parent="."]
+unique_name_in_owner = true
+material = SubResource("MaskMaterial")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+theme_override_styles/normal = SubResource("StyleEmpty")
+theme_override_styles/hover = SubResource("StyleEmpty")
+theme_override_styles/pressed = SubResource("StyleEmpty")
+theme_override_styles/disabled = SubResource("StyleEmpty")
+self_modulate = Color(1, 1, 1, 0)
+expand_icon = true
+
+[node name="KeyLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 24.0
+offset_bottom = 23.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.86, 0.58, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.06, 0.1, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 15
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DoseLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 17.0
+offset_top = 55.0
+offset_right = 59.0
+offset_bottom = 73.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.74, 1)
+theme_override_colors/font_shadow_color = Color(0.05, 0.04, 0.08, 0.95)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "空"
+horizontal_alignment = 1
+vertical_alignment = 1

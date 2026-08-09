@@ -16,6 +16,7 @@ const POTION_CAST_RELEASE_TIME := 0.708333
 @export_range(0.3, 1.2, 0.01) var character_scale := 0.4
 @export_range(50.0, 500.0, 5.0) var walk_speed := 120.0
 @export_range(50.0, 700.0, 5.0) var run_speed := 360.0
+@export var initial_facing_right := false
 ## Optional scene-local perspective scaling. At/under [depth_scale_min_y] the
 ## character reaches [depth_scale_min_multiplier] of its normal visual size.
 @export var depth_scale_enabled := false
@@ -47,6 +48,7 @@ func _ready() -> void:
 	add_to_group("potion_friendly")
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
+	_facing_right = initial_facing_right
 	_apply_visual_scale()
 	_play("idle")
 
