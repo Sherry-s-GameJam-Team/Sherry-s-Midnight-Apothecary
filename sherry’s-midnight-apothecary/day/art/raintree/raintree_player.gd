@@ -23,6 +23,9 @@ const POTION_CAST_RELEASE_TIME := 0.708333
 @export var depth_scale_max_y := 834.0
 @export var depth_scale_min_y := 776.0
 @export_range(0.1, 1.0, 0.01) var depth_scale_min_multiplier := 0.9
+## Local distance from SherrySprite's origin to the feet. Perspective scaling
+## offsets by this amount so the feet, rather than the sprite center, stay put.
+@export_range(0.0, 400.0, 1.0) var depth_scale_foot_anchor_y := 170.0
 
 @onready var sprite: Node2D = $SherryPresentation/SherrySprite
 @onready var animation_player: AnimationPlayer = $SherryPresentation/SherryAnimationPlayer
@@ -42,6 +45,7 @@ var _coyote_timer := 0.0
 var _jump_buffer_timer := 0.0
 var _potion_action_locked := false
 var _potion_cast_active := false
+var _sprite_base_position := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -49,6 +53,7 @@ func _ready() -> void:
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
 	_facing_right = initial_facing_right
+	_sprite_base_position = sprite.position
 	_apply_visual_scale()
 	_play("idle")
 
@@ -182,6 +187,8 @@ func _apply_visual_scale() -> void:
 			var depth_progress := clampf((global_position.y - depth_scale_min_y) / y_range, 0.0, 1.0)
 			scale_multiplier = lerpf(depth_scale_min_multiplier, 1.0, depth_progress)
 	sprite.scale = Vector2.ONE * character_scale * scale_multiplier
+	var foot_anchor_compensation := depth_scale_foot_anchor_y * character_scale * (1.0 - scale_multiplier)
+	sprite.position = _sprite_base_position + Vector2(0.0, foot_anchor_compensation if depth_scale_enabled else 0.0)
 
 
 func _is_transition() -> bool:

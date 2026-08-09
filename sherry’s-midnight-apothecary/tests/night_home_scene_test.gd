@@ -21,9 +21,11 @@ static func run(test: TestSupport) -> void:
 	test.expect(home.get_node_or_null("NightLighting/AlchemyLamp") is PointLight2D, "The alchemy station has a warm local light.")
 
 	var table := home.get_node("Table") as NightStationInteraction
+	var equip := home.get_node("Equip") as NightStationInteraction
 	var transformer := home.get_node("Transsformer") as NightStationInteraction
 	test.expect_equal(table.interaction_hint_text, "按[E]开始营业", "The table advertises the business interaction.")
 	test.expect_equal(table.action, NightStationInteraction.Action.BUSINESS, "The table requests the business scene.")
+	test.expect_equal(equip.action, NightStationInteraction.Action.PRODUCTION, "Equip requests the production workflow directly.")
 	test.expect_equal(transformer.pressed_message, "夜晚还是不要出去了", "The transformer gives the night travel warning.")
 	test.expect_equal(transformer.action, NightStationInteraction.Action.MESSAGE, "The transformer is message-only and cannot open the map.")
 
@@ -36,8 +38,9 @@ static func run(test: TestSupport) -> void:
 	test.expect(not runtime.customer_slot.visible, "Returning from business hides the placeholder scene.")
 	test.expect(player.is_physics_processing(), "Returning from business restores player movement.")
 
-	home.alchemy_requested.emit()
-	test.expect(runtime.alchemy_slot.visible, "The alchemy station opens the existing night alchemy runtime.")
-	test.expect(not runtime.shop_slot.visible, "Opening alchemy hides the shop scene.")
+	home.production_requested.emit()
+	test.expect(runtime.alchemy_slot.visible, "Equip opens the existing night alchemy runtime.")
+	test.expect(not runtime.shop_slot.visible, "Opening production hides the shop scene.")
+	test.expect_equal(runtime.alchemy_runtime.current_panel, AlchemyRuntime.PanelMode.PRODUCTION, "Equip lands directly on the production panel.")
 
 	runtime.free()

@@ -190,7 +190,7 @@ shape = SubResource("RectangleShape2D_exit")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1953653742]
 z_index = 10
-position = Vector2(720, 490)
+position = Vector2(720, 539)
 script = ExtResource("2_player")
 character_scale = 0.8
 initial_facing_right = true
@@ -199,7 +199,7 @@ initial_facing_right = true
 position = Vector2(5, 59)
 
 [node name="SherryPresentation" parent="Player" unique_id=33202871 instance=ExtResource("4_presentation")]
-position = Vector2(0, 6)
+position = Vector2(0, 22)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=667768939]
 position = Vector2(0, -174)

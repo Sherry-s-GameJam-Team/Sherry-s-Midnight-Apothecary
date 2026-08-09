@@ -186,7 +186,7 @@ texture = ExtResource("6_door")
 [node name="Equip" type="Area2D" parent="." unique_id=660046282]
 position = Vector2(1407, 510)
 script = ExtResource("15_interaction")
-action = 2
+action = 3
 interaction_hint_text = "按[E]制药"
 
 [node name="Visual" type="Sprite2D" parent="Equip" unique_id=651348055]

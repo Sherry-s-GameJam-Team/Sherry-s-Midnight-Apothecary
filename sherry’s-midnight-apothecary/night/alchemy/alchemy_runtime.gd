@@ -107,6 +107,7 @@ func _ready() -> void:
 	unified_powder_shelf.setup(powder_shelf_state)
 	production_panel.setup(self, ingredients, powder_shelf_state)
 	_update_navigation_arrows()
+	_snap_to_current_panel()
 	_refresh_ui()
 	_sync_heat_ui()
 	call_deferred("_sync_alchemy_background")
@@ -240,11 +241,13 @@ func show_brewing_panel() -> void:
 
 
 func _slide_to_panel(mode: PanelMode) -> void:
-	if horizontal_stage == null or current_panel == mode:
+	if current_panel == mode:
+		return
+	current_panel = mode
+	if horizontal_stage == null or production_panel == null or unified_powder_shelf == null:
 		return
 	if production_panel != null:
 		production_panel.cancel_piece_drag()
-	current_panel = mode
 	_update_navigation_arrows()
 	if _stage_tween != null and _stage_tween.is_running():
 		_stage_tween.kill()
@@ -256,6 +259,14 @@ func _slide_to_panel(mode: PanelMode) -> void:
 	_stage_tween.tween_property(horizontal_stage, "position:x", target_x, 0.45)
 	_stage_tween.parallel().tween_property(unified_powder_shelf, "anchor_left", shelf_left, 0.45)
 	_stage_tween.parallel().tween_property(unified_powder_shelf, "anchor_right", shelf_right, 0.45)
+
+
+func _snap_to_current_panel() -> void:
+	if horizontal_stage == null or production_panel == null or unified_powder_shelf == null:
+		return
+	horizontal_stage.position.x = -production_panel.position.x if current_panel == PanelMode.PRODUCTION else 0.0
+	unified_powder_shelf.anchor_left = 0.015 if current_panel == PanelMode.PRODUCTION else 0.738
+	unified_powder_shelf.anchor_right = 0.275 if current_panel == PanelMode.PRODUCTION else 0.995
 
 
 func _update_navigation_arrows() -> void:

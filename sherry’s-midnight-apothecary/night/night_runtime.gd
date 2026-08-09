@@ -91,6 +91,12 @@ func open_alchemy() -> void:
 	alchemy_slot.show()
 
 
+func open_production() -> void:
+	open_alchemy()
+	if alchemy_slot != null and alchemy_slot.visible and alchemy_runtime != null:
+		alchemy_runtime.show_production_panel()
+
+
 func finish_night(result: NightResult = null) -> void:
 	var final_result := result if result != null else current_night_result
 	if final_result != null:
@@ -107,6 +113,10 @@ func _on_business_requested() -> void:
 
 func _on_alchemy_requested() -> void:
 	open_alchemy()
+
+
+func _on_production_requested() -> void:
+	open_production()
 
 
 func _on_business_request_return() -> void:

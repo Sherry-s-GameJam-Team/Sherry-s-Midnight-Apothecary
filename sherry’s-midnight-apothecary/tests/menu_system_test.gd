@@ -10,6 +10,14 @@ static func run(test: TestSupport) -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(menu)
 	menu.configure({})
+	for silhouette_path: NodePath in [
+		NodePath("World/DistantForest"),
+		NodePath("World/TreeCanopyForeground"),
+		NodePath("World/ApothecaryHill"),
+		NodePath("World/RoofForeground"),
+	]:
+		var silhouette := menu.get_node(silhouette_path) as CanvasItem
+		test.expect(not silhouette.visible, "Temporary menu silhouette is disabled: %s" % silhouette_path)
 	var continue_button := menu.get_node("MenuUILayer/MenuUI/MenuButtons/ContinueButton") as Button
 	test.expect(continue_button.disabled, "Continue is disabled without a save.")
 	var resolver := menu.get_node("SkyProfileResolver") as SkyProfileResolver
@@ -48,11 +56,15 @@ static func run(test: TestSupport) -> void:
 		test.expect(day_runtime.switch_to_level("home", &"bedroomdoor"), "Bedroom exit can load Home at its bedroom door.")
 		var home_director := day_runtime.current_level_instance.get_node("HomeCameraDirector") as HomeCameraDirector
 		var home_camera := day_runtime.current_level_instance.get_node("Player/Camera2D") as Camera2D
+		var home_player := day_runtime.current_level_instance.get_node("Player") as CharacterBody2D
+		var home_player_sprite := home_player.get_node("SherryPresentation/SherrySprite") as Node2D
+		var bedroom_door_entry := day_runtime.current_level_instance.get_node("EntryPoints/bedroomdoor") as Marker2D
+		test.expect_float_close(home_player.global_position.y, bedroom_door_entry.global_position.y, 0.01, "Bedroom exit places the Home player at the grounded marker without an airborne offset.")
+		test.expect(home_player_sprite.position.y > 0.0, "Home depth scaling anchors Sherry's feet instead of lifting them from the floor.")
 		test.expect(home_director.is_camera_in_bedroom(), "Home camera adopts bedroom bounds for the bedroom-door entry.")
 		test.expect(home_camera.global_position.x < 0.0, "Home camera starts beside the bedroom player instead of panning toward x=0.")
 		test.expect_equal(home_camera.limit_right, home_director.bedroom_right_limit, "Bedroom entry applies the bedroom camera limit immediately.")
 		test.expect(not day_runtime.current_level.show_title_card, "Home does not display a level title card.")
-		var home_player := day_runtime.current_level_instance.get_node("Player") as CharacterBody2D
 		home_player.global_position.x = 400.0
 		for _step in range(20):
 			home_director._process(0.1)

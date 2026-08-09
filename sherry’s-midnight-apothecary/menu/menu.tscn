@@ -98,6 +98,7 @@ process_material = SubResource("MagicParticleMaterial")
 
 [node name="DistantForest" type="Polygon2D" parent="World"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, 1540)
 z_index = 8
 polygon = PackedVector2Array(-1600, 260, -1600, 90, -1420, 15, -1270, 105, -1090, -10, -920, 88, -710, -32, -520, 74, -310, -14, -100, 80, 95, -26, 310, 72, 510, -18, 730, 96, 930, 0, 1130, 82, 1330, -20, 1600, 92, 1600, 260)
@@ -105,6 +106,7 @@ color = Color(0.105, 0.075, 0.17, 1)
 
 [node name="TreeCanopyForeground" type="Polygon2D" parent="World"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, 1200)
 z_index = 15
 polygon = PackedVector2Array(-1600, -120, -1200, -120, -1120, 50, -940, -20, -810, 105, -690, 260, -1600, 260, 1600, 260, 1600, -120, 1260, -120, 1170, 50, 1010, -5, 860, 120, 760, 260, -760, 260)
@@ -112,6 +114,7 @@ color = Color(0.08, 0.055, 0.13, 1)
 
 [node name="ApothecaryHill" type="Polygon2D" parent="World"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, 2140)
 z_index = 10
 polygon = PackedVector2Array(-1600, 540, -1600, 220, -980, 120, -620, 80, -390, 160, -310, -30, -120, -145, 110, -145, 310, -25, 375, 170, 680, 78, 1030, 125, 1600, 220, 1600, 540)
@@ -124,6 +127,7 @@ polygon = PackedVector2Array(-130, 0, -50, 0, -50, 92, -130, 92, 55, 0, 135, 0, 
 color = Color(0.95, 0.63, 0.34, 0.78)
 
 [node name="RoofForeground" type="Polygon2D" parent="World"]
+visible = false
 position = Vector2(0, 2460)
 z_index = 30
 polygon = PackedVector2Array(-1800, -40, -650, -280, 0, -360, 650, -280, 1800, -40, 1800, 440, -1800, 440)

@@ -3,6 +3,7 @@ extends Node2D
 
 signal business_requested
 signal alchemy_requested
+signal production_requested
 
 var _standalone_player_data: PlayerData
 
@@ -22,6 +23,10 @@ func request_business() -> void:
 
 func request_alchemy() -> void:
 	alchemy_requested.emit()
+
+
+func request_production() -> void:
+	production_requested.emit()
 
 
 func refresh_interaction_hints() -> void:

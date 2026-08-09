@@ -170,7 +170,7 @@ position = Vector2(2558, 763)
 position = Vector2(2549, 724)
 
 [node name="bedroomdoor" type="Marker2D" parent="EntryPoints" unique_id=726330820]
-position = Vector2(-902, 780)
+position = Vector2(-902, 759)
 
 [node name="Table" type="Sprite2D" parent="." unique_id=40416591]
 z_index = 11

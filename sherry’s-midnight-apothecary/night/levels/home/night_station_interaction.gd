@@ -5,6 +5,7 @@ enum Action {
 	MESSAGE,
 	BUSINESS,
 	ALCHEMY,
+	PRODUCTION,
 }
 
 @export var action := Action.MESSAGE
@@ -48,6 +49,10 @@ func _input(event: InputEvent) -> void:
 			var home := _find_night_home()
 			if home != null:
 				home.request_alchemy()
+		Action.PRODUCTION:
+			var home := _find_night_home()
+			if home != null:
+				home.request_production()
 
 
 func refresh_hint() -> void:
