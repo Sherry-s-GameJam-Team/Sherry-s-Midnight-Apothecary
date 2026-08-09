@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.6")
 [autoload]
 
 DialogueManager="*uid://c3rodes2l3gxb"
+SoundManager="*res://audio/sound_manager.gd"
 
 [dialogue_manager]
 

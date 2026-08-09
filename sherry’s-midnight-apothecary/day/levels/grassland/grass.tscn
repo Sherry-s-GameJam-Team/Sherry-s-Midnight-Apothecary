@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bh02yxswvwykq" path="res://day/levels/grassland/art/skybox.png" id="1_skybox"]
 [ext_resource type="Texture2D" uid="uid://j4tlbsxhlimv" path="res://day/levels/grassland/art/fs_grass.png" id="2_far_grass"]
-[ext_resource type="Texture2D" uid="uid://3i1bvii0rgfx" path="res://day/levels/grassland/art/grass_loop.png" id="3_foreground_grass"]
+[ext_resource type="Texture2D" uid="uid://dbrm4ly7ewebb" path="res://day/levels/grassland/art/grass_corrupted_loop.png" id="4_8caa3"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="4_player"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="5_camera_bounds"]
 [ext_resource type="Script" uid="uid://887nbn7ofcth" path="res://day/levels/grassland/grass_environment.gd" id="6_environment"]
@@ -51,25 +51,25 @@ centered = false
 [node name="GrassLoop2" type="Sprite2D" parent="FarGrass" unique_id=1912569995]
 position = Vector2(-139, 534)
 scale = Vector2(0.41118428, 0.2286115)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop3" type="Sprite2D" parent="FarGrass" unique_id=1616363413]
 position = Vector2(662.99994, 538)
 scale = Vector2(0.2841329, 0.2230014)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop4" type="Sprite2D" parent="FarGrass" unique_id=978257695]
-position = Vector2(1269, 538)
+position = Vector2(1266, 538.00006)
 scale = Vector2(0.2472325, 0.2230014)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop5" type="Sprite2D" parent="FarGrass" unique_id=1045811809]
 position = Vector2(1411, 534)
 scale = Vector2(0.2998155, 0.2286115)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=160190252]
@@ -127,25 +127,25 @@ z_index = 20
 [node name="GrassLoop2" type="Sprite2D" parent="Foreground" unique_id=245951206]
 position = Vector2(-141, 566)
 scale = Vector2(0.41210675, 0.21593575)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop" type="Sprite2D" parent="Foreground" unique_id=1298010657]
 position = Vector2(724.00006, 577)
 scale = Vector2(0.49907744, 0.20056096)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop3" type="Sprite2D" parent="Foreground" unique_id=1208266337]
 position = Vector2(1788, 566)
 scale = Vector2(0.41210675, 0.21593575)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop4" type="Sprite2D" parent="Foreground" unique_id=674109980]
 position = Vector2(2652.9998, 577)
 scale = Vector2(0.49907744, 0.20056096)
-texture = ExtResource("3_foreground_grass")
+texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="SceneTitleCard" parent="." unique_id=545322281 instance=ExtResource("7_title_card")]

@@ -18,6 +18,8 @@ const JUMP_BUFFER_TIME := 0.12
 const DOUBLE_TAP_WINDOW_MS := 260
 const ROLL_SPEED_MULTIPLIER := 1.3
 const POTION_CAST_RELEASE_TIME := 0.708333
+const WALK_FOOTSTEP_INTERVAL := 0.44
+const RUN_FOOTSTEP_INTERVAL := 0.27
 
 @export_range(0.3, 1.2, 0.01) var character_scale := 0.4
 @export_range(50.0, 600.0, 5.0) var walk_speed := 220.0 
@@ -53,6 +55,7 @@ var _jump_buffer_timer := 0.0
 var _potion_action_locked := false
 var _potion_cast_active := false
 var _sprite_base_position := Vector2.ZERO
+var _footstep_timer := 0.0
 
 
 func _ready() -> void:
@@ -77,7 +80,7 @@ func _physics_process(delta: float) -> void:
 	_update_landing(direction)
 	if not _is_transition() and not _is_airborne and not _is_rolling:
 		_update_locomotion(direction)
-	
+	_update_footstep_sfx(delta)
 	_update_animation_speed()
 
 
@@ -201,6 +204,19 @@ func _update_animation_speed() -> void:
 			animation_player.speed_scale = maxf(speed_ratio, 0.2)
 	else:
 		animation_player.speed_scale = 1.0
+
+
+func _update_footstep_sfx(delta: float) -> void:
+	var moving := is_on_floor() and not _is_airborne and not _is_rolling and _state in ["walk", "run"] and absf(velocity.x) > 20.0
+	if not moving:
+		_footstep_timer = 0.0
+		return
+	_footstep_timer -= delta
+	if _footstep_timer > 0.0:
+		return
+	var speed_ratio := clampf(absf(velocity.x) / maxf(run_speed, 1.0), 0.0, 1.0)
+	SoundManager.play_footstep(speed_ratio)
+	_footstep_timer = lerpf(WALK_FOOTSTEP_INTERVAL, RUN_FOOTSTEP_INTERVAL, speed_ratio)
 
 
 func _play(action: String) -> void:
@@ -351,12 +367,14 @@ func play_potion_cast() -> void:
 	_potion_cast_active = true
 	_potion_action_locked = true
 	_transition_target = "idle"
+	SoundManager.play_spell_cast()
 	_play("cast")
 	get_tree().create_timer(POTION_CAST_RELEASE_TIME, true, false, true).timeout.connect(potion_cast_release, CONNECT_ONE_SHOT)
 
 
 func potion_cast_release() -> void:
 	if _potion_cast_active and potion_thrower != null and potion_thrower.has_method("on_cast_release"):
+		SoundManager.play_spell_release()
 		potion_thrower.call("on_cast_release")
 
 
