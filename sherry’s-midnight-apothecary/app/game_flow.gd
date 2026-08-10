@@ -36,6 +36,7 @@ func start_new_game(
 	if _switching or _runtime_slot == null or player_data == null:
 		return false
 	shutdown()
+	player_data.reset()
 	current_day = 1
 	return _load_mode(Mode.DAY, initial_day_level_id, defer_day_presentation, defer_day_title)
 

@@ -136,6 +136,37 @@ func select_potion_slot(slot_index: int) -> void:
 		selected_potion_slot = slot_index
 
 
+## Dialogue Manager game-state query: number of non-empty bottles owned.
+## Pass PlayerData in extra_game_states, then use:
+## if potion_count("yellow_potion") >= 1
+func potion_count(potion_id: StringName) -> int:
+	var count := 0
+	var stored_instances: Variant = potions.get(potion_id, [])
+	if stored_instances is not Array:
+		return count
+	for value: Variant in stored_instances:
+		if value is Dictionary and float((value as Dictionary).get("remaining_dose", 1.0)) > 0.0001:
+			count += 1
+	return count
+
+
+## Dialogue Manager game-state query: total liquid remaining across all bottles.
+func potion_dose(potion_id: StringName) -> float:
+	var total := 0.0
+	var stored_instances: Variant = potions.get(potion_id, [])
+	if stored_instances is not Array:
+		return total
+	for value: Variant in stored_instances:
+		if value is Dictionary:
+			total += clampf(float((value as Dictionary).get("remaining_dose", 1.0)), 0.0, 1.0)
+	return total
+
+
+## Dialogue Manager game-state query: whether at least the requested bottle count is owned.
+func has_potion(potion_id: StringName, minimum_count: int = 1) -> bool:
+	return potion_count(potion_id) >= maxi(minimum_count, 0)
+
+
 func add_story_item(item_id: StringName, amount: int = 1) -> void:
 	if item_id == &"" or amount <= 0:
 		return

@@ -75,6 +75,14 @@ static func run(test: TestSupport) -> void:
 	tree.root.add_child(balloon)
 	test.expect(balloon.get_node("%DialogueLabel") is DialogueLabel, "Balloon contains DialogueLabel.")
 	test.expect(balloon.get_node("%ResponsesMenu") is DialogueResponsesMenu, "Balloon contains DialogueResponsesMenu.")
+	var response_menu := balloon.get_node("%ResponsesMenu") as DialogueResponsesMenu
+	var unavailable_response := DialogueResponse.new()
+	unavailable_response.id = "unavailable"
+	unavailable_response.next_id = DMConstants.ID_END
+	unavailable_response.is_allowed = false
+	unavailable_response.text = "Unavailable"
+	response_menu.responses = [unavailable_response]
+	test.expect(response_menu.get_menu_items().is_empty(), "An all-disallowed response list has no focus target and does not index item zero.")
 	var progress := balloon.get_node("%Progress") as Control
 	test.expect(progress != null, "Balloon contains the animated progress indicator.")
 	var progress_mark := progress.get_node("AnimatedMark") as DialogueProgressIndicator

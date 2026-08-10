@@ -123,12 +123,24 @@ func grind_selected_pieces() -> bool:
 	ground_powder.quality = clampf((weighted_quality / total_weight) * 0.95, 0.1, 1.5)
 	ground_powder.amount = clampf(total_amount, 0.01, 1.0)
 	ground_powder.created_day = alchemy_runtime.day
+	ground_powder.special_potion_id = _special_potion_for_ground_pieces()
 	status_label.text = "本次研磨 %d 个部位：当前色值 %.3f，累计份量 %.0f%%。" % [
 		selected.size(), ground_powder.spectrum_x, ground_powder.amount * 100.0,
 	]
 	_refresh_board()
 	_refresh_color()
 	return true
+
+
+func _special_potion_for_ground_pieces() -> StringName:
+	var found_ground_piece := false
+	for piece: ProductionRuntimeTypes.HerbPieceRuntime in pieces:
+		if piece.state != ProductionRuntimeTypes.HerbPieceRuntime.State.GROUND:
+			continue
+		found_ground_piece = true
+		if piece.data == null or piece.data.id != &"dew_flask_herb_dew_flask":
+			return &""
+	return &"purification_potion" if found_ground_piece else &""
 
 
 func pack_powder() -> bool:

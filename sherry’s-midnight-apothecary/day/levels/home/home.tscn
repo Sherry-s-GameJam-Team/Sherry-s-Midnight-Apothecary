@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="1_environment"]
 [ext_resource type="Texture2D" uid="uid://dqt6dhtwjsxy4" path="res://day/levels/home/home.png" id="2_18uk7"]
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="3_player"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="4_collision"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_indoor_collision.tscn" id="4_collision"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="5_presentation"]
 [ext_resource type="Texture2D" uid="uid://cl0tw0r5ojcmq" path="res://day/levels/home/door.png" id="6_door"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="7_door_portal"]
@@ -83,7 +83,7 @@ centered = false
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1967546524]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1416155739]
-polygon = PackedVector2Array(-2545, 867, 3633, 857, 3633, 831, 1184, 836, 1030, 795, 919, 738, 689, 737, 609, 784, 458, 833, -2541, 837)
+polygon = PackedVector2Array(-2545, 867, 3633, 857, 3629, 812, 1184, 823, 1077, 794, 919, 738, 689, 737, 534, 795, 451, 817, -2552, 803)
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1633258588]
 position = Vector2(-2583.67, 432)
@@ -105,9 +105,10 @@ script = ExtResource("3_player")
 character_scale = 0.8
 
 [node name="SherryCollision" parent="Player" unique_id=843162247 instance=ExtResource("4_collision")]
+position = Vector2(0, 60)
 
 [node name="SherryPresentation" parent="Player" unique_id=1617229915 instance=ExtResource("5_presentation")]
-position = Vector2(-5, -34)
+position = Vector2(-5, 6)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1539167542]
 position = Vector2(0, -210)
@@ -169,7 +170,7 @@ position = Vector2(2558, 763)
 position = Vector2(2549, 724)
 
 [node name="bedroomdoor" type="Marker2D" parent="EntryPoints" unique_id=726330820]
-position = Vector2(-902, 759)
+position = Vector2(-902, 718)
 
 [node name="Table" type="Sprite2D" parent="." unique_id=40416591]
 z_index = 11

@@ -65,7 +65,10 @@ func get_menu_items() -> Array:
 
 ## Prepare the menu for keyboard and mouse navigation.
 func configure_focus() -> void:
-	var items = get_menu_items()
+	var items := get_menu_items()
+	if items.is_empty():
+		_previously_focused_item = null
+		return
 	for i in items.size():
 		var item: Control = items[i]
 

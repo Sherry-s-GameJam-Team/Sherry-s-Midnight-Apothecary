@@ -28,6 +28,26 @@ static func run(test: TestSupport) -> void:
 	page.equip_selected_to_slot(2)
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &"red_potion"], "Loading an equipped potion into another slot moves it.")
 
+	player.potions[&"purification_potion"] = [{"instance_uid": "tutorial-purification", "remaining_dose": 1.0, "quality": 1.0}]
+	page.refresh()
+	var selected := {"id": StringName()}
+	var equipped := {"slot": -1, "id": StringName()}
+	page.potion_selected.connect(func(potion_id: StringName) -> void: selected.id = potion_id)
+	page.potion_equipped.connect(func(slot_index: int, potion_id: StringName) -> void:
+		equipped.slot = slot_index
+		equipped.id = potion_id
+	)
+	page.begin_potion_equip_tutorial(&"purification_potion")
+	test.expect(page.is_potion_equip_tutorial_active(), "Potion equip tutorial can highlight an inventory potion.")
+	test.expect(page.get_potion_button(&"purification_potion") != null, "Tutorial exposes the purification potion button.")
+	page.select_potion(&"purification_potion")
+	test.expect_equal(selected.id, &"purification_potion", "Selecting the tutorial potion emits its selection signal.")
+	test.expect(page.get_slot_button(0) != null, "Tutorial exposes an unlocked loadout slot button.")
+	page.equip_selected_to_slot(0)
+	test.expect_equal(equipped, {"slot": 0, "id": &"purification_potion"}, "Equipping the tutorial potion emits slot and potion details.")
+	page.end_potion_equip_tutorial()
+	test.expect(not page.is_potion_equip_tutorial_active(), "Potion equip tutorial presentation can be cleared.")
+
 	player.unlock_potion_slot(PlayerData.MAX_POTION_SLOT_COUNT)
 	page.refresh()
 	test.expect_equal(page.get_visible_slot_count(), 8, "At maximum capacity exactly eight slots are visible.")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://60b3qvvmovbl"]
 
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="1_environment"]
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="2_player"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="2_player"]
 [ext_resource type="Texture2D" uid="uid://bd0vlwhgvvean" path="res://day/art/lake/FS/skybox.png" id="3_skybox"]
 [ext_resource type="Texture2D" uid="uid://ck1h3kayl74h" path="res://day/art/lake/FS/BG.png" id="4_background"]
 [ext_resource type="Texture2D" uid="uid://dfh8am6be8ckp" path="res://day/art/lake/FS/wall.png" id="5_wall"]
@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="19_potions"]
 [ext_resource type="PackedScene" path="res://day/art/lake/idle_sprite/lake_idle_sprite.tscn" id="20_idle_sprite"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="21_sherry_presentation"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="22_sherry_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="22_sherry_collision"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lake_replace"]
 texture = ExtResource("12_replace_tiles")
@@ -356,8 +356,10 @@ shape = SubResource("RectangleShape2D_side_barrier")
 z_index = 10
 position = Vector2(234, 482)
 script = ExtResource("2_player")
+character_scale = 0.4
 
 [node name="SherryCollision" parent="Player" unique_id=603891695 instance=ExtResource("22_sherry_collision")]
+position = Vector2(0, 54)
 
 [node name="SherryPresentation" parent="Player" unique_id=1608600665 instance=ExtResource("21_sherry_presentation")]
 position = Vector2(-6, 16)

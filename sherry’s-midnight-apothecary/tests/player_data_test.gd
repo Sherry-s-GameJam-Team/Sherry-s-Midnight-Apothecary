@@ -3,6 +3,7 @@ extends RefCounted
 
 static func run(test: TestSupport) -> void:
 	var player := PlayerData.new()
+	test.expect(player.potions.is_empty(), "New players start without any potions.")
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "New players start with three empty potion slots.")
 	var day_result := DayResult.new()
 	day_result.remaining_health = 72
@@ -29,6 +30,16 @@ static func run(test: TestSupport) -> void:
 	player.add_story_item(&"sealed_letter", 2)
 	player.remove_story_item(&"sealed_letter")
 	test.expect_equal(player.story_items[&"sealed_letter"], 1, "Story item counts can be added and removed.")
+	player.potions[&"yellow_potion"] = [
+		{"instance_uid": "yellow-full", "remaining_dose": 1.0},
+		{"instance_uid": "yellow-partial", "remaining_dose": 0.25},
+		{"instance_uid": "yellow-empty", "remaining_dose": 0.0},
+	]
+	test.expect_equal(player.potion_count(&"yellow_potion"), 2, "Dialogue potion count includes non-empty full and partial bottles.")
+	test.expect_float_close(player.potion_dose(&"yellow_potion"), 1.25, 0.001, "Dialogue potion dose totals remaining liquid.")
+	test.expect(player.has_potion(&"yellow_potion", 2), "Dialogue potion predicate accepts a minimum bottle count.")
+	test.expect(not player.has_potion(&"yellow_potion", 3), "Dialogue potion predicate rejects an insufficient bottle count.")
+	test.expect_equal(player.potion_count(&"missing_potion"), 0, "Dialogue potion count safely handles unknown IDs.")
 
 	var restored := PlayerData.from_save_data(player.to_save_data())
 	test.expect_equal(restored.health, 72, "Player health round-trips.")

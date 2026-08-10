@@ -43,4 +43,9 @@ static func run(test: TestSupport) -> void:
 	hotbar._refresh_slots()
 	test.expect_float_close(first_slot.capacity_ratio, 0.18, 0.001, "Capacity ring refreshes when potion dose changes.")
 	test.expect_equal(first_slot.dose_label.text, "18%", "Capacity percentage refreshes with the ring.")
+
+	player.equipped_potion_ids.clear()
+	player.selected_potion_slot = 0
+	hotbar._on_slot_pressed(0)
+	test.expect(not hotbar.is_detail_open(), "Clicking the selected first slot tolerates an empty legacy loadout array.")
 	hotbar.free()

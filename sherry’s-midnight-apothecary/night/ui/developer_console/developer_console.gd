@@ -9,6 +9,7 @@ const POTION_IDS_BY_NUMBER: Array[StringName] = [
 	&"cyan_potion",
 	&"blue_potion",
 	&"purple_potion",
+	&"purification_potion",
 ]
 
 var night_runtime: NightRuntime
@@ -341,7 +342,7 @@ func _scene_command(parts: PackedStringArray) -> String:
 	if day_runtime == null and day_scene == null:
 		return "错误：场景切换仅可在日间模式使用。"
 	if parts.size() != 2:
-		return "错误：用法 scene <town|raintree|lake>"
+		return "错误：用法 scene <town|home|raintree|lake|grassland>"
 	var requested := parts[1].to_lower()
 	var level_id := ""
 	match requested:
@@ -353,8 +354,10 @@ func _scene_command(parts: PackedStringArray) -> String:
 			level_id = "forest"
 		"lake":
 			level_id = "lake"
+		"grass", "grassland":
+			level_id = "grassland"
 		_:
-			return "错误：未知场景。可用：town、raintree、lake。"
+			return "错误：未知场景。可用：town、home、raintree、lake、grassland。"
 	if day_runtime != null:
 		if not day_runtime.switch_to_level(level_id):
 			return "错误：无法切换到场景 %s。" % requested
@@ -364,6 +367,7 @@ func _scene_command(parts: PackedStringArray) -> String:
 		"home": "res://day/levels/home/home.tscn",
 		"forest": "res://day/art/raintree/raintree.tscn",
 		"lake": "res://day/art/lake/lake.tscn",
+		"grassland": "res://day/levels/grassland/grass.tscn",
 	}.get(level_id, "") as String
 	if scene_path.is_empty() or get_tree().change_scene_to_file(scene_path) != OK:
 		return "错误：无法切换到场景 %s。" % requested
@@ -439,7 +443,7 @@ func _status_text() -> String:
 
 func _help_text() -> String:
 	return """Day scene commands:
-  scene <town|raintree|lake>
+	  scene <town|home|raintree|lake|grassland>
   title
   to normal
   to corrupted

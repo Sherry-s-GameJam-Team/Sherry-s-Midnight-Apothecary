@@ -31,8 +31,11 @@ static func run(test: TestSupport) -> void:
 		"res://night/ui/pause_menu/pause_menu.tscn",
 		"res://night/ui/pause_menu/pause_inventory_page.tscn",
 		"res://night/ui/top_hint/top_hint_ui.tscn",
+		"res://shared/ui/task_complete/task_complete_ui.tscn",
 		"res://tests/top_hint_ui_demo.tscn",
 		"res://art/characters/sherry/sherry_test_scene.tscn",
+		"res://art/characters/sherry/sherry_indoor_collision.tscn",
+		"res://art/characters/sherry/sherry_outdoor_collision.tscn",
 		"res://art/characters/luca/luca_player.tscn",
 		"res://shared/potions/runtime/potion_player_system.tscn",
 		"res://shared/potions/runtime/potion_projectile.tscn",
@@ -51,5 +54,6 @@ static func run(test: TestSupport) -> void:
 		"res://art/effects/bird.png",
 		"res://menu/menu_silhouette_director.gd",
 		"res://menu/shaders/menu_bird_trail.gdshader",
+		"res://day/levels/grassland/grassland_level.tres",
 	]:
 		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

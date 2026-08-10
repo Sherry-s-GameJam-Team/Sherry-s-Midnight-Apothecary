@@ -78,6 +78,15 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(dew_flask_herb.production_layers[1].pieces[3].source_rect, Rect2i(2030, 1160, 1748, 1350), "The final foliage source rectangle is baked from the supplied split image.")
 	var dew_flask_pieces := ProductionRuntimeTypes.create_piece_set(dew_flask_herb, &"dew_flask_test")
 	test.expect_equal(dew_flask_pieces.size(), 5, "Dew-Flask Herb reconstructs from all five supplied decomposition pieces.")
+	var original_panel_pieces := panel.pieces
+	panel.pieces = dew_flask_pieces
+	dew_flask_pieces[0].state = ProductionRuntimeTypes.HerbPieceRuntime.State.GROUND
+	test.expect_equal(panel._special_potion_for_ground_pieces(), &"purification_potion", "Grinding only the blue dew marks powder for the dedicated purification recipe.")
+	dew_flask_pieces[1].state = ProductionRuntimeTypes.HerbPieceRuntime.State.GROUND
+	test.expect_equal(panel._special_potion_for_ground_pieces(), &"", "Adding foliage removes the dedicated purification marker.")
+	for dew_piece: ProductionRuntimeTypes.HerbPieceRuntime in dew_flask_pieces:
+		dew_piece.state = ProductionRuntimeTypes.HerbPieceRuntime.State.ATTACHED
+	panel.pieces = original_panel_pieces
 	test.expect(dew_flask_pieces[0].quality > dew_flask_pieces[1].quality, "The pure floating water contributes more quality than ordinary foliage.")
 	test.expect(dew_flask_herb.production_layers[0].pieces[0].texture.get_image().get_pixel(0, 0).a < 0.1, "The extracted water-flask sprite keeps transparent padding for alpha hit testing.")
 	var dew_flask_assembly := HerbAssemblyView.new()

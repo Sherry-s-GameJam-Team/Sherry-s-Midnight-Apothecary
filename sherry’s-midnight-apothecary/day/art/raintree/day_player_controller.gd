@@ -1,3 +1,4 @@
+@tool
 extends CharacterBody2D
 
 const WALK_JUMP_VELOCITY := -550.0
@@ -21,7 +22,13 @@ const POTION_CAST_RELEASE_TIME := 0.708333
 const WALK_FOOTSTEP_INTERVAL := 0.44
 const RUN_FOOTSTEP_INTERVAL := 0.27
 
-@export_range(0.3, 1.2, 0.01) var character_scale := 0.4
+## Scene-owned visual scale. Every playable scene serializes this value so indoor
+## and outdoor presentation tuning cannot leak through this fallback default.
+@export_range(0.3, 1.2, 0.01) var character_scale := 0.4:
+	set(value):
+		character_scale = value
+		if Engine.is_editor_hint() and is_node_ready():
+			_apply_visual_scale()
 @export_range(50.0, 600.0, 5.0) var walk_speed := 220.0 
 @export_range(50.0, 900.0, 5.0) var run_speed := 420.0
 @export var initial_facing_right := false
@@ -59,16 +66,22 @@ var _footstep_timer := 0.0
 
 
 func _ready() -> void:
+	_sprite_base_position = sprite.position
+	if Engine.is_editor_hint():
+		_apply_visual_scale()
+		set_physics_process(false)
+		return
 	add_to_group("potion_friendly")
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
 	_facing_right = initial_facing_right
-	_sprite_base_position = sprite.position
 	_apply_visual_scale()
 	_play("idle")
 
 
 func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	var direction := 0.0 if _potion_action_locked else _get_input_direction()
 	_update_jump_timers(delta)
 	_try_consume_buffered_jump()
@@ -85,6 +98,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if Engine.is_editor_hint():
+		return
 	var key_event := event as InputEventKey
 	if key_event == null or not key_event.pressed or key_event.echo or _is_transition() or _potion_action_locked or _is_text_input_focused():
 		return

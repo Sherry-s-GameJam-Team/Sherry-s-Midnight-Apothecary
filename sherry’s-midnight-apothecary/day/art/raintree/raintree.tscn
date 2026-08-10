@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cpg2dlpo68lpe"]
 
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="2_environment"]
 [ext_resource type="Texture2D" uid="uid://bfdoo172sqyu4" path="res://day/art/raintree/FS/skybox.png" id="3_skybox"]
 [ext_resource type="Texture2D" uid="uid://c6qswaskcu1uw" path="res://day/art/raintree/FS/BG_f.png" id="4_far_background"]
@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="12_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="13_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="14_sherry_presentation"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="15_sherry_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="15_sherry_collision"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -645.0
@@ -96,6 +96,7 @@ shape = SubResource("RectangleShape2D_side_barrier")
 z_index = 10
 position = Vector2(1082, 565)
 script = ExtResource("1_player")
+character_scale = 0.4
 
 [node name="SherryCollision" parent="Player" instance=ExtResource("15_sherry_collision")]
 

@@ -110,13 +110,20 @@ func _refresh_slots() -> void:
 func _on_slot_pressed(slot_index: int) -> void:
 	if inventory_service == null or inventory_service.player_data == null:
 		return
-	if inventory_service.player_data.selected_potion_slot == slot_index:
-		var potion_id: StringName = inventory_service.player_data.equipped_potion_ids[slot_index]
+	var player_data := inventory_service.player_data
+	if slot_index < 0 or slot_index >= player_data.potion_slot_count:
+		return
+	if player_data.selected_potion_slot == slot_index:
+		var potion_id: StringName = (
+			player_data.equipped_potion_ids[slot_index]
+			if slot_index < player_data.equipped_potion_ids.size()
+			else &""
+		)
 		var potion: PotionData = potion_definitions.get(potion_id)
 		if potion != null:
 			_order_panel.open_for(inventory_service, potion_id, potion.display_name)
 		return
-	inventory_service.player_data.select_potion_slot(slot_index)
+	player_data.select_potion_slot(slot_index)
 	_order_panel.hide()
 	slot_selected.emit(slot_index)
 	_refresh_slots()

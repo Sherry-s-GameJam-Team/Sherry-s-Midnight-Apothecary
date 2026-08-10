@@ -264,5 +264,5 @@ offset_right = 1220.0
 offset_bottom = 662.0
 theme_override_colors/font_color = Color(0.66, 0.66, 0.74, 1)
 theme_override_font_sizes/font_size = 14
-text = "Signal-only: travel_requested(...) does not change the scene."
+text = "Confirmed registered routes change the active daytime level."
 autowrap_mode = 2

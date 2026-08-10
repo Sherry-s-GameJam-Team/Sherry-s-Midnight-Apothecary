@@ -222,7 +222,7 @@ func _on_lever_committed() -> void:
 	if _selected_index < 0:
 		return
 	var data: Dictionary = destinations[_selected_index]
-	status_label.text = "SIGNAL EMITTED: travel_requested(%s). Scene remains unchanged." % str(data.get("id", &"unknown"))
+	status_label.text = "ROUTE CONFIRMED: %s" % str(data.get("name", "Unknown"))
 	lever_hint.text = "SIGNAL SENT"
 	lever.set_enabled(false)
 	travel_requested.emit(data.get("id", &"unknown"), data)

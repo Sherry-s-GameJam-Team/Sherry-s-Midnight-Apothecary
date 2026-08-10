@@ -130,7 +130,15 @@ func get_open_target_position() -> Vector2:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if visible and event.is_action_pressed("ui_cancel"):
+	if not visible:
+		return
+	if event.is_action_pressed("open_backpack"):
+		if active_page == Page.BACKPACK:
+			close()
+		else:
+			select_page(Page.BACKPACK)
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_cancel"):
 		close()
 		get_viewport().set_input_as_handled()
 

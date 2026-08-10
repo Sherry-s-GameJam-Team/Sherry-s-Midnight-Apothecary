@@ -61,6 +61,10 @@ func _make_context(effect_id: StringName, multiplier: float, payload: Dictionary
 		&"attack":
 			context["amount"] = tuning.attack_damage * potency * quality * multiplier
 			context["knockback"] = tuning.attack_knockback * potency * multiplier
+		&"lightning_meteor":
+			context["amount"] = tuning.attack_damage * 1.35 * potency * quality * multiplier
+			context["knockback"] = tuning.attack_knockback * 1.2 * potency * multiplier
+			context["strike_count"] = 3
 		&"speed": context["amount"] = tuning.speed_bonus * potency * multiplier
 		&"healing": context["amount"] = tuning.healing_amount * potency * quality * multiplier
 		&"shield": context["amount"] = tuning.shield_amount * potency * quality * multiplier

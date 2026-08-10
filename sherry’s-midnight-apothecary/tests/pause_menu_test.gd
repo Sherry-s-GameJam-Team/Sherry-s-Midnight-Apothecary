@@ -47,4 +47,18 @@ static func run(test: TestSupport) -> void:
 	menu.bookmark_return.pressed.emit()
 	test.expect(not menu.visible, "Return bookmark closes the pause menu.")
 	test.expect(not tree.paused, "Return bookmark resumes the scene tree.")
+	test.expect(InputMap.has_action("open_backpack"), "Project defines the B-key backpack action.")
+	var has_physical_b := InputMap.action_get_events("open_backpack").any(
+		func(event: InputEvent) -> bool:
+			return event is InputEventKey and (event as InputEventKey).physical_keycode == KEY_B
+	)
+	test.expect(has_physical_b, "Backpack action is mapped to the physical B key.")
+	var backpack_event := InputEventAction.new()
+	backpack_event.action = &"open_backpack"
+	backpack_event.pressed = true
+	menu.open(PauseMenu.Page.SETTINGS)
+	menu._unhandled_input(backpack_event)
+	test.expect_equal(menu.active_page, PauseMenu.Page.BACKPACK, "B switches an open menu directly to the backpack page.")
+	menu._unhandled_input(backpack_event)
+	test.expect(not menu.visible and not tree.paused, "Pressing B again while viewing the backpack resumes gameplay.")
 	menu.free()

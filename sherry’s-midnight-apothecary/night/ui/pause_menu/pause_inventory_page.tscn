@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3]
+[gd_scene load_steps=32 format=3]
 
 [ext_resource type="Script" path="res://night/ui/pause_menu/pause_inventory_page.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://night/ui/pause_menu/potion_loadout_slot.tscn" id="2_slot"]
@@ -13,6 +13,7 @@
 [ext_resource type="Resource" path="res://shared/definitions/data/potions/blue_potion.tres" id="15_blue"]
 [ext_resource type="Resource" path="res://shared/definitions/data/potions/purple_potion.tres" id="16_purple"]
 [ext_resource type="Resource" path="res://shared/definitions/data/potions/black_potion.tres" id="17_black"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/purification_potion.tres" id="18_purification"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/amber_root.tres" id="20_amber"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/blue_bell.tres" id="21_blue_bell"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/dew_flask_herb.tres" id="22_dew"]
@@ -30,7 +31,7 @@
 
 [node name="PauseInventoryPage" type="Control"]
 script = ExtResource("1_script")
-potion_definitions = Array[PotionData]([ExtResource("10_red"), ExtResource("11_orange"), ExtResource("12_yellow"), ExtResource("13_green"), ExtResource("14_cyan"), ExtResource("15_blue"), ExtResource("16_purple"), ExtResource("17_black")])
+potion_definitions = Array[PotionData]([ExtResource("10_red"), ExtResource("11_orange"), ExtResource("12_yellow"), ExtResource("13_green"), ExtResource("14_cyan"), ExtResource("15_blue"), ExtResource("16_purple"), ExtResource("18_purification"), ExtResource("17_black")])
 ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle")])
 lock_icon = ExtResource("3_lock")
 empty_slot_icon = ExtResource("4_empty")

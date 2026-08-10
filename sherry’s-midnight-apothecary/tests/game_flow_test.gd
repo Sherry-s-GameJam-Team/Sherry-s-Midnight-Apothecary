@@ -5,10 +5,14 @@ static func run(test: TestSupport) -> void:
 	var runtime_slot := Node.new()
 	var flow := GameFlow.new()
 	var player := PlayerData.new()
+	player.potions[&"yellow_potion"] = [{"instance_uid": "stale-potion", "remaining_dose": 1.0}]
+	player.equipped_potion_ids[0] = &"yellow_potion"
 	flow.configure(runtime_slot, player)
 
 	test.expect(flow.start_new_game(), "A new game starts in the day runtime.")
 	test.expect_equal(flow.current_day, 1, "A new game starts on day one.")
+	test.expect(player.potions.is_empty(), "A new game starts without any potions.")
+	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "A new game starts with empty potion slots.")
 	test.expect(flow.current_runtime is DayRuntime, "DayRuntime is active.")
 	test.expect(flow.current_runtime.player_data == player, "DayRuntime receives the shared PlayerData instance.")
 	var emitted_day_result := DayResult.new()

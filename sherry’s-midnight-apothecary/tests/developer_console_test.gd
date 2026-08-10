@@ -69,5 +69,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(day_console.execute_command("scene raintree"), "scene = Rain Tree", "Console opens RainTree during the day.")
 	test.expect_equal(day_console.execute_command("scene lake"), "scene = Lake", "Console opens Lake during the day.")
 	test.expect_equal(day_console.execute_command("title"), "标题动画已播放：Lake", "Console replays the current scene title.")
+	test.expect_equal(day_console.execute_command("scene grassland"), "scene = 翡翠原", "Console opens Grassland during the day.")
+	test.expect_equal(day_console.execute_command("scene grass"), "scene = 翡翠原", "Console accepts the short Grassland alias.")
 	test.expect(day_console.execute_command("status").contains("mode=DAY"), "Day status reports the active scene.")
 	day_runtime.free()

@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://irw51cbx10tg" path="res://shared/definitions/data/potions/blue_potion.tres" id="25_blue"]
 [ext_resource type="Resource" uid="uid://duc8heuiyfcap" path="res://shared/definitions/data/potions/purple_potion.tres" id="26_purple"]
 [ext_resource type="Resource" path="res://shared/definitions/data/potions/black_potion.tres" id="27_black"]
+[ext_resource type="Resource" path="res://shared/definitions/data/potions/purification_potion.tres" id="28_purification"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/dew_flask_herb.tres" id="30_dew_flask"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/old_mans_noose.tres" id="31_old_mans_noose"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/praise_star_maple.tres" id="32_praise_star_maple"]
@@ -34,6 +35,7 @@ grow_vertical = 2
 script = ExtResource("1_runtime")
 ingredients = Array[ExtResource("2_1vxw6")]([ExtResource("18_herdsman"), ExtResource("19_stardust"), ExtResource("20_grail"), ExtResource("30_dew_flask"), ExtResource("31_old_mans_noose"), ExtResource("32_praise_star_maple")])
 potions = Array[ExtResource("11_hti2p")]([ExtResource("20_red"), ExtResource("21_orange"), ExtResource("22_yellow"), ExtResource("23_green"), ExtResource("24_cyan"), ExtResource("25_blue"), ExtResource("26_purple")])
+special_potions = Array[ExtResource("11_hti2p")]([ExtResource("28_purification")])
 failed_potion = ExtResource("27_black")
 default_heat_profile = ExtResource("34_default_heat")
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ckd8kmnf2vugc"]
 
 [ext_resource type="Texture2D" uid="uid://b54mr2bxi3gaf" path="res://day/art/town/FS/BG.png" id="1_fs_bg"]
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b57ln8afc42ex" path="res://day/art/town/FS/cloud.png" id="2_fs_cloud"]
 [ext_resource type="Texture2D" uid="uid://m3b6x28606g4" path="res://day/art/town/FS/town.png" id="3_fs_town"]
 [ext_resource type="Texture2D" uid="uid://dxyrs7kygp0en" path="res://day/art/town/MS/part.png" id="4_ms"]
@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="20_sherry_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="20_sherry_collision"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -727.0
@@ -158,6 +158,7 @@ shape = SubResource("RectangleShape2D_side_barrier")
 z_index = 10
 position = Vector2(1086, 651)
 script = ExtResource("1_player")
+character_scale = 0.4
 
 [node name="SherryCollision" parent="Player" unique_id=1307035824 instance=ExtResource("20_sherry_collision")]
 

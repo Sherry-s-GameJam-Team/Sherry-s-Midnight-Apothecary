@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PotionData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Resource" path="res://shared/definitions/data/heat_profiles/dew_purification.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"purification_potion"
+display_name = "清露净化药水"
+color_name = "露蓝"
+display_color = Color(0.18, 0.65, 0.93, 1)
+main_effect_id = &"purify"
+spectrum_center_x = 0.72
+effect_ranges = Array[Vector2]([])
+base_price = 25
+heat_profile = ExtResource("2")

@@ -2,6 +2,8 @@ class_name PauseInventoryPage
 extends Control
 
 signal loadout_changed
+signal potion_selected(potion_id: StringName)
+signal potion_equipped(slot_index: int, potion_id: StringName)
 
 const ENTRY_SCENE := preload("res://night/ui/pause_menu/inventory_entry.tscn")
 
@@ -35,6 +37,11 @@ var _potion_by_id: Dictionary = {}
 var _ingredient_by_id: Dictionary = {}
 var _story_item_by_id: Dictionary = {}
 var _potion_buttons: Dictionary = {}
+var _tutorial_active := false
+var _tutorial_potion_id: StringName = &""
+var _tutorial_phase := ""
+var _tutorial_target: CanvasItem
+var _tutorial_target_base_modulate := Color.WHITE
 
 
 func _ready() -> void:
@@ -47,6 +54,14 @@ func _ready() -> void:
 	_build_definition_maps()
 	show_potions()
 	refresh()
+
+
+func _process(_delta: float) -> void:
+	if not _tutorial_active or not is_instance_valid(_tutorial_target):
+		return
+	var pulse := (sin(float(Time.get_ticks_msec()) * 0.008) + 1.0) * 0.5
+	var glow := Color(1.35, 1.14, 0.52, 1.0)
+	_tutorial_target.self_modulate = _tutorial_target_base_modulate.lerp(glow, 0.35 + pulse * 0.45)
 
 
 func bind_player_data(shared_player_data: PlayerData) -> void:
@@ -93,16 +108,58 @@ func select_potion(potion_id: StringName) -> void:
 	for id: Variant in _potion_buttons:
 		(_potion_buttons[id] as Button).set_pressed_no_signal(StringName(str(id)) == potion_id)
 	_refresh_slots()
+	potion_selected.emit(potion_id)
+	if _tutorial_active and potion_id == _tutorial_potion_id:
+		_tutorial_phase = "slot"
+		_refresh_tutorial_display()
 
 
 func equip_selected_to_slot(slot_index: int) -> void:
 	if player_data == null or selected_potion_id == &"":
 		return
-	if player_data.move_equip_potion(slot_index, selected_potion_id):
+	var equipped_id := selected_potion_id
+	if player_data.move_equip_potion(slot_index, equipped_id):
 		selected_potion_id = &""
 		loadout_changed.emit()
 		_refresh_potions()
 		_refresh_slots()
+		potion_equipped.emit(slot_index, equipped_id)
+		if _tutorial_active and equipped_id == _tutorial_potion_id:
+			_tutorial_phase = "complete"
+			_refresh_tutorial_display()
+
+
+func begin_potion_equip_tutorial(potion_id: StringName) -> void:
+	if potion_id == &"":
+		return
+	_tutorial_active = true
+	_tutorial_potion_id = potion_id
+	_tutorial_phase = "slot" if selected_potion_id == potion_id else "potion"
+	show_potions()
+	refresh()
+	_refresh_tutorial_display()
+
+
+func end_potion_equip_tutorial() -> void:
+	_tutorial_active = false
+	_tutorial_potion_id = &""
+	_tutorial_phase = ""
+	_set_tutorial_target(null)
+	_refresh_slots()
+
+
+func is_potion_equip_tutorial_active() -> bool:
+	return _tutorial_active
+
+
+func get_potion_button(potion_id: StringName) -> Button:
+	return _potion_buttons.get(potion_id) as Button
+
+
+func get_slot_button(slot_index: int) -> Button:
+	if slot_index < 0 or slot_index >= slot_rows.get_child_count():
+		return null
+	return (slot_rows.get_child(slot_index) as Node).get_node("Main") as Button
 
 
 func get_visible_slot_count() -> int:
@@ -190,6 +247,40 @@ func _refresh_slots() -> void:
 		unload.visible = equipped_id != &""
 		unload.disabled = equipped_id == &""
 	selection_hint.text = "已选择：%s；请选择目标档位" % _potion_name(selected_potion_id) if selected_potion_id != &"" else "先从左页选择药水，再点击右页档位装填。"
+	if _tutorial_active:
+		_refresh_tutorial_display()
+
+
+func _refresh_tutorial_display() -> void:
+	if not _tutorial_active:
+		return
+	match _tutorial_phase:
+		"potion":
+			selection_hint.text = "教程：用鼠标点击左侧的“%s”。" % _potion_name(_tutorial_potion_id)
+			_set_tutorial_target(get_potion_button(_tutorial_potion_id))
+		"slot":
+			selection_hint.text = "教程：点击右侧任意已解锁档位，将净化药水装入快捷栏。"
+			_set_tutorial_target(get_slot_button(_first_unlocked_slot()))
+		"complete":
+			selection_hint.text = "装配完成！点击右侧“返回”书签继续。"
+			_set_tutorial_target(null)
+
+
+func _first_unlocked_slot() -> int:
+	if player_data == null:
+		return 0
+	for slot_index in range(player_data.potion_slot_count):
+		if slot_index >= player_data.equipped_potion_ids.size() or player_data.equipped_potion_ids[slot_index] == &"":
+			return slot_index
+	return clampi(player_data.selected_potion_slot, 0, player_data.potion_slot_count - 1)
+
+
+func _set_tutorial_target(target: CanvasItem) -> void:
+	if is_instance_valid(_tutorial_target):
+		_tutorial_target.self_modulate = _tutorial_target_base_modulate
+	_tutorial_target = target
+	if is_instance_valid(_tutorial_target):
+		_tutorial_target_base_modulate = _tutorial_target.self_modulate
 
 
 func _refresh_items() -> void:

@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry"]
+size = Vector2(56, 76)
+
+[node name="SherryCollision" type="CollisionShape2D" unique_id=1315830946]
+position = Vector2(0, 38)
+shape = SubResource("RectangleShape2D_sherry")

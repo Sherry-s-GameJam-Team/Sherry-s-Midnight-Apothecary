@@ -3,6 +3,7 @@ extends RefCounted
 
 var source_ingredient_id: StringName
 var source_data: IngredientData
+var special_potion_id: StringName
 var selected_start := 0.0
 var selected_end := 1.0
 var spectrum_x := 0.5

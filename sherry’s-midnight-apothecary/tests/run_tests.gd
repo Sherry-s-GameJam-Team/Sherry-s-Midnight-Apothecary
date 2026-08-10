@@ -6,6 +6,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/app_root_menu_test.gd"),
 	preload("res://tests/animation_presentation_executor_test.gd"),
 	preload("res://tests/grassland_scene_test.gd"),
+	preload("res://tests/sleeping_hound_tutorial_test.gd"),
 	preload("res://tests/developer_console_test.gd"),
 	preload("res://tests/player_data_test.gd"),
 	preload("res://tests/potion_inventory_service_test.gd"),

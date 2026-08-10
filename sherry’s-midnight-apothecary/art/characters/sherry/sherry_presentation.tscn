@@ -16,7 +16,6 @@ scale = Vector2(0.4, 0.4)
 
 [node name="SherryVisual" type="Sprite2D" parent="SherrySprite"]
 material = SubResource("ShaderMaterial_sherry_outline")
-scale = Vector2(0.9, 0.9)
 texture = ExtResource("1_idle")
 
 [node name="SherryAnimationPlayer" type="AnimationPlayer" parent="."]

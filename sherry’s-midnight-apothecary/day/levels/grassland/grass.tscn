@@ -3,15 +3,17 @@
 [ext_resource type="Texture2D" uid="uid://bh02yxswvwykq" path="res://day/levels/grassland/art/skybox.png" id="1_skybox"]
 [ext_resource type="Texture2D" uid="uid://j4tlbsxhlimv" path="res://day/levels/grassland/art/fs_grass.png" id="2_far_grass"]
 [ext_resource type="Texture2D" uid="uid://dbrm4ly7ewebb" path="res://day/levels/grassland/art/grass_corrupted_loop.png" id="4_8caa3"]
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="4_player"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="4_player"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="5_camera_bounds"]
 [ext_resource type="Script" uid="uid://887nbn7ofcth" path="res://day/levels/grassland/grass_environment.gd" id="6_environment"]
 [ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="7_title_card"]
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="9_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="10_sherry_presentation"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="11_sherry_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="11_sherry_collision"]
 [ext_resource type="PackedScene" uid="uid://dy7mc0aye5abs" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_npc.tscn" id="12_sleeping_hound"]
+[ext_resource type="Script" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_tutorial.gd" id="13_hound_tutorial"]
+[ext_resource type="PackedScene" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="14_task_complete"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -689.0
@@ -92,13 +94,19 @@ position = Vector2(2216, 362)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1006906215]
 shape = SubResource("RectangleShape2D_side_barrier")
 
+[node name="EntryPoints" type="Node2D" parent="."]
+
+[node name="default" type="Marker2D" parent="EntryPoints"]
+position = Vector2(988, 481)
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1043951829]
 z_index = 10
 position = Vector2(988, 481)
 script = ExtResource("4_player")
+character_scale = 0.4
 
 [node name="SherryCollision" parent="Player" unique_id=1181825080 instance=ExtResource("11_sherry_collision")]
-position = Vector2(0, 23)
+position = Vector2(0, 38)
 
 [node name="SherryPresentation" parent="Player" unique_id=2056010217 instance=ExtResource("10_sherry_presentation")]
 
@@ -120,6 +128,11 @@ visible = false
 position = Vector2(1545, 744)
 interaction_hint_text = "按[E]交谈"
 animation_fps = 5.0
+
+[node name="SleepingHoundTutorial" type="Node" parent="."]
+script = ExtResource("13_hound_tutorial")
+
+[node name="TaskCompleteUI" parent="." instance=ExtResource("14_task_complete")]
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1625435170]
 z_index = 20

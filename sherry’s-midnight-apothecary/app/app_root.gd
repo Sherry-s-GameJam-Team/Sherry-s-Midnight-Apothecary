@@ -15,6 +15,10 @@ var player_data: PlayerData
 var save_service: SaveService
 
 
+func get_player_data() -> PlayerData:
+	return player_data
+
+
 func _ready() -> void:
 	save_service = SaveService.new()
 	player_data = PlayerData.new()
@@ -112,11 +116,27 @@ func _on_save_requested(_day: int, _mode: GameFlow.Mode) -> void:
 
 
 func _on_map_switch_travel_requested(destination_id: StringName, _destination_data: Dictionary) -> void:
-	print("[MapSwitch] travel requested: ", destination_id)
+	if game_flow.current_mode != GameFlow.Mode.DAY or not (game_flow.current_runtime is DayRuntime):
+		push_warning("MapSwitch travel is only available during the day: %s" % destination_id)
+		return
+	if map_switch.has_method("close"):
+		map_switch.call("close")
+	var day_runtime := game_flow.current_runtime as DayRuntime
+	if not day_runtime.switch_to_level(str(destination_id), &"default"):
+		push_warning("MapSwitch destination is not a registered day level: %s" % destination_id)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_instance_valid(menu_controller) and menu_controller.state != MenuController.MenuState.FINISHED:
+		return
+	if get_tree().has_meta("day_modal_input_locked"):
+		return
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused is LineEdit or focused is TextEdit:
+		return
+	if event.is_action_pressed("open_backpack") and not pause_menu.visible:
+		pause_menu.open(PauseMenu.Page.BACKPACK)
+		get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_cancel") and not pause_menu.visible:
 		pause_menu.open()

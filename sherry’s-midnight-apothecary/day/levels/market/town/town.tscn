@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cxf4skcv5navd"]
 
 [ext_resource type="Texture2D" uid="uid://b54mr2bxi3gaf" path="res://day/art/town/FS/BG.png" id="1_fs_bg"]
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b57ln8afc42ex" path="res://day/art/town/FS/cloud.png" id="2_fs_cloud"]
 [ext_resource type="Texture2D" uid="uid://m3b6x28606g4" path="res://day/art/town/FS/town.png" id="3_fs_town"]
 [ext_resource type="Texture2D" uid="uid://dxyrs7kygp0en" path="res://day/art/town/MS/part.png" id="4_ms"]
@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="20_sherry_collision"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="20_sherry_collision"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="21_door_portal"]
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="22_door_outline"]
 
@@ -125,17 +125,17 @@ texture = ExtResource("5_56gmp")
 scroll_scale = Vector2(0.82, 0.82)
 
 [node name="Home" type="Sprite2D" parent="CS" unique_id=518218445]
-position = Vector2(718.00006, 481)
+position = Vector2(718.00006, 473)
 scale = Vector2(0.65802467, 0.65802467)
 texture = ExtResource("5_d0v0d")
 
 [node name="TownLeft" type="Sprite2D" parent="CS" unique_id=1049310137]
-position = Vector2(1413, 27)
+position = Vector2(1413, 19)
 texture = ExtResource("6_cs_town")
 centered = false
 
 [node name="Center" type="Sprite2D" parent="CS" unique_id=1441064153]
-position = Vector2(3560, 100)
+position = Vector2(3560, 92)
 texture = ExtResource("5_cs")
 centered = false
 
@@ -191,8 +191,10 @@ shape = SubResource("RectangleShape2D_side_barrier")
 z_index = 10
 position = Vector2(1086, 651)
 script = ExtResource("1_player")
+character_scale = 0.5
 
 [node name="SherryCollision" parent="Player" unique_id=1307035824 instance=ExtResource("20_sherry_collision")]
+position = Vector2(0, 56)
 
 [node name="SherryPresentation" parent="Player" unique_id=2024104673 instance=ExtResource("19_sherry_presentation")]
 
@@ -207,6 +209,7 @@ left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=2078016120 instance=ExtResource("18_potions")]
+position = Vector2(0, 11)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1547737807]
 libraries/ = SubResource("AnimationLibrary_clouds")

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bimxmvcuqrqsc"
+path="res://.godot/imported/luca_after_purification.dialogue-8ab9c25969c6f5d1bc87ab7fb862c9a3.tres"
+
+[deps]
+
+source_file="res://day/levels/grassland/npc/sleeping_hound/luca_after_purification.dialogue"
+dest_files=["res://.godot/imported/luca_after_purification.dialogue-8ab9c25969c6f5d1bc87ab7fb862c9a3.tres"]
+
+[params]
+
+defaults=true

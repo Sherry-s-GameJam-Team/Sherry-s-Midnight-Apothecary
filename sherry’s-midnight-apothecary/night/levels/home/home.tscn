@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://db28y2juoopbx" path="res://night/levels/home/night_home.gd" id="1_home"]
 [ext_resource type="Texture2D" uid="uid://dqt6dhtwjsxy4" path="res://day/levels/home/home.png" id="2_interior"]
-[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/raintree_player.gd" id="3_player"]
-[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="4_collision"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_indoor_collision.tscn" id="4_collision"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="5_presentation"]
 [ext_resource type="Texture2D" uid="uid://cl0tw0r5ojcmq" path="res://day/levels/home/door.png" id="6_door"]
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="7_outline"]
@@ -163,13 +163,12 @@ shape = SubResource("SideBarrierShape")
 z_index = 10
 position = Vector2(2531, 748)
 script = ExtResource("3_player")
-depth_scale_enabled = true
+character_scale = 0.8
 
 [node name="SherryCollision" parent="Player" unique_id=98448943 instance=ExtResource("4_collision")]
 
 [node name="SherryPresentation" parent="Player" unique_id=945973414 instance=ExtResource("5_presentation")]
-position = Vector2(-5, -34)
-scale = Vector2(1.585, 1.585)
+position = Vector2(-5, 6)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1411475507]
 position = Vector2(0, -210)

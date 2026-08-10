@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry_indoor"]
+size = Vector2(56, 166)
+
+[node name="SherryCollision" type="CollisionShape2D"]
+position = Vector2(0, 38)
+shape = SubResource("RectangleShape2D_sherry_indoor")

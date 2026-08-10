@@ -11,6 +11,12 @@ static func run(test: TestSupport) -> void:
 	player.inventory = {&"herdsmans_loaf_bush": 4}
 	var result := NightResult.new()
 	runtime.setup(player, result, 3)
+	var yellow_storm := load("res://shared/definitions/data/potions/yellow_potion.tres") as PotionData
+	var purification := load("res://shared/definitions/data/potions/purification_potion.tres") as PotionData
+	test.expect_equal(yellow_storm.display_name, "雷击与星陨之药", "The former yellow purification potion is now the lightning and meteor potion.")
+	test.expect_equal(yellow_storm.main_effect_id, &"lightning_meteor", "The yellow spectrum potion uses the storm combat effect.")
+	test.expect_equal(purification.main_effect_id, &"purify", "Purification is owned by the dedicated dew potion.")
+	test.expect(purification.effect_ranges.is_empty(), "The dedicated purification potion cannot be reached through the ordinary spectrum.")
 
 	test.expect_equal(runtime.available_count(&"herdsmans_loaf_bush"), 4, "Alchemy reads base inventory.")
 	test.expect(runtime.reserve_ingredient(&"herdsmans_loaf_bush"), "An available herb can be reserved.")
@@ -81,6 +87,22 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(secondary_prediction.get("secondary_effect_id"), &"mana", "Second color contribution above 20% becomes secondary effect.")
 	test.expect(float(secondary_prediction.get("quality", 0.0)) > 0.0, "Color preview remains independent of heat processing.")
 	runtime.cancel_batch()
+	var dew_source := runtime.ingredient_by_id(&"dew_flask_herb")
+	var special_dew := ProcessedIngredient.from_ingredient(dew_source)
+	special_dew.special_potion_id = &"purification_potion"
+	special_dew.spectrum_x = 0.72
+	special_dew.quality = 1.2
+	runtime.cauldron_ingredients.assign([special_dew])
+	var purification_prediction := runtime.calculate_prediction()
+	test.expect_equal(purification_prediction.get("potion_id"), &"purification_potion", "Pure blue dew uses the dedicated purification recipe.")
+	test.expect(bool(purification_prediction.get("special_brew", false)), "Dedicated purification is marked as a special brew.")
+	var contaminant := ProcessedIngredient.from_ingredient(runtime.ingredients[0])
+	runtime.cauldron_ingredients.append(contaminant)
+	test.expect_equal(runtime.calculate_prediction().get("potion_id"), &"black_potion", "Mixing ordinary material into blue dew contaminates the dedicated recipe.")
+	runtime.cauldron_ingredients.assign([special_dew])
+	var brewed_purification := _brew_to_completion(runtime)
+	test.expect_equal(brewed_purification.get("potion_id"), &"purification_potion", "Pure blue dew completes as the dedicated purification potion.")
+	test.expect_equal(result.produced_potions[&"purification_potion"].size(), 1, "Dedicated purification is committed to nightly production.")
 
 	player.apply_night_result(result)
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 1, "PlayerData changes only when NightResult is applied.")

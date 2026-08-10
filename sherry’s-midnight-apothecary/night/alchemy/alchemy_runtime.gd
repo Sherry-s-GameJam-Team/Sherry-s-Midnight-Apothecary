@@ -27,6 +27,7 @@ const BURNT_LIQUID_COLOR := Color(0.0, 0.0, 0.0, 0.90)
 
 @export var ingredients: Array[IngredientData] = []
 @export var potions: Array[PotionData] = []
+@export var special_potions: Array[PotionData] = []
 @export var failed_potion: PotionData
 @export var default_heat_profile: HeatProfileData
 @export_group("Shared Alchemy Background")
@@ -388,6 +389,7 @@ func add_powder_to_cauldron(instance_id: StringName) -> bool:
 	var ingredient := ProcessedIngredient.from_ingredient(source)
 	ingredient.spectrum_x = powder.spectrum_x
 	ingredient.quality = powder.quality
+	ingredient.special_potion_id = powder.special_potion_id
 	ingredient.concentration = 1.0
 	ingredient.extraction_ratio = powder.amount
 	ingredient.applied_tools = [&"powder"]
@@ -419,6 +421,9 @@ func calculate_prediction() -> Dictionary:
 	var all_materials: Array[ProcessedIngredient] = cauldron_ingredients.duplicate()
 	if all_materials.is_empty():
 		return {}
+	var special_prediction := _calculate_special_prediction(all_materials)
+	if not special_prediction.is_empty():
+		return special_prediction
 	var total_weight := 0.0
 	var weighted_x := 0.0
 	var weighted_quality := 0.0
@@ -467,6 +472,73 @@ func calculate_prediction() -> Dictionary:
 		"total_weight": total_weight,
 		"failed": failed,
 	}
+
+
+func _calculate_special_prediction(all_materials: Array[ProcessedIngredient]) -> Dictionary:
+	var special_id := StringName()
+	var total_weight := 0.0
+	var weighted_quality := 0.0
+	var has_special_material := false
+	var contaminated := false
+	for item: ProcessedIngredient in all_materials:
+		if item == null:
+			continue
+		var item_weight := item.weight()
+		if item_weight <= 0.0 or not is_finite(item_weight):
+			continue
+		total_weight += item_weight
+		weighted_quality += item.quality * item_weight
+		if item.special_potion_id == &"":
+			contaminated = true
+		else:
+			has_special_material = true
+			if special_id == &"":
+				special_id = item.special_potion_id
+			elif special_id != item.special_potion_id:
+				contaminated = true
+	if not has_special_material or total_weight < MINIMUM_BREW_WEIGHT:
+		return {}
+	if contaminated:
+		return _failed_special_prediction(total_weight, weighted_quality)
+	var potion := _special_potion_by_id(special_id)
+	if potion == null:
+		return _failed_special_prediction(total_weight, weighted_quality)
+	return {
+		"potion": potion,
+		"potion_id": potion.id,
+		"mixed_x": potion.spectrum_center_x,
+		"main_effect_id": potion.main_effect_id,
+		"secondary_effect_id": StringName(),
+		"quality": clampf(weighted_quality / total_weight, 0.1, 1.5),
+		"purity": 1.0,
+		"total_weight": total_weight,
+		"failed": false,
+		"special_brew": true,
+	}
+
+
+func _failed_special_prediction(total_weight: float, weighted_quality: float) -> Dictionary:
+	if failed_potion == null:
+		return {}
+	return {
+		"potion": failed_potion,
+		"potion_id": failed_potion.id,
+		"mixed_x": 0.5,
+		"main_effect_id": StringName(),
+		"secondary_effect_id": StringName(),
+		"quality": minf(clampf(weighted_quality / maxf(total_weight, MINIMUM_BREW_WEIGHT), 0.1, 1.5), 0.45),
+		"purity": 0.0,
+		"total_weight": total_weight,
+		"failed": true,
+		"special_brew": true,
+	}
+
+
+func _special_potion_by_id(potion_id: StringName) -> PotionData:
+	for potion: PotionData in special_potions:
+		if potion != null and potion.id == potion_id:
+			return potion
+	return null
 
 
 func brew() -> Dictionary:
@@ -594,6 +666,9 @@ func _build_lookup() -> void:
 		for effect_range: Vector2 in potion.effect_ranges:
 			if effect_range.x < 0.0 or effect_range.y > 1.0 or effect_range.x > effect_range.y:
 				push_warning("Invalid effect range in %s." % potion.id)
+	for potion: PotionData in special_potions:
+		if potion == null or potion.id == &"":
+			push_warning("AlchemyRuntime contains an invalid special PotionData reference.")
 
 
 func _nearest_potion(spectrum_x: float) -> PotionData:

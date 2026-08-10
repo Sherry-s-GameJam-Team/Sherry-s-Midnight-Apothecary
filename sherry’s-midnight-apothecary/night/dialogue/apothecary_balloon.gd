@@ -3,6 +3,10 @@ extends CanvasLayer
 
 signal load_requested
 signal settings_requested
+signal dialogue_event(event_name: StringName, payload: Variant)
+signal hint_requested(text: String, hint_id: String, auto_hide_seconds: float)
+signal persistent_hint_requested(text: String, hint_id: String)
+signal hint_hide_requested(hint_id: String)
 
 @export var dialogue_resource: DialogueResource
 @export var start_from_title: String = "start"
@@ -102,7 +106,11 @@ func start(
 	title: String = "",
 	extra_game_states: Array = []
 ) -> void:
-	temporary_game_states = [self] + extra_game_states
+	temporary_game_states = [self]
+	var player_state := _find_player_data()
+	if player_state != null and not extra_game_states.has(player_state):
+		temporary_game_states.append(player_state)
+	temporary_game_states.append_array(extra_game_states)
 	is_waiting_for_input = false
 	_history.clear()
 	history_panel.hide()
@@ -112,6 +120,66 @@ func start(
 		start_from_title = title
 	dialogue_line = await dialogue_resource.get_next_dialogue_line(start_from_title, temporary_game_states)
 	show()
+
+
+func _find_player_data() -> PlayerData:
+	var current_scene := get_tree().current_scene
+	if current_scene != null and current_scene.has_method("get_player_data"):
+		return current_scene.call("get_player_data") as PlayerData
+	return null
+
+
+## Dialogue command: do emit_dialogue_event("event_name", optional_payload)
+## Gameplay code can subscribe to dialogue_event on this balloon.
+func emit_dialogue_event(event_name: String, payload: Variant = null) -> void:
+	if event_name.is_empty():
+		push_warning("Dialogue event names cannot be empty.")
+		return
+	dialogue_event.emit(StringName(event_name), payload)
+
+
+## Dialogue command: do show_hint("text", "optional_id", optional_seconds)
+## Pushes an auto-hiding message to the project's existing TopHintUI.
+func show_hint(text: String, hint_id: String = "", auto_hide_seconds: float = -1.0) -> void:
+	if text.is_empty():
+		return
+	var resolved_id := hint_id if not hint_id.is_empty() else text
+	hint_requested.emit(text, resolved_id, auto_hide_seconds)
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.push_text(text, resolved_id, auto_hide_seconds)
+
+
+## Dialogue command: do show_persistent_hint("text", "id")
+## The hint remains visible until hide_hint is called with the same ID.
+func show_persistent_hint(text: String, hint_id: String) -> void:
+	if text.is_empty() or hint_id.is_empty():
+		push_warning("Persistent dialogue hints require non-empty text and an ID.")
+		return
+	persistent_hint_requested.emit(text, hint_id)
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.show_interaction_hint(hint_id, text)
+
+
+## Dialogue command: do hide_hint("id")
+func hide_hint(hint_id: String) -> void:
+	if hint_id.is_empty():
+		return
+	hint_hide_requested.emit(hint_id)
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.hide_interaction_hint(hint_id)
+
+
+func _find_top_hint() -> TopHintUI:
+	var current: Node = self
+	while current != null:
+		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
+		if top_hint != null:
+			return top_hint
+		current = current.get_parent()
+	return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 
 
 func apply_dialogue_line() -> void:
@@ -143,9 +211,14 @@ func apply_dialogue_line() -> void:
 	if not is_instance_valid(dialogue_line) or dialogue_line.id != current_line_id:
 		return
 
-	if dialogue_line.responses.size() > 0:
+	var has_selectable_responses := not responses_menu.get_menu_items().is_empty()
+	if has_selectable_responses:
 		balloon.focus_mode = Control.FOCUS_NONE
 		responses_menu.show()
+	elif dialogue_line.responses.size() > 0:
+		# Every conditional response failed. Continue instead of showing an
+		# empty, unfocusable response menu.
+		next(dialogue_line.next_id)
 	elif dialogue_line.time != "":
 		var wait_time := dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		await get_tree().create_timer(wait_time).timeout
