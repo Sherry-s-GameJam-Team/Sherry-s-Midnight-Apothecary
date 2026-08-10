@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="15_environment"]
 [ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="16_title_card"]
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
+[ext_resource type="PackedScene" uid="uid://dlw7v1x4uu0x6" path="res://day/interactables/herb/herb.tscn" id="18_6yq41"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_collision.tscn" id="20_sherry_collision"]
@@ -185,3 +186,6 @@ autoplay = &"cloud_drift"
 layer = 200
 
 [node name="DeveloperConsole" parent="DebugUI" unique_id=2024486634 instance=ExtResource("17_console")]
+
+[node name="Herb" parent="." unique_id=316247259 instance=ExtResource("18_6yq41")]
+position = Vector2(1359, 698)
