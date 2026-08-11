@@ -1,10 +1,4 @@
-[gd_scene load_steps=4 format=3]
-
-[sub_resource type="RectangleShape2D" id="WallShape"]
-size = Vector2(70, 320)
-
-[sub_resource type="RectangleShape2D" id="BridgeShape"]
-size = Vector2(700, 40)
+[gd_scene load_steps=2 format=3]
 
 [sub_resource type="RectangleShape2D" id="StepShape"]
 size = Vector2(150, 30)
@@ -18,33 +12,11 @@ polygon = PackedVector2Array(0, 0, 3400, 0, 3400, 720, 0, 720)
 color = Color(0.16, 0.075, 0.22, 0.2)
 z_index = -5
 
-[node name="CorruptionWallVisual" type="Polygon2D" parent="Visual"]
-polygon = PackedVector2Array(745, 300, 815, 300, 815, 620, 745, 620)
-color = Color(0.61, 0.2, 0.72, 1)
-
-[node name="StabilizedBridgeVisual" type="Polygon2D" parent="Visual"]
-visible = false
-polygon = PackedVector2Array(800, 620, 1500, 620, 1500, 660, 800, 660)
-color = Color(0.68, 0.35, 0.78, 1)
-
 [node name="StepVisual" type="Polygon2D" parent="Visual"]
 polygon = PackedVector2Array(1975, 525, 2125, 525, 2125, 555, 1975, 555)
 color = Color(0.53, 0.2, 0.64, 1)
 
 [node name="Collision" type="Node2D" parent="."]
-
-[node name="CorruptionWall" type="StaticBody2D" parent="Collision"]
-position = Vector2(780, 460)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/CorruptionWall"]
-shape = SubResource("WallShape")
-
-[node name="StabilizedBridge" type="StaticBody2D" parent="Collision"]
-position = Vector2(1150, 640)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/StabilizedBridge"]
-disabled = true
-shape = SubResource("BridgeShape")
 
 [node name="CorruptedStep" type="StaticBody2D" parent="Collision"]
 position = Vector2(2050, 540)
@@ -53,4 +25,3 @@ position = Vector2(2050, 540)
 shape = SubResource("StepShape")
 
 [node name="WorldObjects" type="Node2D" parent="."]
-
