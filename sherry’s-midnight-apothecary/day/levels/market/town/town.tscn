@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://b54mr2bxi3gaf" path="res://day/art/town/FS/BG.png" id="1_fs_bg"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b57ln8afc42ex" path="res://day/art/town/FS/cloud.png" id="2_fs_cloud"]
-[ext_resource type="Texture2D" uid="uid://m3b6x28606g4" path="res://day/art/town/FS/town.png" id="3_fs_town"]
 [ext_resource type="Texture2D" uid="uid://vfa3lgk6bw2b" path="res://day/art/town/MS/part2.png" id="5_56gmp"]
 [ext_resource type="Texture2D" uid="uid://uhtmpmxhrukj" path="res://day/art/town/CS/center.png" id="5_cs"]
+[ext_resource type="Texture2D" uid="uid://d3oce0aoocqgc" path="res://day/levels/market/town/FS.png" id="6_s1bmf"]
 [ext_resource type="Texture2D" uid="uid://suwl7i2ival4" path="res://day/levels/market/town/floor.png" id="8_rso1f"]
 [ext_resource type="Texture2D" uid="uid://6kytrvb1hse3" path="res://day/levels/market/town/home.png" id="9_mhwfj"]
 [ext_resource type="Texture2D" uid="uid://c457rfqxaupro" path="res://day/levels/market/town/complex1.png" id="9_rso1f"]
@@ -99,13 +99,10 @@ centered = false
 z_index = -19
 scroll_scale = Vector2(0.5, 0.5)
 
-[node name="Artwork" type="Sprite2D" parent="DistantTown" unique_id=484273327]
-texture = ExtResource("3_fs_town")
-centered = false
-
-[node name="Artwork" type="Sprite2D" parent="DistantTown/Artwork" unique_id=765967371]
-position = Vector2(2172, 1)
-texture = ExtResource("3_fs_town")
+[node name="Artwork2" type="Sprite2D" parent="DistantTown" unique_id=765967371]
+position = Vector2(786.00024, 203)
+scale = Vector2(0.5216895, 0.5216895)
+texture = ExtResource("6_s1bmf")
 centered = false
 
 [node name="MS" type="Parallax2D" parent="." unique_id=980200588]

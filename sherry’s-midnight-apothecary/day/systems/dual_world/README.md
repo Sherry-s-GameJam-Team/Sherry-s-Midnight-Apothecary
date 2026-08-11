@@ -74,3 +74,21 @@ Automated checks:
 godot --headless --path . res://tests/dual_world_runtime_test.tscn
 godot --headless --path . --script res://tests/run_tests.gd
 ```
+
+## Giant Tree Tower test
+
+`res://day/levels/_tests/dual_world_tree_tower/tree_tower_demo.tscn` adapts the second standalone whitebox into the same reusable system. The trunk shell and remote platforms are shared. Sherry's Luca-room gate, growth roots, frozen sap, and rotten bark are CORRUPTED objects; Luca's unobstructed lower control room is ORIGINAL.
+
+Run it with:
+
+```powershell
+godot --path . res://day/levels/_tests/dual_world_tree_tower/tree_tower_demo.tscn
+```
+
+Use Q to switch, E beside Luca's A/B/C consoles, F beside Sherry's GROWTH/FREEZE/BLAST receptors, and R to reset. The intended order is A → GROWTH → B → FREEZE → C → BLAST → tree crown. Editor alignment previews live beside the tower scene.
+
+Automated tower check:
+
+```powershell
+godot --headless --path . res://tests/dual_world_tree_tower_runtime_test.tscn
+```
