@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://day/levels/_tests/dual_world/corrupted_world.tscn" id="1_current"]
+[ext_resource type="PackedScene" path="res://day/levels/_tests/dual_world/original_world.tscn" id="2_reference"]
+[ext_resource type="Script" path="res://day/systems/dual_world/dual_world_ghost_reference.gd" id="3_ghost"]
+
+[node name="CorruptedAlignmentPreview" type="Node2D"]
+
+[node name="CorruptedWorld" parent="." instance=ExtResource("1_current")]
+
+[node name="OriginalGhost" type="Node2D" parent="."]
+script = ExtResource("3_ghost")
+reference_scene = ExtResource("2_reference")
+preview_alpha = 0.25
+

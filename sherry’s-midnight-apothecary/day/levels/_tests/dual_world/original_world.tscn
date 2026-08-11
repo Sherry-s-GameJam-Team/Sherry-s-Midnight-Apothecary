@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="RectangleShape2D" id="BridgeShape"]
+size = Vector2(700, 40)
+
+[node name="OriginalWorld" type="Node2D"]
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Atmosphere" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(0, 0, 3400, 0, 3400, 720, 0, 720)
+color = Color(0.1, 0.32, 0.43, 0.18)
+z_index = -5
+
+[node name="OriginalBridgeVisual" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(800, 620, 1500, 620, 1500, 660, 800, 660)
+color = Color(0.24, 0.66, 0.78, 1)
+
+[node name="Collision" type="Node2D" parent="."]
+
+[node name="OriginalBridge" type="StaticBody2D" parent="Collision"]
+position = Vector2(1150, 640)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/OriginalBridge"]
+shape = SubResource("BridgeShape")
+
+[node name="WorldObjects" type="Node2D" parent="."]
+

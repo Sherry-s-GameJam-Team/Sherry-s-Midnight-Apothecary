@@ -24,6 +24,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/pause_inventory_page_test.gd"),
 	preload("res://tests/top_hint_ui_test.gd"),
 	preload("res://tests/dialogue_integration_test.gd"),
+	preload("res://tests/dual_world_structure_test.gd"),
 ]
 
 

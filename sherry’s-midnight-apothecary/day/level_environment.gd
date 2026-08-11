@@ -39,9 +39,12 @@ func replay_scene_title() -> void:
 	var title_card := get_node_or_null("SceneTitleCard")
 	if title_card == null:
 		return
+	var location_name: String = debug_location_name
+	if location_name.is_empty():
+		location_name = str(name)
 	title_card.show_title(
 		1,
-		debug_location_name if not debug_location_name.is_empty() else name,
+		location_name,
 		debug_disaster_name,
 		debug_scene_description
 	)
