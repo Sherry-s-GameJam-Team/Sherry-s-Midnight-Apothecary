@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[node name="OriginalWorld" type="Node2D"]
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="OriginalTint" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 4100, 0, 4100)
+color = Color(0.08, 0.31, 0.42, 0.18)
+z_index = -4
+
+[node name="ControlRoomGlow" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(115, 3385, 487, 3385, 487, 3715, 115, 3715)
+color = Color(0.18, 0.35, 0.48, 0.42)
+z_index = -1
+
+[node name="Collision" type="Node2D" parent="."]
+
+[node name="WorldObjects" type="Node2D" parent="."]
+

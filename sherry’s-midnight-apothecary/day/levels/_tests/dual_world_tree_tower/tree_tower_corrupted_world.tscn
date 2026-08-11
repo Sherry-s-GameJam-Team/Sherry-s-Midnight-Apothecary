@@ -1,0 +1,122 @@
+[gd_scene load_steps=6 format=3]
+
+[sub_resource type="RectangleShape2D" id="GateShape"]
+size = Vector2(34, 330)
+
+[sub_resource type="RectangleShape2D" id="RootShape"]
+size = Vector2(220, 44)
+
+[sub_resource type="RectangleShape2D" id="SapShape"]
+size = Vector2(190, 40)
+
+[sub_resource type="RectangleShape2D" id="SapShapeSmall"]
+size = Vector2(180, 40)
+
+[sub_resource type="RectangleShape2D" id="BarrierShape"]
+size = Vector2(82, 260)
+
+[node name="CorruptedWorld" type="Node2D"]
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="CorruptedTint" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 4100, 0, 4100)
+color = Color(0.31, 0.12, 0.34, 0.18)
+z_index = -4
+
+[node name="LucaGateVisual" type="Polygon2D" parent="Visual"]
+polygon = PackedVector2Array(453, 3385, 487, 3385, 487, 3715, 453, 3715)
+color = Color(0.48, 0.22, 0.62, 0.82)
+
+[node name="Collision" type="Node2D" parent="."]
+
+[node name="LucaGate" type="StaticBody2D" parent="Collision"]
+position = Vector2(470, 3550)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/LucaGate"]
+shape = SubResource("GateShape")
+
+[node name="WorldObjects" type="Node2D" parent="."]
+
+[node name="RootStep1" type="Node2D" parent="WorldObjects"]
+visible = false
+position = Vector2(760, 3082)
+
+[node name="Visual" type="Polygon2D" parent="WorldObjects/RootStep1"]
+polygon = PackedVector2Array(-110, -22, 110, -22, 110, 22, -110, 22)
+color = Color(0.42, 0.64, 0.43, 1)
+
+[node name="Body" type="StaticBody2D" parent="WorldObjects/RootStep1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldObjects/RootStep1/Body"]
+disabled = true
+shape = SubResource("RootShape")
+
+[node name="RootStep2" type="Node2D" parent="WorldObjects"]
+visible = false
+position = Vector2(565, 2932)
+
+[node name="Visual" type="Polygon2D" parent="WorldObjects/RootStep2"]
+polygon = PackedVector2Array(-110, -22, 110, -22, 110, 22, -110, 22)
+color = Color(0.42, 0.64, 0.43, 1)
+
+[node name="Body" type="StaticBody2D" parent="WorldObjects/RootStep2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldObjects/RootStep2/Body"]
+disabled = true
+shape = SubResource("RootShape")
+
+[node name="SapStep1" type="Node2D" parent="WorldObjects"]
+visible = false
+position = Vector2(750, 2182)
+
+[node name="Visual" type="Polygon2D" parent="WorldObjects/SapStep1"]
+polygon = PackedVector2Array(-95, -20, 95, -20, 95, 20, -95, 20)
+color = Color(0.58, 0.76, 0.82, 1)
+
+[node name="Body" type="StaticBody2D" parent="WorldObjects/SapStep1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldObjects/SapStep1/Body"]
+disabled = true
+shape = SubResource("SapShape")
+
+[node name="SapStep2" type="Node2D" parent="WorldObjects"]
+visible = false
+position = Vector2(560, 2032)
+
+[node name="Visual" type="Polygon2D" parent="WorldObjects/SapStep2"]
+polygon = PackedVector2Array(-90, -20, 90, -20, 90, 20, -90, 20)
+color = Color(0.58, 0.76, 0.82, 1)
+
+[node name="Body" type="StaticBody2D" parent="WorldObjects/SapStep2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldObjects/SapStep2/Body"]
+disabled = true
+shape = SubResource("SapShapeSmall")
+
+[node name="SapStep3" type="Node2D" parent="WorldObjects"]
+visible = false
+position = Vector2(365, 1882)
+
+[node name="Visual" type="Polygon2D" parent="WorldObjects/SapStep3"]
+polygon = PackedVector2Array(-90, -20, 90, -20, 90, 20, -90, 20)
+color = Color(0.58, 0.76, 0.82, 1)
+
+[node name="Body" type="StaticBody2D" parent="WorldObjects/SapStep3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldObjects/SapStep3/Body"]
+disabled = true
+shape = SubResource("SapShapeSmall")
+
+[node name="RottenBarrier" type="Node2D" parent="WorldObjects"]
+position = Vector2(745, 1260)
+
+[node name="Visual" type="Polygon2D" parent="WorldObjects/RottenBarrier"]
+polygon = PackedVector2Array(-41, -130, 41, -130, 41, 130, -41, 130)
+color = Color(0.57, 0.34, 0.2, 1)
+
+[node name="Body" type="StaticBody2D" parent="WorldObjects/RottenBarrier"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldObjects/RottenBarrier/Body"]
+shape = SubResource("BarrierShape")
+

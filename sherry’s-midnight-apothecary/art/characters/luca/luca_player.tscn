@@ -12,8 +12,8 @@ floor_snap_length = 8.0
 script = ExtResource("1_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=997955077]
-position = Vector2(0, -84)
-scale = Vector2(0.22, 0.22)
+position = Vector2(17.000004, -45.000004)
+scale = Vector2(0.14379092, 0.124742016)
 sprite_frames = ExtResource("2_frames")
 animation = &"idle"
 autoplay = "idle"
