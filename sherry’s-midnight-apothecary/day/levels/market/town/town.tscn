@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="20_sherry_collision"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="21_door_portal"]
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="22_door_outline"]
+[ext_resource type="AudioStream" uid="uid://cyd2djlvtrk7a" path="res://audio/bgm/doraintown.wav" id="23_town_bgm"]
+[ext_resource type="Script" path="res://audio/looping_bgm_player.gd" id="24_looping_bgm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_door_outline"]
 shader = ExtResource("22_door_outline")
@@ -66,6 +68,11 @@ texture_filter = 1
 script = ExtResource("15_environment")
 debug_scene_id = "market"
 debug_location_name = "Town"
+
+[node name="TownBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_town_bgm")
+script = ExtResource("24_looping_bgm")
+loop_end_sample = 2382144
 
 [node name="FS" type="Parallax2D" parent="." unique_id=1600265163]
 z_index = -20

@@ -6,12 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://c6qswaskcu1uw" path="res://day/art/raintree/FS/BG_f.png" id="4_far_background"]
 [ext_resource type="Texture2D" uid="uid://7q1bawv3kfrc" path="res://day/art/raintree/FS/BGm_f.png" id="5_mid_background"]
 [ext_resource type="Texture2D" uid="uid://e4r7ur3tgnf0" path="res://day/art/raintree/CS/ground.png" id="6_ground"]
-[ext_resource type="Shader" uid="uid://b4kwt7ueiol0s" path="res://art/characters/sherry/sherry_inset_outline.gdshader" id="8_outline"]
-[ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://art/characters/sherry/frames/12_land_to_idle/01.png" id="8_ut57c"]
-[ext_resource type="AnimationLibrary" uid="uid://c8p0f21s0sefx" path="res://art/characters/sherry/sherry_animations.tres" id="9_animations"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="10_camera_bounds"]
-[ext_resource type="PackedScene" path="res://day/ui/scene_title_card.tscn" id="11_title_card"]
-[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="12_console"]
+[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="11_title_card"]
+[ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="12_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="13_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="14_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="15_sherry_collision"]
@@ -21,14 +18,6 @@ distance = -645.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1448)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sherry"]
-size = Vector2(56, 76)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sherry_outline"]
-shader = ExtResource("8_outline")
-shader_parameter/outline_color = Color(0.12, 0.055, 0.19, 0.92)
-shader_parameter/outline_width = 1.0
 
 [node name="RainTree" type="Node2D" unique_id=197978847]
 texture_filter = 1
@@ -49,7 +38,7 @@ centered = false
 
 [node name="MidForest" type="Sprite2D" parent="." unique_id=1455308270]
 z_index = -10
-position = Vector2(3717, -229)
+position = Vector2(3660.9998, -204)
 scale = Vector2(1.2477249, 1.3162982)
 texture = ExtResource("5_mid_background")
 centered = false
@@ -96,13 +85,12 @@ shape = SubResource("RectangleShape2D_side_barrier")
 z_index = 10
 position = Vector2(1082, 565)
 script = ExtResource("1_player")
-character_scale = 0.4
 
-[node name="SherryCollision" parent="Player" instance=ExtResource("15_sherry_collision")]
+[node name="SherryCollision" parent="Player" unique_id=438592019 instance=ExtResource("15_sherry_collision")]
 
-[node name="SherryPresentation" parent="Player" instance=ExtResource("14_sherry_presentation")]
+[node name="SherryPresentation" parent="Player" unique_id=591322063 instance=ExtResource("14_sherry_presentation")]
 
-[node name="PotionThrower" parent="Player" instance=ExtResource("13_potions")]
+[node name="PotionThrower" parent="Player" unique_id=1907873229 instance=ExtResource("13_potions")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1688110080]
 position = Vector2(0, -86)
@@ -110,14 +98,13 @@ limit_left = 96
 limit_top = 0
 limit_right = 2076
 limit_bottom = 724
-position_smoothing_enabled = false
 script = ExtResource("10_camera_bounds")
 left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
-[node name="SceneTitleCard" parent="." instance=ExtResource("11_title_card")]
+[node name="SceneTitleCard" parent="." unique_id=901552691 instance=ExtResource("11_title_card")]
 
-[node name="DebugUI" type="CanvasLayer" parent="."]
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=1643904740]
 layer = 200
 
-[node name="DeveloperConsole" parent="DebugUI" instance=ExtResource("12_console")]
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1570069955 instance=ExtResource("12_console")]
