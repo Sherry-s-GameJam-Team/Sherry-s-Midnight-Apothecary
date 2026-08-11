@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://d7e8f9g0h1i2j"]
+
+[ext_resource type="Script" uid="uid://39cmge4kb1q8d" path="res://day/interactables/control_system/scripts/controlled_door.gd" id="1_door"]
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(80, 160)
+
+[node name="ControlledDoor" type="Node2D"]
+script = ExtResource("1_door")
+active_color = Color(0.2, 0.76, 0.42, 1)
+inactive_color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="Visual" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-40, -80, 40, -80, 40, 80, -40, 80)
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("DoorShape")
