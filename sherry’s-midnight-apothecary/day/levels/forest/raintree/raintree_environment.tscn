@@ -21,6 +21,7 @@ debug_scene_id = "forest"
 debug_location_name = "Rain Tree"
 
 [node name="FS" type="Parallax2D" parent="." unique_id=1753342698]
+visible = false
 z_index = -20
 scroll_scale = Vector2(0.12, 0.12)
 

@@ -20,7 +20,9 @@
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_outdoor_collision.tscn" id="20_sherry_collision"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/levels/door_portal.gd" id="21_door_portal"]
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://day/levels/interaction_outline.gdshader" id="22_door_outline"]
+[ext_resource type="Texture2D" uid="uid://b7ylmgif1v6wx" path="res://day/levels/market/town/资源/fountain/fountain.png" id="23_qsket"]
 [ext_resource type="AudioStream" uid="uid://cyd2djlvtrk7a" path="res://audio/bgm/doraintown.wav" id="23_town_bgm"]
+[ext_resource type="PackedScene" path="res://day/levels/market/town/资源/fountain/fountain_sprite.tscn" id="24_cq1f3"]
 [ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="24_looping_bgm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_door_outline"]
@@ -80,7 +82,8 @@ z_index = -20
 scroll_scale = Vector2(0.12, 0.12)
 
 [node name="Background" type="Sprite2D" parent="FS" unique_id=552597500]
-scale = Vector2(2.8568141, 1)
+position = Vector2(-211.99998, 0)
+scale = Vector2(2.95442, 1)
 texture = ExtResource("1_fs_bg")
 centered = false
 
@@ -158,6 +161,15 @@ texture = ExtResource("13_rso1f")
 position = Vector2(5259, 338)
 scale = Vector2(0.52429, 0.52428997)
 texture = ExtResource("14_mhwfj")
+
+[node name="Fountain" type="Sprite2D" parent="CS" unique_id=1352107887]
+position = Vector2(5237, 531)
+scale = Vector2(0.16400146, 0.16400146)
+texture = ExtResource("23_qsket")
+
+[node name="FountainSprite" parent="CS/Fountain" unique_id=1088006122 instance=ExtResource("24_cq1f3")]
+position = Vector2(2.4916368, -23.535152)
+scale = Vector2(1.0736486, 1.0065424)
 
 [node name="Door" type="Area2D" parent="." unique_id=1830731207]
 position = Vector2(635, 585)
