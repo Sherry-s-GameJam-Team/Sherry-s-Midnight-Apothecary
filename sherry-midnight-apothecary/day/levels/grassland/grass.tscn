@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="4_player"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/systems/camera_bounds.gd" id="5_camera_bounds"]
 [ext_resource type="Script" uid="uid://887nbn7ofcth" path="res://day/levels/grassland/grass_environment.gd" id="6_environment"]
-[ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/developer_console/developer_console.tscn" id="8_console"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="9_potions"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="10_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="11_sherry_collision"]

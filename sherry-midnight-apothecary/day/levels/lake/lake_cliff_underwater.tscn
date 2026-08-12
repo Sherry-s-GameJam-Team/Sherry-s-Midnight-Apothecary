@@ -18,7 +18,9 @@
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="15_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="16_presentation"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="17_potions"]
-[ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="Texture2D" uid="uid://5n54lif7dcse" path="res://day/levels/lakebed/effect/surface.png" id="19_water_surface"]
+[ext_resource type="Texture2D" uid="uid://d34qtr786fv3b" path="res://day/levels/lakebed/effect/bottom.png" id="20_water_bottom"]
 
 [sub_resource type="RectangleShape2D" id="TopFloorShape"]
 size = Vector2(936, 200)

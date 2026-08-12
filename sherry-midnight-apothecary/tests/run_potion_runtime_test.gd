@@ -85,7 +85,7 @@ func _run() -> void:
 			await process_frame
 		_expect(bool(cast_observation["received_splash"]), "Broken potion projectile creates splash feedback.")
 	var standalone_level := DayLevelEnvironment.new()
-	var standalone_console: DeveloperConsole = preload("res://night/developer_console/developer_console.tscn").instantiate()
+	var standalone_console: DeveloperConsole = preload("res://night/ui/developer_console/developer_console.tscn").instantiate()
 	root.add_child(standalone_level)
 	standalone_level.add_child(standalone_console)
 	standalone_console.setup_day_scene(standalone_level)

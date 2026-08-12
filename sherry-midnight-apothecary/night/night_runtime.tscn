@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://night/night_runtime.gd" id="1_night"]
 [ext_resource type="PackedScene" path="res://night/alchemy/alchemy_runtime.tscn" id="2_alchemy"]
-[ext_resource type="PackedScene" path="res://night/developer_console/developer_console.tscn" id="3_console"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="3_console"]
 [ext_resource type="PackedScene" path="res://night/levels/home/home.tscn" id="4_home"]
 [ext_resource type="PackedScene" path="res://night/shop/business_placeholder.tscn" id="5_business"]
 [ext_resource type="AudioStream" path="res://audio/bgm/Interior_night.wav" id="6_night_bgm"]

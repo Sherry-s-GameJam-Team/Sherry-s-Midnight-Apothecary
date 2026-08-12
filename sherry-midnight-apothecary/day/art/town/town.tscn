@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://uhm12fd6ldcb" path="res://day/art/town/home/door.png" id="8_56gmp"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/systems/camera_bounds.gd" id="14_camera_bounds"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="15_environment"]
-[ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/developer_console/developer_console.tscn" id="17_console"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="20_sherry_collision"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://splv0nu3urtf" path="res://day/day_runtime.gd" id="1_day"]
 [ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="2_title_card"]
-[ext_resource type="PackedScene" path="res://night/developer_console/developer_console.tscn" id="3_console"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="3_console"]
 
 [node name="DayRuntime" type="Node" unique_id=935191861]
 script = ExtResource("1_day")

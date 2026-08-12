@@ -9,7 +9,7 @@ static func run(test: TestSupport) -> void:
 	)
 	for scene_path: String in [
 		"res://app/app_root.tscn",
-		"res://night/developer_console/developer_console.tscn",
+		"res://night/ui/developer_console/developer_console.tscn",
 		"res://day/day_runtime.tscn",
 		"res://day/ui/scene_title_card.tscn",
 		"res://menu/menu.tscn",

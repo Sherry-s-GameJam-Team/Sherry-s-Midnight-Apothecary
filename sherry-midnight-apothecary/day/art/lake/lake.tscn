@@ -14,7 +14,7 @@
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="14_tile_ghost"]
 [ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="15_tile_dual"]
 [ext_resource type="Script" uid="uid://d4mqw3dv3l4ye" path="res://day/art/lake/lake_tile_edit_algorithm.gd" id="16_tile_algorithm"]
-[ext_resource type="PackedScene" path="res://night/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="19_potions"]
 [ext_resource type="PackedScene" path="res://day/art/lake/idle_sprite/lake_idle_sprite.tscn" id="20_idle_sprite"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="21_sherry_presentation"]

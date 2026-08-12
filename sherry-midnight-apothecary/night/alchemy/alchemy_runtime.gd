@@ -140,7 +140,7 @@ func _sync_alchemy_background() -> void:
 func _ensure_standalone_console() -> void:
 	if not enable_standalone_console or is_instance_valid(standalone_developer_console) or _night_runtime_ancestor() != null:
 		return
-	var console_scene := load("res://night/developer_console/developer_console.tscn") as PackedScene
+	var console_scene := load("res://night/ui/developer_console/developer_console.tscn") as PackedScene
 	if console_scene == null:
 		push_error("Unable to load the standalone developer console.")
 		return

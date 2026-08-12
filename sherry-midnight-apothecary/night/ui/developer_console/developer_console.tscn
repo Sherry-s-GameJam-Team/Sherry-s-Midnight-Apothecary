@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bp7wfkblgad38"]
+[gd_scene format=3]
 
 [ext_resource type="Script" uid="uid://c7jwnjedtvius" path="res://night/developer_console/developer_console.gd" id="1_console"]
 
@@ -37,7 +37,7 @@ text = "控制台"
 [node name="Hint" type="Label" parent="ConsoleLayout/Header" unique_id=907555736]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.64, 0.66, 1)
-text = "~ / F1 开关    打开后独占键盘 / Esc 关闭并返回操控"
+text = "~ / F1 开关   打开后独占键盘 / Esc 关闭并返回操控"
 
 [node name="Output" type="RichTextLabel" parent="ConsoleLayout" unique_id=223527500]
 unique_name_in_owner = true
