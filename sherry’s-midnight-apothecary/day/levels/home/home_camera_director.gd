@@ -4,6 +4,9 @@ extends Node
 ## Bedroom access is deliberately interaction-driven. The Area2D supplies the
 ## prompt, while the StaticBody2D physically closes the passage until E is used.
 
+signal main_room_crossed
+signal cinematic_focus_reached
+
 @export_node_path("CharacterBody2D") var player_path: NodePath
 @export_node_path("Camera2D") var camera_path: NodePath
 @export_node_path("CollisionShape2D") var left_barrier_path: NodePath
@@ -36,6 +39,10 @@ var _camera_bottom := 0.0
 var _main_room_left := 0.0
 var _main_room_right := 0.0
 var _bedroom_left := 0.0
+var _main_room_crossing_emitted := false
+var _cinematic_camera_active := false
+var _cinematic_target := Vector2.ZERO
+var _cinematic_arrival_emitted := false
 
 
 func _ready() -> void:
@@ -92,6 +99,7 @@ func on_level_entered(entry_id: StringName) -> void:
 		_blocker_collision.set_deferred("disabled", true)
 		_set_barrier_dissolve(1.0)
 		_barrier_visual.visible = false
+		_main_room_crossing_emitted = false
 	else:
 		_bedroom_active = false
 		_crossed_into_bedroom = false
@@ -109,8 +117,45 @@ func is_camera_in_bedroom() -> bool:
 	return _camera_in_bedroom
 
 
+func focus_cinematic_camera(target_global_position: Vector2) -> void:
+	if _camera == null:
+		return
+	_cinematic_camera_active = true
+	_cinematic_target = target_global_position
+	_cinematic_arrival_emitted = false
+	_camera.limit_left = -10000000
+	_camera.limit_right = 10000000
+
+
+func release_cinematic_camera() -> void:
+	if _camera == null:
+		return
+	_cinematic_camera_active = false
+	_cinematic_arrival_emitted = false
+	_camera_transitioning = false
+	_set_native_horizontal_limits(_camera_in_bedroom)
+	_camera.global_position = _camera_target_position()
+	_camera.force_update_scroll()
+
+
+func is_cinematic_camera_active() -> bool:
+	return _cinematic_camera_active
+
+
+func is_cinematic_focus_reached() -> bool:
+	return _cinematic_camera_active and _cinematic_arrival_emitted
+
+
+func hide_entrance_hint() -> void:
+	_player_near_entrance = false
+	_hide_interaction_hint()
+
+
 func _process(delta: float) -> void:
 	if _player == null or _camera == null:
+		return
+	if _cinematic_camera_active:
+		_update_cinematic_camera(delta)
 		return
 	if _bedroom_active and not _crossed_into_bedroom and _player.global_position.x < 0.0:
 		_crossed_into_bedroom = true
@@ -142,6 +187,7 @@ func _enter_bedroom() -> void:
 	_entrance_collision.set_deferred("disabled", true)
 	_blocker_collision.set_deferred("disabled", true)
 	_animate_barrier(1.0)
+	_main_room_crossing_emitted = false
 
 
 func _return_to_main_room() -> void:
@@ -154,6 +200,9 @@ func _return_to_main_room() -> void:
 	if _camera_in_bedroom:
 		_begin_camera_transition(false)
 	_animate_barrier(0.0)
+	if not _main_room_crossing_emitted:
+		_main_room_crossing_emitted = true
+		main_room_crossed.emit()
 
 
 func _on_entrance_body_entered(body: Node2D) -> void:
@@ -184,6 +233,15 @@ func _update_camera(delta: float) -> void:
 		_camera.global_position = target
 		_camera_transitioning = false
 		_set_native_horizontal_limits(_camera_in_bedroom)
+	_camera.force_update_scroll()
+
+
+func _update_cinematic_camera(delta: float) -> void:
+	_camera.global_position = _camera.global_position.move_toward(_cinematic_target, pan_speed * delta)
+	if not _cinematic_arrival_emitted and _camera.global_position.distance_to(_cinematic_target) <= 0.5:
+		_camera.global_position = _cinematic_target
+		_cinematic_arrival_emitted = true
+		cinematic_focus_reached.emit()
 	_camera.force_update_scroll()
 
 

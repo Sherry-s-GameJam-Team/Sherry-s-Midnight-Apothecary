@@ -15,9 +15,11 @@
 [ext_resource type="Script" uid="uid://b7ptghim42468" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_tutorial.gd" id="13_hound_tutorial"]
 [ext_resource type="PackedScene" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="14_task_complete"]
 [ext_resource type="Texture2D" uid="uid://c0usw24l5ompe" path="res://day/levels/grassland/art/grass_to_rainforest.png" id="15_cjcfm"]
+[ext_resource type="AudioStream" uid="uid://csiwbvo3mmyan" path="res://audio/bgm/VerdantPath_autoloop.wav" id="16_grass_bgm"]
+[ext_resource type="Script" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
-distance = -585.0
+distance = -667.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1448)
@@ -27,6 +29,10 @@ texture_filter = 1
 script = ExtResource("6_environment")
 debug_scene_id = "grassland"
 debug_location_name = "Grassland"
+
+[node name="GrasslandBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_grass_bgm")
+script = ExtResource("17_looping_bgm")
 
 [node name="Skybox" type="Parallax2D" parent="." unique_id=1367240776]
 z_index = -40
@@ -139,28 +145,24 @@ script = ExtResource("13_hound_tutorial")
 z_index = 20
 
 [node name="GrassLoop2" type="Sprite2D" parent="Foreground" unique_id=245951206]
-visible = false
 position = Vector2(-141, 566)
 scale = Vector2(0.41210675, 0.21593575)
 texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop" type="Sprite2D" parent="Foreground" unique_id=1298010657]
-visible = false
 position = Vector2(724.00006, 577)
 scale = Vector2(0.49907744, 0.20056096)
 texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop3" type="Sprite2D" parent="Foreground" unique_id=1208266337]
-visible = false
 position = Vector2(1788, 566)
 scale = Vector2(0.41210675, 0.21593575)
 texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop4" type="Sprite2D" parent="Foreground" unique_id=674109980]
-visible = false
 position = Vector2(2652.9998, 577)
 scale = Vector2(0.49907744, 0.20056096)
 texture = ExtResource("4_8caa3")
@@ -175,6 +177,7 @@ layer = 200
 [node name="DeveloperConsole" parent="DebugUI" unique_id=1608055672 instance=ExtResource("8_console")]
 
 [node name="GrassToRainforest" type="Sprite2D" parent="." unique_id=581226149]
+visible = false
 position = Vector2(2223.7988, 362.7891)
 scale = Vector2(0.26570806, 0.34260744)
 texture = ExtResource("15_cjcfm")

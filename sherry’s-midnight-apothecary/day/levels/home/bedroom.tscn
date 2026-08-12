@@ -37,6 +37,9 @@
 [ext_resource type="Texture2D" uid="uid://cp2corlbf2jp7" path="res://day/art/spite/sleep_to_wake/27.png" id="31_frame_27"]
 [ext_resource type="Texture2D" uid="uid://cybdduca1dmjk" path="res://day/art/spite/sleep_to_wake/28.png" id="32_frame_28"]
 [ext_resource type="Texture2D" uid="uid://bwuoybb8dll1o" path="res://day/art/spite/sleep_to_wake/29.png" id="33_frame_29"]
+[ext_resource type="Texture2D" uid="uid://b1m250ykp276t" path="res://day/levels/home/stick.png" id="38_ss1qg"]
+[ext_resource type="Script" path="res://day/levels/home/bedroom_stick_interaction.gd" id="39_stick_script"]
+[ext_resource type="Resource" uid="uid://8pvjr6f6vny3" path="res://day/levels/home/bedroom_stick.dialogue" id="40_stick_dialogue"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sleep_to_wake"]
 animations = [{
@@ -142,6 +145,9 @@ size = Vector2(96, 1448)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
 size = Vector2(70, 720)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stick_interaction"]
+size = Vector2(190, 174)
+
 [node name="Bedroom" type="Node2D" unique_id=903013001]
 texture_filter = 1
 
@@ -190,7 +196,7 @@ shape = SubResource("RectangleShape2D_exit")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1953653742]
 z_index = 10
-position = Vector2(720, 539)
+position = Vector2(720, 492)
 script = ExtResource("2_player")
 character_scale = 0.8
 initial_facing_right = true
@@ -224,3 +230,15 @@ player_visual_path = NodePath("../Player/SherryPresentation")
 spawn_point_path = NodePath("../EntryPoints/default")
 one_shot_per_day = true
 daily_flag_id = &"sleep_to_wake"
+
+[node name="Stick" type="Sprite2D" parent="." unique_id=278029094]
+position = Vector2(1066, 491)
+texture = ExtResource("38_ss1qg")
+script = ExtResource("39_stick_script")
+dialogue_resource = ExtResource("40_stick_dialogue")
+
+[node name="InteractionArea" type="Area2D" parent="Stick" unique_id=1903745067]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stick/InteractionArea" unique_id=2854938]
+position = Vector2(57, 57)
+shape = SubResource("RectangleShape2D_stick_interaction")

@@ -105,6 +105,9 @@ static func run(test: TestSupport) -> void:
 		test.expect(home_camera.global_position.x < 0.0, "Home camera starts beside the bedroom player instead of panning toward x=0.")
 		test.expect_equal(home_camera.limit_right, home_director.bedroom_right_limit, "Bedroom entry applies the bedroom camera limit immediately.")
 		test.expect(not day_runtime.current_level.show_title_card, "Home does not display a level title card.")
+		# This suite verifies the baseline room-camera handoff. The dedicated Home
+		# intro suite covers the first-day cinematic override.
+		day_runtime.get_player_data().tutorial_flags[HomeDayOneIntro.COMPLETED_FLAG] = true
 		home_player.global_position.x = 400.0
 		for _step in range(20):
 			home_director._process(0.1)
