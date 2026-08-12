@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bwqgtwtuvark4"]
+
+[ext_resource type="Script" uid="uid://splv0nu3urtf" path="res://day/day_runtime.gd" id="1_day"]
+[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="2_title_card"]
+[ext_resource type="PackedScene" path="res://night/developer_console/developer_console.tscn" id="3_console"]
+
+[node name="DayRuntime" type="Node" unique_id=935191861]
+script = ExtResource("1_day")
+
+[node name="LevelSlot" type="Node" parent="." unique_id=1174122493]
+
+[node name="PlayerSlot" type="Node" parent="." unique_id=740273180]
+
+[node name="CameraSlot" type="Node" parent="." unique_id=1913860685]
+
+[node name="SceneTitleCard" parent="." unique_id=1734013484 instance=ExtResource("2_title_card")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=697674512]
+
+[node name="DeveloperConsoleLayer" type="CanvasLayer" parent="."]
+layer = 220
+
+[node name="DeveloperConsole" parent="DeveloperConsoleLayer" unique_id=1935932251 instance=ExtResource("3_console")]
+anchors_preset = -1
+
+[node name="FinishDayButton" type="Button" parent="UI" unique_id=1367388977]
+offset_left = 1080.0
+offset_top = 650.0
+offset_right = 1245.0
+offset_bottom = 698.0
+theme_override_font_sizes/font_size = 18
+text = "结束白天"

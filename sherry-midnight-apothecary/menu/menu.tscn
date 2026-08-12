@@ -1,0 +1,246 @@
+[gd_scene load_steps=28 format=3]
+
+[ext_resource type="Script" path="res://menu/menu.gd" id="1_menu"]
+[ext_resource type="Script" path="res://menu/sky/sky_controller.gd" id="2_sky"]
+[ext_resource type="Script" path="res://menu/sky/sky_profile_resolver.gd" id="3_resolver"]
+[ext_resource type="Script" path="res://menu/sky/menu_cloud_layer.gd" id="4_cloud"]
+[ext_resource type="Script" path="res://menu/sky/menu_star_field.gd" id="5_stars"]
+[ext_resource type="Script" path="res://menu/menu_camera_director.gd" id="6_camera"]
+[ext_resource type="Script" path="res://menu/transition/menu_transition.gd" id="7_transition"]
+[ext_resource type="Script" path="res://menu/transition/bedroom_intro_bridge.gd" id="8_bridge"]
+[ext_resource type="PackedScene" path="res://menu/ui/menu_ui.tscn" id="9_ui"]
+[ext_resource type="Shader" path="res://menu/shaders/menu_sky.gdshader" id="10_sky_shader"]
+[ext_resource type="Shader" path="res://menu/shaders/menu_shadow.gdshader" id="11_shadow_shader"]
+[ext_resource type="Resource" path="res://menu/sky/profiles/day_01_default.tres" id="12_day01"]
+[ext_resource type="Resource" path="res://menu/sky/profiles/day_07_warning.tres" id="13_day07"]
+[ext_resource type="Resource" path="res://menu/sky/profiles/day_14_anomaly.tres" id="14_day14"]
+[ext_resource type="Resource" path="res://menu/sky/profiles/day_21_disaster.tres" id="15_day21"]
+[ext_resource type="Resource" path="res://menu/sky/profiles/day_30_finale.tres" id="16_day30"]
+[ext_resource type="Script" path="res://menu/sky/sky_profile.gd" id="17_profile"]
+[ext_resource type="Script" path="res://menu/sky/menu_moon.gd" id="18_moon"]
+[ext_resource type="Resource" path="res://menu/sky/profiles/night_default.tres" id="19_night"]
+[ext_resource type="Texture2D" path="res://menu/effects/tree.png" id="20_tree"]
+[ext_resource type="Texture2D" path="res://menu/effects/bird.png" id="21_bird"]
+[ext_resource type="Script" path="res://menu/menu_silhouette_director.gd" id="22_silhouette_director"]
+[ext_resource type="Shader" path="res://menu/shaders/menu_bird_trail.gdshader" id="23_bird_trail"]
+
+[sub_resource type="ShaderMaterial" id="SkyMaterial"]
+shader = ExtResource("10_sky_shader")
+
+[sub_resource type="ParticleProcessMaterial" id="MagicParticleMaterial"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1120, 280, 1)
+direction = Vector3(0, -1, 0)
+spread = 18.0
+gravity = Vector3(0, -1.5, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 7.0
+scale_min = 0.7
+scale_max = 1.7
+color = Color(0.8, 0.72, 1, 0.55)
+
+[sub_resource type="ShaderMaterial" id="ShadowMaterial"]
+shader = ExtResource("11_shadow_shader")
+shader_parameter/progress = 0.0
+shader_parameter/softness = 0.18
+shader_parameter/noise_strength = 0.032
+shader_parameter/shadow_color = Color(0.055, 0.035, 0.12, 0.94)
+
+[sub_resource type="ShaderMaterial" id="BirdTrailMaterial"]
+shader = ExtResource("23_bird_trail")
+shader_parameter/silhouette_color = Color(0.09, 0.06, 0.15, 0.92)
+shader_parameter/trail_offsets_px = Vector3(18, 36, 54)
+shader_parameter/trail_opacities = Vector3(0.24, 0.13, 0.06)
+
+[node name="Menu" type="Node"]
+script = ExtResource("1_menu")
+
+[node name="World" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="SkyGradient" type="ColorRect" parent="World"]
+unique_name_in_owner = true
+offset_left = -1600.0
+offset_top = -40.0
+offset_right = 1600.0
+offset_bottom = 3000.0
+mouse_filter = 2
+material = SubResource("SkyMaterial")
+
+[node name="Stars" type="Node2D" parent="World"]
+unique_name_in_owner = true
+position = Vector2(0, 20)
+script = ExtResource("5_stars")
+
+[node name="Moon" type="Node2D" parent="World"]
+unique_name_in_owner = true
+position = Vector2(930, 175)
+script = ExtResource("18_moon")
+
+[node name="FarCloud" type="Node2D" parent="World"]
+unique_name_in_owner = true
+position = Vector2(0, 310)
+z_index = 2
+script = ExtResource("4_cloud")
+opacity = 0.14
+drift_speed = -1.2
+cloud_scale = 0.82
+
+[node name="NearCloud" type="Node2D" parent="World"]
+unique_name_in_owner = true
+position = Vector2(0, 620)
+z_index = 4
+script = ExtResource("4_cloud")
+opacity = 0.2
+drift_speed = 2.6
+cloud_scale = 1.15
+
+[node name="MagicParticles" type="GPUParticles2D" parent="World"]
+unique_name_in_owner = true
+position = Vector2(0, 410)
+z_index = 5
+amount = 30
+lifetime = 8.0
+preprocess = 8.0
+visibility_rect = Rect2(-1280, -400, 2560, 800)
+process_material = SubResource("MagicParticleMaterial")
+
+[node name="SilhouetteLayers" type="Node2D" parent="World"]
+
+[node name="TreeSilhouette" type="Sprite2D" parent="World/SilhouetteLayers"]
+unique_name_in_owner = true
+z_index = 20
+texture = ExtResource("20_tree")
+centered = false
+
+[node name="BirdSilhouette" type="Sprite2D" parent="World/SilhouetteLayers"]
+unique_name_in_owner = true
+visible = false
+z_index = 22
+material = SubResource("BirdTrailMaterial")
+texture = ExtResource("21_bird")
+centered = false
+
+[node name="DistantForest" type="Polygon2D" parent="World"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, 1540)
+z_index = 8
+polygon = PackedVector2Array(-1600, 260, -1600, 90, -1420, 15, -1270, 105, -1090, -10, -920, 88, -710, -32, -520, 74, -310, -14, -100, 80, 95, -26, 310, 72, 510, -18, 730, 96, 930, 0, 1130, 82, 1330, -20, 1600, 92, 1600, 260)
+color = Color(0.105, 0.075, 0.17, 1)
+
+[node name="TreeCanopyForeground" type="Polygon2D" parent="World"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, 1200)
+z_index = 15
+polygon = PackedVector2Array(-1600, -120, -1200, -120, -1120, 50, -940, -20, -810, 105, -690, 260, -1600, 260, 1600, 260, 1600, -120, 1260, -120, 1170, 50, 1010, -5, 860, 120, 760, 260, -760, 260)
+color = Color(0.08, 0.055, 0.13, 1)
+
+[node name="ApothecaryHill" type="Polygon2D" parent="World"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, 2140)
+z_index = 10
+polygon = PackedVector2Array(-1600, 540, -1600, 220, -980, 120, -620, 80, -390, 160, -310, -30, -120, -145, 110, -145, 310, -25, 375, 170, 680, 78, 1030, 125, 1600, 220, 1600, 540)
+color = Color(0.105, 0.075, 0.17, 1)
+
+[node name="ApothecaryWindows" type="Polygon2D" parent="World/ApothecaryHill"]
+position = Vector2(0, -20)
+z_index = 1
+polygon = PackedVector2Array(-130, 0, -50, 0, -50, 92, -130, 92, 55, 0, 135, 0, 135, 92, 55, 92)
+color = Color(0.95, 0.63, 0.34, 0.78)
+
+[node name="RoofForeground" type="Polygon2D" parent="World"]
+visible = false
+position = Vector2(0, 2460)
+z_index = 30
+polygon = PackedVector2Array(-1800, -40, -650, -280, 0, -360, 650, -280, 1800, -40, 1800, 440, -1800, 440)
+color = Color(0.045, 0.025, 0.075, 1)
+
+[node name="MenuCameraStart" type="Marker2D" parent="World"]
+position = Vector2(0, 360)
+
+[node name="CloudPassPoint" type="Marker2D" parent="World"]
+position = Vector2(0, 780)
+
+[node name="ForestPassPoint" type="Marker2D" parent="World"]
+position = Vector2(0, 1660)
+
+[node name="RoofTransitionPoint" type="Marker2D" parent="World"]
+position = Vector2(0, 2440)
+
+[node name="MenuCamera" type="Camera2D" parent="World"]
+position = Vector2(0, 360)
+
+[node name="SkyProfileResolver" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_resolver")
+profiles = Array[ExtResource("17_profile")]([ExtResource("12_day01"), ExtResource("13_day07"), ExtResource("14_day14"), ExtResource("15_day21"), ExtResource("16_day30"), ExtResource("19_night")])
+
+[node name="SkyController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_sky")
+preview_profile = ExtResource("12_day01")
+
+[node name="MenuCameraDirector" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_camera")
+camera_path = NodePath("../World/MenuCamera")
+start_marker_path = NodePath("../World/MenuCameraStart")
+cloud_marker_path = NodePath("../World/CloudPassPoint")
+forest_marker_path = NodePath("../World/ForestPassPoint")
+roof_marker_path = NodePath("../World/RoofTransitionPoint")
+parallax_layer_paths = Array[NodePath]([NodePath("../World/FarCloud"), NodePath("../World/NearCloud"), NodePath("../World/DistantForest"), NodePath("../World/TreeCanopyForeground")])
+parallax_factors = Array[float]([1.0, 1.15, 1.4, 1.7])
+
+[node name="MenuSilhouetteDirector" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("22_silhouette_director")
+tree_path = NodePath("../World/SilhouetteLayers/TreeSilhouette")
+bird_path = NodePath("../World/SilhouetteLayers/BirdSilhouette")
+roof_marker_path = NodePath("../World/RoofTransitionPoint")
+
+[node name="BedroomIntroBridge" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("8_bridge")
+
+[node name="MenuUILayer" type="CanvasLayer" parent="."]
+layer = 50
+
+[node name="MenuUI" parent="MenuUILayer" instance=ExtResource("9_ui")]
+unique_name_in_owner = true
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="Shadow" type="ColorRect" parent="TransitionLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+material = SubResource("ShadowMaterial")
+
+[node name="RoofOccluder" type="ColorRect" parent="TransitionLayer"]
+mouse_filter = 2
+color = Color(0.035, 0.022, 0.065, 1)
+
+[node name="MenuTransitionDirector" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_transition")
+shadow_path = NodePath("../TransitionLayer/Shadow")
+roof_path = NodePath("../TransitionLayer/RoofOccluder")
+
+[node name="MenuBGM" type="AudioStreamPlayer" parent="."]
+
+[node name="WindAmbience" type="AudioStreamPlayer" parent="."]
+
+[node name="BirdAmbience" type="AudioStreamPlayer" parent="."]
+
+[node name="TransitionWhoosh" type="AudioStreamPlayer" parent="."]
+
+[node name="LeavesAmbience" type="AudioStreamPlayer" parent="."]

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="HerbColorLayerData" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="2_piece_script"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/data/pieces/foliage_01.tres" id="3_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/data/pieces/foliage_02.tres" id="4_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/data/pieces/foliage_03.tres" id="5_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/data/pieces/foliage_04.tres" id="6_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/data/pieces/foliage_05.tres" id="7_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/data/pieces/foliage_06.tres" id="8_piece"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"herdsmans_loaf_bush_foliage_layer"
+display_name = "叶丛层"
+color_id = &"green"
+display_color = Color(0.27, 0.65, 0.38, 1)
+spectrum_x = 0.5
+layer_yield_multiplier = 0.45
+pieces = Array[ExtResource("2_piece_script")]([ExtResource("3_piece"), ExtResource("4_piece"), ExtResource("5_piece"), ExtResource("6_piece"), ExtResource("7_piece"), ExtResource("8_piece")])
+

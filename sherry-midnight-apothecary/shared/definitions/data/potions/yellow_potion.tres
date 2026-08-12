@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://br1irs40yuhxt"]
+
+[ext_resource type="Script" uid="uid://hqa1qlsr7gos" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Resource" path="res://night/alchemy/heat/profiles/yellow_storm.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"yellow_potion"
+display_name = "雷击与星陨之药"
+color_name = "黄"
+display_color = Color(0.95, 0.79, 0.12, 1)
+main_effect_id = &"lightning_meteor"
+spectrum_center_x = 0.3
+effect_ranges = Array[Vector2]([Vector2(0.23, 0.37)])
+base_price = 21
+heat_profile = ExtResource("2")

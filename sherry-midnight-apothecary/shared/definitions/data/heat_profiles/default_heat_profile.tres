@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="HeatProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://night/alchemy/heat/heat_profile_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"default_heat_profile"
+ideal_min = 45.0
+ideal_max = 65.0
+warning_min = 35.0
+warning_max = 75.0
+burn_temperature = 85.0

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="HerbColorLayerData" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="2_piece_script"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/old_mans_noose/data/pieces/lichen_branch.tres" id="3_branch"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"old_mans_noose_host_layer"
+display_name = "附生枯枝层"
+color_id = &"brown"
+display_color = Color(0.43, 0.29, 0.16, 1)
+spectrum_x = 0.18
+layer_yield_multiplier = 0.0
+pieces = Array[ExtResource("2_piece_script")]([ExtResource("3_branch")])
