@@ -5,9 +5,6 @@ extends Node2D
 ## globally switches to NightRuntime after the player ends the day.
 
 @export var debug_scene_id := ""
-@export var debug_location_name := ""
-@export var debug_disaster_name := "灾难未定"
-@export_multiline var debug_scene_description := "场景描述待补充"
 
 var _standalone_player_data: PlayerData
 
@@ -33,18 +30,3 @@ func _ready() -> void:
 	var console := get_node_or_null("DebugUI/DeveloperConsole")
 	if console != null:
 		console.setup_day_scene(self)
-
-
-func replay_scene_title() -> void:
-	var title_card := get_node_or_null("SceneTitleCard")
-	if title_card == null:
-		return
-	var location_name: String = debug_location_name
-	if location_name.is_empty():
-		location_name = str(name)
-	title_card.show_title(
-		1,
-		location_name,
-		debug_disaster_name,
-		debug_scene_description
-	)

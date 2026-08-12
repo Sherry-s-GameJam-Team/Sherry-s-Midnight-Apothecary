@@ -63,6 +63,8 @@ var _potion_action_locked := false
 var _potion_cast_active := false
 var _sprite_base_position := Vector2.ZERO
 var _footstep_timer := 0.0
+var _dialogue_locked := false
+var _animation_was_playing_before_dialogue := false
 
 
 func _ready() -> void:
@@ -72,6 +74,7 @@ func _ready() -> void:
 		set_physics_process(false)
 		return
 	add_to_group("potion_friendly")
+	add_to_group("dialogue_lockable")
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
 	_facing_right = initial_facing_right
@@ -81,6 +84,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
+		return
+	if _dialogue_locked:
+		velocity = Vector2.ZERO
+		_horizontal_velocity = 0.0
+		_footstep_timer = 0.0
 		return
 	var direction := 0.0 if _potion_action_locked else _get_input_direction()
 	_update_jump_timers(delta)
@@ -98,7 +106,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or _dialogue_locked:
 		return
 	var key_event := event as InputEventKey
 	if key_event == null or not key_event.pressed or key_event.echo or _is_transition() or _potion_action_locked or _is_text_input_focused():
@@ -230,7 +238,7 @@ func _update_footstep_sfx(delta: float) -> void:
 	if _footstep_timer > 0.0:
 		return
 	var speed_ratio := clampf(absf(velocity.x) / maxf(run_speed, 1.0), 0.0, 1.0)
-	SoundManager.play_footstep(speed_ratio)
+	_call_sound_manager(&"play_footstep", [speed_ratio])
 	_footstep_timer = lerpf(WALK_FOOTSTEP_INTERVAL, RUN_FOOTSTEP_INTERVAL, speed_ratio)
 
 
@@ -331,13 +339,13 @@ func _try_start_roll(action_name: StringName) -> void:
 
 
 func _get_input_direction() -> float:
-	if _is_text_input_focused():
+	if _dialogue_locked or _is_text_input_focused():
 		return 0.0
 	return Input.get_axis("move_left", "move_right")
 
 
 func _is_running() -> bool:
-	return not _is_text_input_focused() and Input.is_action_pressed("move_run")
+	return not _dialogue_locked and not _is_text_input_focused() and Input.is_action_pressed("move_run")
 
 
 func _current_move_speed() -> float:
@@ -352,7 +360,7 @@ func _ground_action_for(direction: float) -> String:
 
 
 func can_start_potion_aim(allow_air_aim: bool = false) -> bool:
-	if _potion_action_locked or _is_rolling or _potion_cast_active:
+	if _dialogue_locked or _potion_action_locked or _is_rolling or _potion_cast_active:
 		return false
 	if not is_on_floor() or _is_airborne:
 		return allow_air_aim and _state in ["jump_takeoff", "jump_fall", "fall"]
@@ -364,6 +372,22 @@ func set_potion_action_locked(locked: bool) -> void:
 	if locked:
 		velocity.x = 0.0
 		_horizontal_velocity = 0.0
+
+
+func set_dialogue_locked(locked: bool) -> void:
+	if _dialogue_locked == locked:
+		return
+	_dialogue_locked = locked
+	if locked:
+		velocity = Vector2.ZERO
+		_horizontal_velocity = 0.0
+		_jump_buffer_timer = 0.0
+		_footstep_timer = 0.0
+		_animation_was_playing_before_dialogue = animation_player.is_playing()
+		animation_player.pause()
+	elif _animation_was_playing_before_dialogue:
+		animation_player.play()
+	_animation_was_playing_before_dialogue = false
 
 
 func is_facing_right() -> bool:
@@ -382,14 +406,14 @@ func play_potion_cast() -> void:
 	_potion_cast_active = true
 	_potion_action_locked = true
 	_transition_target = "idle"
-	SoundManager.play_spell_cast()
+	_call_sound_manager(&"play_spell_cast")
 	_play("cast")
 	get_tree().create_timer(POTION_CAST_RELEASE_TIME, true, false, true).timeout.connect(potion_cast_release, CONNECT_ONE_SHOT)
 
 
 func potion_cast_release() -> void:
 	if _potion_cast_active and potion_thrower != null and potion_thrower.has_method("on_cast_release"):
-		SoundManager.play_spell_release()
+		_call_sound_manager(&"play_spell_release")
 		potion_thrower.call("on_cast_release")
 
 
@@ -442,3 +466,9 @@ func _get_shared_player_data() -> PlayerData:
 func _is_text_input_focused() -> bool:
 	var focused := get_viewport().gui_get_focus_owner()
 	return focused is LineEdit or focused is TextEdit
+
+
+func _call_sound_manager(method: StringName, arguments: Array = []) -> void:
+	var manager := get_node_or_null("/root/SoundManager")
+	if manager != null and manager.has_method(method):
+		manager.callv(method, arguments)

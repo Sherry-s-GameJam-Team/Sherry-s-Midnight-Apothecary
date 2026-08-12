@@ -33,7 +33,9 @@ func _input(event: InputEvent) -> void:
 	var viewport := get_viewport()
 	if viewport != null:
 		viewport.set_input_as_handled()
-	SoundManager.play_door_transition()
+	var sound_manager := get_node_or_null("/root/SoundManager")
+	if sound_manager != null and sound_manager.has_method("play_door_transition"):
+		sound_manager.call("play_door_transition")
 	var runtime := _find_day_runtime()
 	if runtime != null:
 		runtime.switch_to_level(str(destination_level), destination_entry_id)

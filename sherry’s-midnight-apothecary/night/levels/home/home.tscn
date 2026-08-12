@@ -144,7 +144,7 @@ centered = false
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1419029382]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=912486140]
-polygon = PackedVector2Array(-2545, 867, 3633, 857, 3633, 831, 1184, 836, 1030, 795, 919, 738, 689, 737, 609, 784, 458, 833, -2541, 837)
+polygon = PackedVector2Array(-2545, 867, 3633, 857, 3633, 831, 1184, 836, 1078, 791, 919, 738, 679, 739, 551, 781, 458, 833, -2541, 837)
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1414386575]
 position = Vector2(-2583.67, 432)

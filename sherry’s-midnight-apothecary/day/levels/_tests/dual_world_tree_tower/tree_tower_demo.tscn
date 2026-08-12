@@ -53,7 +53,6 @@ size = Vector2(260, 150)
 [node name="DualWorldTreeTowerLevel" type="Node2D" unique_id=353385837]
 script = ExtResource("1_level")
 debug_scene_id = "dual_world_tree_tower"
-debug_location_name = "Giant Tree Tower Whitebox"
 
 [node name="BG" type="Node2D" parent="." unique_id=322834018]
 

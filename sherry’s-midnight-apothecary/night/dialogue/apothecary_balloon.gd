@@ -53,6 +53,7 @@ var _transition_tween: Tween
 var _has_entered := false
 var _is_transitioning := false
 var _is_closing := false
+var _dialogue_targets_locked := false
 
 
 func _ready() -> void:
@@ -65,6 +66,10 @@ func _ready() -> void:
 	if auto_start:
 		assert(is_instance_valid(dialogue_resource), DMConstants.get_error_message(DMConstants.ERR_MISSING_RESOURCE_FOR_AUTOSTART))
 		start()
+
+
+func _exit_tree() -> void:
+	_set_dialogue_targets_locked(false)
 
 
 func _process(_delta: float) -> void:
@@ -106,6 +111,7 @@ func start(
 	title: String = "",
 	extra_game_states: Array = []
 ) -> void:
+	_set_dialogue_targets_locked(true)
 	temporary_game_states = [self]
 	var player_state := _find_player_data()
 	if player_state != null and not extra_game_states.has(player_state):
@@ -313,11 +319,21 @@ func _close_balloon() -> void:
 		await _play_exit_transition()
 	_has_entered = false
 	balloon.hide()
+	_set_dialogue_targets_locked(false)
 	if owner == null:
 		queue_free()
 	else:
 		hide()
 	_is_closing = false
+
+
+func _set_dialogue_targets_locked(locked: bool) -> void:
+	if _dialogue_targets_locked == locked:
+		return
+	_dialogue_targets_locked = locked
+	for target in get_tree().get_nodes_in_group("dialogue_lockable"):
+		if is_instance_valid(target) and target.has_method("set_dialogue_locked"):
+			target.call("set_dialogue_locked", locked)
 
 
 func _kill_transition_tween() -> void:

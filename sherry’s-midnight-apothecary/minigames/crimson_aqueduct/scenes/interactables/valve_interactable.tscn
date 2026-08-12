@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://minigames/crimson_aqueduct/scripts/interactables/valve_interactable.gd" id="1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape"]
+radius = 42.0
+
+[node name="ValveInteractable" type="Area2D"]
+script = ExtResource("1")
+input_pickable = true
+
+[node name="Plate" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-52, -52, 52, -52, 52, 52, -52, 52)
+color = Color(0.19, 0.17, 0.15, 1)
+
+[node name="Wheel" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-8, -39, 8, -39, 8, -10, 39, -10, 39, 10, 8, 10, 8, 39, -8, 39, -8, 10, -39, 10, -39, -10, -8, -10)
+color = Color(0.56, 0.75, 0.61, 1)
+
+[node name="Center" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-11, -11, 11, -11, 11, 11, -11, 11)
+color = Color(0.74, 0.53, 0.27, 1)
+
+[node name="StateLabel" type="Label" parent="."]
+offset_left = -50.0
+offset_top = 51.0
+offset_right = 50.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.88, 0.78, 0.58, 1)
+theme_override_font_sizes/font_size = 17
+text = "开启"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape")

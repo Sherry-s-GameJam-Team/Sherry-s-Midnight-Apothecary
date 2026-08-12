@@ -1,0 +1,163 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://minigames/crimson_aqueduct/scripts/crimson_aqueduct_root.gd" id="1"]
+[ext_resource type="Script" path="res://minigames/crimson_aqueduct/scripts/systems/pipe_network.gd" id="2"]
+[ext_resource type="Script" path="res://minigames/crimson_aqueduct/scripts/systems/fp_mouse_controller.gd" id="3"]
+[ext_resource type="PackedScene" path="res://minigames/crimson_aqueduct/scenes/interactables/valve_interactable.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://minigames/crimson_aqueduct/scenes/interactables/diverter_interactable.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://minigames/crimson_aqueduct/scenes/interactables/purifier_interactable.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://minigames/crimson_aqueduct/scenes/interactables/crack_interactable.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://minigames/crimson_aqueduct/scenes/ui/reservoir_display.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://minigames/crimson_aqueduct/scenes/ui/ui_hud.tscn" id="9"]
+
+[sub_resource type="Gradient" id="GradientBackground"]
+colors = PackedColorArray(0.035, 0.028, 0.025, 1, 0.13, 0.105, 0.075, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture"]
+gradient = SubResource("GradientBackground")
+width = 1280
+height = 720
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StonePanel"]
+bg_color = Color(0.105, 0.095, 0.085, 0.96)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.28, 0.24, 0.19, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="CrimsonAqueductRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture")
+expand_mode = 1
+
+[node name="Architecture" type="Node2D" parent="."]
+position = Vector2(238, 0)
+z_index = 1
+
+[node name="ArchTop" type="Polygon2D" parent="Architecture"]
+polygon = PackedVector2Array(0, 0, 1042, 0, 1042, 72, 0, 72)
+color = Color(0.16, 0.14, 0.12, 1)
+
+[node name="PipeClean" type="Line2D" parent="Architecture"]
+points = PackedVector2Array(90, 210, 260, 210, 410, 325, 610, 325, 790, 245)
+width = 44.0
+default_color = Color(0.22, 0.42, 0.43, 1)
+
+[node name="PipeCorrupt" type="Line2D" parent="Architecture"]
+points = PackedVector2Array(90, 470, 260, 470, 410, 325)
+width = 44.0
+default_color = Color(0.48, 0.12, 0.14, 1)
+
+[node name="PipeWaste" type="Line2D" parent="Architecture"]
+points = PackedVector2Array(410, 325, 590, 495, 790, 495)
+width = 38.0
+default_color = Color(0.25, 0.22, 0.18, 1)
+
+[node name="Workbench" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 270.0
+offset_top = 92.0
+offset_right = 1000.0
+offset_bottom = 622.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StonePanel")
+
+[node name="PipeNetwork" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2")
+
+[node name="FPMouseController" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3")
+
+[node name="Interactables" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="SpringValve" parent="Interactables" instance=ExtResource("4")]
+position = Vector2(355, 210)
+valve_id = &"spring_gate"
+
+[node name="RedValve" parent="Interactables" instance=ExtResource("4")]
+position = Vector2(355, 470)
+valve_id = &"red_gate"
+
+[node name="TownValve" parent="Interactables" instance=ExtResource("4")]
+position = Vector2(918, 245)
+valve_id = &"town_gate"
+
+[node name="MainDiverter" parent="Interactables" instance=ExtResource("5")]
+position = Vector2(650, 325)
+
+[node name="PurifierBasin" parent="Interactables" instance=ExtResource("6")]
+position = Vector2(835, 400)
+
+[node name="UpperCrack" parent="Interactables" instance=ExtResource("7")]
+position = Vector2(530, 210)
+
+[node name="BypassCrack" parent="Interactables" instance=ExtResource("7")]
+position = Vector2(1050, 485)
+crack_id = &"bypass_crack"
+
+[node name="LowerCrack" parent="Interactables" instance=ExtResource("7")]
+position = Vector2(545, 530)
+crack_id = &"lower_crack"
+
+[node name="Labels" type="Node2D" parent="."]
+[node name="Spring" type="Label" parent="Labels"]
+offset_left = 294.0
+offset_top = 120.0
+offset_right = 420.0
+offset_bottom = 148.0
+theme_override_colors/font_color = Color(0.48, 0.78, 0.75, 1)
+text = "森林清泉"
+horizontal_alignment = 1
+[node name="Corruption" type="Label" parent="Labels"]
+offset_left = 286.0
+offset_top = 548.0
+offset_right = 428.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(0.91, 0.32, 0.3, 1)
+text = "赤红污染源"
+horizontal_alignment = 1
+[node name="Waste" type="Label" parent="Labels"]
+offset_left = 750.0
+offset_top = 545.0
+offset_right = 900.0
+offset_bottom = 573.0
+theme_override_colors/font_color = Color(0.67, 0.58, 0.43, 1)
+text = "古老泄洪渠"
+horizontal_alignment = 1
+
+[node name="ReservoirDisplay" parent="." instance=ExtResource("8")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1015.0
+offset_top = 154.0
+offset_right = 1260.0
+offset_bottom = 484.0
+
+[node name="UIHud" parent="." instance=ExtResource("9")]
+unique_name_in_owner = true
+layout_mode = 1

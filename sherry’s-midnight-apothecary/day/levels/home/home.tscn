@@ -21,7 +21,7 @@
 [ext_resource type="Script" path="res://day/levels/home/map_switch_station.gd" id="19_map_switch_station"]
 [ext_resource type="Texture2D" uid="uid://7ydlo8v0i0yw" path="res://day/levels/home/npc/solder.png" id="20_young_knight"]
 [ext_resource type="Texture2D" uid="uid://7a726ryhg0wn" path="res://day/levels/home/npc/solder2.png" id="21_senior_knight"]
-[ext_resource type="Script" path="res://day/levels/home/home_day_one_intro.gd" id="22_day_one_intro"]
+[ext_resource type="Script" uid="uid://bqe86enjoel00" path="res://day/levels/home/home_day_one_intro.gd" id="22_day_one_intro"]
 [ext_resource type="Resource" uid="uid://ckeajf5jckvmm" path="res://day/levels/home/home_day_one_intro.dialogue" id="23_day_one_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
@@ -73,7 +73,6 @@ texture_filter = 1
 position = Vector2(0, 7)
 script = ExtResource("1_environment")
 debug_scene_id = "home"
-debug_location_name = "Home"
 
 [node name="Interior" type="Sprite2D" parent="." unique_id=508247289]
 z_index = -10
@@ -87,7 +86,7 @@ centered = false
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1967546524]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1416155739]
-polygon = PackedVector2Array(-2545, 867, 3633, 857, 3629, 812, 1184, 823, 1077, 794, 919, 738, 689, 737, 534, 795, 451, 817, -2552, 803)
+polygon = PackedVector2Array(-2545, 867, 3633, 857, 3629, 812, -2552, 803)
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1633258588]
 position = Vector2(-2583.67, 432)
@@ -107,6 +106,7 @@ z_index = 10
 position = Vector2(2554, 715)
 script = ExtResource("3_player")
 character_scale = 0.8
+depth_scale_enabled = true
 
 [node name="SherryCollision" parent="Player" unique_id=843162247 instance=ExtResource("4_collision")]
 position = Vector2(0, 60)
@@ -253,13 +253,13 @@ position = Vector2(510, 504)
 
 [node name="YoungKnight" type="Sprite2D" parent="Cinematic" unique_id=601519406]
 z_index = 12
-position = Vector2(505, 628)
-scale = Vector2(0.32, 0.32)
+position = Vector2(622, 661.00006)
+scale = Vector2(0.2663291, 0.26632908)
 texture = ExtResource("20_young_knight")
 
 [node name="SeniorKnight" type="Sprite2D" parent="Cinematic" unique_id=2085169272]
 z_index = 12
-position = Vector2(785, 620)
+position = Vector2(487, 625)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("21_senior_knight")
 

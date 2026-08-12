@@ -3,9 +3,6 @@ extends Node
 
 signal finished(result: DayResult)
 
-var player_data: PlayerData
-var day := 1
-
 const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
 	preload("res://day/levels/home/home_level.tres"),
@@ -16,16 +13,20 @@ const LEVELS: Array[LevelData] = [
 ]
 
 # Home is available through its door, but does not consume a day in the normal
-# market → forest → lake progression.
+# market -> forest -> lake progression.
 const DAILY_LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
 	preload("res://day/levels/forest/raintree/raintree_level.tres"),
 	preload("res://day/levels/lake/lake_level.tres"),
 ]
 
+const SCENE_TITLE_SEEN_PREFIX := "scene_title_seen"
+
+var player_data: PlayerData
+var day := 1
+
 @onready var level_slot: Node = $LevelSlot
 @onready var gameplay_ui: CanvasLayer = $UI
-@onready var level_title: Label = $UI/LevelTitle
 @onready var finish_button: Button = $UI/FinishDayButton
 @onready var scene_title_card: SceneTitleCard = $SceneTitleCard
 @onready var developer_console_layer: CanvasLayer = $DeveloperConsoleLayer
@@ -93,10 +94,8 @@ func _load_level() -> void:
 	if current_level == null:
 		current_level = DAILY_LEVELS[posmod(day - 1, DAILY_LEVELS.size())]
 	_instantiate_current_level(&"default")
-	if not _defer_initial_title and current_level.show_title_card:
-		replay_scene_title()
-	level_title.text = "Day %d · %s" % [day, current_level.display_name]
-	level_title.visible = current_level.show_title_card
+	if not _defer_initial_title:
+		_play_scene_title_once()
 	_initial_level_id = &""
 	_defer_initial_presentation = false
 	_defer_initial_title = false
@@ -119,10 +118,7 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 			child.queue_free()
 		current_level = level_data
 		_instantiate_current_level(entry_id)
-		level_title.text = "Day %d 路 %s" % [day, current_level.display_name]
-		level_title.visible = current_level.show_title_card
-		if current_level.show_title_card:
-			replay_scene_title()
+		_play_scene_title_once()
 		return true
 	return false
 
@@ -162,11 +158,27 @@ func replay_scene_title(immediate_text := false) -> bool:
 	scene_title_card.show_title(
 		day,
 		current_level.display_name,
-		current_level.disaster_name,
-		current_level.scene_description,
+		current_level.title_subtitle_for_day(day),
 		immediate_text
 	)
 	return true
+
+
+func _play_scene_title_once() -> bool:
+	if current_level == null or not current_level.show_title_card:
+		return false
+	var seen_key := scene_title_seen_key(day, current_level.id)
+	var data := get_player_data()
+	if bool(data.tutorial_flags.get(seen_key, false)):
+		return false
+	if not replay_scene_title():
+		return false
+	data.tutorial_flags[seen_key] = true
+	return true
+
+
+static func scene_title_seen_key(day_number: int, level_id: StringName) -> String:
+	return "%s:%d:%s" % [SCENE_TITLE_SEEN_PREFIX, maxi(day_number, 1), level_id]
 
 
 func finish_day(result: DayResult) -> void:

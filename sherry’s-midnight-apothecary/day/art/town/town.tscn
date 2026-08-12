@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://uhm12fd6ldcb" path="res://day/art/town/home/door.png" id="8_56gmp"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="14_camera_bounds"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="15_environment"]
-[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="16_title_card"]
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
@@ -55,7 +54,6 @@ _data = {
 texture_filter = 1
 script = ExtResource("15_environment")
 debug_scene_id = "market"
-debug_location_name = "Town"
 
 [node name="FS" type="Parallax2D" parent="." unique_id=1600265163]
 z_index = -20
@@ -179,8 +177,6 @@ right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1547737807]
 libraries/ = SubResource("AnimationLibrary_clouds")
 autoplay = &"cloud_drift"
-
-[node name="SceneTitleCard" parent="." unique_id=1700513448 instance=ExtResource("16_title_card")]
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=523084111]
 layer = 200

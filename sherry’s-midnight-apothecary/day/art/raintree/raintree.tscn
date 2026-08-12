@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://7q1bawv3kfrc" path="res://day/art/raintree/FS/BGm_f.png" id="5_mid_background"]
 [ext_resource type="Texture2D" uid="uid://e4r7ur3tgnf0" path="res://day/art/raintree/CS/ground.png" id="6_ground"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="10_camera_bounds"]
-[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="11_title_card"]
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="12_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="13_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="14_sherry_presentation"]
@@ -23,7 +22,6 @@ size = Vector2(96, 1448)
 texture_filter = 1
 script = ExtResource("2_environment")
 debug_scene_id = "forest"
-debug_location_name = "Rain Tree"
 
 [node name="Sky" type="Sprite2D" parent="." unique_id=737603260]
 z_index = -30
@@ -101,8 +99,6 @@ limit_bottom = 724
 script = ExtResource("10_camera_bounds")
 left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
-
-[node name="SceneTitleCard" parent="." unique_id=901552691 instance=ExtResource("11_title_card")]
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1643904740]
 layer = 200

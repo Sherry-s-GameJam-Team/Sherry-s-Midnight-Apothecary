@@ -9,7 +9,7 @@ static func run(test: TestSupport) -> void:
 	var hint := scene.instantiate() as TopHintUI
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(hint)
-	test.expect_equal(hint.layer, 150, "TopHintUI renders above ordinary HUD and below GlobalUI/PauseMenu.")
+	test.expect(hint is Control and hint.mouse_filter == Control.MOUSE_FILTER_IGNORE, "TopHintUI is a non-blocking Control owned by the shared GlobalUI layer.")
 	test.expect(InputMap.has_action("hint_expand"), "hint_expand exists in the Input Map.")
 	test.expect(InputMap.has_action("hint_skip"), "hint_skip exists in the Input Map.")
 	var player := PlayerData.new()

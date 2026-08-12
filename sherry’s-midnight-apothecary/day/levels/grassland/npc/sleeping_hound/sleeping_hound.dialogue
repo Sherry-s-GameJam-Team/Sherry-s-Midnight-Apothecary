@@ -1,10 +1,13 @@
 ~ start
-雪莉: 这只狗好像被某种魔法侵蚀了。
-虚弱的狗: （警惕地盯着雪莉，面容痛苦）
-雪莉: 试试使用[b]净化药水[/b]吧。
-- 使用净化药水 [if potion_count("yellow_potion") >= 1]
-	do show_hint("[B]键进入背包页面选取药水", "teach01", 4.0)
-if potion_count("yellow_potion") >= 1
-	do show_hint("前往药水铺中炼制【净化药水】", "teach01", 4.0) 
-	
+# 浣跨敤鍑€鍖栬嵂姘?[if potion_count("purification_potion") >= 1]
+# 鐐煎埗鍑€鍖栬嵂姘?[if potion_count("purification_potion") < 1]
+雪莉: 这只猎犬似乎被某种魔法污染了。
+虚弱的猎犬: （警惕地盯着雪莉，神情痛苦。）
+雪莉: 也许净化药水能帮助它。
+- 使用净化药水 [if potion_count("purification_potion") >= 1]
+	do emit_dialogue_event("sleeping_hound_tutorial_begin", "purification_potion")
+	雪莉: 打开背包，装备净化药水后尝试净化它。
+- 炼制净化药水 [if potion_count("purification_potion") < 1]
+	do show_hint("前往药水铺炼制净化药水。", "sleeping_hound_brew_hint", 4.0)
+	雪莉: 我需要先回药水铺炼制一瓶净化药水。
 => END

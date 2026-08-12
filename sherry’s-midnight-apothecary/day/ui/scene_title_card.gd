@@ -33,8 +33,7 @@ func _ready() -> void:
 func show_title(
 	day: int,
 	location: String,
-	disaster: String,
-	description: String,
+	subtitle: String,
 	immediate_text := false
 ) -> void:
 	if _hide_tween != null:
@@ -42,9 +41,7 @@ func show_title(
 	_presenting = true
 	day_label.text = "第 %d 天" % maxi(day, 1)
 	location_label.text = location if not location.is_empty() else "未知地点"
-	var resolved_disaster := disaster if not disaster.is_empty() else "灾难未定"
-	var resolved_description := description if not description.is_empty() else "场景描述待补充"
-	subtitle_label.text = "%s · %s" % [resolved_disaster, resolved_description]
+	subtitle_label.text = subtitle if not subtitle.is_empty() else "场景描述待补充"
 	_fit_label(location_label, 96, 44)
 	_fit_label(subtitle_label, 34, 20)
 

@@ -375,15 +375,13 @@ func _scene_command(parts: PackedStringArray) -> String:
 
 
 func _title_command(parts: PackedStringArray) -> String:
-	if day_runtime == null and day_scene == null:
-		return "错误：标题动画仅可在日间模式使用。"
 	if parts.size() != 1:
 		return "错误：用法 title"
-	if day_runtime != null:
-		day_runtime.replay_scene_title()
-		return "标题动画已播放：%s" % day_runtime.current_level.display_name
-	day_scene.replay_scene_title()
-	return "标题动画已播放：%s" % day_scene.debug_location_name
+	if day_runtime == null:
+		return "错误：标题动画仅由 DayRuntime 提供，独立关卡场景不支持。"
+	if not day_runtime.replay_scene_title():
+		return "错误：当前场景已禁用标题动画。"
+	return "标题动画已播放：%s" % day_runtime.current_level.display_name
 
 
 func _environment_texture_command(parts: PackedStringArray) -> String:
@@ -423,10 +421,7 @@ func _status_text() -> String:
 			level.disaster_name,
 		]
 	if day_scene != null:
-		return "day=1  mode=DAY  location=%s  disaster=%s" % [
-			day_scene.debug_location_name,
-			day_scene.debug_disaster_name,
-		]
+		return "day=1  mode=DAY  scene=%s  title=runtime-only" % day_scene.debug_scene_id
 	var player := _player()
 	if player == null or _alchemy() == null:
 		return "错误：游戏尚未初始化。"

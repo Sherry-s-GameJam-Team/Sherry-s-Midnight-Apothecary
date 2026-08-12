@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/art/raintree/raintree_camera_bounds.gd" id="14_camera_bounds"]
 [ext_resource type="Texture2D" uid="uid://bahl4xopkmufw" path="res://day/levels/market/town/cross.png" id="14_mhwfj"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/level_environment.gd" id="15_environment"]
-[ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="16_title_card"]
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="18_potions"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="19_sherry_presentation"]
@@ -69,8 +68,7 @@ _data = {
 [node name="Town" type="Node2D" unique_id=926977197]
 texture_filter = 1
 script = ExtResource("15_environment")
-debug_scene_id = "market"
-debug_location_name = "Town"
+debug_scene_id = "流明街"
 
 [node name="TownBGM" type="AudioStreamPlayer" parent="." unique_id=2023291965]
 stream = ExtResource("23_town_bgm")
@@ -83,7 +81,7 @@ scroll_scale = Vector2(0.12, 0.12)
 
 [node name="Background" type="Sprite2D" parent="FS" unique_id=552597500]
 position = Vector2(-211.99998, 0)
-scale = Vector2(2.95442, 1)
+scale = Vector2(3.14779, 1)
 texture = ExtResource("1_fs_bg")
 centered = false
 
@@ -128,7 +126,8 @@ centered = false
 scroll_scale = Vector2(0.82, 0.82)
 
 [node name="Floor2" type="Sprite2D" parent="CS" unique_id=1216221189]
-position = Vector2(5070, 708)
+position = Vector2(5171, 708)
+scale = Vector2(1.0761689, 1)
 texture = ExtResource("8_rso1f")
 
 [node name="Floor" type="Sprite2D" parent="CS" unique_id=572790004]
@@ -168,8 +167,8 @@ scale = Vector2(0.16400146, 0.16400146)
 texture = ExtResource("23_qsket")
 
 [node name="FountainSprite" parent="CS/Fountain" unique_id=1088006122 instance=ExtResource("24_cq1f3")]
-position = Vector2(2.4916368, -23.535152)
-scale = Vector2(1.0736486, 1.0065424)
+position = Vector2(2.4905882, -23.535152)
+scale = Vector2(1.0736474, 1.0065424)
 
 [node name="Door" type="Area2D" parent="." unique_id=1830731207]
 position = Vector2(635, 585)
@@ -240,9 +239,6 @@ position = Vector2(-8, 13)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1547737807]
 libraries/ = SubResource("AnimationLibrary_clouds")
 autoplay = &"cloud_drift"
-
-[node name="SceneTitleCard" parent="." unique_id=1700513448 instance=ExtResource("16_title_card")]
-visible = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=523084111]
 layer = 200

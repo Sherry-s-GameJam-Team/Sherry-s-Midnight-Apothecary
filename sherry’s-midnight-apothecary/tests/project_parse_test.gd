@@ -50,6 +50,7 @@ static func run(test: TestSupport) -> void:
 		"res://shared/potions/ui/potion_hotbar.tscn",
 		"res://shared/potions/ui/potion_hotbar_slot.tscn",
 		"res://shared/potions/ui/potion_order_panel.tscn",
+		"res://minigames/crimson_aqueduct/scenes/crimson_aqueduct_root.tscn",
 	]:
 		var scene := load(scene_path) as PackedScene
 		test.expect(scene != null, "%s can be loaded." % scene_path)

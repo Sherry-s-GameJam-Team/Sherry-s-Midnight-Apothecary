@@ -65,7 +65,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(day_console.visible and not scene_tree.paused and day_console.command_input.has_focus(), "F1 opens a usable live daytime console without pausing DayRuntime.")
 	day_console._input(fallback_event)
 	test.expect(not day_console.visible and not scene_tree.paused, "F1 closes the daytime console cleanly.")
-	test.expect_equal(day_console.execute_command("scene town"), "scene = Town", "Console opens Town during the day.")
+	test.expect_equal(day_console.execute_command("scene town"), "scene = 流明街", "Console opens Town during the day.")
 	test.expect_equal(day_console.execute_command("scene raintree"), "scene = Rain Tree", "Console opens RainTree during the day.")
 	test.expect_equal(day_console.execute_command("scene lake"), "scene = Lake", "Console opens Lake during the day.")
 	test.expect_equal(day_console.execute_command("title"), "标题动画已播放：Lake", "Console replays the current scene title.")
