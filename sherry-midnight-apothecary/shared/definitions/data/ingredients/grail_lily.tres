@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/grail_lily/preview/herb_slot_thumb.png" id="3_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/grail_lily/preview/herb_preview.png" id="4_preview"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/grail_lily/data/flower_layer.tres" id="5_flower"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/grail_lily/data/foliage_layer.tres" id="6_foliage"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"grail_lily"
+display_name = "圣杯百合"
+english_name = "Grail-Lily"
+description = "花瓣高高展开，形如承接恩泽的圣杯；洁白花冠可显著提高成品药水的品质。"
+lore = "传说它由第一批寻找圣杯的骑士发现于纯洁之地，花瓣永远洁白、不染尘埃。它象征骑士精神与纯洁信念，常被种植在修道院的内庭中。"
+icon = ExtResource("3_icon")
+preview_texture = ExtResource("4_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer_script")]([ExtResource("5_flower"), ExtResource("6_foliage")])
+base_value = 20
+spectrum_start = 0.46
+spectrum_end = 0.66
+base_quality = 1.1
+base_concentration = 1.0

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2qk4vyp3s0s0"]
+
+[ext_resource type="Script" uid="uid://2lpaezz2fwc2i" path="res://day/interactables/control_system/pressure_plate_controller.gd" id="1_plate"]
+
+[sub_resource type="RectangleShape2D" id="PlateTriggerShape"]
+size = Vector2(120, 40)
+
+[sub_resource type="RectangleShape2D" id="PlateVisualShape"]
+size = Vector2(120, 40)
+
+[node name="PressurePlate" type="Node2D"]
+script = ExtResource("1_plate")
+active_color = Color(0.2, 0.76, 0.42, 1)
+inactive_color = Color(0.76, 0.22, 0.22, 1)
+
+[node name="Visual" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-60, -20, 60, -20, 60, 20, -60, 20)
+color = Color(0.76, 0.22, 0.22, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("PlateTriggerShape")

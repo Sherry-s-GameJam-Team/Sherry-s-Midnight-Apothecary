@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="HeatProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://night/alchemy/heat/heat_profile_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"purple_concealment"
+ideal_min = 55.0
+ideal_max = 65.0
+warning_min = 45.0
+warning_max = 72.0
+burn_temperature = 82.0

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="HeatProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://night/alchemy/heat/heat_profile_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+id = &"dew_purification"
+ideal_min = 42.0
+ideal_max = 54.0
+warning_min = 34.0
+warning_max = 62.0
+burn_temperature = 76.0

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="HerbColorLayerData" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="1_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="2_piece_script"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_01.tres" id="3_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_02.tres" id="4_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_03.tres" id="5_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_04.tres" id="6_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_05.tres" id="7_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_06.tres" id="8_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_07.tres" id="9_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_08.tres" id="10_piece"]
+[ext_resource type="Resource" path="res://day/interactables/herb/herbs/praise_star_maple/data/pieces/fruit_09.tres" id="11_piece"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"praise_star_maple_fruit_layer"
+display_name = "带绳星果层"
+color_id = &"gold"
+display_color = Color(0.95, 0.72, 0.19, 1)
+spectrum_x = 0.14
+layer_yield_multiplier = 0.55
+pieces = Array[ExtResource("2_piece_script")]([ExtResource("3_piece"), ExtResource("4_piece"), ExtResource("5_piece"), ExtResource("6_piece"), ExtResource("7_piece"), ExtResource("8_piece"), ExtResource("9_piece"), ExtResource("10_piece"), ExtResource("11_piece")])

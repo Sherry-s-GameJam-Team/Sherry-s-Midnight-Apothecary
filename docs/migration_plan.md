@@ -1,0 +1,10 @@
+# 内容迁移顺序
+
+1. 保持旧项目只读。
+2. 优先迁移原始美术与音频，不复制旧 GameRoot。
+3. 将需要共享的主角数值映射到 `PlayerData`。
+4. 以森林贯通一次白天探索和一次夜间经营。
+5. 再迁移集市内容。
+6. 湖泊最后迁移。
+
+旧关卡应拆成 `day/levels/` 下的内容（home、grassland、forest、lake、lakebed、market），不直接带入旧玩家、主摄像机或完整流程控制代码。共用玩家控制器位于 `shared/player/`，共用关卡系统位于 `day/systems/`。

@@ -1,0 +1,283 @@
+[gd_scene format=3 uid="uid://yqkapq3dix0r"]
+
+[ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="1_environment"]
+[ext_resource type="Texture2D" uid="uid://dqt6dhtwjsxy4" path="res://day/levels/home/home.png" id="2_18uk7"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_indoor_collision.tscn" id="4_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="5_presentation"]
+[ext_resource type="Texture2D" uid="uid://cl0tw0r5ojcmq" path="res://day/levels/home/door.png" id="6_door"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="7_door_portal"]
+[ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://shared/shaders/interaction_outline.gdshader" id="8_door_outline"]
+[ext_resource type="Texture2D" uid="uid://bspflplmb646m" path="res://day/levels/home/table.png" id="9_8dq4v"]
+[ext_resource type="Script" uid="uid://cvvsurytalq5u" path="res://day/systems/alchemy_station.gd" id="10_alchemy_station"]
+[ext_resource type="Texture2D" uid="uid://b0cq20puj1m7o" path="res://day/levels/home/equip.png" id="11_equip"]
+[ext_resource type="PackedScene" uid="uid://q2mlpc4fa1do" path="res://night/alchemy/alchemy_runtime.tscn" id="12_alchemy_runtime"]
+[ext_resource type="Texture2D" uid="uid://c0ql7o82wld7t" path="res://day/levels/home/transsformer.png" id="13_ga1c4"]
+[ext_resource type="Texture2D" uid="uid://c2ywnit3lhswg" path="res://day/levels/home/bedroom.png" id="14_k5h2p"]
+[ext_resource type="Script" uid="uid://j1cxm2tmwnyr" path="res://day/levels/home/home_camera_director.gd" id="15_camera_director"]
+[ext_resource type="Shader" uid="uid://cqj6mkygmcjps" path="res://day/levels/home/bedroom_barrier_dissolve.gdshader" id="17_barrier_shader"]
+[ext_resource type="Texture2D" uid="uid://x303tlcn0gfs" path="res://day/levels/home/shader.png" id="18_li0wu"]
+[ext_resource type="Texture2D" uid="uid://b07j2gsqg27i" path="res://day/levels/home/bedroomdoor.png" id="19_7yaos"]
+[ext_resource type="Script" path="res://day/levels/home/map_switch_station.gd" id="19_map_switch_station"]
+[ext_resource type="Texture2D" uid="uid://7ydlo8v0i0yw" path="res://day/levels/home/npc/solder.png" id="20_young_knight"]
+[ext_resource type="Texture2D" uid="uid://7a726ryhg0wn" path="res://day/levels/home/npc/solder2.png" id="21_senior_knight"]
+[ext_resource type="Script" uid="uid://bqe86enjoel00" path="res://day/levels/home/home_day_one_intro.gd" id="22_day_one_intro"]
+[ext_resource type="Resource" uid="uid://ckeajf5jckvmm" path="res://day/levels/home/home_day_one_intro.dialogue" id="23_day_one_dialogue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
+size = Vector2(96, 1728)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_door_outline"]
+shader = ExtResource("8_door_outline")
+shader_parameter/outline_color = Color(1, 0.84, 0.3, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(255.75, 493)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_equip_outline"]
+shader = ExtResource("8_door_outline")
+shader_parameter/outline_color = Color(1, 0.84, 0.3, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_equip"]
+size = Vector2(540, 577)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_map_switch_outline"]
+shader = ExtResource("8_door_outline")
+shader_parameter/outline_color = Color(0.44, 0.72, 1, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_map_switch"]
+size = Vector2(367, 619)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bedroom_barrier"]
+shader = ExtResource("17_barrier_shader")
+shader_parameter/dissolve = 0.0
+shader_parameter/magic_color = Color(0.42, 0.22, 1, 1)
+shader_parameter/edge_color = Color(0.18, 0.9, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bedroom_entrance"]
+size = Vector2(66.913025, 747.25)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bedroom_door_outline"]
+shader = ExtResource("8_door_outline")
+shader_parameter/outline_color = Color(0.44, 0.72, 1, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bedroom_door"]
+size = Vector2(290, 520)
+
+[node name="Home" type="Node2D" unique_id=729989334]
+texture_filter = 1
+position = Vector2(0, 7)
+script = ExtResource("1_environment")
+debug_scene_id = "home"
+
+[node name="Interior" type="Sprite2D" parent="." unique_id=508247289]
+z_index = -10
+position = Vector2(2.9999998, 149)
+scale = Vector2(0.62720853, 0.62720853)
+texture = ExtResource("2_18uk7")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1495383979]
+
+[node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1967546524]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=1416155739]
+polygon = PackedVector2Array(-2545, 867, 3633, 857, 3629, 812, -2552, 803)
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1633258588]
+position = Vector2(-2583.67, 432)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=896764743]
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1294443687]
+position = Vector2(3669, 493)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=541855407]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_side_barrier")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=780675265]
+z_index = 10
+position = Vector2(2554, 715)
+script = ExtResource("3_player")
+character_scale = 0.8
+depth_scale_enabled = true
+
+[node name="SherryCollision" parent="Player" unique_id=843162247 instance=ExtResource("4_collision")]
+position = Vector2(0, 60)
+
+[node name="SherryPresentation" parent="Player" unique_id=1617229915 instance=ExtResource("5_presentation")]
+position = Vector2(-5, 6)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1539167542]
+position = Vector2(0, -210)
+limit_left = 0
+limit_top = 144
+limit_right = 4416
+limit_bottom = 864
+
+[node name="HomeCameraDirector" type="Node" parent="." unique_id=1155188782]
+script = ExtResource("15_camera_director")
+player_path = NodePath("../Player")
+camera_path = NodePath("../Player/Camera2D")
+left_barrier_path = NodePath("../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../WorldBounds/RightBarrier/CollisionShape2D")
+entrance_area_path = NodePath("../BedroomEntrance")
+entrance_collision_path = NodePath("../BedroomEntrance/CollisionShape2D")
+blocker_collision_path = NodePath("../BedroomBlocker/CollisionShape2D")
+barrier_visual_path = NodePath("../Shader")
+
+[node name="DayOneIntro" type="Node" parent="." unique_id=1231674233]
+script = ExtResource("22_day_one_intro")
+dialogue_resource = ExtResource("23_day_one_dialogue")
+player_path = NodePath("../Player")
+camera_director_path = NodePath("../HomeCameraDirector")
+trigger_marker_path = NodePath("../Cinematic/trid")
+young_knight_path = NodePath("../Cinematic/YoungKnight")
+senior_knight_path = NodePath("../Cinematic/SeniorKnight")
+fade_overlay_path = NodePath("../CinematicFade/FadeOverlay")
+
+[node name="CinematicFade" type="CanvasLayer" parent="." unique_id=1760910053]
+layer = 90
+
+[node name="FadeOverlay" type="ColorRect" parent="CinematicFade" unique_id=1644496050]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Door" type="Area2D" parent="." unique_id=1755164246]
+position = Vector2(2595, 601)
+script = ExtResource("7_door_portal")
+destination_level = &"market"
+destination_entry_id = &"from_home"
+fallback_scene_path = "res://day/levels/market/town/town.tscn"
+interaction_hint_enabled = true
+
+[node name="Visual" type="Sprite2D" parent="Door" unique_id=931369178]
+material = SubResource("ShaderMaterial_door_outline")
+position = Vector2(-27.548603, -32.847775)
+scale = Vector2(0.8225825, 0.8159701)
+texture = ExtResource("6_door")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=500275799]
+position = Vector2(-24, 1)
+shape = SubResource("RectangleShape2D_door")
+
+[node name="Equip" type="Area2D" parent="." unique_id=1274751298]
+position = Vector2(1407, 510)
+script = ExtResource("10_alchemy_station")
+alchemy_scene = ExtResource("12_alchemy_runtime")
+
+[node name="Visual" type="Sprite2D" parent="Equip" unique_id=542806976]
+material = SubResource("ShaderMaterial_equip_outline")
+position = Vector2(-4.5000086, 10.999989)
+scale = Vector2(0.6274285, 0.63058823)
+texture = ExtResource("11_equip")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Equip" unique_id=20259292]
+position = Vector2(4, 42)
+shape = SubResource("RectangleShape2D_equip")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=861958384]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1518116055]
+position = Vector2(2558, 763)
+
+[node name="from_market" type="Marker2D" parent="EntryPoints" unique_id=1070510327]
+position = Vector2(2549, 724)
+
+[node name="bedroomdoor" type="Marker2D" parent="EntryPoints" unique_id=726330820]
+position = Vector2(-902, 718)
+
+[node name="Table" type="Sprite2D" parent="." unique_id=40416591]
+z_index = 11
+position = Vector2(808, 663)
+scale = Vector2(0.50658125, 0.5065813)
+texture = ExtResource("9_8dq4v")
+
+[node name="Transsformer" type="Area2D" parent="." unique_id=303685540]
+position = Vector2(2217, 526)
+script = ExtResource("19_map_switch_station")
+
+[node name="Visual" type="Sprite2D" parent="Transsformer" unique_id=1267980823]
+material = SubResource("ShaderMaterial_map_switch_outline")
+scale = Vector2(0.8276242, 0.82674414)
+texture = ExtResource("13_ga1c4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transsformer" unique_id=520911155]
+position = Vector2(2.5, 8.5)
+shape = SubResource("RectangleShape2D_map_switch")
+
+[node name="Bedroom" type="Sprite2D" parent="." unique_id=523818523]
+position = Vector2(-1050.0004, 508.99994)
+scale = Vector2(0.8853435, 0.82870364)
+texture = ExtResource("14_k5h2p")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=135241443]
+position = Vector2(148, 527)
+
+[node name="Shader" type="Sprite2D" parent="." unique_id=1822030358]
+material = SubResource("ShaderMaterial_bedroom_barrier")
+position = Vector2(24.499994, 495.5)
+scale = Vector2(0.6463158, 0.64575976)
+texture = ExtResource("18_li0wu")
+
+[node name="BedroomEntrance" type="Area2D" parent="." unique_id=766253254]
+position = Vector2(104.347885, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomEntrance" unique_id=712955122]
+position = Vector2(-22.804398, -58.375)
+shape = SubResource("RectangleShape2D_bedroom_entrance")
+
+[node name="BedroomBlocker" type="StaticBody2D" parent="." unique_id=1021805823]
+position = Vector2(104.347885, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomBlocker" unique_id=503967931]
+position = Vector2(-43.347885, -130)
+shape = SubResource("RectangleShape2D_bedroom_entrance")
+
+[node name="Cinematic" type="Node2D" parent="." unique_id=2091831404]
+position = Vector2(304, 19)
+
+[node name="CameraFocus" type="Marker2D" parent="Cinematic" unique_id=1457031226]
+position = Vector2(510, 504)
+
+[node name="YoungKnight" type="Sprite2D" parent="Cinematic" unique_id=601519406]
+z_index = 12
+position = Vector2(622, 661.00006)
+scale = Vector2(0.2663291, 0.26632908)
+texture = ExtResource("20_young_knight")
+
+[node name="SeniorKnight" type="Sprite2D" parent="Cinematic" unique_id=2085169272]
+z_index = 12
+position = Vector2(487, 625)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("21_senior_knight")
+
+[node name="trid" type="Marker2D" parent="Cinematic" unique_id=694698045]
+position = Vector2(63, 801)
+
+[node name="Bedroomdoor" type="Area2D" parent="." unique_id=1483891026]
+position = Vector2(-897.75, 512.1491)
+script = ExtResource("7_door_portal")
+destination_level = &"bedroom"
+destination_entry_id = &"right_side"
+fallback_scene_path = "res://day/levels/home/bedroom.tscn"
+interaction_hint_enabled = true
+
+[node name="Visual" type="Sprite2D" parent="Bedroomdoor" unique_id=1878229542]
+material = SubResource("ShaderMaterial_bedroom_door_outline")
+scale = Vector2(0.8832418, 0.82982165)
+texture = ExtResource("19_7yaos")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroomdoor" unique_id=1604470777]
+shape = SubResource("RectangleShape2D_bedroom_door")

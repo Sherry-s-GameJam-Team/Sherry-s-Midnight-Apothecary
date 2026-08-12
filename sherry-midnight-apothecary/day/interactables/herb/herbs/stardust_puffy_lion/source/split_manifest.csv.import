@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://djag43wjg1vg4"
+
+[deps]
+
+files=["res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.name.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.role.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.area.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.cropped.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.full.translation"]
+
+source_file="res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.csv"
+dest_files=["res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.name.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.role.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.bbox.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.area.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.cropped.translation", "res://day/interactables/herb/herbs/stardust_puffy_lion/source/split_manifest.full.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

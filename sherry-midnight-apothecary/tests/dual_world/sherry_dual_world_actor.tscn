@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://shared/player/day_player_controller.gd" id="1_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="2_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="3_presentation"]
+
+[node name="Sherry" type="CharacterBody2D"]
+z_index = 10
+floor_snap_length = 12.0
+script = ExtResource("1_player")
+
+[node name="SherryCollision" parent="." instance=ExtResource("2_collision")]
+
+[node name="SherryPresentation" parent="." instance=ExtResource("3_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -180)
+limit_left = 0
+limit_top = 0
+limit_right = 3400
+limit_bottom = 720
+
