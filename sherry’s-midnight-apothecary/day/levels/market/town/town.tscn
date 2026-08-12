@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b57ln8afc42ex" path="res://day/art/town/FS/cloud.png" id="2_fs_cloud"]
 [ext_resource type="Texture2D" uid="uid://vfa3lgk6bw2b" path="res://day/art/town/MS/part2.png" id="5_56gmp"]
-[ext_resource type="Texture2D" uid="uid://uhtmpmxhrukj" path="res://day/art/town/CS/center.png" id="5_cs"]
 [ext_resource type="Texture2D" uid="uid://d3oce0aoocqgc" path="res://day/levels/market/town/FS.png" id="6_s1bmf"]
 [ext_resource type="Texture2D" uid="uid://suwl7i2ival4" path="res://day/levels/market/town/floor.png" id="8_rso1f"]
 [ext_resource type="Texture2D" uid="uid://6kytrvb1hse3" path="res://day/levels/market/town/home.png" id="9_mhwfj"]
@@ -88,11 +87,12 @@ centered = false
 [node name="CloudDrift" type="Node2D" parent="FS" unique_id=540081489]
 
 [node name="Clouds" type="Sprite2D" parent="FS/CloudDrift" unique_id=668432697]
+position = Vector2(1468, 22)
 texture = ExtResource("2_fs_cloud")
 centered = false
 
 [node name="CloudsRepeat" type="Sprite2D" parent="FS/CloudDrift" unique_id=1915558642]
-position = Vector2(2172, 0)
+position = Vector2(4372, -19)
 texture = ExtResource("2_fs_cloud")
 centered = false
 
@@ -101,8 +101,14 @@ z_index = -19
 scroll_scale = Vector2(0.5, 0.5)
 
 [node name="Artwork2" type="Sprite2D" parent="DistantTown" unique_id=765967371]
-position = Vector2(786.00024, 203)
-scale = Vector2(0.5216895, 0.5216895)
+position = Vector2(3971, 354)
+scale = Vector2(0.25081155, 0.2968036)
+texture = ExtResource("6_s1bmf")
+centered = false
+
+[node name="Artwork3" type="Sprite2D" parent="DistantTown" unique_id=749966165]
+position = Vector2(2349, 326)
+scale = Vector2(0.22131582, 0.3287671)
 texture = ExtResource("6_s1bmf")
 centered = false
 
@@ -111,16 +117,33 @@ z_index = -10
 scroll_scale = Vector2(0.68, 0.68)
 
 [node name="TownLeft" type="Sprite2D" parent="MS" unique_id=1049310137]
-position = Vector2(950.00006, 114)
-scale = Vector2(0.487672, 0.42385447)
+position = Vector2(1281, -21)
+scale = Vector2(0.6121432, 0.4885445)
 texture = ExtResource("9_rso1f")
 centered = false
 
 [node name="TownLeft2" type="Sprite2D" parent="MS" unique_id=1282627812]
-position = Vector2(3545, 43)
+position = Vector2(2664, 45)
 scale = Vector2(0.5027186, 0.43735743)
 texture = ExtResource("9_rso1f")
 centered = false
+
+[node name="TownLeft3" type="Sprite2D" parent="MS" unique_id=1163228549]
+position = Vector2(13, 104)
+scale = Vector2(0.40394202, 0.39487872)
+texture = ExtResource("9_rso1f")
+centered = false
+
+[node name="TownLeft4" type="Sprite2D" parent="MS" unique_id=581978606]
+position = Vector2(4308, 45)
+scale = Vector2(0.55505216, 0.43735743)
+texture = ExtResource("9_rso1f")
+centered = false
+
+[node name="Floor2" type="Sprite2D" parent="MS" unique_id=783473618]
+position = Vector2(3180, 654)
+scale = Vector2(1.0761689, 1)
+texture = ExtResource("8_rso1f")
 
 [node name="CS" type="Parallax2D" parent="." unique_id=1003396534]
 scroll_scale = Vector2(0.82, 0.82)
@@ -139,12 +162,6 @@ position = Vector2(602, 434)
 scale = Vector2(0.39082187, 0.3957502)
 texture = ExtResource("9_mhwfj")
 
-[node name="Center" type="Sprite2D" parent="CS" unique_id=1441064153]
-visible = false
-position = Vector2(3942, 79)
-texture = ExtResource("5_cs")
-centered = false
-
 [node name="Part3" type="Sprite2D" parent="CS" unique_id=2113440186]
 position = Vector2(2695, 355)
 scale = Vector2(0.5904696, 0.5904696)
@@ -157,8 +174,8 @@ scale = Vector2(0.39555547, 0.39481273)
 texture = ExtResource("13_rso1f")
 
 [node name="Cross" type="Sprite2D" parent="CS" unique_id=920060703]
-position = Vector2(5259, 338)
-scale = Vector2(0.52429, 0.52428997)
+position = Vector2(5240, 380)
+scale = Vector2(0.4594544, 0.4594544)
 texture = ExtResource("14_mhwfj")
 
 [node name="Fountain" type="Sprite2D" parent="CS" unique_id=1352107887]
@@ -167,8 +184,8 @@ scale = Vector2(0.16400146, 0.16400146)
 texture = ExtResource("23_qsket")
 
 [node name="FountainSprite" parent="CS/Fountain" unique_id=1088006122 instance=ExtResource("24_cq1f3")]
-position = Vector2(2.4905882, -23.535152)
-scale = Vector2(1.0736474, 1.0065424)
+position = Vector2(12.1936035, 9.573547)
+scale = Vector2(1.0736474, 1.0339803)
 
 [node name="Door" type="Area2D" parent="." unique_id=1830731207]
 position = Vector2(635, 585)
