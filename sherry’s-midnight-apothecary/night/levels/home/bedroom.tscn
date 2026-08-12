@@ -35,7 +35,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
 [sub_resource type="RectangleShape2D" id="SleepInteractionShape"]
-size = Vector2(720, 280)
+size = Vector2(454, 280)
 
 [sub_resource type="WorldBoundaryShape2D" id="GroundShape"]
 distance = -56.0
@@ -94,6 +94,7 @@ sleep_animation_path = NodePath("../Sleep")
 bed_visual_path = NodePath("../Bed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SleepInteraction" unique_id=2071154873]
+position = Vector2(-1, 0)
 shape = SubResource("SleepInteractionShape")
 
 [node name="sleep" type="AnimatedSprite2D" parent="." unique_id=1323050570]
