@@ -3,6 +3,9 @@ extends Node
 
 signal finished(result: NightResult)
 
+const NIGHT_HOME_SCENE := preload("res://night/levels/home/home.tscn")
+const NIGHT_BEDROOM_SCENE := preload("res://night/levels/home/bedroom.tscn")
+
 var player_data: PlayerData
 var day := 1
 var current_night_result := NightResult.new()
@@ -10,6 +13,7 @@ var _standalone_player_data: PlayerData
 
 @onready var shop_slot: Node2D = $ShopSlot
 @onready var night_home: NightHome = $ShopSlot/NightHome
+@onready var night_bgm: AudioStreamPlayer = $InteriorNightBGM
 @onready var customer_slot: CanvasLayer = $CustomerSlot
 @onready var business_placeholder: BusinessPlaceholder = $CustomerSlot/BusinessPlaceholder
 @onready var alchemy_slot: CanvasLayer = $AlchemySlot
@@ -97,6 +101,32 @@ func open_production() -> void:
 		alchemy_runtime.show_production_panel()
 
 
+func switch_room(room_id: StringName, entry_id: StringName = &"default") -> bool:
+	if shop_slot == null:
+		return false
+	var scene: PackedScene
+	match room_id:
+		&"home":
+			scene = NIGHT_HOME_SCENE
+		&"bedroom":
+			scene = NIGHT_BEDROOM_SCENE
+		_:
+			return false
+	_clear_interaction_hints()
+	for child in shop_slot.get_children():
+		shop_slot.remove_child(child)
+		child.queue_free()
+	var room := scene.instantiate() as Node2D
+	if room == null:
+		return false
+	shop_slot.add_child(room)
+	_connect_room(room)
+	_place_room_player(room, entry_id)
+	room.propagate_call(&"on_level_entered", [entry_id], true)
+	_resolve_scene_nodes()
+	return true
+
+
 func finish_night(result: NightResult = null) -> void:
 	var final_result := result if result != null else current_night_result
 	if final_result != null:
@@ -117,6 +147,14 @@ func _on_alchemy_requested() -> void:
 
 func _on_production_requested() -> void:
 	open_production()
+
+
+func _on_bedroom_requested() -> void:
+	switch_room(&"bedroom", &"from_home")
+
+
+func _on_bedroom_return_requested() -> void:
+	switch_room(&"home", &"bedroomdoor")
 
 
 func _on_business_request_return() -> void:
@@ -149,10 +187,25 @@ func _resolve_scene_nodes() -> void:
 func _place_player_at_default() -> void:
 	if night_home == null:
 		return
-	var player := night_home.get_node_or_null("Player") as CharacterBody2D
-	var entry := night_home.get_node_or_null("EntryPoints/default") as Marker2D
+	_place_room_player(night_home, &"default")
+
+
+func _place_room_player(room: Node, entry_id: StringName) -> void:
+	var player := room.get_node_or_null("Player") as CharacterBody2D
+	var entry := room.get_node_or_null("EntryPoints/%s" % entry_id) as Marker2D
 	if player != null and entry != null:
 		player.global_position = entry.global_position
+
+
+func _connect_room(room: Node) -> void:
+	if room is NightHome:
+		var home := room as NightHome
+		home.business_requested.connect(_on_business_requested)
+		home.alchemy_requested.connect(_on_alchemy_requested)
+		home.production_requested.connect(_on_production_requested)
+		home.bedroom_requested.connect(_on_bedroom_requested)
+	elif room is NightBedroom:
+		(room as NightBedroom).return_requested.connect(_on_bedroom_return_requested)
 
 
 func _set_player_enabled(enabled: bool) -> void:

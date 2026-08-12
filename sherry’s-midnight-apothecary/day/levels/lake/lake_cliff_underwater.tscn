@@ -86,6 +86,8 @@ shader_parameter/scale = 18.0
 texture_filter = 1
 script = ExtResource("1_main")
 debug_scene_id = "lake_cliff_underwater"
+camera_player_offset = Vector2(0, -410)
+camera_elevator_offset = Vector2(0, -540)
 
 [node name="World" type="Node2D" parent="." unique_id=656459479]
 

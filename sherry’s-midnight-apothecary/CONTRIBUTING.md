@@ -51,4 +51,3 @@ def test():
 ## Finally but most importantly
 
 Be kind and nice to each other. We are all here to learn and improve, and we will surely make mistakes along the way. Dont' worry, we will fix them together.  
-

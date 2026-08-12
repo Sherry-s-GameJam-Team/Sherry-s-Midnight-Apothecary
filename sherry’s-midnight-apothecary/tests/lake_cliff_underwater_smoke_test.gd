@@ -17,6 +17,8 @@ func _run() -> void:
 	_assert(not scene.is_underwater(Vector2(0.0, 1599.0)), "underwater query above surface")
 	_assert(scene.camera != null and scene.player != null, "camera and player resolve")
 	_assert(scene.camera.enabled and not scene.camera.position_smoothing_enabled, "single-stage camera controller is active")
+	_assert(is_equal_approx(scene.camera_player_offset.y, -410.0), "player camera is shifted upward by 500 units")
+	_assert(is_equal_approx(scene.camera_elevator_offset.y, -540.0), "elevator camera is shifted upward by 500 units")
 	var water_surface := scene.get_node("World/WaterSurface")
 	var water_planes := 0
 	for water_layer in water_surface.get_children():

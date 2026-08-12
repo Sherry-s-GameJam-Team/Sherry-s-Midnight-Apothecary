@@ -8,8 +8,8 @@ signal exited_underwater
 @export var water_y := 1600.0
 @export var elevator_top_y := 900.0
 @export var elevator_bottom_y := 4300.0
-@export var camera_player_offset := Vector2(0.0, -30.0)
-@export var camera_elevator_offset := Vector2(0.0, -120.0)
+@export var camera_player_offset := Vector2(0.0, -410.0)
+@export var camera_elevator_offset := Vector2(0.0, -540.0)
 @export_range(1.0, 20.0, 0.5) var camera_follow_speed := 5.0
 @export var debug_draw := false:
 	set(value):

@@ -15,8 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://x303tlcn0gfs" path="res://day/levels/home/shader.png" id="13_barrier"]
 [ext_resource type="Texture2D" uid="uid://b07j2gsqg27i" path="res://day/levels/home/bedroomdoor.png" id="14_bedroom_door"]
 [ext_resource type="Script" uid="uid://co7rwmom8agfn" path="res://night/levels/home/night_station_interaction.gd" id="15_interaction"]
-[ext_resource type="AudioStream" uid="uid://cx8yq33f441xb" path="res://audio/bgm/Interior_night.wav" id="16_interior_night_bgm"]
-[ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
+[ext_resource type="Script" path="res://day/levels/home/home_camera_director.gd" id="16_camera_director"]
+[ext_resource type="Script" path="res://night/levels/home/night_bedroom_portal.gd" id="17_bedroom_portal"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -78,14 +78,18 @@ shader_parameter/edge_color = Color(0.18, 0.64, 1, 1)
 [sub_resource type="RectangleShape2D" id="BedroomEntranceShape"]
 size = Vector2(66.913025, 747.25)
 
+[sub_resource type="RectangleShape2D" id="BedroomDoorShape"]
+size = Vector2(290, 520)
+
+[sub_resource type="ShaderMaterial" id="BedroomDoorOutline"]
+shader = ExtResource("7_outline")
+shader_parameter/outline_color = Color(0.44, 0.72, 1, 0.95)
+shader_parameter/outline_width = 2.0
+
 [node name="NightHome" type="Node2D" unique_id=129948175]
 texture_filter = 1
 position = Vector2(0, 7)
 script = ExtResource("1_home")
-
-[node name="InteriorNightBGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("16_interior_night_bgm")
-script = ExtResource("17_looping_bgm")
 
 [node name="NightLighting" type="Node2D" parent="." unique_id=418127947]
 
@@ -183,6 +187,18 @@ limit_top = 144
 limit_right = 4416
 limit_bottom = 864
 
+[node name="HomeCameraDirector" type="Node" parent="."]
+script = ExtResource("16_camera_director")
+player_path = NodePath("../Player")
+camera_path = NodePath("../Player/Camera2D")
+left_barrier_path = NodePath("../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../WorldBounds/RightBarrier/CollisionShape2D")
+entrance_area_path = NodePath("../BedroomEntrance")
+entrance_collision_path = NodePath("../BedroomEntrance/CollisionShape2D")
+blocker_collision_path = NodePath("../BedroomBlocker/CollisionShape2D")
+barrier_visual_path = NodePath("../BedroomBarrierVisual")
+interaction_hint_text = "按[E]进入卧室区域"
+
 [node name="DoorVisual" type="Sprite2D" parent="." unique_id=676724327]
 position = Vector2(2567.4514, 568.1522)
 scale = Vector2(0.8225825, 0.8159701)
@@ -208,6 +224,9 @@ shape = SubResource("EquipShape")
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=141730865]
 position = Vector2(2531, 748)
+
+[node name="bedroomdoor" type="Marker2D" parent="EntryPoints"]
+position = Vector2(-690, 780)
 
 [node name="Table" type="Area2D" parent="." unique_id=1253998386]
 z_index = 11
@@ -258,7 +277,28 @@ position = Vector2(104.347885, 620)
 position = Vector2(-43.347885, -130)
 shape = SubResource("BedroomEntranceShape")
 
-[node name="BedroomDoorVisual" type="Sprite2D" parent="." unique_id=1566990108]
+[node name="BedroomEntrance" type="Area2D" parent="."]
+position = Vector2(104.347885, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomEntrance"]
+position = Vector2(-22.804398, -58.375)
+shape = SubResource("BedroomEntranceShape")
+
+[node name="Bedroomdoor" type="Area2D" parent="."]
 position = Vector2(-897.75, 512.1491)
+
+[node name="Visual" type="Sprite2D" parent="Bedroomdoor" unique_id=1566990108]
+material = SubResource("BedroomDoorOutline")
 scale = Vector2(0.8832418, 0.82982165)
 texture = ExtResource("14_bedroom_door")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroomdoor"]
+shape = SubResource("BedroomDoorShape")
+
+[node name="BedroomPortal" type="Area2D" parent="."]
+position = Vector2(-897.75, 512.1491)
+script = ExtResource("17_bedroom_portal")
+visual_path = NodePath("../Bedroomdoor/Visual")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomPortal"]
+shape = SubResource("BedroomDoorShape")

@@ -36,4 +36,3 @@ godot --headless --path . --editor --quit
 godot --headless --path . --script res://tests/run_tests.gd
 ```
 <!-- PROJECT_ARCHITECTURE_END -->
-

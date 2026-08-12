@@ -1,13 +1,19 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://night/night_runtime.gd" id="1_night"]
 [ext_resource type="PackedScene" path="res://night/alchemy/alchemy_runtime.tscn" id="2_alchemy"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="3_console"]
 [ext_resource type="PackedScene" path="res://night/levels/home/home.tscn" id="4_home"]
 [ext_resource type="PackedScene" path="res://night/shop/business_placeholder.tscn" id="5_business"]
+[ext_resource type="AudioStream" path="res://audio/bgm/Interior_night.wav" id="6_night_bgm"]
+[ext_resource type="Script" path="res://audio/looping_bgm_player.gd" id="7_looping_bgm"]
 
 [node name="NightRuntime" type="Node"]
 script = ExtResource("1_night")
+
+[node name="InteriorNightBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_night_bgm")
+script = ExtResource("7_looping_bgm")
 
 [node name="ShopSlot" type="Node2D" parent="."]
 
@@ -35,5 +41,6 @@ layer = 220
 [connection signal="business_requested" from="ShopSlot/NightHome" to="." method="_on_business_requested"]
 [connection signal="alchemy_requested" from="ShopSlot/NightHome" to="." method="_on_alchemy_requested"]
 [connection signal="production_requested" from="ShopSlot/NightHome" to="." method="_on_production_requested"]
+[connection signal="bedroom_requested" from="ShopSlot/NightHome" to="." method="_on_bedroom_requested"]
 [connection signal="request_return" from="CustomerSlot/BusinessPlaceholder" to="." method="_on_business_request_return"]
 [connection signal="request_close" from="AlchemySlot/AlchemyRuntime" to="." method="_on_alchemy_request_close"]

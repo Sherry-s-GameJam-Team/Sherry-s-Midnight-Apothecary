@@ -23,6 +23,7 @@ static func run(test: TestSupport) -> void:
 		"res://day/art/lake/lake.tscn",
 		"res://night/night_runtime.tscn",
 		"res://night/levels/home/home.tscn",
+		"res://night/levels/home/bedroom.tscn",
 		"res://night/shop/business_placeholder.tscn",
 		"res://night/alchemy/alchemy_runtime.tscn",
 		"res://night/alchemy/brewing_panel.tscn",
