@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="HerbPieceData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/pieces/fruit/fruit_09.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"herdsmans_loaf_bush_fruit_09"
+display_name = "块果 9"
+kind = 0
+texture = ExtResource("2_texture")
+source_rect = Rect2i(1707, 2591, 339, 339)
+area_ratio = 0.12827140
+detachable = true
+grindable = true
+color_id = &"orange"
+spectrum_x = 0.2
+display_color = Color(0.86, 0.32, 0.16, 1)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.15
+z_order = 20
+

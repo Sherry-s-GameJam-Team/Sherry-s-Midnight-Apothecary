@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="FireStateLibrary" format=3 uid="uid://cexg1q5noli0"]
+
+[ext_resource type="Script" uid="uid://wapu556yww0d" path="res://night/alchemy/fire_visual/scripts/fire_state_library.gd" id="1"]
+
+[resource]
+script = ExtResource("1")

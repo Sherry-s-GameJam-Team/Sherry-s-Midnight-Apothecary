@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://bwyr41p1403wh"]
+
+[ext_resource type="Script" uid="uid://hqa1qlsr7gos" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Resource" path="res://night/alchemy/heat/profiles/cyan_shield.tres" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"cyan_potion"
+display_name = "青色护盾药水"
+color_name = "青"
+display_color = Color(0.12, 0.78, 0.76, 1)
+main_effect_id = &"shield"
+spectrum_center_x = 0.62
+effect_ranges = Array[Vector2]([Vector2(0.57, 0.68)])
+base_price = 24
+heat_profile = ExtResource("2")

@@ -1,0 +1,206 @@
+[gd_scene format=3 uid="uid://dy250sntmp0k3"]
+
+[ext_resource type="Script" uid="uid://ca7qlt22bulcv" path="res://tests/dual_world/dual_world_puzzle_demo.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://dj25dm44286jq" path="res://tests/dual_world/corrupted_world.tscn" id="2_corrupted"]
+[ext_resource type="PackedScene" path="res://tests/dual_world/original_world.tscn" id="3_original"]
+[ext_resource type="PackedScene" path="res://tests/dual_world/sherry_dual_world_actor.tscn" id="4_sherry"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="5_luca"]
+[ext_resource type="Script" uid="uid://dcj30mraql5hc" path="res://day/systems/dual_world/dual_world_state.gd" id="6_state"]
+[ext_resource type="Script" uid="uid://bmajb4okiljf" path="res://day/systems/dual_world/dual_world_manager.gd" id="7_manager"]
+[ext_resource type="Script" uid="uid://c0pcg4e8ceet8" path="res://day/systems/dual_world/dual_protagonist_controller.gd" id="8_controller"]
+
+[sub_resource type="RectangleShape2D" id="GroundLeftShape"]
+size = Vector2(800, 80)
+
+[sub_resource type="RectangleShape2D" id="GroundRightShape"]
+size = Vector2(1900, 80)
+
+[sub_resource type="RectangleShape2D" id="GateShape"]
+size = Vector2(70, 300)
+
+[sub_resource type="RectangleShape2D" id="LeftBoundShape"]
+size = Vector2(40, 720)
+
+[sub_resource type="RectangleShape2D" id="RightBoundShape"]
+size = Vector2(40, 720)
+
+[sub_resource type="RectangleShape2D" id="TriggerShape"]
+size = Vector2(120, 160)
+
+[sub_resource type="RectangleShape2D" id="GoalShape"]
+size = Vector2(160, 220)
+
+[node name="DualWorldLevel" type="Node2D" unique_id=1440337113]
+script = ExtResource("1_level")
+debug_scene_id = "dual_world_puzzle_demo"
+
+[node name="SharedWorld" type="Node2D" parent="." unique_id=1328837193]
+
+[node name="Background" type="Node2D" parent="SharedWorld" unique_id=523429320]
+
+[node name="Backdrop" type="Polygon2D" parent="SharedWorld/Background" unique_id=468286068]
+z_index = -10
+color = Color(0.88, 0.88, 0.9, 1)
+polygon = PackedVector2Array(0, 0, 3400, 0, 3400, 720, 0, 720)
+
+[node name="SharedVisual" type="Node2D" parent="SharedWorld" unique_id=956251000]
+
+[node name="GroundLeftVisual" type="Polygon2D" parent="SharedWorld/SharedVisual" unique_id=1311189063]
+color = Color(0.3, 0.32, 0.36, 1)
+polygon = PackedVector2Array(0, 620, 800, 620, 800, 700, 0, 700)
+
+[node name="GroundRightVisual" type="Polygon2D" parent="SharedWorld/SharedVisual" unique_id=1391803296]
+color = Color(0.3, 0.32, 0.36, 1)
+polygon = PackedVector2Array(1500, 620, 3400, 620, 3400, 700, 1500, 700)
+
+[node name="FinalGateVisual" type="Polygon2D" parent="SharedWorld/SharedVisual" unique_id=1592698521]
+color = Color(0.16, 0.17, 0.2, 1)
+polygon = PackedVector2Array(2665, 320, 2735, 320, 2735, 620, 2665, 620)
+
+[node name="AnchorVisual" type="Polygon2D" parent="SharedWorld/SharedVisual" unique_id=1946436083]
+color = Color(0.2, 0.72, 0.9, 1)
+polygon = PackedVector2Array(1660, 520, 1700, 470, 1740, 520, 1700, 590)
+
+[node name="SealVisual" type="Polygon2D" parent="SharedWorld/SharedVisual" unique_id=1951403793]
+color = Color(0.72, 0.22, 0.82, 1)
+polygon = PackedVector2Array(2210, 520, 2250, 470, 2290, 520, 2250, 590)
+
+[node name="GoalVisual" type="Polygon2D" parent="SharedWorld/SharedVisual" unique_id=1413548730]
+color = Color(0.2, 0.76, 0.42, 1)
+polygon = PackedVector2Array(3190, 600, 3250, 430, 3310, 600)
+
+[node name="SharedCollision" type="Node2D" parent="SharedWorld" unique_id=1450168782]
+
+[node name="GroundLeft" type="StaticBody2D" parent="SharedWorld/SharedCollision" unique_id=763696435]
+position = Vector2(400, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedCollision/GroundLeft" unique_id=2028490325]
+shape = SubResource("GroundLeftShape")
+
+[node name="GroundRight" type="StaticBody2D" parent="SharedWorld/SharedCollision" unique_id=1425595039]
+position = Vector2(2450, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedCollision/GroundRight" unique_id=2100640061]
+shape = SubResource("GroundRightShape")
+
+[node name="FinalGate" type="StaticBody2D" parent="SharedWorld/SharedCollision" unique_id=1137798655]
+position = Vector2(2700, 470)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedCollision/FinalGate" unique_id=1220953385]
+shape = SubResource("GateShape")
+
+[node name="LeftBoundary" type="StaticBody2D" parent="SharedWorld/SharedCollision" unique_id=860818287]
+position = Vector2(-20, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedCollision/LeftBoundary" unique_id=1882697153]
+shape = SubResource("LeftBoundShape")
+
+[node name="RightBoundary" type="StaticBody2D" parent="SharedWorld/SharedCollision" unique_id=1980867573]
+position = Vector2(3420, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedCollision/RightBoundary" unique_id=1348285755]
+shape = SubResource("RightBoundShape")
+
+[node name="SharedInteractables" type="Node2D" parent="SharedWorld" unique_id=861851709]
+
+[node name="LucaAnchor" type="Area2D" parent="SharedWorld/SharedInteractables" unique_id=2077759476]
+position = Vector2(1700, 540)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedInteractables/LucaAnchor" unique_id=1068960735]
+shape = SubResource("TriggerShape")
+
+[node name="SherrySeal" type="Area2D" parent="SharedWorld/SharedInteractables" unique_id=357764221]
+position = Vector2(2250, 540)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedInteractables/SherrySeal" unique_id=690965502]
+shape = SubResource("TriggerShape")
+
+[node name="LevelGoal" type="Area2D" parent="SharedWorld/SharedInteractables" unique_id=1218599635]
+position = Vector2(3250, 510)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SharedWorld/SharedInteractables/LevelGoal" unique_id=1567029087]
+shape = SubResource("GoalShape")
+
+[node name="CorruptedWorld" parent="." unique_id=1069865062 instance=ExtResource("2_corrupted")]
+
+[node name="OriginalWorld" parent="." unique_id=1549598030 instance=ExtResource("3_original")]
+
+[node name="Actors" type="Node2D" parent="." unique_id=1647394374]
+
+[node name="Sherry" parent="Actors" unique_id=916713906 instance=ExtResource("4_sherry")]
+position = Vector2(220, 544)
+
+[node name="Luca" parent="Actors" unique_id=548662325 instance=ExtResource("5_luca")]
+position = Vector2(300, 620)
+input_enabled = false
+
+[node name="Systems" type="Node" parent="." unique_id=63947511]
+
+[node name="DualWorldState" type="Node" parent="Systems" unique_id=1203020553]
+script = ExtResource("6_state")
+
+[node name="DualWorldManager" type="Node" parent="Systems" unique_id=2053997538]
+script = ExtResource("7_manager")
+corrupted_world_path = NodePath("../../CorruptedWorld")
+original_world_path = NodePath("../../OriginalWorld")
+transition_overlay_path = NodePath("../../UI/TransitionOverlay")
+
+[node name="DualProtagonistController" type="Node" parent="Systems" unique_id=732791882]
+script = ExtResource("8_controller")
+sherry_path = NodePath("../../Actors/Sherry")
+luca_path = NodePath("../../Actors/Luca")
+camera_path = NodePath("../../Actors/Sherry/Camera2D")
+world_manager_path = NodePath("../DualWorldManager")
+
+[node name="AlignmentMarkers" type="Node2D" parent="." unique_id=992743100]
+
+[node name="Origin" type="Marker2D" parent="AlignmentMarkers" unique_id=451316576]
+
+[node name="LevelStart" type="Marker2D" parent="AlignmentMarkers" unique_id=935212275]
+position = Vector2(220, 620)
+
+[node name="GroundBase" type="Marker2D" parent="AlignmentMarkers" unique_id=16931360]
+position = Vector2(0, 620)
+
+[node name="PuzzleAnchor01" type="Marker2D" parent="AlignmentMarkers" unique_id=1111950329]
+position = Vector2(1700, 540)
+
+[node name="PuzzleAnchor02" type="Marker2D" parent="AlignmentMarkers" unique_id=943345643]
+position = Vector2(2250, 540)
+
+[node name="LevelEnd" type="Marker2D" parent="AlignmentMarkers" unique_id=421655476]
+position = Vector2(3250, 620)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=887622379]
+
+[node name="Panel" type="Panel" parent="UI" unique_id=1411170886]
+visible = false
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 760.0
+offset_bottom = 112.0
+
+[node name="Title" type="Label" parent="UI/Panel" unique_id=1718251050]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 720.0
+offset_bottom = 36.0
+text = "DUAL WORLD WHITEBOX — A/D or arrows move, W/Z/up jump, Q switches"
+
+[node name="Status" type="Label" parent="UI/Panel" unique_id=1275358538]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 46.0
+offset_right = 720.0
+offset_bottom = 76.0
+text = "Sherry / CORRUPTED: route broken. Press Q to switch to Luca."
+
+[node name="TransitionOverlay" type="ColorRect" parent="UI" unique_id=1115944139]
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+color = Color(0.18, 0.08, 0.24, 0)

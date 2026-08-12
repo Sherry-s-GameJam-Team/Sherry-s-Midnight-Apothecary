@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4d1p8n7x2q9z"]
+
+[ext_resource type="Script" uid="uid://d60uy3h67zrq" path="res://day/interactables/control_system/lever_switch_controller.gd" id="1_lever"]
+
+[sub_resource type="RectangleShape2D" id="InteractShape"]
+size = Vector2(80, 100)
+
+[node name="LeverSwitch" type="Node2D"]
+script = ExtResource("1_lever")
+active_color = Color(0.2, 0.76, 0.42, 1)
+inactive_color = Color(0.76, 0.22, 0.22, 1)
+
+[node name="Visual" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-30, -40, 30, -40, 30, 40, -30, 40)
+color = Color(0.76, 0.22, 0.22, 1)
+
+[node name="Lever" type="Polygon2D" parent="Visual"]
+position = Vector2(0, -10)
+polygon = PackedVector2Array(-6, -30, 6, -30, 6, 30, -6, 30)
+color = Color(0.9, 0.85, 0.6, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -10)
+shape = SubResource("InteractShape")
+
+[node name="HintLabel" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -80.0
+offset_right = 40.0
+offset_bottom = -57.0
+text = "[E]"
+horizontal_alignment = 1

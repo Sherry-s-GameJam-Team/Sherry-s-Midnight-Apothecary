@@ -1,0 +1,1341 @@
+[gd_resource type="AnimationLibrary" format=3 uid="uid://c8p0f21s0sefx"]
+
+[ext_resource type="Texture2D" uid="uid://hxmtn00p7vjn" path="res://characters/sherry/frames/01_idle/idle_001.png" id="Texture_1"]
+[ext_resource type="Texture2D" uid="uid://h6nhg6dtsxyy" path="res://characters/sherry/frames/01_idle/idle_002.png" id="Texture_2"]
+[ext_resource type="Texture2D" uid="uid://b6ne2fsffm0kb" path="res://characters/sherry/frames/01_idle/idle_003.png" id="Texture_3"]
+[ext_resource type="Texture2D" uid="uid://crkm0epgwydyb" path="res://characters/sherry/frames/01_idle/idle_004.png" id="Texture_4"]
+[ext_resource type="Texture2D" uid="uid://c25mk3fg4ec2l" path="res://characters/sherry/frames/01_idle/idle_005.png" id="Texture_5"]
+[ext_resource type="Texture2D" uid="uid://ciwig22xt3ool" path="res://characters/sherry/frames/01_idle/idle_006.png" id="Texture_6"]
+[ext_resource type="Texture2D" uid="uid://b2478hhy6jndu" path="res://characters/sherry/frames/01_idle/idle_007.png" id="Texture_7"]
+[ext_resource type="Texture2D" uid="uid://dfu7ibtlo2oye" path="res://characters/sherry/frames/01_idle/idle_008.png" id="Texture_8"]
+[ext_resource type="Texture2D" uid="uid://ctpv76ndnakm8" path="res://characters/sherry/frames/01_idle/idle_009.png" id="Texture_9"]
+[ext_resource type="Texture2D" uid="uid://dtas1layvf4kx" path="res://characters/sherry/frames/01_idle/idle_010.png" id="Texture_10"]
+[ext_resource type="Texture2D" uid="uid://ch742wwwx4m6s" path="res://characters/sherry/frames/01_idle/idle_011.png" id="Texture_11"]
+[ext_resource type="Texture2D" uid="uid://38f7yah3xkuc" path="res://characters/sherry/frames/01_idle/idle_012.png" id="Texture_12"]
+[ext_resource type="Texture2D" uid="uid://c6ndvxvn8w403" path="res://characters/sherry/frames/01_idle/idle_013.png" id="Texture_13"]
+[ext_resource type="Texture2D" uid="uid://clpehofqm5e7h" path="res://characters/sherry/frames/01_idle/idle_014.png" id="Texture_14"]
+[ext_resource type="Texture2D" uid="uid://b0d173vvicxyp" path="res://characters/sherry/frames/01_idle/idle_015.png" id="Texture_15"]
+[ext_resource type="Texture2D" uid="uid://dwlq7cc7brmej" path="res://characters/sherry/frames/01_idle/idle_016.png" id="Texture_16"]
+[ext_resource type="Texture2D" uid="uid://d1gnqubkidlit" path="res://characters/sherry/frames/01_idle/idle_017.png" id="Texture_17"]
+[ext_resource type="Texture2D" uid="uid://cis1ejl4fs1no" path="res://characters/sherry/frames/01_idle/idle_018.png" id="Texture_18"]
+[ext_resource type="Texture2D" uid="uid://b617m4dw2j2ts" path="res://characters/sherry/frames/01_idle/idle_019.png" id="Texture_19"]
+[ext_resource type="Texture2D" uid="uid://emv243lwo3bc" path="res://characters/sherry/frames/01_idle/idle_020.png" id="Texture_20"]
+[ext_resource type="Texture2D" uid="uid://bp1ima0i60su5" path="res://characters/sherry/frames/01_idle/idle_021.png" id="Texture_21"]
+[ext_resource type="Texture2D" uid="uid://bur12dyotrvwv" path="res://characters/sherry/frames/01_idle/idle_022.png" id="Texture_22"]
+[ext_resource type="Texture2D" uid="uid://cuovgkiuatpwc" path="res://characters/sherry/frames/01_idle/idle_023.png" id="Texture_23"]
+[ext_resource type="Texture2D" uid="uid://dlfkgvajo5rir" path="res://characters/sherry/frames/01_idle/idle_024.png" id="Texture_24"]
+[ext_resource type="Texture2D" uid="uid://6mfvdy8hc8hn" path="res://characters/sherry/frames/02_walk/walk_003.png" id="Texture_25"]
+[ext_resource type="Texture2D" uid="uid://d3fe5x1hwc3yh" path="res://characters/sherry/frames/02_walk/walk_004.png" id="Texture_26"]
+[ext_resource type="Texture2D" uid="uid://c6pcsbvg4josv" path="res://characters/sherry/frames/02_walk/walk_005.png" id="Texture_27"]
+[ext_resource type="Texture2D" uid="uid://dbq06ghy6jm3y" path="res://characters/sherry/frames/02_walk/walk_006.png" id="Texture_28"]
+[ext_resource type="Texture2D" uid="uid://dcr26ne00cuyn" path="res://characters/sherry/frames/02_walk/walk_007.png" id="Texture_29"]
+[ext_resource type="Texture2D" uid="uid://brddt0qamrcxh" path="res://characters/sherry/frames/02_walk/walk_008.png" id="Texture_30"]
+[ext_resource type="Texture2D" uid="uid://b43dacfcjsyvn" path="res://characters/sherry/frames/02_walk/walk_009.png" id="Texture_31"]
+[ext_resource type="Texture2D" uid="uid://d01ndhj6vqy0u" path="res://characters/sherry/frames/02_walk/walk_010.png" id="Texture_32"]
+[ext_resource type="Texture2D" uid="uid://dm6fgy26fhm1m" path="res://characters/sherry/frames/02_walk/walk_011.png" id="Texture_33"]
+[ext_resource type="Texture2D" uid="uid://dfckspii8ct12" path="res://characters/sherry/frames/02_walk/walk_012.png" id="Texture_34"]
+[ext_resource type="Texture2D" uid="uid://dsavi6y517p5i" path="res://characters/sherry/frames/02_walk/walk_013.png" id="Texture_35"]
+[ext_resource type="Texture2D" uid="uid://deiaalab33ni0" path="res://characters/sherry/frames/02_walk/walk_014.png" id="Texture_36"]
+[ext_resource type="Texture2D" uid="uid://btgaq8cbsa5po" path="res://characters/sherry/frames/02_walk/walk_015.png" id="Texture_37"]
+[ext_resource type="Texture2D" uid="uid://dsfq6j0ntk7de" path="res://characters/sherry/frames/02_walk/walk_016.png" id="Texture_38"]
+[ext_resource type="Texture2D" uid="uid://cr6itawurfsh" path="res://characters/sherry/frames/02_walk/walk_017.png" id="Texture_39"]
+[ext_resource type="Texture2D" uid="uid://bw61m0iua7p2v" path="res://characters/sherry/frames/02_walk/walk_018.png" id="Texture_40"]
+[ext_resource type="Texture2D" uid="uid://prdwcg7ea4b7" path="res://characters/sherry/frames/02_walk/walk_019.png" id="Texture_41"]
+[ext_resource type="Texture2D" uid="uid://cfmsfdkm7d8ud" path="res://characters/sherry/frames/02_walk/walk_020.png" id="Texture_42"]
+[ext_resource type="Texture2D" uid="uid://dlpxucgco5b06" path="res://characters/sherry/frames/02_walk/walk_021.png" id="Texture_43"]
+[ext_resource type="Texture2D" uid="uid://dptq41j85k7cy" path="res://characters/sherry/frames/02_walk/walk_022.png" id="Texture_44"]
+[ext_resource type="Texture2D" uid="uid://bhxxg6ce42mu" path="res://characters/sherry/frames/02_walk/walk_023.png" id="Texture_45"]
+[ext_resource type="Texture2D" uid="uid://de3mg3hyb0w3t" path="res://characters/sherry/frames/02_walk/walk_024.png" id="Texture_46"]
+[ext_resource type="Texture2D" uid="uid://d13a1bkiejweb" path="res://characters/sherry/frames/02_walk/walk_025.png" id="Texture_47"]
+[ext_resource type="Texture2D" uid="uid://4uldn2s31eck" path="res://characters/sherry/frames/02_walk/walk_026.png" id="Texture_48"]
+[ext_resource type="Texture2D" uid="uid://bsj71i6ox6s6f" path="res://characters/sherry/frames/02_walk/walk_027.png" id="Texture_49"]
+[ext_resource type="Texture2D" uid="uid://b6csyl03cfh3c" path="res://characters/sherry/frames/02_walk/walk_028.png" id="Texture_50"]
+[ext_resource type="Texture2D" uid="uid://bykghl0ev0ge1" path="res://characters/sherry/frames/02_walk/walk_029.png" id="Texture_51"]
+[ext_resource type="Texture2D" uid="uid://nk6i70tbh4rh" path="res://characters/sherry/frames/02_walk/walk_030.png" id="Texture_52"]
+[ext_resource type="Texture2D" uid="uid://clgg44so50xun" path="res://characters/sherry/frames/02_walk/walk_031.png" id="Texture_53"]
+[ext_resource type="Texture2D" uid="uid://cquo16jg1li0m" path="res://characters/sherry/frames/02_walk/walk_032.png" id="Texture_54"]
+[ext_resource type="Texture2D" uid="uid://c7fs06hqb6s3e" path="res://characters/sherry/frames/02_walk/walk_033.png" id="Texture_55"]
+[ext_resource type="Texture2D" uid="uid://bkae1mdj0gf32" path="res://characters/sherry/frames/03_run/run_010.png" id="Texture_56"]
+[ext_resource type="Texture2D" uid="uid://b8ncsp14eoesv" path="res://characters/sherry/frames/03_run/run_011.png" id="Texture_57"]
+[ext_resource type="Texture2D" uid="uid://cq6qhb0078opf" path="res://characters/sherry/frames/03_run/run_012.png" id="Texture_58"]
+[ext_resource type="Texture2D" uid="uid://dr55wo6c3m8y8" path="res://characters/sherry/frames/03_run/run_013.png" id="Texture_59"]
+[ext_resource type="Texture2D" uid="uid://dhobyywe11mn" path="res://characters/sherry/frames/03_run/run_014.png" id="Texture_60"]
+[ext_resource type="Texture2D" uid="uid://slpx3fj8y01r" path="res://characters/sherry/frames/03_run/run_015.png" id="Texture_61"]
+[ext_resource type="Texture2D" uid="uid://k6s0j5qr8etd" path="res://characters/sherry/frames/03_run/run_016.png" id="Texture_62"]
+[ext_resource type="Texture2D" uid="uid://cxu74o0qmofkj" path="res://characters/sherry/frames/03_run/run_017.png" id="Texture_63"]
+[ext_resource type="Texture2D" uid="uid://d042t1lgegdph" path="res://characters/sherry/frames/03_run/run_018.png" id="Texture_64"]
+[ext_resource type="Texture2D" uid="uid://c1qu6pq5qtm0b" path="res://characters/sherry/frames/03_run/run_019.png" id="Texture_65"]
+[ext_resource type="Texture2D" uid="uid://ejgcvmkt20xb" path="res://characters/sherry/frames/03_run/run_020.png" id="Texture_66"]
+[ext_resource type="Texture2D" uid="uid://crmsmvetb0dg6" path="res://characters/sherry/frames/03_run/run_021.png" id="Texture_67"]
+[ext_resource type="Texture2D" uid="uid://b6y6gbahrs8ax" path="res://characters/sherry/frames/03_run/run_022.png" id="Texture_68"]
+[ext_resource type="Texture2D" uid="uid://ck5yl0cv8nu6q" path="res://characters/sherry/frames/03_run/run_023.png" id="Texture_69"]
+[ext_resource type="Texture2D" uid="uid://c1iya6tqdop1g" path="res://characters/sherry/frames/04_throw/hit_000.png" id="Texture_70"]
+[ext_resource type="Texture2D" uid="uid://oxndrdddfd7v" path="res://characters/sherry/frames/04_throw/hit_001.png" id="Texture_71"]
+[ext_resource type="Texture2D" uid="uid://btxn3jpom6poh" path="res://characters/sherry/frames/04_throw/hit_002.png" id="Texture_72"]
+[ext_resource type="Texture2D" uid="uid://drp6tytbl7bwy" path="res://characters/sherry/frames/04_throw/hit_003.png" id="Texture_73"]
+[ext_resource type="Texture2D" uid="uid://bn0k3fp01o3j8" path="res://characters/sherry/frames/04_throw/hit_004.png" id="Texture_74"]
+[ext_resource type="Texture2D" uid="uid://b2yirm1sj6qpu" path="res://characters/sherry/frames/04_throw/hit_005.png" id="Texture_75"]
+[ext_resource type="Texture2D" uid="uid://b1vk4n1opsdmi" path="res://characters/sherry/frames/05_hit/hit_006.png" id="Texture_76"]
+[ext_resource type="Texture2D" uid="uid://fy5xsdcmpv4d" path="res://characters/sherry/frames/05_hit/hit_007.png" id="Texture_77"]
+[ext_resource type="Texture2D" uid="uid://bvns5wouisdmp" path="res://characters/sherry/frames/05_hit/hit_008.png" id="Texture_78"]
+[ext_resource type="Texture2D" uid="uid://b1vbkmd41jj6d" path="res://characters/sherry/frames/05_hit/hit_009.png" id="Texture_79"]
+[ext_resource type="Texture2D" uid="uid://cocer7sun602p" path="res://characters/sherry/frames/05_hit/hit_010.png" id="Texture_80"]
+[ext_resource type="Texture2D" uid="uid://61lkale23hwq" path="res://characters/sherry/frames/05_hit/hit_011.png" id="Texture_81"]
+[ext_resource type="Texture2D" uid="uid://bq52kky05py1l" path="res://characters/sherry/frames/05_hit/hit_012.png" id="Texture_82"]
+[ext_resource type="Texture2D" uid="uid://cwljinacb5sty" path="res://characters/sherry/frames/05_hit/hit_013.png" id="Texture_83"]
+[ext_resource type="Texture2D" uid="uid://d4hxf33yhwsjk" path="res://characters/sherry/frames/05_hit/hit_014.png" id="Texture_84"]
+[ext_resource type="Texture2D" uid="uid://cavqjm1id2snr" path="res://characters/sherry/frames/05_hit/hit_015.png" id="Texture_85"]
+[ext_resource type="Texture2D" uid="uid://dyv42nrjgqys8" path="res://characters/sherry/frames/05_hit/hit_016.png" id="Texture_86"]
+[ext_resource type="Texture2D" uid="uid://cune1ch6etwd7" path="res://characters/sherry/frames/05_hit/hit_017.png" id="Texture_87"]
+[ext_resource type="Texture2D" uid="uid://bpr67xll3hj5a" path="res://characters/sherry/frames/05_hit/hit_018.png" id="Texture_88"]
+[ext_resource type="Texture2D" uid="uid://1chtmiw0xmj4" path="res://characters/sherry/frames/05_hit/hit_019.png" id="Texture_89"]
+[ext_resource type="Texture2D" uid="uid://bokhqh6l072up" path="res://characters/sherry/frames/06_fall/fall_000.png" id="Texture_90"]
+[ext_resource type="Texture2D" uid="uid://de0p7lchf7iw6" path="res://characters/sherry/frames/06_fall/fall_001.png" id="Texture_91"]
+[ext_resource type="Texture2D" uid="uid://dkr4l8kcatmjq" path="res://characters/sherry/frames/06_fall/fall_002.png" id="Texture_92"]
+[ext_resource type="Texture2D" uid="uid://ciuksn3r31oab" path="res://characters/sherry/frames/06_fall/fall_003.png" id="Texture_93"]
+[ext_resource type="Texture2D" uid="uid://b3ris40pc3i3t" path="res://characters/sherry/frames/06_fall/fall_004.png" id="Texture_94"]
+[ext_resource type="Texture2D" uid="uid://u7ctmothvyy1" path="res://characters/sherry/frames/06_fall/fall_005.png" id="Texture_95"]
+[ext_resource type="Texture2D" uid="uid://dmpn5dhljnfoy" path="res://characters/sherry/frames/06_fall/fall_006.png" id="Texture_96"]
+[ext_resource type="Texture2D" uid="uid://dsf7vclvntr86" path="res://characters/sherry/frames/06_fall/fall_007.png" id="Texture_97"]
+[ext_resource type="Texture2D" uid="uid://bfaavqnwuohej" path="res://characters/sherry/frames/06_fall/fall_008.png" id="Texture_98"]
+[ext_resource type="Texture2D" uid="uid://dv5ko6u5ay7ax" path="res://characters/sherry/frames/06_fall/fall_009.png" id="Texture_99"]
+[ext_resource type="Texture2D" uid="uid://dxu0rv67n7owu" path="res://characters/sherry/frames/06_fall/fall_010.png" id="Texture_100"]
+[ext_resource type="Texture2D" uid="uid://c3437nauy3qjn" path="res://characters/sherry/frames/06_fall/fall_011.png" id="Texture_101"]
+[ext_resource type="Texture2D" uid="uid://dr1bg7ha0hss3" path="res://characters/sherry/frames/06_fall/fall_012.png" id="Texture_102"]
+[ext_resource type="Texture2D" uid="uid://iim51d057ufx" path="res://characters/sherry/frames/06_fall/fall_013.png" id="Texture_103"]
+[ext_resource type="Texture2D" uid="uid://desdid1hbo7p8" path="res://characters/sherry/frames/06_fall/fall_014.png" id="Texture_104"]
+[ext_resource type="Texture2D" uid="uid://b0y73xxspo1rk" path="res://characters/sherry/frames/06_fall/fall_015.png" id="Texture_105"]
+[ext_resource type="Texture2D" uid="uid://v5dnilofx8uw" path="res://characters/sherry/frames/06_fall/fall_016.png" id="Texture_106"]
+[ext_resource type="Texture2D" uid="uid://nxfhod4tpfsp" path="res://characters/sherry/frames/06_fall/fall_017.png" id="Texture_107"]
+[ext_resource type="Texture2D" uid="uid://bg5j6rt5ppicq" path="res://characters/sherry/frames/06_fall/fall_018.png" id="Texture_108"]
+[ext_resource type="Texture2D" uid="uid://dxyheksdn8x01" path="res://characters/sherry/frames/06_fall/fall_019.png" id="Texture_109"]
+[ext_resource type="Texture2D" uid="uid://uu032kmti4ki" path="res://characters/sherry/frames/06_fall/fall_020.png" id="Texture_110"]
+[ext_resource type="Texture2D" uid="uid://bwnt5bsn4xx5" path="res://characters/sherry/frames/06_fall/fall_021.png" id="Texture_111"]
+[ext_resource type="Texture2D" uid="uid://cs68rugwbtss1" path="res://characters/sherry/frames/06_fall/fall_022.png" id="Texture_112"]
+[ext_resource type="Texture2D" uid="uid://bneobbwjjoktc" path="res://characters/sherry/frames/06_fall/fall_023.png" id="Texture_113"]
+[ext_resource type="Texture2D" uid="uid://c60baql1lqgyy" path="res://characters/sherry/frames/06_fall/fall_024.png" id="Texture_114"]
+[ext_resource type="Texture2D" uid="uid://do8m0uhovspg0" path="res://characters/sherry/frames/07_jump/jump_0001.png" id="Texture_115"]
+[ext_resource type="Texture2D" uid="uid://d24qr38yvofnl" path="res://characters/sherry/frames/07_jump/jump_0002.png" id="Texture_116"]
+[ext_resource type="Texture2D" uid="uid://c3h6f4qt37cxh" path="res://characters/sherry/frames/07_jump/jump_0003.png" id="Texture_117"]
+[ext_resource type="Texture2D" uid="uid://btq8yvhlw0sey" path="res://characters/sherry/frames/07_jump/jump_0004.png" id="Texture_118"]
+[ext_resource type="Texture2D" uid="uid://csivduubli86k" path="res://characters/sherry/frames/07_jump/jump_0005.png" id="Texture_119"]
+[ext_resource type="Texture2D" uid="uid://cfo4ws60weyiv" path="res://characters/sherry/frames/07_jump/jump_0006.png" id="Texture_120"]
+[ext_resource type="Texture2D" uid="uid://d2krjj0laj485" path="res://characters/sherry/frames/07_jump/jump_0007.png" id="Texture_121"]
+[ext_resource type="Texture2D" uid="uid://c1u0ep2p6vp67" path="res://characters/sherry/frames/07_jump/jump_0008.png" id="Texture_122"]
+[ext_resource type="Texture2D" uid="uid://7cvbtywnfdrs" path="res://characters/sherry/frames/07_jump/jump_0009.png" id="Texture_123"]
+[ext_resource type="Texture2D" uid="uid://ejknls3f6qfw" path="res://characters/sherry/frames/07_jump/jump_0010.png" id="Texture_124"]
+[ext_resource type="Texture2D" uid="uid://dpqebm56s2byu" path="res://characters/sherry/frames/11_prejump/01.png" id="Texture_125"]
+[ext_resource type="Texture2D" uid="uid://duh044yrxdohj" path="res://characters/sherry/frames/11_prejump/02.png" id="Texture_126"]
+[ext_resource type="Texture2D" uid="uid://cfjqoeast7wjh" path="res://characters/sherry/frames/07_jump/jump_0011.png" id="Texture_127"]
+[ext_resource type="Texture2D" uid="uid://tocwai6a7il0" path="res://characters/sherry/frames/07_jump/jump_0012.png" id="Texture_128"]
+[ext_resource type="Texture2D" uid="uid://b0jl1qw2umisb" path="res://characters/sherry/frames/07_jump/jump_0013.png" id="Texture_129"]
+[ext_resource type="Texture2D" uid="uid://ctx060kyjrr2j" path="res://characters/sherry/frames/07_jump/jump_0014.png" id="Texture_130"]
+[ext_resource type="Texture2D" uid="uid://b8v4cbn4akuc0" path="res://characters/sherry/frames/07_jump/jump_0015.png" id="Texture_131"]
+[ext_resource type="Texture2D" uid="uid://bfik8lxlkewt8" path="res://characters/sherry/frames/07_jump/jump_0016.png" id="Texture_132"]
+[ext_resource type="Texture2D" uid="uid://fk4176mdqocs" path="res://characters/sherry/frames/07_jump/jump_0017.png" id="Texture_133"]
+[ext_resource type="Texture2D" uid="uid://bfsgg5lejjwtn" path="res://characters/sherry/frames/07_jump/jump_0018.png" id="Texture_134"]
+[ext_resource type="Texture2D" uid="uid://cn47tn37ja20p" path="res://characters/sherry/frames/07_jump/jump_0019.png" id="Texture_135"]
+[ext_resource type="Texture2D" uid="uid://cd4bqlnl2bd7t" path="res://characters/sherry/frames/07_jump/jump_0020.png" id="Texture_136"]
+[ext_resource type="Texture2D" uid="uid://b0akwo4fyh3lu" path="res://characters/sherry/frames/07_jump/jump_0021.png" id="Texture_137"]
+[ext_resource type="Texture2D" uid="uid://bfhln8tmi8j43" path="res://characters/sherry/frames/07_jump/jump_0022.png" id="Texture_138"]
+[ext_resource type="Texture2D" uid="uid://smpvcm04dy7d" path="res://characters/sherry/frames/07_jump/jump_0023.png" id="Texture_139"]
+[ext_resource type="Texture2D" uid="uid://btrkmhpwsweg3" path="res://characters/sherry/frames/07_jump/jump_0024.png" id="Texture_140"]
+[ext_resource type="Texture2D" uid="uid://dr60kegall8re" path="res://characters/sherry/frames/08_land/land_0001.png" id="Texture_141"]
+[ext_resource type="Texture2D" uid="uid://tijwy63ue1lq" path="res://characters/sherry/frames/08_land/land_0002.png" id="Texture_142"]
+[ext_resource type="Texture2D" uid="uid://0gepafbvkdve" path="res://characters/sherry/frames/08_land/land_0006.png" id="Texture_143"]
+[ext_resource type="Texture2D" uid="uid://bpvko2f2nhq1u" path="res://characters/sherry/frames/08_land/land_0007.png" id="Texture_144"]
+[ext_resource type="Texture2D" uid="uid://dkkewve3i5nti" path="res://characters/sherry/frames/08_land/land_0009.png" id="Texture_145"]
+[ext_resource type="Texture2D" uid="uid://hv2y8tuowptv" path="res://characters/sherry/frames/08_land/land_0010.png" id="Texture_146"]
+[ext_resource type="Texture2D" uid="uid://cyq7hiimic6jl" path="res://characters/sherry/frames/08_land/land_0011.png" id="Texture_147"]
+[ext_resource type="Texture2D" uid="uid://c5fyyal28lc7b" path="res://characters/sherry/frames/08_land/land_0012.png" id="Texture_148"]
+[ext_resource type="Texture2D" uid="uid://rt22yy54lkk3" path="res://characters/sherry/frames/12_land_to_idle/01.png" id="Texture_149"]
+[ext_resource type="Texture2D" uid="uid://b541usl71lsku" path="res://characters/sherry/frames/12_land_to_idle/02.png" id="Texture_150"]
+[ext_resource type="Texture2D" uid="uid://dnttdfpff5k3m" path="res://characters/sherry/frames/12_land_to_idle/03.png" id="Texture_151"]
+[ext_resource type="Texture2D" uid="uid://b5pyoduy1bpa7" path="res://characters/sherry/frames/09_roll/roll_0001.png" id="Texture_152"]
+[ext_resource type="Texture2D" uid="uid://bbpyycf6xmph6" path="res://characters/sherry/frames/09_roll/roll_0002.png" id="Texture_153"]
+[ext_resource type="Texture2D" uid="uid://bhyb1e4n0tpqd" path="res://characters/sherry/frames/09_roll/roll_0003.png" id="Texture_154"]
+[ext_resource type="Texture2D" uid="uid://xk27ohb2ix68" path="res://characters/sherry/frames/09_roll/roll_0004.png" id="Texture_155"]
+[ext_resource type="Texture2D" uid="uid://df2qppkq4ftls" path="res://characters/sherry/frames/09_roll/roll_0005.png" id="Texture_156"]
+[ext_resource type="Texture2D" uid="uid://10w844c1tovw" path="res://characters/sherry/frames/09_roll/roll_0006.png" id="Texture_157"]
+[ext_resource type="Texture2D" uid="uid://cwe6qaqk3ccc7" path="res://characters/sherry/frames/09_roll/roll_0007.png" id="Texture_158"]
+[ext_resource type="Texture2D" uid="uid://dj0vlbo5xq56u" path="res://characters/sherry/frames/09_roll/roll_0008.png" id="Texture_159"]
+[ext_resource type="Texture2D" uid="uid://ulqb3arkifoy" path="res://characters/sherry/frames/09_roll/roll_0009.png" id="Texture_160"]
+[ext_resource type="Texture2D" uid="uid://cubkk5t4aco7w" path="res://characters/sherry/frames/09_roll/roll_0010.png" id="Texture_161"]
+[ext_resource type="Texture2D" uid="uid://5g0tr2kr0vuy" path="res://characters/sherry/frames/09_roll/roll_0011.png" id="Texture_162"]
+[ext_resource type="Texture2D" uid="uid://ddvodmpshcp6i" path="res://characters/sherry/frames/09_roll/roll_0012.png" id="Texture_163"]
+[ext_resource type="Texture2D" uid="uid://chruyalyu3uvo" path="res://characters/sherry/frames/09_roll/roll_0013.png" id="Texture_164"]
+[ext_resource type="Texture2D" uid="uid://ba4isnx5bnp73" path="res://characters/sherry/frames/09_roll/roll_0014.png" id="Texture_165"]
+[ext_resource type="Texture2D" uid="uid://cvkgw2a443kg5" path="res://characters/sherry/frames/09_roll/roll_0015.png" id="Texture_166"]
+[ext_resource type="Texture2D" uid="uid://cgr0lur3keovh" path="res://characters/sherry/frames/09_roll/roll_0016.png" id="Texture_167"]
+[ext_resource type="Texture2D" uid="uid://bg4c0gts0qesd" path="res://characters/sherry/frames/09_roll/roll_0017.png" id="Texture_168"]
+[ext_resource type="Texture2D" uid="uid://dcda5iekmg12" path="res://characters/sherry/frames/09_roll/roll_0018.png" id="Texture_169"]
+[ext_resource type="Texture2D" uid="uid://pgg3ey4e7bhk" path="res://characters/sherry/frames/09_roll/roll_0019.png" id="Texture_170"]
+[ext_resource type="Texture2D" uid="uid://1i0t8x3dlnnu" path="res://characters/sherry/frames/09_roll/roll_0020.png" id="Texture_171"]
+[ext_resource type="Texture2D" uid="uid://ci1mv87w13j3a" path="res://characters/sherry/frames/09_roll/roll_0021.png" id="Texture_172"]
+[ext_resource type="Texture2D" uid="uid://cra7h64787bpl" path="res://characters/sherry/frames/09_roll/roll_0022.png" id="Texture_173"]
+[ext_resource type="Texture2D" uid="uid://g6t8pjkhp7gj" path="res://characters/sherry/frames/09_roll/roll_0023.png" id="Texture_174"]
+[ext_resource type="Texture2D" uid="uid://1adhvryb4kn8" path="res://characters/sherry/frames/09_roll/roll_0024.png" id="Texture_175"]
+[ext_resource type="Texture2D" uid="uid://wgp5t1bhicxc" path="res://characters/sherry/frames/10_cast/cast_0001.png" id="Texture_176"]
+[ext_resource type="Texture2D" uid="uid://dee224fj2vw05" path="res://characters/sherry/frames/10_cast/cast_0002.png" id="Texture_177"]
+[ext_resource type="Texture2D" uid="uid://3k5oqxttvphq" path="res://characters/sherry/frames/10_cast/cast_0003.png" id="Texture_178"]
+[ext_resource type="Texture2D" uid="uid://ddsrtyaoprud1" path="res://characters/sherry/frames/10_cast/cast_0004.png" id="Texture_179"]
+[ext_resource type="Texture2D" uid="uid://b2x7dkg8ft7kj" path="res://characters/sherry/frames/10_cast/cast_0005.png" id="Texture_180"]
+[ext_resource type="Texture2D" uid="uid://l8cxshpqjeq3" path="res://characters/sherry/frames/10_cast/cast_0006.png" id="Texture_181"]
+[ext_resource type="Texture2D" uid="uid://cju04e7fyq4we" path="res://characters/sherry/frames/10_cast/cast_0007.png" id="Texture_182"]
+[ext_resource type="Texture2D" uid="uid://c5t7nkt0om1me" path="res://characters/sherry/frames/10_cast/cast_0008.png" id="Texture_183"]
+[ext_resource type="Texture2D" uid="uid://byykodxmurykt" path="res://characters/sherry/frames/10_cast/cast_0009.png" id="Texture_184"]
+[ext_resource type="Texture2D" uid="uid://dlctci1qekew" path="res://characters/sherry/frames/10_cast/cast_0010.png" id="Texture_185"]
+[ext_resource type="Texture2D" uid="uid://c1e57u0uyec7n" path="res://characters/sherry/frames/10_cast/cast_0011.png" id="Texture_186"]
+[ext_resource type="Texture2D" uid="uid://c26buaox5rv8f" path="res://characters/sherry/frames/10_cast/cast_0012.png" id="Texture_187"]
+[ext_resource type="Texture2D" uid="uid://ri4320lkw8dj" path="res://characters/sherry/frames/10_cast/cast_0013.png" id="Texture_188"]
+[ext_resource type="Texture2D" uid="uid://dx8meuwq4wd1g" path="res://characters/sherry/frames/10_cast/cast_0014.png" id="Texture_189"]
+[ext_resource type="Texture2D" uid="uid://hrw50oelkkn4" path="res://characters/sherry/frames/10_cast/cast_0015.png" id="Texture_190"]
+[ext_resource type="Texture2D" uid="uid://bu2luyqkmws7i" path="res://characters/sherry/frames/10_cast/cast_0016.png" id="Texture_191"]
+[ext_resource type="Texture2D" uid="uid://cwttnba8a0hhl" path="res://characters/sherry/frames/10_cast/cast_0017.png" id="Texture_192"]
+[ext_resource type="Texture2D" uid="uid://bjoimq30i5llg" path="res://characters/sherry/frames/10_cast/cast_0018.png" id="Texture_193"]
+[ext_resource type="Texture2D" uid="uid://blbmq5kam7sv2" path="res://characters/sherry/frames/10_cast/cast_0019.png" id="Texture_194"]
+[ext_resource type="Texture2D" uid="uid://db2fl85svnyq1" path="res://characters/sherry/frames/10_cast/cast_0020.png" id="Texture_195"]
+[ext_resource type="Texture2D" uid="uid://2qq05lqw6see" path="res://characters/sherry/frames/10_cast/cast_0021.png" id="Texture_196"]
+[ext_resource type="Texture2D" uid="uid://cyydvr5vchv8k" path="res://characters/sherry/frames/10_cast/cast_0022.png" id="Texture_197"]
+[ext_resource type="Texture2D" uid="uid://yla7jy76ew63" path="res://characters/sherry/frames/10_cast/cast_0023.png" id="Texture_198"]
+[ext_resource type="Texture2D" uid="uid://by47tggyva0yg" path="res://characters/sherry/frames/10_cast/cast_0024.png" id="Texture_199"]
+[ext_resource type="Texture2D" uid="uid://dxcmvgtfxllnn" path="res://characters/sherry/frames/10_cast/cast_0025.png" id="Texture_200"]
+[ext_resource type="Texture2D" uid="uid://b1usf3wgy5bjt" path="res://characters/sherry/frames/10_cast/cast_0026.png" id="Texture_201"]
+[ext_resource type="Texture2D" uid="uid://cg545ms8x162u" path="res://characters/sherry/frames/10_cast/cast_0027.png" id="Texture_202"]
+[ext_resource type="Texture2D" uid="uid://c708s57nmrun" path="res://characters/sherry/frames/10_cast/cast_0028.png" id="Texture_203"]
+[ext_resource type="Texture2D" uid="uid://cg1uq3e2hkhox" path="res://characters/sherry/frames/10_cast/cast_0029.png" id="Texture_204"]
+[ext_resource type="Texture2D" uid="uid://bhkpe6u6gjdcs" path="res://characters/sherry/frames/10_cast/cast_0030.png" id="Texture_205"]
+
+[sub_resource type="Animation" id="Animation_syrej"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("Texture_149")]
+}
+
+[sub_resource type="Animation" id="Animation_cast"]
+resource_name = "cast"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333, 1, 1.041667, 1.083333, 1.125, 1.166667, 1.208333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_176"), ExtResource("Texture_177"), ExtResource("Texture_178"), ExtResource("Texture_179"), ExtResource("Texture_180"), ExtResource("Texture_181"), ExtResource("Texture_182"), ExtResource("Texture_183"), ExtResource("Texture_184"), ExtResource("Texture_185"), ExtResource("Texture_186"), ExtResource("Texture_187"), ExtResource("Texture_188"), ExtResource("Texture_189"), ExtResource("Texture_190"), ExtResource("Texture_191"), ExtResource("Texture_192"), ExtResource("Texture_193"), ExtResource("Texture_194"), ExtResource("Texture_195"), ExtResource("Texture_196"), ExtResource("Texture_197"), ExtResource("Texture_198"), ExtResource("Texture_199"), ExtResource("Texture_200"), ExtResource("Texture_201"), ExtResource("Texture_202"), ExtResource("Texture_203"), ExtResource("Texture_204"), ExtResource("Texture_205")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333, 1, 1.041667, 1.083333, 1.125, 1.166667, 1.208333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333, 1, 1.041667, 1.083333, 1.125, 1.166667, 1.208333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.708333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"potion_cast_release"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_cast_right"]
+resource_name = "cast_right"
+length = 1.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333, 1, 1.041667, 1.083333, 1.125, 1.166667, 1.208333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_176"), ExtResource("Texture_177"), ExtResource("Texture_178"), ExtResource("Texture_179"), ExtResource("Texture_180"), ExtResource("Texture_181"), ExtResource("Texture_182"), ExtResource("Texture_183"), ExtResource("Texture_184"), ExtResource("Texture_185"), ExtResource("Texture_186"), ExtResource("Texture_187"), ExtResource("Texture_188"), ExtResource("Texture_189"), ExtResource("Texture_190"), ExtResource("Texture_191"), ExtResource("Texture_192"), ExtResource("Texture_193"), ExtResource("Texture_194"), ExtResource("Texture_195"), ExtResource("Texture_196"), ExtResource("Texture_197"), ExtResource("Texture_198"), ExtResource("Texture_199"), ExtResource("Texture_200"), ExtResource("Texture_201"), ExtResource("Texture_202"), ExtResource("Texture_203"), ExtResource("Texture_204"), ExtResource("Texture_205")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333, 1, 1.041667, 1.083333, 1.125, 1.166667, 1.208333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667, 0.583333, 0.625, 0.666667, 0.708333, 0.75, 0.791667, 0.833333, 0.875, 0.916667, 0.958333, 1, 1.041667, 1.083333, 1.125, 1.166667, 1.208333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.708333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"potion_cast_release"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+length = 1.785714
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_90"), ExtResource("Texture_91"), ExtResource("Texture_92"), ExtResource("Texture_93"), ExtResource("Texture_94"), ExtResource("Texture_95"), ExtResource("Texture_96"), ExtResource("Texture_97"), ExtResource("Texture_98"), ExtResource("Texture_99"), ExtResource("Texture_100"), ExtResource("Texture_101"), ExtResource("Texture_102"), ExtResource("Texture_103"), ExtResource("Texture_104"), ExtResource("Texture_105"), ExtResource("Texture_106"), ExtResource("Texture_107"), ExtResource("Texture_108"), ExtResource("Texture_109"), ExtResource("Texture_110"), ExtResource("Texture_111"), ExtResource("Texture_112"), ExtResource("Texture_113"), ExtResource("Texture_114")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fall_right"]
+resource_name = "fall_right"
+length = 1.785714
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_90"), ExtResource("Texture_91"), ExtResource("Texture_92"), ExtResource("Texture_93"), ExtResource("Texture_94"), ExtResource("Texture_95"), ExtResource("Texture_96"), ExtResource("Texture_97"), ExtResource("Texture_98"), ExtResource("Texture_99"), ExtResource("Texture_100"), ExtResource("Texture_101"), ExtResource("Texture_102"), ExtResource("Texture_103"), ExtResource("Texture_104"), ExtResource("Texture_105"), ExtResource("Texture_106"), ExtResource("Texture_107"), ExtResource("Texture_108"), ExtResource("Texture_109"), ExtResource("Texture_110"), ExtResource("Texture_111"), ExtResource("Texture_112"), ExtResource("Texture_113"), ExtResource("Texture_114")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hit"]
+resource_name = "hit"
+length = 0.291667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.020833, 0.041667, 0.0625, 0.083333, 0.104167, 0.125, 0.145833, 0.166667, 0.1875, 0.208333, 0.229167, 0.25, 0.270833),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_76"), ExtResource("Texture_77"), ExtResource("Texture_78"), ExtResource("Texture_79"), ExtResource("Texture_80"), ExtResource("Texture_81"), ExtResource("Texture_82"), ExtResource("Texture_83"), ExtResource("Texture_84"), ExtResource("Texture_85"), ExtResource("Texture_86"), ExtResource("Texture_87"), ExtResource("Texture_88"), ExtResource("Texture_89")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.020833, 0.041667, 0.0625, 0.083333, 0.104167, 0.125, 0.145833, 0.166667, 0.1875, 0.208333, 0.229167, 0.25, 0.270833),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.020833, 0.041667, 0.0625, 0.083333, 0.104167, 0.125, 0.145833, 0.166667, 0.1875, 0.208333, 0.229167, 0.25, 0.270833),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hit_right"]
+resource_name = "hit_right"
+length = 0.291667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.020833, 0.041667, 0.0625, 0.083333, 0.104167, 0.125, 0.145833, 0.166667, 0.1875, 0.208333, 0.229167, 0.25, 0.270833),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_76"), ExtResource("Texture_77"), ExtResource("Texture_78"), ExtResource("Texture_79"), ExtResource("Texture_80"), ExtResource("Texture_81"), ExtResource("Texture_82"), ExtResource("Texture_83"), ExtResource("Texture_84"), ExtResource("Texture_85"), ExtResource("Texture_86"), ExtResource("Texture_87"), ExtResource("Texture_88"), ExtResource("Texture_89")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.020833, 0.041667, 0.0625, 0.083333, 0.104167, 0.125, 0.145833, 0.166667, 0.1875, 0.208333, 0.229167, 0.25, 0.270833),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.020833, 0.041667, 0.0625, 0.083333, 0.104167, 0.125, 0.145833, 0.166667, 0.1875, 0.208333, 0.229167, 0.25, 0.270833),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.083333, 1.166667, 1.25, 1.333333, 1.416667, 1.5, 1.583333, 1.666667, 1.75, 1.833333, 1.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_1"), ExtResource("Texture_2"), ExtResource("Texture_3"), ExtResource("Texture_4"), ExtResource("Texture_5"), ExtResource("Texture_6"), ExtResource("Texture_7"), ExtResource("Texture_8"), ExtResource("Texture_9"), ExtResource("Texture_10"), ExtResource("Texture_11"), ExtResource("Texture_12"), ExtResource("Texture_13"), ExtResource("Texture_14"), ExtResource("Texture_15"), ExtResource("Texture_16"), ExtResource("Texture_17"), ExtResource("Texture_18"), ExtResource("Texture_19"), ExtResource("Texture_20"), ExtResource("Texture_21"), ExtResource("Texture_22"), ExtResource("Texture_23"), ExtResource("Texture_24")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.083333, 1.166667, 1.25, 1.333333, 1.416667, 1.5, 1.583333, 1.666667, 1.75, 1.833333, 1.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.083333, 1.166667, 1.25, 1.333333, 1.416667, 1.5, 1.583333, 1.666667, 1.75, 1.833333, 1.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_idle_right"]
+resource_name = "idle_right"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.083333, 1.166667, 1.25, 1.333333, 1.416667, 1.5, 1.583333, 1.666667, 1.75, 1.833333, 1.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_1"), ExtResource("Texture_2"), ExtResource("Texture_3"), ExtResource("Texture_4"), ExtResource("Texture_5"), ExtResource("Texture_6"), ExtResource("Texture_7"), ExtResource("Texture_8"), ExtResource("Texture_9"), ExtResource("Texture_10"), ExtResource("Texture_11"), ExtResource("Texture_12"), ExtResource("Texture_13"), ExtResource("Texture_14"), ExtResource("Texture_15"), ExtResource("Texture_16"), ExtResource("Texture_17"), ExtResource("Texture_18"), ExtResource("Texture_19"), ExtResource("Texture_20"), ExtResource("Texture_21"), ExtResource("Texture_22"), ExtResource("Texture_23"), ExtResource("Texture_24")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.083333, 1.166667, 1.25, 1.333333, 1.416667, 1.5, 1.583333, 1.666667, 1.75, 1.833333, 1.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667, 1, 1.083333, 1.166667, 1.25, 1.333333, 1.416667, 1.5, 1.583333, 1.666667, 1.75, 1.833333, 1.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jump_fall"]
+resource_name = "jump_fall"
+length = 0.583333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_127"), ExtResource("Texture_128"), ExtResource("Texture_129"), ExtResource("Texture_130"), ExtResource("Texture_131"), ExtResource("Texture_132"), ExtResource("Texture_133"), ExtResource("Texture_134"), ExtResource("Texture_135"), ExtResource("Texture_136"), ExtResource("Texture_137"), ExtResource("Texture_138"), ExtResource("Texture_139"), ExtResource("Texture_140")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885)]
+}
+
+[sub_resource type="Animation" id="Animation_jump_fall_right"]
+resource_name = "jump_fall_right"
+length = 0.583333
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_127"), ExtResource("Texture_128"), ExtResource("Texture_129"), ExtResource("Texture_130"), ExtResource("Texture_131"), ExtResource("Texture_132"), ExtResource("Texture_133"), ExtResource("Texture_134"), ExtResource("Texture_135"), ExtResource("Texture_136"), ExtResource("Texture_137"), ExtResource("Texture_138"), ExtResource("Texture_139"), ExtResource("Texture_140")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.041667, 0.083333, 0.125, 0.166667, 0.208333, 0.25, 0.291667, 0.333333, 0.375, 0.416667, 0.458333, 0.5, 0.541667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885)]
+}
+
+[sub_resource type="Animation" id="Animation_jump_takeoff"]
+resource_name = "jump_takeoff"
+length = 0.333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_115"), ExtResource("Texture_116"), ExtResource("Texture_117"), ExtResource("Texture_118"), ExtResource("Texture_119"), ExtResource("Texture_120"), ExtResource("Texture_121"), ExtResource("Texture_122"), ExtResource("Texture_123"), ExtResource("Texture_124")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885), Vector2(0.411885, 0.411885)]
+}
+
+[sub_resource type="Animation" id="Animation_jump_takeoff_right"]
+resource_name = "jump_takeoff_right"
+length = 0.333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_115"), ExtResource("Texture_116"), ExtResource("Texture_117"), ExtResource("Texture_118"), ExtResource("Texture_119"), ExtResource("Texture_120"), ExtResource("Texture_121"), ExtResource("Texture_122"), ExtResource("Texture_123"), ExtResource("Texture_124")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885), Vector2(-0.411885, 0.411885)]
+}
+
+[sub_resource type="Animation" id="Animation_land"]
+resource_name = "land"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_141"), ExtResource("Texture_142"), ExtResource("Texture_143"), ExtResource("Texture_144"), ExtResource("Texture_145"), ExtResource("Texture_146"), ExtResource("Texture_147"), ExtResource("Texture_148")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765)]
+}
+
+[sub_resource type="Animation" id="Animation_land_right"]
+resource_name = "land_right"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_141"), ExtResource("Texture_142"), ExtResource("Texture_143"), ExtResource("Texture_144"), ExtResource("Texture_145"), ExtResource("Texture_146"), ExtResource("Texture_147"), ExtResource("Texture_148")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765)]
+}
+
+[sub_resource type="Animation" id="Animation_land_to_idle"]
+resource_name = "land_to_idle"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_149"), ExtResource("Texture_150"), ExtResource("Texture_151"), ExtResource("Texture_1")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(0.9, 0.9), Vector2(0.9, 0.9)]
+}
+
+[sub_resource type="Animation" id="Animation_land_to_idle_right"]
+resource_name = "land_to_idle_right"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_149"), ExtResource("Texture_150"), ExtResource("Texture_151"), ExtResource("Texture_1")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.9, 0.9), Vector2(-0.9, 0.9), Vector2(-0.9, 0.9)]
+}
+
+[sub_resource type="Animation" id="Animation_prejump"]
+resource_name = "prejump"
+length = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("Texture_125"), ExtResource("Texture_126")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(0.9, 0.9)]
+}
+
+[sub_resource type="Animation" id="Animation_prejump_right"]
+resource_name = "prejump_right"
+length = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("Texture_125"), ExtResource("Texture_126")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-0.9, 0.9), Vector2(-0.9, 0.9)]
+}
+
+[sub_resource type="Animation" id="Animation_roll"]
+resource_name = "roll"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_152"), ExtResource("Texture_153"), ExtResource("Texture_154"), ExtResource("Texture_155"), ExtResource("Texture_156"), ExtResource("Texture_157"), ExtResource("Texture_158"), ExtResource("Texture_159"), ExtResource("Texture_160"), ExtResource("Texture_161"), ExtResource("Texture_162"), ExtResource("Texture_163"), ExtResource("Texture_164"), ExtResource("Texture_165"), ExtResource("Texture_166"), ExtResource("Texture_167"), ExtResource("Texture_168"), ExtResource("Texture_169"), ExtResource("Texture_170"), ExtResource("Texture_171"), ExtResource("Texture_172"), ExtResource("Texture_173"), ExtResource("Texture_174"), ExtResource("Texture_175")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765), Vector2(0.45765, 0.45765)]
+}
+
+[sub_resource type="Animation" id="Animation_roll_right"]
+resource_name = "roll_right"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_152"), ExtResource("Texture_153"), ExtResource("Texture_154"), ExtResource("Texture_155"), ExtResource("Texture_156"), ExtResource("Texture_157"), ExtResource("Texture_158"), ExtResource("Texture_159"), ExtResource("Texture_160"), ExtResource("Texture_161"), ExtResource("Texture_162"), ExtResource("Texture_163"), ExtResource("Texture_164"), ExtResource("Texture_165"), ExtResource("Texture_166"), ExtResource("Texture_167"), ExtResource("Texture_168"), ExtResource("Texture_169"), ExtResource("Texture_170"), ExtResource("Texture_171"), ExtResource("Texture_172"), ExtResource("Texture_173"), ExtResource("Texture_174"), ExtResource("Texture_175")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.033333, 0.066667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765), Vector2(-0.45765, 0.45765)]
+}
+
+[sub_resource type="Animation" id="Animation_run"]
+resource_name = "run"
+length = 0.875
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_56"), ExtResource("Texture_57"), ExtResource("Texture_58"), ExtResource("Texture_59"), ExtResource("Texture_60"), ExtResource("Texture_61"), ExtResource("Texture_62"), ExtResource("Texture_63"), ExtResource("Texture_64"), ExtResource("Texture_65"), ExtResource("Texture_66"), ExtResource("Texture_67"), ExtResource("Texture_68"), ExtResource("Texture_69")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_run_right"]
+resource_name = "run_right"
+length = 0.875
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_56"), ExtResource("Texture_57"), ExtResource("Texture_58"), ExtResource("Texture_59"), ExtResource("Texture_60"), ExtResource("Texture_61"), ExtResource("Texture_62"), ExtResource("Texture_63"), ExtResource("Texture_64"), ExtResource("Texture_65"), ExtResource("Texture_66"), ExtResource("Texture_67"), ExtResource("Texture_68"), ExtResource("Texture_69")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375, 0.5, 0.5625, 0.625, 0.6875, 0.75, 0.8125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_throw"]
+resource_name = "throw"
+length = 0.428571
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_70"), ExtResource("Texture_71"), ExtResource("Texture_72"), ExtResource("Texture_73"), ExtResource("Texture_74"), ExtResource("Texture_75")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_throw_right"]
+resource_name = "throw_right"
+length = 0.428571
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_70"), ExtResource("Texture_71"), ExtResource("Texture_72"), ExtResource("Texture_73"), ExtResource("Texture_74"), ExtResource("Texture_75")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 2.214286
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286, 1.785714, 1.857143, 1.928571, 2, 2.071429, 2.142857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_25"), ExtResource("Texture_26"), ExtResource("Texture_27"), ExtResource("Texture_28"), ExtResource("Texture_29"), ExtResource("Texture_30"), ExtResource("Texture_31"), ExtResource("Texture_32"), ExtResource("Texture_33"), ExtResource("Texture_34"), ExtResource("Texture_35"), ExtResource("Texture_36"), ExtResource("Texture_37"), ExtResource("Texture_38"), ExtResource("Texture_39"), ExtResource("Texture_40"), ExtResource("Texture_41"), ExtResource("Texture_42"), ExtResource("Texture_43"), ExtResource("Texture_44"), ExtResource("Texture_45"), ExtResource("Texture_46"), ExtResource("Texture_47"), ExtResource("Texture_48"), ExtResource("Texture_49"), ExtResource("Texture_50"), ExtResource("Texture_51"), ExtResource("Texture_52"), ExtResource("Texture_53"), ExtResource("Texture_54"), ExtResource("Texture_55")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286, 1.785714, 1.857143, 1.928571, 2, 2.071429, 2.142857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286, 1.785714, 1.857143, 1.928571, 2, 2.071429, 2.142857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_walk_right"]
+resource_name = "walk_right"
+length = 2.214286
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SherrySprite/SherryVisual:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286, 1.785714, 1.857143, 1.928571, 2, 2.071429, 2.142857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("Texture_25"), ExtResource("Texture_26"), ExtResource("Texture_27"), ExtResource("Texture_28"), ExtResource("Texture_29"), ExtResource("Texture_30"), ExtResource("Texture_31"), ExtResource("Texture_32"), ExtResource("Texture_33"), ExtResource("Texture_34"), ExtResource("Texture_35"), ExtResource("Texture_36"), ExtResource("Texture_37"), ExtResource("Texture_38"), ExtResource("Texture_39"), ExtResource("Texture_40"), ExtResource("Texture_41"), ExtResource("Texture_42"), ExtResource("Texture_43"), ExtResource("Texture_44"), ExtResource("Texture_45"), ExtResource("Texture_46"), ExtResource("Texture_47"), ExtResource("Texture_48"), ExtResource("Texture_49"), ExtResource("Texture_50"), ExtResource("Texture_51"), ExtResource("Texture_52"), ExtResource("Texture_53"), ExtResource("Texture_54"), ExtResource("Texture_55")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SherrySprite/SherryVisual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286, 1.785714, 1.857143, 1.928571, 2, 2.071429, 2.142857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SherrySprite/SherryVisual:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.071429, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571, 0.5, 0.571429, 0.642857, 0.714286, 0.785714, 0.857143, 0.928571, 1, 1.071429, 1.142857, 1.214286, 1.285714, 1.357143, 1.428571, 1.5, 1.571429, 1.642857, 1.714286, 1.785714, 1.857143, 1.928571, 2, 2.071429, 2.142857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(-1, 1)]
+}
+
+[resource]
+_data = {
+&"RESET": SubResource("Animation_syrej"),
+&"cast": SubResource("Animation_cast"),
+&"cast_right": SubResource("Animation_cast_right"),
+&"fall": SubResource("Animation_fall"),
+&"fall_right": SubResource("Animation_fall_right"),
+&"hit": SubResource("Animation_hit"),
+&"hit_right": SubResource("Animation_hit_right"),
+&"idle": SubResource("Animation_idle"),
+&"idle_right": SubResource("Animation_idle_right"),
+&"jump_fall": SubResource("Animation_jump_fall"),
+&"jump_fall_right": SubResource("Animation_jump_fall_right"),
+&"jump_takeoff": SubResource("Animation_jump_takeoff"),
+&"jump_takeoff_right": SubResource("Animation_jump_takeoff_right"),
+&"land": SubResource("Animation_land"),
+&"land_right": SubResource("Animation_land_right"),
+&"land_to_idle": SubResource("Animation_land_to_idle"),
+&"land_to_idle_right": SubResource("Animation_land_to_idle_right"),
+&"prejump": SubResource("Animation_prejump"),
+&"prejump_right": SubResource("Animation_prejump_right"),
+&"roll": SubResource("Animation_roll"),
+&"roll_right": SubResource("Animation_roll_right"),
+&"run": SubResource("Animation_run"),
+&"run_right": SubResource("Animation_run_right"),
+&"throw": SubResource("Animation_throw"),
+&"throw_right": SubResource("Animation_throw_right"),
+&"walk": SubResource("Animation_walk"),
+&"walk_right": SubResource("Animation_walk_right")
+}
