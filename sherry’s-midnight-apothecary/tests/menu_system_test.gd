@@ -23,6 +23,14 @@ static func run(test: TestSupport) -> void:
 	test.expect_float_close(MenuCameraDirector.ease_uniform_accel_decel(0.25), 0.125, 0.0001, "Camera uses constant acceleration in the first half.")
 	test.expect_float_close(MenuCameraDirector.ease_uniform_accel_decel(0.5), 0.5, 0.0001, "Camera reaches half distance at half time.")
 	test.expect_float_close(MenuCameraDirector.ease_uniform_accel_decel(0.75), 0.875, 0.0001, "Camera uses symmetric constant deceleration in the second half.")
+	var descent_progresses: Array[float] = []
+	menu.camera_director.descent_progressed.connect(func(progress: float) -> void: descent_progresses.append(progress))
+	menu.camera_director._set_descent_elapsed_ratio(0.25)
+	menu.camera_director._set_descent_elapsed_ratio(0.75)
+	test.expect_equal(descent_progresses.size(), 2, "Camera descent publishes continuous audio transition progress.")
+	if descent_progresses.size() == 2:
+		test.expect_float_close(descent_progresses[0], 0.125, 0.0001, "Audio progress follows the camera's eased path position.")
+		test.expect(descent_progresses[1] > descent_progresses[0], "Audio transition progress stays monotonic during descent.")
 	test.expect(not bird_silhouette.visible, "Bird flock stays hidden while the menu is idle.")
 	test.expect(silhouette_director.get_bird_start_x() > tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock starts completely beyond the right edge.")
 	test.expect(silhouette_director.get_bird_end_x() < -tree.root.get_viewport().get_visible_rect().size.x * 0.5, "Bird flock finishes completely beyond the left edge.")

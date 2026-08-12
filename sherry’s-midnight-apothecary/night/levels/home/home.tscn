@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://x303tlcn0gfs" path="res://day/levels/home/shader.png" id="13_barrier"]
 [ext_resource type="Texture2D" uid="uid://b07j2gsqg27i" path="res://day/levels/home/bedroomdoor.png" id="14_bedroom_door"]
 [ext_resource type="Script" uid="uid://co7rwmom8agfn" path="res://night/levels/home/night_station_interaction.gd" id="15_interaction"]
+[ext_resource type="AudioStream" uid="uid://cx8yq33f441xb" path="res://audio/bgm/Interior_night.wav" id="16_interior_night_bgm"]
+[ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -80,6 +82,10 @@ size = Vector2(66.913025, 747.25)
 texture_filter = 1
 position = Vector2(0, 7)
 script = ExtResource("1_home")
+
+[node name="InteriorNightBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_interior_night_bgm")
+script = ExtResource("17_looping_bgm")
 
 [node name="NightLighting" type="Node2D" parent="." unique_id=418127947]
 

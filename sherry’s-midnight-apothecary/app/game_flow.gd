@@ -100,6 +100,10 @@ func _load_mode(
 		current_runtime.queue_free()
 	current_runtime = null
 	current_mode = mode
+	if mode != Mode.DAY and is_inside_tree():
+		var sound_manager := get_node_or_null("/root/SoundManager")
+		if sound_manager != null:
+			sound_manager.call("stop_bgm")
 
 	if mode != Mode.ENDING:
 		var scene: PackedScene = DAY_SCENE if mode == Mode.DAY else NIGHT_SCENE

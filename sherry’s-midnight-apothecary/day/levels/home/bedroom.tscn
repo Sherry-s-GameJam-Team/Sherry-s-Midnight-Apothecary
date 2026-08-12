@@ -149,7 +149,6 @@ size = Vector2(70, 720)
 size = Vector2(190, 174)
 
 [node name="Bedroom" type="Node2D" unique_id=903013001]
-texture_filter = 1
 
 [node name="Background" type="Sprite2D" parent="." unique_id=904110592]
 z_index = -10

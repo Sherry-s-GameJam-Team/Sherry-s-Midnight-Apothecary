@@ -35,6 +35,7 @@ func _ready() -> void:
 	menu_ui.quit_requested.connect(get_tree().quit)
 	menu_ui.previous_profile_requested.connect(_preview_relative_profile.bind(-1))
 	menu_ui.next_profile_requested.connect(_preview_relative_profile.bind(1))
+	camera_director.descent_progressed.connect(_on_descent_progressed)
 
 
 func configure(save_data: Dictionary) -> void:
@@ -42,6 +43,13 @@ func configure(save_data: Dictionary) -> void:
 	selected_day = maxi(int(save_data.get("day", 1)), 1)
 	var saved_mode := int(save_data.get("mode", GameFlow.Mode.DAY))
 	selected_mode = saved_mode as GameFlow.Mode if GameFlow.Mode.values().has(saved_mode) else GameFlow.Mode.DAY
+	var sound_manager := get_node_or_null("/root/SoundManager")
+	if sound_manager != null:
+		if selected_mode == GameFlow.Mode.DAY:
+			sound_manager.call("play_day_interior_bgm")
+			sound_manager.call("set_day_interior_menu_profile")
+		else:
+			sound_manager.call("stop_bgm")
 	var profile := profile_resolver.get_profile_for_menu(has_save, selected_mode)
 	if profile != null:
 		sky_controller.apply_profile(profile)
@@ -56,6 +64,9 @@ func runtime_loaded(runtime: Node, mode: GameFlow.Mode, day: int) -> void:
 	camera_director.release_camera()
 	var has_bedroom_intro := mode == GameFlow.Mode.DAY and runtime is DayRuntime
 	if has_bedroom_intro:
+		var sound_manager := get_node_or_null("/root/SoundManager")
+		if sound_manager != null:
+			sound_manager.call("set_day_interior_room_profile")
 		state = MenuState.BEDROOM_INTRO
 		(runtime as DayRuntime).set_intro_locked(true)
 		# Start the actual Bedroom wake animation while the roof reveals the
@@ -78,6 +89,10 @@ func fail_transition(message: String) -> void:
 	silhouette_director.reset()
 	menu_ui.modulate.a = 1.0
 	menu_ui.set_menu_enabled(true)
+	var sound_manager := get_node_or_null("/root/SoundManager")
+	if sound_manager != null and selected_mode == GameFlow.Mode.DAY:
+		sound_manager.call("play_day_interior_bgm")
+		sound_manager.call("set_day_interior_menu_profile")
 
 
 func _begin_transition(continue_game: bool) -> void:
@@ -94,6 +109,14 @@ func _begin_transition(continue_game: bool) -> void:
 	transition_director.cover_with_roof()
 	await transition_director.fully_covered
 	runtime_swap_requested.emit(continue_game)
+
+
+func _on_descent_progressed(progress: float) -> void:
+	if selected_mode != GameFlow.Mode.DAY:
+		return
+	var sound_manager := get_node_or_null("/root/SoundManager")
+	if sound_manager != null:
+		sound_manager.call("set_day_interior_transition", progress)
 
 
 func _preview_relative_profile(direction: int) -> void:

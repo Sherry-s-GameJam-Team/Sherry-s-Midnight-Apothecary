@@ -2,6 +2,7 @@ class_name MenuCameraDirector
 extends Node
 
 signal descent_finished
+signal descent_progressed(progress: float)
 
 @export var camera_path: NodePath
 @export var start_marker_path: NodePath
@@ -62,6 +63,7 @@ static func ease_uniform_accel_decel(value: float) -> float:
 func _set_descent_elapsed_ratio(value: float) -> void:
 	var progress := ease_uniform_accel_decel(value)
 	_camera.global_position = _position_along_path(progress)
+	descent_progressed.emit(progress)
 
 
 func _position_along_path(progress: float) -> Vector2:

@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://dj41d5naqt5ru"]
 
-[ext_resource type="Script" path="res://day/levels/lake/lake_cliff_underwater.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://bhoev2a006145" path="res://day/levels/lake/lake_cliff_underwater.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://v4cl6udwg3aj" path="res://day/levels/lake/scripts/lake_elevator.gd" id="2_elevator"]
+[ext_resource type="Texture2D" uid="uid://dfh8am6be8ckp" path="res://day/art/lake/FS/wall.png" id="2_evsck"]
 [ext_resource type="Script" uid="uid://cuiup1odcqav6" path="res://day/levels/lake/scripts/lake_parallax_layer.gd" id="3_parallax"]
 [ext_resource type="Script" uid="uid://3jncxbxwvrkn" path="res://day/levels/lake/scripts/lake_water_surface.gd" id="4_surface_script"]
 [ext_resource type="Script" uid="uid://7xq06s34hgus" path="res://day/levels/lake/scripts/lake_underwater_controller.gd" id="5_underwater"]
-[ext_resource type="Shader" uid="uid://ubfitb87010c" path="res://day/levels/lake/shaders/lake_surface.gdshader" id="6_surface_shader"]
 [ext_resource type="Shader" uid="uid://b2h1unw6xh807" path="res://day/levels/lake/shaders/underwater_post.gdshader" id="7_post_shader"]
 [ext_resource type="Shader" uid="uid://b25yq0f4fl421" path="res://day/levels/lake/shaders/underwater_distortion.gdshader" id="8_distortion_shader"]
+[ext_resource type="Texture2D" uid="uid://bojj3oo6ugfgc" path="res://day/levels/lakebed/effect/trans.png" id="8_y7lfw"]
 [ext_resource type="Shader" uid="uid://cipgox13o5kyr" path="res://day/levels/lake/shaders/underwater_caustics.gdshader" id="9_caustics_shader"]
-[ext_resource type="Texture2D" uid="uid://i7qkrsbpy6pn" path="res://day/art/lake/CS/rock face.png" id="10_cliff"]
 [ext_resource type="Texture2D" uid="uid://fg72dnugifl8" path="res://day/levels/lakebed/art/BG.png" id="11_lakebed_bg"]
 [ext_resource type="Texture2D" uid="uid://bvw2oq0t364vm" path="res://day/levels/lakebed/art/ground_loop.png" id="12_lakebed_ground"]
 [ext_resource type="PackedScene" uid="uid://dfxen4gpefv17" path="res://day/levels/lakebed/lakebed.tscn" id="13_lakebed"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="16_presentation"]
 [ext_resource type="PackedScene" path="res://shared/potions/runtime/potion_player_system.tscn" id="17_potions"]
 [ext_resource type="PackedScene" uid="uid://bp7wfkblgad38" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="Texture2D" uid="uid://5n54lif7dcse" path="res://day/levels/lakebed/effect/surface.png" id="19_water_surface"]
+[ext_resource type="Texture2D" uid="uid://d34qtr786fv3b" path="res://day/levels/lakebed/effect/bottom.png" id="20_water_bottom"]
 
 [sub_resource type="RectangleShape2D" id="TopFloorShape"]
 size = Vector2(936, 200)
@@ -27,50 +29,6 @@ size = Vector2(300, 28)
 
 [sub_resource type="RectangleShape2D" id="ElevatorAreaShape"]
 size = Vector2(340, 230)
-
-[sub_resource type="ShaderMaterial" id="WaterBackMaterial"]
-shader = ExtResource("6_surface_shader")
-shader_parameter/water_color = Color(0.03, 0.42, 0.52, 0.42)
-shader_parameter/highlight_color = Color(0.4, 0.9, 0.86, 0.45)
-shader_parameter/wave_strength = 0.005
-shader_parameter/wave_speed = 0.32
-shader_parameter/frequency = 5.0
-shader_parameter/flow_speed = 0.04
-shader_parameter/refraction_strength = 0.0015
-shader_parameter/opacity = 0.45
-
-[sub_resource type="ShaderMaterial" id="WaterMiddleMaterial"]
-shader = ExtResource("6_surface_shader")
-shader_parameter/water_color = Color(0.04, 0.55, 0.62, 0.52)
-shader_parameter/highlight_color = Color(0.55, 1, 0.95, 0.75)
-shader_parameter/wave_strength = 0.009
-shader_parameter/wave_speed = 0.55
-shader_parameter/frequency = 7.0
-shader_parameter/flow_speed = 0.04
-shader_parameter/refraction_strength = 0.003
-shader_parameter/opacity = 0.6
-
-[sub_resource type="ShaderMaterial" id="WaterFrontMaterial"]
-shader = ExtResource("6_surface_shader")
-shader_parameter/water_color = Color(0.05, 0.64, 0.68, 0.58)
-shader_parameter/highlight_color = Color(0.55, 1, 0.95, 0.75)
-shader_parameter/wave_strength = 0.014
-shader_parameter/wave_speed = 0.82
-shader_parameter/frequency = 9.0
-shader_parameter/flow_speed = 0.04
-shader_parameter/refraction_strength = 0.004
-shader_parameter/opacity = 0.74
-
-[sub_resource type="ShaderMaterial" id="FoamMaterial"]
-shader = ExtResource("6_surface_shader")
-shader_parameter/water_color = Color(0.52, 0.95, 0.88, 0.2)
-shader_parameter/highlight_color = Color(0.75, 1, 0.96, 0.9)
-shader_parameter/wave_strength = 0.018
-shader_parameter/wave_speed = 1.0
-shader_parameter/frequency = 12.0
-shader_parameter/flow_speed = 0.04
-shader_parameter/refraction_strength = 0.001
-shader_parameter/opacity = 0.62
 
 [sub_resource type="RectangleShape2D" id="WaterTriggerShape"]
 size = Vector2(2600, 12)
@@ -138,16 +96,24 @@ z_index = -45
 color = Color(0.88, 0.92, 0.89, 1)
 polygon = PackedVector2Array(0, 0, 2172, 0, 2172, 1580, 0, 1580)
 
-[node name="RockFace" type="Sprite2D" parent="World/CliffArea" unique_id=177722464]
+[node name="RockFace2" type="Sprite2D" parent="World/CliffArea" unique_id=1406910976]
 z_index = -15
-position = Vector2(0, 310)
-texture = ExtResource("10_cliff")
+position = Vector2(-24, 1306)
+scale = Vector2(1.0220995, 1.070442)
+texture = ExtResource("2_evsck")
 centered = false
 
 [node name="CliffMist" type="Polygon2D" parent="World/CliffArea" unique_id=1525887936]
 z_index = -10
 color = Color(0.78, 0.92, 0.9, 0.32)
 polygon = PackedVector2Array(0, 1150, 2172, 1150, 2172, 1595, 0, 1595)
+
+[node name="RockFace" type="Sprite2D" parent="World/CliffArea" unique_id=177722464]
+z_index = -15
+position = Vector2(-25, 744)
+scale = Vector2(1.0105894, 1)
+texture = ExtResource("2_evsck")
+centered = false
 
 [node name="TopPlatforms" type="Node2D" parent="World/CliffArea" unique_id=661054646]
 
@@ -220,62 +186,25 @@ position = Vector2(1086, 4300)
 
 [node name="WaterSurface" type="Node2D" parent="World" unique_id=1593285379]
 
-[node name="WaterBack" type="ColorRect" parent="World/WaterSurface" unique_id=1864743139 groups=["lake_water_layer"]]
-visible = false
-z_index = -4
-material = SubResource("WaterBackMaterial")
-offset_left = -220.0
-offset_top = 1558.0
-offset_right = 2392.0
-offset_bottom = 1678.0
-mouse_filter = 2
+[node name="WaterBottom" type="Sprite2D" parent="World/WaterSurface" unique_id=461709560 groups=["lake_water_layer"]]
+z_index = -6
+position = Vector2(0, 1600)
+texture = ExtResource("20_water_bottom")
+centered = false
 script = ExtResource("4_surface_script")
-vertical_parallax = 0.15
-bob_amplitude = 3.0
-bob_period = 8.0
+bob_amplitude = 1.5
+bob_period = 9.0
+phase_offset = 1.8
 
-[node name="WaterMiddle" type="ColorRect" parent="World/WaterSurface" unique_id=739882938 groups=["lake_water_layer"]]
-visible = false
-z_index = 2
-material = SubResource("WaterMiddleMaterial")
-offset_left = -220.0
-offset_top = 1573.0
-offset_right = 2392.0
-offset_bottom = 1713.0
-mouse_filter = 2
-script = ExtResource("4_surface_script")
-bob_amplitude = 6.0
-phase_offset = 1.2
-
-[node name="WaterFront" type="ColorRect" parent="World/WaterSurface" unique_id=1525304027 groups=["lake_water_layer"]]
-visible = false
-z_index = 18
-material = SubResource("WaterFrontMaterial")
-offset_left = -220.0
-offset_top = 1589.0
-offset_right = 2392.0
-offset_bottom = 1769.0
-mouse_filter = 2
-script = ExtResource("4_surface_script")
-vertical_parallax = 0.7
-bob_amplitude = 10.0
-bob_period = 3.0
-phase_offset = 2.4
-
-[node name="Foam" type="ColorRect" parent="World/WaterSurface" unique_id=1503721895 groups=["lake_water_layer"]]
-visible = false
+[node name="Surface" type="Sprite2D" parent="World/WaterSurface" unique_id=693230654 groups=["lake_water_layer"]]
 z_index = 20
-material = SubResource("FoamMaterial")
-offset_left = -220.0
-offset_top = 1578.0
-offset_right = 2392.0
-offset_bottom = 1614.0
-mouse_filter = 2
+position = Vector2(0, 1545)
+texture = ExtResource("19_water_surface")
+centered = false
 script = ExtResource("4_surface_script")
-vertical_parallax = 0.82
-bob_amplitude = 12.0
-bob_period = 3.7
-phase_offset = 4.0
+bob_amplitude = 4.0
+bob_period = 4.2
+phase_offset = 0.4
 
 [node name="WaterTrigger" type="Area2D" parent="World/WaterSurface" unique_id=416061162]
 position = Vector2(1086, 1600)
@@ -296,8 +225,13 @@ drift_amplitude = Vector2(4, 8)
 drift_period = 12.0
 
 [node name="WaterColumn" type="Polygon2D" parent="World/UnderwaterArea/DeepBackground" unique_id=1693549090]
-color = Color(0.025, 0.19, 0.23, 1)
-polygon = PackedVector2Array(0, 0, 2172, 0, 2172, 4200, 0, 4200)
+color = Color(0.54901963, 0.92156863, 0.8901961, 0)
+polygon = PackedVector2Array(0, 0, 1088.626, 0, 2172, 0, 2172, 4200, 0, 4200)
+
+[node name="Trans" type="Sprite2D" parent="World/UnderwaterArea/DeepBackground" unique_id=544694326]
+position = Vector2(1082, 1545.5)
+scale = Vector2(1.0138122, 1.3064264)
+texture = ExtResource("8_y7lfw")
 
 [node name="FarRuins" type="Node2D" parent="World/UnderwaterArea" unique_id=627194224 groups=["lake_parallax_layer"]]
 z_index = -32
@@ -310,6 +244,7 @@ drift_period = 10.0
 phase_offset = 1.4
 
 [node name="Artwork" type="Sprite2D" parent="World/UnderwaterArea/FarRuins" unique_id=1867515693]
+visible = false
 modulate = Color(0.38, 0.7, 0.69, 0.45)
 scale = Vector2(1, 1.15)
 texture = ExtResource("11_lakebed_bg")
@@ -326,12 +261,19 @@ drift_period = 6.7
 phase_offset = 2.8
 
 [node name="Artwork" type="Sprite2D" parent="World/UnderwaterArea/MidRuins" unique_id=1581750024]
+visible = false
 modulate = Color(0.48, 0.83, 0.78, 0.62)
 texture = ExtResource("11_lakebed_bg")
 centered = false
 
 [node name="GameplayRuins" type="Node2D" parent="World/UnderwaterArea" unique_id=1319569919]
 position = Vector2(0, 3670)
+
+[node name="LakebedBackdrop" type="Sprite2D" parent="World/UnderwaterArea/GameplayRuins" unique_id=1318642969]
+show_behind_parent = true
+z_index = -18
+texture = ExtResource("11_lakebed_bg")
+centered = false
 
 [node name="LakebedVisual" parent="World/UnderwaterArea/GameplayRuins" unique_id=300438473 instance=ExtResource("13_lakebed")]
 script = null
@@ -451,6 +393,7 @@ script = ExtResource("14_player")
 [node name="PotionThrower" parent="Player" unique_id=1735111988 instance=ExtResource("17_potions")]
 
 [node name="CameraSystem" type="Node2D" parent="." unique_id=457570311]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="CameraSystem" unique_id=1829672299]
 position = Vector2(1086, 810)
@@ -458,8 +401,6 @@ limit_left = 0
 limit_top = 0
 limit_right = 2172
 limit_bottom = 4662
-position_smoothing_enabled = true
-position_smoothing_speed = 4.0
 
 [node name="EnvironmentFX" type="Node2D" parent="." unique_id=1383014748]
 z_index = 90

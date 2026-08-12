@@ -93,6 +93,7 @@ func _load_level() -> void:
 	current_level = _find_level(_initial_level_id)
 	if current_level == null:
 		current_level = DAILY_LEVELS[posmod(day - 1, DAILY_LEVELS.size())]
+	_sync_bgm_for_current_level()
 	_instantiate_current_level(&"default")
 	if not _defer_initial_title:
 		_play_scene_title_once()
@@ -117,10 +118,22 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		for child in level_slot.get_children():
 			child.queue_free()
 		current_level = level_data
+		_sync_bgm_for_current_level()
 		_instantiate_current_level(entry_id)
 		_play_scene_title_once()
 		return true
 	return false
+
+
+func _sync_bgm_for_current_level() -> void:
+	var sound_manager := get_node_or_null("/root/SoundManager")
+	if sound_manager == null:
+		return
+	if current_level != null and current_level.id in [&"home", &"bedroom"]:
+		sound_manager.call("play_day_interior_bgm")
+		sound_manager.call("set_day_interior_room_profile")
+	else:
+		sound_manager.call("stop_bgm")
 
 
 func _instantiate_current_level(entry_id: StringName) -> Node:
