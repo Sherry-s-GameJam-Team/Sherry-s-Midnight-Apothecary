@@ -33,8 +33,12 @@ static func run(test: TestSupport) -> void:
 	root.add_child(animation)
 	root.add_child(executor)
 	var tree := Engine.get_main_loop() as SceneTree
-	tree.root.add_child(root)
 	player.set_physics_process(true)
+	# Menu startup prepares Bedroom before attaching it to the live scene tree so
+	# the player artwork cannot appear in a pre-animation render frame.
+	test.expect(executor.prepare(), "Presentation can be prepared while its level tree is detached.")
+	test.expect(not player_visual.visible, "Detached preparation hides player artwork before the level's first rendered frame.")
+	tree.root.add_child(root)
 
 	var completed_count := [0]
 	executor.completed.connect(func() -> void: completed_count[0] += 1)
@@ -45,6 +49,11 @@ static func run(test: TestSupport) -> void:
 	test.expect(not player.is_physics_processing(), "Player physics is disabled while the animation runs.")
 	test.expect(camera.can_process(), "A Camera2D child keeps processing during the presentation.")
 	animation.animation_finished.emit()
+	test.expect(not animation.visible, "The finished presentation frame is hidden before the player artwork is revealed.")
+	test.expect(not player_visual.visible, "Player artwork remains hidden during the render-frame handoff.")
+	# Complete the deferred half of the handoff directly; the simplified suite is
+	# synchronous and does not advance SceneTree process frames between asserts.
+	executor._complete_presentation()
 	test.expect_equal(player.global_position, spawn_point.global_position, "Player is moved to the configured spawn marker after the animation.")
 	test.expect(player.visible, "Player is revealed after the presentation animation.")
 	test.expect(player_visual.visible, "Player artwork is revealed after the presentation animation.")
@@ -55,6 +64,37 @@ static func run(test: TestSupport) -> void:
 	animation.animation_finished.emit()
 	test.expect_equal(completed_count[0], 1, "Duplicate completion signals are ignored.")
 	root.free()
+
+	var skipped_root := Node2D.new()
+	var skipped_player := CharacterBody2D.new()
+	skipped_player.name = "Player"
+	skipped_player.position = Vector2(900, 360)
+	var skipped_visual := Node2D.new()
+	skipped_visual.name = "PlayerVisual"
+	skipped_player.add_child(skipped_visual)
+	var skipped_spawn := Marker2D.new()
+	skipped_spawn.name = "SpawnPoint"
+	skipped_spawn.position = Vector2(240, 360)
+	var skipped_animation := AnimatedSprite2D.new()
+	skipped_animation.name = "Animation"
+	skipped_animation.sprite_frames = _make_frames(false)
+	skipped_animation.animation = &"sequence"
+	var skipped_executor := scene.instantiate() as AnimationPresentationExecutor
+	skipped_executor.auto_start = false
+	skipped_executor.animation_path = NodePath("../Animation")
+	skipped_executor.player_path = NodePath("../Player")
+	skipped_executor.player_visual_path = NodePath("../Player/PlayerVisual")
+	skipped_executor.spawn_point_path = NodePath("../SpawnPoint")
+	skipped_root.add_child(skipped_player)
+	skipped_root.add_child(skipped_spawn)
+	skipped_root.add_child(skipped_animation)
+	skipped_root.add_child(skipped_executor)
+	tree.root.add_child(skipped_root)
+	skipped_executor.prepare()
+	skipped_executor._complete_presentation(false)
+	test.expect_equal(skipped_player.global_position, Vector2(900, 360), "Skipping an already-played presentation preserves the requested level entry position.")
+	test.expect(skipped_visual.visible, "Skipping an already-played presentation still reveals the player artwork.")
+	skipped_root.free()
 
 	var loop_root := Node2D.new()
 	var loop_player := CharacterBody2D.new()

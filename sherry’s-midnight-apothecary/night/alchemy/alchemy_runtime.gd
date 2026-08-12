@@ -75,7 +75,6 @@ var _ingredient_by_id: Dictionary = {}
 @onready var batch_list: VBoxContainer = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BatchPanel/BatchMargin/IngredientList")
 @onready var brew_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BrewButton")
 @onready var cancel_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CancelButton")
-@onready var finish_night_button: BaseButton = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/FinishNightButton")
 @onready var result_popup: AcceptDialog = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ResultPopup")
 @onready var to_production_arrow: Button = $StageRoot/HorizontalStage/BrewingPanel/ArtBoard/ToProductionArrow
 @onready var back_to_brewing_arrow: Button = $StageRoot/HorizontalStage/ProductionPanel/BackToBrewingArrow
@@ -86,7 +85,6 @@ func _ready() -> void:
 		stage_root.resized.connect(_sync_alchemy_background)
 	_connect_button(brew_button, brew)
 	_connect_button(cancel_button, cancel_batch)
-	_connect_button(finish_night_button, _on_finish_night_pressed)
 	_connect_button(to_production_arrow, show_production_panel)
 	_connect_button(back_to_brewing_arrow, show_brewing_panel)
 	_build_lookup()
@@ -167,10 +165,6 @@ func _night_runtime_ancestor() -> NightRuntime:
 func _connect_button(button: BaseButton, callback: Callable) -> void:
 	if button != null and not button.pressed.is_connected(callback):
 		button.pressed.connect(callback)
-
-
-func _on_finish_night_pressed() -> void:
-	request_close.emit()
 
 
 func setup(shared_player_data: PlayerData, current_night_result: NightResult, current_day: int) -> void:

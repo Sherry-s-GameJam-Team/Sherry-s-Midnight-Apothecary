@@ -199,7 +199,7 @@ position = Vector2(2549, 724)
 position = Vector2(-902, 718)
 
 [node name="Table" type="Sprite2D" parent="." unique_id=40416591]
-z_index = 11
+z_index = 5
 position = Vector2(808, 663)
 scale = Vector2(0.50658125, 0.5065813)
 texture = ExtResource("9_8dq4v")

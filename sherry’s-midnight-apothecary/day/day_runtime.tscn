@@ -22,11 +22,3 @@ layer = 220
 
 [node name="DeveloperConsole" parent="DeveloperConsoleLayer" unique_id=1935932251 instance=ExtResource("3_console")]
 anchors_preset = -1
-
-[node name="FinishDayButton" type="Button" parent="UI" unique_id=1367388977]
-offset_left = 1080.0
-offset_top = 650.0
-offset_right = 1245.0
-offset_bottom = 698.0
-theme_override_font_sizes/font_size = 18
-text = "结束白天"

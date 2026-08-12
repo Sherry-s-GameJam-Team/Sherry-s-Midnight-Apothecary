@@ -2,6 +2,7 @@ class_name NightRuntime
 extends Node
 
 signal finished(result: NightResult)
+signal sleep_requested(result: NightResult)
 
 const NIGHT_HOME_SCENE := preload("res://night/levels/home/home.tscn")
 const NIGHT_BEDROOM_SCENE := preload("res://night/levels/home/bedroom.tscn")
@@ -133,10 +134,6 @@ func finish_night(result: NightResult = null) -> void:
 		finished.emit(final_result)
 
 
-func _on_alchemy_request_close() -> void:
-	finish_night()
-
-
 func _on_business_requested() -> void:
 	open_business()
 
@@ -205,7 +202,13 @@ func _connect_room(room: Node) -> void:
 		home.production_requested.connect(_on_production_requested)
 		home.bedroom_requested.connect(_on_bedroom_requested)
 	elif room is NightBedroom:
-		(room as NightBedroom).return_requested.connect(_on_bedroom_return_requested)
+		var bedroom := room as NightBedroom
+		bedroom.return_requested.connect(_on_bedroom_return_requested)
+		bedroom.sleep_requested.connect(_on_bedroom_sleep_requested)
+
+
+func _on_bedroom_sleep_requested() -> void:
+	sleep_requested.emit(current_night_result)
 
 
 func _set_player_enabled(enabled: bool) -> void:

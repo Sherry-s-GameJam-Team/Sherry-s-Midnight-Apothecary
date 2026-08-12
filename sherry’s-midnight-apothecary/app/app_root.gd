@@ -10,9 +10,11 @@ extends Node
 @onready var pause_menu: PauseMenu = $GlobalUI/PauseMenu
 @onready var top_hint_ui: TopHintUI = $GlobalUI/TopHintUI
 @onready var map_switch: Control = $GlobalUI/MapSwitchInteraction
+@onready var sleep_fade: ColorRect = $SleepTransition/Fade
 
 var player_data: PlayerData
 var save_service: SaveService
+var _sleep_transition_running := false
 
 
 func get_player_data() -> PlayerData:
@@ -27,6 +29,7 @@ func _ready() -> void:
 	game_flow.configure(current_runtime_slot, player_data)
 	map_switch.travel_requested.connect(_on_map_switch_travel_requested)
 	game_flow.save_requested.connect(_on_save_requested)
+	game_flow.sleep_transition_requested.connect(_on_sleep_transition_requested)
 	menu_controller.runtime_swap_requested.connect(_on_menu_runtime_swap_requested)
 	menu_controller.settings_requested.connect(_on_menu_settings_requested)
 	menu_controller.intro_finished.connect(_on_menu_intro_finished)
@@ -113,6 +116,29 @@ func _on_menu_intro_finished() -> void:
 
 func _on_save_requested(_day: int, _mode: GameFlow.Mode) -> void:
 	save_game()
+
+
+func _on_sleep_transition_requested(result: NightResult) -> void:
+	if _sleep_transition_running or game_flow.current_mode != GameFlow.Mode.NIGHT:
+		return
+	_sleep_transition_running = true
+	sleep_fade.mouse_filter = Control.MOUSE_FILTER_STOP
+	var fade_out := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	fade_out.tween_property(sleep_fade, "color:a", 1.0, 0.8)
+	await fade_out.finished
+	var changed := game_flow.complete_night_to_bedroom(result)
+	if changed and game_flow.current_mode == GameFlow.Mode.DAY:
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var fade_in := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		fade_in.tween_property(sleep_fade, "color:a", 0.0, 0.8)
+		await fade_in.finished
+	elif not changed:
+		sleep_fade.color.a = 0.0
+	if game_flow.current_mode != GameFlow.Mode.ENDING:
+		sleep_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	get_tree().remove_meta("day_modal_input_locked")
+	_sleep_transition_running = false
 
 
 func _on_map_switch_travel_requested(destination_id: StringName, _destination_data: Dictionary) -> void:

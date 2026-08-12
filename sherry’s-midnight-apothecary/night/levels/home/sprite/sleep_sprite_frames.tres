@@ -1,0 +1,262 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dnu4fmfv1h2l0"]
+
+[ext_resource type="Texture2D" uid="uid://dglv7fn81i3js" path="res://night/levels/home/sprite/sleep_frames/sleep_0000.png" id="1_sleep"]
+[ext_resource type="Texture2D" uid="uid://bo71iunlhvvrk" path="res://night/levels/home/sprite/sleep_frames/sleep_0001.png" id="2_sleep"]
+[ext_resource type="Texture2D" uid="uid://bpb7ivltp0oas" path="res://night/levels/home/sprite/sleep_frames/sleep_0002.png" id="3_sleep"]
+[ext_resource type="Texture2D" uid="uid://5shrdwcvp2io" path="res://night/levels/home/sprite/sleep_frames/sleep_0003.png" id="4_sleep"]
+[ext_resource type="Texture2D" uid="uid://0wrtquomfwcx" path="res://night/levels/home/sprite/sleep_frames/sleep_0004.png" id="5_sleep"]
+[ext_resource type="Texture2D" uid="uid://bshlanq3usj7n" path="res://night/levels/home/sprite/sleep_frames/sleep_0005.png" id="6_sleep"]
+[ext_resource type="Texture2D" uid="uid://532ur147hc8l" path="res://night/levels/home/sprite/sleep_frames/sleep_0006.png" id="7_sleep"]
+[ext_resource type="Texture2D" uid="uid://c54xyd5nrq0br" path="res://night/levels/home/sprite/sleep_frames/sleep_0007.png" id="8_sleep"]
+[ext_resource type="Texture2D" uid="uid://m7og3d0mpseh" path="res://night/levels/home/sprite/sleep_frames/sleep_0008.png" id="9_sleep"]
+[ext_resource type="Texture2D" uid="uid://bkua0jpxlj1ng" path="res://night/levels/home/sprite/sleep_frames/sleep_0009.png" id="10_sleep"]
+[ext_resource type="Texture2D" uid="uid://cpo6gvnfjrsvu" path="res://night/levels/home/sprite/sleep_frames/sleep_0010.png" id="11_sleep"]
+[ext_resource type="Texture2D" uid="uid://b5d1ms64rjgo2" path="res://night/levels/home/sprite/sleep_frames/sleep_0011.png" id="12_sleep"]
+[ext_resource type="Texture2D" uid="uid://brsgw0vhnyydp" path="res://night/levels/home/sprite/sleep_frames/sleep_0012.png" id="13_sleep"]
+[ext_resource type="Texture2D" uid="uid://cgonlotbxenwu" path="res://night/levels/home/sprite/sleep_frames/sleep_0013.png" id="14_sleep"]
+[ext_resource type="Texture2D" uid="uid://b7ymeriqciptu" path="res://night/levels/home/sprite/sleep_frames/sleep_0014.png" id="15_sleep"]
+[ext_resource type="Texture2D" uid="uid://177mgjg4ifje" path="res://night/levels/home/sprite/sleep_frames/sleep_0015.png" id="16_sleep"]
+[ext_resource type="Texture2D" uid="uid://c3gpe3spqgtrm" path="res://night/levels/home/sprite/sleep_frames/sleep_0016.png" id="17_sleep"]
+[ext_resource type="Texture2D" uid="uid://cv5roqxyrf7dx" path="res://night/levels/home/sprite/sleep_frames/sleep_0017.png" id="18_sleep"]
+[ext_resource type="Texture2D" uid="uid://k242knkl5a46" path="res://night/levels/home/sprite/sleep_frames/sleep_0018.png" id="19_sleep"]
+[ext_resource type="Texture2D" uid="uid://dt78q2stb3hbe" path="res://night/levels/home/sprite/sleep_frames/sleep_0019.png" id="20_sleep"]
+[ext_resource type="Texture2D" uid="uid://lfiohwurrp42" path="res://night/levels/home/sprite/sleep_frames/sleep_0020.png" id="21_sleep"]
+[ext_resource type="Texture2D" uid="uid://cjry5iq3024j4" path="res://night/levels/home/sprite/sleep_frames/sleep_0021.png" id="22_sleep"]
+[ext_resource type="Texture2D" uid="uid://dk7dnng4la8b8" path="res://night/levels/home/sprite/sleep_frames/sleep_0022.png" id="23_sleep"]
+[ext_resource type="Texture2D" uid="uid://dom5j3d3l2280" path="res://night/levels/home/sprite/sleep_frames/sleep_0023.png" id="24_sleep"]
+[ext_resource type="Texture2D" uid="uid://bfn0f8pfd0ghk" path="res://night/levels/home/sprite/sleep_frames/sleep_0024.png" id="25_sleep"]
+[ext_resource type="Texture2D" uid="uid://wqaqmfyiyu1t" path="res://night/levels/home/sprite/sleep_frames/sleep_0025.png" id="26_sleep"]
+[ext_resource type="Texture2D" uid="uid://cuya6gnxj3tub" path="res://night/levels/home/sprite/sleep_frames/sleep_0026.png" id="27_sleep"]
+[ext_resource type="Texture2D" uid="uid://dg88b10e0ubmh" path="res://night/levels/home/sprite/sleep_frames/sleep_0027.png" id="28_sleep"]
+[ext_resource type="Texture2D" uid="uid://b8p1o3odjvooo" path="res://night/levels/home/sprite/sleep_frames/sleep_0028.png" id="29_sleep"]
+[ext_resource type="Texture2D" uid="uid://bs60j0nm2h0wk" path="res://night/levels/home/sprite/sleep_frames/sleep_0029.png" id="30_sleep"]
+[ext_resource type="Texture2D" uid="uid://dy4pvmlxh1dpq" path="res://night/levels/home/sprite/sleep_frames/sleep_0030.png" id="31_sleep"]
+[ext_resource type="Texture2D" uid="uid://dvrr3q6s3ncs5" path="res://night/levels/home/sprite/sleep_frames/sleep_0031.png" id="32_sleep"]
+[ext_resource type="Texture2D" uid="uid://ck8usolfwfrxa" path="res://night/levels/home/sprite/sleep_frames/sleep_0032.png" id="33_sleep"]
+[ext_resource type="Texture2D" uid="uid://chpmg7bag6vi6" path="res://night/levels/home/sprite/sleep_frames/sleep_0033.png" id="34_sleep"]
+[ext_resource type="Texture2D" uid="uid://c45u67inp8nny" path="res://night/levels/home/sprite/sleep_frames/sleep_0034.png" id="35_sleep"]
+[ext_resource type="Texture2D" uid="uid://5hddcitlxj7c" path="res://night/levels/home/sprite/sleep_frames/sleep_0035.png" id="36_sleep"]
+[ext_resource type="Texture2D" uid="uid://yarr3ol2umh7" path="res://night/levels/home/sprite/sleep_frames/sleep_0036.png" id="37_sleep"]
+[ext_resource type="Texture2D" uid="uid://b5fnllpmrdrsl" path="res://night/levels/home/sprite/sleep_frames/sleep_0037.png" id="38_sleep"]
+[ext_resource type="Texture2D" uid="uid://blteft8d1mj7p" path="res://night/levels/home/sprite/sleep_frames/sleep_0038.png" id="39_sleep"]
+[ext_resource type="Texture2D" uid="uid://bnr4yt4yvrl7a" path="res://night/levels/home/sprite/sleep_frames/sleep_0039.png" id="40_sleep"]
+[ext_resource type="Texture2D" uid="uid://ds0f1rs41k5uu" path="res://night/levels/home/sprite/sleep_frames/sleep_0040.png" id="41_sleep"]
+[ext_resource type="Texture2D" uid="uid://dgivmvvgecxp2" path="res://night/levels/home/sprite/sleep_frames/sleep_0041.png" id="42_sleep"]
+[ext_resource type="Texture2D" uid="uid://cr1d63167ucj6" path="res://night/levels/home/sprite/sleep_frames/sleep_0042.png" id="43_sleep"]
+[ext_resource type="Texture2D" uid="uid://cm56ogloxa2rd" path="res://night/levels/home/sprite/sleep_frames/sleep_0043.png" id="44_sleep"]
+[ext_resource type="Texture2D" uid="uid://lng2mwtlregx" path="res://night/levels/home/sprite/sleep_frames/sleep_0044.png" id="45_sleep"]
+[ext_resource type="Texture2D" uid="uid://dc5ff3ovdt052" path="res://night/levels/home/sprite/sleep_frames/sleep_0045.png" id="46_sleep"]
+[ext_resource type="Texture2D" uid="uid://cjeu6bjd1oxft" path="res://night/levels/home/sprite/sleep_frames/sleep_0046.png" id="47_sleep"]
+[ext_resource type="Texture2D" uid="uid://c16akqua8hw5n" path="res://night/levels/home/sprite/sleep_frames/sleep_0047.png" id="48_sleep"]
+[ext_resource type="Texture2D" uid="uid://cgmrodt8weqht" path="res://night/levels/home/sprite/sleep_frames/sleep_0048.png" id="49_sleep"]
+[ext_resource type="Texture2D" uid="uid://bvimxfvfnmfgh" path="res://night/levels/home/sprite/sleep_frames/sleep_0049.png" id="50_sleep"]
+[ext_resource type="Texture2D" uid="uid://b5wm716js2xfe" path="res://night/levels/home/sprite/sleep_frames/sleep_0050.png" id="51_sleep"]
+[ext_resource type="Texture2D" uid="uid://cdkgd5ps0tiiu" path="res://night/levels/home/sprite/sleep_frames/sleep_0051.png" id="52_sleep"]
+[ext_resource type="Texture2D" uid="uid://b3ind00r5njfn" path="res://night/levels/home/sprite/sleep_frames/sleep_0052.png" id="53_sleep"]
+[ext_resource type="Texture2D" uid="uid://efrwmrsqq6lk" path="res://night/levels/home/sprite/sleep_frames/sleep_0053.png" id="54_sleep"]
+[ext_resource type="Texture2D" uid="uid://bd82ot1by3lst" path="res://night/levels/home/sprite/sleep_frames/sleep_0054.png" id="55_sleep"]
+[ext_resource type="Texture2D" uid="uid://sbs38a6ifd1c" path="res://night/levels/home/sprite/sleep_frames/sleep_0055.png" id="56_sleep"]
+[ext_resource type="Texture2D" uid="uid://dlcpsbcdmygp0" path="res://night/levels/home/sprite/sleep_frames/sleep_0056.png" id="57_sleep"]
+[ext_resource type="Texture2D" uid="uid://dfmkacbgt3cth" path="res://night/levels/home/sprite/sleep_frames/sleep_0057.png" id="58_sleep"]
+[ext_resource type="Texture2D" uid="uid://isnvm1peq15q" path="res://night/levels/home/sprite/sleep_frames/sleep_0058.png" id="59_sleep"]
+[ext_resource type="Texture2D" uid="uid://c8830lqgxq83a" path="res://night/levels/home/sprite/sleep_frames/sleep_0059.png" id="60_sleep"]
+[ext_resource type="Texture2D" uid="uid://bmwjxe5iw54mj" path="res://night/levels/home/sprite/sleep_frames/sleep_0060.png" id="61_sleep"]
+[ext_resource type="Texture2D" uid="uid://cpael6yddaqx" path="res://night/levels/home/sprite/sleep_frames/sleep_0061.png" id="62_sleep"]
+[ext_resource type="Texture2D" uid="uid://bsp6so5ai4c7r" path="res://night/levels/home/sprite/sleep_frames/sleep_0062.png" id="63_sleep"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_sleep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_sleep")
+}],
+"loop": false,
+"name": &"sleep",
+"speed": 30.0
+}]

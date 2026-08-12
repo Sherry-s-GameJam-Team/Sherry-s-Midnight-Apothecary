@@ -135,8 +135,8 @@ texture = ExtResource("9_rso1f")
 centered = false
 
 [node name="TownLeft4" type="Sprite2D" parent="MS" unique_id=581978606]
-position = Vector2(4308, 45)
-scale = Vector2(0.55505216, 0.43735743)
+position = Vector2(4077, 153)
+scale = Vector2(0.40801996, 0.35851645)
 texture = ExtResource("9_rso1f")
 centered = false
 
@@ -207,7 +207,7 @@ shape = SubResource("RectangleShape2D_door")
 position = Vector2(1086, 651)
 
 [node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=203064288]
-position = Vector2(735, 651)
+position = Vector2(499, 651)
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=405597964]
 
@@ -217,21 +217,21 @@ position = Vector2(735, 651)
 shape = SubResource("WorldBoundaryShape2D_ground")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1950042328]
-position = Vector2(48, 362)
+position = Vector2(-256, 362)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=1535891576]
 shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1388232364]
-position = Vector2(7239, 391)
+position = Vector2(7313, 393)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=2126063265]
-position = Vector2(39, 2)
+position = Vector2(199, -4)
 shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1816946551]
 z_index = 10
-position = Vector2(516, 651)
+position = Vector2(486, 651)
 script = ExtResource("1_player")
 character_scale = 0.5
 

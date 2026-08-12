@@ -15,8 +15,13 @@
 [ext_resource type="Texture2D" uid="uid://x303tlcn0gfs" path="res://day/levels/home/shader.png" id="13_barrier"]
 [ext_resource type="Texture2D" uid="uid://b07j2gsqg27i" path="res://day/levels/home/bedroomdoor.png" id="14_bedroom_door"]
 [ext_resource type="Script" uid="uid://co7rwmom8agfn" path="res://night/levels/home/night_station_interaction.gd" id="15_interaction"]
-[ext_resource type="Script" path="res://day/levels/home/home_camera_director.gd" id="16_camera_director"]
-[ext_resource type="Script" path="res://night/levels/home/night_bedroom_portal.gd" id="17_bedroom_portal"]
+[ext_resource type="Script" uid="uid://j1cxm2tmwnyr" path="res://day/levels/home/home_camera_director.gd" id="16_camera_director"]
+[ext_resource type="Script" uid="uid://mhxiwuqp0t63" path="res://night/levels/home/night_bedroom_portal.gd" id="17_bedroom_portal"]
+[ext_resource type="Texture2D" uid="uid://blt2l1kfbssio" path="res://night/levels/home/cover_C.png" id="18_8mwc6"]
+[ext_resource type="Texture2D" uid="uid://c551r65ti0a3u" path="res://night/levels/home/cover_F.png" id="19_8v1ga"]
+[ext_resource type="Texture2D" uid="uid://c4gxbm5y3v4ui" path="res://night/levels/home/cover_M.png" id="19_cp2oj"]
+[ext_resource type="AudioStream" path="res://night/levels/home/people_voice.wav" id="20_people_voice"]
+[ext_resource type="Script" path="res://night/levels/home/night_home_ambience.gd" id="21_ambience"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -78,13 +83,13 @@ shader_parameter/edge_color = Color(0.18, 0.64, 1, 1)
 [sub_resource type="RectangleShape2D" id="BedroomEntranceShape"]
 size = Vector2(66.913025, 747.25)
 
-[sub_resource type="RectangleShape2D" id="BedroomDoorShape"]
-size = Vector2(290, 520)
-
 [sub_resource type="ShaderMaterial" id="BedroomDoorOutline"]
 shader = ExtResource("7_outline")
 shader_parameter/outline_color = Color(0.44, 0.72, 1, 0.95)
 shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="BedroomDoorShape"]
+size = Vector2(290, 644.8509)
 
 [node name="NightHome" type="Node2D" unique_id=129948175]
 texture_filter = 1
@@ -149,12 +154,17 @@ scale = Vector2(0.62720853, 0.62720853)
 texture = ExtResource("2_interior")
 centered = false
 
+[node name="PeopleVoiceAmbience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_people_voice")
+volume_db = -8.0
+script = ExtResource("21_ambience")
+
 [node name="WorldBounds" type="Node2D" parent="." unique_id=755317503]
 
 [node name="GroundWorldBoundary" type="StaticBody2D" parent="WorldBounds" unique_id=1419029382]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/GroundWorldBoundary" unique_id=912486140]
-polygon = PackedVector2Array(-2545, 867, 3633, 857, 3633, 831, 1184, 836, 1078, 791, 919, 738, 679, 739, 551, 781, 458, 833, -2541, 837)
+polygon = PackedVector2Array(-2545, 867, 3633, 857, 3633, 831, 1184, 836, 1068, 794, 919, 738, 679, 739, 559, 785, 462, 838, -2541, 837)
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1414386575]
 position = Vector2(-2583.67, 432)
@@ -171,11 +181,12 @@ shape = SubResource("SideBarrierShape")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=897597879]
 z_index = 10
-position = Vector2(2531, 748)
+position = Vector2(2565, 686)
 script = ExtResource("3_player")
 character_scale = 0.8
 
 [node name="SherryCollision" parent="Player" unique_id=98448943 instance=ExtResource("4_collision")]
+position = Vector2(0, 66)
 
 [node name="SherryPresentation" parent="Player" unique_id=945973414 instance=ExtResource("5_presentation")]
 position = Vector2(-5, 6)
@@ -187,7 +198,7 @@ limit_top = 144
 limit_right = 4416
 limit_bottom = 864
 
-[node name="HomeCameraDirector" type="Node" parent="."]
+[node name="HomeCameraDirector" type="Node" parent="." unique_id=1483401686]
 script = ExtResource("16_camera_director")
 player_path = NodePath("../Player")
 camera_path = NodePath("../Player/Camera2D")
@@ -225,7 +236,7 @@ shape = SubResource("EquipShape")
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=141730865]
 position = Vector2(2531, 748)
 
-[node name="bedroomdoor" type="Marker2D" parent="EntryPoints"]
+[node name="bedroomdoor" type="Marker2D" parent="EntryPoints" unique_id=650976279]
 position = Vector2(-690, 780)
 
 [node name="Table" type="Area2D" parent="." unique_id=1253998386]
@@ -277,14 +288,14 @@ position = Vector2(104.347885, 620)
 position = Vector2(-43.347885, -130)
 shape = SubResource("BedroomEntranceShape")
 
-[node name="BedroomEntrance" type="Area2D" parent="."]
+[node name="BedroomEntrance" type="Area2D" parent="." unique_id=424888767]
 position = Vector2(104.347885, 620)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomEntrance"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomEntrance" unique_id=290475663]
 position = Vector2(-22.804398, -58.375)
 shape = SubResource("BedroomEntranceShape")
 
-[node name="Bedroomdoor" type="Area2D" parent="."]
+[node name="Bedroomdoor" type="Area2D" parent="." unique_id=1090744078]
 position = Vector2(-897.75, 512.1491)
 
 [node name="Visual" type="Sprite2D" parent="Bedroomdoor" unique_id=1566990108]
@@ -292,13 +303,35 @@ material = SubResource("BedroomDoorOutline")
 scale = Vector2(0.8832418, 0.82982165)
 texture = ExtResource("14_bedroom_door")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroomdoor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroomdoor" unique_id=973760060]
 shape = SubResource("BedroomDoorShape")
 
-[node name="BedroomPortal" type="Area2D" parent="."]
+[node name="Cover" type="Node2D" parent="." unique_id=123455890]
+position = Vector2(-897.75, 512.1491)
+
+[node name="CoverC" type="Sprite2D" parent="Cover" unique_id=2001507452]
+z_index = 16
+position = Vector2(2748.0532, -10.149139)
+scale = Vector2(0.85251766, 1.0084865)
+texture = ExtResource("18_8mwc6")
+
+[node name="CoverF" type="Sprite2D" parent="Cover" unique_id=533091555]
+z_index = 7
+position = Vector2(2720.75, 0.8508911)
+scale = Vector2(0.7954283, 0.7954283)
+texture = ExtResource("19_8v1ga")
+
+[node name="CoverM" type="Sprite2D" parent="Cover" unique_id=1879082168]
+z_index = 16
+position = Vector2(2883.75, -3.1491165)
+scale = Vector2(0.8773149, 0.8773148)
+texture = ExtResource("19_cp2oj")
+
+[node name="BedroomPortal" type="Area2D" parent="." unique_id=677363821]
 position = Vector2(-897.75, 512.1491)
 script = ExtResource("17_bedroom_portal")
 visual_path = NodePath("../Bedroomdoor/Visual")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomPortal"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BedroomPortal" unique_id=1250363049]
+position = Vector2(0, 62.425476)
 shape = SubResource("BedroomDoorShape")

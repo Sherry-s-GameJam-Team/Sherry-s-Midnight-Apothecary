@@ -3,6 +3,7 @@ extends Node
 
 signal mode_changed(mode: Mode, day: int)
 signal save_requested(day: int, mode: Mode)
+signal sleep_transition_requested(result: NightResult)
 
 enum Mode {
 	DAY,
@@ -65,6 +66,21 @@ func complete_day(result: DayResult) -> bool:
 
 
 func complete_night(result: NightResult) -> bool:
+	return _complete_night(result, &"")
+
+
+func complete_night_to_bedroom(result: NightResult) -> bool:
+	return _complete_night(result, &"bedroom")
+
+
+func debug_switch_mode(mode: Mode) -> bool:
+	if mode == Mode.ENDING:
+		return false
+	var initial_day_level_id: StringName = &"bedroom" if mode == Mode.DAY else &""
+	return _load_mode(mode, initial_day_level_id)
+
+
+func _complete_night(result: NightResult, next_day_level_id: StringName) -> bool:
 	if current_mode != Mode.NIGHT or _switching or result == null:
 		return false
 	player_data.apply_night_result(result)
@@ -73,7 +89,7 @@ func complete_night(result: NightResult) -> bool:
 		changed = _load_mode(Mode.ENDING)
 	else:
 		current_day += 1
-		changed = _load_mode(Mode.DAY)
+		changed = _load_mode(Mode.DAY, next_day_level_id)
 	if changed:
 		save_requested.emit(current_day, current_mode)
 	return changed
@@ -124,7 +140,13 @@ func _load_mode(
 			current_runtime.finished.connect(complete_day)
 		else:
 			current_runtime.finished.connect(complete_night)
+			current_runtime.sleep_requested.connect(_on_sleep_requested)
 
 	_switching = false
 	mode_changed.emit(current_mode, current_day)
 	return true
+
+
+func _on_sleep_requested(result: NightResult) -> void:
+	if current_mode == Mode.NIGHT and not _switching and result != null:
+		sleep_transition_requested.emit(result)

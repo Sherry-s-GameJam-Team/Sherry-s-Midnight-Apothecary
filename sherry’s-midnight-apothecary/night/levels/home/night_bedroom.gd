@@ -2,6 +2,7 @@ class_name NightBedroom
 extends Node2D
 
 signal return_requested
+signal sleep_requested
 
 var _standalone_player_data: PlayerData
 
@@ -17,6 +18,10 @@ func get_player_data() -> PlayerData:
 
 func request_return() -> void:
 	return_requested.emit()
+
+
+func request_sleep() -> void:
+	sleep_requested.emit()
 
 
 func _find_night_runtime() -> NightRuntime:

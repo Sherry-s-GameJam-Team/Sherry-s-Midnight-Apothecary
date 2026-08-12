@@ -43,4 +43,3 @@ layer = 220
 [connection signal="production_requested" from="ShopSlot/NightHome" to="." method="_on_production_requested"]
 [connection signal="bedroom_requested" from="ShopSlot/NightHome" to="." method="_on_bedroom_requested"]
 [connection signal="request_return" from="CustomerSlot/BusinessPlaceholder" to="." method="_on_business_request_return"]
-[connection signal="request_close" from="AlchemySlot/AlchemyRuntime" to="." method="_on_alchemy_request_close"]

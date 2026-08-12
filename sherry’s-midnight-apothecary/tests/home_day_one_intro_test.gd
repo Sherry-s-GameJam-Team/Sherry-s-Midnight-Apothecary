@@ -33,6 +33,6 @@ static func run(test: TestSupport) -> void:
 	home.free()
 
 	var dialogue_source := FileAccess.get_file_as_string("res://day/levels/home/home_day_one_intro.dialogue")
-	for speaker in ["年轻骑士:", "年长骑士:", "雪莉:"]:
+	for speaker in ["年轻士兵:", "中年士兵:", "雪莉:"]:
 		test.expect(dialogue_source.contains(speaker), "Home intro dialogue includes %s" % speaker)
 	test.expect(dialogue_source.contains("=> END"), "Home intro dialogue has a finite ending.")

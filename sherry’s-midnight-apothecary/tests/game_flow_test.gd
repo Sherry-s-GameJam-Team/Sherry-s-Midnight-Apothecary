@@ -3,6 +3,8 @@ extends RefCounted
 
 static func run(test: TestSupport) -> void:
 	var runtime_slot := Node.new()
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.add_child(runtime_slot)
 	var flow := GameFlow.new()
 	var player := PlayerData.new()
 	player.potions[&"yellow_potion"] = [{"instance_uid": "stale-potion", "remaining_dose": 1.0}]
@@ -46,9 +48,17 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(flow.current_day, 2, "The day advances after night.")
 	test.expect(flow.current_runtime is DayRuntime, "The next DayRuntime is active.")
 	test.expect_equal(player.money, 20, "Night result is applied before the next day.")
+	test.expect(flow.resume_game(2, GameFlow.Mode.NIGHT), "A later night can be resumed for the sleep transition.")
+	var sleep_result := NightResult.new()
+	sleep_result.earned_money = 7
+	test.expect(flow.complete_night_to_bedroom(sleep_result), "Sleeping completes night into the next bedroom.")
+	test.expect_equal(flow.current_day, 3, "Sleeping advances exactly one day.")
+	test.expect(flow.current_runtime is DayRuntime, "Sleeping creates the next DayRuntime.")
+	test.expect_equal((flow.current_runtime as DayRuntime).current_level.id, &"bedroom", "Sleeping forces the next day to start in bedroom.")
+	test.expect_equal(player.money, 27, "The sleep transition applies its NightResult exactly once.")
 
 	test.expect(flow.resume_game(30, GameFlow.Mode.NIGHT), "A day-30 night can be resumed.")
-	test.expect(flow.complete_night(NightResult.new()), "Day 30 completes.")
+	test.expect(flow.complete_night_to_bedroom(NightResult.new()), "Day 30 sleep completes.")
 	test.expect_equal(flow.current_mode, GameFlow.Mode.ENDING, "Day 30 enters the ending.")
 	test.expect(flow.current_runtime == null, "The ending does not create an unused runtime.")
 

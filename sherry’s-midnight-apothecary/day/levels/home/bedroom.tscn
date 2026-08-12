@@ -165,13 +165,15 @@ position = Vector2(719, 528)
 scale = Vector2(-0.41327515, 0.3991217)
 sprite_frames = SubResource("SpriteFrames_sleep_to_wake")
 animation = &"sleep_to_wake"
+frame = 28
+frame_progress = 1.0
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=2096902884]
 
 [node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=1099365388]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=157646567]
-position = Vector2(1063, 621)
+position = Vector2(827, 627)
 shape = SubResource("WorldBoundaryShape2D_w63pd")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=444753365]
@@ -195,7 +197,7 @@ shape = SubResource("RectangleShape2D_exit")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1953653742]
 z_index = 10
-position = Vector2(720, 492)
+position = Vector2(720, 505)
 script = ExtResource("2_player")
 character_scale = 0.8
 initial_facing_right = true
@@ -220,7 +222,7 @@ right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 position = Vector2(721, 490)
 
 [node name="right_side" type="Marker2D" parent="EntryPoints" unique_id=1120631178]
-position = Vector2(2025, 490)
+position = Vector2(2086, 516)
 
 [node name="SleepToWakeExecutor" parent="." unique_id=895436264 instance=ExtResource("7_animation_executor")]
 animation_path = NodePath("../SleepToWake")

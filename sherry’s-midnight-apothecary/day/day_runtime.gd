@@ -27,7 +27,6 @@ var day := 1
 
 @onready var level_slot: Node = $LevelSlot
 @onready var gameplay_ui: CanvasLayer = $UI
-@onready var finish_button: Button = $UI/FinishDayButton
 @onready var scene_title_card: SceneTitleCard = $SceneTitleCard
 @onready var developer_console_layer: CanvasLayer = $DeveloperConsoleLayer
 @onready var developer_console: Node = $DeveloperConsoleLayer/DeveloperConsole
@@ -62,20 +61,8 @@ func configure(
 
 
 func _ready() -> void:
-	finish_button.pressed.connect(_finish_current_level)
 	developer_console.setup_day(self)
 	_load_level()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _intro_locked:
-		return
-	var focused := get_viewport().gui_get_focus_owner()
-	if focused is LineEdit or focused is TextEdit:
-		return
-	if event.is_action_pressed("ui_accept"):
-		_finish_current_level()
-		get_viewport().set_input_as_handled()
 
 
 func set_intro_locked(locked: bool) -> void:
@@ -86,7 +73,7 @@ func set_intro_locked(locked: bool) -> void:
 
 
 func _load_level() -> void:
-	if not is_node_ready() or DAILY_LEVELS.is_empty():
+	if not is_inside_tree() or DAILY_LEVELS.is_empty():
 		return
 	for child in level_slot.get_children():
 		child.queue_free()
@@ -100,15 +87,6 @@ func _load_level() -> void:
 	_initial_level_id = &""
 	_defer_initial_presentation = false
 	_defer_initial_title = false
-
-
-func _finish_current_level() -> void:
-	var result := DayResult.new()
-	result.completed = true
-	if player_data != null:
-		result.remaining_health = player_data.health
-		result.remaining_potions = player_data.potions.duplicate(true)
-	finish_day(result)
 
 
 func switch_to_level(level_id: String, entry_id: StringName = &"default") -> bool:
@@ -144,10 +122,13 @@ func _instantiate_current_level(entry_id: StringName) -> Node:
 			var executor := presentation as AnimationPresentationExecutor
 			executor.auto_start = false
 			deferred_presentations.append(executor)
-	level_slot.add_child(level)
-	current_level_instance = level
+	# Prepare deferred opening presentations while the level is still detached.
+	# This hides the gameplay character before Bedroom can render its first frame;
+	# preparing after add_child exposed Sherry briefly before sleep_to_wake began.
 	for presentation: AnimationPresentationExecutor in deferred_presentations:
 		presentation.prepare()
+	level_slot.add_child(level)
+	current_level_instance = level
 	var entry := level.get_node_or_null("EntryPoints/%s" % entry_id) as Marker2D
 	var player := level.get_node_or_null("Player") as CharacterBody2D
 	if entry != null and player != null:

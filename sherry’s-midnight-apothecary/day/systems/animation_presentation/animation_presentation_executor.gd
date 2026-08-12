@@ -40,7 +40,10 @@ func start(force_replay := false) -> bool:
 	if not _prepared and not prepare():
 		return false
 	if one_shot_per_day and not force_replay and _has_played_today():
-		_complete_presentation()
+		# DayRuntime has already placed the player at the requested entry marker.
+		# Skipping a one-shot presentation must preserve that position (for
+		# example, Home -> Bedroom uses EntryPoints/right_side).
+		_complete_presentation(false)
 		return true
 	_running = true
 	_mark_played_today()
@@ -103,15 +106,25 @@ func _on_animation_finished() -> void:
 	if not _running or _has_completed:
 		return
 	_running = false
+	# Remove the presentation artwork before revealing the gameplay character.
+	# AnimatedSprite2D keeps its final frame for the rest of the current render
+	# tick, so revealing synchronously produces a short double-exposure flash.
+	if is_instance_valid(_animation):
+		_animation.hide()
+		_animation.stop()
+	await get_tree().process_frame
+	if not is_inside_tree() or _has_completed:
+		return
 	_complete_presentation()
 
 
-func _complete_presentation() -> void:
+func _complete_presentation(move_to_spawn := true) -> void:
 	if _has_completed:
 		return
 	_has_completed = true
-	if is_instance_valid(_player) and is_instance_valid(_spawn_point):
-		_player.global_position = _spawn_point.global_position
+	if is_instance_valid(_player):
+		if move_to_spawn and is_instance_valid(_spawn_point):
+			_player.global_position = _spawn_point.global_position
 		_player.set_process(_previous_process_enabled)
 		_player.set_physics_process(_previous_physics_process_enabled)
 		_player.set_process_input(_previous_input_enabled)

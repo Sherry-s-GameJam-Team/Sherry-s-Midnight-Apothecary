@@ -1,21 +1,14 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene format=3 uid="uid://b1y25elr17yw8"]
 
-[ext_resource type="Script" path="res://night/levels/home/night_bedroom.gd" id="1_bedroom"]
-[ext_resource type="Texture2D" path="res://day/levels/home/player_bedroom.png" id="2_background"]
-[ext_resource type="Texture2D" path="res://day/levels/home/bed.png" id="3_bed"]
-[ext_resource type="Script" path="res://day/art/raintree/day_player_controller.gd" id="4_player"]
+[ext_resource type="Script" uid="uid://du3uyihwbm2e1" path="res://night/levels/home/night_bedroom.gd" id="1_bedroom"]
+[ext_resource type="Texture2D" uid="uid://dbh56r0gifmy3" path="res://night/levels/home/player_bedroom.png" id="2_r5w07"]
+[ext_resource type="Texture2D" uid="uid://c38rienp1ms02" path="res://day/levels/home/bed.png" id="3_bed"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://day/art/raintree/day_player_controller.gd" id="4_player"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_indoor_collision.tscn" id="5_collision"]
 [ext_resource type="PackedScene" path="res://art/characters/sherry/sherry_presentation.tscn" id="6_presentation"]
-[ext_resource type="Script" path="res://night/levels/home/night_bedroom_exit.gd" id="7_exit"]
-
-[sub_resource type="WorldBoundaryShape2D" id="GroundShape"]
-distance = -56.0
-
-[sub_resource type="RectangleShape2D" id="SideBarrierShape"]
-size = Vector2(96, 1448)
-
-[sub_resource type="RectangleShape2D" id="ExitShape"]
-size = Vector2(70, 720)
+[ext_resource type="Script" uid="uid://fftcfhh8rtd4" path="res://night/levels/home/night_bedroom_exit.gd" id="7_exit"]
+[ext_resource type="SpriteFrames" uid="uid://dnu4fmfv1h2l0" path="res://night/levels/home/sprite/sleep_sprite_frames.tres" id="8_sleep_frames"]
+[ext_resource type="Script" path="res://night/levels/home/night_sleep_interaction.gd" id="9_sleep_interaction"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -41,89 +34,128 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[node name="NightBedroom" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="SleepInteractionShape"]
+size = Vector2(720, 280)
+
+[sub_resource type="WorldBoundaryShape2D" id="GroundShape"]
+distance = -56.0
+
+[sub_resource type="RectangleShape2D" id="SideBarrierShape"]
+size = Vector2(96, 1448)
+
+[sub_resource type="RectangleShape2D" id="ExitShape"]
+size = Vector2(70, 720)
+
+[node name="NightBedroom" type="Node2D" unique_id=1207508312]
 texture_filter = 1
 script = ExtResource("1_bedroom")
 
-[node name="NightLighting" type="Node2D" parent="."]
+[node name="NightLighting" type="Node2D" parent="." unique_id=739307180]
 
-[node name="AmbientTint" type="CanvasModulate" parent="NightLighting"]
+[node name="AmbientTint" type="CanvasModulate" parent="NightLighting" unique_id=76574197]
 color = Color(0.56781363, 0.6000119, 0.80029655, 1)
 
-[node name="MoonGlow" type="PointLight2D" parent="NightLighting"]
-position = Vector2(1750, 220)
+[node name="MoonGlow" type="PointLight2D" parent="NightLighting" unique_id=75702923]
+position = Vector2(1778, 220)
 energy = 0.62
 texture = SubResource("MoonLightTexture")
 texture_scale = 3.5
 
-[node name="BedsideLamp" type="PointLight2D" parent="NightLighting"]
-position = Vector2(720, 430)
+[node name="BedsideLamp" type="PointLight2D" parent="NightLighting" unique_id=1668271058]
+position = Vector2(1037.5, 440.99997)
+scale = Vector2(1.9467659, 1.00109)
 color = Color(1, 0.76, 0.42, 1)
 energy = 1.05
 texture = SubResource("WarmLightTexture")
 texture_scale = 2.15
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=661402884]
 z_index = -10
-texture = ExtResource("2_background")
+texture = ExtResource("2_r5w07")
 centered = false
 
-[node name="Bed" type="Sprite2D" parent="."]
+[node name="Bed" type="Sprite2D" parent="." unique_id=2084509361]
 position = Vector2(719, 527)
 scale = Vector2(-0.413669, 0.3989963)
 texture = ExtResource("3_bed")
 
-[node name="WorldBounds" type="Node2D" parent="."]
+[node name="Sleep" type="AnimatedSprite2D" parent="." unique_id=222579679]
+visible = false
+z_index = 5
+position = Vector2(719.8809, 534.36365)
+scale = Vector2(-0.32204133, 0.3165047)
+sprite_frames = ExtResource("8_sleep_frames")
+animation = &"sleep"
 
-[node name="Ground" type="StaticBody2D" parent="WorldBounds"]
+[node name="SleepInteraction" type="Area2D" parent="." unique_id=1672065953]
+position = Vector2(719, 500)
+script = ExtResource("9_sleep_interaction")
+sleep_animation_path = NodePath("../Sleep")
+bed_visual_path = NodePath("../Bed")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SleepInteraction" unique_id=2071154873]
+shape = SubResource("SleepInteractionShape")
+
+[node name="sleep" type="AnimatedSprite2D" parent="." unique_id=1323050570]
+visible = false
+position = Vector2(719.8342, 534.41626)
+rotation = 3.1415927
+scale = Vector2(0.31999978, -0.31122524)
+sprite_frames = ExtResource("8_sleep_frames")
+animation = &"sleep"
+frame = 62
+frame_progress = 1.0
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1804068654]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=868401183]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=1979122864]
 position = Vector2(1063, 621)
 shape = SubResource("GroundShape")
 
-[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds"]
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=942856826]
 position = Vector2(-48, 362)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=1990404807]
 shape = SubResource("SideBarrierShape")
 
-[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds"]
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1749558090]
 position = Vector2(2220, 362)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=189692723]
 shape = SubResource("SideBarrierShape")
 
-[node name="RightExit" type="Area2D" parent="."]
+[node name="RightExit" type="Area2D" parent="." unique_id=476587314]
 position = Vector2(2172, 360)
 script = ExtResource("7_exit")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightExit"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightExit" unique_id=130775798]
 shape = SubResource("ExitShape")
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1790172283]
 z_index = 10
 position = Vector2(2025, 490)
 script = ExtResource("4_player")
-character_scale = 0.4
-initial_facing_right = false
 
-[node name="SherryCollision" parent="Player" instance=ExtResource("5_collision")]
+[node name="SherryCollision" parent="Player" unique_id=927180945 instance=ExtResource("5_collision")]
 position = Vector2(3, 93)
 
-[node name="SherryPresentation" parent="Player" instance=ExtResource("6_presentation")]
+[node name="SherryPresentation" parent="Player" unique_id=814648592 instance=ExtResource("6_presentation")]
 position = Vector2(0, 26)
+scale = Vector2(2.04, 2.04)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1227679343]
 position = Vector2(0, -174)
 limit_left = 0
 limit_top = 0
 limit_right = 2172
 limit_bottom = 724
 
-[node name="EntryPoints" type="Node2D" parent="."]
+[node name="EntryPoints" type="Node2D" parent="." unique_id=557979720]
 
-[node name="default" type="Marker2D" parent="EntryPoints"]
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1341410058]
 position = Vector2(2025, 490)
 
-[node name="from_home" type="Marker2D" parent="EntryPoints"]
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=813242223]
 position = Vector2(2025, 490)

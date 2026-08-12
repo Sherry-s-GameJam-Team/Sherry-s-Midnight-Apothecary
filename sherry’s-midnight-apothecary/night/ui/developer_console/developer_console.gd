@@ -178,6 +178,8 @@ func execute_command(raw_command: String) -> String:
 			result = _potion_command(parts)
 		"temp":
 			result = _temperature_command(parts)
+		"day", "night":
+			result = _mode_command(parts)
 		"scene", "level":
 			result = _scene_command(parts)
 		"title":
@@ -195,6 +197,20 @@ func execute_command(raw_command: String) -> String:
 			result = "未知命令：%s。输入 help 查看可用命令。" % verb
 	_write(result, Color("#e6dfcf") if not result.begins_with("错误") else Color("#ff8d82"))
 	return result
+
+
+func _mode_command(parts: PackedStringArray) -> String:
+	if parts.size() != 1:
+		return "错误：用法 day 或 night"
+	var app_root := get_node_or_null("/root/AppRoot") as AppRoot
+	if app_root == null or app_root.game_flow == null:
+		return "错误：GameFlow 尚未初始化。"
+	var target_mode := GameFlow.Mode.DAY if parts[0].to_lower() == "day" else GameFlow.Mode.NIGHT
+	if app_root.game_flow.current_mode == target_mode:
+		return "mode = %s" % parts[0].to_lower()
+	if not app_root.game_flow.debug_switch_mode(target_mode):
+		return "错误：无法切换到 %s。" % parts[0].to_lower()
+	return "mode = %s" % parts[0].to_lower()
 
 
 func _get_command(parts: PackedStringArray) -> String:
@@ -444,7 +460,7 @@ func _help_text() -> String:
   to corrupted
 
 Other commands:
-  status, get, set, add, give, take, potion, temp, clear, close"""
+  day, night, status, get, set, add, give, take, potion, temp, clear, close"""
 	return """可用命令：
   status
   get <参数>
