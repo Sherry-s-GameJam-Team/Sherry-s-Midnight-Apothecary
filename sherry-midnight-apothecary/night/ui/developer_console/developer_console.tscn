@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://c7jwnjedtvius" path="res://night/developer_console/developer_console.gd" id="1_console"]
+[ext_resource type="Script" uid="uid://c7jwnjedtvius" path="res://night/ui/developer_console/developer_console.gd" id="1_console"]
 
 [sub_resource type="StyleBoxFlat" id="Style_console"]
 content_margin_left = 16.0
