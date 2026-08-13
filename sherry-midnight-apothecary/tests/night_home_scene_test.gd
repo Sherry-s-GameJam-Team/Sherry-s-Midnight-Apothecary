@@ -28,6 +28,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(home.get_node_or_null("NightLighting/AlchemyLamp") is PointLight2D, "The alchemy station has a warm local light.")
 	test.expect(home.get_node_or_null("InteriorNightBGM") == null, "Night BGM is owned by the persistent runtime, not the home room.")
 	test.expect(bgm != null and bgm.playing, "The persistent night BGM is playing.")
+	test.expect_equal(bgm.process_mode, Node.PROCESS_MODE_ALWAYS, "The persistent night BGM continues while the pause menu pauses gameplay.")
 	var bgm_playback_position := bgm.get_playback_position()
 
 	var table := home.get_node("Table") as NightStationInteraction

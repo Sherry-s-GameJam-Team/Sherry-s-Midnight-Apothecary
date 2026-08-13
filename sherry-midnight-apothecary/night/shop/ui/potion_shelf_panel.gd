@@ -2,6 +2,7 @@ class_name PotionShelfPanel
 extends PanelContainer
 
 signal potion_selected(potion_id: StringName, uid: String)
+signal potion_hovered(potion: PotionData, instance: Dictionary, price: int)
 
 const ITEM_SCENE := preload("res://night/shop/ui/potion_shelf_item.tscn")
 
@@ -24,6 +25,7 @@ func add_potion(potion: PotionData, instance: Dictionary, price: int, selected: 
 	shelf.add_child(item)
 	item.show_potion(potion, instance, price)
 	item.button_pressed = selected
+	item.potion_hovered.connect(func(next_potion: PotionData, next_instance: Dictionary, next_price: int) -> void: potion_hovered.emit(next_potion, next_instance, next_price))
 	item.pressed.connect(func() -> void: potion_selected.emit(potion.id, str(instance.get("instance_uid", ""))))
 
 

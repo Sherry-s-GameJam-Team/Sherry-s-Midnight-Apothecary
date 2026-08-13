@@ -116,6 +116,13 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="PotionDetail" type="Label" parent="RootVBox/Columns/LeftPanel/LeftMargin/LeftVBox" unique_id=918873421]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 118)
+layout_mode = 2
+text = "药水详情\n将鼠标移到药水柜中的药水上查看。"
+autowrap_mode = 2
+
 [node name="CenterPanel" type="PanelContainer" parent="RootVBox/Columns" unique_id=289628660]
 layout_mode = 2
 size_flags_horizontal = 3

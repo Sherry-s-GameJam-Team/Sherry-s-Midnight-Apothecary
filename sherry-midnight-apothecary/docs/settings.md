@@ -10,7 +10,7 @@
 - `SFX` controls gameplay and ambience.
 - `UI` controls button and task-completion feedback.
 
-Persistent BGM uses `PROCESS_MODE_ALWAYS`, so opening the pause menu does not restart, seek, stop, or pause music.
+Persistent day and night BGM players use `PROCESS_MODE_ALWAYS`, so opening the pause menu inherits the active scene's existing track without restarting, seeking, stopping, or pausing it.
 
 ## Display and accessibility
 

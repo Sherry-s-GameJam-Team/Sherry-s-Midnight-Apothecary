@@ -28,6 +28,7 @@ const MAX_SATISFACTION := 1.5
 @onready var progress_label: Label = %ProgressLabel
 @onready var economy_label: Label = %EconomyLabel
 @onready var request_card: CustomerRequestCard = %CustomerRequestCard
+@onready var potion_detail: Label = %PotionDetail
 @onready var customer_portrait: TextureRect = %CustomerPortrait
 @onready var patience_text: Label = $RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox/PatienceText
 @onready var patience_bar: ProgressBar = $RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox/PatienceBar
@@ -54,6 +55,7 @@ func _ready() -> void:
 	for potion: PotionData in POTIONS:
 		_potion_by_id[potion.id] = potion
 	potion_shelf_panel.potion_selected.connect(_on_potion_chosen)
+	potion_shelf_panel.potion_hovered.connect(_on_potion_hovered)
 	_refresh()
 
 
@@ -165,6 +167,23 @@ func _on_potion_chosen(potion_id: StringName, uid: String) -> void:
 	if potion_shelf_panel != null:
 		potion_shelf_panel.set_selection_text("已选择：%s · 报价 %d曜" % [potion.display_name if potion != null else str(potion_id), _sale_value(potion, _find_instance(potion_id, uid), float(current_customer().get("modifier", 1.0)))])
 	_update_sale_button()
+
+
+func _on_potion_hovered(potion: PotionData, instance: Dictionary, price: int) -> void:
+	if potion_detail == null:
+		return
+	var display_name := str(instance.get("custom_name", "")).strip_edges()
+	if display_name.is_empty():
+		display_name = potion.display_name
+	var secondary := StringName(str(instance.get("secondary_effect_id", "")))
+	potion_detail.text = "%s\n品质 %.0f%% · 剩余 %.0f%% · 报价 %d曜\n主作用：%s%s" % [
+		display_name,
+		float(instance.get("quality", 1.0)) * 100.0,
+		clampf(float(instance.get("remaining_dose", 1.0)), 0.0, 1.0) * 100.0,
+		price,
+		PotionEffectText.describe(potion.main_effect_id),
+		"\n副作用：%s × %.2f" % [PotionEffectText.describe(secondary), float(instance.get("secondary_effect_multiplier", 0.0))] if secondary != &"" else "",
+	]
 
 
 func _update_sale_button() -> void:

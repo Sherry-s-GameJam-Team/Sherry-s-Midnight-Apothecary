@@ -12,6 +12,7 @@
 script = ExtResource("1_night")
 
 [node name="InteriorNightBGM" type="AudioStreamPlayer" parent="." unique_id=5809210]
+process_mode = 3
 stream = ExtResource("6_night_bgm")
 bus = &"Music"
 script = ExtResource("7_looping_bgm")

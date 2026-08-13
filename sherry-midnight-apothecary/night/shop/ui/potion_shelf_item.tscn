@@ -28,7 +28,7 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [node name="PotionShelfItem" type="Button"]
-custom_minimum_size = Vector2(0, 94)
+custom_minimum_size = Vector2(92, 118)
 toggle_mode = true
 alignment = 0
 theme_override_styles/normal = SubResource("ItemNormal")
@@ -49,13 +49,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Row" type="HBoxContainer" parent="Margin"]
+[node name="Row" type="CenterContainer" parent="Margin"]
 layout_mode = 2
 theme_override_constants/separation = 10
 mouse_filter = 2
 
 [node name="BottleFrame" type="PanelContainer" parent="Margin/Row"]
-custom_minimum_size = Vector2(58, 0)
+custom_minimum_size = Vector2(82, 98)
 layout_mode = 2
 mouse_filter = 2
 
@@ -64,6 +64,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Info" type="VBoxContainer" parent="Margin/Row"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 3
