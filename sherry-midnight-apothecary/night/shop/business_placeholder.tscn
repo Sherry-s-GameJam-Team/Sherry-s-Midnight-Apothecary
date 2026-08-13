@@ -1,11 +1,16 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://db51ad0xclw5a"]
 
-[ext_resource type="Script" path="res://night/shop/business_placeholder.gd" id="1"]
+[ext_resource type="Script" uid="uid://hys27num01nb" path="res://night/shop/business_placeholder.gd" id="1"]
 [ext_resource type="PackedScene" path="res://night/shop/ui/customer_request_card.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://night/shop/ui/sale_feedback.tscn" id="3"]
 
 [sub_resource type="StyleBoxFlat" id="bg"]
 bg_color = Color(0.055, 0.035, 0.09, 1)
+
+[sub_resource type="StyleBoxFlat" id="header"]
+bg_color = Color(0.12, 0.075, 0.17, 1)
+border_width_bottom = 2
+border_color = Color(0.58, 0.4, 0.2, 1)
 
 [sub_resource type="StyleBoxFlat" id="panel"]
 bg_color = Color(0.095, 0.065, 0.14, 0.98)
@@ -19,23 +24,16 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="header"]
-bg_color = Color(0.12, 0.075, 0.17, 1)
-border_width_bottom = 2
-border_color = Color(0.58, 0.4, 0.2, 1)
-
-[node name="BusinessScreen" type="Control"]
+[node name="BusinessScreen" type="Control" unique_id=1188723563]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.93, 0.86, 0.72, 1)
-theme_override_font_sizes/font_size = 17
 script = ExtResource("1")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=773606132]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("bg")
 
-[node name="RootVBox" type="VBoxContainer" parent="."]
+[node name="RootVBox" type="VBoxContainer" parent="." unique_id=736863465]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,198 +55,199 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
 
-[node name="Header" type="PanelContainer" parent="RootVBox"]
-layout_mode = 2
+[node name="Header" type="PanelContainer" parent="RootVBox" unique_id=1192991144]
 custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
 theme_override_styles/panel = SubResource("header")
 
-[node name="HeaderMargin" type="MarginContainer" parent="RootVBox/Header"]
+[node name="HeaderMargin" type="MarginContainer" parent="RootVBox/Header" unique_id=1057822654]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 
-[node name="HeaderHBox" type="HBoxContainer" parent="RootVBox/Header/HeaderMargin"]
+[node name="HeaderHBox" type="HBoxContainer" parent="RootVBox/Header/HeaderMargin" unique_id=1655182741]
 layout_mode = 2
 
-[node name="NightLabel" type="Label" parent="RootVBox/Header/HeaderMargin/HeaderHBox"]
+[node name="NightLabel" type="Label" parent="RootVBox/Header/HeaderMargin/HeaderHBox" unique_id=1067379142]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "第 03 夜 · 营业"
 
-[node name="Spacer" type="Control" parent="RootVBox/Header/HeaderMargin/HeaderHBox"]
+[node name="Spacer" type="Control" parent="RootVBox/Header/HeaderMargin/HeaderHBox" unique_id=1287685318]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ProgressLabel" type="Label" parent="RootVBox/Header/HeaderMargin/HeaderHBox"]
+[node name="ProgressLabel" type="Label" parent="RootVBox/Header/HeaderMargin/HeaderHBox" unique_id=1301733023]
 unique_name_in_owner = true
 layout_mode = 2
 text = "顾客 1 / 3"
 
-[node name="EconomyLabel" type="Label" parent="RootVBox/Header/HeaderMargin/HeaderHBox"]
+[node name="EconomyLabel" type="Label" parent="RootVBox/Header/HeaderMargin/HeaderHBox" unique_id=40190461]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "待结算 +0曜 · 持有 120曜 · 债务 30000曜"
 horizontal_alignment = 2
 
-[node name="Columns" type="HBoxContainer" parent="RootVBox"]
+[node name="Columns" type="HBoxContainer" parent="RootVBox" unique_id=1322060281]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 14
 
-[node name="LeftPanel" type="PanelContainer" parent="RootVBox/Columns"]
+[node name="LeftPanel" type="PanelContainer" parent="RootVBox/Columns" unique_id=940485415]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("panel")
 
-[node name="LeftMargin" type="MarginContainer" parent="RootVBox/Columns/LeftPanel"]
+[node name="LeftMargin" type="MarginContainer" parent="RootVBox/Columns/LeftPanel" unique_id=1554042582]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="LeftVBox" type="VBoxContainer" parent="RootVBox/Columns/LeftPanel/LeftMargin"]
+[node name="LeftVBox" type="VBoxContainer" parent="RootVBox/Columns/LeftPanel/LeftMargin" unique_id=583881707]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="Section" type="Label" parent="RootVBox/Columns/LeftPanel/LeftMargin/LeftVBox"]
+[node name="Section" type="Label" parent="RootVBox/Columns/LeftPanel/LeftMargin/LeftVBox" unique_id=841284178]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "顾客请求 / 对话"
 
-[node name="CustomerRequestCard" parent="RootVBox/Columns/LeftPanel/LeftMargin/LeftVBox" instance=ExtResource("2")]
+[node name="CustomerRequestCard" parent="RootVBox/Columns/LeftPanel/LeftMargin/LeftVBox" unique_id=178805074 instance=ExtResource("2")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterPanel" type="PanelContainer" parent="RootVBox/Columns"]
+[node name="CenterPanel" type="PanelContainer" parent="RootVBox/Columns" unique_id=289628660]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("panel")
 
-[node name="CenterMargin" type="MarginContainer" parent="RootVBox/Columns/CenterPanel"]
+[node name="CenterMargin" type="MarginContainer" parent="RootVBox/Columns/CenterPanel" unique_id=2034709126]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="CenterVBox" type="VBoxContainer" parent="RootVBox/Columns/CenterPanel/CenterMargin"]
+[node name="CenterVBox" type="VBoxContainer" parent="RootVBox/Columns/CenterPanel/CenterMargin" unique_id=34432541]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 18
+alignment = 1
 
-[node name="Section" type="Label" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox"]
+[node name="Section" type="Label" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox" unique_id=1522173240]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "顾客"
 horizontal_alignment = 1
 
-[node name="CustomerPortrait" type="TextureRect" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox"]
+[node name="CustomerPortrait" type="TextureRect" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox" unique_id=1243835932]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 360)
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PatienceText" type="Label" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox"]
+[node name="PatienceText" type="Label" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox" unique_id=949792522]
 layout_mode = 2
 text = "耐心 / 风险（白模展示）"
 horizontal_alignment = 1
 
-[node name="PatienceBar" type="ProgressBar" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox"]
+[node name="PatienceBar" type="ProgressBar" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox" unique_id=838713308]
 unique_name_in_owner = true
 layout_mode = 2
 value = 80.0
 show_percentage = false
 
-[node name="RightPanel" type="PanelContainer" parent="RootVBox/Columns"]
+[node name="RightPanel" type="PanelContainer" parent="RootVBox/Columns" unique_id=1462847421]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("panel")
 
-[node name="RightMargin" type="MarginContainer" parent="RootVBox/Columns/RightPanel"]
+[node name="RightMargin" type="MarginContainer" parent="RootVBox/Columns/RightPanel" unique_id=1489964132]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="RightVBox" type="VBoxContainer" parent="RootVBox/Columns/RightPanel/RightMargin"]
+[node name="RightVBox" type="VBoxContainer" parent="RootVBox/Columns/RightPanel/RightMargin" unique_id=1378929860]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Section" type="Label" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox"]
+[node name="Section" type="Label" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox" unique_id=435820507]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "货架 / 可售药水"
 
-[node name="Scroll" type="ScrollContainer" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox"]
+[node name="Scroll" type="ScrollContainer" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox" unique_id=1699700185]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Shelf" type="VBoxContainer" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox/Scroll"]
+[node name="Shelf" type="VBoxContainer" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox/Scroll" unique_id=1606415997]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="SelectionLabel" type="Label" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox"]
+[node name="SelectionLabel" type="Label" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox" unique_id=1578761293]
 unique_name_in_owner = true
-layout_mode = 2
 custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
 text = "请从货架选择一瓶药水。"
 autowrap_mode = 2
 
-[node name="Footer" type="PanelContainer" parent="RootVBox"]
-layout_mode = 2
+[node name="Footer" type="PanelContainer" parent="RootVBox" unique_id=738819503]
 custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
 theme_override_styles/panel = SubResource("header")
 
-[node name="FooterMargin" type="MarginContainer" parent="RootVBox/Footer"]
+[node name="FooterMargin" type="MarginContainer" parent="RootVBox/Footer" unique_id=472543755]
 layout_mode = 2
 theme_override_constants/margin_left = 18
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 10
 
-[node name="FooterHBox" type="HBoxContainer" parent="RootVBox/Footer/FooterMargin"]
+[node name="FooterHBox" type="HBoxContainer" parent="RootVBox/Footer/FooterMargin" unique_id=288348234]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="RejectButton" type="Button" parent="RootVBox/Footer/FooterMargin/FooterHBox"]
+[node name="RejectButton" type="Button" parent="RootVBox/Footer/FooterMargin/FooterHBox" unique_id=528964900]
 unique_name_in_owner = true
 layout_mode = 2
 text = "婉拒顾客"
 
-[node name="FooterSpacer" type="Control" parent="RootVBox/Footer/FooterMargin/FooterHBox"]
+[node name="FooterSpacer" type="Control" parent="RootVBox/Footer/FooterMargin/FooterHBox" unique_id=1116863182]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SaleFeedback" parent="RootVBox/Footer/FooterMargin/FooterHBox" instance=ExtResource("3")]
+[node name="SaleFeedback" parent="RootVBox/Footer/FooterMargin/FooterHBox" unique_id=609266177 instance=ExtResource("3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SellButton" type="Button" parent="RootVBox/Footer/FooterMargin/FooterHBox"]
+[node name="SellButton" type="Button" parent="RootVBox/Footer/FooterMargin/FooterHBox" unique_id=1030743034]
 unique_name_in_owner = true
-layout_mode = 2
 custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
 disabled = true
 text = "交付所选药水"
 
-[node name="EndButton" type="Button" parent="RootVBox/Footer/FooterMargin/FooterHBox"]
+[node name="EndButton" type="Button" parent="RootVBox/Footer/FooterMargin/FooterHBox" unique_id=612025190]
 unique_name_in_owner = true
 layout_mode = 2
 text = "退回室内"
 
-[node name="ConfirmDialog" type="ConfirmationDialog" parent="."]
+[node name="ConfirmDialog" type="ConfirmationDialog" parent="." unique_id=2144315094]
 unique_name_in_owner = true
 title = "退回室内？"
-dialog_text = "已完成的交易会保留，并在入睡时结算。现在退回室内吗？"
 ok_button_text = "退回室内"
+dialog_text = "已完成的交易会保留，并在入睡时结算。现在退回室内吗？"
 cancel_button_text = "继续营业"
 
 [connection signal="pressed" from="RootVBox/Footer/FooterMargin/FooterHBox/RejectButton" to="." method="_on_reject_pressed"]
