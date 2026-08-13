@@ -54,4 +54,7 @@ static func run(test: TestSupport) -> void:
 	shop.setup(player, NightResult.new(), 3)
 	test.expect_equal(shop._customer_queue.size(), 1, "Below 40 reputation, the next night receives only one customer.")
 	test.expect(float(shop.current_customer().get("modifier", 1.0)) < 0.95, "Very low reputation produces lower-quality customer offers.")
+	result.produced_potions[&"green_potion"] = [{"instance_uid": "fresh-brew", "remaining_dose": 1.0, "quality": 1.0, "bottle_style_id": "moon"}]
+	shop.setup(player, result, 4)
+	test.expect(not shop._find_instance(&"green_potion", "fresh-brew").is_empty(), "The shop can display potions brewed during the current night before sleep settlement.")
 	shop.free()

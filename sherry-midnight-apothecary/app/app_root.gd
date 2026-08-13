@@ -1,9 +1,12 @@
 class_name AppRoot
 extends Node
 
+const SettingsServiceScript := preload("res://app/settings_service.gd")
+
 @export var start_automatically := false
 
 @onready var game_flow: GameFlow = $GameFlow
+@onready var settings_service: Node = $SettingsService
 @onready var menu_controller: MenuController = $MenuSlot/Menu
 @onready var current_runtime_slot: Node = $CurrentRuntime
 @onready var global_ui: CanvasLayer = $GlobalUI
@@ -22,10 +25,13 @@ func get_player_data() -> PlayerData:
 
 
 func _ready() -> void:
+	settings_service.load_and_apply()
 	save_service = SaveService.new()
 	player_data = PlayerData.new()
 	top_hint_ui.bind_player_data(player_data)
 	pause_menu.bind_player_data(player_data)
+	pause_menu.bind_settings(settings_service)
+	menu_controller.bind_settings(settings_service)
 	game_flow.configure(current_runtime_slot, player_data)
 	map_switch.travel_requested.connect(_on_map_switch_travel_requested)
 	game_flow.save_requested.connect(_on_save_requested)

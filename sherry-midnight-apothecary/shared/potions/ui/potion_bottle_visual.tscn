@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://shared/potions/ui/potion_bottle_visual.gd" id="1"]
 
 [sub_resource type="Shader" id="LiquidMaskShader"]
-code = "shader_type canvas_item;\nvoid fragment() {\n\tvec4 cover = texture(TEXTURE, UV);\n\tfloat mask = 1.0 - cover.r;\n\tCOLOR = vec4(COLOR.rgb, COLOR.a * mask);\n}\n"
+code = "shader_type canvas_item;\nuniform vec4 liquid_color : source_color = vec4(0.2, 0.7, 0.4, 0.7);\nvoid fragment() {\n\tvec4 cover = texture(TEXTURE, UV);\n\tfloat mask = 1.0 - cover.r;\n\tCOLOR = vec4(liquid_color.rgb, liquid_color.a * mask);\n}\n"
 
 [sub_resource type="ShaderMaterial" id="LiquidMaskMaterial"]
 shader = SubResource("LiquidMaskShader")

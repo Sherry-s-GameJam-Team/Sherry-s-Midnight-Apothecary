@@ -1,6 +1,8 @@
 class_name MenuController
 extends Node
 
+const SettingsServiceScript := preload("res://app/settings_service.gd")
+
 signal runtime_swap_requested(continue_game: bool)
 signal settings_requested
 signal intro_finished
@@ -26,6 +28,7 @@ var state := MenuState.IDLE
 var selected_day := 1
 var selected_mode := GameFlow.Mode.DAY
 var _profile_index := 0
+var settings_service: Node
 
 
 func _ready() -> void:
@@ -55,6 +58,13 @@ func configure(save_data: Dictionary) -> void:
 		sky_controller.apply_profile(profile)
 		_profile_index = maxi(profile_resolver.get_profile_index(profile), 0)
 	menu_ui.configure(has_save, selected_day, profile.display_name if profile != null else "No Profile")
+
+
+func bind_settings(service: Node) -> void:
+	settings_service = service
+	_apply_motion_setting()
+	if not settings_service.settings_changed.is_connected(_on_settings_changed):
+		settings_service.settings_changed.connect(_on_settings_changed)
 
 
 func runtime_loaded(runtime: Node, mode: GameFlow.Mode, day: int) -> void:
@@ -102,7 +112,8 @@ func _begin_transition(continue_game: bool) -> void:
 	menu_ui.set_menu_enabled(false)
 	menu_ui.fade_out()
 	transition_director.play_shadow()
-	silhouette_director.play()
+	if settings_service == null or not bool(settings_service.get_value(&"reduced_motion", false)):
+		silhouette_director.play()
 	camera_director.play_descent()
 	await camera_director.descent_finished
 	state = MenuState.LOADING
@@ -126,3 +137,15 @@ func _preview_relative_profile(direction: int) -> void:
 	var profile := profile_resolver.profiles[_profile_index]
 	sky_controller.apply_profile(profile)
 	menu_ui.set_profile_name(profile.display_name)
+
+
+func _on_settings_changed(section: StringName) -> void:
+	if section in [&"accessibility", &"all"]:
+		_apply_motion_setting()
+
+
+func _apply_motion_setting() -> void:
+	var reduced := settings_service != null and bool(settings_service.get_value(&"reduced_motion", false))
+	camera_director.motion_scale = 0.5 if reduced else 1.0
+	transition_director.motion_scale = 0.5 if reduced else 1.0
+	sky_controller.set_reduced_motion(reduced)

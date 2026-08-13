@@ -20,9 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://rsn6g3hq58y4" path="res://night/art/ui/buttons/button_rect_red_hover.png" id="17_red_hover"]
 [ext_resource type="Texture2D" uid="uid://cdmjba0okefw4" path="res://night/alchemy/art/shader.png" id="17_u6obb"]
 [ext_resource type="Texture2D" uid="uid://dgdn3avo661xh" path="res://night/art/ui/buttons/button_rect_red_pressed.png" id="18_red_pressed"]
-[ext_resource type="Texture2D" uid="uid://c6ivmou61gv5c" path="res://night/art/ui/buttons/button_round_compass_hover.png" id="19_compass_hover"]
-[ext_resource type="Texture2D" uid="uid://dk2xo6o8mcc7i" path="res://night/art/ui/buttons/button_round_compass_normal.png" id="19_compass_normal"]
-[ext_resource type="Texture2D" uid="uid://dk6hdx0e8g66l" path="res://night/art/ui/buttons/button_round_compass_pressed.png" id="19_compass_pressed"]
 [ext_resource type="Texture2D" uid="uid://ck4v32b7vdfaq" path="res://night/art/ui/spectrum_pointer.png" id="20_spectrum_pointer"]
 [ext_resource type="Texture2D" uid="uid://cpvqdavg41gff" path="res://night/art/ui/temperature_gauge_face.svg" id="22_temperature_face"]
 [ext_resource type="Texture2D" uid="uid://took11ewwkf8" path="res://night/art/ui/temperature_needle.svg" id="23_temperature_needle"]
@@ -611,7 +608,32 @@ theme_override_styles/pressed = SubResource("Style_red_pressed")
 theme_override_styles/hover = SubResource("Style_red_hover")
 text = "取 消"
 
+[node name="ExitButton" type="Button" parent="ArtBoard" unique_id=2072018856]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_top = 0.025
+anchor_right = 0.12
+anchor_bottom = 0.09
+offset_left = 7.6399994
+offset_top = 629.0
+offset_right = 7.6399994
+offset_bottom = 629.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.91, 0.83, 0.65, 1)
+theme_override_colors/font_pressed_color = Color(0.8, 0.72, 0.56, 1)
+theme_override_colors/font_hover_color = Color(1, 0.93, 0.75, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_red_normal")
+theme_override_styles/pressed = SubResource("Style_red_pressed")
+theme_override_styles/hover = SubResource("Style_red_hover")
+text = "退出炼制"
+
 [node name="ResultPopup" type="AcceptDialog" parent="." unique_id=453322509]
+oversampling_override = 1.0
 title = "炼制结果"
 initial_position = 2
 size = Vector2i(360, 180)

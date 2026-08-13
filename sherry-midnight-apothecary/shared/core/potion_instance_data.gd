@@ -17,6 +17,7 @@ var was_burned := false
 var created_day := 1
 var bottle_style_id: StringName = &"health"
 var custom_name := ""
+var actual_color: Array = []
 
 
 func to_dict() -> Dictionary:
@@ -37,6 +38,7 @@ func to_dict() -> Dictionary:
 		"created_day": created_day,
 		"bottle_style_id": str(bottle_style_id),
 		"custom_name": custom_name,
+		"actual_color": actual_color.duplicate(),
 	}
 
 
@@ -58,4 +60,5 @@ static func from_dict(data: Dictionary) -> PotionInstanceData:
 	result.created_day = maxi(int(data.get("created_day", 1)), 1)
 	result.bottle_style_id = StringName(str(data.get("bottle_style_id", "health")))
 	result.custom_name = str(data.get("custom_name", "")).left(12)
+	result.actual_color = (data.get("actual_color", []) as Array).duplicate()
 	return result

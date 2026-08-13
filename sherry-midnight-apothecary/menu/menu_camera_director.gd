@@ -20,6 +20,7 @@ var _points: Array[Marker2D] = []
 var _layers: Array[Node2D] = []
 var _layer_origins: Array[Vector2] = []
 var _running := false
+var motion_scale := 1.0
 
 
 func _ready() -> void:
@@ -43,8 +44,8 @@ func play_descent() -> void:
 		return
 	_running = true
 	var tween := create_tween()
-	tween.tween_interval(descent_delay)
-	tween.tween_method(_set_descent_elapsed_ratio, 0.0, 1.0, descent_duration).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_interval(descent_delay * motion_scale)
+	tween.tween_method(_set_descent_elapsed_ratio, 0.0, 1.0, descent_duration * motion_scale).set_trans(Tween.TRANS_LINEAR)
 	await tween.finished
 	_set_descent_elapsed_ratio(1.0)
 	_running = false

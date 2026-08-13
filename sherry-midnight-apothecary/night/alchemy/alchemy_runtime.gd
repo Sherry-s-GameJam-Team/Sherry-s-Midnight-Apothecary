@@ -77,7 +77,6 @@ var _ingredient_by_id: Dictionary = {}
 @onready var batch_list: VBoxContainer = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BatchPanel/BatchMargin/IngredientList")
 @onready var brew_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/BrewButton")
 @onready var cancel_button: Button = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/CancelButton")
-@onready var result_popup: AcceptDialog = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ResultPopup")
 @onready var to_production_arrow: Button = $StageRoot/HorizontalStage/BrewingPanel/ArtBoard/ToProductionArrow
 @onready var back_to_brewing_arrow: Button = $StageRoot/HorizontalStage/ProductionPanel/BackToBrewingArrow
 @onready var bottling_panel: BottlingPanel = %BottlingPanel
@@ -90,6 +89,7 @@ func _ready() -> void:
 	_connect_button(cancel_button, cancel_batch)
 	_connect_button(to_production_arrow, show_production_panel)
 	_connect_button(back_to_brewing_arrow, show_brewing_panel)
+	_connect_button(get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ArtBoard/ExitButton"), _request_close)
 	if bottling_panel != null:
 		bottling_panel.confirmed.connect(_on_bottling_confirmed)
 	_build_lookup()
@@ -606,9 +606,12 @@ func _on_heat_finished(heat_result: HeatResult) -> void:
 	instance.temperature_grade = heat_result.temperature_grade()
 	instance.was_burned = heat_result.is_burned
 	instance.created_day = day
+	var liquid_color := BURNT_LIQUID_COLOR if instance.was_burned else _cauldron_liquid_color(active_prediction)
+	instance.actual_color = [liquid_color.r, liquid_color.g, liquid_color.b, liquid_color.a]
 	if instance.was_burned:
 		instance.bottle_style_id = &"black"
 		_commit_brew_instance(instance, result_potion)
+		bottling_panel.show_auto_stored(result_potion, instance.to_dict())
 		return
 	pending_bottling_instance = instance
 	pending_bottling_potion = result_potion
@@ -617,6 +620,7 @@ func _on_heat_finished(heat_result: HeatResult) -> void:
 
 func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> void:
 	var instance_data := instance.to_dict()
+	instance_data["potion_id"] = str(potion.id)
 	for ingredient_key: Variant in current_batch_reserved:
 		var ingredient_id := StringName(str(ingredient_key))
 		night_result.spent_ingredients[ingredient_id] = (
@@ -627,6 +631,8 @@ func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> 
 	var produced: Array = night_result.produced_potions.get(potion_id, [])
 	produced.append(instance_data)
 	night_result.produced_potions[potion_id] = produced
+	if player_data != null:
+		player_data.add_brewed_potion(instance_data)
 	current_batch_reserved.clear()
 	cauldron_ingredients.clear()
 	cauldron_powders.clear()
@@ -634,15 +640,12 @@ func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> 
 	active_prediction.clear()
 	last_brewed_instance = instance_data.duplicate(true)
 	batch_committed.emit(instance_data)
-	if result_popup != null:
-		result_popup.dialog_text = "%s\n%s\n品质：%s（%.2f）" % [
-			potion.display_name,
-			"烧焦" if instance.was_burned else _temperature_grade_name(instance.temperature_grade),
-			_quality_name(instance.quality),
-			instance.quality,
-		]
-		result_popup.popup_centered()
 	_refresh_ui()
+
+
+func _request_close() -> void:
+	if not is_brewing() and pending_bottling_instance == null:
+		request_close.emit()
 
 
 func _on_bottling_confirmed(style_id: StringName, custom_name: String) -> void:

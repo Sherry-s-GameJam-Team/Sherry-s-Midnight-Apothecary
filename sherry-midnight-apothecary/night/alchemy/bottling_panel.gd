@@ -19,6 +19,8 @@ func open_for(source_potion: PotionData, source_instance: Dictionary) -> void:
 	potion = source_potion
 	instance = source_instance.duplicate(true)
 	style_id = StringName(str(instance.get("bottle_style_id", "health")))
+	name_input.visible = true
+	style_row.visible = true
 	name_input.text = str(instance.get("custom_name", ""))
 	quality_label.text = "评级：%s（%.2f）" % [_quality_name(float(instance.get("quality", 1.0))), float(instance.get("quality", 1.0))]
 	var main := PotionEffectText.describe(potion.main_effect_id)
@@ -27,12 +29,26 @@ func open_for(source_potion: PotionData, source_instance: Dictionary) -> void:
 	if secondary != &"": effect_label.text += "\n副作用：%s × %.2f" % [PotionEffectText.describe(secondary), float(instance.get("secondary_effect_multiplier", 0.0))]
 	for child in style_row.get_children(): child.queue_free()
 	for style: StringName in PotionBottleVisual.STYLES:
+		if style == &"black":
+			continue
 		var button := Button.new()
 		button.text = str(style)
 		button.toggle_mode = true
 		button.button_pressed = style == style_id
 		button.pressed.connect(func() -> void: _select_style(style))
 		style_row.add_child(button)
+	visible = true
+	_refresh_preview()
+
+
+func show_auto_stored(source_potion: PotionData, source_instance: Dictionary) -> void:
+	potion = source_potion
+	instance = source_instance.duplicate(true)
+	style_id = &"black"
+	name_input.visible = false
+	style_row.visible = false
+	quality_label.text = "评级：%s（%.2f）" % [_quality_name(float(instance.get("quality", 1.0))), float(instance.get("quality", 1.0))]
+	effect_label.text = "炼制失败，黑药水已自动装瓶并加入库存。"
 	visible = true
 	_refresh_preview()
 
@@ -45,6 +61,9 @@ func _refresh_preview() -> void:
 	preview.show_instance(potion, instance)
 
 func _on_confirm_pressed() -> void:
+	if style_id == &"black":
+		visible = false
+		return
 	confirmed.emit(style_id, name_input.text.strip_edges().left(12))
 	visible = false
 

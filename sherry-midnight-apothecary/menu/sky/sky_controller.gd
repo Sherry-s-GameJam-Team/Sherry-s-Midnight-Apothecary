@@ -53,3 +53,9 @@ func apply_profile(profile: MenuSkyProfile) -> void:
 	magic_particles.modulate = profile.magic_particle_color
 	for foreground: CanvasItem in foreground_nodes:
 		foreground.modulate = profile.foreground_tint
+
+
+func set_reduced_motion(reduced: bool) -> void:
+	far_cloud.set_process(not reduced)
+	near_cloud.set_process(not reduced)
+	magic_particles.emitting = not reduced

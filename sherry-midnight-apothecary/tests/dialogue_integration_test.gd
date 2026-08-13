@@ -29,12 +29,30 @@ static func run(test: TestSupport) -> void:
 
 	var dialogue := load(DIALOGUE_PATH) as DialogueResource
 	test.expect(dialogue != null, "Chinese test dialogue imports as a DialogueResource.")
+	var actor_scene := load("res://tests/dual_world/sherry_dual_world_actor.tscn") as PackedScene
+	var dialogue_actor := actor_scene.instantiate() as CharacterBody2D
+	var tree := Engine.get_main_loop() as SceneTree
+	tree.root.add_child(dialogue_actor)
+	dialogue_actor.velocity = Vector2(180.0, 0.0)
+	dialogue_actor._horizontal_velocity = 180.0
+	dialogue_actor._is_rolling = true
+	dialogue_actor._play("roll")
+	dialogue_actor.set_dialogue_locked(true)
+	test.expect(dialogue_actor.is_physics_processing(), "Dialogue locks controls without stopping player physics.")
+	test.expect_equal(dialogue_actor.velocity, Vector2(180.0, 0.0), "Dialogue locks controls without rewriting active movement state.")
+	test.expect(dialogue_actor.animation_player.is_playing(), "Dialogue locks controls without pausing an active roll animation.")
+	dialogue_actor.animation_player.animation_finished.emit(dialogue_actor.animation_player.current_animation)
+	test.expect(not dialogue_actor._is_rolling, "Roll completion still clears its state while dialogue controls are locked.")
+	dialogue_actor.free()
+	var stick_script := FileAccess.get_file_as_string("res://day/levels/home/bedroom_stick_interaction.gd")
+	var hound_script := FileAccess.get_file_as_string("res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_npc.gd")
+	test.expect(not stick_script.contains("_player.set_physics_process"), "Bedroom note dialogue does not freeze the player state machine.")
+	test.expect(not hound_script.contains("_player.set_physics_process"), "Sleeping hound dialogue does not freeze the player state machine.")
 	var test_scene_resource := load(TEST_SCENE_PATH) as PackedScene
 	test.expect(test_scene_resource != null, "Dialogue test scene loads.")
 	if test_scene_resource != null:
 		var test_scene := test_scene_resource.instantiate()
 		test_scene.auto_start = false
-		var tree := Engine.get_main_loop() as SceneTree
 		tree.root.add_child(test_scene)
 		var test_pause_menu := test_scene.get_node("%PauseMenu") as PauseMenu
 		test.expect(test_pause_menu != null, "Dialogue test scene contains the pause menu.")
@@ -71,7 +89,6 @@ static func run(test: TestSupport) -> void:
 	if balloon_scene == null:
 		return
 	var balloon := balloon_scene.instantiate() as ApothecaryDialogueBalloon
-	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(balloon)
 	test.expect(balloon.get_node("%DialogueLabel") is DialogueLabel, "Balloon contains DialogueLabel.")
 	test.expect(balloon.get_node("%ResponsesMenu") is DialogueResponsesMenu, "Balloon contains DialogueResponsesMenu.")

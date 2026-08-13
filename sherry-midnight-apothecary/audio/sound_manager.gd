@@ -55,19 +55,19 @@ func _ready() -> void:
 
 func play_footstep(speed_ratio: float = 1.0) -> void:
 	var speed_pitch := lerpf(0.94, 1.06, clampf(speed_ratio, 0.0, 1.0))
-	_play_one_shot(FOOTSTEP, -10.0, speed_pitch * randf_range(0.94, 1.06))
+	_play_one_shot(FOOTSTEP, -10.0, speed_pitch * randf_range(0.94, 1.06), &"SFX")
 
 
 func play_spell_cast() -> void:
-	_play_one_shot(SPELL_CAST, -7.0, randf_range(0.97, 1.03))
+	_play_one_shot(SPELL_CAST, -7.0, randf_range(0.97, 1.03), &"SFX")
 
 
 func play_spell_release() -> void:
-	_play_one_shot(SPELL_RELEASE, -6.0, randf_range(0.98, 1.04))
+	_play_one_shot(SPELL_RELEASE, -6.0, randf_range(0.98, 1.04), &"SFX")
 
 
 func play_door_transition() -> void:
-	_play_one_shot(DOOR_OPEN, -7.0, randf_range(0.97, 1.02))
+	_play_one_shot(DOOR_OPEN, -7.0, randf_range(0.97, 1.02), &"SFX")
 	get_tree().create_timer(0.32, true, false, true).timeout.connect(
 		_play_door_close,
 		CONNECT_ONE_SHOT
@@ -75,7 +75,7 @@ func play_door_transition() -> void:
 
 
 func play_ui_press() -> void:
-	_play_one_shot(UI_PRESS, -11.0, randf_range(0.98, 1.02))
+	_play_one_shot(UI_PRESS, -11.0, randf_range(0.98, 1.02), &"UI")
 
 
 func play_ui_hover() -> void:
@@ -83,7 +83,7 @@ func play_ui_hover() -> void:
 	if now - _last_ui_hover_ms < MIN_UI_HOVER_INTERVAL_MS:
 		return
 	_last_ui_hover_ms = now
-	_play_one_shot(UI_HOVER, -15.0, randf_range(1.02, 1.08))
+	_play_one_shot(UI_HOVER, -15.0, randf_range(1.02, 1.08), &"UI")
 
 
 func play_day_interior_bgm() -> void:
@@ -128,10 +128,10 @@ func stop_bgm() -> void:
 
 
 func _play_door_close() -> void:
-	_play_one_shot(DOOR_CLOSE, -8.0, randf_range(0.98, 1.03))
+	_play_one_shot(DOOR_CLOSE, -8.0, randf_range(0.98, 1.03), &"SFX")
 
 
-func _play_one_shot(stream: AudioStream, volume_db: float, pitch_scale: float) -> void:
+func _play_one_shot(stream: AudioStream, volume_db: float, pitch_scale: float, bus_name: StringName) -> void:
 	if stream == null:
 		return
 	var player := AudioStreamPlayer.new()
@@ -139,6 +139,7 @@ func _play_one_shot(stream: AudioStream, volume_db: float, pitch_scale: float) -
 	player.stream = stream
 	player.volume_db = volume_db
 	player.pitch_scale = pitch_scale
+	player.bus = bus_name
 	add_child(player)
 	player.finished.connect(player.queue_free, CONNECT_ONE_SHOT)
 	player.play()
@@ -163,6 +164,7 @@ func _ensure_day_interior_bus() -> void:
 		AudioServer.add_bus()
 		_day_interior_bus_index = AudioServer.bus_count - 1
 		AudioServer.set_bus_name(_day_interior_bus_index, DAY_INTERIOR_BUS)
+	AudioServer.set_bus_send(_day_interior_bus_index, &"Music")
 	if (
 		is_instance_valid(_day_interior_reverb)
 		and is_instance_valid(_day_interior_stereo)

@@ -71,6 +71,7 @@ debug_scene_id = "流明街"
 
 [node name="TownBGM" type="AudioStreamPlayer" parent="." unique_id=2023291965]
 stream = ExtResource("23_town_bgm")
+bus = &"Music"
 script = ExtResource("24_looping_bgm")
 loop_end_sample = 2382144
 

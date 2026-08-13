@@ -236,11 +236,16 @@ shadow_path = NodePath("../TransitionLayer/Shadow")
 roof_path = NodePath("../TransitionLayer/RoofOccluder")
 
 [node name="MenuBGM" type="AudioStreamPlayer" parent="."]
+bus = &"Music"
 
 [node name="WindAmbience" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
 
 [node name="BirdAmbience" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
 
 [node name="TransitionWhoosh" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
 
 [node name="LeavesAmbience" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

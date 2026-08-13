@@ -59,6 +59,20 @@ func apply_night_result(result: NightResult) -> void:
 	_cleanup_potion_configuration()
 
 
+func add_brewed_potion(instance: Dictionary) -> void:
+	var potion_id := StringName(str(instance.get("potion_id", "")))
+	var uid := str(instance.get("instance_uid", ""))
+	if potion_id == &"" or uid.is_empty():
+		return
+	var existing := _potion_array(potion_id, potions.get(potion_id, []))
+	if existing.any(func(item: Dictionary) -> bool: return str(item.get("instance_uid", "")) == uid):
+		return
+	for normalized: Dictionary in _potion_array(potion_id, [instance]):
+		existing.append(normalized)
+	potions[potion_id] = existing
+	_rebuild_default_throw_order(potion_id)
+
+
 func to_save_data() -> Dictionary:
 	return {
 		"version": SAVE_VERSION,
@@ -208,7 +222,10 @@ func _append_potions(target: Dictionary, additions: Dictionary) -> void:
 		var potion_id := StringName(str(potion_key))
 		var existing := _potion_array(potion_id, target.get(potion_id, []))
 		var incoming := _potion_array(potion_id, additions[potion_key])
-		existing.append_array(incoming)
+		for instance: Dictionary in incoming:
+			var uid := str(instance.get("instance_uid", ""))
+			if uid.is_empty() or not existing.any(func(current: Dictionary) -> bool: return str(current.get("instance_uid", "")) == uid):
+				existing.append(instance)
 		target[potion_id] = existing
 		_rebuild_default_throw_order(potion_id)
 
@@ -266,6 +283,7 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				normalized["created_day"] = maxi(int(normalized.get("created_day", 1)), 1)
 				normalized["bottle_style_id"] = str(normalized.get("bottle_style_id", "health"))
 				normalized["custom_name"] = str(normalized.get("custom_name", "")).left(12)
+				normalized["actual_color"] = (normalized.get("actual_color", []) as Array).duplicate()
 				result.append(normalized)
 	elif value is int or value is float:
 		for _index in range(maxi(int(value), 0)):
@@ -286,6 +304,7 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				"created_day": 1,
 				"bottle_style_id": "health",
 				"custom_name": "",
+				"actual_color": [],
 			})
 	return result
 

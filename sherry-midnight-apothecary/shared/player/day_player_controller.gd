@@ -64,7 +64,6 @@ var _potion_cast_active := false
 var _sprite_base_position := Vector2.ZERO
 var _footstep_timer := 0.0
 var _dialogue_locked := false
-var _animation_was_playing_before_dialogue := false
 
 
 func _ready() -> void:
@@ -84,11 +83,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
-		return
-	if _dialogue_locked:
-		velocity = Vector2.ZERO
-		_horizontal_velocity = 0.0
-		_footstep_timer = 0.0
 		return
 	var direction := 0.0 if _potion_action_locked else _get_input_direction()
 	_update_jump_timers(delta)
@@ -375,19 +369,10 @@ func set_potion_action_locked(locked: bool) -> void:
 
 
 func set_dialogue_locked(locked: bool) -> void:
-	if _dialogue_locked == locked:
-		return
+	# Dialogue only gates new player input. Physics and AnimationPlayer must keep
+	# advancing so an in-flight jump, roll, cast, or transition can finish and
+	# leave its state naturally while the balloon is open.
 	_dialogue_locked = locked
-	if locked:
-		velocity = Vector2.ZERO
-		_horizontal_velocity = 0.0
-		_jump_buffer_timer = 0.0
-		_footstep_timer = 0.0
-		_animation_was_playing_before_dialogue = animation_player.is_playing()
-		animation_player.pause()
-	elif _animation_was_playing_before_dialogue:
-		animation_player.play()
-	_animation_was_playing_before_dialogue = false
 
 
 func is_facing_right() -> bool:

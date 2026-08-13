@@ -23,6 +23,23 @@ var _welcomed := false
 var _toggle_key_was_down := false
 var _fallback_player_data: PlayerData
 
+const FALLBACK_INGREDIENTS: Array[IngredientData] = [
+	preload("res://shared/definitions/data/ingredients/herdsmans_loaf_bush.tres"),
+	preload("res://shared/definitions/data/ingredients/stardust_puffy_lion.tres"),
+	preload("res://shared/definitions/data/ingredients/grail_lily.tres"),
+	preload("res://shared/definitions/data/ingredients/dew_flask_herb.tres"),
+	preload("res://shared/definitions/data/ingredients/old_mans_noose.tres"),
+	preload("res://shared/definitions/data/ingredients/praise_star_maple.tres"),
+	preload("res://shared/definitions/data/ingredients/amber_root.tres"),
+	preload("res://shared/definitions/data/ingredients/blue_bell.tres"),
+	preload("res://shared/definitions/data/ingredients/mist_leaf.tres"),
+	preload("res://shared/definitions/data/ingredients/moon_mint.tres"),
+	preload("res://shared/definitions/data/ingredients/red_berry.tres"),
+	preload("res://shared/definitions/data/ingredients/star_lavender.tres"),
+	preload("res://shared/definitions/data/ingredients/sun_daisy.tres"),
+	preload("res://shared/definitions/data/ingredients/violet_thistle.tres"),
+]
+
 @onready var output: RichTextLabel = %Output
 @onready var command_input: LineEdit = %CommandInput
 
@@ -298,7 +315,13 @@ func _inventory_command(parts: PackedStringArray, direction: int) -> String:
 	if parts[1].is_valid_int():
 		var alchemy := _alchemy()
 		if alchemy == null or alchemy.ingredients.is_empty():
-			return "错误：当前没有可用的植物列表。"
+			var plant_number := int(parts[1])
+			if plant_number < 1 or plant_number > FALLBACK_INGREDIENTS.size():
+				return "错误：植物序号超出范围。"
+			ingredient_id = FALLBACK_INGREDIENTS[plant_number - 1].id
+			var new_count := maxi(int(player.inventory.get(ingredient_id, 0)) + count * direction, 0)
+			_set_inventory_count(player, ingredient_id, new_count)
+			return "inventory.%s = %d" % [ingredient_id, new_count]
 		var plant_number := int(parts[1])
 		if plant_number < 1 or plant_number > alchemy.ingredients.size():
 			return "错误：植物序号必须在 1–%d 之间。" % alchemy.ingredients.size()

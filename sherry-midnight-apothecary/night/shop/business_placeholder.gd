@@ -115,7 +115,8 @@ func _refresh() -> void:
 		customer_portrait.texture = null
 		patience_text.visible = false
 		patience_bar.value = 0.0
-		potion_shelf_panel.set_selection_text("今晚的顾客已经全部接待完毕。")
+		if potion_shelf_panel != null:
+			potion_shelf_panel.set_selection_text("今晚的顾客已经全部接待完毕。")
 		sell_button.disabled = true
 		reject_button.disabled = true
 	else:
@@ -132,6 +133,8 @@ func _refresh() -> void:
 
 
 func _refresh_shelf() -> void:
+	if potion_shelf_panel == null:
+		return
 	potion_shelf_panel.clear_items()
 	selected_potion_id = &"" if _find_instance(selected_potion_id, selected_uid).is_empty() else selected_potion_id
 	if player_data == null:
@@ -139,7 +142,7 @@ func _refresh_shelf() -> void:
 		return
 	var count := 0
 	for potion: PotionData in POTIONS:
-		for item: Variant in player_data.potions.get(potion.id, []):
+		for item: Variant in _available_instances(potion.id):
 			if item is not Dictionary:
 				continue
 			var instance := item as Dictionary
@@ -159,7 +162,8 @@ func _on_potion_chosen(potion_id: StringName, uid: String) -> void:
 	selected_potion_id = potion_id
 	selected_uid = uid
 	var potion: PotionData = _potion_by_id.get(potion_id)
-	potion_shelf_panel.set_selection_text("已选择：%s · 报价 %d曜" % [potion.display_name if potion != null else str(potion_id), _sale_value(potion, _find_instance(potion_id, uid), float(current_customer().get("modifier", 1.0)))])
+	if potion_shelf_panel != null:
+		potion_shelf_panel.set_selection_text("已选择：%s · 报价 %d曜" % [potion.display_name if potion != null else str(potion_id), _sale_value(potion, _find_instance(potion_id, uid), float(current_customer().get("modifier", 1.0)))])
 	_update_sale_button()
 
 
@@ -245,12 +249,21 @@ func _potion_name(potion_id: StringName) -> String:
 
 
 func _find_instance(potion_id: StringName, uid: String) -> Dictionary:
-	if player_data == null:
-		return {}
-	for item: Variant in player_data.potions.get(potion_id, []):
+	for item: Variant in _available_instances(potion_id):
 		if item is Dictionary and str((item as Dictionary).get("instance_uid", "")) == uid:
 			return item as Dictionary
 	return {}
+
+
+func _available_instances(potion_id: StringName) -> Array:
+	var instances: Array = []
+	if player_data != null:
+		instances.append_array(player_data.potions.get(potion_id, []))
+	if night_result != null:
+		for item: Variant in night_result.produced_potions.get(potion_id, []):
+			if item is Dictionary and not instances.any(func(current: Dictionary) -> bool: return str(current.get("instance_uid", "")) == str((item as Dictionary).get("instance_uid", ""))):
+				instances.append(item)
+	return instances
 
 
 func _is_sold(uid: String) -> bool:

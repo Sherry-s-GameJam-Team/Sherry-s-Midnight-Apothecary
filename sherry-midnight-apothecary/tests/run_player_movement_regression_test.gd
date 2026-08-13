@@ -42,9 +42,14 @@ func _run() -> void:
 	player._try_start_roll(KEY_D)
 	_expect(player._is_rolling, "Double-tap roll can still start on the ground.")
 	var roll_start_x: float = player.global_position.x
+	player.set_dialogue_locked(true)
+	_expect(player.is_physics_processing(), "Dialogue input lock does not stop player physics during a roll.")
+	_expect(player.animation_player.is_playing(), "Dialogue input lock does not pause the active roll animation.")
 	for _frame in range(30):
 		await physics_frame
 	_expect(player.global_position.x > roll_start_x, "Roll retains its horizontal movement.")
+	_expect(not player._is_rolling, "A roll naturally finishes while dialogue input is locked.")
+	player.set_dialogue_locked(false)
 	runtime.queue_free()
 	await process_frame
 	await process_frame

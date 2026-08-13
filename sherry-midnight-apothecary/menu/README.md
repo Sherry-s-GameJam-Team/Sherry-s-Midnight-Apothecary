@@ -27,6 +27,8 @@ Bedroom 仍是 `res://day/levels/home/bedroom.tscn`，起床动画仍是 `SleepT
 
 不要用固定 Timer 猜测起床动画长度。若将来替换起床动画，只需继续让 Bedroom 的执行器指向正确的 `AnimatedSprite2D`、Player 和出生 Marker。
 
+运行时对话气泡通过 `dialogue_lockable` 组调用 Player 的 `set_dialogue_locked()`。该锁只阻止新的移动、跳跃、翻滚和药水按键输入，不暂停 Player 的物理循环、速度、当前动画或动作状态；因此在滚动、跳跃等动作中进入对话时，动作仍会自然结束，不会在关闭对话后卡在中间状态。普通 NPC 和场景交互不得额外调用 `set_physics_process(false)` 冻结 Player。完整镜头演出若确实需要固定站位，应由演出控制器单独管理并在统一清理路径恢复。
+
 ## 主菜单剪影层
 
 `res://art/effects/tree.png` 与 `bird.png` 是同一个 1056×2019 透明画布的两层剪影。`MenuSilhouetteDirector` 按 viewport 宽度统一缩放。`RoofTransitionPoint` 是最终镜头中心，画布底边因此对齐到该镜头的 viewport 底边，并向房间遮罩内重叠 24px，防止运镜尾段露出断层。因此 bird 的有效区域位于天空/云层段，tree 的有效区域位于树冠到屋檐段。

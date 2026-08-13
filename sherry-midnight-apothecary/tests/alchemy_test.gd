@@ -50,6 +50,9 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(result.produced_potions[&"green_potion"].size(), 1, "Confirmed bottling appends a dynamic potion instance.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["bottle_style_id"], "moon", "Bottling stores the selected bottle style.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["custom_name"], "试验药", "Bottling stores the custom name.")
+	test.expect_equal(result.produced_potions[&"green_potion"][0]["potion_id"], "green_potion", "Bottling preserves the potion identifier.")
+	test.expect_equal(player.potions[&"green_potion"].size(), 1, "Confirmed bottling immediately adds the potion to the player inventory.")
+	test.expect(not result.produced_potions[&"green_potion"][0]["actual_color"].is_empty(), "Bottled potions persist their final alchemy liquid color.")
 
 	test.expect(runtime.reserve_ingredient(&"herdsmans_loaf_bush"), "A second batch can start in the same night.")
 	test.expect(runtime.set_processing_selection(0.40, 0.46), "Second batch can be cut.")

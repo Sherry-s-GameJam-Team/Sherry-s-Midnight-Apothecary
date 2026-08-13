@@ -61,8 +61,6 @@ func _start_dialogue() -> void:
 	_mark_as_read()
 	_dialogue_open = true
 	_hide_interaction_hint()
-	if _player != null:
-		_player.set_physics_process(false)
 	_modal_lock_was_set = get_tree().has_meta("day_modal_input_locked")
 	get_tree().set_meta("day_modal_input_locked", true)
 	var dialogue_manager := get_node_or_null("/root/DialogueManager")
@@ -86,8 +84,6 @@ func _finish_dialogue() -> void:
 		return
 	_dialogue_open = false
 	_balloon = null
-	if _player != null:
-		_player.set_physics_process(true)
 	if not _modal_lock_was_set:
 		get_tree().remove_meta("day_modal_input_locked")
 

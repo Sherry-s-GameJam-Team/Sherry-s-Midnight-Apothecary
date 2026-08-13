@@ -440,16 +440,21 @@ particles_path = NodePath("../../World/UnderwaterArea/Particles")
 [node name="Audio" type="Node" parent="." unique_id=109730417]
 
 [node name="AudioAboveWater" type="AudioStreamPlayer" parent="Audio" unique_id=1700443816]
+bus = &"SFX"
 volume_db = -6.0
 
 [node name="AudioUnderwater" type="AudioStreamPlayer" parent="Audio" unique_id=130114162]
+bus = &"SFX"
 volume_db = -20.0
 
 [node name="ElevatorLoop" type="AudioStreamPlayer" parent="Audio" unique_id=696223779]
+bus = &"SFX"
 
 [node name="WaterEnterSFX" type="AudioStreamPlayer" parent="Audio" unique_id=605346286]
+bus = &"SFX"
 
 [node name="ElevatorStopSFX" type="AudioStreamPlayer" parent="Audio" unique_id=2088495165]
+bus = &"SFX"
 
 [node name="Debug" type="Node2D" parent="." unique_id=932920636]
 

@@ -10,6 +10,14 @@ static func run(test: TestSupport) -> void:
 	var menu := scene.instantiate() as PauseMenu
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(menu)
+	var settings := preload("res://app/settings_service.gd").new("user://pause_menu_test_settings.json")
+	tree.root.add_child(settings)
+	settings.load_and_apply()
+	menu.bind_settings(settings)
+	test.expect(menu.settings_panel is ScrollContainer, "Settings use a scrollable book page.")
+	test.expect(menu.music_volume != null and menu.sfx_volume != null and menu.ui_volume != null, "Settings expose independent music, SFX, and UI volume controls.")
+	settings.set_value(&"music_volume", 0.42)
+	test.expect_float_close(menu.music_volume.value, 0.42, 0.001, "Audio settings update the bound UI immediately.")
 
 	var bookmark_paths := [
 		"DesignRoot/BookmarkSettings",
@@ -28,6 +36,13 @@ static func run(test: TestSupport) -> void:
 	menu.open()
 	test.expect(menu.visible, "Opening the pause menu makes it visible.")
 	test.expect(tree.paused, "Opening the pause menu pauses the scene tree.")
+	var sound_manager := tree.root.get_node_or_null("SoundManager")
+	if sound_manager != null:
+		sound_manager.play_day_interior_bgm()
+		var bgm := sound_manager.get_node("PersistentBGM") as AudioStreamPlayer
+		bgm.seek(2.0)
+		menu.open()
+		test.expect(bgm.playing and bgm.get_playback_position() > 1.0, "Opening an already visible pause menu preserves the persistent BGM position.")
 	test.expect(menu.is_opening(), "Pause menu starts its upward reveal animation.")
 	test.expect(
 		menu.design_root.position.y > menu.get_open_target_position().y,
@@ -61,4 +76,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(menu.active_page, PauseMenu.Page.BACKPACK, "B switches an open menu directly to the backpack page.")
 	menu._unhandled_input(backpack_event)
 	test.expect(not menu.visible and not tree.paused, "Pressing B again while viewing the backpack resumes gameplay.")
+	settings.flush()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://pause_menu_test_settings.json"))
+	settings.free()
 	menu.free()

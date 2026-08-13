@@ -30,6 +30,7 @@ debug_scene_id = "grassland"
 
 [node name="GrasslandBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_grass_bgm")
+bus = &"Music"
 script = ExtResource("17_looping_bgm")
 
 [node name="Skybox" type="Parallax2D" parent="." unique_id=1367240776]

@@ -85,6 +85,7 @@ text = "[center]页面内容[/center]"
 fit_content = true
 
 [node name="SettingsPanel" type="VBoxContainer" parent="DesignRoot" unique_id=1065603437]
+visible = false
 layout_mode = 0
 offset_left = 300.0
 offset_top = 270.0
@@ -118,6 +119,152 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
 theme_override_font_sizes/font_size = 21
 text = "按 Esc 或点击右侧“返回”继续游戏"
+
+[node name="SettingsScroll" type="ScrollContainer" parent="DesignRoot"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 235.0
+offset_right = 1110.0
+offset_bottom = 860.0
+
+[node name="SettingsContent" type="VBoxContainer" parent="DesignRoot/SettingsScroll"]
+custom_minimum_size = Vector2(815, 0)
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="AudioHeading" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "音频"
+
+[node name="MasterLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "主音量"
+
+[node name="MasterVolume" type="HSlider" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "音乐"
+
+[node name="MusicVolume" type="HSlider" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "音效"
+
+[node name="SFXVolume" type="HSlider" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="UILabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "UI 音效"
+
+[node name="UIVolume" type="HSlider" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="DisplayHeading" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "显示"
+
+[node name="WindowModeLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "窗口模式"
+
+[node name="WindowMode" type="OptionButton" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "窗口分辨率"
+
+[node name="Resolution" type="OptionButton" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="VSyncToggle" type="CheckButton" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "垂直同步"
+
+[node name="AccessibilityHeading" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "文字与交互"
+
+[node name="TextSizeLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "文字大小"
+
+[node name="TextSize" type="OptionButton" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="DialogueSpeedLabel" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "对话速度"
+
+[node name="DialogueSpeed" type="OptionButton" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ReducedMotion" type="CheckButton" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "减少动态效果"
+
+[node name="ResetButton" type="Button" parent="DesignRoot/SettingsScroll/SettingsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "恢复默认设置"
+
+[node name="PauseHintNew" type="Label" parent="DesignRoot/SettingsScroll/SettingsContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.42, 0.33, 0.22, 0.8)
+theme_override_font_sizes/font_size = 21
+text = "按 Esc 或点击右侧返回继续游戏"
 
 [node name="InventoryPage" parent="DesignRoot" instance=ExtResource("18_inventory")]
 unique_name_in_owner = true

@@ -177,6 +177,10 @@ func _show_shop() -> void:
 	_set_player_enabled(true)
 
 
+func _on_alchemy_request_close() -> void:
+	_show_shop()
+
+
 func _resolve_scene_nodes() -> void:
 	shop_slot = get_node_or_null("ShopSlot") as Node2D
 	night_home = get_node_or_null("ShopSlot/NightHome") as NightHome
@@ -184,6 +188,8 @@ func _resolve_scene_nodes() -> void:
 	business_placeholder = get_node_or_null("CustomerSlot/BusinessPlaceholder") as BusinessPlaceholder
 	alchemy_slot = get_node_or_null("AlchemySlot") as CanvasLayer
 	alchemy_runtime = get_node_or_null("AlchemySlot/AlchemyRuntime") as AlchemyRuntime
+	if alchemy_runtime != null and not alchemy_runtime.request_close.is_connected(_on_alchemy_request_close):
+		alchemy_runtime.request_close.connect(_on_alchemy_request_close)
 
 
 func _place_player_at_default() -> void:

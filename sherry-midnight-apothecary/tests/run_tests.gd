@@ -26,6 +26,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/temperature_gauge_editor_test.gd"),
 	preload("res://tests/production_test.gd"),
 	preload("res://tests/pause_menu_test.gd"),
+	preload("res://tests/settings_service_test.gd"),
 	preload("res://tests/pause_inventory_page_test.gd"),
 	preload("res://tests/top_hint_ui_test.gd"),
 	preload("res://tests/dialogue_integration_test.gd"),

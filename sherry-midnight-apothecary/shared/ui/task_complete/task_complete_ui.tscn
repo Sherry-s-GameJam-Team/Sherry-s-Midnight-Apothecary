@@ -182,6 +182,7 @@ text = "继续探索"
 unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("4_complete")
+bus = &"UI"
 volume_db = -4.0
 pitch_scale = 1.08
 
@@ -189,5 +190,6 @@ pitch_scale = 1.08
 unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("5_sparkle")
+bus = &"UI"
 volume_db = -8.0
 pitch_scale = 1.42

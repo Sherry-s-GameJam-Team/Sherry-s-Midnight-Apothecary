@@ -10,6 +10,8 @@ extends Button
 
 
 func show_potion(potion: PotionData, instance: Dictionary, price: int) -> void:
+	if name_label == null or quality_label == null or dose_bar == null or dose_label == null or price_label == null or bottle_visual == null:
+		return
 	name_label.text = str(instance.get("custom_name", "")).strip_edges()
 	if name_label.text.is_empty(): name_label.text = potion.display_name
 	quality_label.text = "品质 %.0f%%" % (float(instance.get("quality", 1.0)) * 100.0)

@@ -20,8 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://blt2l1kfbssio" path="res://night/levels/home/cover_C.png" id="18_8mwc6"]
 [ext_resource type="Texture2D" uid="uid://c551r65ti0a3u" path="res://night/levels/home/cover_F.png" id="19_8v1ga"]
 [ext_resource type="Texture2D" uid="uid://c4gxbm5y3v4ui" path="res://night/levels/home/cover_M.png" id="19_cp2oj"]
-[ext_resource type="AudioStream" path="res://night/levels/home/people_voice.wav" id="20_people_voice"]
-[ext_resource type="Script" path="res://night/levels/home/night_home_ambience.gd" id="21_ambience"]
+[ext_resource type="AudioStream" uid="uid://bb3ufqrijdk5f" path="res://night/levels/home/people_voice.wav" id="20_people_voice"]
+[ext_resource type="Script" uid="uid://lowx026ww67k" path="res://night/levels/home/night_home_ambience.gd" id="21_ambience"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -149,13 +149,14 @@ texture_scale = 2.3
 
 [node name="Interior" type="Sprite2D" parent="." unique_id=1579141177]
 z_index = -10
-position = Vector2(2.9999998, 149)
-scale = Vector2(0.62720853, 0.62720853)
+position = Vector2(2.9999998, 139)
+scale = Vector2(0.62720853, 0.6360424)
 texture = ExtResource("2_interior")
 centered = false
 
-[node name="PeopleVoiceAmbience" type="AudioStreamPlayer" parent="."]
+[node name="PeopleVoiceAmbience" type="AudioStreamPlayer" parent="." unique_id=25504204]
 stream = ExtResource("20_people_voice")
+bus = &"SFX"
 volume_db = -8.0
 script = ExtResource("21_ambience")
 
@@ -271,8 +272,8 @@ position = Vector2(2.5, 8.5)
 shape = SubResource("TransformerShape")
 
 [node name="Bedroom" type="Sprite2D" parent="." unique_id=1967420445]
-position = Vector2(-1050.0004, 508.99994)
-scale = Vector2(0.8853435, 0.82870364)
+position = Vector2(-1050.0004, 502.49997)
+scale = Vector2(0.8853435, 0.84374994)
 texture = ExtResource("11_bedroom")
 
 [node name="BedroomBarrierVisual" type="Sprite2D" parent="." unique_id=974814242]
