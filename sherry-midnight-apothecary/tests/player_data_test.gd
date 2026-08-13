@@ -3,6 +3,7 @@ extends RefCounted
 
 static func run(test: TestSupport) -> void:
 	var player := PlayerData.new()
+	test.expect_equal(player.store_reputation, 100, "New players begin with full store reputation.")
 	test.expect_equal(player.debt, 30000, "New players visibly begin with 30000曜 of debt.")
 	test.expect(player.potions.is_empty(), "New players start without any potions.")
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "New players start with three empty potion slots.")
@@ -22,17 +23,19 @@ static func run(test: TestSupport) -> void:
 	night_result.spent_ingredients = {&"herdsmans_loaf_bush": 2}
 	night_result.produced_potions = {&"blue_tonic": 2}
 	night_result.sold_potions = {&"healing_tonic": 1}
+	night_result.reputation_delta = -10
 	player.apply_night_result(night_result)
 
 	test.expect_equal(player.money, 50, "Night earnings are applied.")
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 2, "Night ingredient costs are applied.")
 	test.expect_equal(player.potions[&"blue_tonic"].size(), 2, "Night potion production is applied.")
 	test.expect(not player.potions.has(&"healing_tonic"), "Sold potions are removed at zero.")
+	test.expect_equal(player.store_reputation, 90, "Night reputation changes are applied to shared player data.")
 	player.add_story_item(&"sealed_letter", 2)
 	player.remove_story_item(&"sealed_letter")
 	test.expect_equal(player.story_items[&"sealed_letter"], 1, "Story item counts can be added and removed.")
 	player.potions[&"yellow_potion"] = [
-		{"instance_uid": "yellow-full", "remaining_dose": 1.0},
+		{"instance_uid": "yellow-full", "remaining_dose": 1.0, "bottle_style_id": "moon", "custom_name": "月光药"},
 		{"instance_uid": "yellow-partial", "remaining_dose": 0.25},
 		{"instance_uid": "yellow-empty", "remaining_dose": 0.0},
 	]
@@ -47,13 +50,19 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(restored.inventory[&"herdsmans_loaf_bush"], 2, "Player inventory round-trips.")
 	test.expect_equal(restored.potions[&"blue_tonic"].size(), 2, "Dynamic potion arrays round-trip.")
 	test.expect_equal(restored.story_items[&"sealed_letter"], 1, "Story items round-trip.")
+	test.expect_equal(restored.potions[&"yellow_potion"][0]["bottle_style_id"], "moon", "Bottle style round-trips.")
+	test.expect_equal(restored.potions[&"yellow_potion"][0]["custom_name"], "月光药", "Custom potion names round-trip.")
+	test.expect_equal(restored.store_reputation, 90, "Store reputation round-trips.")
 	var migrated_empty := PlayerData.from_save_data({})
 	test.expect_equal(migrated_empty.debt, 30000, "Legacy saves without debt adopt the 30000曜 starting debt.")
 	var migrated_old_debt := PlayerData.from_save_data({"version": 5, "debt": 0})
 	test.expect_equal(migrated_old_debt.debt, 30000, "Version 5 saves migrate their placeholder debt to 30000曜.")
+	test.expect_equal(migrated_old_debt.store_reputation, 100, "Older saves migrate to full store reputation.")
 	var restored_paid_debt := PlayerData.from_save_data({"version": PlayerData.SAVE_VERSION, "debt": 12500})
 	test.expect_equal(restored_paid_debt.debt, 12500, "Current saves preserve debt repayment progress.")
 	test.expect_equal(migrated_empty.equipped_potion_ids, [&"", &"", &""], "Saves without a loadout migrate to empty slots.")
+	var legacy_bottle := PlayerData.from_save_data({"potions": {"green_potion": [{"instance_uid": "legacy"}]}})
+	test.expect_equal(legacy_bottle.potions[&"green_potion"][0]["bottle_style_id"], "health", "Legacy potions receive the default bottle style.")
 	var migrated_equipped := PlayerData.from_save_data({"equipped_potion_ids": ["red_potion", "", ""]})
 	test.expect_equal(migrated_equipped.equipped_potion_ids[0], &"red_potion", "Explicit saved loadouts are preserved.")
 	migrated_equipped.move_equip_potion(2, &"red_potion")

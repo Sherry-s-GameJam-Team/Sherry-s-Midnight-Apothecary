@@ -53,6 +53,8 @@ var standalone_developer_console: DeveloperConsole
 var _distillation_fill_target := 0.0
 var _distillation_completion_queued := false
 var _distillation_total_seconds := DISTILLATION_BASE_SECONDS
+var pending_bottling_instance: PotionInstanceData
+var pending_bottling_potion: PotionData
 
 var _ingredient_by_id: Dictionary = {}
 
@@ -78,6 +80,7 @@ var _ingredient_by_id: Dictionary = {}
 @onready var result_popup: AcceptDialog = get_node_or_null("StageRoot/HorizontalStage/BrewingPanel/ResultPopup")
 @onready var to_production_arrow: Button = $StageRoot/HorizontalStage/BrewingPanel/ArtBoard/ToProductionArrow
 @onready var back_to_brewing_arrow: Button = $StageRoot/HorizontalStage/ProductionPanel/BackToBrewingArrow
+@onready var bottling_panel: BottlingPanel = %BottlingPanel
 
 
 func _ready() -> void:
@@ -87,6 +90,8 @@ func _ready() -> void:
 	_connect_button(cancel_button, cancel_batch)
 	_connect_button(to_production_arrow, show_production_panel)
 	_connect_button(back_to_brewing_arrow, show_brewing_panel)
+	if bottling_panel != null:
+		bottling_panel.confirmed.connect(_on_bottling_confirmed)
 	_build_lookup()
 	if cauldron != null:
 		cauldron.ingredient_dropped.connect(add_processing_to_cauldron)
@@ -536,7 +541,7 @@ func _special_potion_by_id(potion_id: StringName) -> PotionData:
 
 
 func brew() -> Dictionary:
-	if is_brewing() or night_result == null or cauldron_ingredients.is_empty():
+	if is_brewing() or pending_bottling_instance != null or night_result == null or cauldron_ingredients.is_empty():
 		return {}
 	var prediction := calculate_prediction()
 	var profile := _heat_profile_for(prediction.get("potion"))
@@ -601,7 +606,13 @@ func _on_heat_finished(heat_result: HeatResult) -> void:
 	instance.temperature_grade = heat_result.temperature_grade()
 	instance.was_burned = heat_result.is_burned
 	instance.created_day = day
-	_commit_brew_instance(instance, result_potion)
+	if instance.was_burned:
+		instance.bottle_style_id = &"black"
+		_commit_brew_instance(instance, result_potion)
+		return
+	pending_bottling_instance = instance
+	pending_bottling_potion = result_potion
+	bottling_panel.open_for(result_potion, instance.to_dict())
 
 
 func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> void:
@@ -634,8 +645,20 @@ func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> 
 	_refresh_ui()
 
 
+func _on_bottling_confirmed(style_id: StringName, custom_name: String) -> void:
+	if pending_bottling_instance == null or pending_bottling_potion == null:
+		return
+	pending_bottling_instance.bottle_style_id = style_id
+	pending_bottling_instance.custom_name = custom_name
+	var instance := pending_bottling_instance
+	var potion := pending_bottling_potion
+	pending_bottling_instance = null
+	pending_bottling_potion = null
+	_commit_brew_instance(instance, potion)
+
+
 func cancel_batch() -> void:
-	if is_brewing():
+	if is_brewing() or pending_bottling_instance != null:
 		return
 	for powder: PowderInstanceData in cauldron_powders.values():
 		powder_shelf_state.return_powder(powder)

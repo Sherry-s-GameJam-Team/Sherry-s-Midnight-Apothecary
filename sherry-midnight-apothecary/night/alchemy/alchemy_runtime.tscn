@@ -24,6 +24,7 @@
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/praise_star_maple.tres" id="32_praise_star_maple"]
 [ext_resource type="Script" uid="uid://cgivirjk3d0gp" path="res://night/alchemy/heat/heat_controller.gd" id="33_heat_controller"]
 [ext_resource type="Resource" path="res://night/alchemy/heat/profiles/default_heat_profile.tres" id="34_default_heat"]
+[ext_resource type="PackedScene" path="res://night/alchemy/bottling_panel.tscn" id="35_bottling"]
 
 [node name="AlchemyRuntime" type="Control" unique_id=1797314839]
 layout_mode = 3
@@ -85,3 +86,6 @@ offset_left = 12.360046
 offset_top = -55.6
 offset_right = 572.4
 offset_bottom = 90.79999
+
+[node name="BottlingPanel" parent="StageRoot" unique_id=1703111111 instance=ExtResource("35_bottling")]
+unique_name_in_owner = true

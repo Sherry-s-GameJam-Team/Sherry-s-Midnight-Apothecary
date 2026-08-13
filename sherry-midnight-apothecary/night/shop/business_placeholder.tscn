@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://hys27num01nb" path="res://night/shop/business_placeholder.gd" id="1"]
 [ext_resource type="PackedScene" path="res://night/shop/ui/customer_request_card.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://d1r8nyft1gvmu" path="res://night/art/alchemy_background.png" id="2_0hdkn"]
 [ext_resource type="PackedScene" path="res://night/shop/ui/sale_feedback.tscn" id="3"]
-
-[sub_resource type="StyleBoxFlat" id="bg"]
-bg_color = Color(0.055, 0.035, 0.09, 1)
+[ext_resource type="Texture2D" uid="uid://cb5kru5yet6x7" path="res://night/shop/ui/table.png" id="4_fbdj1"]
+[ext_resource type="PackedScene" path="res://night/shop/ui/potion_shelf_panel.tscn" id="5_shelf"]
 
 [sub_resource type="StyleBoxFlat" id="header"]
-bg_color = Color(0.12, 0.075, 0.17, 1)
+bg_color = Color(0.12156863, 0.07450981, 0.16862746, 0)
 border_width_bottom = 2
-border_color = Color(0.58, 0.4, 0.2, 1)
+border_color = Color(0.5803922, 0.4, 0.2, 0)
 
 [sub_resource type="StyleBoxFlat" id="panel"]
 bg_color = Color(0.095, 0.065, 0.14, 0.98)
@@ -33,14 +33,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="Background" type="Panel" parent="." unique_id=773606132]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("bg")
+[node name="AlchemyBackground" type="Sprite2D" parent="." unique_id=1257462988]
+position = Vector2(497, 364)
+texture = ExtResource("2_0hdkn")
 
 [node name="RootVBox" type="VBoxContainer" parent="." unique_id=736863465]
 layout_mode = 1
@@ -48,9 +43,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 28.0
-offset_top = 24.0
+offset_top = 4.0
 offset_right = -28.0
-offset_bottom = -24.0
+offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 14
@@ -154,7 +149,7 @@ stretch_mode = 5
 
 [node name="PatienceText" type="Label" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox" unique_id=949792522]
 layout_mode = 2
-text = "耐心 / 风险（白模展示）"
+text = "耐心 100 / 100"
 horizontal_alignment = 1
 
 [node name="PatienceBar" type="ProgressBar" parent="RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox" unique_id=838713308]
@@ -163,44 +158,15 @@ layout_mode = 2
 value = 80.0
 show_percentage = false
 
-[node name="RightPanel" type="PanelContainer" parent="RootVBox/Columns" unique_id=1462847421]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("panel")
+[node name="Table" type="Sprite2D" parent="RootVBox/Columns/CenterPanel/CenterMargin" unique_id=821119966]
+z_index = 5
+position = Vector2(179, 577)
+scale = Vector2(0.5086326, 0.5086326)
+texture = ExtResource("4_fbdj1")
 
-[node name="RightMargin" type="MarginContainer" parent="RootVBox/Columns/RightPanel" unique_id=1489964132]
-layout_mode = 2
-theme_override_constants/margin_left = 18
-theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 18
-
-[node name="RightVBox" type="VBoxContainer" parent="RootVBox/Columns/RightPanel/RightMargin" unique_id=1378929860]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="Section" type="Label" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox" unique_id=435820507]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "货架 / 可售药水"
-
-[node name="Scroll" type="ScrollContainer" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox" unique_id=1699700185]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="Shelf" type="VBoxContainer" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox/Scroll" unique_id=1606415997]
+[node name="PotionShelfPanel" parent="RootVBox/Columns" unique_id=1462847421 instance=ExtResource("5_shelf")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-
-[node name="SelectionLabel" type="Label" parent="RootVBox/Columns/RightPanel/RightMargin/RightVBox" unique_id=1578761293]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 62)
-layout_mode = 2
-text = "请从货架选择一瓶药水。"
-autowrap_mode = 2
 
 [node name="Footer" type="PanelContainer" parent="RootVBox" unique_id=738819503]
 custom_minimum_size = Vector2(0, 72)

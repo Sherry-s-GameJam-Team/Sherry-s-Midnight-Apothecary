@@ -15,6 +15,8 @@ var thermal_score := 1.0
 var temperature_grade: StringName = &"stable_brew"
 var was_burned := false
 var created_day := 1
+var bottle_style_id: StringName = &"health"
+var custom_name := ""
 
 
 func to_dict() -> Dictionary:
@@ -33,6 +35,8 @@ func to_dict() -> Dictionary:
 		"temperature_grade": str(temperature_grade),
 		"was_burned": was_burned,
 		"created_day": created_day,
+		"bottle_style_id": str(bottle_style_id),
+		"custom_name": custom_name,
 	}
 
 
@@ -52,4 +56,6 @@ static func from_dict(data: Dictionary) -> PotionInstanceData:
 	result.temperature_grade = StringName(str(data.get("temperature_grade", "stable_brew")))
 	result.was_burned = bool(data.get("was_burned", false))
 	result.created_day = maxi(int(data.get("created_day", 1)), 1)
+	result.bottle_style_id = StringName(str(data.get("bottle_style_id", "health")))
+	result.custom_name = str(data.get("custom_name", "")).left(12)
 	return result

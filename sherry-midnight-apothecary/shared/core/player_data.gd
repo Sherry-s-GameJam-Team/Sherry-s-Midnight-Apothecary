@@ -1,7 +1,7 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 6
+const SAVE_VERSION := 7
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
@@ -10,6 +10,7 @@ var max_health := 100
 var health := 100
 var money := 0
 var debt := 30000
+var store_reputation := 100
 var inventory: Dictionary = {}
 var story_items: Dictionary = {}
 var potions: Dictionary = {}
@@ -27,6 +28,7 @@ func reset() -> void:
 	health = max_health
 	money = 0
 	debt = 30000
+	store_reputation = 100
 	inventory = {}
 	story_items = {}
 	potions = {}
@@ -50,6 +52,7 @@ func apply_day_result(result: DayResult) -> void:
 
 func apply_night_result(result: NightResult) -> void:
 	money += result.earned_money
+	store_reputation = clampi(store_reputation + result.reputation_delta, 0, 100)
 	_subtract_counts(inventory, result.spent_ingredients)
 	_append_potions(potions, result.produced_potions)
 	_remove_potions(potions, result.sold_potions)
@@ -63,6 +66,7 @@ func to_save_data() -> Dictionary:
 		"health": health,
 		"money": money,
 		"debt": debt,
+		"store_reputation": store_reputation,
 		"inventory": _serialize_counts(inventory),
 		"story_items": _serialize_counts(story_items),
 		"potions": _serialize_potions(potions),
@@ -83,6 +87,7 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.money = int(data.get("money", 0))
 	var saved_version := int(data.get("version", 0))
 	result.debt = int(data.get("debt", 30000)) if saved_version >= SAVE_VERSION else 30000
+	result.store_reputation = clampi(int(data.get("store_reputation", 100)), 0, 100) if saved_version >= SAVE_VERSION else 100
 	result.inventory = _count_dictionary(data.get("inventory", {}))
 	result.story_items = _count_dictionary(data.get("story_items", {}))
 	result.potions = _normalize_potions(data.get("potions", {}))
@@ -259,6 +264,8 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				normalized["temperature_grade"] = str(normalized.get("temperature_grade", "stable_brew"))
 				normalized["was_burned"] = bool(normalized.get("was_burned", false))
 				normalized["created_day"] = maxi(int(normalized.get("created_day", 1)), 1)
+				normalized["bottle_style_id"] = str(normalized.get("bottle_style_id", "health"))
+				normalized["custom_name"] = str(normalized.get("custom_name", "")).left(12)
 				result.append(normalized)
 	elif value is int or value is float:
 		for _index in range(maxi(int(value), 0)):
@@ -277,6 +284,8 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				"temperature_grade": "stable_brew",
 				"was_burned": false,
 				"created_day": 1,
+				"bottle_style_id": "health",
+				"custom_name": "",
 			})
 	return result
 

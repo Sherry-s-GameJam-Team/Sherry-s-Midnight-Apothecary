@@ -45,7 +45,11 @@ static func run(test: TestSupport) -> void:
 	test.expect(first.has("thermal_score") and first.has("potency") and first.has("duration"), "Brewed instances persist their thermal treatment attributes.")
 	test.expect_equal(player.inventory, inventory_before, "Brewing does not directly mutate PlayerData inventory.")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 1, "Committed batch records one ingredient exactly once.")
-	test.expect_equal(result.produced_potions[&"green_potion"].size(), 1, "Committed batch appends a dynamic potion instance.")
+	test.expect_equal(result.produced_potions.get(&"green_potion", []).size(), 0, "A completed brew waits for bottling before entering production.")
+	runtime._on_bottling_confirmed(&"moon", "试验药")
+	test.expect_equal(result.produced_potions[&"green_potion"].size(), 1, "Confirmed bottling appends a dynamic potion instance.")
+	test.expect_equal(result.produced_potions[&"green_potion"][0]["bottle_style_id"], "moon", "Bottling stores the selected bottle style.")
+	test.expect_equal(result.produced_potions[&"green_potion"][0]["custom_name"], "试验药", "Bottling stores the custom name.")
 
 	test.expect(runtime.reserve_ingredient(&"herdsmans_loaf_bush"), "A second batch can start in the same night.")
 	test.expect(runtime.set_processing_selection(0.40, 0.46), "Second batch can be cut.")
@@ -62,6 +66,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(not _brew_to_completion(runtime).is_empty(), "Black potion is still a valid committed product.")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 3, "Black potion still consumes its material.")
 	test.expect_equal(result.produced_potions[&"black_potion"].size(), 1, "Black potion is written to production.")
+	test.expect_equal(result.produced_potions[&"black_potion"][0]["bottle_style_id"], "black", "Failed brews use the black bottle and bypass bottling.")
 
 	var green_component := ProcessedIngredient.from_ingredient(runtime.ingredients[0])
 	green_component.spectrum_x = 0.43

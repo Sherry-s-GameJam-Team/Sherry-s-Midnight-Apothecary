@@ -76,15 +76,7 @@ func _update_title() -> void:
 
 
 func _effect_explanation(effect_id: StringName) -> String:
-	match effect_id:
-		&"attack": return "强化攻击效果"
-		&"speed": return "提升行动速度"
-		&"purify": return "净化异常状态"
-		&"healing": return "恢复生命与伤势"
-		&"shield": return "生成防护屏障"
-		&"mana": return "恢复魔力"
-		&"concealment": return "提供隐匿效果"
-		_: return "正在解析药水功效"
+	return PotionEffectText.describe(effect_id)
 
 
 func _spectrum_band() -> Rect2:
