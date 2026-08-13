@@ -1,7 +1,7 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 7
+const SAVE_VERSION := 8
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
@@ -21,6 +21,7 @@ var potion_throw_orders: Dictionary = {}
 var upgrades: Array[StringName] = []
 var unlocked_levels: Array[StringName] = [&"market"]
 var tutorial_flags: Dictionary = {}
+var customer_states: Dictionary = {}
 
 
 func reset() -> void:
@@ -39,6 +40,7 @@ func reset() -> void:
 	upgrades = []
 	unlocked_levels = [&"market"]
 	tutorial_flags = {}
+	customer_states = {}
 
 
 func apply_day_result(result: DayResult) -> void:
@@ -91,6 +93,7 @@ func to_save_data() -> Dictionary:
 		"upgrades": upgrades.map(func(value: StringName) -> String: return str(value)),
 		"unlocked_levels": unlocked_levels.map(func(value: StringName) -> String: return str(value)),
 		"tutorial_flags": tutorial_flags.duplicate(),
+		"customer_states": customer_states.duplicate(true),
 	}
 
 
@@ -100,8 +103,8 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.health = clampi(int(data.get("health", result.max_health)), 0, result.max_health)
 	result.money = int(data.get("money", 0))
 	var saved_version := int(data.get("version", 0))
-	result.debt = int(data.get("debt", 30000)) if saved_version >= SAVE_VERSION else 30000
-	result.store_reputation = clampi(int(data.get("store_reputation", 100)), 0, 100) if saved_version >= SAVE_VERSION else 100
+	result.debt = int(data.get("debt", 30000)) if saved_version >= 7 else 30000
+	result.store_reputation = clampi(int(data.get("store_reputation", 100)), 0, 100) if saved_version >= 7 else 100
 	result.inventory = _count_dictionary(data.get("inventory", {}))
 	result.story_items = _count_dictionary(data.get("story_items", {}))
 	result.potions = _normalize_potions(data.get("potions", {}))
@@ -112,6 +115,7 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.upgrades = _string_name_array(data.get("upgrades", []))
 	result.unlocked_levels = _string_name_array(data.get("unlocked_levels", [&"market"]))
 	result.tutorial_flags = _bool_dictionary(data.get("tutorial_flags", {}))
+	result.customer_states = _customer_state_dictionary(data.get("customer_states", {}))
 	result._cleanup_potion_configuration()
 	return result
 
@@ -284,6 +288,8 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				normalized["bottle_style_id"] = str(normalized.get("bottle_style_id", "health"))
 				normalized["custom_name"] = str(normalized.get("custom_name", "")).left(12)
 				normalized["actual_color"] = (normalized.get("actual_color", []) as Array).duplicate()
+				normalized["traits"] = _string_array(normalized.get("traits", []))
+				normalized["special_potion_id"] = str(normalized.get("special_potion_id", ""))
 				result.append(normalized)
 	elif value is int or value is float:
 		for _index in range(maxi(int(value), 0)):
@@ -305,6 +311,8 @@ static func _potion_array(potion_id: StringName, value: Variant) -> Array[Dictio
 				"bottle_style_id": "health",
 				"custom_name": "",
 				"actual_color": [],
+				"traits": [],
+				"special_potion_id": "",
 			})
 	return result
 
@@ -325,6 +333,15 @@ static func _bool_dictionary(value: Variant) -> Dictionary:
 		for key: Variant in value:
 			if bool(value[key]):
 				result[str(key)] = true
+	return result
+
+
+static func _customer_state_dictionary(value: Variant) -> Dictionary:
+	var result: Dictionary = {}
+	if value is Dictionary:
+		for key: Variant in value:
+			if value[key] is Dictionary:
+				result[str(key)] = (value[key] as Dictionary).duplicate(true)
 	return result
 
 
@@ -421,4 +438,12 @@ static func _string_name_array(value: Variant) -> Array[StringName]:
 	if value is Array:
 		for item: Variant in value:
 			result.append(StringName(str(item)))
+	return result
+
+
+static func _string_array(value: Variant) -> Array[String]:
+	var result: Array[String] = []
+	if value is Array:
+		for item: Variant in value:
+			result.append(str(item))
 	return result

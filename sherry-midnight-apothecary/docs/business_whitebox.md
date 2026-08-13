@@ -12,7 +12,7 @@
 
 ## 数据边界
 
-营业页只读取 `PlayerData.potions`，并将成交实例 UID 与收入写入共享 `NightResult.sold_potions` / `earned_money`。同一实例在同一夜不能重复出售。成交时会按药水的「品质 × 剩余剂量」计算该顾客满意度（限制在 50%–150%），并写入对应的声誉增量：50% 为 +1，100% 为 +3，150% 为 +5，中间线性取整；顾客耐心耗尽离开时则向 `NightResult.reputation_delta` 写入 -10。入睡后统一结算到 `PlayerData.store_reputation`。当前版本债务显式显示为 `30000曜`；`PlayerData` 存档版本升级到 7，旧版本债务值迁移为 30000，声誉默认为 100。
+营业页读取 `PlayerData.potions`，将成交实例 UID 与收入写入共享 `NightResult.sold_potions` / `earned_money`，并由 `PotionMatchService` 将现有药水战斗效果映射为七类治疗功效。顾客事件定义于 `night/shop/customer_event_catalog.gd`，按照表格的主/副需求、Trait、禁忌、强度与特殊药水分析，不再按 `potion_id` 判定。`CustomerFeedbackResolver` 保证每次交付都显示顾客对白，同时把声誉变化写入 `NightResult`；关系、最近治疗和回访日写入 `PlayerData.customer_states` 随存档保存。耐心耗尽仍使本夜声誉 -10，入睡后统一结算声誉与收入。
 
 ## 运行流程
 

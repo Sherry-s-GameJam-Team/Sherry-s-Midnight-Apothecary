@@ -37,6 +37,25 @@ script = ExtResource("1")
 position = Vector2(497, 364)
 texture = ExtResource("2_0hdkn")
 
+[node name="PotionTooltip" type="PanelContainer" parent="." unique_id=812330719]
+unique_name_in_owner = true
+visible = false
+z_index = 30
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="PotionTooltip"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="PotionTooltip/Margin" unique_id=812330720]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+autowrap_mode = 2
+
 [node name="RootVBox" type="VBoxContainer" parent="." unique_id=736863465]
 layout_mode = 1
 anchors_preset = 15

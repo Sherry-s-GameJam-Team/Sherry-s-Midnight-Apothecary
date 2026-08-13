@@ -18,6 +18,8 @@ var created_day := 1
 var bottle_style_id: StringName = &"health"
 var custom_name := ""
 var actual_color: Array = []
+var traits: Array[StringName] = []
+var special_potion_id: StringName = &""
 
 
 func to_dict() -> Dictionary:
@@ -39,6 +41,8 @@ func to_dict() -> Dictionary:
 		"bottle_style_id": str(bottle_style_id),
 		"custom_name": custom_name,
 		"actual_color": actual_color.duplicate(),
+		"traits": _serialize_traits(),
+		"special_potion_id": str(special_potion_id),
 	}
 
 
@@ -61,4 +65,15 @@ static func from_dict(data: Dictionary) -> PotionInstanceData:
 	result.bottle_style_id = StringName(str(data.get("bottle_style_id", "health")))
 	result.custom_name = str(data.get("custom_name", "")).left(12)
 	result.actual_color = (data.get("actual_color", []) as Array).duplicate()
+	if data.get("traits", []) is Array:
+		for trait_id in data.get("traits", []):
+			result.traits.append(StringName(str(trait_id)))
+	result.special_potion_id = StringName(str(data.get("special_potion_id", "")))
+	return result
+
+
+func _serialize_traits() -> Array[String]:
+	var result: Array[String] = []
+	for trait_id in traits:
+		result.append(str(trait_id))
 	return result

@@ -13,11 +13,6 @@ const POTIONS: Array[PotionData] = [
 	preload("res://shared/definitions/data/potions/purple_potion.tres"),
 	preload("res://shared/definitions/data/potions/purification_potion.tres"),
 ]
-const CUSTOMERS := [
-	{"name": "年轻村民", "identity": "夜归村民", "request": "最近总觉得没精神，能给我一瓶温和些的药水吗？", "potion": &"green_potion", "portrait": preload("res://characters/npcs/01_young_villager/frontal_bust.png"), "modifier": 1.0},
-	{"name": "采药妇", "identity": "山路采药人", "request": "山里的雾越来越浓，我想备一瓶能护身的药水。", "potion": &"cyan_potion", "portrait": preload("res://characters/npcs/02_herbalist/frontal_bust.png"), "modifier": 1.05},
-	{"name": "铁匠", "identity": "炉火铁匠", "request": "明天要赶一批重活，给我来一瓶够劲的。", "potion": &"red_potion", "portrait": preload("res://characters/npcs/03_blacksmith/frontal_bust.png"), "modifier": 1.1},
-]
 const MAX_PATIENCE := 100.0
 const REFUSAL_PATIENCE_LOSS := 25.0
 const WALKOUT_REPUTATION_LOSS := 10
@@ -68,12 +63,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		request_return.emit()
-		get_viewport().set_input_as_handled()
-
-
 func setup(shared_player_data: PlayerData, shared_night_result: NightResult, current_day: int) -> void:
 	player_data = shared_player_data
 	night_result = shared_night_result
@@ -90,7 +79,7 @@ func setup(shared_player_data: PlayerData, shared_night_result: NightResult, cur
 func _build_customer_queue() -> Array[Dictionary]:
 	var reputation := player_data.store_reputation if player_data != null else 100
 	var available: Array[Dictionary] = []
-	for customer: Dictionary in CUSTOMERS:
+	for customer: Dictionary in CustomerEventCatalog.eligible_for_day(day, player_data.tutorial_flags if player_data != null else {}):
 		if reputation >= 70 or float(customer.get("modifier", 1.0)) <= 1.05:
 			available.append(customer)
 	var target_count := 3 if reputation >= 70 else 2 if reputation >= 40 else 1
@@ -138,7 +127,7 @@ func _refresh() -> void:
 		reject_button.disabled = true
 	else:
 		request_card.visible = true
-		request_card.show_customer(customer, _potion_name(customer.potion))
+		request_card.show_customer(customer)
 		customer_portrait.texture = customer.portrait
 		var patience := float(customer.get("patience", MAX_PATIENCE))
 		patience_text.visible = true
@@ -221,7 +210,7 @@ func _update_potion_tooltip_position() -> void:
 
 func _update_sale_button() -> void:
 	var customer := current_customer()
-	sell_button.disabled = transition_lock or customer.is_empty() or selected_uid.is_empty() or selected_potion_id != StringName(str(customer.get("potion", ""))) or _find_instance(selected_potion_id, selected_uid).is_empty()
+	sell_button.disabled = transition_lock or customer.is_empty() or selected_uid.is_empty() or _find_instance(selected_potion_id, selected_uid).is_empty()
 
 
 func _on_sell_pressed() -> void:
@@ -231,16 +220,20 @@ func _on_sell_pressed() -> void:
 	sell_button.disabled = true
 	var instance := _find_instance(selected_potion_id, selected_uid)
 	var potion: PotionData = _potion_by_id.get(selected_potion_id)
-	var value := _sale_value(potion, instance, float(current_customer().get("modifier", 1.0)))
+	var customer := current_customer()
+	var value := _sale_value(potion, instance, float(customer.get("modifier", 1.0)))
+	var match := PotionMatchService.calculate(customer, potion, instance)
+	var customer_feedback := CustomerFeedbackResolver.resolve(customer, match)
 	var sold: Array = night_result.sold_potions.get(selected_potion_id, [])
 	sold.append(selected_uid)
 	night_result.sold_potions[selected_potion_id] = sold
 	night_result.earned_money += value
 	var satisfaction := _customer_satisfaction(instance)
-	var reputation_gain := _reputation_gain_for_satisfaction(satisfaction)
+	var reputation_gain := customer_feedback.reputation_delta
 	night_result.reputation_delta += reputation_gain
 	session_earnings += value
-	_flash_sale_feedback(value, satisfaction, reputation_gain)
+	_record_customer_result(customer, instance, match, customer_feedback)
+	_flash_sale_feedback(value, satisfaction, reputation_gain, customer_feedback.immediate_text)
 	_complete_current_customer()
 
 
@@ -272,9 +265,35 @@ func _flash_rejection_feedback(customer: Dictionary, walked_out: bool) -> void:
 		feedback.flash("%s 回到队尾，耐心 -%d。" % [customer.get("name", "顾客"), roundi(REFUSAL_PATIENCE_LOSS)], false)
 
 
-func _flash_sale_feedback(value: int, satisfaction: float, reputation_gain: int) -> void:
+func _flash_sale_feedback(value: int, satisfaction: float, reputation_gain: int, text: String) -> void:
 	if feedback != null:
-		feedback.flash("成交 +%d曜 · 满意度 %.0f%% · 声誉 +%d" % [value, satisfaction * 100.0, reputation_gain], true)
+		feedback.flash("%s\n成交 +%d曜 · 满意度 %.0f%% · 声誉 %+d" % [text, value, satisfaction * 100.0, reputation_gain], reputation_gain >= 0)
+
+
+func _record_customer_result(customer: Dictionary, instance: Dictionary, match: PotionMatchResult, result: CustomerFeedbackResult) -> void:
+	if player_data == null:
+		return
+	var npc_id := str(customer.get("npc_id", customer.get("event_id", "customer")))
+	var state: Dictionary = player_data.customer_states.get(npc_id, {})
+	state["visit_count"] = int(state.get("visit_count", 0)) + 1
+	state["last_visit_day"] = day
+	state["next_visit_day"] = day + result.revisit_after_days if result.schedule_revisit else 0
+	state["last_outcome"] = str(match.outcome_id()).to_lower()
+	state["relationship"] = int(state.get("relationship", 0)) + result.relationship_delta
+	var selected_potion: PotionData = _potion_by_id.get(selected_potion_id)
+	state["last_treatment"] = {
+		"primary_effect": str(PotionMatchService.effect_for(selected_potion.main_effect_id)) if selected_potion != null else "",
+		"secondary_effect": str(PotionMatchService.effect_for(StringName(str(instance.get("secondary_effect_id", ""))))),
+		"traits": instance.get("traits", []),
+		"potency": instance.get("potency", 1.0),
+		"score": match.total_score,
+	}
+	state["last_feedback"] = result.immediate_text
+	player_data.customer_states[npc_id] = state
+	if match.outcome == PotionMatchResult.Outcome.PERFECT or match.outcome == PotionMatchResult.Outcome.SPECIAL:
+		player_data.tutorial_flags[str(customer.get("success_flag", ""))] = true
+	if result.special_event_id != &"":
+		player_data.tutorial_flags[str(result.special_event_id)] = true
 
 
 func _complete_current_customer() -> void:
