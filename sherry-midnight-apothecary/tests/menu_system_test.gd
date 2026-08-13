@@ -95,6 +95,7 @@ static func run(test: TestSupport) -> void:
 		var executor := day_runtime.current_level_instance.get_node("SleepToWakeExecutor") as AnimationPresentationExecutor
 		var player := day_runtime.current_level_instance.get_node("Player") as CharacterBody2D
 		test.expect(not executor.auto_start, "Bedroom wake-up waits for the menu bridge.")
+		test.expect(executor.restore_player_control_on_complete, "Bedroom wake-up explicitly restores player movement after detached preparation.")
 		test.expect(not player.is_physics_processing(), "Player physics is locked before the roof reveals the bedroom.")
 		var bedroom_camera := player.get_node("Camera2D") as Camera2D
 		test.expect(bedroom_camera.can_process(), "Bedroom camera remains active while player input is locked.")

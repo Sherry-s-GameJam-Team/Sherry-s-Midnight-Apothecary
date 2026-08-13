@@ -28,6 +28,7 @@ static func run(test: TestSupport) -> void:
 	executor.player_path = NodePath("../Player")
 	executor.player_visual_path = NodePath("../Player/PlayerVisual")
 	executor.spawn_point_path = NodePath("../SpawnPoint")
+	executor.restore_player_control_on_complete = true
 	root.add_child(player)
 	root.add_child(spawn_point)
 	root.add_child(animation)
@@ -59,6 +60,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(player_visual.visible, "Player artwork is revealed after the presentation animation.")
 	test.expect_equal(player.process_mode, Node.PROCESS_MODE_INHERIT, "Player processing is restored after the animation.")
 	test.expect(player.is_physics_processing(), "Player physics is restored after the animation.")
+	test.expect(player.is_processing_input(), "Player input is explicitly restored after a detached opening presentation.")
 	test.expect(animation.is_queued_for_deletion(), "Completed animation node is queued for removal.")
 	test.expect_equal(completed_count[0], 1, "Completion is emitted once.")
 	animation.animation_finished.emit()
@@ -85,6 +87,7 @@ static func run(test: TestSupport) -> void:
 	skipped_executor.player_path = NodePath("../Player")
 	skipped_executor.player_visual_path = NodePath("../Player/PlayerVisual")
 	skipped_executor.spawn_point_path = NodePath("../SpawnPoint")
+	skipped_executor.restore_player_control_on_complete = true
 	skipped_root.add_child(skipped_player)
 	skipped_root.add_child(skipped_spawn)
 	skipped_root.add_child(skipped_animation)
@@ -94,6 +97,7 @@ static func run(test: TestSupport) -> void:
 	skipped_executor._complete_presentation(false)
 	test.expect_equal(skipped_player.global_position, Vector2(900, 360), "Skipping an already-played presentation preserves the requested level entry position.")
 	test.expect(skipped_visual.visible, "Skipping an already-played presentation still reveals the player artwork.")
+	test.expect(skipped_player.is_physics_processing(), "Skipping an already-played presentation restores player movement.")
 	skipped_root.free()
 
 	var loop_root := Node2D.new()

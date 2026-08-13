@@ -13,6 +13,7 @@ signal completed
 @export var auto_start := true
 @export var one_shot_per_day := false
 @export var daily_flag_id: StringName = &""
+@export var restore_player_control_on_complete := false
 
 var _animation: AnimatedSprite2D
 var _player: CharacterBody2D
@@ -125,11 +126,11 @@ func _complete_presentation(move_to_spawn := true) -> void:
 	if is_instance_valid(_player):
 		if move_to_spawn and is_instance_valid(_spawn_point):
 			_player.global_position = _spawn_point.global_position
-		_player.set_process(_previous_process_enabled)
-		_player.set_physics_process(_previous_physics_process_enabled)
-		_player.set_process_input(_previous_input_enabled)
-		_player.set_process_unhandled_input(_previous_unhandled_input_enabled)
-		_player.set_process_unhandled_key_input(_previous_unhandled_key_input_enabled)
+		_player.set_process(true if restore_player_control_on_complete else _previous_process_enabled)
+		_player.set_physics_process(true if restore_player_control_on_complete else _previous_physics_process_enabled)
+		_player.set_process_input(true if restore_player_control_on_complete else _previous_input_enabled)
+		_player.set_process_unhandled_input(true if restore_player_control_on_complete else _previous_unhandled_input_enabled)
+		_player.set_process_unhandled_key_input(true if restore_player_control_on_complete else _previous_unhandled_key_input_enabled)
 	if is_instance_valid(_player_visual):
 		_player_visual.visible = _previous_visual_visibility
 	if is_instance_valid(_animation):

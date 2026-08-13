@@ -1,7 +1,7 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 5
+const SAVE_VERSION := 6
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
@@ -9,7 +9,7 @@ const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
 var max_health := 100
 var health := 100
 var money := 0
-var debt := 0
+var debt := 30000
 var inventory: Dictionary = {}
 var story_items: Dictionary = {}
 var potions: Dictionary = {}
@@ -26,7 +26,7 @@ func reset() -> void:
 	max_health = 100
 	health = max_health
 	money = 0
-	debt = 0
+	debt = 30000
 	inventory = {}
 	story_items = {}
 	potions = {}
@@ -81,7 +81,8 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.max_health = maxi(int(data.get("max_health", 100)), 1)
 	result.health = clampi(int(data.get("health", result.max_health)), 0, result.max_health)
 	result.money = int(data.get("money", 0))
-	result.debt = int(data.get("debt", 0))
+	var saved_version := int(data.get("version", 0))
+	result.debt = int(data.get("debt", 30000)) if saved_version >= SAVE_VERSION else 30000
 	result.inventory = _count_dictionary(data.get("inventory", {}))
 	result.story_items = _count_dictionary(data.get("story_items", {}))
 	result.potions = _normalize_potions(data.get("potions", {}))

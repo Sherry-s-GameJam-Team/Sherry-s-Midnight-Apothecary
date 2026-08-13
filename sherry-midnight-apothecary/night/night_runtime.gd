@@ -51,6 +51,10 @@ func configure(shared_player_data: PlayerData, current_day: int) -> void:
 		return
 	alchemy_runtime = alchemy
 	alchemy_runtime.setup(player_data, current_night_result, day)
+	if business_placeholder == null:
+		push_error("NightRuntime is missing its BusinessPlaceholder scene.")
+		return
+	business_placeholder.setup(player_data, current_night_result, day)
 	var console := get_node_or_null("UI/DeveloperConsole") as DeveloperConsole
 	if console == null:
 		push_error("NightRuntime is missing its DeveloperConsole scene.")
@@ -61,8 +65,9 @@ func configure(shared_player_data: PlayerData, current_day: int) -> void:
 
 func open_business() -> void:
 	_resolve_scene_nodes()
-	if shop_slot == null or customer_slot == null:
+	if shop_slot == null or customer_slot == null or business_placeholder == null:
 		return
+	business_placeholder.refresh_from_runtime()
 	_clear_interaction_hints()
 	_set_player_enabled(false)
 	shop_slot.hide()

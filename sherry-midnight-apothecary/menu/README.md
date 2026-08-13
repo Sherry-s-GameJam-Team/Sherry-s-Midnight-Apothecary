@@ -22,7 +22,7 @@ Bedroom 仍是 `res://day/levels/home/bedroom.tscn`，起床动画仍是 `SleepT
 3. 执行器的 `prepare()`只隐藏 `player_visual_path` 指向的角色表现节点，并禁用 Player 自身的物理与输入回调；Player 根节点及其 Camera2D 保持激活。屋檐完全遮挡时，MenuCamera 会主动释放 viewport，避免它继续拍摄菜单空坐标而出现灰屏。
 4. Bedroom 创建完成后，`BedroomIntroBridge` 在屋檐揭开期间调用实际 `AnimationPresentationExecutor.start()`，让现有 `SleepToWake` 直接承担加载后的视觉衔接。
 5. 菜单桥接使用强制重播参数，因此即使存档已有当天的 `sleep_to_wake` Flag，仍会播放本次 opening shot；普通世界内进入仍遵守 one-shot Flag。
-6. 执行器监听真实 `AnimatedSprite2D.animation_finished`，完成后恢复 Player 并发出 `completed`。
+6. 执行器监听真实 `AnimatedSprite2D.animation_finished`，完成后恢复 Player 并发出 `completed`。Bedroom 会启用 `restore_player_control_on_complete`，因为菜单是在关卡尚未加入场景树时预备演出；结束或因 one-shot Flag 跳过时，都明确重新开启 Player 的移动与输入，避免把脱离场景树时的禁用状态误当作常态。
 7. Bridge 收到 `completed` 后恢复 DayRuntime 与全局游戏 UI。起床加载期间的“结束白天”等交互会被锁定。Home 和 Bedroom 的 `LevelData.show_title_card` 均为 `false`，左上角关卡标签和大标题卡都不会再显示。
 
 不要用固定 Timer 猜测起床动画长度。若将来替换起床动画，只需继续让 Bedroom 的执行器指向正确的 `AnimatedSprite2D`、Player 和出生 Marker。

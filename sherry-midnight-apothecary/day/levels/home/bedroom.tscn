@@ -231,6 +231,7 @@ player_visual_path = NodePath("../Player/SherryPresentation")
 spawn_point_path = NodePath("../EntryPoints/default")
 one_shot_per_day = true
 daily_flag_id = &"sleep_to_wake"
+restore_player_control_on_complete = true
 
 [node name="Stick" type="Sprite2D" parent="." unique_id=278029094]
 position = Vector2(1066, 491)
