@@ -232,9 +232,7 @@ player_visual_path = NodePath("../Player/SherryPresentation")
 spawn_point_path = NodePath("../EntryPoints/default")
 one_shot_per_day = true
 daily_flag_id = &"sleep_to_wake"
-<<<<<<< Updated upstream:sherry-midnight-apothecary/day/levels/home/bedroom.tscn
 restore_player_control_on_complete = true
-=======
 force_player_visible_on_complete = true
 reveal_overlay_path = NodePath("../WakeReveal/FadeOverlay")
 reveal_fade_duration = 0.3
@@ -250,7 +248,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 color = Color(0, 0, 0, 1)
->>>>>>> Stashed changes:sherry’s-midnight-apothecary/day/levels/home/bedroom.tscn
 
 [node name="Stick" type="Sprite2D" parent="." unique_id=278029094]
 position = Vector2(1066, 491)

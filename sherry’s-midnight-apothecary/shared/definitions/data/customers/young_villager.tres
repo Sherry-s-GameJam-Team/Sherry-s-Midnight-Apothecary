@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CustomerData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/customer_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/characters/npcs/01_young_villager/frontal_bust.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"young_villager"
+display_name = "年轻村民"
+portrait = ExtResource("2")
+preferred_potion_ids = Array[StringName]([&"green_potion", &"yellow_potion"])
+request_text = "最近总觉得没精神，能给我一瓶温和些的药水吗？"
+price_multiplier = 1.0

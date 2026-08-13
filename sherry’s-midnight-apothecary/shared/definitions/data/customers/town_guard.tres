@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CustomerData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/customer_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://art/characters/npcs/06_town_guard/frontal_bust.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+id = &"town_guard"
+display_name = "城镇守卫"
+portrait = ExtResource("2")
+preferred_potion_ids = Array[StringName]([&"yellow_potion", &"red_potion"])
+request_text = "最近夜巡不太平，我需要一瓶能应付意外的药水。"
+price_multiplier = 1.15

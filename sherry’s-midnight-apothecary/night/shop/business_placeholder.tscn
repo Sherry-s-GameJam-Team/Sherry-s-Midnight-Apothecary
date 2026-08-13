@@ -1,0 +1,273 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://night/shop/business_placeholder.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.105, 0.105, 0.12, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.48, 0.54, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 18.0
+content_margin_top = 16.0
+content_margin_right = 18.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="HeaderStyle"]
+bg_color = Color(0.14, 0.14, 0.17, 1)
+border_width_bottom = 2
+border_color = Color(0.42, 0.42, 0.48, 1)
+content_margin_left = 24.0
+content_margin_top = 14.0
+content_margin_right = 24.0
+content_margin_bottom = 14.0
+
+[sub_resource type="StyleBoxFlat" id="PortraitStyle"]
+bg_color = Color(0.055, 0.055, 0.065, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.62, 0.62, 0.7, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="BottomStyle"]
+bg_color = Color(0.13, 0.13, 0.15, 1)
+border_width_top = 2
+border_color = Color(0.42, 0.42, 0.48, 1)
+content_margin_left = 24.0
+content_margin_top = 12.0
+content_margin_right = 24.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="HighlightStyle"]
+bg_color = Color(0.18, 0.16, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.66, 0.34, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+
+[node name="BusinessPlaceholder" type="Control"]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.035, 0.035, 0.045, 1)
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Header" type="PanelContainer" parent="Layout"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("HeaderStyle")
+
+[node name="HeaderRow" type="HBoxContainer" parent="Layout/Header"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Layout/Header/HeaderRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "午夜药水铺 · 营业白模"
+
+[node name="Spacer" type="Control" parent="Layout/Header/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressLabel" type="Label" parent="Layout/Header/HeaderRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="MoneyLabel" type="Label" parent="Layout/Header/HeaderRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.82, 0.36, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="DebtLabel" type="Label" parent="Layout/Header/HeaderRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.42, 0.36, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="Body" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="LeftPanel" type="PanelContainer" parent="Layout/Body"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="LeftContent" type="VBoxContainer" parent="Layout/Body/LeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="SectionTitle" type="Label" parent="Layout/Body/LeftPanel/LeftContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "顾客需求"
+
+[node name="RequestLabel" type="Label" parent="Layout/Body/LeftPanel/LeftContent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 19
+text = "顾客的需求会显示在这里。"
+autowrap_mode = 2
+
+[node name="RequestPotionLabel" type="Label" parent="Layout/Body/LeftPanel/LeftContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.82, 0.36, 1)
+theme_override_font_sizes/font_size = 22
+text = "需求：药水 × 1"
+autowrap_mode = 2
+
+[node name="CenterPanel" type="PanelContainer" parent="Layout/Body"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="CustomerCenter" type="VBoxContainer" parent="Layout/Body/CenterPanel"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="CustomerNameLabel" type="Label" parent="Layout/Body/CenterPanel/CustomerCenter"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "顾客"
+horizontal_alignment = 1
+
+[node name="PortraitFrame" type="PanelContainer" parent="Layout/Body/CenterPanel/CustomerCenter"]
+custom_minimum_size = Vector2(390, 390)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("PortraitStyle")
+
+[node name="CustomerPortrait" type="TextureRect" parent="Layout/Body/CenterPanel/CustomerCenter/PortraitFrame"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PortraitHint" type="Label" parent="Layout/Body/CenterPanel/CustomerCenter"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.65, 0.7, 1)
+text = "顾客头像（正式 UI 待替换）"
+horizontal_alignment = 1
+
+[node name="RightPanel" type="PanelContainer" parent="Layout/Body"]
+custom_minimum_size = Vector2(390, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="RightContent" type="VBoxContainer" parent="Layout/Body/RightPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SectionTitle" type="Label" parent="Layout/Body/RightPanel/RightContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "可售药水"
+
+[node name="OfferScroll" type="ScrollContainer" parent="Layout/Body/RightPanel/RightContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OfferList" type="VBoxContainer" parent="Layout/Body/RightPanel/RightContent/OfferScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="SelectionLabel" type="Label" parent="Layout/Body/RightPanel/RightContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_styles/normal = SubResource("HighlightStyle")
+text = "尚未选择药水"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Bottom" type="PanelContainer" parent="Layout"]
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+theme_override_styles/panel = SubResource("BottomStyle")
+
+[node name="BottomRow" type="HBoxContainer" parent="Layout/Bottom"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="FeedbackLabel" type="Label" parent="Layout/Bottom/BottomRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "选择符合需求的药水并交付。"
+vertical_alignment = 1
+
+[node name="RejectButton" type="Button" parent="Layout/Bottom/BottomRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "婉拒顾客"
+
+[node name="ServeButton" type="Button" parent="Layout/Bottom/BottomRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "交付药水"
+
+[node name="FinishButton" type="Button" parent="Layout/Bottom/BottomRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "暂时收摊"

@@ -14,12 +14,9 @@ signal completed
 @export var auto_start := true
 @export var one_shot_per_day := false
 @export var daily_flag_id: StringName = &""
-<<<<<<< Updated upstream:sherry-midnight-apothecary/day/systems/animation_presentation/animation_presentation_executor.gd
 @export var restore_player_control_on_complete := false
-=======
 @export var force_player_visible_on_complete := false
 @export_range(0.0, 2.0, 0.05) var reveal_fade_duration := 0.3
->>>>>>> Stashed changes:sherry’s-midnight-apothecary/day/systems/animation_presentation/animation_presentation_executor.gd
 
 var _animation: AnimatedSprite2D
 var _player: CharacterBody2D
