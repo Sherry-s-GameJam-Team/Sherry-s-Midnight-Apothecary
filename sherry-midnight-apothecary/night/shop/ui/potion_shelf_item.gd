@@ -2,6 +2,7 @@ class_name PotionShelfItem
 extends Button
 
 signal potion_hovered(potion: PotionData, instance: Dictionary, price: int)
+signal potion_unhovered
 
 @onready var bottle_visual: PotionBottleVisual = %BottleVisual
 var _base_position := Vector2.ZERO
@@ -25,3 +26,4 @@ func _show_hover(potion: PotionData, instance: Dictionary, price: int) -> void:
 func _hide_hover() -> void:
 	bottle_visual.position = _base_position
 	bottle_visual.modulate = Color.WHITE
+	potion_unhovered.emit()

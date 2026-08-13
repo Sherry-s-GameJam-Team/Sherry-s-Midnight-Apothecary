@@ -29,6 +29,8 @@ const MAX_SATISFACTION := 1.5
 @onready var economy_label: Label = %EconomyLabel
 @onready var request_card: CustomerRequestCard = %CustomerRequestCard
 @onready var potion_detail: Label = %PotionDetail
+@onready var potion_tooltip: PanelContainer = %PotionTooltip
+@onready var potion_tooltip_label: Label = %Label
 @onready var customer_portrait: TextureRect = %CustomerPortrait
 @onready var patience_text: Label = $RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox/PatienceText
 @onready var patience_bar: ProgressBar = $RootVBox/Columns/CenterPanel/CenterMargin/CenterVBox/PatienceBar
@@ -56,7 +58,20 @@ func _ready() -> void:
 		_potion_by_id[potion.id] = potion
 	potion_shelf_panel.potion_selected.connect(_on_potion_chosen)
 	potion_shelf_panel.potion_hovered.connect(_on_potion_hovered)
+	potion_shelf_panel.potion_unhovered.connect(_hide_potion_tooltip)
 	_refresh()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		request_return.emit()
+		get_viewport().set_input_as_handled()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		request_return.emit()
+		get_viewport().set_input_as_handled()
 
 
 func setup(shared_player_data: PlayerData, shared_night_result: NightResult, current_day: int) -> void:
@@ -170,13 +185,13 @@ func _on_potion_chosen(potion_id: StringName, uid: String) -> void:
 
 
 func _on_potion_hovered(potion: PotionData, instance: Dictionary, price: int) -> void:
-	if potion_detail == null:
+	if potion_tooltip == null or potion_tooltip_label == null:
 		return
 	var display_name := str(instance.get("custom_name", "")).strip_edges()
 	if display_name.is_empty():
 		display_name = potion.display_name
 	var secondary := StringName(str(instance.get("secondary_effect_id", "")))
-	potion_detail.text = "%s\n品质 %.0f%% · 剩余 %.0f%% · 报价 %d曜\n主作用：%s%s" % [
+	potion_tooltip_label.text = "%s\n品质 %.0f%% · 剩余 %.0f%% · 报价 %d曜\n主作用：%s%s" % [
 		display_name,
 		float(instance.get("quality", 1.0)) * 100.0,
 		clampf(float(instance.get("remaining_dose", 1.0)), 0.0, 1.0) * 100.0,
@@ -184,6 +199,24 @@ func _on_potion_hovered(potion: PotionData, instance: Dictionary, price: int) ->
 		PotionEffectText.describe(potion.main_effect_id),
 		"\n副作用：%s × %.2f" % [PotionEffectText.describe(secondary), float(instance.get("secondary_effect_multiplier", 0.0))] if secondary != &"" else "",
 	]
+	potion_tooltip.show()
+	_update_potion_tooltip_position()
+
+
+func _hide_potion_tooltip() -> void:
+	if potion_tooltip != null:
+		potion_tooltip.hide()
+
+
+func _process(_delta: float) -> void:
+	if potion_tooltip != null and potion_tooltip.visible:
+		_update_potion_tooltip_position()
+
+
+func _update_potion_tooltip_position() -> void:
+	var cursor := get_viewport().get_mouse_position() + Vector2(18, 18)
+	var viewport_size := get_viewport_rect().size
+	potion_tooltip.position = Vector2(minf(cursor.x, viewport_size.x - potion_tooltip.size.x - 8), minf(cursor.y, viewport_size.y - potion_tooltip.size.y - 8))
 
 
 func _update_sale_button() -> void:

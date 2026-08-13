@@ -4,6 +4,7 @@ extends RefCounted
 static func run(test: TestSupport) -> void:
 	var scene := load("res://night/shop/business_placeholder.tscn") as PackedScene
 	test.expect(scene != null, "The business shop whitebox loads.")
+	test.expect(FileAccess.get_file_as_string("res://night/shop/business_placeholder.gd").contains("func _unhandled_input"), "Business shop handles Escape before the global pause menu.")
 	var shelf_panel_scene := load("res://night/shop/ui/potion_shelf_panel.tscn") as PackedScene
 	var shelf_item_scene := load("res://night/shop/ui/potion_shelf_item.tscn") as PackedScene
 	test.expect(shelf_panel_scene != null, "The potion shelf is a standalone editable scene.")

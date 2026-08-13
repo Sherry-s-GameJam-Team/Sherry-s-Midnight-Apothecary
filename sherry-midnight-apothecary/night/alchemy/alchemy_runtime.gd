@@ -122,6 +122,12 @@ func _process(_delta: float) -> void:
 	_sync_alchemy_background()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		_request_close()
+		get_viewport().set_input_as_handled()
+
+
 func _sync_alchemy_background() -> void:
 	if not pan_background_with_stage or alchemy_background == null or stage_root == null or horizontal_stage == null:
 		return

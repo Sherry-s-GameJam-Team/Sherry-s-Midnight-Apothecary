@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://clukkdxmr1qyq"]
 
-[ext_resource type="Script" path="res://night/shop/ui/potion_shelf_panel.gd" id="1"]
+[ext_resource type="Script" uid="uid://cxb63asisnbi4" path="res://night/shop/ui/potion_shelf_panel.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dgqqtrj5vncas" path="res://night/shop/ui/cabinet.png" id="2_p4qde"]
 
 [sub_resource type="StyleBoxFlat" id="Panel"]
@@ -14,6 +14,7 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+
 
 [node name="PotionShelfPanel" type="PanelContainer" unique_id=1725797552]
 custom_minimum_size = Vector2(280, 0)
@@ -46,16 +47,144 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "货架 / 可售药水"
 
-[node name="Scroll" type="ScrollContainer" parent="Sprite2D/Margin/VBox" unique_id=1029295543]
+[node name="ShelfCanvas" type="Control" parent="Sprite2D/Margin/VBox" unique_id=1751557776]
 layout_mode = 2
 size_flags_vertical = 3
-horizontal_scroll_mode = 0
 
-[node name="Shelf" type="VBoxContainer" parent="Sprite2D/Margin/VBox/Scroll" unique_id=1751557776]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
+[node name="DisplaySlot1" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=1534132298]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 11.508816
+offset_top = 21.036621
+offset_right = 87.50882
+offset_bottom = 133.03662
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot2" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=1535266014]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 110.45012
+offset_top = 21.03661
+offset_right = 186.45013
+offset_bottom = 133.0366
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot3" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=485923186]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 211.1272
+offset_top = 21.03661
+offset_right = 287.1272
+offset_bottom = 133.0366
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot4" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=764063060]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 306.59686
+offset_top = 21.03661
+offset_right = 382.59686
+offset_bottom = 133.0366
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot5" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=1489537265]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 407.274
+offset_top = 21.036604
+offset_right = 483.27402
+offset_bottom = 133.0366
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot6" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=709156318]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 11.508816
+offset_top = 231.40088
+offset_right = 87.50882
+offset_bottom = 343.40088
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot7" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=365905885]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 110.45012
+offset_top = 231.40088
+offset_right = 186.45013
+offset_bottom = 343.40088
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot8" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=742092020]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 211.12721
+offset_top = 231.40088
+offset_right = 287.1272
+offset_bottom = 343.40088
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot9" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=230752594]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 306.59686
+offset_top = 231.40088
+offset_right = 382.59686
+offset_bottom = 343.40088
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot10" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=661320783]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 407.274
+offset_top = 231.40088
+offset_right = 483.27402
+offset_bottom = 343.40088
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot11" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=1255398998]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 11.508816
+offset_top = 441.76514
+offset_right = 87.50882
+offset_bottom = 553.76514
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot12" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=920960703]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 110.45012
+offset_top = 441.76514
+offset_right = 186.45013
+offset_bottom = 553.76514
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot13" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=1452014725]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 211.12721
+offset_top = 441.76514
+offset_right = 287.1272
+offset_bottom = 553.76514
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot14" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=2062809361]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 306.59686
+offset_top = 441.76514
+offset_right = 382.59686
+offset_bottom = 553.76514
+scale = Vector2(1.48, 1.48)
+
+[node name="DisplaySlot15" type="Panel" parent="Sprite2D/Margin/VBox/ShelfCanvas" unique_id=1127659974]
+custom_minimum_size = Vector2(76, 112)
+layout_mode = 0
+offset_left = 407.274
+offset_top = 441.76514
+offset_right = 483.27402
+offset_bottom = 553.76514
+scale = Vector2(1.48, 1.48)
 
 [node name="SelectionLabel" type="Label" parent="Sprite2D/Margin/VBox" unique_id=1802234293]
 unique_name_in_owner = true

@@ -18,6 +18,14 @@ const COVER_SCALES := {&"heart": Vector2(0.985, 0.985), &"ice": Vector2(0.985, 0
 
 @onready var liquid: TextureRect = %Liquid
 @onready var bottle: TextureRect = %Bottle
+var _liquid_material: ShaderMaterial
+
+
+func _ready() -> void:
+	var shared_material := liquid.material as ShaderMaterial
+	if shared_material != null:
+		_liquid_material = shared_material.duplicate() as ShaderMaterial
+		liquid.material = _liquid_material
 
 func show_instance(potion: PotionData, instance: Dictionary) -> void:
 	var style := StringName(str(instance.get("bottle_style_id", "health")))
@@ -30,6 +38,6 @@ func show_instance(potion: PotionData, instance: Dictionary) -> void:
 	var color := PotionColorResolver.resolve(potion, instance)
 	color.a = lerpf(0.42, 0.82, inverse_lerp(0.1, 1.5, clampf(float(instance.get("quality", 1.0)), 0.1, 1.5)))
 	liquid.modulate = Color.WHITE
-	var material := liquid.material as ShaderMaterial
+	var material := _liquid_material if _liquid_material != null else liquid.material as ShaderMaterial
 	if material != null:
 		material.set_shader_parameter("liquid_color", color)
