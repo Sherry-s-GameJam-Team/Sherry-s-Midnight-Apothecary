@@ -10,15 +10,23 @@ signal completed
 @export_node_path("CharacterBody2D") var player_path: NodePath
 @export_node_path("CanvasItem") var player_visual_path: NodePath
 @export_node_path("Marker2D") var spawn_point_path: NodePath
+@export_node_path("ColorRect") var reveal_overlay_path: NodePath
 @export var auto_start := true
 @export var one_shot_per_day := false
 @export var daily_flag_id: StringName = &""
+<<<<<<< Updated upstream:sherry-midnight-apothecary/day/systems/animation_presentation/animation_presentation_executor.gd
 @export var restore_player_control_on_complete := false
+=======
+@export var force_player_visible_on_complete := false
+@export_range(0.0, 2.0, 0.05) var reveal_fade_duration := 0.3
+>>>>>>> Stashed changes:sherry’s-midnight-apothecary/day/systems/animation_presentation/animation_presentation_executor.gd
 
 var _animation: AnimatedSprite2D
 var _player: CharacterBody2D
 var _player_visual: CanvasItem
 var _spawn_point: Marker2D
+var _reveal_overlay: ColorRect
+var _previous_player_visibility := true
 var _previous_visual_visibility := true
 var _previous_process_enabled := true
 var _previous_physics_process_enabled := true
@@ -44,6 +52,7 @@ func start(force_replay := false) -> bool:
 		# DayRuntime has already placed the player at the requested entry marker.
 		# Skipping a one-shot presentation must preserve that position (for
 		# example, Home -> Bedroom uses EntryPoints/right_side).
+		_hide_reveal_overlay_immediately()
 		_complete_presentation(false)
 		return true
 	_running = true
@@ -52,6 +61,7 @@ func start(force_replay := false) -> bool:
 	_animation.frame = 0
 	_animation.frame_progress = 0.0
 	_animation.play()
+	_fade_in_presentation()
 	return true
 
 
@@ -65,7 +75,9 @@ func prepare() -> bool:
 	_previous_input_enabled = _player.is_processing_input()
 	_previous_unhandled_input_enabled = _player.is_processing_unhandled_input()
 	_previous_unhandled_key_input_enabled = _player.is_processing_unhandled_key_input()
+	_previous_player_visibility = _player.visible
 	_previous_visual_visibility = _player_visual.visible
+	_player.visible = false
 	_player_visual.visible = false
 	# Disable only the player's own gameplay callbacks. Disabling process_mode
 	# would also stop its Camera2D child and expose an invalid gray viewport.
@@ -87,10 +99,33 @@ func _resolve_nodes() -> bool:
 	_player = get_node_or_null(player_path) as CharacterBody2D
 	_player_visual = get_node_or_null(player_visual_path) as CanvasItem if not player_visual_path.is_empty() else _player
 	_spawn_point = get_node_or_null(spawn_point_path) as Marker2D
+	_reveal_overlay = get_node_or_null(reveal_overlay_path) as ColorRect if not reveal_overlay_path.is_empty() else null
 	if _animation == null or _player == null or _player_visual == null or _spawn_point == null:
 		push_error("AnimationPresentationExecutor requires valid animation, player, player visual, and spawn point paths.")
 		return false
 	return true
+
+
+func _fade_in_presentation() -> void:
+	if not is_instance_valid(_reveal_overlay):
+		return
+	_reveal_overlay.visible = true
+	_reveal_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_reveal_overlay.color.a = 1.0
+	if reveal_fade_duration <= 0.0:
+		_hide_reveal_overlay_immediately()
+		return
+	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(_reveal_overlay, "color:a", 0.0, reveal_fade_duration)
+	tween.finished.connect(_hide_reveal_overlay_immediately, CONNECT_ONE_SHOT)
+
+
+func _hide_reveal_overlay_immediately() -> void:
+	if not is_instance_valid(_reveal_overlay):
+		return
+	_reveal_overlay.color.a = 0.0
+	_reveal_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_reveal_overlay.visible = false
 
 
 func _validate_animation() -> bool:
@@ -133,6 +168,8 @@ func _complete_presentation(move_to_spawn := true) -> void:
 		_player.set_process_unhandled_key_input(true if restore_player_control_on_complete else _previous_unhandled_key_input_enabled)
 	if is_instance_valid(_player_visual):
 		_player_visual.visible = _previous_visual_visibility
+	if is_instance_valid(_player):
+		_player.visible = true if force_player_visible_on_complete else _previous_player_visibility
 	if is_instance_valid(_animation):
 		_animation.queue_free()
 	completed.emit()

@@ -122,13 +122,10 @@ func _instantiate_current_level(entry_id: StringName) -> Node:
 			var executor := presentation as AnimationPresentationExecutor
 			executor.auto_start = false
 			deferred_presentations.append(executor)
-	# Prepare deferred opening presentations while the level is still detached.
-	# This hides the gameplay character before Bedroom can render its first frame;
-	# preparing after add_child exposed Sherry briefly before sleep_to_wake began.
-	for presentation: AnimationPresentationExecutor in deferred_presentations:
-		presentation.prepare()
 	level_slot.add_child(level)
 	current_level_instance = level
+	for presentation: AnimationPresentationExecutor in deferred_presentations:
+		presentation.prepare()
 	var entry := level.get_node_or_null("EntryPoints/%s" % entry_id) as Marker2D
 	var player := level.get_node_or_null("Player") as CharacterBody2D
 	if entry != null and player != null:

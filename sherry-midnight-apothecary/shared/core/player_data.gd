@@ -82,7 +82,11 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.health = clampi(int(data.get("health", result.max_health)), 0, result.max_health)
 	result.money = int(data.get("money", 0))
 	var saved_version := int(data.get("version", 0))
+<<<<<<< Updated upstream:sherry-midnight-apothecary/shared/core/player_data.gd
 	result.debt = int(data.get("debt", 30000)) if saved_version >= SAVE_VERSION else 30000
+=======
+	result.debt = int(data.get("debt", 30000)) if saved_version >= 6 else 30000
+>>>>>>> Stashed changes:sherry’s-midnight-apothecary/shared/player_data.gd
 	result.inventory = _count_dictionary(data.get("inventory", {}))
 	result.story_items = _count_dictionary(data.get("story_items", {}))
 	result.potions = _normalize_potions(data.get("potions", {}))

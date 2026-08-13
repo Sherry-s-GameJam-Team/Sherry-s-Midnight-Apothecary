@@ -16,6 +16,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/potion_hotbar_ui_test.gd"),
 	preload("res://tests/game_flow_test.gd"),
 	preload("res://tests/night_home_scene_test.gd"),
+	preload("res://tests/business_shop_test.gd"),
 	preload("res://tests/night_sleep_interaction_test.gd"),
 	preload("res://tests/save_service_test.gd"),
 	preload("res://tests/alchemy_test.gd"),

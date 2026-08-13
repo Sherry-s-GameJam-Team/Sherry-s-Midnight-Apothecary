@@ -34,18 +34,14 @@ static func run(test: TestSupport) -> void:
 	root.add_child(animation)
 	root.add_child(executor)
 	var tree := Engine.get_main_loop() as SceneTree
-	player.set_physics_process(true)
-	# Menu startup prepares Bedroom before attaching it to the live scene tree so
-	# the player artwork cannot appear in a pre-animation render frame.
-	test.expect(executor.prepare(), "Presentation can be prepared while its level tree is detached.")
-	test.expect(not player_visual.visible, "Detached preparation hides player artwork before the level's first rendered frame.")
 	tree.root.add_child(root)
+	player.set_physics_process(true)
 
 	var completed_count := [0]
 	executor.completed.connect(func() -> void: completed_count[0] += 1)
 	executor.start()
-	test.expect(player.visible, "Player root stays visible so its child camera remains active.")
-	test.expect(not player_visual.visible, "Only the player artwork is hidden while the presentation runs.")
+	test.expect(not player.visible, "The complete Player scene stays hidden while the presentation runs.")
+	test.expect(not player_visual.visible, "Player artwork remains hidden together with its Player root.")
 	test.expect_equal(player.process_mode, Node.PROCESS_MODE_INHERIT, "Presentation locking does not disable the player's child camera.")
 	test.expect(not player.is_physics_processing(), "Player physics is disabled while the animation runs.")
 	test.expect(camera.can_process(), "A Camera2D child keeps processing during the presentation.")

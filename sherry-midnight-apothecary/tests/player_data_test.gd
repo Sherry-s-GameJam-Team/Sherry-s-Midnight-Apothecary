@@ -3,6 +3,7 @@ extends RefCounted
 
 static func run(test: TestSupport) -> void:
 	var player := PlayerData.new()
+	test.expect_equal(player.debt, 30000, "New players visibly begin with 30000曜 of debt.")
 	test.expect(player.potions.is_empty(), "New players start without any potions.")
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "New players start with three empty potion slots.")
 	var day_result := DayResult.new()
@@ -47,6 +48,11 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(restored.potions[&"blue_tonic"].size(), 2, "Dynamic potion arrays round-trip.")
 	test.expect_equal(restored.story_items[&"sealed_letter"], 1, "Story items round-trip.")
 	var migrated_empty := PlayerData.from_save_data({})
+	test.expect_equal(migrated_empty.debt, 30000, "Legacy saves without debt adopt the 30000曜 starting debt.")
+	var migrated_old_debt := PlayerData.from_save_data({"version": 5, "debt": 0})
+	test.expect_equal(migrated_old_debt.debt, 30000, "Version 5 saves migrate their placeholder debt to 30000曜.")
+	var restored_paid_debt := PlayerData.from_save_data({"version": PlayerData.SAVE_VERSION, "debt": 12500})
+	test.expect_equal(restored_paid_debt.debt, 12500, "Current saves preserve debt repayment progress.")
 	test.expect_equal(migrated_empty.equipped_potion_ids, [&"", &"", &""], "Saves without a loadout migrate to empty slots.")
 	var migrated_equipped := PlayerData.from_save_data({"equipped_potion_ids": ["red_potion", "", ""]})
 	test.expect_equal(migrated_equipped.equipped_potion_ids[0], &"red_potion", "Explicit saved loadouts are preserved.")
