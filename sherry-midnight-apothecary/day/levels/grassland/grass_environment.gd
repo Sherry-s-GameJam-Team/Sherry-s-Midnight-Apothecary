@@ -70,6 +70,7 @@ func _apply_texture_state(corrupted: bool, force := false) -> void:
 	if not force and _is_corrupted == corrupted:
 		return
 	_set_sprite_texture(NodePath("Skybox/Artwork"), CORRUPTED_SKYBOX if corrupted else NORMAL_SKYBOX)
+	_set_corrupted_horizon_visible(corrupted)
 	_set_sprite_texture(NodePath("FarGrass/Artwork"), CORRUPTED_FAR_GRASS if corrupted else NORMAL_FAR_GRASS)
 	var grass_texture: Texture2D = CORRUPTED_GRASS_LOOP if corrupted else NORMAL_GRASS_LOOP
 	for node: Sprite2D in _grass_loop_sprites():
@@ -91,3 +92,11 @@ func _set_sprite_texture(node_path: NodePath, texture: Texture2D) -> void:
 		push_error("Grassland texture target is missing: %s" % node_path)
 		return
 	sprite.texture = texture
+
+
+func _set_corrupted_horizon_visible(corrupted: bool) -> void:
+	var horizon := get_node_or_null("CorruptedHorizon") as Parallax2D
+	if horizon == null:
+		push_error("Grassland corrupted horizon is missing.")
+		return
+	horizon.visible = corrupted

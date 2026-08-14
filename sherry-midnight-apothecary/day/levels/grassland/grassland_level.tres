@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dt8dtxqgmd75p"]
 
 [ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_level_data"]
-[ext_resource type="PackedScene" path="res://day/levels/grassland/grass.tscn" id="2_grassland_scene"]
+[ext_resource type="PackedScene" uid="uid://caxmsy6rwo0p" path="res://day/levels/grassland/grass.tscn" id="2_grassland_scene"]
 
 [resource]
 script = ExtResource("1_level_data")
 id = &"grassland"
 display_name = "翡翠原"
-disaster_name = "沉睡污染"
-scene_description = "调查沉睡猎犬与草原异变，净化被污染的生物。"
+disaster_name = "瘴气之灾"
+normal_description = "流明街以东的广阔草原，终年长风不息，旧旅门遗迹散布其间。"
+scene_description = "长风染毒，生灵倒悬之急。"
 content_scene = ExtResource("2_grassland_scene")
 default_entry_id = &"default"

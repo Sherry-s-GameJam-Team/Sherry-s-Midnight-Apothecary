@@ -12,16 +12,28 @@ texture = ExtResource("1_rfk06")
 
 [node name="AnchorPoints" type="Node2D" parent="." unique_id=1079564064]
 
+[node name="Anchor00" type="Node2D" parent="AnchorPoints" unique_id=229669385]
+position = Vector2(496, 654)
+script = ExtResource("2_anchor")
+destination_id = &"market"
+display_name = "流明街"
+subtitle = "圣泉之上的乌托邦"
+danger = "无"
+distance_text = "1 次中继"
+environment = "草原集市"
+description = "埃瑟利亚边陲的自由商镇，因旧旅门贸易兴起，远离两国战火，以夜市、药材与异乡商旅闻名。
+是旅者与怀揣希望之人的归巢。"
+
 [node name="Anchor01" type="Node2D" parent="AnchorPoints" unique_id=31535025]
-position = Vector2(485, 616)
+position = Vector2(476, 609)
 script = ExtResource("2_anchor")
 destination_id = &"grassland"
-display_name = "翡翠原"
-subtitle = "沉睡猎犬草原"
+display_name = "翡翠原·药水铺原址"
+subtitle = "这片原野下所有的离乡者"
 danger = "低"
 distance_text = "1 次中继"
 environment = "草原 / 药草地"
-description = "通往翡翠原的稳定传送锚点。当地出现了异常沉睡与污染反应。"
+description = "流明街以北的广阔草原，终年长风不息，是所有离乡者曾经回头瞭望的地方。灵泉衰弱后，草海深处逐渐出现异变。"
 
 [node name="Anchor02" type="Node2D" parent="AnchorPoints" unique_id=1067454492]
 position = Vector2(537, 545)
@@ -60,7 +72,7 @@ destination_id = &"anchor_07"
 display_name = "Anchor 07"
 
 [node name="Anchor08" type="Node2D" parent="AnchorPoints" unique_id=598385129]
-position = Vector2(523, 159)
+position = Vector2(451, 255)
 script = ExtResource("2_anchor")
 destination_id = &"anchor_08"
 display_name = "Anchor 08"

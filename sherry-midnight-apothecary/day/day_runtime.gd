@@ -2,6 +2,7 @@ class_name DayRuntime
 extends Node
 
 signal finished(result: DayResult)
+signal travel_anchor_activated(level_id: StringName)
 
 const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
@@ -101,6 +102,28 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		_play_scene_title_once()
 		return true
 	return false
+
+
+func set_home_destination(level_id: StringName) -> bool:
+	if _find_level(level_id) == null:
+		return false
+	return get_player_data().set_active_home_destination(level_id)
+
+
+func travel_from_home() -> bool:
+	var destination_id := get_player_data().active_home_destination_id
+	if not get_player_data().has_unlocked_level(destination_id):
+		return false
+	return switch_to_level(str(destination_id), &"from_home")
+
+
+func activate_travel_anchor(level_id: StringName) -> bool:
+	if _find_level(level_id) == null:
+		return false
+	if not get_player_data().unlock_level(level_id):
+		return false
+	travel_anchor_activated.emit(level_id)
+	return true
 
 
 func _sync_bgm_for_current_level() -> void:

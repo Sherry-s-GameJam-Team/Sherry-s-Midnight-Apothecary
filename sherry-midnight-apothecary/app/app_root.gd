@@ -33,7 +33,7 @@ func _ready() -> void:
 	pause_menu.bind_settings(settings_service)
 	menu_controller.bind_settings(settings_service)
 	game_flow.configure(current_runtime_slot, player_data)
-	map_switch.travel_requested.connect(_on_map_switch_travel_requested)
+	map_switch.destination_locked.connect(_on_map_switch_destination_locked)
 	game_flow.save_requested.connect(_on_save_requested)
 	game_flow.sleep_transition_requested.connect(_on_sleep_transition_requested)
 	menu_controller.runtime_swap_requested.connect(_on_menu_runtime_swap_requested)
@@ -147,15 +147,20 @@ func _on_sleep_transition_requested(result: NightResult) -> void:
 	_sleep_transition_running = false
 
 
-func _on_map_switch_travel_requested(destination_id: StringName, _destination_data: Dictionary) -> void:
+func _on_map_switch_destination_locked(destination_id: StringName, _destination_data: Dictionary) -> void:
 	if game_flow.current_mode != GameFlow.Mode.DAY or not (game_flow.current_runtime is DayRuntime):
 		push_warning("MapSwitch travel is only available during the day: %s" % destination_id)
 		return
+	var day_runtime := game_flow.current_runtime as DayRuntime
+	if day_runtime.current_level == null or day_runtime.current_level.id != &"home":
+		push_warning("MapSwitch destination can only be locked from Home: %s" % destination_id)
+		return
+	if not day_runtime.set_home_destination(destination_id):
+		push_warning("MapSwitch destination is not unlocked or registered: %s" % destination_id)
+		return
 	if map_switch.has_method("close"):
 		map_switch.call("close")
-	var day_runtime := game_flow.current_runtime as DayRuntime
-	if not day_runtime.switch_to_level(str(destination_id), &"default"):
-		push_warning("MapSwitch destination is not a registered day level: %s" % destination_id)
+	save_game()
 
 
 func _unhandled_input(event: InputEvent) -> void:

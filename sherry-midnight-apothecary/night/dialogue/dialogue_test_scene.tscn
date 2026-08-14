@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bqmquwrgjdqb3"]
 
 [ext_resource type="Script" uid="uid://ctqmfhhu6glt6" path="res://night/dialogue/dialogue_test_scene.gd" id="1"]
-[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="2_pause"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="2_pause"]
 
 [sub_resource type="Gradient" id="night_gradient"]
 colors = PackedColorArray(0.035, 0.025, 0.075, 1, 0.13, 0.075, 0.16, 1)

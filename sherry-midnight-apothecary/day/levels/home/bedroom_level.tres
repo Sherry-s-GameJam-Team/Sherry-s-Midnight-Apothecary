@@ -7,6 +7,7 @@
 script = ExtResource("1_level_data")
 id = &"bedroom"
 display_name = "Bedroom"
+normal_description = "两天之间用于休息的安静房间。"
 content_scene = ExtResource("2_bedroom_scene")
 default_entry_id = &"right_side"
 show_title_card = false

@@ -191,10 +191,10 @@ anchor_left = 0.582
 anchor_top = 0.47500002
 anchor_right = 0.86800003
 anchor_bottom = 0.93100005
-offset_left = 0.039978027
-offset_top = 38.148575
-offset_right = -0.040039063
-offset_bottom = 0.03845215
+offset_left = -364.96002
+offset_top = -470.85144
+offset_right = -257.04004
+offset_bottom = -5.961548
 theme_override_constants/separation = 8
 script = ExtResource("4")
 

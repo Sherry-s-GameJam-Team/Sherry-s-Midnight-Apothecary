@@ -5,6 +5,8 @@ extends Area2D
 
 @export var destination_level: StringName
 @export var destination_entry_id: StringName = &"default"
+## Home's exterior door resolves its level from PlayerData instead of this portal's static target.
+@export var use_active_home_destination := false
 @export_file("*.tscn") var fallback_scene_path := ""
 @export_node_path("Sprite2D") var visual_path: NodePath
 @export var interaction_hint_enabled := false
@@ -38,7 +40,11 @@ func _input(event: InputEvent) -> void:
 		sound_manager.call("play_door_transition")
 	var runtime := _find_day_runtime()
 	if runtime != null:
-		runtime.switch_to_level(str(destination_level), destination_entry_id)
+		if use_active_home_destination and runtime.has_method("travel_from_home"):
+			if not runtime.call("travel_from_home"):
+				push_warning("Home door has no unlocked active destination.")
+		else:
+			runtime.switch_to_level(str(destination_level), destination_entry_id)
 	elif not fallback_scene_path.is_empty():
 		get_tree().change_scene_to_file(fallback_scene_path)
 

@@ -7,12 +7,12 @@ static func run(test: TestSupport) -> void:
 	var level := LevelData.new()
 	level.id = &"test_level"
 	level.display_name = "Test Location"
-	level.scene_description = "Ordinary scene description"
+	level.normal_description = "Ordinary scene description"
 	level.disaster_name = "Named Disaster"
 	level.disaster_days = [3, 8]
 	test.expect(not level.is_disaster_day(2), "A normal day does not activate the disaster title.")
 	test.expect(level.is_disaster_day(3), "A configured disaster day activates the disaster title.")
-	test.expect_equal(level.title_subtitle_for_day(2), "Ordinary scene description", "Normal scenes use the scene description subtitle.")
+	test.expect_equal(level.title_subtitle_for_day(2), "Ordinary scene description", "Normal scenes use the NormalDescription subtitle.")
 	test.expect_equal(level.title_subtitle_for_day(8), "Named Disaster", "Disaster scenes use only the disaster name subtitle.")
 
 	var day_one_key := DayRuntime.scene_title_seen_key(1, &"market")

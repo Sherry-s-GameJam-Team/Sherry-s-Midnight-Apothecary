@@ -2,7 +2,7 @@
 
 The daytime Grassland level is configured by `day/levels/grassland/grass.tscn` and exposed through `day/levels/grassland/grassland_level.tres`.
 
-Its purification completion presentation uses the shared `res://shared/ui/task_complete/task_complete_ui.tscn` scene. The corruption state applies the corrupted texture to every `Sprite2D` named `GrassLoop*`, including future loop sprites added to the scene.
+Its purification completion presentation uses the shared `res://shared/ui/task_complete/task_complete_ui.tscn` scene. The corruption state applies the corrupted texture to every `Sprite2D` named `GrassLoop*`, including future loop sprites added to the scene. It also reveals the fixed `CorruptedHorizon` parallax layer, placed between `Skybox` and `FarGrass`; that layer stays hidden in the normal state.
 
 When run as an individual scene, Grassland dynamically attaches `res://night/ui/developer_console/developer_console.tscn` below `DebugUI`; when loaded by `DayRuntime`, it uses the global day console instead. This avoids making `grassland_level.tres` preload the console scene.
 

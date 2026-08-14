@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bc52qrj6shonf" path="res://day/interactables/map_switch/scripts/map_switch_controller.gd" id="1_controller"]
 [ext_resource type="Texture2D" uid="uid://b1c4f8dw20sms" path="res://day/interactables/map_switch/assets/device/transsformer.png" id="2_device"]
+[ext_resource type="Texture2D" uid="uid://baheunvghxblk" path="res://day/art/BG.png" id="2_x6kgy"]
 [ext_resource type="Texture2D" uid="uid://y8w68eov4m6c" path="res://day/interactables/map_switch/assets/device/wheel.png" id="3_wheel"]
 [ext_resource type="Texture2D" uid="uid://bxc52fudaj5ld" path="res://day/interactables/map_switch/assets/device/switch.png" id="4_switch"]
 [ext_resource type="Shader" uid="uid://bfio7al4y7mur" path="res://day/interactables/map_switch/shaders/dial_to_map.gdshader" id="5_shader"]
@@ -9,7 +10,9 @@
 [ext_resource type="Script" uid="uid://uyxq3pi0hrxq" path="res://day/interactables/map_switch/scripts/magic_overlay.gd" id="7_overlay"]
 [ext_resource type="Script" uid="uid://ttlu44pkk151" path="res://day/interactables/map_switch/scripts/crosshair.gd" id="8_crosshair"]
 [ext_resource type="Script" uid="uid://cj57cj4mpl7j5" path="res://day/interactables/map_switch/scripts/lever_confirm.gd" id="9_lever"]
+[ext_resource type="Texture2D" uid="uid://btevxqvk5kp6f" path="res://day/art/UI.png" id="10_bkn30"]
 [ext_resource type="PackedScene" uid="uid://bd22ulo0g5k61" path="res://day/interactables/map_switch/data/map.tscn" id="10_map"]
+[ext_resource type="FontFile" uid="uid://rb0viahqhkc3" path="res://assets/font/ZCOOLQingKeHuangYou-Regular.ttf" id="11_dmpxw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_display"]
 shader = ExtResource("5_shader")
@@ -23,16 +26,68 @@ content_margin_left = 24.0
 content_margin_top = 22.0
 content_margin_right = 24.0
 content_margin_bottom = 22.0
-bg_color = Color(0.055, 0.045, 0.085, 0.96)
+bg_color = Color(0.05490196, 0.043137256, 0.08627451, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.58, 0.43, 0.22, 0.95)
+border_color = Color(0.5803922, 0.43137255, 0.21960784, 0)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_activate_normal"]
+bg_color = Color(0.38, 0.18, 0.66, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.76, 0.59, 1, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+shadow_color = Color(0.08, 0.02, 0.16, 0.62)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_activate_pressed"]
+bg_color = Color(0.25, 0.1, 0.47, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.64, 0.42, 0.91, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_activate_hover"]
+bg_color = Color(0.5, 0.27, 0.82, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.89, 0.78, 1, 1)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
+shadow_color = Color(0.21, 0.08, 0.39, 0.7)
+shadow_size = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_activate_disabled"]
+bg_color = Color(0.19, 0.11, 0.3, 0.72)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.31, 0.57, 0.7)
+corner_radius_top_left = 70
+corner_radius_top_right = 70
+corner_radius_bottom_right = 70
+corner_radius_bottom_left = 70
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_lever_plate"]
 bg_color = Color(0.06, 0.05, 0.085, 0.86)
@@ -41,6 +96,42 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.38, 0.28, 0.16, 0.95)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_confirm_normal"]
+bg_color = Color(0.35, 0.18, 0.62, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.62, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_confirm_hover"]
+bg_color = Color(0.48, 0.27, 0.8, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.93, 0.85, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_confirm_disabled"]
+bg_color = Color(0.29, 0.3, 0.34, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.51, 0.53, 0.59, 0.9)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -55,15 +146,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_controller")
 
-[node name="DimBackground" type="ColorRect" parent="." unique_id=1327730771]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.035, 0.025, 0.07, 0.98)
+[node name="Bg" type="Sprite2D" parent="." unique_id=1801577819]
+position = Vector2(739.0001, 363)
+scale = Vector2(0.93508285, 1)
+texture = ExtResource("2_x6kgy")
 
 [node name="Heading" type="Label" parent="." unique_id=1657096321]
 visible = false
@@ -124,70 +210,104 @@ script = ExtResource("6_canvas")
 
 [node name="DestinationPanel" type="PanelContainer" parent="." unique_id=153241291]
 layout_mode = 0
-offset_left = 760.0
-offset_top = 100.0
+offset_left = 782.0
+offset_top = 128.0
 offset_right = 1230.0
-offset_bottom = 520.0
+offset_bottom = 576.0
 theme_override_styles/panel = SubResource("StyleBox_panel")
 
+[node name="BG" type="Sprite2D" parent="DestinationPanel" unique_id=1094150553]
+position = Vector2(219.49992, 179)
+scale = Vector2(0.3915745, 0.36832422)
+texture = ExtResource("10_bkn30")
+
 [node name="DestinationColumn" type="VBoxContainer" parent="DestinationPanel" unique_id=1735722878]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 10
-
-[node name="ReadoutLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=1282123241]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.616, 0.514, 0.788, 1)
-theme_override_font_sizes/font_size = 13
-text = "详情"
 
 [node name="DestinationTitle" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=531544674]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.886, 0.761, 0.49, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_colors/font_shadow_color = Color(0.7805233, 0.41799933, 0, 0.737)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_dmpxw")
+theme_override_font_sizes/font_size = 56
 autowrap_mode = 2
 
 [node name="DestinationSubtitle" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=262308414]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.72, 0.75, 0.9, 1)
+theme_override_colors/font_color = Color(0.27181262, 0.29606804, 0.5153843, 1)
 theme_override_font_sizes/font_size = 17
 
 [node name="Separator" type="HSeparator" parent="DestinationPanel/DestinationColumn" unique_id=579342081]
+visible = false
 layout_mode = 2
 
 [node name="DangerLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=2118267102]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+theme_override_colors/font_color = Color(0.558647, 0.48955506, 0.3447818, 1)
 theme_override_font_sizes/font_size = 15
 
 [node name="DistanceLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=2058415685]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+theme_override_colors/font_color = Color(0.558647, 0.48955506, 0.3447818, 1)
 theme_override_font_sizes/font_size = 15
 
 [node name="EnvironmentLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=1049671905]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.86, 0.8, 0.68, 1)
+theme_override_colors/font_color = Color(0.558647, 0.48955506, 0.3447818, 1)
 theme_override_font_sizes/font_size = 15
 
 [node name="DescriptionLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=1956491851]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 94)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.82, 0.82, 0.88, 1)
+theme_override_colors/font_color = Color(0.08528238, 0.29495126, 0.580321, 1)
 theme_override_font_sizes/font_size = 16
 autowrap_mode = 2
 
-[node name="StatusLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=646512436]
+[node name="ActivateButton" type="Button" parent="." unique_id=851048229]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.455, 0.851, 1, 1)
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 928.0
+offset_top = 232.0
+offset_right = 1075.0
+offset_bottom = 379.0
+size_flags_horizontal = 4
+tooltip_text = "激活设备"
+theme_override_colors/font_color = Color(0.96, 0.92, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.91, 0.84, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
-autowrap_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_activate_normal")
+theme_override_styles/pressed = SubResource("StyleBox_activate_pressed")
+theme_override_styles/hover = SubResource("StyleBox_activate_hover")
+theme_override_styles/disabled = SubResource("StyleBox_activate_disabled")
+text = "激活"
+
+[node name="ConfirmButton" type="Button" parent="." unique_id=1918524417]
+unique_name_in_owner = true
+visible = false
+disabled = true
+layout_mode = 0
+offset_left = 924.0
+offset_top = 430.0
+offset_right = 1080.0
+offset_bottom = 476.0
+theme_override_colors/font_color = Color(0.97, 0.94, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.78, 0.79, 0.82, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBox_confirm_normal")
+theme_override_styles/hover = SubResource("StyleBox_confirm_hover")
+theme_override_styles/disabled = SubResource("StyleBox_confirm_disabled")
+text = "确认锁定"
 
 [node name="LeverPlate" type="Panel" parent="." unique_id=558310809]
 visible = false
@@ -235,23 +355,13 @@ text = "LOCK A NODE FIRST"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="ActivateButton" type="Button" parent="." unique_id=851048229]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 760.0
-offset_top = 545.0
-offset_right = 980.0
-offset_bottom = 589.0
-theme_override_font_sizes/font_size = 16
-text = "激活设备"
-
 [node name="ResetButton" type="Button" parent="." unique_id=1422132816]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 1000.0
-offset_top = 545.0
-offset_right = 1220.0
-offset_bottom = 589.0
+offset_left = 1035.0
+offset_top = 677.0
+offset_right = 1255.0
+offset_bottom = 721.0
 theme_override_font_sizes/font_size = 16
 text = "退回场景"
 
@@ -265,4 +375,17 @@ offset_bottom = 662.0
 theme_override_colors/font_color = Color(0.66, 0.66, 0.74, 1)
 theme_override_font_sizes/font_size = 14
 text = "Confirmed registered routes change the active daytime level."
+autowrap_mode = 2
+
+[node name="AlignmentTutorialHint" type="Label" parent="." unique_id=2057874795]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 180.0
+offset_top = 18.0
+offset_right = 1100.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.95, 0.82, 0.48, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
 autowrap_mode = 2

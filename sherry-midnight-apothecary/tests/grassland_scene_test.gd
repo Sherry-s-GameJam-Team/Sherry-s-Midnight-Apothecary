@@ -10,6 +10,7 @@ static func run(test: TestSupport) -> void:
 	var scene_tree := Engine.get_main_loop() as SceneTree
 	scene_tree.root.add_child(grass)
 	var skybox := grass.get_node("Skybox") as Parallax2D
+	var corrupted_horizon := grass.get_node("CorruptedHorizon") as Parallax2D
 	var far_grass := grass.get_node("FarGrass") as Parallax2D
 	var player := grass.get_node("Player") as CharacterBody2D
 	var default_entry := grass.get_node("EntryPoints/default") as Marker2D
@@ -19,6 +20,8 @@ static func run(test: TestSupport) -> void:
 	var sleeping_hound_tutorial := grass.get_node("SleepingHoundTutorial") as SleepingHoundTutorial
 
 	test.expect_equal(skybox.scroll_scale, Vector2.ZERO, "Skybox stays fixed relative to the camera.")
+	test.expect(not corrupted_horizon.visible, "The corrupted horizon is hidden in the normal state.")
+	test.expect(corrupted_horizon.z_index > skybox.z_index and corrupted_horizon.z_index < far_grass.z_index, "The corrupted horizon renders between the skybox and far grass.")
 	test.expect_equal(far_grass.scroll_scale, Vector2(0.45, 1.0), "Far grass uses horizontal-only parallax.")
 	test.expect_equal(default_entry.global_position, player.global_position, "Grassland exposes a formal default travel entry point.")
 	test.expect(foreground.z_index > player.z_index, "Foreground grass masks the player.")
@@ -51,6 +54,7 @@ static func run(test: TestSupport) -> void:
 	grass.texture_state_requested.emit(true)
 	test.expect(grass.is_corrupted(), "The request signal switches Grassland to corrupted textures.")
 	test.expect_equal(changed_states, [true], "The changed signal reports the corrupted state.")
+	test.expect(corrupted_horizon.visible, "The corrupted horizon appears in the corrupted state.")
 	test.expect((grass.get_node("Skybox/Artwork") as Sprite2D).texture.resource_path.ends_with("skybox_corruped.png"), "Corrupted skybox is applied.")
 	test.expect((grass.get_node("FarGrass/Artwork") as Sprite2D).texture.resource_path.ends_with("fs_grass_corruped.png"), "Corrupted far grass is applied.")
 	for node_path in texture_paths.slice(2):
@@ -63,5 +67,8 @@ static func run(test: TestSupport) -> void:
 	test.expect(not grass_loops.is_empty(), "Grassland exposes GrassLoop sprites for corruption.")
 	for grass_loop: Sprite2D in grass_loops:
 		test.expect(grass_loop.texture.resource_path.ends_with("grass_corrupted_loop.png"), "%s uses corrupted grass." % grass_loop.get_path())
+
+	grass.texture_state_requested.emit(false)
+	test.expect(not corrupted_horizon.visible, "The corrupted horizon hides when Grassland returns to normal.")
 
 	grass.free()

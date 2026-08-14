@@ -1,7 +1,7 @@
 class_name PlayerData
 extends Resource
 
-const SAVE_VERSION := 8
+const SAVE_VERSION := 9
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
@@ -19,7 +19,9 @@ var equipped_potion_ids: Array[StringName] = DEFAULT_EQUIPPED_POTIONS.duplicate(
 var selected_potion_slot := 0
 var potion_throw_orders: Dictionary = {}
 var upgrades: Array[StringName] = []
-var unlocked_levels: Array[StringName] = [&"market"]
+var unlocked_levels: Array[StringName] = [&"market", &"grassland"]
+## The destination selected at Home's Transformer. The exterior door consumes it.
+var active_home_destination_id: StringName = &"market"
 var tutorial_flags: Dictionary = {}
 var customer_states: Dictionary = {}
 
@@ -38,7 +40,8 @@ func reset() -> void:
 	selected_potion_slot = 0
 	potion_throw_orders = {}
 	upgrades = []
-	unlocked_levels = [&"market"]
+	unlocked_levels = [&"market", &"grassland"]
+	active_home_destination_id = &"market"
 	tutorial_flags = {}
 	customer_states = {}
 
@@ -48,8 +51,25 @@ func apply_day_result(result: DayResult) -> void:
 	_add_counts(inventory, result.collected_items)
 	potions = _normalize_potions(result.remaining_potions)
 	_cleanup_potion_configuration()
-	if result.unlocked_level_id != &"" and not unlocked_levels.has(result.unlocked_level_id):
-		unlocked_levels.append(result.unlocked_level_id)
+	unlock_level(result.unlocked_level_id)
+
+
+func has_unlocked_level(level_id: StringName) -> bool:
+	return level_id != &"" and unlocked_levels.has(level_id)
+
+
+func unlock_level(level_id: StringName) -> bool:
+	if level_id == &"" or unlocked_levels.has(level_id):
+		return false
+	unlocked_levels.append(level_id)
+	return true
+
+
+func set_active_home_destination(level_id: StringName) -> bool:
+	if not has_unlocked_level(level_id):
+		return false
+	active_home_destination_id = level_id
+	return true
 
 
 func apply_night_result(result: NightResult) -> void:
@@ -92,6 +112,7 @@ func to_save_data() -> Dictionary:
 		"potion_throw_orders": _serialize_throw_orders(potion_throw_orders),
 		"upgrades": upgrades.map(func(value: StringName) -> String: return str(value)),
 		"unlocked_levels": unlocked_levels.map(func(value: StringName) -> String: return str(value)),
+		"active_home_destination_id": str(active_home_destination_id),
 		"tutorial_flags": tutorial_flags.duplicate(),
 		"customer_states": customer_states.duplicate(true),
 	}
@@ -113,7 +134,13 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.selected_potion_slot = clampi(int(data.get("selected_potion_slot", 0)), 0, result.potion_slot_count - 1)
 	result.potion_throw_orders = _normalize_throw_orders(data.get("potion_throw_orders", {}))
 	result.upgrades = _string_name_array(data.get("upgrades", []))
-	result.unlocked_levels = _string_name_array(data.get("unlocked_levels", [&"market"]))
+	result.unlocked_levels = _string_name_array(data.get("unlocked_levels", [&"market", &"grassland"]))
+	if result.unlocked_levels.is_empty():
+		result.unlocked_levels = [&"market", &"grassland"]
+	elif saved_version < SAVE_VERSION and not result.unlocked_levels.has(&"grassland"):
+		result.unlocked_levels.append(&"grassland")
+	var saved_destination := StringName(str(data.get("active_home_destination_id", &"market")))
+	result.active_home_destination_id = saved_destination if result.has_unlocked_level(saved_destination) else result.unlocked_levels[0]
 	result.tutorial_flags = _bool_dictionary(data.get("tutorial_flags", {}))
 	result.customer_states = _customer_state_dictionary(data.get("customer_states", {}))
 	result._cleanup_potion_configuration()

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_level_data")
 id = &"lakebed"
+normal_description = "湖水退去后暴露的遗迹与不稳定水道。"
 display_name = "Lakebed"
 content_scene = ExtResource("2_lakebed_scene")
 default_entry_id = &"default"

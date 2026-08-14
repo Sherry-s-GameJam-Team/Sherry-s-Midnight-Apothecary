@@ -8,6 +8,7 @@ script = ExtResource("1")
 id = &"market"
 display_name = "流明街"
 disaster_name = "维塔利亚南部的城郭"
+normal_description = "旅人与希望者的归宿"
 scene_description = "旅人与希望者的归巢"
 content_scene = ExtResource("2")
 default_entry_id = &"default"

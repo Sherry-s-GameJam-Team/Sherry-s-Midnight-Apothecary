@@ -159,6 +159,7 @@ position = Vector2(2595, 601)
 script = ExtResource("7_door_portal")
 destination_level = &"market"
 destination_entry_id = &"from_home"
+use_active_home_destination = true
 fallback_scene_path = "res://day/levels/market/town/town.tscn"
 interaction_hint_enabled = true
 
@@ -193,6 +194,9 @@ shape = SubResource("RectangleShape2D_equip")
 position = Vector2(2558, 763)
 
 [node name="from_market" type="Marker2D" parent="EntryPoints" unique_id=1070510327]
+position = Vector2(2549, 724)
+
+[node name="from_grass" type="Marker2D" parent="EntryPoints" unique_id=1787413837]
 position = Vector2(2549, 724)
 
 [node name="bedroomdoor" type="Marker2D" parent="EntryPoints" unique_id=726330820]

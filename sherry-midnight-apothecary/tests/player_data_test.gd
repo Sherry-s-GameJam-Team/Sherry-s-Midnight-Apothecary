@@ -17,6 +17,11 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(player.health, 72, "Day health is applied to shared player data.")
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 4, "Day items are applied.")
 	test.expect(player.unlocked_levels.has(&"forest"), "Day level unlock is applied.")
+	test.expect(player.set_active_home_destination(&"grassland"), "Grassland is unlocked from the start.")
+	test.expect(not player.set_active_home_destination(&"forest"), "Locked levels cannot become the active Home destination.")
+	test.expect(player.unlock_level(&"forest"), "Travel anchors can unlock a new level.")
+	test.expect(player.set_active_home_destination(&"forest"), "Unlocked levels can become the active Home destination.")
+	test.expect_equal(player.active_home_destination_id, &"forest", "The active Home destination is retained.")
 
 	var night_result := NightResult.new()
 	night_result.earned_money = 50
@@ -53,8 +58,10 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(restored.potions[&"yellow_potion"][0]["bottle_style_id"], "moon", "Bottle style round-trips.")
 	test.expect_equal(restored.potions[&"yellow_potion"][0]["custom_name"], "月光药", "Custom potion names round-trip.")
 	test.expect_equal(restored.store_reputation, 90, "Store reputation round-trips.")
+	test.expect_equal(restored.active_home_destination_id, &"forest", "The active Home destination round-trips.")
 	var migrated_empty := PlayerData.from_save_data({})
 	test.expect_equal(migrated_empty.debt, 30000, "Legacy saves without debt adopt the 30000曜 starting debt.")
+	test.expect(migrated_empty.unlocked_levels.has(&"grassland"), "Legacy saves receive the default Grassland anchor.")
 	var migrated_old_debt := PlayerData.from_save_data({"version": 5, "debt": 0})
 	test.expect_equal(migrated_old_debt.debt, 30000, "Version 5 saves migrate their placeholder debt to 30000曜.")
 	test.expect_equal(migrated_old_debt.store_reputation, 100, "Older saves migrate to full store reputation.")
