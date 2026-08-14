@@ -1,30 +1,35 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene format=3 uid="uid://cti4npw3yn4nr"]
 
-[ext_resource type="Script" path="res://shared/ui/task_complete/task_complete_ui.gd" id="1_ui"]
-[ext_resource type="Script" path="res://shared/ui/task_complete/task_complete_effect.gd" id="2_effect"]
-[ext_resource type="Texture2D" path="res://night/art/ui/ornament.svg" id="3_ornament"]
-[ext_resource type="AudioStream" path="res://audio/sfx/spell_release.ogg" id="4_complete"]
-[ext_resource type="AudioStream" path="res://audio/sfx/ui_press.ogg" id="5_sparkle"]
+[ext_resource type="Script" uid="uid://bcl4q67yie77p" path="res://shared/ui/task_complete/task_complete_ui.gd" id="1_ui"]
+[ext_resource type="Script" uid="uid://c6crki35m8cw7" path="res://shared/ui/task_complete/task_complete_effect.gd" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://dojbbmufdhpc8" path="res://day/art/logo.png" id="3_q4fi4"]
+[ext_resource type="AudioStream" uid="uid://cndrk2ko07l4k" path="res://audio/sfx/spell_release.ogg" id="4_complete"]
+[ext_resource type="AudioStream" uid="uid://ceanyo3e3wo8p" path="res://audio/sfx/ui_press.ogg" id="5_sparkle"]
 
 [sub_resource type="StyleBoxFlat" id="PanelStyle"]
-bg_color = Color(0.095, 0.069, 0.043, 0.985)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.94, 0.72, 0.27, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 18
-shadow_color = Color(0, 0, 0, 0.65)
-shadow_size = 24
 content_margin_left = 54.0
 content_margin_top = 38.0
 content_margin_right = 54.0
 content_margin_bottom = 34.0
+bg_color = Color(0.09411765, 0.07058824, 0.043137256, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.9411765, 0.72156864, 0.27058825, 0)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.3019608)
+shadow_size = 24
+anti_aliasing_size = 0.01
 
 [sub_resource type="StyleBoxFlat" id="ButtonStyle"]
+content_margin_left = 28.0
+content_margin_top = 9.0
+content_margin_right = 28.0
+content_margin_bottom = 9.0
 bg_color = Color(0.79, 0.56, 0.17, 0.95)
 border_width_left = 2
 border_width_top = 2
@@ -35,18 +40,13 @@ corner_radius_top_left = 9
 corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
-content_margin_left = 28.0
-content_margin_top = 9.0
-content_margin_right = 28.0
-content_margin_bottom = 9.0
 
-[node name="TaskCompleteUI" type="CanvasLayer"]
+[node name="TaskCompleteUI" type="CanvasLayer" unique_id=366272052]
 layer = 180
 script = ExtResource("1_ui")
 
-[node name="Overlay" type="Control" parent="."]
+[node name="Overlay" type="Control" parent="." unique_id=1310043317]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,7 +54,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Dimmer" type="ColorRect" parent="Overlay"]
+[node name="Dimmer" type="ColorRect" parent="Overlay" unique_id=1482868397]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -65,7 +65,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.025, 0.018, 0.012, 0.68)
 
-[node name="TaskCompleteEffect" type="Control" parent="Overlay"]
+[node name="TaskCompleteEffect" type="Control" parent="Overlay" unique_id=653816189]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -76,7 +76,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_effect")
 
-[node name="Center" type="CenterContainer" parent="Overlay"]
+[node name="Center" type="CenterContainer" parent="Overlay" unique_id=149076929]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,32 +85,32 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Overlay/Center"]
+[node name="Panel" type="PanelContainer" parent="Overlay/Center" unique_id=1968990927]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(720, 350)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("PanelStyle")
 
-[node name="Content" type="VBoxContainer" parent="Overlay/Center/Panel"]
+[node name="Content" type="VBoxContainer" parent="Overlay/Center/Panel" unique_id=1734865369]
 layout_mode = 2
 theme_override_constants/separation = 14
 alignment = 1
 
-[node name="Ornaments" type="HBoxContainer" parent="Overlay/Center/Panel/Content"]
+[node name="Ornaments" type="HBoxContainer" parent="Overlay/Center/Panel/Content" unique_id=1301977567]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 18
+alignment = 1
 
-[node name="Left" type="TextureRect" parent="Overlay/Center/Panel/Content/Ornaments"]
+[node name="Left" type="TextureRect" parent="Overlay/Center/Panel/Content/Ornaments" unique_id=1576384172]
+modulate = Color(0.98, 0.78, 0.34, 0.85)
 custom_minimum_size = Vector2(88, 34)
 layout_mode = 2
-modulate = Color(0.98, 0.78, 0.34, 0.85)
-texture = ExtResource("3_ornament")
+texture = ExtResource("3_q4fi4")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Header" type="Label" parent="Overlay/Center/Panel/Content/Ornaments"]
+[node name="Header" type="Label" parent="Overlay/Center/Panel/Content/Ornaments" unique_id=1449990305]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.83, 0.4, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.55)
@@ -119,16 +119,16 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 27
 text = "任务完成"
 
-[node name="Right" type="TextureRect" parent="Overlay/Center/Panel/Content/Ornaments"]
+[node name="Right" type="TextureRect" parent="Overlay/Center/Panel/Content/Ornaments" unique_id=106952026]
+modulate = Color(0.98, 0.78, 0.34, 0.85)
 custom_minimum_size = Vector2(88, 34)
 layout_mode = 2
-modulate = Color(0.98, 0.78, 0.34, 0.85)
-texture = ExtResource("3_ornament")
+texture = ExtResource("3_q4fi4")
 expand_mode = 3
 stretch_mode = 5
 flip_h = true
 
-[node name="TaskTitle" type="Label" parent="Overlay/Center/Panel/Content"]
+[node name="TaskTitle" type="Label" parent="Overlay/Center/Panel/Content" unique_id=301499095]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.97, 0.95, 0.84, 1)
@@ -138,11 +138,12 @@ theme_override_font_sizes/font_size = 38
 text = "沉睡魔犬的净化"
 horizontal_alignment = 1
 
-[node name="Divider" type="HSeparator" parent="Overlay/Center/Panel/Content"]
-layout_mode = 2
+[node name="Divider" type="HSeparator" parent="Overlay/Center/Panel/Content" unique_id=1240510409]
+visible = false
 modulate = Color(0.95, 0.74, 0.31, 0.62)
+layout_mode = 2
 
-[node name="Description" type="Label" parent="Overlay/Center/Panel/Content"]
+[node name="Description" type="Label" parent="Overlay/Center/Panel/Content" unique_id=132651583]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 62)
 layout_mode = 2
@@ -153,7 +154,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Footer" type="Label" parent="Overlay/Center/Panel/Content"]
+[node name="Footer" type="Label" parent="Overlay/Center/Panel/Content" unique_id=800841046]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.49, 0.94, 0.68, 1)
@@ -161,35 +162,33 @@ theme_override_font_sizes/font_size = 18
 text = "净化教程已完成 · 任务进度已记录"
 horizontal_alignment = 1
 
-[node name="ButtonRow" type="HBoxContainer" parent="Overlay/Center/Panel/Content"]
+[node name="ButtonRow" type="HBoxContainer" parent="Overlay/Center/Panel/Content" unique_id=1323907442]
 layout_mode = 2
 alignment = 1
 
-[node name="ContinueButton" type="Button" parent="Overlay/Center/Panel/Content/ButtonRow"]
+[node name="ContinueButton" type="Button" parent="Overlay/Center/Panel/Content/ButtonRow" unique_id=1820011166]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(190, 50)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.15, 0.09, 0.025, 1)
-theme_override_colors/font_hover_color = Color(0.15, 0.09, 0.025, 1)
 theme_override_colors/font_pressed_color = Color(0.08, 0.04, 0.01, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.09, 0.025, 1)
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("ButtonStyle")
-theme_override_styles/hover = SubResource("ButtonStyle")
 theme_override_styles/pressed = SubResource("ButtonStyle")
+theme_override_styles/hover = SubResource("ButtonStyle")
 text = "继续探索"
 
-[node name="CompleteChime" type="AudioStreamPlayer" parent="."]
+[node name="CompleteChime" type="AudioStreamPlayer" parent="." unique_id=3010812]
 unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("4_complete")
-bus = &"UI"
 volume_db = -4.0
 pitch_scale = 1.08
 
-[node name="SparkleChime" type="AudioStreamPlayer" parent="."]
+[node name="SparkleChime" type="AudioStreamPlayer" parent="." unique_id=2918879]
 unique_name_in_owner = true
 process_mode = 3
 stream = ExtResource("5_sparkle")
-bus = &"UI"
 volume_db = -8.0
 pitch_scale = 1.42

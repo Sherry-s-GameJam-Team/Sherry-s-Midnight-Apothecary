@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://j4tlbsxhlimv" path="res://day/levels/grassland/art/fs_grass.png" id="2_far_grass"]
 [ext_resource type="Texture2D" uid="uid://dbrm4ly7ewebb" path="res://day/levels/grassland/art/grass_corrupted_loop.png" id="4_8caa3"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="4_player"]
-[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/systems/camera_bounds.gd" id="5_camera_bounds"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="5_camera_bounds"]
 [ext_resource type="Script" uid="uid://887nbn7ofcth" path="res://day/levels/grassland/grass_environment.gd" id="6_environment"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="9_potions"]
@@ -15,7 +15,8 @@
 [ext_resource type="PackedScene" path="res://day/ui/task_complete/task_complete_ui.tscn" id="14_task_complete"]
 [ext_resource type="Texture2D" uid="uid://c0usw24l5ompe" path="res://day/levels/grassland/art/grass_to_rainforest.png" id="15_cjcfm"]
 [ext_resource type="AudioStream" uid="uid://csiwbvo3mmyan" path="res://audio/bgm/verdant_path_autoloop.wav" id="16_grass_bgm"]
-[ext_resource type="Script" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
+[ext_resource type="Texture2D" uid="uid://csq80pl4laeer" path="res://day/levels/grassland/art/house.png" id="17_grxfx"]
+[ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -667.0
@@ -28,9 +29,8 @@ texture_filter = 1
 script = ExtResource("6_environment")
 debug_scene_id = "grassland"
 
-[node name="GrasslandBGM" type="AudioStreamPlayer" parent="."]
+[node name="GrasslandBGM" type="AudioStreamPlayer" parent="." unique_id=1375464267]
 stream = ExtResource("16_grass_bgm")
-bus = &"Music"
 script = ExtResource("17_looping_bgm")
 
 [node name="Skybox" type="Parallax2D" parent="." unique_id=1367240776]
@@ -105,11 +105,11 @@ shape = SubResource("RectangleShape2D_side_barrier")
 [node name="EntryPoints" type="Node2D" parent="." unique_id=1871318074]
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=1207069329]
-position = Vector2(988, 481)
+position = Vector2(486, 589)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1043951829]
 z_index = 10
-position = Vector2(988, 481)
+position = Vector2(486, 589)
 script = ExtResource("4_player")
 
 [node name="SherryCollision" parent="Player" unique_id=1181825080 instance=ExtResource("11_sherry_collision")]
@@ -177,3 +177,13 @@ visible = false
 position = Vector2(2223.7988, 362.7891)
 scale = Vector2(0.26570806, 0.34260744)
 texture = ExtResource("15_cjcfm")
+
+[node name="House" type="Sprite2D" parent="." unique_id=1896794159]
+position = Vector2(483, 384)
+scale = Vector2(0.7918968, 0.7918969)
+texture = ExtResource("17_grxfx")
+
+[node name="issues" type="Node2D" parent="." unique_id=733082789]
+
+[node name="dialog1" type="Marker2D" parent="issues" unique_id=143980258]
+position = Vector2(923, 673)

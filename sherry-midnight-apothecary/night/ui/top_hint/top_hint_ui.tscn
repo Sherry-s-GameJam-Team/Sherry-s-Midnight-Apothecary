@@ -1,40 +1,32 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://qruougt04u04"]
 
-[ext_resource type="Script" path="res://night/ui/top_hint/top_hint_ui.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://night/art/ui/ornament.svg" id="2_ornament"]
+[ext_resource type="Script" uid="uid://bdom8sbe3r1sd" path="res://night/ui/top_hint/top_hint_ui.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dojbbmufdhpc8" path="res://day/art/logo.png" id="2_5kw12"]
+[ext_resource type="Texture2D" uid="uid://cu1lf3dnlp2st" path="res://day/art/logo_2.png" id="3_pjdfy"]
 
 [sub_resource type="StyleBoxFlat" id="HintPanelStyle"]
+content_margin_left = 24.0
+content_margin_top = 12.0
+content_margin_right = 24.0
+content_margin_bottom = 12.0
 bg_color = Color(0.105, 0.083, 0.061, 0.965)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.66, 0.49, 0.28, 1)
-corner_radius_bottom_left = 9
-corner_radius_bottom_right = 9
 corner_radius_top_left = 9
 corner_radius_top_right = 9
-content_margin_left = 24.0
-content_margin_top = 12.0
-content_margin_right = 24.0
-content_margin_bottom = 12.0
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
 shadow_color = Color(0, 0, 0, 0.35)
 shadow_size = 7
 
-[sub_resource type="StyleBoxFlat" id="ImageStyle"]
-bg_color = Color(0.12, 0.095, 0.071, 0.98)
-border_width_left = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.66, 0.49, 0.28, 1)
-corner_radius_bottom_left = 10
-corner_radius_bottom_right = 10
-content_margin_left = 10.0
-content_margin_top = 10.0
-content_margin_right = 10.0
-content_margin_bottom = 10.0
-
 [sub_resource type="StyleBoxFlat" id="KeyStyle"]
+content_margin_left = 7.0
+content_margin_top = 2.0
+content_margin_right = 7.0
+content_margin_bottom = 2.0
 bg_color = Color(0.73, 0.58, 0.34, 0.2)
 border_width_left = 1
 border_width_top = 1
@@ -43,14 +35,23 @@ border_width_bottom = 1
 border_color = Color(0.82, 0.67, 0.42, 0.8)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
-corner_radius_bottom_left = 4
 corner_radius_bottom_right = 4
-content_margin_left = 7.0
-content_margin_top = 2.0
-content_margin_right = 7.0
-content_margin_bottom = 2.0
+corner_radius_bottom_left = 4
 
-[node name="TopHintUI" type="Control"]
+[sub_resource type="StyleBoxFlat" id="ImageStyle"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.12, 0.095, 0.071, 0.98)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.66, 0.49, 0.28, 1)
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="TopHintUI" type="Control" unique_id=668382815]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,8 +61,8 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="Root" type="Control" parent="."]
-layout_mode = 3
+[node name="Root" type="Control" parent="." unique_id=394802490]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -69,7 +70,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TopCenter" type="CenterContainer" parent="Root"]
+[node name="TopCenter" type="CenterContainer" parent="Root" unique_id=1121465825]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -78,39 +79,39 @@ offset_bottom = 18.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="TopDock" type="VBoxContainer" parent="Root/TopCenter"]
+[node name="TopDock" type="VBoxContainer" parent="Root/TopCenter" unique_id=404994053]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="HintPanel" type="PanelContainer" parent="Root/TopCenter/TopDock"]
+[node name="HintPanel" type="PanelContainer" parent="Root/TopCenter/TopDock" unique_id=16306652]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 82)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("HintPanelStyle")
 
-[node name="Row" type="HBoxContainer" parent="Root/TopCenter/TopDock/HintPanel"]
+[node name="Row" type="HBoxContainer" parent="Root/TopCenter/TopDock/HintPanel" unique_id=1651804062]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 
-[node name="LeftOrnament" type="TextureRect" parent="Root/TopCenter/TopDock/HintPanel/Row"]
+[node name="LeftOrnament" type="TextureRect" parent="Root/TopCenter/TopDock/HintPanel/Row" unique_id=1441252815]
+modulate = Color(0.93, 0.78, 0.48, 0.72)
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_ornament")
+texture = ExtResource("2_5kw12")
 expand_mode = 3
 stretch_mode = 5
-modulate = Color(0.93, 0.78, 0.48, 0.72)
 
-[node name="Center" type="VBoxContainer" parent="Root/TopCenter/TopDock/HintPanel/Row"]
+[node name="Center" type="VBoxContainer" parent="Root/TopCenter/TopDock/HintPanel/Row" unique_id=404623282]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 3
 
-[node name="HintLabel" type="RichTextLabel" parent="Root/TopCenter/TopDock/HintPanel/Row/Center"]
+[node name="HintLabel" type="RichTextLabel" parent="Root/TopCenter/TopDock/HintPanel/Row/Center" unique_id=1591617978]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
@@ -127,15 +128,15 @@ scroll_active = false
 autowrap_mode = 0
 horizontal_alignment = 1
 
-[node name="ExpandRow" type="HBoxContainer" parent="Root/TopCenter/TopDock/HintPanel/Row/Center"]
+[node name="ExpandRow" type="HBoxContainer" parent="Root/TopCenter/TopDock/HintPanel/Row/Center" unique_id=334834420]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 2
-alignment = 2
 theme_override_constants/separation = 6
+alignment = 2
 
-[node name="ExpandKey" type="Label" parent="Root/TopCenter/TopDock/HintPanel/Row/Center/ExpandRow"]
+[node name="ExpandKey" type="Label" parent="Root/TopCenter/TopDock/HintPanel/Row/Center/ExpandRow" unique_id=1557613934]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.83, 0.57, 1)
@@ -143,30 +144,29 @@ theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("KeyStyle")
 text = "[E]"
 
-[node name="ExpandText" type="Label" parent="Root/TopCenter/TopDock/HintPanel/Row/Center/ExpandRow"]
+[node name="ExpandText" type="Label" parent="Root/TopCenter/TopDock/HintPanel/Row/Center/ExpandRow" unique_id=1433413613]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.76, 0.68, 0.55, 1)
 theme_override_font_sizes/font_size = 15
 text = "展开图示"
 
-[node name="RightOrnament" type="TextureRect" parent="Root/TopCenter/TopDock/HintPanel/Row"]
+[node name="RightOrnament" type="TextureRect" parent="Root/TopCenter/TopDock/HintPanel/Row" unique_id=1460270161]
+modulate = Color(0.93, 0.78, 0.48, 0.72)
 custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_ornament")
+texture = ExtResource("3_pjdfy")
 expand_mode = 3
 stretch_mode = 5
-modulate = Color(0.93, 0.78, 0.48, 0.72)
 
-[node name="ImageReveal" type="Control" parent="Root/TopCenter/TopDock"]
+[node name="ImageReveal" type="Control" parent="Root/TopCenter/TopDock" unique_id=787451665]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 0)
+clip_contents = true
 layout_mode = 2
 mouse_filter = 2
-clip_contents = true
 
-[node name="ImagePanel" type="PanelContainer" parent="Root/TopCenter/TopDock/ImageReveal"]
+[node name="ImagePanel" type="PanelContainer" parent="Root/TopCenter/TopDock/ImageReveal" unique_id=461301414]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -175,11 +175,11 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("ImageStyle")
 
-[node name="ImageVBox" type="VBoxContainer" parent="Root/TopCenter/TopDock/ImageReveal/ImagePanel"]
+[node name="ImageVBox" type="VBoxContainer" parent="Root/TopCenter/TopDock/ImageReveal/ImagePanel" unique_id=200414855]
 layout_mode = 2
 theme_override_constants/separation = 7
 
-[node name="ImageTexture" type="TextureRect" parent="Root/TopCenter/TopDock/ImageReveal/ImagePanel/ImageVBox"]
+[node name="ImageTexture" type="TextureRect" parent="Root/TopCenter/TopDock/ImageReveal/ImagePanel/ImageVBox" unique_id=1332595864]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
@@ -187,14 +187,14 @@ size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 6
 
-[node name="ImageCaption" type="Label" parent="Root/TopCenter/TopDock/ImageReveal/ImagePanel/ImageVBox"]
+[node name="ImageCaption" type="Label" parent="Root/TopCenter/TopDock/ImageReveal/ImagePanel/ImageVBox" unique_id=1769015807]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.68, 0.55, 1)
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
 
-[node name="AutoHideTimer" type="Timer" parent="."]
+[node name="AutoHideTimer" type="Timer" parent="." unique_id=2127257821]
 unique_name_in_owner = true
 one_shot = true
 

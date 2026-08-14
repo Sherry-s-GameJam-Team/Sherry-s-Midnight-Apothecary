@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://oyns2me5yen3" path="res://day/levels/forest/art/cs.png" id="2_cs"]
 [ext_resource type="Texture2D" uid="uid://bqhx6h4muwydr" path="res://day/levels/forest/art/fs.png" id="2_wpyvx"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="3_player"]
-[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/systems/camera_bounds.gd" id="4_camera_bounds"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="4_camera_bounds"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="5_environment"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="7_console"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="8_potions"]
@@ -19,7 +19,6 @@ script = ExtResource("5_environment")
 debug_scene_id = "forest"
 
 [node name="FS" type="Parallax2D" parent="." unique_id=1753342698]
-visible = false
 z_index = -20
 scroll_scale = Vector2(0.12, 0.12)
 
