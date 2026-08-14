@@ -8,6 +8,7 @@ script = ExtResource("1_level_data")
 id = &"home"
 display_name = "Home"
 normal_description = "整理材料、准备营业与休息的药剂师之家。"
+corrupted_description = "异变的阴影悄然逼近药剂师之家。"
 content_scene = ExtResource("2_home_scene")
 default_entry_id = &"default"
 show_title_card = false

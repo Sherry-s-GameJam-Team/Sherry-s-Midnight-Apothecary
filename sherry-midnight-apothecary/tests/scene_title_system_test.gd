@@ -8,12 +8,22 @@ static func run(test: TestSupport) -> void:
 	level.id = &"test_level"
 	level.display_name = "Test Location"
 	level.normal_description = "Ordinary scene description"
+	level.corrupted_description = "Corrupted scene description"
 	level.disaster_name = "Named Disaster"
 	level.disaster_days = [3, 8]
 	test.expect(not level.is_disaster_day(2), "A normal day does not activate the disaster title.")
 	test.expect(level.is_disaster_day(3), "A configured disaster day activates the disaster title.")
 	test.expect_equal(level.title_subtitle_for_day(2), "Ordinary scene description", "Normal scenes use the NormalDescription subtitle.")
 	test.expect_equal(level.title_subtitle_for_day(8), "Named Disaster", "Disaster scenes use only the disaster name subtitle.")
+	test.expect_equal(level.title_subtitle_for_environment_state(false), "Ordinary scene description", "Normal environment state uses NormalDescription.")
+	test.expect_equal(level.title_subtitle_for_environment_state(true), "Corrupted scene description", "Corrupted environment state uses CorruptedDescription.")
+	var environment := DayLevelEnvironment.new()
+	var environment_changes: Array[bool] = []
+	environment.environment_state_changed.connect(func(corrupted: bool) -> void: environment_changes.append(corrupted))
+	environment.set_corrupted(true)
+	test.expect(environment.is_corrupted(), "All day-level environments expose a corrupted state.")
+	test.expect_equal(environment_changes, [true], "Environment state changes are explicitly signalled.")
+	environment.free()
 
 	var day_one_key := DayRuntime.scene_title_seen_key(1, &"market")
 	var day_two_key := DayRuntime.scene_title_seen_key(2, &"market")
@@ -33,6 +43,8 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime.replay_scene_title(true), "Manual title replay ignores the persisted seen marker.")
 	test.expect(runtime.switch_to_level("forest"), "The runtime can enter a second titled scene.")
 	test.expect(bool(player.tutorial_flags.get(forest_key, false)), "A different scene receives its own daily seen marker.")
+	test.expect(runtime.switch_to_level("grassland"), "The runtime can enter Grassland.")
+	test.expect_equal(runtime.scene_title_card.subtitle_label.text, "长风染毒，生灵倒悬之急。", "The corrupted Grassland environment uses CorruptedDescription in the title UI.")
 	test.expect(runtime.switch_to_level("home"), "The runtime can enter a title-disabled scene.")
 	test.expect(not runtime.replay_scene_title(true), "Title-disabled scenes reject manual replay.")
 	test.expect(not player.tutorial_flags.has(DayRuntime.scene_title_seen_key(1, &"home")), "Title-disabled scenes do not create seen markers.")

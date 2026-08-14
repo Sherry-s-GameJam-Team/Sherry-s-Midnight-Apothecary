@@ -89,18 +89,6 @@ corner_radius_top_right = 70
 corner_radius_bottom_right = 70
 corner_radius_bottom_left = 70
 
-[sub_resource type="StyleBoxFlat" id="StyleBox_lever_plate"]
-bg_color = Color(0.06, 0.05, 0.085, 0.86)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.38, 0.28, 0.16, 0.95)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="StyleBoxFlat" id="StyleBox_confirm_normal"]
 bg_color = Color(0.35, 0.18, 0.62, 1)
 border_width_left = 2
@@ -132,6 +120,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.51, 0.53, 0.59, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_lever_plate"]
+bg_color = Color(0.06, 0.05, 0.085, 0.86)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.28, 0.16, 0.95)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -229,8 +229,8 @@ theme_override_constants/separation = 10
 [node name="DestinationTitle" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=531544674]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.886, 0.761, 0.49, 1)
-theme_override_colors/font_shadow_color = Color(0.7805233, 0.41799933, 0, 0.737)
+theme_override_colors/font_color = Color(0.75152713, 0.55194545, 0.13042727, 1)
+theme_override_colors/font_shadow_color = Color(0.996764, 0.8733151, 0.8701454, 0.8352941)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("11_dmpxw")
 theme_override_font_sizes/font_size = 56
@@ -243,25 +243,24 @@ theme_override_colors/font_color = Color(0.27181262, 0.29606804, 0.5153843, 1)
 theme_override_font_sizes/font_size = 17
 
 [node name="Separator" type="HSeparator" parent="DestinationPanel/DestinationColumn" unique_id=579342081]
-visible = false
 layout_mode = 2
 
 [node name="DangerLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=2118267102]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.558647, 0.48955506, 0.3447818, 1)
+theme_override_colors/font_color = Color(0.7831794, 0.5924931, 0.114779316, 1)
 theme_override_font_sizes/font_size = 15
 
 [node name="DistanceLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=2058415685]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.558647, 0.48955506, 0.3447818, 1)
+theme_override_colors/font_color = Color(0.7831794, 0.5924931, 0.114779316, 1)
 theme_override_font_sizes/font_size = 15
 
 [node name="EnvironmentLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=1049671905]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.558647, 0.48955506, 0.3447818, 1)
+theme_override_colors/font_color = Color(0.7831794, 0.5924931, 0.114779316, 1)
 theme_override_font_sizes/font_size = 15
 
 [node name="DescriptionLabel" type="Label" parent="DestinationPanel/DestinationColumn" unique_id=1956491851]
@@ -294,19 +293,18 @@ text = "激活"
 
 [node name="ConfirmButton" type="Button" parent="." unique_id=1918524417]
 unique_name_in_owner = true
-visible = false
-disabled = true
 layout_mode = 0
-offset_left = 924.0
-offset_top = 430.0
-offset_right = 1080.0
-offset_bottom = 476.0
+offset_left = 1054.0
+offset_top = 284.0
+offset_right = 1210.0
+offset_bottom = 330.0
 theme_override_colors/font_color = Color(0.97, 0.94, 1, 1)
 theme_override_colors/font_disabled_color = Color(0.78, 0.79, 0.82, 1)
 theme_override_font_sizes/font_size = 17
 theme_override_styles/normal = SubResource("StyleBox_confirm_normal")
 theme_override_styles/hover = SubResource("StyleBox_confirm_hover")
 theme_override_styles/disabled = SubResource("StyleBox_confirm_disabled")
+disabled = true
 text = "确认锁定"
 
 [node name="LeverPlate" type="Panel" parent="." unique_id=558310809]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://de4nkfctmes60" path="res://day/levels/grassland/level.tscn" id="2_emerald_field_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"emerald_field"
+display_name = "异变浮岛"
+normal_description = "悬浮在草原裂谷上方的古老旅门遗迹。"
+corrupted_description = "黑魔法托起残破浮岛，异变源头藏在云层之上。"
+content_scene = ExtResource("2_emerald_field_scene")
+default_entry_id = &"default"

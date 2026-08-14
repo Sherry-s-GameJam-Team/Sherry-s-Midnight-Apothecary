@@ -6,7 +6,7 @@
 [node name="MapSwitchDemo" unique_id=598855832 instance=ExtResource("1_interaction")]
 open_on_ready = true
 
-[node name="Bg" type="Sprite2D" parent="." index="0" unique_id=879877373]
+[node name="Bg2" type="Sprite2D" parent="." index="0" unique_id=879877373]
 position = Vector2(591, 368)
 texture = ExtResource("2_p1287")
 
@@ -28,31 +28,31 @@ offset_top = 0.0
 offset_right = 470.0
 offset_bottom = 420.0
 
-[node name="LeverPlate" parent="." index="7" unique_id=558310809]
+[node name="LeverPlate" parent="." index="9" unique_id=558310809]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 140.0
 offset_bottom = 420.0
 
-[node name="LeverTitle" parent="." index="8" unique_id=1264328005]
+[node name="LeverTitle" parent="." index="10" unique_id=1264328005]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 100.0
 offset_bottom = 23.0
 
-[node name="LeverHint" parent="." index="10" unique_id=1266401713]
+[node name="LeverHint" parent="." index="12" unique_id=1266401713]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 112.0
 offset_bottom = 54.0
 
-[node name="ResetButton" parent="." index="12" unique_id=1422132816]
+[node name="ResetButton" parent="." index="13" unique_id=1422132816]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 220.0
 offset_bottom = 44.0
 
-[node name="NoTravelNote" parent="." index="13" unique_id=1361102100]
+[node name="NoTravelNote" parent="." index="14" unique_id=1361102100]
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 460.0

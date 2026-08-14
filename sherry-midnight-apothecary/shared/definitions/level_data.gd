@@ -5,6 +5,7 @@ extends Resource
 @export var display_name: String
 @export var disaster_name: String = "灾难未定"
 @export_multiline var normal_description: String = "场景描述待补充"
+@export_multiline var corrupted_description: String = ""
 ## Legacy alias kept so older LevelData resources continue to load.
 @export_multiline var scene_description: String = ""
 @export var disaster_days: Array[int] = []
@@ -21,4 +22,10 @@ func is_disaster_day(day: int) -> bool:
 func title_subtitle_for_day(day: int) -> String:
 	if is_disaster_day(day):
 		return disaster_name
+	return normal_description if not normal_description.is_empty() else scene_description
+
+
+func title_subtitle_for_environment_state(corrupted: bool) -> String:
+	if corrupted and not corrupted_description.is_empty():
+		return corrupted_description
 	return normal_description if not normal_description.is_empty() else scene_description

@@ -8,5 +8,6 @@ script = ExtResource("1")
 id = &"forest"
 display_name = "Rain Tree"
 normal_description = "潮湿的药草林地，路径在雨雾中不断变化。"
+corrupted_description = "黑雨侵蚀林地，药草与树影都在异变。"
 content_scene = ExtResource("2")
 default_entry_id = &"default"

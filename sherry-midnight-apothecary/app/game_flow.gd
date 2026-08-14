@@ -12,10 +12,11 @@ enum Mode {
 }
 
 const FINAL_DAY := 30
+const INITIAL_DAY := 0
 const DAY_SCENE := preload("res://day/day_runtime.tscn")
 const NIGHT_SCENE := preload("res://night/night_runtime.tscn")
 
-var current_day := 1
+var current_day := INITIAL_DAY
 var current_mode := Mode.DAY
 var current_runtime: Node
 var player_data: PlayerData
@@ -38,7 +39,7 @@ func start_new_game(
 		return false
 	shutdown()
 	player_data.reset()
-	current_day = 1
+	current_day = INITIAL_DAY
 	return _load_mode(Mode.DAY, initial_day_level_id, defer_day_presentation, defer_day_title)
 
 
@@ -54,7 +55,7 @@ func resume_game(
 	if not Mode.values().has(int(mode)):
 		return false
 	shutdown()
-	current_day = clampi(day, 1, FINAL_DAY)
+	current_day = clampi(day, INITIAL_DAY, FINAL_DAY)
 	return _load_mode(mode, initial_day_level_id, defer_day_presentation, defer_day_title)
 
 

@@ -9,6 +9,7 @@ id = &"grassland"
 display_name = "翡翠原"
 disaster_name = "瘴气之灾"
 normal_description = "流明街以东的广阔草原，终年长风不息，旧旅门遗迹散布其间。"
+corrupted_description = "长风染毒，生灵倒悬之急。"
 scene_description = "长风染毒，生灵倒悬之急。"
 content_scene = ExtResource("2_grassland_scene")
 default_entry_id = &"default"

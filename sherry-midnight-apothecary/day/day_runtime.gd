@@ -11,6 +11,7 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/forest/raintree/raintree_level.tres"),
 	preload("res://day/levels/lake/lake_level.tres"),
 	preload("res://day/levels/grassland/grassland_level.tres"),
+	preload("res://day/levels/grassland/emerald_field_level.tres"),
 ]
 
 # Home is available through its door, but does not consume a day in the normal
@@ -80,7 +81,7 @@ func _load_level() -> void:
 		child.queue_free()
 	current_level = _find_level(_initial_level_id)
 	if current_level == null:
-		current_level = DAILY_LEVELS[posmod(day - 1, DAILY_LEVELS.size())]
+		current_level = DAILY_LEVELS[posmod(day, DAILY_LEVELS.size())]
 	_sync_bgm_for_current_level()
 	_instantiate_current_level(&"default")
 	if not _defer_initial_title:
@@ -172,10 +173,15 @@ func replay_scene_title(immediate_text := false) -> bool:
 	scene_title_card.show_title(
 		day,
 		current_level.display_name,
-		current_level.title_subtitle_for_day(day),
+		current_level.title_subtitle_for_environment_state(_current_level_is_corrupted()),
 		immediate_text
 	)
 	return true
+
+
+func _current_level_is_corrupted() -> bool:
+	var environment := current_level_instance as DayLevelEnvironment
+	return environment != null and environment.is_corrupted()
 
 
 func _play_scene_title_once() -> bool:

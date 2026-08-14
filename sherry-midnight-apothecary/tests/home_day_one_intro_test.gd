@@ -24,10 +24,10 @@ static func run(test: TestSupport) -> void:
 	test.expect(young_knight.z_index > table.z_index and senior_knight.z_index > table.z_index, "Both cinematic NPCs render above the table.")
 
 	var fresh_data := PlayerData.new()
-	test.expect(HomeDayOneIntro.should_present(1, fresh_data), "A fresh day-one save presents the Home intro.")
-	test.expect(not HomeDayOneIntro.should_present(2, fresh_data), "Days after day one skip the Home intro.")
+	test.expect(HomeDayOneIntro.should_present(0, fresh_data), "A fresh day-zero save presents the Home intro.")
+	test.expect(not HomeDayOneIntro.should_present(1, fresh_data), "Days after day zero skip the Home intro.")
 	fresh_data.tutorial_flags[HomeDayOneIntro.COMPLETED_FLAG] = true
-	test.expect(not HomeDayOneIntro.should_present(1, fresh_data), "The persistent completion flag prevents replay.")
+	test.expect(not HomeDayOneIntro.should_present(0, fresh_data), "The persistent completion flag prevents replay.")
 	test.expect(HomeDayOneIntro.has_reached_trigger(Vector2(360, 710), Vector2(367, 846), 80.0), "The side-scrolling trigger uses horizontal arrival at trid despite the player foot-anchor offset.")
 	test.expect(not HomeDayOneIntro.has_reached_trigger(Vector2(200, 846), Vector2(367, 846), 80.0), "The intro stays idle before the player reaches trid.")
 	home.free()

@@ -8,5 +8,6 @@ script = ExtResource("1")
 id = &"lake"
 display_name = "Lake"
 normal_description = "退水后的湖岸，古老遗迹与不稳定的水道逐渐显露。"
+corrupted_description = "黑潮漫过湖岸，遗迹水道被异变吞没。"
 content_scene = ExtResource("2")
 default_entry_id = &"default"

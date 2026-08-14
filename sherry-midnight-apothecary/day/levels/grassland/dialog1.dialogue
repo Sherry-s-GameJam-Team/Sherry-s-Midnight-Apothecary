@@ -1,0 +1,14 @@
+~ start
+雪莉: 这里发生了什么？
+雪莉: 为什么一点药材都看不到，全是枯萎的草地？
+雪莉: 远处还浮着几座空岛，是[color=#3d014d]黑魔法[/color]的作用吗？
+雪莉: 看起来只能看看异变源头在哪里了……
+雪莉: 前面有个大坑应该跳不过去，那么踩着前面浮岛划过去试试吧……
+#雪莉踩到trapezoid节点上
+#节点开始晃动，并带着雪莉悬停在半空
+do emit_dialogue_event("grassland_dialog1_board")
+雪莉: ？！
+	怎么回事
+#节点接着向上移动，飞出摄像机范围，场景转到level.tscn
+do emit_dialogue_event("grassland_dialog1_launch")
+=> END

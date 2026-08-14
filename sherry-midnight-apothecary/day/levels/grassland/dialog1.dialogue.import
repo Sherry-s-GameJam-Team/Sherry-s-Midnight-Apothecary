@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dn067qavrx2xb"
+path="res://.godot/imported/dialog1.dialogue-e6b07aa99f6db8a7377dcdf1b56c1588.tres"
+
+[deps]
+
+source_file="res://day/levels/grassland/dialog1.dialogue"
+dest_files=["res://.godot/imported/dialog1.dialogue-e6b07aa99f6db8a7377dcdf1b56c1588.tres"]
+
+[params]
+
+defaults=true

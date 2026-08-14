@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="4_player"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="5_camera_bounds"]
 [ext_resource type="Script" uid="uid://887nbn7ofcth" path="res://day/levels/grassland/grass_environment.gd" id="6_environment"]
+[ext_resource type="Script" path="res://day/levels/grassland/dialogue_trigger.gd" id="7_dialogue_trigger"]
+[ext_resource type="Resource" uid="uid://dn067qavrx2xb" path="res://day/levels/grassland/dialog1.dialogue" id="8_dialog1_dialogue"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="9_potions"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="10_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="11_sherry_collision"]
@@ -13,17 +15,22 @@
 [ext_resource type="Script" uid="uid://b7ptghim42468" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_tutorial.gd" id="13_hound_tutorial"]
 [ext_resource type="PackedScene" uid="uid://cti4npw3yn4nr" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="14_task_complete"]
 [ext_resource type="AudioStream" uid="uid://csiwbvo3mmyan" path="res://audio/bgm/verdant_path_autoloop.wav" id="16_grass_bgm"]
+[ext_resource type="Texture2D" uid="uid://cotlufbdpdg7p" path="res://day/levels/grassland/art/hole_left.png" id="16_grd57"]
 [ext_resource type="Texture2D" uid="uid://mmsswny1rupu" path="res://day/levels/grassland/art/door.png" id="16_kvm0j"]
 [ext_resource type="Texture2D" uid="uid://csq80pl4laeer" path="res://day/levels/grassland/art/house.png" id="17_grxfx"]
 [ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="18_door_portal"]
 [ext_resource type="Texture2D" uid="uid://xlhrhrr4fc4r" path="res://day/levels/grassland/art/corrupted_skybox.png" id="19_corrupted_horizon"]
+[ext_resource type="Texture2D" uid="uid://b68l87jjdv1e4" path="res://day/levels/grassland/art/platform/trapezoid.png" id="22_jmxaa"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -667.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1448)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dialog1_trigger"]
+size = Vector2(256, 651)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_home_door"]
 size = Vector2(180, 250)
@@ -32,6 +39,7 @@ size = Vector2(180, 250)
 texture_filter = 1
 script = ExtResource("6_environment")
 debug_scene_id = "grassland"
+start_corrupted = true
 
 [node name="GrasslandBGM" type="AudioStreamPlayer" parent="." unique_id=1375464267]
 stream = ExtResource("16_grass_bgm")
@@ -173,13 +181,13 @@ texture = ExtResource("4_8caa3")
 centered = false
 
 [node name="GrassLoop3" type="Sprite2D" parent="Foreground" unique_id=1208266337]
-position = Vector2(1788, 566)
-scale = Vector2(0.41210675, 0.21593575)
-texture = ExtResource("4_8caa3")
+position = Vector2(1803.0001, 295.00003)
+scale = Vector2(0.41210675, 0.4798657)
+texture = ExtResource("16_grd57")
 centered = false
 
 [node name="GrassLoop4" type="Sprite2D" parent="Foreground" unique_id=674109980]
-position = Vector2(2652.9998, 577)
+position = Vector2(3123.0002, 582)
 scale = Vector2(0.49907744, 0.20056096)
 texture = ExtResource("4_8caa3")
 centered = false
@@ -199,9 +207,19 @@ scale = Vector2(0.7918968, 0.7918969)
 texture = ExtResource("17_grxfx")
 
 [node name="issues" type="Node2D" parent="." unique_id=733082789]
+position = Vector2(1063, 0)
 
 [node name="dialog1" type="Marker2D" parent="issues" unique_id=143980258]
 position = Vector2(923, 673)
+
+[node name="Dialog1Trigger" type="Area2D" parent="issues" unique_id=253236181]
+position = Vector2(923, 673)
+script = ExtResource("7_dialogue_trigger")
+dialogue_resource = ExtResource("8_dialog1_dialogue")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="issues/Dialog1Trigger" unique_id=315906906]
+position = Vector2(0, -229.5)
+shape = SubResource("RectangleShape2D_dialog1_trigger")
 
 [node name="Door" type="Sprite2D" parent="." unique_id=111916327]
 position = Vector2(481.00003, 510)
@@ -220,3 +238,9 @@ interaction_hint_text = "按[E]返回药水铺"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HomeDoor" unique_id=811238017]
 shape = SubResource("RectangleShape2D_home_door")
+
+[node name="Trapezoid" type="Sprite2D" parent="." unique_id=37722980]
+z_index = 25
+position = Vector2(2274, 732.00006)
+scale = Vector2(0.64106137, 0.6410613)
+texture = ExtResource("22_jmxaa")

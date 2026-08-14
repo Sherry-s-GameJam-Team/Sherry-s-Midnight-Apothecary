@@ -1,0 +1,479 @@
+[gd_scene format=3 uid="uid://de4nkfctmes60"]
+
+[ext_resource type="Script" uid="uid://cjxl00tdldvhg" path="res://day/levels/grassland/emerald_field/scripts/emerald_field_level.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://xlhrhrr4fc4r" path="res://day/levels/grassland/art/corrupted_skybox.png" id="2_2ney1"]
+[ext_resource type="Script" uid="uid://bs0uugqtrs37" path="res://day/levels/grassland/emerald_field/scripts/moving_platform.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://drb8odoqcoy61" path="res://day/levels/grassland/art/skybox_corruped.png" id="3_1jms1"]
+[ext_resource type="Script" uid="uid://tr6k0icc71w" path="res://day/levels/grassland/emerald_field/scripts/collapse_platform.gd" id="4"]
+[ext_resource type="Script" uid="uid://crfp386hv65g4" path="res://day/levels/grassland/emerald_field/scripts/poison_gas.gd" id="5"]
+[ext_resource type="Script" uid="uid://bcc8vqdfc8r0s" path="res://day/levels/grassland/emerald_field/scripts/fall_reset_zone.gd" id="6"]
+[ext_resource type="Script" uid="uid://c8jr1d5y7nhjv" path="res://day/levels/grassland/emerald_field/scripts/goal_marker.gd" id="7"]
+[ext_resource type="Texture2D" uid="uid://bt0ld633b3v3f" path="res://day/levels/grassland/emerald_field/art/platforms/disc.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://b6nbg3s8ri46" path="res://day/levels/grassland/emerald_field/art/platforms/rectangle.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://2r58uv0lmhg2" path="res://day/levels/grassland/emerald_field/art/platforms/stairs.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://c7n47bwhkxbqd" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://mqki86nhyphg" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid_broken.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://d2ve3h0u4xvm3" path="res://day/levels/grassland/emerald_field/art/platforms/triangle.png" id="14"]
+[ext_resource type="Texture2D" uid="uid://dw1pntgafsmuw" path="res://day/levels/grassland/emerald_field/art/platforms/triangle_long.png" id="15"]
+[ext_resource type="Texture2D" uid="uid://4lw0wwxqp1jv" path="res://day/levels/grassland/emerald_field/art/platforms/triangle_short.png" id="16"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="17_player"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="18_potions"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="19_presentation"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="20_collision"]
+
+[sub_resource type="RectangleShape2D" id="Rect_StartGround"]
+size = Vector2(625.95, 78.9)
+
+[sub_resource type="RectangleShape2D" id="Rect_P02"]
+size = Vector2(389.6, 49.9)
+
+[sub_resource type="RectangleShape2D" id="Rect_Move01"]
+size = Vector2(347.3, 67.6)
+
+[sub_resource type="RectangleShape2D" id="Rect_Collapse01"]
+size = Vector2(342.8, 48.7)
+
+[sub_resource type="RectangleShape2D" id="Rect_P05"]
+size = Vector2(213.6, 56.3)
+
+[sub_resource type="RectangleShape2D" id="Rect_P06"]
+size = Vector2(265.6, 66.8)
+
+[sub_resource type="RectangleShape2D" id="Rect_Move02"]
+size = Vector2(374.8, 57.2)
+
+[sub_resource type="RectangleShape2D" id="Rect_P09"]
+size = Vector2(287, 72.2)
+
+[sub_resource type="RectangleShape2D" id="Rect_Collapse02"]
+size = Vector2(328, 63.8)
+
+[sub_resource type="RectangleShape2D" id="Rect_P11"]
+size = Vector2(209, 56.3)
+
+[sub_resource type="RectangleShape2D" id="Rect_Move03"]
+size = Vector2(209, 56.3)
+
+[sub_resource type="RectangleShape2D" id="Rect_P13"]
+size = Vector2(369.6, 47.5)
+
+[sub_resource type="RectangleShape2D" id="Rect_P14"]
+size = Vector2(514.7, 48.3)
+
+[sub_resource type="RectangleShape2D" id="Rect_P15"]
+size = Vector2(213.6, 56.3)
+
+[sub_resource type="RectangleShape2D" id="Rect_Collapse03"]
+size = Vector2(361.8, 51.4)
+
+[sub_resource type="RectangleShape2D" id="Rect_Move04"]
+size = Vector2(328, 63.8)
+
+[sub_resource type="RectangleShape2D" id="Rect_EndGround"]
+size = Vector2(620.4, 80.9)
+
+[sub_resource type="RectangleShape2D" id="Rect_Gas1"]
+size = Vector2(980, 330)
+
+[sub_resource type="RectangleShape2D" id="Rect_Gas2"]
+size = Vector2(1050, 360)
+
+[sub_resource type="RectangleShape2D" id="Rect_Fall"]
+size = Vector2(9000, 420)
+
+[sub_resource type="RectangleShape2D" id="Rect_Goal"]
+size = Vector2(180, 320)
+
+[node name="EmeraldFieldLevel" type="Node2D" unique_id=674559747 groups=["emerald_level"]]
+script = ExtResource("1")
+start_corrupted = true
+
+[node name="CorruptedSkybox" type="Sprite2D" parent="." unique_id=1060680886]
+position = Vector2(855.00006, 71.00006)
+scale = Vector2(0.9088398, 0.9088398)
+texture = ExtResource("2_2ney1")
+
+[node name="CorruptedSkybox" type="Sprite2D" parent="CorruptedSkybox" unique_id=1209988741]
+position = Vector2(1962.3917, 30.808426)
+scale = Vector2(0.86068887, 0.8905775)
+texture = ExtResource("2_2ney1")
+
+[node name="CorruptedSkybox" type="Sprite2D" parent="CorruptedSkybox/CorruptedSkybox" unique_id=1946923410]
+position = Vector2(2224.4146, -50.8054)
+scale = Vector2(1.0553266, 1.245319)
+texture = ExtResource("2_2ney1")
+
+[node name="CorruptedSkybox" type="Sprite2D" parent="CorruptedSkybox/CorruptedSkybox/CorruptedSkybox" unique_id=1509511049]
+position = Vector2(1962.3917, 30.808426)
+scale = Vector2(0.86068887, 0.8905775)
+texture = ExtResource("2_2ney1")
+
+[node name="CorruptedSkybox" type="Sprite2D" parent="CorruptedSkybox/CorruptedSkybox/CorruptedSkybox/CorruptedSkybox" unique_id=227287241]
+position = Vector2(2215.3757, -4.9371758)
+scale = Vector2(1.0400367, 1.0478452)
+texture = ExtResource("2_2ney1")
+
+[node name="CorruptedSkybox" type="Sprite2D" parent="CorruptedSkybox/CorruptedSkybox/CorruptedSkybox/CorruptedSkybox/CorruptedSkybox" unique_id=118394847]
+position = Vector2(1962.3917, 30.808426)
+scale = Vector2(0.86068887, 0.8905775)
+texture = ExtResource("2_2ney1")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=619652802]
+z_index = -100
+position = Vector2(4206.599, 330)
+scale = Vector2(4.011439, 1.62)
+texture = ExtResource("3_1jms1")
+
+[node name="MistTint" type="Polygon2D" parent="." unique_id=1802220303]
+z_index = -90
+color = Color(0.49, 0.86, 0.42, 0.08)
+polygon = PackedVector2Array(0, 430, 8400, 430, 8400, 900, 0, 900)
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=342690382]
+position = Vector2(240, 420)
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=907447332]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=908465150]
+position = Vector2(240, 420)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=81979378 groups=["player"]]
+z_index = 10
+position = Vector2(240, 420)
+script = ExtResource("17_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1591332243 instance=ExtResource("20_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=188691992 instance=ExtResource("19_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=933728173]
+position = Vector2(150, -90)
+limit_left = 0
+limit_top = 0
+limit_right = 8500
+limit_bottom = 900
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="PotionThrower" parent="Player" unique_id=321834054 instance=ExtResource("18_potions")]
+
+[node name="Platforms" type="Node2D" parent="." unique_id=1579105145]
+
+[node name="StartGround" type="StaticBody2D" parent="Platforms" unique_id=184002786]
+position = Vector2(320, 610)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/StartGround" unique_id=249580494]
+scale = Vector2(0.95, 0.8)
+texture = ExtResource("10")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StartGround" unique_id=1160016999]
+position = Vector2(0.024993896, -38)
+shape = SubResource("Rect_StartGround")
+
+[node name="P02" type="StaticBody2D" parent="Platforms" unique_id=727933554]
+position = Vector2(920, 525)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P02" unique_id=1059420708]
+scale = Vector2(0.78, 0.82)
+texture = ExtResource("12")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P02" unique_id=1250070784]
+position = Vector2(-1, -27.999989)
+shape = SubResource("Rect_P02")
+
+[node name="Move01" type="AnimatableBody2D" parent="Platforms" unique_id=315953368 groups=["resettable"]]
+position = Vector2(1320, 455)
+script = ExtResource("3")
+motion = Vector2(360, 0)
+travel_time = 2.5
+phase = 0.05
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Move01" unique_id=165238566]
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("9")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Move01" unique_id=668745888]
+position = Vector2(3, 2.0000114)
+shape = SubResource("Rect_Move01")
+
+[node name="Collapse01" type="AnimatableBody2D" parent="Platforms" unique_id=2068548114]
+position = Vector2(2020, 475)
+script = ExtResource("4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Collapse01" unique_id=772271113]
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("13")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse01" unique_id=238202904]
+position = Vector2(4, 19.999992)
+shape = SubResource("Rect_Collapse01")
+
+[node name="Trigger" type="Area2D" parent="Platforms/Collapse01" unique_id=942591283]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse01/Trigger" unique_id=532078712]
+position = Vector2(1, -30.000008)
+shape = SubResource("Rect_Collapse01")
+
+[node name="P05" type="StaticBody2D" parent="Platforms" unique_id=157172587]
+position = Vector2(2440, 410)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P05" unique_id=1148680395]
+scale = Vector2(0.92, 0.82)
+texture = ExtResource("16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P05" unique_id=175780233]
+position = Vector2(-2, -26.000011)
+shape = SubResource("Rect_P05")
+
+[node name="P06" type="StaticBody2D" parent="Platforms" unique_id=781247637]
+position = Vector2(2760, 470)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P06" unique_id=234547031]
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P06" unique_id=707783897]
+position = Vector2(0, -37.99999)
+shape = SubResource("Rect_P06")
+
+[node name="Move02" type="AnimatableBody2D" parent="Platforms" unique_id=910855451 groups=["resettable"]]
+position = Vector2(3180, 510)
+script = ExtResource("3")
+motion = Vector2(0, -185)
+travel_time = 2.2
+phase = 0.3
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Move02" unique_id=1893576083]
+scale = Vector2(0.58, 0.58)
+texture = ExtResource("10")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Move02" unique_id=2101538683]
+position = Vector2(3, -24.000008)
+shape = SubResource("Rect_Move02")
+
+[node name="P08" type="StaticBody2D" parent="Platforms" unique_id=158339648]
+position = Vector2(3700, 545)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P08" unique_id=680366640]
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("11")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/P08" unique_id=1398920874]
+polygon = PackedVector2Array(-224, -62, -223, 39, 228, 41, 226, -1, 87, 1, 64, -14, -29, -14, -40, -64)
+
+[node name="P09" type="StaticBody2D" parent="Platforms" unique_id=63300391]
+position = Vector2(4200, 470)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P09" unique_id=1842182207]
+scale = Vector2(0.67, 0.67)
+texture = ExtResource("14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P09" unique_id=1680153341]
+position = Vector2(0, -51)
+shape = SubResource("Rect_P09")
+
+[node name="Collapse02" type="AnimatableBody2D" parent="Platforms" unique_id=1709667775]
+position = Vector2(4610, 390)
+script = ExtResource("4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Collapse02" unique_id=347828404]
+scale = Vector2(0.68, 0.68)
+texture = ExtResource("9")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse02" unique_id=166446634]
+position = Vector2(1, 32)
+shape = SubResource("Rect_Collapse02")
+
+[node name="Trigger" type="Area2D" parent="Platforms/Collapse02" unique_id=1791290292]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse02/Trigger" unique_id=1094099717]
+position = Vector2(0, 2)
+shape = SubResource("Rect_Collapse02")
+
+[node name="P11" type="StaticBody2D" parent="Platforms" unique_id=2035180329]
+position = Vector2(4950, 470)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P11" unique_id=1978022179]
+scale = Vector2(0.9, 0.82)
+texture = ExtResource("16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P11" unique_id=950392479]
+position = Vector2(1, -25.000011)
+shape = SubResource("Rect_P11")
+
+[node name="Move03" type="AnimatableBody2D" parent="Platforms" unique_id=358192187 groups=["resettable"]]
+position = Vector2(5170, 345)
+script = ExtResource("3")
+motion = Vector2(330, 0)
+travel_time = 2.0
+phase = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Move03" unique_id=1117737287]
+scale = Vector2(0.9, 0.82)
+texture = ExtResource("16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Move03" unique_id=1963043085]
+position = Vector2(0, -24.000011)
+shape = SubResource("Rect_Move03")
+
+[node name="P13" type="StaticBody2D" parent="Platforms" unique_id=772211831]
+position = Vector2(5660, 435)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P13" unique_id=1554808073]
+scale = Vector2(0.74, 0.78)
+texture = ExtResource("12")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P13" unique_id=1824095375]
+position = Vector2(-1, -18)
+shape = SubResource("Rect_P13")
+
+[node name="P14" type="StaticBody2D" parent="Platforms" unique_id=1191683329]
+position = Vector2(6100, 535)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P14" unique_id=151218831]
+scale = Vector2(0.58, 0.68)
+texture = ExtResource("15")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P14" unique_id=1709889824]
+position = Vector2(2, -12.999992)
+shape = SubResource("Rect_P14")
+
+[node name="P15" type="StaticBody2D" parent="Platforms" unique_id=331932992]
+position = Vector2(6670, 405)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/P15" unique_id=78981281]
+scale = Vector2(0.92, 0.82)
+texture = ExtResource("16")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P15" unique_id=1265389659]
+position = Vector2(2, -23.000011)
+shape = SubResource("Rect_P15")
+
+[node name="Collapse03" type="AnimatableBody2D" parent="Platforms" unique_id=2116378154]
+position = Vector2(7000, 485)
+script = ExtResource("4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Collapse03" unique_id=357296211]
+scale = Vector2(0.76, 0.76)
+texture = ExtResource("13")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse03" unique_id=1970883241]
+position = Vector2(7, 5.9999886)
+shape = SubResource("Rect_Collapse03")
+
+[node name="Trigger" type="Area2D" parent="Platforms/Collapse03" unique_id=1947226330]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse03/Trigger" unique_id=1610633982]
+position = Vector2(3, -19.000015)
+shape = SubResource("Rect_Collapse03")
+
+[node name="Move04" type="AnimatableBody2D" parent="Platforms" unique_id=1644485162 groups=["resettable"]]
+position = Vector2(7440, 405)
+script = ExtResource("3")
+motion = Vector2(0, -190)
+travel_time = 2.35
+phase = 0.55
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Move04" unique_id=1586535307]
+scale = Vector2(0.68, 0.68)
+texture = ExtResource("9")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Move04" unique_id=845796899]
+position = Vector2(1, -5)
+shape = SubResource("Rect_Move04")
+
+[node name="EndGround" type="StaticBody2D" parent="Platforms" unique_id=717539309]
+position = Vector2(8050, 585)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/EndGround" unique_id=433600287]
+scale = Vector2(0.96, 0.82)
+texture = ExtResource("10")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/EndGround" unique_id=86666627]
+position = Vector2(1, -29.000023)
+shape = SubResource("Rect_EndGround")
+
+[node name="Hazards" type="Node2D" parent="." unique_id=367085625]
+
+[node name="PoisonGasA" type="Area2D" parent="Hazards" unique_id=1011590587 groups=["resettable"]]
+position = Vector2(2580, 710)
+collision_layer = 0
+script = ExtResource("5")
+max_exposure = 1.25
+
+[node name="GasVisual" type="Polygon2D" parent="Hazards/PoisonGasA" unique_id=132562260]
+color = Color(0.35, 0.92, 0.38, 0.3)
+polygon = PackedVector2Array(-490, -165, 490, -165, 490, 165, -490, 165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/PoisonGasA" unique_id=1173232766]
+shape = SubResource("Rect_Gas1")
+
+[node name="PoisonGasB" type="Area2D" parent="Hazards" unique_id=151336606 groups=["resettable"]]
+position = Vector2(4950, 720)
+collision_layer = 0
+script = ExtResource("5")
+max_exposure = 1.05
+poison_color = Color(0.42, 0.95, 0.35, 0.34)
+
+[node name="GasVisual" type="Polygon2D" parent="Hazards/PoisonGasB" unique_id=1899384102]
+color = Color(0.42, 0.95, 0.35, 0.34)
+polygon = PackedVector2Array(-525, -180, 525, -180, 525, 180, -525, 180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/PoisonGasB" unique_id=946153381]
+shape = SubResource("Rect_Gas2")
+
+[node name="FallResetZone" type="Area2D" parent="Hazards" unique_id=1045581831]
+position = Vector2(4200, 1110)
+collision_layer = 0
+script = ExtResource("6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/FallResetZone" unique_id=2108176927]
+shape = SubResource("Rect_Fall")
+
+[node name="Goal" type="Area2D" parent="." unique_id=1531402167]
+position = Vector2(8250, 360)
+collision_layer = 0
+script = ExtResource("7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal" unique_id=610540721]
+shape = SubResource("Rect_Goal")
+
+[node name="Post" type="Polygon2D" parent="Goal" unique_id=1032343496]
+color = Color(0.28, 0.18, 0.35, 1)
+polygon = PackedVector2Array(-12, -130, 12, -130, 12, 130, -12, 130)
+
+[node name="Ring" type="Polygon2D" parent="Goal" unique_id=612881992]
+color = Color(0.6, 0.35, 0.85, 1)
+polygon = PackedVector2Array(-70, -95, 70, -95, 70, -70, -70, -70)
+
+[node name="Label" type="Label" parent="Goal" unique_id=1457699466]
+offset_left = -105.0
+offset_top = -185.0
+offset_right = 155.0
+offset_bottom = -141.0
+text = "旧旅门"
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1359593164]
+layer = 100
+visible = false
+
+[node name="Hint" type="Label" parent="UI" unique_id=1960785098]
+modulate = Color(1, 1, 1, 0.82)
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 60.0
+text = "A/D 或 ←/→ 移动    W/Z/↑ 跳跃    Shift 奔跑    毒气停留过久/坠落会重置"
+
+[node name="FadeRect" type="ColorRect" parent="UI" unique_id=1821867977]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

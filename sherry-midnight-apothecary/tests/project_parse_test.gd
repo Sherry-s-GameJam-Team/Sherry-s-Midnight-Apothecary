@@ -19,6 +19,7 @@ static func run(test: TestSupport) -> void:
 		"res://day/levels/home/bedroom.tscn",
 		"res://day/systems/animation_presentation/animation_presentation_executor.tscn",
 		"res://day/levels/grassland/grass.tscn",
+		"res://day/levels/grassland/level.tscn",
 		"res://day/art/raintree/raintree.tscn",
 		"res://day/art/lake/lake.tscn",
 		"res://night/night_runtime.tscn",
@@ -65,5 +66,6 @@ static func run(test: TestSupport) -> void:
 		"res://menu/menu_silhouette_director.gd",
 		"res://menu/shaders/menu_bird_trail.gdshader",
 		"res://day/levels/grassland/grassland_level.tres",
+		"res://day/levels/grassland/emerald_field_level.tres",
 	]:
 		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

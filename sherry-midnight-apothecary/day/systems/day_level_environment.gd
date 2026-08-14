@@ -4,9 +4,15 @@ extends Node2D
 ## Day-level scenes contain presentation only. DayRuntime owns progression and
 ## globally switches to NightRuntime after the player ends the day.
 
+## Every daytime level exposes the same normal/corrupted state contract. A
+## level may override set_corrupted() to update its own artwork.
+signal environment_state_changed(corrupted: bool)
+
 @export var debug_scene_id := ""
+@export var start_corrupted := false
 
 var _standalone_player_data: PlayerData
+var _is_corrupted := false
 
 
 func get_player_data() -> PlayerData:
@@ -21,6 +27,7 @@ func get_player_data() -> PlayerData:
 
 
 func _ready() -> void:
+	_is_corrupted = start_corrupted
 	var host := get_parent()
 	if host != null and host.get_parent() != null and host.get_parent().has_method("get_player_data"):
 		var embedded_debug_ui := get_node_or_null("DebugUI")
@@ -30,3 +37,14 @@ func _ready() -> void:
 	var console := get_node_or_null("DebugUI/DeveloperConsole")
 	if console != null:
 		console.setup_day_scene(self)
+
+
+func set_corrupted(corrupted: bool) -> void:
+	if _is_corrupted == corrupted:
+		return
+	_is_corrupted = corrupted
+	environment_state_changed.emit(corrupted)
+
+
+func is_corrupted() -> bool:
+	return _is_corrupted

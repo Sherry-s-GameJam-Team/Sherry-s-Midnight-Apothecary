@@ -13,11 +13,6 @@ const NORMAL_GRASS_LOOP := preload("res://day/levels/grassland/art/grass_loop.pn
 const CORRUPTED_GRASS_LOOP := preload("res://day/levels/grassland/art/grass_corrupted_loop.png")
 const DEVELOPER_CONSOLE_SCENE_PATH := "res://night/ui/developer_console/developer_console.tscn"
 
-@export var start_corrupted := false
-
-var _is_corrupted := false
-
-
 func _init() -> void:
 	texture_state_requested.connect(_on_texture_state_requested)
 
@@ -76,8 +71,10 @@ func _apply_texture_state(corrupted: bool, force := false) -> void:
 	for node: Sprite2D in _grass_loop_sprites():
 		node.texture = grass_texture
 	_is_corrupted = corrupted
-	if not force:
-		texture_state_changed.emit(corrupted)
+	if force:
+		return
+	environment_state_changed.emit(corrupted)
+	texture_state_changed.emit(corrupted)
 
 
 func _grass_loop_sprites() -> Array[Sprite2D]:

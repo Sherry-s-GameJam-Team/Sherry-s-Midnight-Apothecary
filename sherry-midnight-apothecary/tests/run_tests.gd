@@ -10,6 +10,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/home_day_one_intro_test.gd"),
 	preload("res://tests/home_travel_routing_test.gd"),
 	preload("res://tests/grassland_scene_test.gd"),
+	preload("res://tests/emerald_field_level_test.gd"),
 	preload("res://tests/sleeping_hound_tutorial_test.gd"),
 	preload("res://tests/developer_console_test.gd"),
 	preload("res://tests/player_data_test.gd"),

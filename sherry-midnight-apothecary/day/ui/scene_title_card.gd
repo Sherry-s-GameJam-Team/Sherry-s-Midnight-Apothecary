@@ -39,7 +39,7 @@ func show_title(
 	if _hide_tween != null:
 		_hide_tween.kill()
 	_presenting = true
-	day_label.text = "第 %d 天" % maxi(day, 1)
+	day_label.text = "第 %d 天" % maxi(day, GameFlow.INITIAL_DAY)
 	location_label.text = location if not location.is_empty() else "未知地点"
 	subtitle_label.text = subtitle if not subtitle.is_empty() else "场景描述待补充"
 	_fit_label(location_label, 96, 44)

@@ -56,7 +56,7 @@ func _exit_tree() -> void:
 
 
 static func should_present(day: int, player_data: PlayerData) -> bool:
-	return day == 1 and player_data != null and not bool(player_data.tutorial_flags.get(COMPLETED_FLAG, false))
+	return day == GameFlow.INITIAL_DAY and player_data != null and not bool(player_data.tutorial_flags.get(COMPLETED_FLAG, false))
 
 
 static func has_reached_trigger(player_position: Vector2, marker_position: Vector2, radius: float) -> bool:

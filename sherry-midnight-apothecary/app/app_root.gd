@@ -78,7 +78,7 @@ func load_game(
 	pause_menu.bind_player_data(player_data)
 	game_flow.configure(current_runtime_slot, player_data)
 	return game_flow.resume_game(
-		int(save_data.get("day", 1)),
+		int(save_data.get("day", GameFlow.INITIAL_DAY)),
 		int(save_data.get("mode", GameFlow.Mode.DAY)) as GameFlow.Mode,
 		initial_day_level_id,
 		defer_day_presentation,
