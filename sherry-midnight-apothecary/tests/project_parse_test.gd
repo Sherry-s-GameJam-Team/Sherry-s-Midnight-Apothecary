@@ -32,7 +32,7 @@ static func run(test: TestSupport) -> void:
 		"res://night/ui/pause_menu/pause_menu.tscn",
 		"res://night/ui/pause_menu/pause_inventory_page.tscn",
 		"res://night/ui/top_hint/top_hint_ui.tscn",
-		"res://day/ui/task_complete/task_complete_ui.tscn",
+		"res://shared/ui/task_complete/task_complete_ui.tscn",
 		"res://tests/top_hint_ui_demo.tscn",
 		"res://characters/sherry/sherry_test_scene.tscn",
 		"res://characters/sherry/sherry_indoor_collision.tscn",

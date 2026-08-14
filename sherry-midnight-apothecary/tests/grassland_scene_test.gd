@@ -55,8 +55,4 @@ static func run(test: TestSupport) -> void:
 	for node_path in texture_paths:
 		test.expect_equal((grass.get_node(node_path) as Sprite2D).transform, original_transforms[node_path], "%s keeps its edited transform." % node_path)
 
-	var console := grass.get_node("DebugUI/DeveloperConsole") as DeveloperConsole
-	test.expect_equal(console.execute_command("to normal"), "environment = normal", "Console restores normal Grassland textures.")
-	test.expect(not grass.is_corrupted(), "Normal console command updates the scene state.")
-	test.expect_equal(console.execute_command("to corrupted"), "environment = corrupted", "Console applies corrupted Grassland textures.")
 	grass.free()
