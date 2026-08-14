@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://b7ptghim42468" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_tutorial.gd" id="13_hound_tutorial"]
 [ext_resource type="PackedScene" uid="uid://cti4npw3yn4nr" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="14_task_complete"]
 [ext_resource type="AudioStream" uid="uid://csiwbvo3mmyan" path="res://audio/bgm/verdant_path_autoloop.wav" id="16_grass_bgm"]
+[ext_resource type="Texture2D" uid="uid://mmsswny1rupu" path="res://day/levels/grassland/art/door.png" id="16_kvm0j"]
 [ext_resource type="Texture2D" uid="uid://csq80pl4laeer" path="res://day/levels/grassland/art/house.png" id="17_grxfx"]
 [ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
 
@@ -87,10 +88,10 @@ position = Vector2(0, 23)
 shape = SubResource("WorldBoundaryShape2D_ground")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=271720390]
-position = Vector2(-2154, 415)
+position = Vector2(-1420, 417)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=46254276]
-position = Vector2(-15, 7)
+position = Vector2(-11, -5)
 shape = SubResource("RectangleShape2D_side_barrier")
 
 [node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1674331883]
@@ -137,19 +138,20 @@ animation_fps = 5.0
 script = ExtResource("13_hound_tutorial")
 
 [node name="TaskCompleteUI" parent="." unique_id=1852036980 instance=ExtResource("14_task_complete")]
+visible = false
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1625435170]
 z_index = 20
 
-[node name="GrassLoop2" type="Sprite2D" parent="Foreground" unique_id=245951206]
-position = Vector2(-141, 566)
-scale = Vector2(0.41210675, 0.21593575)
-texture = ExtResource("4_8caa3")
-centered = false
-
 [node name="GrassLoop" type="Sprite2D" parent="Foreground" unique_id=1298010657]
 position = Vector2(724.00006, 577)
 scale = Vector2(0.49907744, 0.20056096)
+texture = ExtResource("4_8caa3")
+centered = false
+
+[node name="GrassLoop2" type="Sprite2D" parent="Foreground" unique_id=245951206]
+position = Vector2(-141, 566)
+scale = Vector2(0.41210675, 0.21593575)
 texture = ExtResource("4_8caa3")
 centered = false
 
@@ -165,6 +167,12 @@ scale = Vector2(0.49907744, 0.20056096)
 texture = ExtResource("4_8caa3")
 centered = false
 
+[node name="GrassLoop5" type="Sprite2D" parent="Foreground" unique_id=754930040]
+position = Vector2(-1568, 577)
+scale = Vector2(0.66697425, 0.20056096)
+texture = ExtResource("4_8caa3")
+centered = false
+
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=429653190]
 layer = 200
 
@@ -177,3 +185,8 @@ texture = ExtResource("17_grxfx")
 
 [node name="dialog1" type="Marker2D" parent="issues" unique_id=143980258]
 position = Vector2(923, 673)
+
+[node name="Door" type="Sprite2D" parent="." unique_id=111916327]
+position = Vector2(481.00003, 510)
+scale = Vector2(0.80074245, 0.80074245)
+texture = ExtResource("16_kvm0j")

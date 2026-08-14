@@ -9,5 +9,5 @@
 	雪莉: 打开背包，装备净化药水后尝试净化它。
 - 炼制净化药水 [if potion_count("purification_potion") < 1]
 	do show_hint("前往药水铺炼制净化药水。", "sleeping_hound_brew_hint", 4.0)
-	雪莉: 我需要先回药水铺炼制一瓶净化药水。
+	雪莉: 我需要先回药水铺炼制一瓶[b]净化药水[/b]。
 => END

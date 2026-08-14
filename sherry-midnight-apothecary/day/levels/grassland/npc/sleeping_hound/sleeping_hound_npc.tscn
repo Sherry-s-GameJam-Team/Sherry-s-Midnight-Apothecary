@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dy7mc0aye5abs"]
+[gd_scene format=3 uid="uid://dy7mc0aye5abs"]
 
 [ext_resource type="Script" uid="uid://dk1cp8d87apvc" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_npc.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c84skhnl1fynb" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_npc_idle_30f.png" id="2_atlas"]
 [ext_resource type="Resource" uid="uid://b7jahkfkksu8t" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound.dialogue" id="3_dialogue"]
-[ext_resource type="Script" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_target_guide.gd" id="4_target_guide"]
+[ext_resource type="Script" uid="uid://beoemwershtpp" path="res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_target_guide.gd" id="4_target_guide"]
 [ext_resource type="SpriteFrames" path="res://characters/luca/luca_sprite_frames.tres" id="5_luca_frames"]
-[ext_resource type="Resource" path="res://day/levels/grassland/npc/sleeping_hound/luca_after_purification.dialogue" id="6_luca_dialogue"]
+[ext_resource type="Resource" uid="uid://bimxmvcuqrqsc" path="res://day/levels/grassland/npc/sleeping_hound/luca_after_purification.dialogue" id="6_luca_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
 size = Vector2(316, 131.5)
@@ -23,7 +23,7 @@ texture = ExtResource("2_atlas")
 hframes = 5
 vframes = 6
 
-[node name="LucaVisual" type="AnimatedSprite2D" parent="."]
+[node name="LucaVisual" type="AnimatedSprite2D" parent="." unique_id=2042647680]
 visible = false
 position = Vector2(0, -84)
 scale = Vector2(0.22, 0.22)
@@ -35,8 +35,8 @@ position = Vector2(6, -76)
 scale = Vector2(0.595, 0.595)
 shape = SubResource("RectangleShape2D_interaction")
 
-[node name="TargetGuide" type="Node2D" parent="."]
-z_as_relative = false
-z_index = 60
+[node name="TargetGuide" type="Node2D" parent="." unique_id=164692817]
 visible = false
+z_index = 60
+z_as_relative = false
 script = ExtResource("4_target_guide")

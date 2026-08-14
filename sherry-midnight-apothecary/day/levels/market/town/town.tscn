@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://6kytrvb1hse3" path="res://day/levels/market/town/home.png" id="9_mhwfj"]
 [ext_resource type="Texture2D" uid="uid://c457rfqxaupro" path="res://day/levels/market/town/complex1.png" id="9_rso1f"]
 [ext_resource type="Texture2D" uid="uid://dwk78d0jg8m58" path="res://day/levels/market/town/door.png" id="13_rso1f"]
-[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/systems/camera_bounds.gd" id="14_camera_bounds"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="14_camera_bounds"]
 [ext_resource type="Texture2D" uid="uid://bahl4xopkmufw" path="res://day/levels/market/town/cross.png" id="14_mhwfj"]
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="15_environment"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="17_console"]
@@ -71,7 +71,6 @@ debug_scene_id = "流明街"
 
 [node name="TownBGM" type="AudioStreamPlayer" parent="." unique_id=2023291965]
 stream = ExtResource("23_town_bgm")
-bus = &"Music"
 script = ExtResource("24_looping_bgm")
 loop_end_sample = 2382144
 

@@ -229,8 +229,8 @@ func _complete_tutorial() -> void:
 		if not _task_complete_ui.dismissed.is_connected(_on_task_complete_dismissed):
 			_task_complete_ui.dismissed.connect(_on_task_complete_dismissed, CONNECT_ONE_SHOT)
 		_task_complete_ui.present(
-			"沉睡魔犬的净化",
-			"侵蚀已经消退，翡翠原恢复了片刻安宁。",
+			"魔化猎犬的净化",
+			"瘴气已经消散，快去看看它具体情况吧。",
 			"净化教程已完成 · 任务进度已记录"
 		)
 	elif _top_hint != null:

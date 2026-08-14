@@ -55,4 +55,9 @@ static func run(test: TestSupport) -> void:
 	for node_path in texture_paths:
 		test.expect_equal((grass.get_node(node_path) as Sprite2D).transform, original_transforms[node_path], "%s keeps its edited transform." % node_path)
 
+	var grass_loops := grass.find_children("GrassLoop*", "Sprite2D", true, false)
+	test.expect(not grass_loops.is_empty(), "Grassland exposes GrassLoop sprites for corruption.")
+	for grass_loop: Sprite2D in grass_loops:
+		test.expect(grass_loop.texture.resource_path.ends_with("grass_corrupted_loop.png"), "%s uses corrupted grass." % grass_loop.get_path())
+
 	grass.free()

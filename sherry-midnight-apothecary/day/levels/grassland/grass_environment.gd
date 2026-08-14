@@ -12,13 +12,6 @@ const CORRUPTED_FAR_GRASS := preload("res://day/levels/grassland/art/fs_grass_co
 const NORMAL_GRASS_LOOP := preload("res://day/levels/grassland/art/grass_loop.png")
 const CORRUPTED_GRASS_LOOP := preload("res://day/levels/grassland/art/grass_corrupted_loop.png")
 
-const GRASS_LOOP_PATHS: Array[NodePath] = [
-	NodePath("FarGrass/GrassLoop2"),
-	NodePath("FarGrass/GrassLoop3"),
-	NodePath("Foreground/GrassLoop2"),
-	NodePath("Foreground/GrassLoop"),
-]
-
 @export var start_corrupted := false
 
 var _is_corrupted := false
@@ -59,12 +52,18 @@ func _apply_texture_state(corrupted: bool, force := false) -> void:
 	_set_sprite_texture(NodePath("Skybox/Artwork"), CORRUPTED_SKYBOX if corrupted else NORMAL_SKYBOX)
 	_set_sprite_texture(NodePath("FarGrass/Artwork"), CORRUPTED_FAR_GRASS if corrupted else NORMAL_FAR_GRASS)
 	var grass_texture: Texture2D = CORRUPTED_GRASS_LOOP if corrupted else NORMAL_GRASS_LOOP
-	for node_path in GRASS_LOOP_PATHS:
-		_set_sprite_texture(node_path, grass_texture)
+	for node: Sprite2D in _grass_loop_sprites():
+		node.texture = grass_texture
 	_is_corrupted = corrupted
 	if not force:
 		texture_state_changed.emit(corrupted)
 
+
+func _grass_loop_sprites() -> Array[Sprite2D]:
+	var sprites: Array[Sprite2D] = []
+	for node: Node in find_children("GrassLoop*", "Sprite2D", true, false):
+		sprites.append(node as Sprite2D)
+	return sprites
 
 func _set_sprite_texture(node_path: NodePath, texture: Texture2D) -> void:
 	var sprite := get_node_or_null(node_path) as Sprite2D

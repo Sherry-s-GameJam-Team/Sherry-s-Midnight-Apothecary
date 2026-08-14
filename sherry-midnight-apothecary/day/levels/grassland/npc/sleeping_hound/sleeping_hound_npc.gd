@@ -11,7 +11,7 @@ signal purification_reloaded
 @export var dialogue_resource: DialogueResource
 @export var post_purification_dialogue_resource: DialogueResource
 @export var dialogue_title := "start"
-@export var interaction_hint_text := "按[E]与沉睡的魔犬交谈"
+@export var interaction_hint_text := "按[E]与受伤的魔犬交流"
 @export_range(1.0, 24.0, 0.5) var animation_fps := 6.0
 @export_range(1, 120, 1) var animation_frame_count := 30
 
