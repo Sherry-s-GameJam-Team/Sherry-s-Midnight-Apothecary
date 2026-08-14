@@ -11,6 +11,7 @@ const NORMAL_FAR_GRASS := preload("res://day/levels/grassland/art/fs_grass.png")
 const CORRUPTED_FAR_GRASS := preload("res://day/levels/grassland/art/fs_grass_corruped.png")
 const NORMAL_GRASS_LOOP := preload("res://day/levels/grassland/art/grass_loop.png")
 const CORRUPTED_GRASS_LOOP := preload("res://day/levels/grassland/art/grass_corrupted_loop.png")
+const DEVELOPER_CONSOLE_SCENE_PATH := "res://night/ui/developer_console/developer_console.tscn"
 
 @export var start_corrupted := false
 
@@ -23,8 +24,27 @@ func _init() -> void:
 
 func _ready() -> void:
 	super()
+	_install_standalone_developer_console()
 	_apply_texture_state(start_corrupted, true)
 
+func _install_standalone_developer_console() -> void:
+	if _is_embedded_in_day_runtime():
+		return
+	var debug_ui := get_node_or_null("DebugUI") as CanvasLayer
+	if debug_ui == null or debug_ui.get_node_or_null("DeveloperConsole") != null:
+		return
+	var console_scene := load(DEVELOPER_CONSOLE_SCENE_PATH) as PackedScene
+	if console_scene == null:
+		push_error("Grassland could not load DeveloperConsole.")
+		return
+	var console := console_scene.instantiate()
+	debug_ui.add_child(console)
+	console.call("setup_day_scene", self)
+
+
+func _is_embedded_in_day_runtime() -> bool:
+	var host := get_parent()
+	return host != null and host.get_parent() != null and host.get_parent().has_method("get_player_data")
 
 func set_corrupted(corrupted: bool) -> void:
 	texture_state_requested.emit(corrupted)

@@ -86,10 +86,21 @@ func _start_dialogue() -> void:
 		push_error("SleepingHoundNPC requires the DialogueManager autoload.")
 		_finish_dialogue()
 		return
+	var extra_game_states: Array = []
+	var player_data := _find_player_data()
+	var dialogue_start_title := dialogue_title
+	if dialogue_resource == post_purification_dialogue_resource:
+		var has_seen_follow_up := player_data != null and bool(player_data.tutorial_flags.get("luca_after_purification_seen", false))
+		dialogue_start_title = "repeat" if has_seen_follow_up else "first"
+		if player_data != null:
+			player_data.tutorial_flags["luca_after_purification_seen"] = true
+	if player_data != null:
+		extra_game_states.append({"player_data": player_data})
 	_balloon = dialogue_manager.show_dialogue_balloon_scene(
 		BALLOON_SCENE,
 		dialogue_resource,
-		dialogue_title
+		dialogue_start_title,
+		extra_game_states
 	)
 	if _balloon == null:
 		_finish_dialogue()
@@ -176,6 +187,13 @@ func _is_interact_event(event: InputEvent) -> bool:
 		key_event.keycode == KEY_E or key_event.physical_keycode == KEY_E
 	)
 
+func _find_player_data() -> PlayerData:
+	var current: Node = self
+	while current != null:
+		if current.has_method("get_player_data"):
+			return current.call("get_player_data") as PlayerData
+		current = current.get_parent()
+	return null
 
 func _find_app_root() -> Node:
 	var current: Node = self

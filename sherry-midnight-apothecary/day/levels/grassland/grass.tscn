@@ -116,7 +116,6 @@ script = ExtResource("4_player")
 [node name="SherryPresentation" parent="Player" unique_id=2056010217 instance=ExtResource("10_sherry_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=362910047]
-visible = false
 position = Vector2(112, -291)
 limit_left = 0
 limit_top = 0
@@ -127,7 +126,6 @@ left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=820947329 instance=ExtResource("9_potions")]
-visible = false
 
 [node name="SleepingHoundNPC" parent="." unique_id=1045050158 instance=ExtResource("12_sleeping_hound")]
 position = Vector2(1545, 744)
@@ -138,7 +136,6 @@ animation_fps = 5.0
 script = ExtResource("13_hound_tutorial")
 
 [node name="TaskCompleteUI" parent="." unique_id=1852036980 instance=ExtResource("14_task_complete")]
-visible = false
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1625435170]
 z_index = 20

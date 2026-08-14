@@ -28,6 +28,10 @@ static func run(test: TestSupport) -> void:
 	test.expect(grass.get_node("Foreground/GrassLoop") is Sprite2D, "grass_loop is installed in the foreground layer.")
 	test.expect(sleeping_hound != null, "Grassland installs the sleeping hound interaction NPC.")
 	test.expect(sleeping_hound_tutorial != null, "Grassland installs the sleeping hound purification tutorial controller.")
+	var console := grass.get_node_or_null("DebugUI/DeveloperConsole")
+	test.expect(console != null, "Standalone Grassland installs its developer console at runtime.")
+	if console != null:
+		test.expect((console.call("execute_command", "status") as String).contains("mode=DAY"), "Standalone Grassland binds the console to its day-scene controls.")
 	test.expect(sleeping_hound.get_node("TargetGuide") is SleepingHoundTargetGuide, "Sleeping hound includes its purification target arrow.")
 
 	var texture_paths: Array[NodePath] = [

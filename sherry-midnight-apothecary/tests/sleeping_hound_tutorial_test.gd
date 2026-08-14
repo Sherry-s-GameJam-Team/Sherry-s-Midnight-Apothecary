@@ -2,6 +2,11 @@ extends RefCounted
 
 
 static func run(test: TestSupport) -> void:
+	var npc_source := FileAccess.get_file_as_string("res://day/levels/grassland/npc/sleeping_hound/sleeping_hound_npc.gd")
+	test.expect(npc_source.contains('extra_game_states.append({"player_data": player_data})'), "Sleeping hound dialogue passes PlayerData under the player_data state name.")
+	test.expect(npc_source.contains('dialogue_start_title = "repeat" if has_seen_follow_up else "first"'), "Sleeping hound selects a separate follow-up dialogue title after the first conversation.")
+	var luca_dialogue_source := FileAccess.get_file_as_string("res://day/levels/grassland/npc/sleeping_hound/luca_after_purification.dialogue")
+	test.expect(luca_dialogue_source.contains("~ first") and luca_dialogue_source.contains("~ repeat"), "Luca dialogue defines separate first and repeat branches.")
 	var dialogue_source := FileAccess.get_file_as_string("res://day/levels/grassland/npc/sleeping_hound/sleeping_hound.dialogue")
 	test.expect(dialogue_source.contains("emit_dialogue_event(\"sleeping_hound_tutorial_begin\""), "Sleeping hound dialogue emits the event that starts the gameplay tutorial.")
 	test.expect(dialogue_source.contains("使用净化药水 [if potion_count(\"purification_potion\") >= 1]"), "Using purification is offered only when the dedicated potion is owned.")
