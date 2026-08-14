@@ -82,7 +82,7 @@ func _build_customer_queue() -> Array[Dictionary]:
 	for customer: Dictionary in CustomerEventCatalog.eligible_for_day(day, player_data.tutorial_flags if player_data != null else {}):
 		if reputation >= 70 or float(customer.get("modifier", 1.0)) <= 1.05:
 			available.append(customer)
-	var target_count := 3 if reputation >= 70 else 2 if reputation >= 40 else 1
+	var target_count := 8 if reputation >= 70 else 2 if reputation >= 40 else 1
 	var queue: Array[Dictionary] = []
 	for index in range(mini(target_count, available.size())):
 		var customer := available[index].duplicate()

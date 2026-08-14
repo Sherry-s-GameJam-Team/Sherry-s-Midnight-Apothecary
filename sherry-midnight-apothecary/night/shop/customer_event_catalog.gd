@@ -30,6 +30,7 @@ static func eligible_for_day(current_day: int, flags: Dictionary) -> Array[Dicti
 			result.append(event.duplicate(true))
 	return result
 
-static func _event(event_id: StringName, npc_id: StringName, character_name: String, identity: String, start_day: int, modifier: int, request: String, symptoms: Array, primary: StringName, secondary: StringName, requirements: Array, forbidden_effects: Array, forbidden_traits: Array, preferred_special: StringName, revisit_days: int, revisit_note: String, lines: Array) -> Dictionary:
+static func _event(event_id: StringName, npc_id: StringName, character_name: String, identity: String, _start_day: int, modifier: int, request: String, symptoms: Array, primary: StringName, secondary: StringName, requirements: Array, forbidden_effects: Array, forbidden_traits: Array, preferred_special: StringName, revisit_days: int, revisit_note: String, lines: Array) -> Dictionary:
+	var start_day := 1
 	var severity := 1 if event_id == &"young_villager_fatigue_01" or event_id == &"innkeeper_smoke_cough_01" else 3 if event_id == &"ranger_corrupted_claw_01" else 2
 	return {"event_id":event_id,"npc_id":npc_id,"name":character_name,"identity":identity,"start_day":start_day,"modifier":float(modifier)/100.0,"request":request,"visible_symptoms":symptoms,"primary_need":primary,"secondary_need":secondary,"special_requirements":requirements,"severity":severity,"forbidden_effects":forbidden_effects,"forbidden_traits":forbidden_traits,"preferred_special_potion_id":preferred_special,"revisit_days":revisit_days,"revisit_note":revisit_note,"feedback_lines":lines,"portrait":PORTRAITS.get(npc_id),"success_flag":str(event_id)+"_resolved"}
