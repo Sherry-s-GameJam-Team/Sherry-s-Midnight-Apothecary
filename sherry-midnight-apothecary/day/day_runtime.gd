@@ -32,6 +32,7 @@ var day := 1
 @onready var scene_title_card: SceneTitleCard = $SceneTitleCard
 @onready var developer_console_layer: CanvasLayer = $DeveloperConsoleLayer
 @onready var developer_console: Node = $DeveloperConsoleLayer/DeveloperConsole
+@onready var level_transition_fade: ColorRect = $LevelTransition/Fade
 
 var current_level: LevelData
 var current_level_instance: Node
@@ -39,6 +40,7 @@ var _initial_level_id: StringName = &""
 var _defer_initial_presentation := false
 var _defer_initial_title := false
 var _intro_locked := false
+var _level_transition_running := false
 
 
 func get_player_data() -> PlayerData:
@@ -103,6 +105,29 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		_play_scene_title_once()
 		return true
 	return false
+
+
+func transition_to_level_with_blackout(level_id: String, entry_id: StringName = &"default", release_modal_input_lock := false) -> bool:
+	if _level_transition_running:
+		return false
+	_level_transition_running = true
+	level_transition_fade.visible = true
+	level_transition_fade.modulate.a = 0.0
+	var out_tween := create_tween()
+	out_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	out_tween.tween_property(level_transition_fade, "modulate:a", 1.0, 0.32)
+	await out_tween.finished
+	var switched := switch_to_level(level_id, entry_id)
+	if switched and release_modal_input_lock:
+		get_tree().remove_meta("day_modal_input_locked")
+	await get_tree().process_frame
+	var in_tween := create_tween()
+	in_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	in_tween.tween_property(level_transition_fade, "modulate:a", 0.0, 0.32)
+	await in_tween.finished
+	level_transition_fade.visible = false
+	_level_transition_running = false
+	return switched
 
 
 func set_home_destination(level_id: StringName) -> bool:

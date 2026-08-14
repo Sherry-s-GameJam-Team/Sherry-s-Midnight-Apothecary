@@ -1,0 +1,310 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/miasma_purifier.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/miasma_root.gd" id="2_root"]
+[ext_resource type="Texture2D" path="res://assets/background/emerald_field_skybox.png" id="3_bg"]
+[ext_resource type="Texture2D" path="res://assets/platforms/rectangle.png" id="4_rect"]
+[ext_resource type="Texture2D" path="res://assets/platforms/disc.png" id="5_disc"]
+[ext_resource type="Texture2D" path="res://assets/platforms/trapezoid.png" id="6_trap"]
+[ext_resource type="Texture2D" path="res://assets/platforms/triangle_long.png" id="7_tri"]
+
+[sub_resource type="CircleShape2D" id="CircleRoot"]
+radius = 52.0
+
+[sub_resource type="ParticleProcessMaterial" id="FogMat"]
+emission_shape = 1
+emission_sphere_radius = 28.0
+direction = Vector3(0, 1, 0)
+spread = 35.0
+gravity = Vector3(0, -8, 0)
+initial_velocity_min = 18.0
+initial_velocity_max = 42.0
+scale_min = 0.6
+scale_max = 1.8
+color = Color(0.48, 0.9, 0.27, 0.34)
+
+[sub_resource type="Gradient" id="FogGradient"]
+colors = PackedColorArray(0.5, 1, 0.3, 0.7, 0.4, 0.9, 0.2, 0)
+
+[sub_resource type="GradientTexture1D" id="FogGradientTex"]
+gradient = SubResource("FogGradient")
+
+[sub_resource type="LabelSettings" id="RootLabelSettings"]
+font_size = 26
+font_color = Color(1, 1, 1, 1)
+outline_size = 6
+outline_color = Color(0.08, 0.14, 0.08, 0.9)
+
+[node name="MiasmaPurifierMinigame" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="World"]
+texture = ExtResource("3_bg")
+position = Vector2(0, -70)
+scale = Vector2(0.92, 1.25)
+
+[node name="PlayerIsland" type="Sprite2D" parent="World"]
+texture = ExtResource("4_rect")
+position = Vector2(0, 380)
+scale = Vector2(1.25, 1.25)
+
+[node name="DeviceBase" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-150, 430, -105, 260, -48, 215, 48, 215, 105, 260, 150, 430)
+color = Color(0.17, 0.13, 0.1, 1)
+
+[node name="DeviceBrass" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-82, 315, -55, 232, -25, 205, 25, 205, 55, 232, 82, 315)
+color = Color(0.68, 0.42, 0.16, 1)
+
+[node name="Nozzle" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-34, 225, -18, 110, 18, 110, 34, 225)
+color = Color(0.22, 0.18, 0.13, 1)
+
+[node name="IslandA" type="Sprite2D" parent="World"]
+texture = ExtResource("5_disc")
+position = Vector2(-545, -40)
+scale = Vector2(0.72, 0.72)
+
+[node name="IslandB" type="Sprite2D" parent="World"]
+texture = ExtResource("6_trap")
+position = Vector2(-115, -150)
+scale = Vector2(0.85, 0.85)
+
+[node name="IslandC" type="Sprite2D" parent="World"]
+texture = ExtResource("7_tri")
+position = Vector2(475, -35)
+scale = Vector2(0.64, 0.64)
+
+[node name="MotherIsland" type="Sprite2D" parent="World"]
+texture = ExtResource("4_rect")
+position = Vector2(65, -375)
+scale = Vector2(1.05, 1.05)
+
+[node name="Roots" type="Node2D" parent="World"]
+
+[node name="RootA" type="Area2D" parent="World/Roots"]
+position = Vector2(-545, 50)
+script = ExtResource("2_root")
+root_id = "A"
+required_power = 1
+max_health = 80.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/RootA"]
+shape = SubResource("CircleRoot")
+
+[node name="Core" type="Polygon2D" parent="World/Roots/RootA"]
+polygon = PackedVector2Array(-38, -20, -25, -48, 0, -60, 27, -45, 42, -15, 28, 35, 0, 55, -30, 32)
+color = Color(0.4, 0.86, 0.17, 1)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/RootA"]
+amount = 34
+lifetime = 2.0
+process_material = SubResource("FogMat")
+texture = SubResource("FogGradientTex")
+
+[node name="Label" type="Label" parent="World/Roots/RootA"]
+position = Vector2(-16, -100)
+label_settings = SubResource("RootLabelSettings")
+
+[node name="RootB" type="Area2D" parent="World/Roots"]
+position = Vector2(-115, -55)
+script = ExtResource("2_root")
+root_id = "B"
+required_power = 2
+max_health = 110.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/RootB"]
+shape = SubResource("CircleRoot")
+
+[node name="Core" type="Polygon2D" parent="World/Roots/RootB"]
+polygon = PackedVector2Array(-38, -20, -25, -48, 0, -60, 27, -45, 42, -15, 28, 35, 0, 55, -30, 32)
+color = Color(0.4, 0.86, 0.17, 1)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/RootB"]
+amount = 42
+lifetime = 2.2
+process_material = SubResource("FogMat")
+texture = SubResource("FogGradientTex")
+
+[node name="Label" type="Label" parent="World/Roots/RootB"]
+position = Vector2(-16, -100)
+label_settings = SubResource("RootLabelSettings")
+
+[node name="RootC" type="Area2D" parent="World/Roots"]
+position = Vector2(475, 60)
+script = ExtResource("2_root")
+root_id = "C"
+required_power = 2
+max_health = 120.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/RootC"]
+shape = SubResource("CircleRoot")
+
+[node name="Core" type="Polygon2D" parent="World/Roots/RootC"]
+polygon = PackedVector2Array(-38, -20, -25, -48, 0, -60, 27, -45, 42, -15, 28, 35, 0, 55, -30, 32)
+color = Color(0.4, 0.86, 0.17, 1)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/RootC"]
+amount = 42
+lifetime = 2.2
+process_material = SubResource("FogMat")
+texture = SubResource("FogGradientTex")
+
+[node name="Label" type="Label" parent="World/Roots/RootC"]
+position = Vector2(-16, -100)
+label_settings = SubResource("RootLabelSettings")
+
+[node name="MotherRoot" type="Area2D" parent="World/Roots"]
+position = Vector2(65, -255)
+script = ExtResource("2_root")
+root_id = "MOTHER"
+required_power = 3
+max_health = 180.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/MotherRoot"]
+shape = SubResource("CircleRoot")
+scale = Vector2(1.35, 1.35)
+
+[node name="Core" type="Polygon2D" parent="World/Roots/MotherRoot"]
+polygon = PackedVector2Array(-52, -25, -38, -60, 0, -78, 42, -58, 57, -20, 40, 48, 0, 72, -42, 45)
+color = Color(0.25, 0.5, 0.12, 1)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/MotherRoot"]
+amount = 60
+lifetime = 2.5
+process_material = SubResource("FogMat")
+texture = SubResource("FogGradientTex")
+
+[node name="Label" type="Label" parent="World/Roots/MotherRoot"]
+position = Vector2(-50, -125)
+label_settings = SubResource("RootLabelSettings")
+
+[node name="WindParticles" type="Node2D" parent="World"]
+
+[node name="WindHint" type="Label" parent="World/WindParticles"]
+position = Vector2(-650, 155)
+text = "→  →  →  →  →"
+theme_override_colors/font_color = Color(0.86, 1, 0.8, 0.6)
+theme_override_font_sizes/font_size = 38
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 0)
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="CrosshairH" type="ColorRect" parent="UI"]
+offset_left = 796.0
+offset_top = 420.0
+offset_right = 804.0
+offset_bottom = 480.0
+color = Color(0.95, 1, 0.9, 0.78)
+mouse_filter = 2
+
+[node name="CrosshairV" type="ColorRect" parent="UI"]
+offset_left = 770.0
+offset_top = 446.0
+offset_right = 830.0
+offset_bottom = 454.0
+color = Color(0.95, 1, 0.9, 0.78)
+mouse_filter = 2
+
+[node name="MedicineLabel" type="Label" parent="UI"]
+offset_left = 36.0
+offset_top = 740.0
+offset_right = 260.0
+offset_bottom = 775.0
+text = "净化药液"
+theme_override_font_sizes/font_size = 22
+
+[node name="MedicineBar" type="ProgressBar" parent="UI"]
+offset_left = 36.0
+offset_top = 780.0
+offset_right = 340.0
+offset_bottom = 810.0
+value = 100.0
+show_percentage = false
+
+[node name="HeatLabel" type="Label" parent="UI"]
+offset_left = 36.0
+offset_top = 820.0
+offset_right = 260.0
+offset_bottom = 850.0
+text = "风机负荷"
+theme_override_font_sizes/font_size = 22
+
+[node name="HeatBar" type="ProgressBar" parent="UI"]
+offset_left = 36.0
+offset_top = 855.0
+offset_right = 340.0
+offset_bottom = 883.0
+show_percentage = false
+
+[node name="CorruptionLabel" type="Label" parent="UI"]
+offset_left = 1260.0
+offset_top = 740.0
+offset_right = 1500.0
+offset_bottom = 775.0
+text = "瘴气侵蚀"
+theme_override_font_sizes/font_size = 22
+
+[node name="CorruptionBar" type="ProgressBar" parent="UI"]
+offset_left = 1260.0
+offset_top = 780.0
+offset_right = 1560.0
+offset_bottom = 810.0
+show_percentage = false
+
+[node name="PowerLabel" type="Label" parent="UI"]
+offset_left = 680.0
+offset_top = 790.0
+offset_right = 920.0
+offset_bottom = 830.0
+text = "净化功率：1"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="Objective" type="Label" parent="UI"]
+offset_left = 430.0
+offset_top = 34.0
+offset_right = 1170.0
+offset_bottom = 76.0
+text = "顺风净化：目标 A"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="Hint" type="Label" parent="UI"]
+offset_left = 310.0
+offset_top = 850.0
+offset_right = 1290.0
+offset_bottom = 888.0
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 1, 1, 0.72)
+theme_override_font_sizes/font_size = 18
+
+[node name="SuccessPanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 520.0
+offset_top = 300.0
+offset_right = 1080.0
+offset_bottom = 540.0
+
+[node name="Label" type="Label" parent="UI/SuccessPanel"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 520.0
+offset_bottom = 160.0
+text = "翡翠原瘴气净化完成\n灵泉重新流动"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 30
+
+[node name="Fade" type="ColorRect" parent="UI"]
+offset_right = 1600.0
+offset_bottom = 900.0
+color = Color(0, 0, 0, 0)
+mouse_filter = 2

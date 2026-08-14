@@ -2,7 +2,7 @@
 
 The daytime Grassland level is configured by `day/levels/grassland/grass.tscn` and exposed through `day/levels/grassland/grassland_level.tres`.
 
-Grassland opens as the day-zero corruption scene (`start_corrupted = true`). Its purification completion presentation uses the shared `res://shared/ui/task_complete/task_complete_ui.tscn` scene. The corruption state applies the corrupted texture to every `Sprite2D` named `GrassLoop*`, including future loop sprites added to the scene. It also reveals the fixed `CorruptedHorizon` parallax layer, placed between `Skybox` and `FarGrass`; that layer stays hidden in the normal state.
+Grassland opens as the day-zero corruption scene (`start_corrupted = true`). Its purification completion presentation uses the shared `res://shared/ui/task_complete/task_complete_ui.tscn` scene. The corruption state applies the corrupted texture to every `Sprite2D` named `GrassLoop*`, including future loop sprites added to the scene. It also reveals the fixed `CorruptedHorizon` parallax layer and the `Foreground/HoleLeft` / `HoleRight` sprites; all three stay hidden in the normal state.
 
 When run as an individual scene, Grassland dynamically attaches `res://night/ui/developer_console/developer_console.tscn` below `DebugUI`; when loaded by `DayRuntime`, it uses the global day console instead. This avoids making `grassland_level.tres` preload the console scene.
 
@@ -23,6 +23,12 @@ godot --path . res://day/levels/grassland/level.tscn
 ```
 
 Use A/D or the arrow keys to move, W/Z/Up to jump, and Shift to run. Falling below the route or remaining in poison gas too long fades out, resets the packaged hazards, and returns Sherry to `PlayerSpawn` using the production controller's existing input-lock interfaces.
+
+## Miasma purifier finale
+
+At the Emerald Field `Goal`, press `E` to open the integrated `res://day/minigames/miasma_purifier/miasma_purifier.tscn` sequence. The player remains at the interaction point while the purifier takes control of the camera and input. Hold left mouse to purify the roots in wind order `A → B → C → MOTHER`, using power levels `1 / 2 / 2 / 3`; right mouse highlights active roots, the wheel changes power, and `R` restarts after a failed attempt.
+
+On success, `emerald_field_miasma_cleared` is saved in `PlayerData.tutorial_flags`, the minigame closes at the original Goal position, and the camera shakes. `DayRuntime` then holds a full-screen black transition across the level switch and spawns Sherry at Grassland `EntryPoints/level_completed`. The transition releases the modal input lock only after the new level is in place. A saved cleared flag disables the Goal on later Emerald Field loads.
 
 Deployment checks can be run independently with:
 

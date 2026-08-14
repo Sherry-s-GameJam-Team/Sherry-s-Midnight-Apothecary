@@ -14,8 +14,11 @@ static func run(test: TestSupport) -> void:
 	var far_grass := grass.get_node("FarGrass") as Parallax2D
 	var player := grass.get_node("Player") as CharacterBody2D
 	var default_entry := grass.get_node("EntryPoints/default") as Marker2D
+	var completed_entry := grass.get_node("EntryPoints/level_completed") as Marker2D
 	var camera := grass.get_node("Player/Camera2D") as Camera2D
 	var foreground := grass.get_node("Foreground") as Node2D
+	var hole_left := grass.get_node("Foreground/HoleLeft") as Sprite2D
+	var hole_right := grass.get_node("Foreground/HoleRight") as Sprite2D
 	var dialog1_trigger := grass.get_node("issues/Dialog1Trigger") as GrasslandDialogueTrigger
 	var sleeping_hound := grass.get_node("SleepingHoundNPC") as SleepingHoundNPC
 	var sleeping_hound_tutorial := grass.get_node("SleepingHoundTutorial") as SleepingHoundTutorial
@@ -23,9 +26,11 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(skybox.scroll_scale, Vector2.ZERO, "Skybox stays fixed relative to the camera.")
 	test.expect(grass.is_corrupted(), "Grassland starts in its day-zero corrupted state.")
 	test.expect(corrupted_horizon.visible, "The corrupted horizon is visible in the day-zero corrupted state.")
+	test.expect(hole_left.visible and hole_right.visible, "The corrupted holes are visible in the day-zero corrupted state.")
 	test.expect(corrupted_horizon.z_index > skybox.z_index and corrupted_horizon.z_index < far_grass.z_index, "The corrupted horizon renders between the skybox and far grass.")
 	test.expect_equal(far_grass.scroll_scale, Vector2(0.45, 1.0), "Far grass uses horizontal-only parallax.")
 	test.expect_equal(default_entry.global_position, player.global_position, "Grassland exposes a formal default travel entry point.")
+	test.expect(completed_entry != null, "Grassland exposes the purifier-completion return entry point.")
 	test.expect(foreground.z_index > player.z_index, "Foreground grass masks the player.")
 	test.expect(dialog1_trigger != null and dialog1_trigger.dialogue_resource != null, "Crossing the dialog1 marker triggers its configured dialogue.")
 	test.expect_equal(dialog1_trigger.seen_flag, "grassland_dialog1_seen", "dialog1 records its one-time trigger flag.")
@@ -64,10 +69,12 @@ static func run(test: TestSupport) -> void:
 	grass.texture_state_requested.emit(false)
 	test.expect(not grass.is_corrupted(), "The corruption state can return to normal after purification.")
 	test.expect(not corrupted_horizon.visible, "The corrupted horizon is hidden in the normal state.")
+	test.expect(not hole_left.visible and not hole_right.visible, "The corrupted holes hide in the normal state.")
 	grass.texture_state_requested.emit(true)
 	test.expect(grass.is_corrupted(), "The request signal switches Grassland to corrupted textures.")
 	test.expect_equal(changed_states, [false, true], "The changed signal reports both state transitions.")
 	test.expect(corrupted_horizon.visible, "The corrupted horizon appears in the corrupted state.")
+	test.expect(hole_left.visible and hole_right.visible, "The corrupted holes reappear in the corrupted state.")
 	test.expect((grass.get_node("Skybox/Artwork") as Sprite2D).texture.resource_path.ends_with("skybox_corruped.png"), "Corrupted skybox is applied.")
 	test.expect((grass.get_node("FarGrass/Artwork") as Sprite2D).texture.resource_path.ends_with("fs_grass_corruped.png"), "Corrupted far grass is applied.")
 	for node_path in texture_paths.slice(2):
@@ -83,5 +90,6 @@ static func run(test: TestSupport) -> void:
 
 	grass.texture_state_requested.emit(false)
 	test.expect(not corrupted_horizon.visible, "The corrupted horizon hides when Grassland returns to normal.")
+	test.expect(not hole_left.visible and not hole_right.visible, "The corrupted holes hide when Grassland returns to normal.")
 
 	grass.free()

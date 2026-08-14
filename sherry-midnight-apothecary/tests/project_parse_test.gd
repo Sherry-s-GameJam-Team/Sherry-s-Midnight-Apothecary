@@ -67,5 +67,6 @@ static func run(test: TestSupport) -> void:
 		"res://menu/shaders/menu_bird_trail.gdshader",
 		"res://day/levels/grassland/grassland_level.tres",
 		"res://day/levels/grassland/emerald_field_level.tres",
+		"res://day/minigames/miasma_purifier/miasma_purifier.tscn",
 	]:
 		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

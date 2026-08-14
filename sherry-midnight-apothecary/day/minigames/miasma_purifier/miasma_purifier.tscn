@@ -1,0 +1,264 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://day/minigames/miasma_purifier/miasma_purifier.gd" id="1_main"]
+[ext_resource type="Script" path="res://day/minigames/miasma_purifier/miasma_root.gd" id="2_root"]
+[ext_resource type="Texture2D" path="res://minigames/miasma_purifier/assets/background/emerald_field_skybox.png" id="3_sky"]
+[ext_resource type="Texture2D" path="res://minigames/miasma_purifier/assets/platforms/rectangle.png" id="4_rectangle"]
+[ext_resource type="Texture2D" path="res://minigames/miasma_purifier/assets/platforms/disc.png" id="5_disc"]
+[ext_resource type="Texture2D" path="res://minigames/miasma_purifier/assets/platforms/trapezoid.png" id="6_trapezoid"]
+[ext_resource type="Texture2D" path="res://minigames/miasma_purifier/assets/platforms/triangle_long.png" id="7_triangle"]
+
+[sub_resource type="CircleShape2D" id="RootShape"]
+radius = 52.0
+
+[sub_resource type="ParticleProcessMaterial" id="FogMaterial"]
+emission_shape = 1
+emission_sphere_radius = 28.0
+direction = Vector3(0, 1, 0)
+spread = 35.0
+gravity = Vector3(0, -8, 0)
+initial_velocity_min = 18.0
+initial_velocity_max = 42.0
+color = Color(0.48, 0.9, 0.27, 0.34)
+
+[sub_resource type="Gradient" id="FogGradient"]
+colors = PackedColorArray(0.5, 1, 0.3, 0.7, 0.4, 0.9, 0.2, 0)
+
+[sub_resource type="GradientTexture1D" id="FogTexture"]
+gradient = SubResource("FogGradient")
+
+[node name="MiasmaPurifier" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="World"]
+texture = ExtResource("3_sky")
+position = Vector2(0, -70)
+scale = Vector2(0.92, 1.25)
+
+[node name="PlayerIsland" type="Sprite2D" parent="World"]
+texture = ExtResource("4_rectangle")
+position = Vector2(0, 380)
+scale = Vector2(1.25, 1.25)
+
+[node name="DeviceBase" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-150, 430, -105, 260, -48, 215, 48, 215, 105, 260, 150, 430)
+color = Color(0.17, 0.13, 0.1, 1)
+
+[node name="Nozzle" type="Polygon2D" parent="World"]
+polygon = PackedVector2Array(-34, 225, -18, 110, 18, 110, 34, 225)
+color = Color(0.68, 0.42, 0.16, 1)
+
+[node name="IslandA" type="Sprite2D" parent="World"]
+texture = ExtResource("5_disc")
+position = Vector2(-545, -40)
+scale = Vector2(0.72, 0.72)
+
+[node name="IslandB" type="Sprite2D" parent="World"]
+texture = ExtResource("6_trapezoid")
+position = Vector2(-115, -150)
+scale = Vector2(0.85, 0.85)
+
+[node name="IslandC" type="Sprite2D" parent="World"]
+texture = ExtResource("7_triangle")
+position = Vector2(475, -35)
+scale = Vector2(0.64, 0.64)
+
+[node name="MotherIsland" type="Sprite2D" parent="World"]
+texture = ExtResource("4_rectangle")
+position = Vector2(65, -375)
+scale = Vector2(1.05, 1.05)
+
+[node name="Roots" type="Node2D" parent="World"]
+
+[node name="RootA" type="Area2D" parent="World/Roots"]
+position = Vector2(-545, 50)
+script = ExtResource("2_root")
+root_id = "A"
+required_power = 1
+max_health = 80.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/RootA"]
+shape = SubResource("RootShape")
+
+[node name="Core" type="Polygon2D" parent="World/Roots/RootA"]
+polygon = PackedVector2Array(-38, -20, -25, -48, 0, -60, 27, -45, 42, -15, 28, 35, 0, 55, -30, 32)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/RootA"]
+amount = 34
+lifetime = 2.0
+process_material = SubResource("FogMaterial")
+texture = SubResource("FogTexture")
+
+[node name="Label" type="Label" parent="World/Roots/RootA"]
+position = Vector2(-16, -100)
+theme_override_font_sizes/font_size = 26
+
+[node name="RootB" type="Area2D" parent="World/Roots"]
+position = Vector2(-115, -55)
+script = ExtResource("2_root")
+root_id = "B"
+required_power = 2
+max_health = 110.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/RootB"]
+shape = SubResource("RootShape")
+
+[node name="Core" type="Polygon2D" parent="World/Roots/RootB"]
+polygon = PackedVector2Array(-38, -20, -25, -48, 0, -60, 27, -45, 42, -15, 28, 35, 0, 55, -30, 32)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/RootB"]
+amount = 42
+lifetime = 2.2
+process_material = SubResource("FogMaterial")
+texture = SubResource("FogTexture")
+
+[node name="Label" type="Label" parent="World/Roots/RootB"]
+position = Vector2(-16, -100)
+theme_override_font_sizes/font_size = 26
+
+[node name="RootC" type="Area2D" parent="World/Roots"]
+position = Vector2(475, 60)
+script = ExtResource("2_root")
+root_id = "C"
+required_power = 2
+max_health = 120.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/RootC"]
+shape = SubResource("RootShape")
+
+[node name="Core" type="Polygon2D" parent="World/Roots/RootC"]
+polygon = PackedVector2Array(-38, -20, -25, -48, 0, -60, 27, -45, 42, -15, 28, 35, 0, 55, -30, 32)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/RootC"]
+amount = 42
+lifetime = 2.2
+process_material = SubResource("FogMaterial")
+texture = SubResource("FogTexture")
+
+[node name="Label" type="Label" parent="World/Roots/RootC"]
+position = Vector2(-16, -100)
+theme_override_font_sizes/font_size = 26
+
+[node name="MotherRoot" type="Area2D" parent="World/Roots"]
+position = Vector2(65, -255)
+script = ExtResource("2_root")
+root_id = "MOTHER"
+required_power = 3
+max_health = 180.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Roots/MotherRoot"]
+shape = SubResource("RootShape")
+scale = Vector2(1.35, 1.35)
+
+[node name="Core" type="Polygon2D" parent="World/Roots/MotherRoot"]
+polygon = PackedVector2Array(-52, -25, -38, -60, 0, -78, 42, -58, 57, -20, 40, 48, 0, 72, -42, 45)
+
+[node name="Fog" type="GPUParticles2D" parent="World/Roots/MotherRoot"]
+amount = 60
+lifetime = 2.5
+process_material = SubResource("FogMaterial")
+texture = SubResource("FogTexture")
+
+[node name="Label" type="Label" parent="World/Roots/MotherRoot"]
+position = Vector2(-50, -125)
+theme_override_font_sizes/font_size = 26
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 120
+
+[node name="Title" type="Label" parent="UI"]
+offset_left = 430.0
+offset_top = 28.0
+offset_right = 1170.0
+offset_bottom = 70.0
+text = "净风仪 · 瘴气净化"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+
+[node name="Objective" type="Label" parent="UI"]
+offset_left = 360.0
+offset_top = 72.0
+offset_right = 1240.0
+offset_bottom = 112.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="MedicineBar" type="ProgressBar" parent="UI"]
+offset_left = 36.0
+offset_top = 780.0
+offset_right = 340.0
+offset_bottom = 810.0
+value = 100.0
+show_percentage = false
+
+[node name="HeatBar" type="ProgressBar" parent="UI"]
+offset_left = 36.0
+offset_top = 830.0
+offset_right = 340.0
+offset_bottom = 860.0
+show_percentage = false
+
+[node name="CorruptionBar" type="ProgressBar" parent="UI"]
+offset_left = 1260.0
+offset_top = 780.0
+offset_right = 1560.0
+offset_bottom = 810.0
+show_percentage = false
+
+[node name="PowerLabel" type="Label" parent="UI"]
+offset_left = 650.0
+offset_top = 790.0
+offset_right = 950.0
+offset_bottom = 830.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 24
+
+[node name="Hint" type="Label" parent="UI"]
+offset_left = 270.0
+offset_top = 850.0
+offset_right = 1330.0
+offset_bottom = 886.0
+text = "鼠标观察 · 左键净化 · 右键探脉 · 滚轮切换功率 · R 重置"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 1, 1, 0.78)
+theme_override_font_sizes/font_size = 18
+
+[node name="SuccessPanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 520.0
+offset_top = 300.0
+offset_right = 1080.0
+offset_bottom = 540.0
+
+[node name="Label" type="Label" parent="UI/SuccessPanel"]
+offset_left = 30.0
+offset_top = 75.0
+offset_right = 530.0
+offset_bottom = 165.0
+text = "翡翠原瘴气净化完成\n灵脉重新流动"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 30
+
+[node name="FailPanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 520.0
+offset_top = 300.0
+offset_right = 1080.0
+offset_bottom = 540.0
+
+[node name="Label" type="Label" parent="UI/FailPanel"]
+offset_left = 30.0
+offset_top = 75.0
+offset_right = 530.0
+offset_bottom = 165.0
+text = "瘴气侵蚀已满\n净风仪正在重启"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 30

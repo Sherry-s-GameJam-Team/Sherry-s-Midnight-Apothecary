@@ -15,7 +15,7 @@ signal launch_requested
 @export_node_path("Node2D") var trapezoid_path := NodePath("../../Trapezoid")
 @export_node_path("Camera2D") var camera_path := NodePath("../../Player/Camera2D")
 @export var destination_level: StringName = &"emerald_field"
-@export var boarding_offset := Vector2(-28.0, -72.0)
+@export var boarding_offset := Vector2(-28.0, -122.0)
 @export_range(0.1, 5.0, 0.05) var board_duration := 1.15
 @export_range(0.1, 3.0, 0.05) var shake_duration := 0.75
 @export_range(20.0, 400.0, 5.0) var hover_height := 96.0

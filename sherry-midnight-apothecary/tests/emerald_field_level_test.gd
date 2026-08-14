@@ -25,4 +25,14 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(level.get_node("Platforms").get_child_count(), 18, "All 18 packaged platform nodes are deployed.")
 	test.expect(level.get_node("Hazards/PoisonGasA").has_method("reset_hazard"), "Packaged poison-gas behavior is connected.")
 	test.expect(level.get_node("Platforms/Collapse01").has_method("reset_hazard"), "Packaged collapse-platform behavior is connected.")
+	var goal := level.get_node("Goal")
+	test.expect(goal.has_signal("minigame_requested"), "The old travel-gate Goal exposes the miasma-purifier interaction.")
+	test.expect(goal.has_method("set_available"), "The Goal can remain unavailable after purification is saved.")
+	var minigame_packed := load("res://day/minigames/miasma_purifier/miasma_purifier.tscn") as PackedScene
+	test.expect(minigame_packed != null, "The integrated miasma purifier scene can be loaded.")
+	if minigame_packed != null:
+		var minigame := minigame_packed.instantiate()
+		test.expect(minigame.has_signal("succeeded"), "The purifier reports completion to the level.")
+		test.expect(minigame.get_node_or_null("World/Roots/MotherRoot") != null, "The purifier includes its locked mother root.")
+		minigame.free()
 	level.free()
