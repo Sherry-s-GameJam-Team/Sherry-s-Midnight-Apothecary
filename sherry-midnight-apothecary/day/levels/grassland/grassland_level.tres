@@ -13,3 +13,4 @@ corrupted_description = "长风染毒，生灵倒悬之急。"
 scene_description = "长风染毒，生灵倒悬之急。"
 content_scene = ExtResource("2_grassland_scene")
 default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"herdsmans_loaf_bush", &"stardust_puffy_lion", &"grail_lily", &"dew_flask_herb", &"old_mans_noose", &"praise_star_maple"])

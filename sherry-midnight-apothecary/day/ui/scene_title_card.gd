@@ -16,6 +16,7 @@ const ANIMATION_NAME := &"reveal"
 @onready var border_animation: AnimatedSprite2D = %BorderAnimation
 @onready var day_label: Label = %DayLabel
 @onready var location_label: Label = %LocationLabel
+@onready var disaster_label: Label = %DisasterLabel
 @onready var subtitle_label: Label = %SubtitleLabel
 
 var _hide_tween: Tween
@@ -34,20 +35,24 @@ func show_title(
 	day: int,
 	location: String,
 	subtitle: String,
-	immediate_text := false
+	immediate_text := false,
+	disaster_name := ""
 ) -> void:
 	if _hide_tween != null:
 		_hide_tween.kill()
 	_presenting = true
 	day_label.text = "第 %d 天" % maxi(day, GameFlow.INITIAL_DAY)
 	location_label.text = location if not location.is_empty() else "未知地点"
+	disaster_label.text = disaster_name
+	disaster_label.visible = not disaster_name.is_empty()
 	subtitle_label.text = subtitle if not subtitle.is_empty() else "场景描述待补充"
 	_fit_label(location_label, 96, 44)
+	_fit_label(disaster_label, 36, 20)
 	_fit_label(subtitle_label, 34, 20)
 
 	screen_root.visible = true
 	screen_root.modulate = Color.WHITE
-	for label in [day_label, location_label, subtitle_label]:
+	for label in [day_label, location_label, disaster_label, subtitle_label]:
 		label.modulate.a = 0.0
 	border_animation.visible = true
 	border_animation.stop()
@@ -60,6 +65,8 @@ func show_title(
 	text_tween.tween_property(day_label, "modulate:a", 1.0, 0.25)
 	text_tween.tween_interval(0.12)
 	text_tween.tween_property(location_label, "modulate:a", 1.0, 0.30)
+	text_tween.tween_interval(0.12)
+	text_tween.tween_property(disaster_label, "modulate:a", 1.0, 0.25)
 	text_tween.tween_interval(0.12)
 	text_tween.tween_property(subtitle_label, "modulate:a", 1.0, 0.25)
 

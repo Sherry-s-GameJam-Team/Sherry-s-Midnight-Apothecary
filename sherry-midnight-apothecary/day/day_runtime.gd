@@ -23,6 +23,7 @@ const DAILY_LEVELS: Array[LevelData] = [
 ]
 
 const SCENE_TITLE_SEEN_PREFIX := "scene_title_seen"
+const MIASMA_RETURN_PENDING_FLAG := "grassland_miasma_completion_return_pending"
 
 var player_data: PlayerData
 var day := 1
@@ -165,6 +166,8 @@ func _sync_bgm_for_current_level() -> void:
 
 func _instantiate_current_level(entry_id: StringName) -> Node:
 	var level := current_level.content_scene.instantiate()
+	var resolved_entry_id := _resolve_entry_id(entry_id)
+	var consumes_completion_return := current_level.id == &"grassland" and resolved_entry_id == &"level_completed" and bool(get_player_data().tutorial_flags.get(MIASMA_RETURN_PENDING_FLAG, false))
 	var deferred_presentations: Array[AnimationPresentationExecutor] = []
 	if _defer_initial_presentation:
 		for presentation: Node in level.find_children("*", "AnimationPresentationExecutor", true, false):
@@ -175,12 +178,23 @@ func _instantiate_current_level(entry_id: StringName) -> Node:
 	current_level_instance = level
 	for presentation: AnimationPresentationExecutor in deferred_presentations:
 		presentation.prepare()
-	var entry := level.get_node_or_null("EntryPoints/%s" % entry_id) as Marker2D
+	var entry := level.get_node_or_null("EntryPoints/%s" % resolved_entry_id) as Marker2D
 	var player := level.get_node_or_null("Player") as CharacterBody2D
 	if entry != null and player != null:
 		player.global_position = entry.global_position
-	level.propagate_call(&"on_level_entered", [entry_id], true)
+	level.propagate_call(&"on_level_entered", [resolved_entry_id], true)
+	if consumes_completion_return:
+		get_player_data().tutorial_flags.erase(MIASMA_RETURN_PENDING_FLAG)
 	return level
+
+
+func _resolve_entry_id(requested_entry_id: StringName) -> StringName:
+	# The completed-entry override is consumed after one return. The persistent
+	# cleared flag keeps Grassland normal, while later travel uses the caller's
+	# ordinary default entry again.
+	if current_level != null and current_level.id == &"grassland" and bool(get_player_data().tutorial_flags.get(MIASMA_RETURN_PENDING_FLAG, false)):
+		return &"level_completed"
+	return requested_entry_id
 
 
 func _find_level(level_id: StringName) -> LevelData:
@@ -199,7 +213,8 @@ func replay_scene_title(immediate_text := false) -> bool:
 		day,
 		current_level.display_name,
 		current_level.title_subtitle_for_environment_state(_current_level_is_corrupted()),
-		immediate_text
+		immediate_text,
+		current_level.disaster_name
 	)
 	return true
 

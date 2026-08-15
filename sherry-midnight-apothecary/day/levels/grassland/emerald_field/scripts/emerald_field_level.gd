@@ -3,6 +3,7 @@ extends DayLevelEnvironment
 
 const MIASMA_PURIFIER_SCENE_PATH := "res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn"
 const MIASMA_CLEARED_FLAG := "emerald_field_miasma_cleared"
+const MIASMA_RETURN_PENDING_FLAG := "grassland_miasma_completion_return_pending"
 
 @export var respawn_position := Vector2(240.0, 410.0)
 @export var fade_out_time := 0.18
@@ -95,6 +96,7 @@ func _on_miasma_purifier_succeeded() -> void:
 	var data := _get_player_data()
 	if data != null:
 		data.tutorial_flags[MIASMA_CLEARED_FLAG] = true
+		data.tutorial_flags[MIASMA_RETURN_PENDING_FLAG] = true
 	# Keep the osu-style completion card visible before closing the minigame.
 	await get_tree().create_timer(0.9).timeout
 	if is_instance_valid(_minigame):

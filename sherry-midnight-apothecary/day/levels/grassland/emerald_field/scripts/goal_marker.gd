@@ -19,10 +19,10 @@ func set_available(value: bool) -> void:
 	_refresh_label()
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if not _available or not _player_inside or get_tree().has_meta("day_modal_input_locked"):
 		return
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_E:
+	if _is_interact_event(event):
 		get_viewport().set_input_as_handled()
 		minigame_requested.emit(global_position)
 
@@ -44,3 +44,12 @@ func _refresh_label() -> void:
 		return
 	label.visible = _available and _player_inside
 	label.text = "按 [E] 启动净风仪" if _available else "翡翠原已净化"
+
+
+func _is_interact_event(event: InputEvent) -> bool:
+	if event.is_action_pressed("interact"):
+		return true
+	var key_event := event as InputEventKey
+	return key_event != null and key_event.pressed and not key_event.echo and (
+		key_event.keycode == KEY_E or key_event.physical_keycode == KEY_E
+	)

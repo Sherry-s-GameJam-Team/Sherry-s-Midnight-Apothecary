@@ -31,6 +31,7 @@ script = ExtResource("1_main")
 
 [node name="World" type="Node2D" parent="." unique_id=1193049818]
 position = Vector2(800, 450)
+z_index = 100
 
 [node name="Background" type="Sprite2D" parent="World" unique_id=562446480]
 position = Vector2(0, -78)

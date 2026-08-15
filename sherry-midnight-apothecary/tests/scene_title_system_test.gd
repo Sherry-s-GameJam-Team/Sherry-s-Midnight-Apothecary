@@ -44,6 +44,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime.switch_to_level("forest"), "The runtime can enter a second titled scene.")
 	test.expect(bool(player.tutorial_flags.get(forest_key, false)), "A different scene receives its own daily seen marker.")
 	test.expect(runtime.switch_to_level("grassland"), "The runtime can enter Grassland.")
+	test.expect_equal(runtime.scene_title_card.disaster_label.text, "瘴气之灾", "The title UI displays Grassland's DisasterName below its location.")
 	test.expect_equal(runtime.scene_title_card.subtitle_label.text, "长风染毒，生灵倒悬之急。", "The corrupted Grassland environment uses CorruptedDescription in the title UI.")
 	test.expect(runtime.switch_to_level("home"), "The runtime can enter a title-disabled scene.")
 	test.expect(not runtime.replay_scene_title(true), "Title-disabled scenes reject manual replay.")

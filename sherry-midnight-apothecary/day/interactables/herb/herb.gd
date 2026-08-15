@@ -1,6 +1,8 @@
 class_name HerbInteractable
 extends Area2D
 
+signal collected(ingredient_id: StringName, amount: int)
+
 @export var ingredient_id: StringName = &"herdsmans_loaf_bush"
 @export var herb_name := ""
 @export var interaction_hint_text := "按[E]采集"
@@ -59,6 +61,7 @@ func _collect_herb() -> void:
 	var current_count := int(player_data.inventory.get(ingredient_id, 0))
 	var next_count: int = current_count + maxi(collect_amount, 1)
 	player_data.inventory[ingredient_id] = next_count
+	collected.emit(ingredient_id, next_count - current_count)
 	
 	var display_name := _resolved_herb_name()
 	var app_root := _find_app_root()
@@ -134,6 +137,8 @@ func _resolve_herb_metadata() -> void:
 		var ingredient_data := _find_ingredient_data()
 		if ingredient_data != null and not ingredient_data.display_name.is_empty():
 			herb_name = ingredient_data.display_name
+			if visual is Sprite2D and ingredient_data.preview_texture != null:
+				(visual as Sprite2D).texture = ingredient_data.preview_texture
 		else:
 			herb_name = str(ingredient_id).replace("_", " ")
 

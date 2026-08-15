@@ -442,14 +442,16 @@ script = ExtResource("7")
 position = Vector2(4, -4)
 shape = SubResource("Rect_Goal")
 
-[node name="Label" type="Label" parent="Goal"]
-position = Vector2(-130, -110)
-size = Vector2(260, 42)
-text = "按 [E] 启动净风仪"
-horizontal_alignment = 1
+[node name="Label" type="Label" parent="Goal" unique_id=270621421]
+offset_left = -130.0
+offset_top = -110.0
+offset_right = 130.0
+offset_bottom = -68.0
 theme_override_colors/font_outline_color = Color(0.06, 0.12, 0.08, 1)
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 24
+text = "按 [E] 启动净风仪"
+horizontal_alignment = 1
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1359593164]
 layer = 100
