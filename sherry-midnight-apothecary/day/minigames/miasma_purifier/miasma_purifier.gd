@@ -4,7 +4,7 @@ extends Node2D
 signal succeeded
 signal cancelled
 
-const ORDER := ["A", "B", "C", "MOTHER"]
+const ORDER: Array[String] = ["A", "B", "C", "MOTHER"]
 
 var medicine := 100.0
 var overheat := 0.0
@@ -27,7 +27,7 @@ var _finished := false
 func _ready() -> void:
 	camera.make_current()
 	for child: Node in roots.get_children():
-		var root := child as MiasmaPurifierRoot
+		var root: MiasmaPurifierRoot = child as MiasmaPurifierRoot
 		if root != null:
 			root.purified.connect(_on_root_purified)
 	_set_mother_active(false)
@@ -58,19 +58,19 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _update_camera() -> void:
-	var viewport_size := get_viewport_rect().size
-	var mouse := get_viewport().get_mouse_position()
-	var target := Vector2(
-		clampf((mouse.x / viewport_size.x - 0.5) * 2.0, -1.0, 1.0) * 240.0,
-		clampf((mouse.y / viewport_size.y - 0.5) * 2.0, -1.0, 1.0) * 110.0
+	var viewport_size: Vector2 = get_viewport_rect().size
+	var mouse: Vector2 = get_viewport().get_mouse_position()
+	var target: Vector2 = Vector2(
+		clampf((mouse.x / viewport_size.x - 0.5) * 2.0, -1.0, 1.0) * 560.0,
+		clampf((mouse.y / viewport_size.y - 0.5) * 2.0, -1.0, 1.0) * 270.0
 	)
 	camera.position = target
 
 
 func _handle_scan() -> void:
-	var scanning := Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+	var scanning: bool = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 	for child: Node in roots.get_children():
-		var root := child as MiasmaPurifierRoot
+		var root: MiasmaPurifierRoot = child as MiasmaPurifierRoot
 		if root != null:
 			root.set_highlighted(scanning and root.active)
 
@@ -80,10 +80,10 @@ func _handle_purify(delta: float) -> void:
 		return
 	medicine = maxf(0.0, medicine - (5.0 + 2.0 * power_level) * delta)
 	overheat = minf(100.0, overheat + (13.0 + 7.0 * power_level) * delta)
-	var target := _root_under_mouse()
+	var target: MiasmaPurifierRoot = _root_under_mouse()
 	if target == null:
 		return
-	var expected := ORDER[mini(cleared.size(), ORDER.size() - 1)]
+	var expected: String = ORDER[mini(cleared.size(), ORDER.size() - 1)]
 	if target.root_id != expected:
 		corruption = minf(100.0, corruption + 13.0 * delta)
 		objective_label.text = "风向错误：先净化 %s" % expected
@@ -94,12 +94,12 @@ func _handle_purify(delta: float) -> void:
 
 
 func _root_under_mouse() -> MiasmaPurifierRoot:
-	var query := PhysicsPointQueryParameters2D.new()
+	var query: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
 	query.position = get_global_mouse_position()
 	query.collide_with_areas = true
 	query.collide_with_bodies = false
 	for hit: Dictionary in get_world_2d().direct_space_state.intersect_point(query, 16):
-		var root := hit.get("collider") as MiasmaPurifierRoot
+		var root: MiasmaPurifierRoot = hit.get("collider") as MiasmaPurifierRoot
 		if root != null:
 			return root
 	return null
@@ -118,16 +118,16 @@ func _on_root_purified(root_id: String) -> void:
 
 
 func _set_mother_active(value: bool) -> void:
-	var mother := roots.get_node_or_null("MotherRoot") as MiasmaPurifierRoot
+	var mother: MiasmaPurifierRoot = roots.get_node_or_null("MotherRoot") as MiasmaPurifierRoot
 	if mother != null:
 		mother.active = value
 		mother.visible = value
 
 
 func _ambient_corruption_rate() -> float:
-	var active_count := 0
+	var active_count: int = 0
 	for child: Node in roots.get_children():
-		var root := child as MiasmaPurifierRoot
+		var root: MiasmaPurifierRoot = child as MiasmaPurifierRoot
 		if root != null and root.active and not root.permanently_cleared:
 			active_count += 1
 	return 0.45 * active_count
@@ -158,7 +158,7 @@ func _reset() -> void:
 	success_panel.visible = false
 	fail_panel.visible = false
 	for child: Node in roots.get_children():
-		var root := child as MiasmaPurifierRoot
+		var root: MiasmaPurifierRoot = child as MiasmaPurifierRoot
 		if root == null:
 			continue
 		root.health = root.max_health

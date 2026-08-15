@@ -1,0 +1,227 @@
+[gd_scene format=3 uid="uid://bmeifwir1827d"]
+
+[ext_resource type="Script" uid="uid://2r3ckdatu5o1" path="res://minigames/minigames/miasma_purifier/scripts/miasma_purifier_osu.gd" id="1_main"]
+[ext_resource type="Texture2D" uid="uid://drfgkfsr2pt3y" path="res://minigames/minigames/miasma_purifier/assets/background/emerald_field_skybox.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://77dmiispxwtv" path="res://minigames/minigames/miasma_purifier/assets/platforms/rectangle.png" id="3_rect"]
+[ext_resource type="Texture2D" uid="uid://cyfqs4v12usa" path="res://minigames/minigames/miasma_purifier/assets/platforms/disc.png" id="4_disc"]
+[ext_resource type="Texture2D" uid="uid://kekn64nxdwq4" path="res://minigames/minigames/miasma_purifier/assets/platforms/triangle.png" id="5_trap"]
+[ext_resource type="Texture2D" uid="uid://bpxcjakiejad4" path="res://minigames/minigames/miasma_purifier/assets/platforms/triangle_long.png" id="6_tri"]
+
+[sub_resource type="Gradient" id="FogGradient"]
+offsets = PackedFloat32Array(0, 0, 1)
+colors = PackedColorArray(0.55, 1, 0.36, 0, 0.38, 0.72, 0.18, 0, 0.48, 0.92, 0.25, 0.5)
+
+[sub_resource type="GradientTexture1D" id="FogGradientTex"]
+gradient = SubResource("FogGradient")
+
+[sub_resource type="ParticleProcessMaterial" id="FogMat"]
+emission_shape = 1
+emission_sphere_radius = 42.0
+direction = Vector3(0, -1, 0)
+spread = 42.0
+initial_velocity_min = 24.0
+initial_velocity_max = 62.0
+gravity = Vector3(10, -4, 0)
+scale_min = 0.9
+scale_max = 2.6
+color = Color(0.48, 0.9, 0.24, 0.32)
+
+[node name="MiasmaPurifierOsuMinigame" type="Node2D" unique_id=800901091]
+script = ExtResource("1_main")
+
+[node name="World" type="Node2D" parent="." unique_id=1193049818]
+position = Vector2(800, 450)
+
+[node name="Background" type="Sprite2D" parent="World" unique_id=562446480]
+position = Vector2(0, -78)
+scale = Vector2(0.92, 1.25)
+texture = ExtResource("2_bg")
+
+[node name="PlayerIsland" type="Sprite2D" parent="World" unique_id=339655057]
+position = Vector2(0, 374)
+scale = Vector2(1.22, 1.22)
+texture = ExtResource("3_rect")
+
+[node name="DeviceBase" type="Polygon2D" parent="World" unique_id=427249410]
+color = Color(0.15, 0.12, 0.09, 1)
+polygon = PackedVector2Array(-150, 430, -105, 260, -48, 215, 48, 215, 105, 260, 150, 430)
+
+[node name="DeviceBrass" type="Polygon2D" parent="World" unique_id=573607344]
+color = Color(0.68, 0.42, 0.16, 1)
+polygon = PackedVector2Array(-82, 315, -55, 232, -25, 205, 25, 205, 55, 232, 82, 315)
+
+[node name="IslandA" type="Sprite2D" parent="World" unique_id=2134982412]
+position = Vector2(-545, -40)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("4_disc")
+
+[node name="IslandB" type="Sprite2D" parent="World" unique_id=117029404]
+position = Vector2(-115, -150)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("5_trap")
+
+[node name="IslandC" type="Sprite2D" parent="World" unique_id=1650059312]
+position = Vector2(475, -35)
+scale = Vector2(0.64, 0.64)
+texture = ExtResource("6_tri")
+
+[node name="MotherIsland" type="Sprite2D" parent="World" unique_id=1943425779]
+position = Vector2(65, -375)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("3_rect")
+
+[node name="Fog" type="Node2D" parent="World" unique_id=6227887]
+
+[node name="FogA" type="GPUParticles2D" parent="World/Fog" unique_id=589146637]
+position = Vector2(-545, 38)
+amount = 44
+texture = SubResource("FogGradientTex")
+lifetime = 2.2
+process_material = SubResource("FogMat")
+
+[node name="FogB" type="GPUParticles2D" parent="World/Fog" unique_id=1874529390]
+position = Vector2(-115, -58)
+amount = 52
+texture = SubResource("FogGradientTex")
+lifetime = 2.4
+process_material = SubResource("FogMat")
+
+[node name="FogC" type="GPUParticles2D" parent="World/Fog" unique_id=2011014316]
+position = Vector2(475, 55)
+amount = 44
+texture = SubResource("FogGradientTex")
+lifetime = 2.2
+process_material = SubResource("FogMat")
+
+[node name="FogMother" type="GPUParticles2D" parent="World/Fog" unique_id=535219045]
+position = Vector2(65, -250)
+amount = 68
+texture = SubResource("FogGradientTex")
+lifetime = 2.7
+process_material = SubResource("FogMat")
+
+[node name="AnchorPoints" type="Node2D" parent="World" unique_id=609145268]
+
+[node name="P01" type="Marker2D" parent="World/AnchorPoints" unique_id=2088929707]
+position = Vector2(-590, -38)
+
+[node name="P02" type="Marker2D" parent="World/AnchorPoints" unique_id=1067183557]
+position = Vector2(-510, 32)
+
+[node name="P03" type="Marker2D" parent="World/AnchorPoints" unique_id=1520073961]
+position = Vector2(-180, -160)
+
+[node name="P04" type="Marker2D" parent="World/AnchorPoints" unique_id=472083520]
+position = Vector2(-80, -96)
+
+[node name="P05" type="Marker2D" parent="World/AnchorPoints" unique_id=890376929]
+position = Vector2(430, -42)
+
+[node name="P06" type="Marker2D" parent="World/AnchorPoints" unique_id=26580540]
+position = Vector2(520, 45)
+
+[node name="P07" type="Marker2D" parent="World/AnchorPoints" unique_id=784220908]
+position = Vector2(-167, -199)
+scale = Vector2(70.54231, -36.16208)
+
+[node name="P08" type="Marker2D" parent="World/AnchorPoints" unique_id=4956530]
+position = Vector2(82, -300)
+
+[node name="P09" type="Marker2D" parent="World/AnchorPoints" unique_id=719990577]
+position = Vector2(493, -127)
+
+[node name="P10" type="Marker2D" parent="World/AnchorPoints" unique_id=731887863]
+position = Vector2(-355, -35)
+
+[node name="P11" type="Marker2D" parent="World/AnchorPoints" unique_id=1269389334]
+position = Vector2(300, -160)
+scale = Vector2(1.0229285, 0.90404195)
+
+[node name="P12" type="Marker2D" parent="World/AnchorPoints" unique_id=1129182283]
+position = Vector2(170, 42)
+scale = Vector2(29.733139, 0.5838216)
+
+[node name="AnchorLayer" type="Node2D" parent="World" unique_id=1798128699]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=957123317]
+position = Vector2(800, 450)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=415084364]
+
+[node name="HUD" type="Control" parent="UI" unique_id=681570249]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ComboLabel" type="Label" parent="UI/HUD" unique_id=510581831]
+layout_mode = 0
+anchor_left = 0.04
+anchor_top = 0.05
+anchor_right = 0.32
+anchor_bottom = 0.13
+theme_override_colors/font_color = Color(0.95, 1, 0.92, 1)
+theme_override_font_sizes/font_size = 34
+text = "COMBO  00"
+
+[node name="ProgressLabel" type="Label" parent="UI/HUD" unique_id=1273652261]
+layout_mode = 0
+anchor_left = 0.78
+anchor_top = 0.05
+anchor_right = 0.96
+anchor_bottom = 0.13
+theme_override_colors/font_color = Color(0.95, 1, 0.92, 1)
+theme_override_font_sizes/font_size = 30
+text = "0 / 20"
+horizontal_alignment = 2
+
+[node name="FeedbackLabel" type="Label" parent="UI/HUD" unique_id=1704249965]
+layout_mode = 0
+anchor_left = 0.38
+anchor_top = 0.12
+anchor_right = 0.62
+anchor_bottom = 0.19
+theme_override_colors/font_color = Color(0.92, 1, 0.82, 0.95)
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="UI/HUD" unique_id=533455914]
+layout_mode = 0
+anchor_left = 0.12
+anchor_top = 0.91
+anchor_right = 0.88
+anchor_bottom = 0.97
+theme_override_colors/font_color = Color(1, 1, 1, 0.78)
+theme_override_font_sizes/font_size = 19
+text = "在外圈收缩至锚点附近时单击 · 连击20次完成净化 · 漏点或点空会重置连击"
+horizontal_alignment = 1
+
+[node name="SuccessPanel" type="Panel" parent="UI" unique_id=1447567483]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -120.0
+offset_right = 280.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/SuccessPanel" unique_id=769700511]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "翡翠原瘴气净化完成
+20 COMBO"
+horizontal_alignment = 1
+vertical_alignment = 1

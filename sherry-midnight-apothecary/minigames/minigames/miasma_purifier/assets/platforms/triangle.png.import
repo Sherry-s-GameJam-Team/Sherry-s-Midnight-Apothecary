@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2tw1liqa73bs"
-path="res://.godot/imported/emerald_field_skybox.png-95b833974466d761f94527a0cd311a09.ctex"
+uid="uid://kekn64nxdwq4"
+path="res://.godot/imported/triangle.png-7f2989ee512d6cb15ba10a0dcb97733d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://minigames/miasma_purifier/assets/background/emerald_field_skybox.png"
-dest_files=["res://.godot/imported/emerald_field_skybox.png-95b833974466d761f94527a0cd311a09.ctex"]
+source_file="res://minigames/minigames/miasma_purifier/assets/platforms/triangle.png"
+dest_files=["res://.godot/imported/triangle.png-7f2989ee512d6cb15ba10a0dcb97733d.ctex"]
 
 [params]
 

@@ -26,7 +26,7 @@ Use A/D or the arrow keys to move, W/Z/Up to jump, and Shift to run. Falling bel
 
 ## Miasma purifier finale
 
-At the Emerald Field `Goal`, press `E` to open the integrated `res://day/minigames/miasma_purifier/miasma_purifier.tscn` sequence. The player remains at the interaction point while the purifier takes control of the camera and input. Hold left mouse to purify the roots in wind order `A → B → C → MOTHER`, using power levels `1 / 2 / 2 / 3`; right mouse highlights active roots, the wheel changes power, and `R` restarts after a failed attempt.
+At the Emerald Field `Goal`, press `E` to open `res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn`. The player remains at the interaction point while the purifier takes control of the camera and input. Click each shrinking purification anchor at the correct moment; 20 consecutive hits complete the cleansing, while misses reset the combo.
 
 On success, `emerald_field_miasma_cleared` is saved in `PlayerData.tutorial_flags`, the minigame closes at the original Goal position, and the camera shakes. `DayRuntime` then holds a full-screen black transition across the level switch and spawns Sherry at Grassland `EntryPoints/level_completed`. The transition releases the modal input lock only after the new level is in place. A saved cleared flag disables the Goal on later Emerald Field loads.
 

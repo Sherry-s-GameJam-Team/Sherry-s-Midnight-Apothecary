@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kt1cy7yich8u"
-path="res://.godot/imported/trapezoid_broken.png-924629d953c3b86f5d3ce1f2e6ccb949.ctex"
+uid="uid://bpxcjakiejad4"
+path="res://.godot/imported/triangle_long.png-1d75077b30a42cb08d4dd40395048d06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://minigames/miasma_purifier/assets/platforms/trapezoid_broken.png"
-dest_files=["res://.godot/imported/trapezoid_broken.png-924629d953c3b86f5d3ce1f2e6ccb949.ctex"]
+source_file="res://minigames/minigames/miasma_purifier/assets/platforms/triangle_long.png"
+dest_files=["res://.godot/imported/triangle_long.png-1d75077b30a42cb08d4dd40395048d06.ctex"]
 
 [params]
 

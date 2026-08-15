@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkndph86sj0b7"
-path="res://.godot/imported/disc.png-8af2bf4724c41d0b7d19c2811a36dee8.ctex"
+uid="uid://b4hgrnglldlju"
+path="res://.godot/imported/stairs.png-f9229c43c7766674c82f08bda20eae3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://minigames/miasma_purifier/assets/platforms/disc.png"
-dest_files=["res://.godot/imported/disc.png-8af2bf4724c41d0b7d19c2811a36dee8.ctex"]
+source_file="res://minigames/minigames/miasma_purifier/assets/platforms/stairs.png"
+dest_files=["res://.godot/imported/stairs.png-f9229c43c7766674c82f08bda20eae3f.ctex"]
 
 [params]
 

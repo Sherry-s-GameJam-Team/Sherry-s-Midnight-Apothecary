@@ -28,11 +28,11 @@ static func run(test: TestSupport) -> void:
 	var goal := level.get_node("Goal")
 	test.expect(goal.has_signal("minigame_requested"), "The old travel-gate Goal exposes the miasma-purifier interaction.")
 	test.expect(goal.has_method("set_available"), "The Goal can remain unavailable after purification is saved.")
-	var minigame_packed := load("res://day/minigames/miasma_purifier/miasma_purifier.tscn") as PackedScene
+	var minigame_packed := load("res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn") as PackedScene
 	test.expect(minigame_packed != null, "The integrated miasma purifier scene can be loaded.")
 	if minigame_packed != null:
 		var minigame := minigame_packed.instantiate()
-		test.expect(minigame.has_signal("succeeded"), "The purifier reports completion to the level.")
-		test.expect(minigame.get_node_or_null("World/Roots/MotherRoot") != null, "The purifier includes its locked mother root.")
+		test.expect(minigame.has_signal("minigame_completed"), "The osu purifier reports completion to the level.")
+		test.expect(minigame.get_node_or_null("World/AnchorPoints") != null, "The osu purifier includes its click-anchor route.")
 		minigame.free()
 	level.free()

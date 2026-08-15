@@ -42,7 +42,7 @@ func apply_purification(amount: float, power: int) -> bool:
 
 
 func _refresh_visual() -> void:
-	var ratio := clampf(health / maxf(max_health, 0.001), 0.0, 1.0)
+	var ratio: float = clampf(health / maxf(max_health, 0.001), 0.0, 1.0)
 	core.modulate = Color(0.42, 0.9, 0.24, 0.96) if not permanently_cleared else Color(0.82, 1.0, 0.9, 0.6)
 	core.scale = Vector2.ONE * (0.76 + ratio * 0.28)
 	if highlighted and not permanently_cleared:

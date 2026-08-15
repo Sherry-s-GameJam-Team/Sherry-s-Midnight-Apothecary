@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duivvx7lfcxtv"
-path="res://.godot/imported/trapezoid.png-6291c2f579c53a3e567dfb42249d0a62.ctex"
+uid="uid://drfgkfsr2pt3y"
+path="res://.godot/imported/emerald_field_skybox.png-157448aa38c9d1ec17f7447f8f7ae79e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://minigames/miasma_purifier/assets/platforms/trapezoid.png"
-dest_files=["res://.godot/imported/trapezoid.png-6291c2f579c53a3e567dfb42249d0a62.ctex"]
+source_file="res://minigames/minigames/miasma_purifier/assets/background/emerald_field_skybox.png"
+dest_files=["res://.godot/imported/emerald_field_skybox.png-157448aa38c9d1ec17f7447f8f7ae79e.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dat8npe78c5a8"
-path="res://.godot/imported/rectangle.png-31126ee8e9eda14426f6d0f99c8641c6.ctex"
+uid="uid://yu4che7bkb7p"
+path="res://.godot/imported/triangle_short.png-c597e931ce4e2b7a108044ebf43bc894.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://minigames/miasma_purifier/assets/platforms/rectangle.png"
-dest_files=["res://.godot/imported/rectangle.png-31126ee8e9eda14426f6d0f99c8641c6.ctex"]
+source_file="res://minigames/minigames/miasma_purifier/assets/platforms/triangle_short.png"
+dest_files=["res://.godot/imported/triangle_short.png-c597e931ce4e2b7a108044ebf43bc894.ctex"]
 
 [params]
 

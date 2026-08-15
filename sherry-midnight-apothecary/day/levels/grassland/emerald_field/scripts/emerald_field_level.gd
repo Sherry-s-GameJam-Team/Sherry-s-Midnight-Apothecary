@@ -1,7 +1,7 @@
 class_name EmeraldFieldLevel
 extends DayLevelEnvironment
 
-const MIASMA_PURIFIER_SCENE := preload("res://day/minigames/miasma_purifier/miasma_purifier.tscn")
+const MIASMA_PURIFIER_SCENE_PATH := "res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn"
 const MIASMA_CLEARED_FLAG := "emerald_field_miasma_cleared"
 
 @export var respawn_position := Vector2(240.0, 410.0)
@@ -11,10 +11,10 @@ const MIASMA_CLEARED_FLAG := "emerald_field_miasma_cleared"
 @onready var fade_rect: ColorRect = $UI/FadeRect
 @onready var player_spawn: Marker2D = $PlayerSpawn
 @onready var player: CharacterBody2D = $Player
-@onready var goal: Area2D = $Goal
+@onready var goal = $Goal
 
 var _respawning := false
-var _minigame: MiasmaPurifier
+var _minigame: Node
 var _miasma_completion_running := false
 var _miasma_return_position := Vector2.ZERO
 
@@ -77,9 +77,15 @@ func _start_miasma_purifier(return_position: Vector2) -> void:
 	_miasma_return_position = return_position
 	_set_player_control(player, false)
 	get_tree().set_meta("day_modal_input_locked", true)
-	_minigame = MIASMA_PURIFIER_SCENE.instantiate() as MiasmaPurifier
+	var minigame_scene: PackedScene = load(MIASMA_PURIFIER_SCENE_PATH) as PackedScene
+	if minigame_scene == null:
+		_set_player_control(player, true)
+		get_tree().remove_meta("day_modal_input_locked")
+		push_error("Unable to load miasma purifier scene: %s" % MIASMA_PURIFIER_SCENE_PATH)
+		return
+	_minigame = minigame_scene.instantiate()
 	add_child(_minigame)
-	_minigame.succeeded.connect(_on_miasma_purifier_succeeded, CONNECT_ONE_SHOT)
+	_minigame.connect(&"minigame_completed", _on_miasma_purifier_succeeded, CONNECT_ONE_SHOT)
 
 
 func _on_miasma_purifier_succeeded() -> void:
@@ -89,6 +95,8 @@ func _on_miasma_purifier_succeeded() -> void:
 	var data := _get_player_data()
 	if data != null:
 		data.tutorial_flags[MIASMA_CLEARED_FLAG] = true
+	# Keep the osu-style completion card visible before closing the minigame.
+	await get_tree().create_timer(0.9).timeout
 	if is_instance_valid(_minigame):
 		_minigame.queue_free()
 		_minigame = null
