@@ -7,6 +7,9 @@ signal dialogue_event(event_name: StringName, payload: Variant)
 signal purification_succeeded
 signal purification_failed(reason: String)
 signal purification_reloaded
+signal dialogue_completed
+
+const GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG := "grassland_hound_dialogue_seen"
 
 @export var dialogue_resource: DialogueResource
 @export var post_purification_dialogue_resource: DialogueResource
@@ -29,11 +32,18 @@ var _interaction_enabled := true
 var _purified := false
 var _corrupted_dialogue_resource: DialogueResource
 var _corrupted_interaction_hint := ""
+var _available_this_day := true
 
 
 func _ready() -> void:
 	_corrupted_dialogue_resource = dialogue_resource
 	_corrupted_interaction_hint = interaction_hint_text
+	_available_this_day = _current_day() == 0
+	visible = _available_this_day
+	monitoring = _available_this_day
+	set_process(_available_this_day)
+	if not _available_this_day:
+		return
 	monitoring = true
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -117,6 +127,10 @@ func _finish_dialogue() -> void:
 	_balloon = null
 	if not _modal_lock_was_set:
 		get_tree().remove_meta("day_modal_input_locked")
+	var player_data := _find_player_data()
+	if player_data != null and not bool(player_data.tutorial_flags.get(GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG, false)):
+		player_data.tutorial_flags[GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG] = true
+		dialogue_completed.emit()
 	if _player_inside and _interaction_enabled:
 		_show_interaction_hint()
 
@@ -171,6 +185,10 @@ func is_purified() -> bool:
 	return _purified
 
 
+func is_available_this_day() -> bool:
+	return _available_this_day
+
+
 func report_purification_failure(reason: String) -> void:
 	purification_failed.emit(reason)
 
@@ -194,6 +212,16 @@ func _find_player_data() -> PlayerData:
 			return current.call("get_player_data") as PlayerData
 		current = current.get_parent()
 	return null
+
+
+func _current_day() -> int:
+	var current: Node = get_parent()
+	while current != null:
+		if current.has_method("get_player_data") and "day" in current:
+			return int(current.get("day"))
+		current = current.get_parent()
+	# A directly run Grassland scene represents its day-zero onboarding flow.
+	return 0
 
 func _find_app_root() -> Node:
 	var current: Node = self

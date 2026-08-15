@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://day/levels/cliff/art/mechanisms/cliff_mech_resonance_pillar_01.png" id="1_texture"]
+[ext_resource type="Script" path="res://day/levels/cliff/scripts/resonance_pillar.gd" id="2_script"]
+[ext_resource type="Shader" path="res://day/levels/cliff/shaders/pillar_charge.gdshader" id="3_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_Pillar"]
+shader = ExtResource("3_shader")
+shader_parameter/charge = 0.0
+shader_parameter/burst = 0.0
+
+[sub_resource type="RectangleShape2D" id="Rect_Interact"]
+size = Vector2(240, 280)
+
+[node name="ResonancePillar" type="Node2D"]
+script = ExtResource("2_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -127)
+scale = Vector2(0.18, 0.18)
+material = SubResource("ShaderMaterial_Pillar")
+texture = ExtResource("1_texture")
+
+[node name="BurstRing" type="Line2D" parent="."]
+visible = false
+z_index = 4
+position = Vector2(0, -92)
+points = PackedVector2Array(30, 0, 27.716, 11.481, 21.213, 21.213, 11.481, 27.716, 0, 30, -11.481, 27.716, -21.213, 21.213, -27.716, 11.481, -30, 0, -27.716, -11.481, -21.213, -21.213, -11.481, -27.716, 0, -30, 11.481, -27.716, 21.213, -21.213, 27.716, -11.481, 30, 0)
+width = 5.0
+default_color = Color(0.72, 0.96, 1, 0.9)
+
+[node name="PulseOrigin" type="Marker2D" parent="."]
+position = Vector2(0, -72)
+
+[node name="InteractArea" type="Area2D" parent="."]
+position = Vector2(0, -130)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("Rect_Interact")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -170.0
+offset_top = -330.0
+offset_right = 170.0
+offset_bottom = -288.0
+theme_override_colors/font_outline_color = Color(0.035, 0.09, 0.14, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "按 [E] 校准共鸣晶柱"
+horizontal_alignment = 1
+
+[node name="Audio" type="Node2D" parent="."]
+position = Vector2(0, -90)
+
+[node name="ResonanceCharge" type="AudioStreamPlayer2D" parent="Audio"]
+max_distance = 1500.0
+
+[node name="ResonanceBurst" type="AudioStreamPlayer2D" parent="Audio"]
+max_distance = 1900.0
+
+[node name="ResonanceWave" type="AudioStreamPlayer2D" parent="Audio"]
+max_distance = 1700.0

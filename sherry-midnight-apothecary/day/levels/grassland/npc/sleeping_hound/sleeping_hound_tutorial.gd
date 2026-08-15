@@ -69,6 +69,8 @@ func _initialize() -> void:
 	if _npc == null or _player == null or _thrower == null or _player_data == null:
 		push_error("SleepingHoundTutorial requires the hound, player, PotionThrower and PlayerData.")
 		return
+	if not _npc.is_available_this_day():
+		return
 	_npc.dialogue_event.connect(_on_dialogue_event)
 	if bool(_player_data.tutorial_flags.get("sleeping_hound_purification_complete", false)):
 		stage = Stage.COMPLETE

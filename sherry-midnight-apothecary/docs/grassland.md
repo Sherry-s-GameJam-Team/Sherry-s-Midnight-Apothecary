@@ -10,6 +10,8 @@ After `emerald_field_miasma_cleared`, the Grassland HomeDoor no longer travels t
 
 Luca's follow-up dialogue receives the current `PlayerData` as the explicit `player_data` dialogue state. Its first interaction uses the `first` title and records `luca_after_purification_seen`; later interactions begin at the short `repeat` title.
 
+`SleepingHoundNPC` is present only on day 0. On that day, `HomeDoor` is locked until the player has finished the hound's first dialogue; completion stores `grassland_hound_dialogue_seen` in `PlayerData.tutorial_flags`, so returning to the scene does not re-lock the door. On later days the hound is hidden and the door has no hound-dialogue prerequisite.
+
 The `issues/dialog1` marker is backed by `issues/Dialog1Trigger`, a one-time 256×192 crossing area that plays `dialog1.dialogue` and records `grassland_dialog1_seen` in `PlayerData.tutorial_flags`. Its `grassland_dialog1_board` event locks input, walks Sherry onto `Trapezoid`, then shakes and briefly suspends the platform while her “？！” line is on screen. `grassland_dialog1_launch` then carries her above the frozen camera frame and enters the `emerald_field` level.
 
 ## Emerald Field platform level

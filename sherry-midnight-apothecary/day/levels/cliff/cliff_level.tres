@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/cliff/cliff.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"cliff"
+display_name = "烁金断崖"
+disaster_name = "鸣晶之灾"
+normal_description = "高耸晶柱与灰白断崖交错，苍蓝群晶在长风中发出低沉回响。"
+corrupted_description = "群晶失序，共鸣化作撕裂山脊的震波。"
+scene_description = "让三座失控共鸣晶柱归静，并在断崖尽头稳定鸣晶核心。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"

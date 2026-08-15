@@ -2,6 +2,9 @@ class_name PotionProjectile
 extends CharacterBody2D
 
 signal broken(impact_point: Vector2, impact_normal: Vector2)
+## Emitted when the projectile directly collides with a receiver implementing
+## `receive_potion_hit(hit: Dictionary)` on its collision node or an ancestor.
+signal direct_hit(receiver: Object, hit: Dictionary)
 
 var gravity := 1250.0
 var payload: Dictionary = {}
@@ -51,16 +54,17 @@ func _physics_process(delta: float) -> void:
 	rotation = velocity.angle() + PI * 0.5
 	var collision := move_and_collide(velocity * delta)
 	if collision != null:
-		_break(collision.get_position(), collision.get_normal())
+		_break(collision.get_position(), collision.get_normal(), collision.get_collider())
 
 
-func _break(point: Vector2, normal: Vector2) -> void:
+func _break(point: Vector2, normal: Vector2, direct_collider: Object = null) -> void:
 	if _has_broken:
 		return
 	_has_broken = true
 	velocity = Vector2.ZERO
 	bottle_sprite.visible = false
 	collision_shape.set_deferred("disabled", true)
+	_notify_direct_hit(direct_collider, point, normal)
 	var executor := PotionEffectExecutor.new()
 	executor.tuning = effect_tuning
 	get_parent().add_child(executor)
@@ -72,3 +76,28 @@ func _break(point: Vector2, normal: Vector2) -> void:
 	splash.setup(bottle_color)
 	broken.emit(point, normal)
 	queue_free()
+
+
+func _notify_direct_hit(collider: Object, point: Vector2, normal: Vector2) -> void:
+	var receiver := _find_direct_hit_receiver(collider)
+	if receiver == null:
+		return
+	var hit := {
+		"potion": potion,
+		"potion_id": potion.id if potion != null else &"",
+		"payload": payload.duplicate(true),
+		"impact_point": point,
+		"impact_normal": normal,
+		"projectile": self,
+	}
+	receiver.call("receive_potion_hit", hit)
+	direct_hit.emit(receiver, hit)
+
+
+func _find_direct_hit_receiver(collider: Object) -> Object:
+	var current := collider as Node
+	while current != null:
+		if current.has_method("receive_potion_hit"):
+			return current
+		current = current.get_parent()
+	return null

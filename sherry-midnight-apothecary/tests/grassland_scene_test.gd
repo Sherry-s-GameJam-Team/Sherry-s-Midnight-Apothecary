@@ -23,6 +23,7 @@ static func run(test: TestSupport) -> void:
 	var dialog1_trigger := grass.get_node("issues/Dialog1Trigger") as GrasslandDialogueTrigger
 	var sleeping_hound := grass.get_node("SleepingHoundNPC") as SleepingHoundNPC
 	var sleeping_hound_tutorial := grass.get_node("SleepingHoundTutorial") as SleepingHoundTutorial
+	var home_door := grass.get_node("HomeDoor") as GrasslandNightDoor
 
 	test.expect_equal(skybox.scroll_scale, Vector2.ZERO, "Skybox stays fixed relative to the camera.")
 	test.expect(grass.is_corrupted(), "Grassland starts in its day-zero corrupted state.")
@@ -47,6 +48,8 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(camera.limit_right, 4550, "Grassland camera follows the edited right world barrier.")
 	test.expect(grass.get_node("Foreground/GrassLoop") is Sprite2D, "grass_loop is installed in the foreground layer.")
 	test.expect(sleeping_hound != null, "Grassland installs the sleeping hound interaction NPC.")
+	test.expect(sleeping_hound.is_available_this_day() and sleeping_hound.visible, "The sleeping hound is visible for the standalone day-zero scene.")
+	test.expect(home_door != null and home_door.is_locked_for_hound_dialogue(), "Day-zero HomeDoor requires the sleeping-hound dialogue first.")
 	test.expect(sleeping_hound_tutorial != null, "Grassland installs the sleeping hound purification tutorial controller.")
 	var console := grass.get_node_or_null("DebugUI/DeveloperConsole")
 	test.expect(console != null, "Standalone Grassland installs its developer console at runtime.")

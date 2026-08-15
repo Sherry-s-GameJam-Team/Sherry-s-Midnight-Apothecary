@@ -41,6 +41,13 @@ enabled=PackedStringArray("res://addons/TileMapDual/plugin.cfg", "res://addons/d
 folder_colors={
 "res://day/": "blue",
 "res://day/levels/": "yellow",
+"res://day/levels/cliff/": "blue",
+"res://day/levels/forest/": "green",
+"res://day/levels/grassland/": "teal",
+"res://day/levels/home/": "gray",
+"res://day/levels/lake/": "teal",
+"res://day/levels/lakebed/": "teal",
+"res://day/levels/market/": "gray",
 "res://night/": "purple"
 }
 

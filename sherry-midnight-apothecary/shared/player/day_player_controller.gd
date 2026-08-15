@@ -375,6 +375,29 @@ func set_dialogue_locked(locked: bool) -> void:
 	_dialogue_locked = locked
 
 
+## Thin presentation bridge used by scene-local hazard controllers. Movement
+## tuning stays owned by this controller; hazards only provide a brief impulse.
+func play_hazard_hit(knockback: Vector2) -> void:
+	_potion_cast_active = false
+	_is_rolling = false
+	velocity = knockback
+	_horizontal_velocity = knockback.x
+	_transition_target = "idle"
+	_play("hit")
+
+
+func reset_after_hazard() -> void:
+	velocity = Vector2.ZERO
+	_horizontal_velocity = 0.0
+	_jump_buffer_timer = 0.0
+	_coyote_timer = 0.0
+	_is_airborne = false
+	_is_rolling = false
+	_potion_cast_active = false
+	_transition_target = "idle"
+	_play("idle")
+
+
 func is_facing_right() -> bool:
 	return _facing_right
 

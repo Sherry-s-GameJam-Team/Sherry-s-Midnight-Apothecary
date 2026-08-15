@@ -2,19 +2,28 @@ class_name GrasslandNightDoor
 extends DoorPortal
 
 const MIASMA_CLEARED_FLAG := "emerald_field_miasma_cleared"
+const GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG := "grassland_hound_dialogue_seen"
 
 @export_multiline var night_warning := "进入药水铺将开启晚间营业，请确保资源收集完毕"
 
 var _confirmation: ConfirmationDialog
+var _sleeping_hound: SleepingHoundNPC
 
 
 func _ready() -> void:
 	super()
+	_sleeping_hound = get_parent().get_node_or_null("SleepingHoundNPC") as SleepingHoundNPC
+	if _sleeping_hound != null and not _sleeping_hound.dialogue_completed.is_connected(_on_hound_dialogue_completed):
+		_sleeping_hound.dialogue_completed.connect(_on_hound_dialogue_completed)
 	if _task_completed():
 		interaction_hint_text = "按[E]结束探索"
 
 
 func _input(event: InputEvent) -> void:
+	if _requires_hound_dialogue() and _player_is_inside and _is_interact_event(event):
+		get_viewport().set_input_as_handled()
+		_show_interaction_hint()
+		return
 	if not _task_completed():
 		super(event)
 		return
@@ -68,3 +77,31 @@ func _task_completed() -> bool:
 		return false
 	var data := runtime.call("get_player_data") as PlayerData
 	return data != null and bool(data.tutorial_flags.get(MIASMA_CLEARED_FLAG, false))
+
+
+func is_locked_for_hound_dialogue() -> bool:
+	return _requires_hound_dialogue()
+
+
+func _requires_hound_dialogue() -> bool:
+	var runtime := _find_day_runtime()
+	var current_day := int(runtime.get("day")) if runtime != null else 0
+	if current_day != 0:
+		return false
+	var data_provider: Node = runtime if runtime != null else get_parent()
+	var data := data_provider.call("get_player_data") as PlayerData if data_provider != null and data_provider.has_method("get_player_data") else null
+	return data != null and not bool(data.tutorial_flags.get(GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG, false))
+
+
+func _on_hound_dialogue_completed() -> void:
+	if _player_is_inside:
+		_show_interaction_hint()
+
+
+func _show_interaction_hint() -> void:
+	if _requires_hound_dialogue():
+		var top_hint := _find_top_hint()
+		if top_hint != null:
+			top_hint.show_interaction_hint(_hint_id(), "先按[E]与沉睡的魔犬交谈")
+		return
+	super()

@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://day/levels/cliff/scripts/resonance_wave.gd" id="1_wave"]
+[ext_resource type="Shader" path="res://day/levels/cliff/shaders/resonance_wave.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_Wave"]
+shader = ExtResource("2_shader")
+shader_parameter/outer_color = Color(0.18, 0.78, 1, 0.68)
+shader_parameter/core_color = Color(0.86, 0.99, 1, 0.95)
+shader_parameter/intensity = 1.0
+shader_parameter/travel_direction = 1.0
+
+[sub_resource type="RectangleShape2D" id="Rect_Wave"]
+size = Vector2(120, 48)
+
+[node name="ResonanceWave" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_wave")
+
+[node name="Visual" type="ColorRect" parent="."]
+z_index = 11
+material = SubResource("ShaderMaterial_Wave")
+offset_left = -110.0
+offset_top = -42.0
+offset_right = 110.0
+offset_bottom = 42.0
+mouse_filter = 2
+
+[node name="InnerGlow" type="PointLight2D" parent="."]
+energy = 0.42
+texture_scale = 0.6
+color = Color(0.3, 0.82, 1, 1)
+
+[node name="DangerArea" type="CollisionShape2D" parent="."]
+shape = SubResource("Rect_Wave")
