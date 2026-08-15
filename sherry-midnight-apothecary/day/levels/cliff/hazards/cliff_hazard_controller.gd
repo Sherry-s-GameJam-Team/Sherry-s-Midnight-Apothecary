@@ -5,6 +5,9 @@ extends Node
 @export var respawn_protection_duration := 1.25
 @export var fade_out_duration := 0.22
 @export var fade_in_duration := 0.28
+@export_range(0, 100, 1) var fall_damage := 15
+@export_range(0, 100, 1) var resonance_wave_damage := 12
+@export_range(0, 100, 1) var avalanche_damage := 25
 
 @onready var level: CliffResonanceLevel = get_parent().get_parent() as CliffResonanceLevel
 @onready var player: CharacterBody2D = level.get_node("Player") as CharacterBody2D
@@ -26,6 +29,8 @@ func _ready() -> void:
 func hit_player(target: Node, hazard_type: StringName, force_direction := Vector2.ZERO, force_magnitude := 0.0) -> void:
 	if _handling_hit or not is_instance_valid(target) or target != player or is_hazard_protected():
 		return
+	if _apply_hazard_damage(hazard_type):
+		return
 	_handling_hit = true
 	_set_control_locked(true)
 	var horizontal_force := force_magnitude if force_magnitude > 0.0 else (400.0 if hazard_type == &"avalanche" else 280.0)
@@ -40,9 +45,11 @@ func hit_player(target: Node, hazard_type: StringName, force_direction := Vector
 	_handling_hit = false
 
 
-func request_respawn(target: Node, reason: StringName = &"fall") -> void:
+func request_respawn(target: Node, reason: StringName = &"fall", damage: int = -1) -> void:
 	if reason == &"fall":
 		if _handling_hit or not is_instance_valid(target) or target != player or is_hazard_protected():
+			return
+		if _apply_hazard_damage(reason, damage):
 			return
 		_handling_hit = true
 		_set_control_locked(true)
@@ -88,6 +95,25 @@ func trigger_resonance_pillar(pillar_id: StringName) -> void:
 
 func respawn_player() -> void:
 	request_respawn(player, &"fall")
+
+
+func _apply_hazard_damage(hazard_type: StringName, override_damage: int = -1) -> bool:
+	var damage := fall_damage if override_damage < 0 else override_damage
+	if hazard_type == &"resonance_wave":
+		damage = resonance_wave_damage
+	elif hazard_type == &"avalanche":
+		damage = avalanche_damage
+	var runtime := _find_day_runtime()
+	return runtime != null and runtime.apply_player_damage(damage, hazard_type)
+
+
+func _find_day_runtime() -> DayRuntime:
+	var current: Node = self
+	while current != null:
+		if current is DayRuntime:
+			return current as DayRuntime
+		current = current.get_parent()
+	return null
 
 
 func _fade_to_default() -> void:

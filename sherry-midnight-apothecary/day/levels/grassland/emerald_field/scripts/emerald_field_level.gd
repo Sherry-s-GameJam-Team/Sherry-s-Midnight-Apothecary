@@ -28,8 +28,11 @@ func _ready() -> void:
 	goal.set_available(not _is_miasma_cleared())
 
 
-func request_respawn(body: Node2D, _reason: String = "fall") -> void:
+func request_respawn(body: Node2D, reason: String = "fall", damage: int = 0) -> void:
 	if _respawning or not is_instance_valid(body):
+		return
+	var runtime := _get_day_runtime()
+	if runtime != null and damage > 0 and runtime.apply_player_damage(damage, StringName(reason)):
 		return
 	_respawning = true
 	_set_player_control(body, false)

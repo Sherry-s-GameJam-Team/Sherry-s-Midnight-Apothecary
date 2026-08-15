@@ -1,25 +1,25 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cw72e6p7lgeja"]
 
-[ext_resource type="Script" path="res://day/levels/cliff/scripts/cliff_level.gd" id="1_level"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_bg_sky_01.png" id="2_sky"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_bg_cloud_far_01.png" id="3_cloud"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_bg_crystal_spire_far_01.png" id="4_spire"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_bg_mountain_far_01.png" id="5_mountain"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_mg_cliff_wall_01.png" id="6_midcliff"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_fg_crystal_pillar_01.png" id="7_nearcrystal"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_overlay_fog_front_01.png" id="8_fog"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/background/cliff_overlay_occluder_front_01.png" id="9_occluder"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/platforms/cliff_plat_ground_flat_01.png" id="10_ground"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/platforms/cliff_plat_crystal_01.png" id="11_crystal"]
-[ext_resource type="Texture2D" path="res://day/levels/cliff/art/platforms/cliff_plat_bridge_01.png" id="12_bridge"]
-[ext_resource type="Script" path="res://shared/player/day_player_controller.gd" id="13_player"]
+[ext_resource type="Script" uid="uid://d1wnb76k3t35p" path="res://day/levels/cliff/scripts/cliff_level.gd" id="1_level"]
+[ext_resource type="Texture2D" uid="uid://be6l7o6d037ky" path="res://day/levels/cliff/art/background/cliff_bg_sky_01.png" id="2_sky"]
+[ext_resource type="Texture2D" uid="uid://cugrogsm6xi6f" path="res://day/levels/cliff/art/background/cliff_bg_cloud_far_01.png" id="3_cloud"]
+[ext_resource type="Texture2D" uid="uid://iy22y47f3i1g" path="res://day/levels/cliff/art/background/cliff_bg_crystal_spire_far_01.png" id="4_spire"]
+[ext_resource type="Texture2D" uid="uid://bfq2aj46d01nq" path="res://day/levels/cliff/art/background/cliff_bg_mountain_far_01.png" id="5_mountain"]
+[ext_resource type="Texture2D" uid="uid://bhpq3n2uhfysx" path="res://day/levels/cliff/art/background/cliff_mg_cliff_wall_01.png" id="6_midcliff"]
+[ext_resource type="Texture2D" uid="uid://j30kplyqakur" path="res://day/levels/cliff/art/background/cliff_fg_crystal_pillar_01.png" id="7_nearcrystal"]
+[ext_resource type="Texture2D" uid="uid://ba0cpfmsnrajh" path="res://day/levels/cliff/art/background/cliff_overlay_fog_front_01.png" id="8_fog"]
+[ext_resource type="Texture2D" uid="uid://bs788phn1wion" path="res://day/levels/cliff/art/background/cliff_overlay_occluder_front_01.png" id="9_occluder"]
+[ext_resource type="Texture2D" uid="uid://dhnxfvep6b2e4" path="res://day/levels/cliff/art/platforms/cliff_plat_ground_flat_01.png" id="10_ground"]
+[ext_resource type="Texture2D" uid="uid://cvy7wa1qm2wjm" path="res://day/levels/cliff/art/platforms/cliff_plat_crystal_01.png" id="11_crystal"]
+[ext_resource type="Texture2D" uid="uid://cahal8p1dnk84" path="res://day/levels/cliff/art/platforms/cliff_plat_bridge_01.png" id="12_bridge"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="13_player"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="14_potions"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="15_presentation"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="16_collision"]
 [ext_resource type="PackedScene" path="res://day/levels/cliff/mechanisms/resonance_pillar.tscn" id="17_pillar"]
 [ext_resource type="PackedScene" path="res://day/levels/cliff/mechanisms/resonance_receiver.tscn" id="18_receiver"]
-[ext_resource type="Script" path="res://day/levels/cliff/scripts/fall_reset_zone.gd" id="19_fall"]
-[ext_resource type="Script" path="res://day/levels/cliff/hazards/cliff_hazard_controller.gd" id="20_hazard_controller"]
+[ext_resource type="Script" uid="uid://cn2o4hgf2yjlm" path="res://day/levels/cliff/scripts/fall_reset_zone.gd" id="19_fall"]
+[ext_resource type="Script" uid="uid://d0d5wgvv8c85x" path="res://day/levels/cliff/hazards/cliff_hazard_controller.gd" id="20_hazard_controller"]
 [ext_resource type="PackedScene" path="res://day/levels/cliff/hazards/avalanche_zone.tscn" id="21_avalanche"]
 
 [sub_resource type="RectangleShape2D" id="Rect_LeftBarrier"]
@@ -70,106 +70,106 @@ size = Vector2(920, 82)
 [sub_resource type="RectangleShape2D" id="Rect_Fall"]
 size = Vector2(9600, 440)
 
-[node name="CliffLevel" type="Node2D" groups=["cliff_level"]]
+[node name="CliffLevel" type="Node2D" unique_id=1919945412 groups=["cliff_level"]]
 texture_filter = 1
 script = ExtResource("1_level")
 debug_scene_id = "cliff"
 start_corrupted = true
 
-[node name="Parallax" type="Node2D" parent="."]
+[node name="Parallax" type="Node2D" parent="." unique_id=511207166]
 
-[node name="Sky" type="Parallax2D" parent="Parallax"]
+[node name="Sky" type="Parallax2D" parent="Parallax" unique_id=1547120773]
 z_index = -100
 scroll_scale = Vector2(0.05, 0.03)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="Parallax/Sky"]
+[node name="Artwork" type="Sprite2D" parent="Parallax/Sky" unique_id=1888972713]
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("2_sky")
 centered = false
 
-[node name="FarCloud" type="Parallax2D" parent="Parallax"]
+[node name="FarCloud" type="Parallax2D" parent="Parallax" unique_id=157235288]
 z_index = -92
 scroll_scale = Vector2(0.12, 0.08)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="Parallax/FarCloud"]
+[node name="Artwork" type="Sprite2D" parent="Parallax/FarCloud" unique_id=629206214]
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("3_cloud")
 centered = false
 
-[node name="FarCrystalSpire" type="Parallax2D" parent="Parallax"]
+[node name="FarCrystalSpire" type="Parallax2D" parent="Parallax" unique_id=1007616133]
 z_index = -84
 scroll_scale = Vector2(0.22, 0.16)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="Parallax/FarCrystalSpire"]
+[node name="Artwork" type="Sprite2D" parent="Parallax/FarCrystalSpire" unique_id=409989360]
 position = Vector2(0, 36)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("4_spire")
 centered = false
 
-[node name="FarMountain" type="Parallax2D" parent="Parallax"]
+[node name="FarMountain" type="Parallax2D" parent="Parallax" unique_id=1215258520]
 z_index = -76
 scroll_scale = Vector2(0.34, 0.25)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="Parallax/FarMountain"]
+[node name="Artwork" type="Sprite2D" parent="Parallax/FarMountain" unique_id=866140163]
 position = Vector2(0, 64)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("5_mountain")
 centered = false
 
-[node name="MidCliff" type="Parallax2D" parent="Parallax"]
+[node name="MidCliff" type="Parallax2D" parent="Parallax" unique_id=1755869104]
 z_index = -66
 scroll_scale = Vector2(0.52, 0.42)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="Parallax/MidCliff"]
+[node name="Artwork" type="Sprite2D" parent="Parallax/MidCliff" unique_id=1487074413]
 position = Vector2(0, 105)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("6_midcliff")
 centered = false
 
-[node name="NearCrystal" type="Parallax2D" parent="Parallax"]
+[node name="NearCrystal" type="Parallax2D" parent="Parallax" unique_id=2067761488]
 z_index = -48
 scroll_scale = Vector2(0.74, 0.68)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="Parallax/NearCrystal"]
+[node name="Artwork" type="Sprite2D" parent="Parallax/NearCrystal" unique_id=1690843964]
 modulate = Color(1, 1, 1, 0.7)
 position = Vector2(0, 116)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("7_nearcrystal")
 centered = false
 
-[node name="PlayerSpawn" type="Marker2D" parent="."]
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=289009522]
 position = Vector2(260, 470)
 
-[node name="EntryPoints" type="Node2D" parent="."]
+[node name="EntryPoints" type="Node2D" parent="." unique_id=1207358231]
 
-[node name="default" type="Marker2D" parent="EntryPoints"]
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=254526885]
 position = Vector2(260, 470)
 
-[node name="level_completed" type="Marker2D" parent="EntryPoints"]
+[node name="level_completed" type="Marker2D" parent="EntryPoints" unique_id=1756991711]
 position = Vector2(8520, 470)
 
-[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=244537776 groups=["player"]]
 z_index = 10
 position = Vector2(260, 470)
 script = ExtResource("13_player")
 
-[node name="SherryCollision" parent="Player" instance=ExtResource("16_collision")]
+[node name="SherryCollision" parent="Player" unique_id=2048757061 instance=ExtResource("16_collision")]
 
-[node name="SherryPresentation" parent="Player" instance=ExtResource("15_presentation")]
+[node name="SherryPresentation" parent="Player" unique_id=1161730935 instance=ExtResource("15_presentation")]
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1916029931]
 position = Vector2(160, -90)
 limit_left = 0
 limit_top = 0
@@ -178,203 +178,214 @@ limit_bottom = 900
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
-[node name="PotionThrower" parent="Player" instance=ExtResource("14_potions")]
+[node name="PotionThrower" parent="Player" unique_id=901975732 instance=ExtResource("14_potions")]
 
-[node name="WorldBounds" type="Node2D" parent="."]
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1258712706]
 
-[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds"]
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=380222215]
 position = Vector2(-70, 450)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=1753801743]
 shape = SubResource("Rect_LeftBarrier")
 
-[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds"]
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1114081498]
 position = Vector2(9370, 450)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=387727187]
 shape = SubResource("Rect_RightBarrier")
 
-[node name="Platforms" type="Node2D" parent="."]
+[node name="Platforms" type="Node2D" parent="." unique_id=389915614]
 
-[node name="StartGround" type="StaticBody2D" parent="Platforms"]
+[node name="StartGround" type="StaticBody2D" parent="Platforms" unique_id=1571842304]
 position = Vector2(420, 620)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/StartGround"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/StartGround" unique_id=1682890822]
+position = Vector2(5.9999995, -55.999996)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("10_ground")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StartGround"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/StartGround" unique_id=1808460898]
 position = Vector2(0, -20)
 shape = SubResource("Rect_StartGround")
 
-[node name="Crystal01" type="StaticBody2D" parent="Platforms"]
+[node name="Crystal01" type="StaticBody2D" parent="Platforms" unique_id=122674229]
 position = Vector2(1080, 505)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal01"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal01" unique_id=1313122978]
+position = Vector2(-5, -37)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("11_crystal")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal01"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal01" unique_id=842476757]
 position = Vector2(0, -18)
 shape = SubResource("Rect_Crystal01")
 
-[node name="Bridge01" type="StaticBody2D" parent="Platforms"]
+[node name="Bridge01" type="StaticBody2D" parent="Platforms" unique_id=1127039684]
 position = Vector2(1570, 535)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge01"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge01" unique_id=1710883474]
+position = Vector2(-12, 293)
 scale = Vector2(0.38, 0.38)
 texture = ExtResource("12_bridge")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge01"]
-position = Vector2(0, -47)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge01" unique_id=1898404694]
+position = Vector2(-17, 288)
 shape = SubResource("Rect_Bridge01")
 
-[node name="Ground02" type="StaticBody2D" parent="Platforms"]
+[node name="Ground02" type="StaticBody2D" parent="Platforms" unique_id=1327150720]
 position = Vector2(2320, 620)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Ground02"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Ground02" unique_id=1146390498]
+position = Vector2(8, -57.999996)
 scale = Vector2(0.46, 0.42)
 texture = ExtResource("10_ground")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground02"]
-position = Vector2(0, -20)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground02" unique_id=688578573]
+position = Vector2(14, -26)
 shape = SubResource("Rect_Ground02")
 
-[node name="Crystal02" type="StaticBody2D" parent="Platforms"]
+[node name="Crystal02" type="StaticBody2D" parent="Platforms" unique_id=860937434]
 position = Vector2(3140, 500)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal02"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal02" unique_id=232049035]
+position = Vector2(-7, -35)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("11_crystal")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal02"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal02" unique_id=1204673230]
 position = Vector2(0, -18)
 shape = SubResource("Rect_Crystal02")
 
-[node name="Bridge02" type="StaticBody2D" parent="Platforms"]
+[node name="Bridge02" type="StaticBody2D" parent="Platforms" unique_id=554931001]
 position = Vector2(3660, 535)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge02"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge02" unique_id=348449160]
 scale = Vector2(0.38, 0.38)
 texture = ExtResource("12_bridge")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge02"]
-position = Vector2(0, -47)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge02" unique_id=2033239904]
+position = Vector2(9, -5)
 shape = SubResource("Rect_Bridge02")
 
-[node name="Ground03" type="StaticBody2D" parent="Platforms"]
+[node name="Ground03" type="StaticBody2D" parent="Platforms" unique_id=349571954]
 position = Vector2(4440, 620)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Ground03"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Ground03" unique_id=642873386]
+position = Vector2(14, -51.999996)
 scale = Vector2(0.45, 0.42)
 texture = ExtResource("10_ground")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground03"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground03" unique_id=1456715194]
 position = Vector2(0, -20)
 shape = SubResource("Rect_Ground03")
 
-[node name="Crystal03" type="StaticBody2D" parent="Platforms"]
+[node name="Crystal03" type="StaticBody2D" parent="Platforms" unique_id=891276959]
 position = Vector2(5250, 500)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal03"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal03" unique_id=1685885616]
+position = Vector2(4, -35)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("11_crystal")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal03"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal03" unique_id=365219455]
 position = Vector2(0, -18)
 shape = SubResource("Rect_Crystal03")
 
-[node name="Bridge03" type="StaticBody2D" parent="Platforms"]
+[node name="Bridge03" type="StaticBody2D" parent="Platforms" unique_id=384663088]
 position = Vector2(5800, 535)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge03"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge03" unique_id=1797973564]
+position = Vector2(5, -35)
 scale = Vector2(0.38, 0.38)
 texture = ExtResource("12_bridge")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge03"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge03" unique_id=357176471]
 position = Vector2(0, -47)
 shape = SubResource("Rect_Bridge03")
 
-[node name="Ground04" type="StaticBody2D" parent="Platforms"]
+[node name="Ground04" type="StaticBody2D" parent="Platforms" unique_id=273791712]
 position = Vector2(6560, 620)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Ground04"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Ground04" unique_id=1365477722]
+position = Vector2(15, -55.999996)
 scale = Vector2(0.46, 0.42)
 texture = ExtResource("10_ground")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground04"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Ground04" unique_id=436009503]
 position = Vector2(0, -20)
 shape = SubResource("Rect_Ground04")
 
-[node name="Crystal04" type="StaticBody2D" parent="Platforms"]
+[node name="Crystal04" type="StaticBody2D" parent="Platforms" unique_id=1424699887]
 position = Vector2(7420, 500)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal04"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Crystal04" unique_id=460885290]
+position = Vector2(2, -32)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("11_crystal")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal04"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Crystal04" unique_id=765531620]
 position = Vector2(0, -18)
 shape = SubResource("Rect_Crystal04")
 
-[node name="Bridge04" type="StaticBody2D" parent="Platforms"]
+[node name="Bridge04" type="StaticBody2D" parent="Platforms" unique_id=767164055]
 position = Vector2(7980, 535)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge04"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Bridge04" unique_id=1077455662]
+position = Vector2(6, -41)
 scale = Vector2(0.38, 0.38)
 texture = ExtResource("12_bridge")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge04"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Bridge04" unique_id=2032619625]
 position = Vector2(0, -47)
 shape = SubResource("Rect_Bridge04")
 
-[node name="EndGround" type="StaticBody2D" parent="Platforms"]
+[node name="EndGround" type="StaticBody2D" parent="Platforms" unique_id=1462885911]
 position = Vector2(8670, 620)
 
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/EndGround"]
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/EndGround" unique_id=1409023295]
 scale = Vector2(0.46, 0.42)
 texture = ExtResource("10_ground")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/EndGround"]
-position = Vector2(0, -20)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/EndGround" unique_id=1779957325]
+position = Vector2(2, 33)
 shape = SubResource("Rect_EndGround")
 
-[node name="Mechanisms" type="Node2D" parent="."]
+[node name="Mechanisms" type="Node2D" parent="." unique_id=481383243]
 
-[node name="Pillar01" parent="Mechanisms" instance=ExtResource("17_pillar")]
+[node name="Pillar01" parent="Mechanisms" unique_id=781690730 instance=ExtResource("17_pillar")]
 position = Vector2(2320, 559)
 pillar_id = &"pillar_01"
 pulse_interval = 3.0
 first_pulse_delay = 1.3
 wave_range = 880.0
 
-[node name="Pillar02" parent="Mechanisms" instance=ExtResource("17_pillar")]
+[node name="Pillar02" parent="Mechanisms" unique_id=1961308602 instance=ExtResource("17_pillar")]
 position = Vector2(4440, 559)
 pillar_id = &"pillar_02"
 pulse_interval = 2.7
 first_pulse_delay = 1.8
 wave_range = 920.0
 
-[node name="Pillar03" parent="Mechanisms" instance=ExtResource("17_pillar")]
+[node name="Pillar03" parent="Mechanisms" unique_id=2024053615 instance=ExtResource("17_pillar")]
 position = Vector2(6560, 559)
 pillar_id = &"pillar_03"
 pulse_interval = 2.45
 first_pulse_delay = 2.1
 wave_range = 930.0
 
-[node name="ResonanceReceiver" parent="Mechanisms" instance=ExtResource("18_receiver")]
-position = Vector2(8670, 559)
+[node name="ResonanceReceiver" parent="Mechanisms" unique_id=1497717746 instance=ExtResource("18_receiver")]
+position = Vector2(9007, 613)
 
-[node name="Hazards" type="Node2D" parent="."]
+[node name="Hazards" type="Node2D" parent="." unique_id=1408695122]
 
-[node name="CliffHazardController" type="Node" parent="Hazards"]
+[node name="CliffHazardController" type="Node" parent="Hazards" unique_id=460571414]
 script = ExtResource("20_hazard_controller")
 
-[node name="ResonanceWaves" type="Node2D" parent="Hazards"]
+[node name="ResonanceWaves" type="Node2D" parent="Hazards" unique_id=235368105]
 
-[node name="Avalanches" type="Node2D" parent="Hazards"]
+[node name="Avalanches" type="Node2D" parent="Hazards" unique_id=1832328672]
 
-[node name="AvalancheZone01" parent="Hazards/Avalanches" instance=ExtResource("21_avalanche")]
+[node name="AvalancheZone01" parent="Hazards/Avalanches" unique_id=2066787877 instance=ExtResource("21_avalanche")]
 position = Vector2(2320, 300)
 zone_id = &"avalanche_01"
 zone_size = Vector2(820, 640)
@@ -385,24 +396,20 @@ avalanche_direction = Vector2(-0.38, 1)
 snow_speed = 1.8
 snow_density = 0.82
 
-[node name="AvalancheZone02" parent="Hazards/Avalanches" instance=ExtResource("21_avalanche")]
+[node name="AvalancheZone02" parent="Hazards/Avalanches" unique_id=1117574455 instance=ExtResource("21_avalanche")]
 position = Vector2(4440, 290)
 zone_id = &"avalanche_02"
 zone_size = Vector2(900, 660)
-avalanche_duration = 4.0
 cooldown_duration = 11.0
 initial_delay = 9.5
 avalanche_direction = Vector2(0.42, 1)
 snow_speed = 2.15
-snow_density = 1.0
 
-[node name="AvalancheZone03" parent="Hazards/Avalanches" instance=ExtResource("21_avalanche")]
+[node name="AvalancheZone03" parent="Hazards/Avalanches" unique_id=1132866115 instance=ExtResource("21_avalanche")]
 position = Vector2(6560, 280)
 zone_id = &"avalanche_03"
 zone_size = Vector2(920, 680)
 avalanche_duration = 4.4
-cooldown_duration = 8.0
-avalanche_direction = Vector2(-0.5, 1)
 snow_speed = 2.45
 snow_density = 1.15
 auto_repeat = false
@@ -410,43 +417,43 @@ trigger_mode = 1
 resonance_source_id = &"pillar_03"
 resonance_trigger_delay = 0.65
 
-[node name="FallResetZone" type="Area2D" parent="Hazards"]
+[node name="FallResetZone" type="Area2D" parent="Hazards" unique_id=1737811413]
 position = Vector2(4650, 1100)
 collision_layer = 0
 script = ExtResource("19_fall")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/FallResetZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/FallResetZone" unique_id=1637403312]
 shape = SubResource("Rect_Fall")
 
-[node name="FrontFog" type="Parallax2D" parent="."]
+[node name="FrontFog" type="Parallax2D" parent="." unique_id=1839973059]
 z_index = 45
 scroll_scale = Vector2(1.05, 1)
 repeat_size = Vector2(2715, 0)
 repeat_times = 5
 
-[node name="Artwork" type="Sprite2D" parent="FrontFog"]
+[node name="Artwork" type="Sprite2D" parent="FrontFog" unique_id=484830335]
 modulate = Color(1, 1, 1, 0.32)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("8_fog")
 centered = false
 
-[node name="FrontOccluder" type="Parallax2D" parent="."]
+[node name="FrontOccluder" type="Parallax2D" parent="." unique_id=498882594]
 z_index = 55
 scroll_scale = Vector2(1.12, 1)
 repeat_size = Vector2(1783.75, 0)
 repeat_times = 7
 
-[node name="Artwork" type="Sprite2D" parent="FrontOccluder"]
+[node name="Artwork" type="Sprite2D" parent="FrontOccluder" unique_id=747795443]
 modulate = Color(1, 1, 1, 0.48)
 position = Vector2(0, 176)
 scale = Vector2(1.25, 1.25)
 texture = ExtResource("9_occluder")
 centered = false
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=2020882427]
 layer = 100
 
-[node name="Hint" type="Label" parent="UI"]
+[node name="Hint" type="Label" parent="UI" unique_id=1718811508]
 modulate = Color(1, 1, 1, 0.86)
 offset_left = 24.0
 offset_top = 20.0
@@ -457,7 +464,7 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 22
 text = "A/D 或 ←/→ 移动    W/Z/↑ 跳跃    E 校准晶柱    跃过共鸣波并避开预警雪幕"
 
-[node name="ProgressLabel" type="Label" parent="UI"]
+[node name="ProgressLabel" type="Label" parent="UI" unique_id=674806594]
 offset_left = 24.0
 offset_top = 68.0
 offset_right = 310.0
@@ -467,7 +474,7 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 21
 text = "鸣晶校准  0 / 3"
 
-[node name="CompleteLabel" type="Label" parent="UI"]
+[node name="CompleteLabel" type="Label" parent="UI" unique_id=1242330872]
 visible = false
 anchors_preset = 10
 anchor_right = 1.0
@@ -481,7 +488,7 @@ theme_override_font_sizes/font_size = 32
 text = "鸣晶之灾已平息"
 horizontal_alignment = 1
 
-[node name="FadeRect" type="ColorRect" parent="UI"]
+[node name="FadeRect" type="ColorRect" parent="UI" unique_id=622984696]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0

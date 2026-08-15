@@ -18,6 +18,7 @@ const SettingsServiceScript := preload("res://app/settings_service.gd")
 var player_data: PlayerData
 var save_service: SaveService
 var _sleep_transition_running := false
+var _death_transition_running := false
 
 
 func get_player_data() -> PlayerData:
@@ -36,6 +37,7 @@ func _ready() -> void:
 	map_switch.destination_locked.connect(_on_map_switch_destination_locked)
 	game_flow.save_requested.connect(_on_save_requested)
 	game_flow.sleep_transition_requested.connect(_on_sleep_transition_requested)
+	game_flow.day_death_requested.connect(_on_day_death_requested)
 	menu_controller.runtime_swap_requested.connect(_on_menu_runtime_swap_requested)
 	menu_controller.settings_requested.connect(_on_menu_settings_requested)
 	menu_controller.intro_finished.connect(_on_menu_intro_finished)
@@ -145,6 +147,50 @@ func _on_sleep_transition_requested(result: NightResult) -> void:
 		sleep_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	get_tree().remove_meta("day_modal_input_locked")
 	_sleep_transition_running = false
+
+
+func _on_day_death_requested(_source: StringName) -> void:
+	if _death_transition_running or game_flow.current_mode != GameFlow.Mode.DAY:
+		return
+	_death_transition_running = true
+	get_tree().set_meta("day_modal_input_locked", true)
+	pause_menu.hide()
+	sleep_fade.mouse_filter = Control.MOUSE_FILTER_STOP
+	var fade_out := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	fade_out.tween_property(sleep_fade, "color:a", 1.0, 0.45)
+	await fade_out.finished
+	if not game_flow.restart_day_after_death():
+		sleep_fade.color.a = 0.0
+		sleep_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		get_tree().remove_meta("day_modal_input_locked")
+		_death_transition_running = false
+		return
+	await get_tree().process_frame
+	var runtime := game_flow.current_runtime as DayRuntime
+	var wake_executor := runtime.start_bedroom_revival() if runtime != null else null
+	if wake_executor == null:
+		player_data.restore_full_health()
+		_finish_day_revival()
+		return
+	wake_executor.completed.connect(_on_day_revival_animation_completed, CONNECT_ONE_SHOT)
+	var fade_in := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	fade_in.tween_property(sleep_fade, "color:a", 0.0, 0.45)
+	await fade_in.finished
+
+
+func _on_day_revival_animation_completed() -> void:
+	player_data.restore_full_health()
+	_finish_day_revival()
+
+
+func _finish_day_revival() -> void:
+	var runtime := game_flow.current_runtime as DayRuntime
+	if runtime != null:
+		runtime.set_health_hud_visible(true)
+	sleep_fade.color.a = 0.0
+	sleep_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	get_tree().remove_meta("day_modal_input_locked")
+	_death_transition_running = false
 
 
 func _on_map_switch_destination_locked(destination_id: StringName, _destination_data: Dictionary) -> void:

@@ -13,3 +13,5 @@
 - [Scene title card](scene_title_card.md): per-level `DisasterName` and `NormalDescription` subtitle data, daily presentation rules, and title replay behavior.
 
 - [Potion direct hits](potion_hits.md): collision-box impact receiver contract and splash-effect integration.
+
+- [Day health and recovery](day_health.md): global HP, healing effects, hazard damage, same-day rollback, and Bedroom revival.

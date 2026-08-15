@@ -284,11 +284,10 @@ func _set_command(parts: PackedStringArray, additive: bool) -> String:
 			player.debt = maxi(player.debt + integer if additive else integer, 0)
 			return "debt = %d" % player.debt
 		"max_health":
-			player.max_health = maxi(player.max_health + integer if additive else integer, 1)
-			player.health = mini(player.health, player.max_health)
+			player.set_max_health(player.max_health + integer if additive else integer)
 			return "max_health = %d" % player.max_health
 		"health":
-			player.health = clampi(player.health + integer if additive else integer, 0, player.max_health)
+			player.set_health(player.health + integer if additive else integer)
 			return "health = %d" % player.health
 	if path.begins_with("inventory."):
 		var ingredient_id := StringName(path.trim_prefix("inventory."))

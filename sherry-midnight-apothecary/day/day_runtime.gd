@@ -3,6 +3,7 @@ extends Node
 
 signal finished(result: DayResult)
 signal travel_anchor_activated(level_id: StringName)
+signal player_died(source: StringName)
 
 const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
@@ -34,6 +35,7 @@ var day := 1
 @onready var developer_console_layer: CanvasLayer = $DeveloperConsoleLayer
 @onready var developer_console: Node = $DeveloperConsoleLayer/DeveloperConsole
 @onready var level_transition_fade: ColorRect = $LevelTransition/Fade
+@onready var player_health_hud: PlayerHealthHUD = $UI/PlayerHealthHUD
 
 var current_level: LevelData
 var current_level_instance: Node
@@ -42,12 +44,51 @@ var _defer_initial_presentation := false
 var _defer_initial_title := false
 var _intro_locked := false
 var _level_transition_running := false
+var _death_requested := false
 
 
 func get_player_data() -> PlayerData:
 	if player_data == null:
 		player_data = PlayerData.new()
 	return player_data
+
+
+func apply_player_damage(amount: int, source: StringName = &"") -> bool:
+	if _death_requested or amount <= 0:
+		return _death_requested
+	get_player_data().apply_damage(amount)
+	if get_player_data().health <= 0:
+		_request_player_death(source)
+	return _death_requested
+
+
+func start_bedroom_revival() -> AnimationPresentationExecutor:
+	if current_level == null or current_level.id != &"bedroom" or current_level_instance == null:
+		return null
+	var executor := current_level_instance.get_node_or_null("SleepToWakeExecutor") as AnimationPresentationExecutor
+	if executor == null:
+		return null
+	set_health_hud_visible(false)
+	executor.start(true)
+	return executor
+
+
+func set_health_hud_visible(visible: bool) -> void:
+	if is_node_ready() and is_instance_valid(player_health_hud):
+		player_health_hud.visible = visible
+
+
+func _request_player_death(source: StringName) -> void:
+	if _death_requested:
+		return
+	_death_requested = true
+	get_tree().set_meta("day_modal_input_locked", true)
+	player_died.emit(source)
+
+
+func _bind_player_health_hud() -> void:
+	if is_node_ready() and is_instance_valid(player_health_hud):
+		player_health_hud.bind_player_data(get_player_data())
 
 
 func configure(
@@ -62,12 +103,19 @@ func configure(
 	_initial_level_id = initial_level_id
 	_defer_initial_presentation = defer_initial_presentation
 	_defer_initial_title = defer_initial_title
+	_bind_player_health_hud()
 	_load_level()
 
 
 func _ready() -> void:
 	developer_console.setup_day(self)
+	_bind_player_health_hud()
 	_load_level()
+
+
+func _process(_delta: float) -> void:
+	if not _death_requested and get_player_data().health <= 0:
+		_request_player_death(&"health_depleted")
 
 
 func set_intro_locked(locked: bool) -> void:

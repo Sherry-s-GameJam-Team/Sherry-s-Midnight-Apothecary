@@ -7,6 +7,28 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(player.debt, 30000, "New players visibly begin with 30000曜 of debt.")
 	test.expect(player.potions.is_empty(), "New players start without any potions.")
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "New players start with three empty potion slots.")
+	var health_updates: Array[Vector2i] = []
+	var depleted_events: Array[bool] = []
+	player.health_changed.connect(func(current: int, maximum: int) -> void: health_updates.append(Vector2i(current, maximum)))
+	player.health_depleted.connect(func() -> void: depleted_events.append(true))
+	test.expect_equal(player.apply_damage(15), 15, "PlayerData applies bounded global damage.")
+	test.expect_equal(player.health, 85, "Damage lowers global health.")
+	test.expect_equal(player.restore_health(8), 8, "PlayerData restores health through the shared API.")
+	test.expect_equal(player.health, 93, "Healing raises global health.")
+	player.apply_damage(999)
+	test.expect_equal(player.health, 0, "Damage clamps health at zero.")
+	test.expect_equal(depleted_events.size(), 1, "Reaching zero emits one depletion signal.")
+	player.restore_full_health()
+	test.expect_equal(player.health, player.max_health, "Full recovery restores maximum health.")
+	test.expect(not health_updates.is_empty(), "Health mutations emit HUD update data.")
+	var rollback_snapshot := player.to_save_data()
+	player.money = 999
+	player.inventory[&"temporary"] = 3
+	player.apply_damage(40)
+	player.restore_from_save_data(rollback_snapshot)
+	test.expect_equal(player.money, 0, "Snapshot restoration rolls back transient money.")
+	test.expect(not player.inventory.has(&"temporary"), "Snapshot restoration rolls back transient inventory.")
+	test.expect_equal(player.health, player.max_health, "Snapshot restoration restores saved health.")
 	var day_result := DayResult.new()
 	day_result.remaining_health = 72
 	day_result.collected_items = {&"herdsmans_loaf_bush": 4}

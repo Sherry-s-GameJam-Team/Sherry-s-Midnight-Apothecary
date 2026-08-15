@@ -1,6 +1,9 @@
 class_name PlayerData
 extends Resource
 
+signal health_changed(current_health: int, maximum_health: int)
+signal health_depleted
+
 const SAVE_VERSION := 9
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
@@ -44,14 +47,78 @@ func reset() -> void:
 	active_home_destination_id = &"market"
 	tutorial_flags = {}
 	customer_states = {}
+	health_changed.emit(health, max_health)
 
 
 func apply_day_result(result: DayResult) -> void:
-	health = clampi(result.remaining_health, 0, max_health)
+	set_health(result.remaining_health)
 	_add_counts(inventory, result.collected_items)
 	potions = _normalize_potions(result.remaining_potions)
 	_cleanup_potion_configuration()
 	unlock_level(result.unlocked_level_id)
+
+
+func apply_damage(amount: int) -> int:
+	if amount <= 0:
+		return 0
+	var previous_health := health
+	set_health(health - amount)
+	return previous_health - health
+
+
+func restore_health(amount: int) -> int:
+	if amount <= 0:
+		return 0
+	var previous_health := health
+	set_health(health + amount)
+	return health - previous_health
+
+
+func restore_full_health() -> void:
+	set_health(max_health)
+
+
+func set_health(value: int) -> void:
+	var previous_health := health
+	health = clampi(value, 0, maxi(max_health, 1))
+	if health == previous_health:
+		return
+	health_changed.emit(health, max_health)
+	if health == 0 and previous_health > 0:
+		health_depleted.emit()
+
+
+func set_max_health(value: int) -> void:
+	var previous_maximum := max_health
+	var previous_health := health
+	max_health = maxi(value, 1)
+	health = clampi(health, 0, max_health)
+	if max_health != previous_maximum or health != previous_health:
+		health_changed.emit(health, max_health)
+		if health == 0 and previous_health > 0:
+			health_depleted.emit()
+
+
+func restore_from_save_data(data: Dictionary) -> void:
+	var restored := PlayerData.from_save_data(data)
+	max_health = restored.max_health
+	health = restored.health
+	money = restored.money
+	debt = restored.debt
+	store_reputation = restored.store_reputation
+	inventory = restored.inventory.duplicate(true)
+	story_items = restored.story_items.duplicate(true)
+	potions = restored.potions.duplicate(true)
+	potion_slot_count = restored.potion_slot_count
+	equipped_potion_ids = restored.equipped_potion_ids.duplicate()
+	selected_potion_slot = restored.selected_potion_slot
+	potion_throw_orders = restored.potion_throw_orders.duplicate(true)
+	upgrades = restored.upgrades.duplicate()
+	unlocked_levels = restored.unlocked_levels.duplicate()
+	active_home_destination_id = restored.active_home_destination_id
+	tutorial_flags = restored.tutorial_flags.duplicate(true)
+	customer_states = restored.customer_states.duplicate(true)
+	health_changed.emit(health, max_health)
 
 
 func has_unlocked_level(level_id: StringName) -> bool:

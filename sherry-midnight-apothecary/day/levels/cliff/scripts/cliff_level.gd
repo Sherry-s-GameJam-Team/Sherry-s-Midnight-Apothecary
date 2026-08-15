@@ -38,9 +38,9 @@ func _ready() -> void:
 	_refresh_progress()
 
 
-func request_respawn(body: Node2D, _reason: String = "fall") -> void:
+func request_respawn(body: Node2D, reason: String = "fall", damage: int = -1) -> void:
 	if hazard_controller != null:
-		hazard_controller.request_respawn(body, StringName(_reason))
+		hazard_controller.request_respawn(body, StringName(reason), damage)
 
 
 func _collect_pillars() -> void:

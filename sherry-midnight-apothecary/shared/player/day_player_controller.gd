@@ -434,10 +434,10 @@ func apply_potion_effect(effect_id: StringName, context: Dictionary) -> void:
 			var absorbed := minf(shield, amount)
 			set_meta("potion_shield", shield - absorbed)
 			if shared_player_data != null:
-				shared_player_data.health = maxi(shared_player_data.health - roundi(amount - absorbed), 0)
+				shared_player_data.apply_damage(roundi(amount - absorbed))
 		&"healing":
 			if shared_player_data != null:
-				shared_player_data.health = mini(shared_player_data.health + roundi(amount), shared_player_data.max_health)
+				shared_player_data.restore_health(roundi(amount))
 		&"speed":
 			set_meta("potion_speed_multiplier", 1.0 + amount)
 			set_meta("potion_speed_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))

@@ -4,6 +4,7 @@ extends Node
 signal mode_changed(mode: Mode, day: int)
 signal save_requested(day: int, mode: Mode)
 signal sleep_transition_requested(result: NightResult)
+signal day_death_requested(source: StringName)
 
 enum Mode {
 	DAY,
@@ -23,6 +24,7 @@ var player_data: PlayerData
 
 var _runtime_slot: Node
 var _switching := false
+var _day_start_snapshot: Dictionary = {}
 
 
 func configure(runtime_slot: Node, shared_player_data: PlayerData) -> void:
@@ -74,6 +76,13 @@ func complete_night_to_bedroom(result: NightResult) -> bool:
 	return _complete_night(result, &"bedroom")
 
 
+func restart_day_after_death() -> bool:
+	if current_mode != Mode.DAY or _switching or player_data == null or _day_start_snapshot.is_empty():
+		return false
+	player_data.restore_from_save_data(_day_start_snapshot)
+	return _load_mode(Mode.DAY, &"bedroom", true, true, true)
+
+
 func debug_switch_mode(mode: Mode) -> bool:
 	if mode == Mode.ENDING:
 		return false
@@ -106,9 +115,10 @@ func _load_mode(
 	mode: Mode,
 	initial_day_level_id: StringName = &"",
 	defer_day_presentation := false,
-	defer_day_title := false
+	defer_day_title := false,
+	force_reload := false
 ) -> bool:
-	if _switching or current_mode == mode and is_instance_valid(current_runtime):
+	if _switching or (current_mode == mode and is_instance_valid(current_runtime) and not force_reload):
 		return false
 	_switching = true
 	if is_instance_valid(current_runtime):
@@ -126,6 +136,7 @@ func _load_mode(
 		var scene: PackedScene = DAY_SCENE if mode == Mode.DAY else NIGHT_SCENE
 		current_runtime = scene.instantiate()
 		if mode == Mode.DAY:
+			_capture_day_start_snapshot()
 			current_runtime.configure(
 				player_data,
 				current_day,
@@ -139,6 +150,7 @@ func _load_mode(
 			current_runtime.configure(player_data, current_day)
 		if mode == Mode.DAY:
 			current_runtime.finished.connect(complete_day)
+			current_runtime.player_died.connect(_on_day_player_died)
 		else:
 			current_runtime.finished.connect(complete_night)
 			current_runtime.sleep_requested.connect(_on_sleep_requested)
@@ -146,6 +158,16 @@ func _load_mode(
 	_switching = false
 	mode_changed.emit(current_mode, current_day)
 	return true
+
+
+func _capture_day_start_snapshot() -> void:
+	if player_data != null:
+		_day_start_snapshot = player_data.to_save_data().duplicate(true)
+
+
+func _on_day_player_died(source: StringName) -> void:
+	if current_mode == Mode.DAY and not _switching:
+		day_death_requested.emit(source)
 
 
 func _on_sleep_requested(result: NightResult) -> void:

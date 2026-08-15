@@ -18,6 +18,12 @@ static func run(test: TestSupport) -> void:
 	test.expect(flow.current_runtime is DayRuntime, "DayRuntime is active.")
 	test.expect_equal((flow.current_runtime as DayRuntime).current_level.id, &"market", "Day zero keeps the first daily level in the rotation.")
 	test.expect(flow.current_runtime.player_data == player, "DayRuntime receives the shared PlayerData instance.")
+	player.inventory[&"unsaved_day_item"] = 2
+	player.apply_damage(30)
+	test.expect(flow.restart_day_after_death(), "DayFlow can rebuild the current day from its start snapshot.")
+	test.expect_equal(flow.current_day, 0, "Death recovery keeps the same day number.")
+	test.expect(not player.inventory.has(&"unsaved_day_item"), "Death recovery discards unsaved day inventory.")
+	test.expect_equal(player.health, player.max_health, "Day-start snapshot restores the original health before revival.")
 	var emitted_day_result := DayResult.new()
 	emitted_day_result.remaining_health = 95
 	(flow.current_runtime as DayRuntime).finish_day(emitted_day_result)

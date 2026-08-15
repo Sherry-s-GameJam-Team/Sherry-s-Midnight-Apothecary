@@ -1,6 +1,7 @@
 class_name GrasslandNightDoor
 extends DoorPortal
 
+const LUCA_TASK_COMPLETED_FLAG := "sleeping_hound_purification_complete"
 const MIASMA_CLEARED_FLAG := "emerald_field_miasma_cleared"
 const GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG := "grassland_hound_dialogue_seen"
 
@@ -76,7 +77,7 @@ func _task_completed() -> bool:
 	if runtime == null or not runtime.has_method("get_player_data"):
 		return false
 	var data := runtime.call("get_player_data") as PlayerData
-	return data != null and bool(data.tutorial_flags.get(MIASMA_CLEARED_FLAG, false))
+	return data != null and bool(data.tutorial_flags.get(LUCA_TASK_COMPLETED_FLAG, false))
 
 
 func is_locked_for_hound_dialogue() -> bool:
@@ -90,6 +91,8 @@ func _requires_hound_dialogue() -> bool:
 		return false
 	var data_provider: Node = runtime if runtime != null else get_parent()
 	var data := data_provider.call("get_player_data") as PlayerData if data_provider != null and data_provider.has_method("get_player_data") else null
+	if data != null and bool(data.tutorial_flags.get(MIASMA_CLEARED_FLAG, false)):
+		return false
 	return data != null and not bool(data.tutorial_flags.get(GRASSLAND_HOUND_DIALOGUE_SEEN_FLAG, false))
 
 
@@ -104,4 +107,5 @@ func _show_interaction_hint() -> void:
 		if top_hint != null:
 			top_hint.show_interaction_hint(_hint_id(), "先按[E]与沉睡的魔犬交谈")
 		return
+	interaction_hint_text = "按[E]结束探索" if _task_completed() else "按[E]返回药水铺"
 	super()
