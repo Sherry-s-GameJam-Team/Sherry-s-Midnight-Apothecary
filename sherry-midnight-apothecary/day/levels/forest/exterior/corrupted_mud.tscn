@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bqbchkqu21o6d"]
+
+[ext_resource type="Script" uid="uid://c4xwew3mxcv33" path="res://day/levels/forest/exterior/corrupted_mud.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c2q2o8cyev3qv" path="res://day/levels/forest/art/environments/forest/exterior/forest_corrupted_mud_set.png" id="2"]
+
+[sub_resource type="RectangleShape2D" id="MudShape"]
+size = Vector2(144, 120)
+
+[node name="CorruptedMud" type="StaticBody2D" unique_id=1507170814 groups=["forest_mud"]]
+script = ExtResource("1")
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=582679419]
+position = Vector2(0, -45)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2")
+region_enabled = true
+region_rect = Rect2(0, 0, 520, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1389200493]
+position = Vector2(-52, -33)
+shape = SubResource("MudShape")

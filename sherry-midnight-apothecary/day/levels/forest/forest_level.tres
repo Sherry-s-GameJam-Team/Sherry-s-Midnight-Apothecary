@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/forest/forest.tscn" id="2_forest_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"forest"
+display_name = "常霁云林"
+disaster_name = "血河"
+normal_description = "王莲冠层承接终日雨水，清水沿古老水路汇入阿尔维斯母树。"
+corrupted_description = "熾天使的血泪污染树冠集水系统，地下河正把灾变输向流明街。"
+scene_description = "林下无雨，树冠暴雨；重启四座水车并深入阿尔维斯母树。"
+content_scene = ExtResource("2_forest_scene")
+default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"stardust_puffy_lion", &"grail_lily", &"dew_flask_herb", &"old_mans_noose"])

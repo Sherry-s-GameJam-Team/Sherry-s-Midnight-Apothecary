@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://b40std3gpssc2"]
+
+[ext_resource type="Script" uid="uid://jtu7x3qgil0w" path="res://day/levels/forest/exterior/waterwheel.gd" id="1"]
+[ext_resource type="Script" uid="uid://bp61pikmonjj7" path="res://day/levels/forest/exterior/water_receiver.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://cyddpkb34017x" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_01.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://cia3ple75mr8c" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_02.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://bds88n1wga53t" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_03.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://bjd1mlbka2pwl" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_04.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://bytnaogevohvw" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_05.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://ceoa2xlspjfbi" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_06.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://b3f48fj4783ov" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_07.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://b4yblkco4ft6f" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_08.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://bp7sxe756acrr" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_09.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dtvxxtgjvmyer" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_10.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://0dcmbjhoyhc3" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_11.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://c1n5vow03uiuo" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_12.png" id="14"]
+[ext_resource type="Texture2D" uid="uid://cnmksngadrf7j" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_13.png" id="15"]
+[ext_resource type="Texture2D" uid="uid://cty8p2qyb4re1" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_14.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://b5kx24tuft741" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_15.png" id="17"]
+[ext_resource type="Texture2D" uid="uid://bk47hidc55fh5" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_16.png" id="18"]
+[ext_resource type="Texture2D" uid="uid://csd3k1lt1p2c7" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_17.png" id="19"]
+[ext_resource type="Texture2D" uid="uid://beorrv7gyp34" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_18.png" id="20"]
+[ext_resource type="Texture2D" uid="uid://deaawre7snqm8" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_19.png" id="21"]
+[ext_resource type="Texture2D" uid="uid://dgd8jknpewt01" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_20.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://c61vcl05ry7ka" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_21.png" id="23"]
+[ext_resource type="Texture2D" uid="uid://7m23l2h7o177" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_22.png" id="24"]
+[ext_resource type="Texture2D" uid="uid://b6735y8wcmlkh" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_23.png" id="25"]
+[ext_resource type="Texture2D" uid="uid://bngbqpylb8fn4" path="res://day/levels/forest/art/environments/forest/mechanisms/waterwheel/frames/forest_waterwheel_24.png" id="26"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8")
+}],
+"loop": false,
+"name": &"activate",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 6.0
+}]
+
+[node name="Waterwheel" type="Node2D" unique_id=509904642]
+script = ExtResource("1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=184467302]
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("SpriteFrames")
+animation = &"idle"
+
+[node name="WaterReceiver" type="Area2D" parent="." unique_id=1731545481]
+position = Vector2(0, -78)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WaterReceiver" unique_id=875410574]
+position = Vector2(-79, 29)
+polygon = PackedVector2Array(-4, -6, -9, 115, 166, 115, 165, 79, 143, 79, 142, 94, 18, 93, 18, 78, 14, 78, 13, 39, 19, 12, 49, 10, 49, 6, 27, 1, 26, -5)

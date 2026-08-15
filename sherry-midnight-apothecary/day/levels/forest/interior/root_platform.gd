@@ -1,0 +1,2 @@
+class_name ForestRootPlatform
+extends StaticBody2D

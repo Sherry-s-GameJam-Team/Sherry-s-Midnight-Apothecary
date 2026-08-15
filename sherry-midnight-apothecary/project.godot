@@ -42,7 +42,6 @@ folder_colors={
 "res://day/": "blue",
 "res://day/levels/": "yellow",
 "res://day/levels/cliff/": "blue",
-"res://day/levels/forest/": "green",
 "res://day/levels/grassland/": "teal",
 "res://day/levels/home/": "gray",
 "res://day/levels/lake/": "teal",

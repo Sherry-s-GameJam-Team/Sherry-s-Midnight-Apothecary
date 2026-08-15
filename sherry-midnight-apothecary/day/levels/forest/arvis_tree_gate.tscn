@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://cb43g8ycvuo6q"]
+
+[ext_resource type="Script" uid="uid://p6gyi1t58spg" path="res://day/levels/forest/arvis_tree_gate.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dpmn4qtja3n5p" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/forest_arvis_gate_open_static.png" id="2"]
+[ext_resource type="AudioStream" uid="uid://dwqdh7mmivec5" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/audio/forest_arvis_gate_open_sfx_sync.ogg" id="3"]
+[ext_resource type="Texture2D" uid="uid://b141ymyaldksg" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0001.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://mik2xnw3hq56" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0002.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://0h8q0nl03wf0" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0003.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://diehxrm4u2jh8" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0004.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://cvhxabc8dh0r" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0005.png" id="8"]
+[ext_resource type="Texture2D" uid="uid://cxm4n5vay1gnj" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0006.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://btoag1anif82j" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0007.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://kec5kq4ip0o6" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0008.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://l6bvcc4gpbul" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0009.png" id="12"]
+[ext_resource type="Texture2D" uid="uid://dhwidk0rhdlg5" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0010.png" id="13"]
+[ext_resource type="Texture2D" uid="uid://cp60kxk3jo2sd" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0011.png" id="14"]
+[ext_resource type="Texture2D" uid="uid://c6e20udj8hflw" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0012.png" id="15"]
+[ext_resource type="Texture2D" uid="uid://doocwy4vmomt" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0013.png" id="16"]
+[ext_resource type="Texture2D" uid="uid://cw0i6gouy44tn" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0014.png" id="17"]
+[ext_resource type="Texture2D" uid="uid://pka2qlgsy3jd" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0015.png" id="18"]
+[ext_resource type="Texture2D" uid="uid://3tquq5wd1pr5" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0016.png" id="19"]
+[ext_resource type="Texture2D" uid="uid://xn8je0qoeudc" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0017.png" id="20"]
+[ext_resource type="Texture2D" uid="uid://bgcg7vhacufxt" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0018.png" id="21"]
+[ext_resource type="Texture2D" uid="uid://bxjytjq2ad0ov" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0019.png" id="22"]
+[ext_resource type="Texture2D" uid="uid://d3itwf7ful6mw" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0020.png" id="23"]
+[ext_resource type="Texture2D" uid="uid://c0dufy0ucl7h" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0021.png" id="24"]
+[ext_resource type="Texture2D" uid="uid://bxv2in4cslkym" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0022.png" id="25"]
+[ext_resource type="Texture2D" uid="uid://dboc1l5boxo7q" path="res://day/levels/forest/art/environments/forest/arvis_tree/forest_arvis_gate_open_pack/frames/forest_arvis_gate_open_0023.png" id="26"]
+
+[sub_resource type="SpriteFrames" id="GateFrames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4")
+}],
+"loop": false,
+"name": &"closed",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26")
+}],
+"loop": false,
+"name": &"open",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="GateBlockerShape"]
+size = Vector2(180, 316)
+
+[node name="ArvisTreeGate" type="Node2D" unique_id=2112541590]
+script = ExtResource("1")
+
+[node name="Animation" type="AnimatedSprite2D" parent="." unique_id=771816478]
+scale = Vector2(0.42, 0.42)
+sprite_frames = SubResource("GateFrames")
+animation = &"open"
+frame = 22
+frame_progress = 1.0
+
+[node name="OpenStatic" type="Sprite2D" parent="." unique_id=1407362714]
+visible = false
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("2")
+
+[node name="Blocker" type="StaticBody2D" parent="." unique_id=678771516]
+visible = false
+position = Vector2(0, 25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blocker" unique_id=190362032]
+position = Vector2(0, -52)
+shape = SubResource("GateBlockerShape")
+
+[node name="OpenSFX" type="AudioStreamPlayer2D" parent="." unique_id=1141251892]
+stream = ExtResource("3")

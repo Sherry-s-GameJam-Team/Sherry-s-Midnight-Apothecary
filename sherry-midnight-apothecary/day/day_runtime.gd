@@ -9,7 +9,7 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
 	preload("res://day/levels/home/home_level.tres"),
 	preload("res://day/levels/home/bedroom_level.tres"),
-	preload("res://day/levels/forest/raintree/raintree_level.tres"),
+	preload("res://day/levels/forest/forest_level.tres"),
 	preload("res://day/levels/lake/lake_level.tres"),
 	preload("res://day/levels/grassland/grassland_level.tres"),
 	preload("res://day/levels/grassland/emerald_field_level.tres"),
@@ -19,7 +19,7 @@ const LEVELS: Array[LevelData] = [
 # market -> forest -> lake progression.
 const DAILY_LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
-	preload("res://day/levels/forest/raintree/raintree_level.tres"),
+	preload("res://day/levels/forest/forest_level.tres"),
 	preload("res://day/levels/lake/lake_level.tres"),
 ]
 
