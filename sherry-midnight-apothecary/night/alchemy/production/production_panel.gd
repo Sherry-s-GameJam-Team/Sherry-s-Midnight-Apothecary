@@ -5,7 +5,7 @@ const HERB_ICON_COLUMNS := 4
 
 @export var pack_delay_seconds := 3.0
 
-var alchemy_runtime: AlchemyRuntime
+var alchemy_runtime: Node
 var ingredient_definitions: Array[IngredientData] = []
 var shelf_state: PowderShelfState
 var current_herb: IngredientData
@@ -45,7 +45,7 @@ func _ready() -> void:
 	_refresh_all()
 
 
-func setup(runtime: AlchemyRuntime, definitions: Array[IngredientData], state: PowderShelfState) -> void:
+func setup(runtime: Node, definitions: Array[IngredientData], state: PowderShelfState) -> void:
 	alchemy_runtime = runtime
 	ingredient_definitions = definitions
 	shelf_state = state

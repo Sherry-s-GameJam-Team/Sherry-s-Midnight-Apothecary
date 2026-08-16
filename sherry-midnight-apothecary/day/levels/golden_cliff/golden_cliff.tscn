@@ -155,6 +155,7 @@ script = ExtResource("2_player")
 [node name="SherryPresentation" parent="Player" unique_id=285167296 instance=ExtResource("5_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=703608565]
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 12000
@@ -362,6 +363,8 @@ position = Vector2(219, -6)
 position = Vector2(3060, 470)
 script = ExtResource("9_balance")
 mechanism_id = &"west_balance"
+target_left_weight = 2
+target_right_weight = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=968536402]
 position = Vector2(1, 36)
@@ -387,6 +390,8 @@ texture = ExtResource("22_balance_right")
 position = Vector2(5830, 390)
 script = ExtResource("9_balance")
 mechanism_id = &"middle_balance"
+target_left_weight = 1
+target_right_weight = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceB" unique_id=997572605]
 position = Vector2(0, 70)
@@ -411,6 +416,8 @@ texture = ExtResource("22_balance_right")
 position = Vector2(8500, 470)
 script = ExtResource("9_balance")
 mechanism_id = &"east_balance"
+target_left_weight = 3
+target_right_weight = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceC" unique_id=361604465]
 position = Vector2(0, 70)

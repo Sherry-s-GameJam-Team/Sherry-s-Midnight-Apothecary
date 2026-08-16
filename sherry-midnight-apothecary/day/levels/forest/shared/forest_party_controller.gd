@@ -17,6 +17,8 @@ var switching_enabled := false
 @onready var luca_world_controller: Node = get_node_or_null(luca_world_controller_path)
 
 func _ready() -> void:
+	if camera != null:
+		camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	_set_control(sherry, true)
 	_set_control(luca, false)
 	_set_luca_view(false)
@@ -47,6 +49,7 @@ func set_active_character(character_id: StringName) -> void:
 	_set_control(target, true)
 	camera.reparent(target, true)
 	camera.position = Vector2.ZERO
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	active_character = character_id
 	_set_luca_view(active_character == &"luca")
 	active_character_changed.emit(active_character)

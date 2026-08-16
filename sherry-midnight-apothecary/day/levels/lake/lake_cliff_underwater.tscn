@@ -399,6 +399,7 @@ script = ExtResource("14_player")
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="CameraSystem" unique_id=1829672299]
+process_callback = 0
 position = Vector2(1086, 810)
 limit_left = 0
 limit_top = 0

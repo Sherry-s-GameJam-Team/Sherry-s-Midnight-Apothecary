@@ -103,6 +103,7 @@ func _follow_actor(actor: Node) -> void:
 		camera.reparent(actor, false)
 	camera.position = camera_offset
 	camera.enabled = true
+	camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	camera.make_current()
 
 

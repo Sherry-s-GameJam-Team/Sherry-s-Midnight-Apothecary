@@ -53,11 +53,12 @@ func _is_interact_event(event: InputEvent) -> bool:
 	)
 
 
-func _find_night_home() -> NightHome:
+func _find_night_home() -> Node:
+	# Duck-typed: avoids compile-time class cycle with NightHome.
 	var current := get_parent()
 	while current != null:
-		if current is NightHome:
-			return current as NightHome
+		if current.has_method("request_bedroom"):
+			return current
 		current = current.get_parent()
 	return null
 

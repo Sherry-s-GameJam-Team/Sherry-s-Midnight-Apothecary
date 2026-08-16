@@ -22,12 +22,11 @@ scale = Vector2(0.18, 0.18)
 texture = ExtResource("2")
 
 [node name="WaterStream" type="Node2D" parent="." unique_id=1171635038]
-visible = false
 position = Vector2(-1, 259)
 
 [node name="Visual" type="Sprite2D" parent="WaterStream" unique_id=799246780]
-position = Vector2(0, -96)
-scale = Vector2(0.18, 0.18)
+position = Vector2(0.99999976, -107)
+scale = Vector2(0.28589267, 0.18)
 texture = ExtResource("3")
 
 [node name="WaterStreamArea" type="Area2D" parent="WaterStream" unique_id=1290492636]

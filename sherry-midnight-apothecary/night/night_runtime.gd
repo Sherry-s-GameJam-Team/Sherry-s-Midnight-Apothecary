@@ -13,13 +13,13 @@ var current_night_result := NightResult.new()
 var _standalone_player_data: PlayerData
 
 @onready var shop_slot: Node2D = $ShopSlot
-@onready var night_home: NightHome = $ShopSlot/NightHome
+@onready var night_home: Node = $ShopSlot/NightHome
 @onready var night_bgm: AudioStreamPlayer = $InteriorNightBGM
 @onready var customer_slot: CanvasLayer = $CustomerSlot
-@onready var business_placeholder: BusinessPlaceholder = $CustomerSlot/BusinessPlaceholder
+@onready var business_placeholder: Node = $CustomerSlot/BusinessPlaceholder
 @onready var alchemy_slot: CanvasLayer = $AlchemySlot
-@onready var alchemy_runtime: AlchemyRuntime = $AlchemySlot/AlchemyRuntime
-@onready var developer_console: DeveloperConsole = $UI/DeveloperConsole
+@onready var alchemy_runtime: Node = $AlchemySlot/AlchemyRuntime
+@onready var developer_console: Node = $UI/DeveloperConsole
 
 
 func _ready() -> void:
@@ -45,7 +45,7 @@ func configure(shared_player_data: PlayerData, current_day: int) -> void:
 		return
 	_place_player_at_default()
 	_show_shop()
-	var alchemy := get_node_or_null("AlchemySlot/AlchemyRuntime") as AlchemyRuntime
+	var alchemy := get_node_or_null("AlchemySlot/AlchemyRuntime")
 	if alchemy == null:
 		push_error("NightRuntime is missing its AlchemyRuntime scene.")
 		return
@@ -55,7 +55,7 @@ func configure(shared_player_data: PlayerData, current_day: int) -> void:
 		push_error("NightRuntime is missing its BusinessPlaceholder scene.")
 		return
 	business_placeholder.setup(player_data, current_night_result, day)
-	var console := get_node_or_null("UI/DeveloperConsole") as DeveloperConsole
+	var console := get_node_or_null("UI/DeveloperConsole")
 	if console == null:
 		push_error("NightRuntime is missing its DeveloperConsole scene.")
 		return
@@ -183,11 +183,11 @@ func _on_alchemy_request_close() -> void:
 
 func _resolve_scene_nodes() -> void:
 	shop_slot = get_node_or_null("ShopSlot") as Node2D
-	night_home = get_node_or_null("ShopSlot/NightHome") as NightHome
+	night_home = get_node_or_null("ShopSlot/NightHome")
 	customer_slot = get_node_or_null("CustomerSlot") as CanvasLayer
-	business_placeholder = get_node_or_null("CustomerSlot/BusinessPlaceholder") as BusinessPlaceholder
+	business_placeholder = get_node_or_null("CustomerSlot/BusinessPlaceholder")
 	alchemy_slot = get_node_or_null("AlchemySlot") as CanvasLayer
-	alchemy_runtime = get_node_or_null("AlchemySlot/AlchemyRuntime") as AlchemyRuntime
+	alchemy_runtime = get_node_or_null("AlchemySlot/AlchemyRuntime")
 	if alchemy_runtime != null and not alchemy_runtime.request_close.is_connected(_on_alchemy_request_close):
 		alchemy_runtime.request_close.connect(_on_alchemy_request_close)
 
@@ -206,16 +206,16 @@ func _place_room_player(room: Node, entry_id: StringName) -> void:
 
 
 func _connect_room(room: Node) -> void:
-	if room is NightHome:
-		var home := room as NightHome
-		home.business_requested.connect(_on_business_requested)
-		home.alchemy_requested.connect(_on_alchemy_requested)
-		home.production_requested.connect(_on_production_requested)
-		home.bedroom_requested.connect(_on_bedroom_requested)
-	elif room is NightBedroom:
-		var bedroom := room as NightBedroom
-		bedroom.return_requested.connect(_on_bedroom_return_requested)
-		bedroom.sleep_requested.connect(_on_bedroom_sleep_requested)
+	# Duck-typed: avoids compile-time class cycle with NightHome/NightBedroom
+	# (see day_runtime.gd LEVELS preload chain note).
+	if room != null and room.has_signal("business_requested"):
+		room.business_requested.connect(_on_business_requested)
+		room.alchemy_requested.connect(_on_alchemy_requested)
+		room.production_requested.connect(_on_production_requested)
+		room.bedroom_requested.connect(_on_bedroom_requested)
+	elif room != null and room.has_signal("return_requested"):
+		room.return_requested.connect(_on_bedroom_return_requested)
+		room.sleep_requested.connect(_on_bedroom_sleep_requested)
 
 
 func _on_bedroom_sleep_requested() -> void:

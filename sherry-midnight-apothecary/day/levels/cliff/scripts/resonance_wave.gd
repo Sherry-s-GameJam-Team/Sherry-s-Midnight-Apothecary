@@ -34,7 +34,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if _consumed or not body.is_in_group("player"):
 		return
 	_consumed = true
-	var controller := get_tree().get_first_node_in_group("cliff_hazard_controller") as CliffHazardController
-	if controller != null:
+	var controller := get_tree().get_first_node_in_group("cliff_hazard_controller")
+	if controller != null and controller.has_method("hit_player"):
 		controller.hit_player(body, &"resonance_wave", direction.normalized(), knockback_force)
 	queue_free()

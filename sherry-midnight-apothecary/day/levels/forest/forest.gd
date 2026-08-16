@@ -149,8 +149,13 @@ func enter_interior(body: Node2D) -> void:
 	# (res://day/levels/forest/interior/forest_interior_level.tres). Hand off to
 	# it instead of driving the old embedded interior phase in place.
 	var runtime := _get_day_runtime()
-	if runtime != null and runtime.has_method("switch_to_level"):
-		runtime.call("switch_to_level", "forest_interior", &"from_forest")
+	if runtime != null:
+		if runtime.has_method("transition_to_level_with_blackout"):
+			runtime.call("transition_to_level_with_blackout", "forest_interior", &"from_forest", true)
+		elif runtime.has_method("switch_to_level"):
+			runtime.call("switch_to_level", "forest_interior", &"from_forest")
+	elif get_tree() != null and get_tree().current_scene == self:
+		get_tree().change_scene_to_file("res://day/levels/forest/interior/forest_interior.tscn")
 
 func enter_crown(body: Node2D) -> void:
 	var sherry_entry := get_node_or_null("Crown/SherryEntry") as Marker2D
@@ -170,6 +175,9 @@ func _open_tree_gate() -> void:
 	_set_phase(ForestPhase.TREE_GATE_OPEN)
 	await gate.open_gate(false)
 	request_checkpoint(&"forest_tree_gate_opened")
+	var interior_entrance := get_node_or_null("Exterior/InteriorEntrance") as Area2D
+	if interior_entrance != null and interior_entrance.overlaps_body(player):
+		enter_interior(player)
 
 func _connect_runtime_nodes() -> void:
 	for wheel: Node in $Exterior/Waterwheels.get_children():
@@ -303,7 +311,7 @@ func _store_flag(flag: String, value: bool) -> void:
 func _get_day_runtime() -> Node:
 	var cursor: Node = get_parent()
 	while cursor != null:
-		if cursor.has_method("apply_player_damage") or cursor.has_method("transition_to_level_with_blackout"):
+		if cursor.has_method("switch_to_level") or cursor.has_method("transition_to_level_with_blackout") or cursor.has_method("apply_player_damage"):
 			return cursor
 		cursor = cursor.get_parent()
 	return null

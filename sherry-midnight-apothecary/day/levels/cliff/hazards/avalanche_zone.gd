@@ -180,8 +180,10 @@ func _hit_overlapping_players() -> void:
 		_on_body_entered(body)
 
 
-func _get_hazard_controller() -> CliffHazardController:
-	return get_tree().get_first_node_in_group("cliff_hazard_controller") as CliffHazardController
+func _get_hazard_controller() -> Node:
+	# Duck-typed: avoids compile-time preload cycle via CliffHazardController
+	# (resonance_wave.tscn -> ... -> resonance_pillar.gd -> preload back).
+	return get_tree().get_first_node_in_group("cliff_hazard_controller")
 
 
 func _draw() -> void:

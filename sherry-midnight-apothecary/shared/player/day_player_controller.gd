@@ -87,8 +87,16 @@ func _ready() -> void:
 	# on collision layer 2.
 	collision_mask |= DROP_THROUGH_PLATFORM_LAYER
 	_facing_right = initial_facing_right
+	_sync_camera_process_mode()
 	_apply_visual_scale()
 	_play("idle")
+
+
+func _sync_camera_process_mode() -> void:
+	for child: Node in find_children("*", "Camera2D", true, false):
+		var cam := child as Camera2D
+		if cam != null:
+			cam.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 
 
 func _physics_process(delta: float) -> void:
@@ -208,6 +216,8 @@ func _update_landing(direction: float) -> void:
 	_horizontal_velocity = velocity.x
 	_jump_speed_ratio = 0.0
 	_is_airborne = false
+	if _state == "hit":
+		return
 	if _potion_action_locked:
 		if not _potion_cast_active:
 			_play("idle")
@@ -281,6 +291,9 @@ func _on_animation_finished(_animation_name: StringName) -> void:
 		_potion_action_locked = false
 		if potion_thrower != null and potion_thrower.has_method("on_cast_animation_finished"):
 			potion_thrower.call("on_cast_animation_finished")
+		_play("jump_fall" if _is_airborne else _ground_action_for(_get_input_direction()))
+		return
+	if _state == "hit":
 		_play("jump_fall" if _is_airborne else _ground_action_for(_get_input_direction()))
 		return
 	if _state == "roll":
@@ -423,6 +436,8 @@ func set_dialogue_locked(locked: bool) -> void:
 func play_hazard_hit(knockback: Vector2) -> void:
 	_potion_cast_active = false
 	_is_rolling = false
+	if knockback.y < 0.0:
+		_is_airborne = true
 	velocity = knockback
 	_horizontal_velocity = knockback.x
 	_transition_target = "idle"

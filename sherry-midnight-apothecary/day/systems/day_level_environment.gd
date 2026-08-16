@@ -26,6 +26,19 @@ func get_player_data() -> PlayerData:
 	return _standalone_player_data
 
 
+func apply_player_damage(amount: int, source: StringName = &"") -> bool:
+	var host := get_parent()
+	while host != null:
+		if host.has_method("apply_player_damage"):
+			return bool(host.call("apply_player_damage", amount, source))
+		host = host.get_parent()
+	var data := get_player_data()
+	if data != null and amount > 0:
+		data.apply_damage(amount)
+		return data.health <= 0
+	return false
+
+
 func _ready() -> void:
 	_is_corrupted = start_corrupted
 	var host := get_parent()

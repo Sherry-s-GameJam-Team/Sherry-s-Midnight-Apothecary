@@ -108,11 +108,12 @@ func _hide_interaction_hint() -> void:
 		top_hint.hide_interaction_hint(_hint_id())
 
 
-func _find_night_home() -> NightHome:
+func _find_night_home() -> Node:
+	# Duck-typed: avoids compile-time class cycle with NightHome.
 	var current := get_parent()
 	while current != null:
-		if current is NightHome:
-			return current as NightHome
+		if current.has_method("request_business"):
+			return current
 		current = current.get_parent()
 	return null
 

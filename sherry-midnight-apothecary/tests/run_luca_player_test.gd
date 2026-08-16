@@ -27,6 +27,10 @@ func _run() -> void:
 	_expect(not frames.get_animation_loop(&"run_start"), "Run start is one-shot.")
 	_expect(frames.get_frame_count(&"run_loop") == 13, "Run loop uses frames 084-096.")
 	_expect(frames.get_animation_loop(&"run_loop"), "Run loop loops.")
+	_expect(frames.has_animation(&"jump"), "Jump animation exists in sprite frames.")
+	_expect(frames.get_frame_count(&"jump") == 13, "Jump animation temporarily uses the 13 run loop frames.")
+	_expect(frames.get_animation_loop(&"jump"), "Jump animation loops.")
+	_expect(frames.has_animation(&"fall"), "Fall animation exists in sprite frames.")
 
 	luca.set_movement_direction(1.0)
 	await physics_frame
@@ -45,11 +49,45 @@ func _run() -> void:
 	await physics_frame
 	_expect(luca.get_locomotion_state_name() == &"run_start", "The next movement replays run_start exactly once.")
 	_expect(not luca.animated_sprite.flip_h, "Left movement keeps the source orientation.")
+	luca.stop_moving()
+
+	# Test jump mechanics and signals
+	var signals_emitted := []
+	luca.jumped.connect(func() -> void: signals_emitted.append("jumped"))
+	luca.landed.connect(func() -> void: signals_emitted.append("landed"))
+
+	# Simulate grounded state and trigger jump
+	luca._coyote_timer = luca.coyote_time
+	luca.request_jump()
+	_expect(luca.is_airborne(), "Requesting jump makes Luca airborne.")
+	_expect(luca.velocity.y < 0.0, "Jump gives negative vertical velocity.")
+	_expect(luca.get_locomotion_state_name() == &"jump", "Airborne jump sets state to jump.")
+	_expect(signals_emitted.has("jumped"), "Jumped signal was emitted.")
+
+	# Advance physics into falling
+	luca.velocity.y = 100.0
+	await physics_frame
+	_expect(luca.get_locomotion_state_name() == &"fall", "Positive vertical velocity transitions to fall state.")
+
+	# Simulate landing
+	luca._is_airborne = true
+	luca.velocity.y = 0.0
+	luca._is_airborne = false
+	luca._play_idle()
+	luca.landed.emit()
+	_expect(signals_emitted.has("landed"), "Landed signal is emitted on landing.")
+	_expect(luca.get_locomotion_state_name() == &"idle", "Landing when stationary returns to idle.")
+
+	# Jump buffer test
+	luca._is_airborne = true
+	luca._jump_buffer_timer = 0.0
+	luca.request_jump()
+	_expect(luca._jump_buffer_timer > 0.0, "Requesting jump while airborne buffers the input.")
 
 	luca.queue_free()
 	await process_frame
 	if failures == 0:
-		print("Luca player animation and movement tests passed.")
+		print("Luca player animation, movement, and jump tests passed.")
 		quit(0)
 	else:
 		push_error("%d Luca player assertion(s) failed." % failures)

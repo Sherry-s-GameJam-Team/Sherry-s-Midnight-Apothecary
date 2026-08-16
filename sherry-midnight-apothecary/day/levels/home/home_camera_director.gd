@@ -59,7 +59,7 @@ func _initialize() -> void:
 	_barrier_material = _barrier_visual.material as ShaderMaterial if _barrier_visual != null else null
 	if _player == null or _camera == null or _entrance_area == null or _entrance_collision == null or _blocker_collision == null or _barrier_material == null:
 		push_error("HomeCameraDirector is missing a required bedroom entrance node.")
-		set_process(false)
+		set_physics_process(false)
 		return
 	_entrance_area.body_entered.connect(_on_entrance_body_entered)
 	_entrance_area.body_exited.connect(_on_entrance_body_exited)
@@ -72,6 +72,7 @@ func _initialize() -> void:
 	# combining an inherited Player transform, changing limits and Camera2D's
 	# internal smoothing cache; that combination caused the gray viewport.
 	_camera.enabled = true
+	_camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	_camera.make_current()
 	_camera.top_level = true
 	_camera.position_smoothing_enabled = false
@@ -151,7 +152,7 @@ func hide_entrance_hint() -> void:
 	_hide_interaction_hint()
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if _player == null or _camera == null:
 		return
 	if _cinematic_camera_active:

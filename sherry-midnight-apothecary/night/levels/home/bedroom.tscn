@@ -147,6 +147,7 @@ position = Vector2(0, 26)
 scale = Vector2(2.04, 2.04)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1227679343]
+process_callback = 0
 position = Vector2(0, -174)
 limit_left = 0
 limit_top = 0

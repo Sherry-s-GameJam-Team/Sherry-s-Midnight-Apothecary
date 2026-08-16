@@ -147,6 +147,7 @@ script = ExtResource("17_player")
 [node name="SherryPresentation" parent="Player" unique_id=188691992 instance=ExtResource("19_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=933728173]
+process_callback = 0
 position = Vector2(150, -90)
 limit_left = 0
 limit_top = 0

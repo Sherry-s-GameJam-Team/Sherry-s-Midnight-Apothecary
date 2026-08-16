@@ -15,6 +15,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_temporary_camera = Camera2D.new()
 	_temporary_camera.name = "PotionFlightCamera"
+	_temporary_camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	_temporary_camera.enabled = false
 	add_child(_temporary_camera)
 
@@ -55,7 +56,7 @@ func stop_follow() -> void:
 		_finish_return()
 
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not _active:
 		return
 	if _target == null or not is_instance_valid(_target) or Time.get_ticks_msec() >= _deadline_ms:

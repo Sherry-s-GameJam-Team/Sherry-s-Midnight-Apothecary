@@ -366,6 +366,7 @@ position = Vector2(-6, 16)
 position = Vector2(-1, 18)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1998518796]
+process_callback = 0
 position = Vector2(-9, 75)
 limit_left = 98
 limit_top = 96

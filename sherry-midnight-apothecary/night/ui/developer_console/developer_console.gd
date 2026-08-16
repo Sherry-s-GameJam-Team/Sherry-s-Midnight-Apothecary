@@ -12,10 +12,10 @@ const POTION_IDS_BY_NUMBER: Array[StringName] = [
 	&"purification_potion",
 ]
 
-var night_runtime: NightRuntime
+var night_runtime: Node
 var day_runtime: Node
 var day_scene: Node
-var alchemy_runtime_override: AlchemyRuntime
+var alchemy_runtime_override: Node
 var _previous_tree_paused := false
 var _history: Array[String] = []
 var _history_index := 0
@@ -53,7 +53,7 @@ func _ready() -> void:
 	command_input.text_submitted.connect(_on_command_submitted)
 
 
-func setup(runtime: NightRuntime) -> void:
+func setup(runtime: Node) -> void:
 	day_runtime = null
 	day_scene = null
 	night_runtime = runtime
@@ -74,7 +74,7 @@ func setup_day_scene(scene: Node) -> void:
 	day_scene = scene
 
 
-func setup_alchemy(runtime: AlchemyRuntime) -> void:
+func setup_alchemy(runtime: Node) -> void:
 	day_runtime = null
 	day_scene = null
 	night_runtime = null
@@ -533,7 +533,7 @@ func _resolve_potion_id(raw_id: String) -> StringName:
 	return POTION_IDS_BY_NUMBER[index] if index >= 0 and index < POTION_IDS_BY_NUMBER.size() else &""
 
 
-func _alchemy() -> AlchemyRuntime:
+func _alchemy() -> Node:
 	if alchemy_runtime_override != null:
 		return alchemy_runtime_override
 	return night_runtime.alchemy_runtime if night_runtime != null else null

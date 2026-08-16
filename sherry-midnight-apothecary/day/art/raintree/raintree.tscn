@@ -91,6 +91,7 @@ script = ExtResource("1_player")
 [node name="PotionThrower" parent="Player" unique_id=1907873229 instance=ExtResource("13_potions")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1688110080]
+process_callback = 0
 position = Vector2(0, -86)
 limit_left = 96
 limit_top = 0

@@ -1,66 +1,28 @@
 # Golden Cliff（烁金横崖）— standalone day level
 
 `res://day/levels/golden_cliff/` is a standalone day level under the `DayRuntime`
-architecture (same shape as the standalone forest interior level). The pack keeps
-its own scenes, scripts, and art inside the folder; it creates no nested Godot
-project, Autoload, event bus, or persistent cross-scene references.
+architecture. The pack keeps its own scenes, scripts, and art inside the folder; it creates no nested Godot project, Autoload, event bus, or persistent cross-scene references.
 
 ## Deployment status
 
-Registered in `DayRuntime.LEVELS` in `res://day/day_runtime.gd` (NOT in
-`DAILY_LEVELS`). Deployment steps are documented in
-`day/levels/golden_cliff/README_DEPLOY.md`.
+Registered in `DayRuntime.LEVELS` in `res://day/day_runtime.gd`. Deployment steps are documented in `day/levels/golden_cliff/README_DEPLOY.md`.
 
 ## Global console (DeveloperConsole)
 
 The standalone DeveloperConsole is embedded directly in `golden_cliff.tscn`:
 
 - `DebugUI` — `CanvasLayer`, `layer = 200` (above gameplay).
-- `DebugUI/DeveloperConsole` — instanced from
-  `res://night/ui/developer_console/developer_console.tscn`.
+- `DebugUI/DeveloperConsole` — instanced from `res://night/ui/developer_console/developer_console.tscn`.
 
-This matches the standalone-level pattern used by lake/lakebed/raintree/town.
-`day_level_environment.gd` (the scene root) keeps the embedded console active in
-standalone runs and disables it when the level runs under `DayRuntime` (which owns
-its own console layer). The console hides itself on `_ready()` and toggles via the
-project's usual key bindings.
+`day_level_environment.gd` (the scene root) keeps the embedded console active in standalone runs and disables it when the level runs under `DayRuntime` (which owns its own console layer).
 
 ## Title UI (SceneTitleCard)
 
-`golden_cliff.tscn` does NOT embed `SceneTitleCard` — the title card is
-`DayRuntime`-owned. The level only registers `golden_cliff_level.tres` in
-`DayRuntime.LEVELS`; DayRuntime presents the global `SceneTitleCard` using that
-resource's `disaster_name` / `normal_description` (see `docs/scene_title_card.md`).
-`show_title_card = true` is set on the level resource.
+`golden_cliff.tscn` registers `golden_cliff_level.tres` in `DayRuntime.LEVELS`; DayRuntime presents the global `SceneTitleCard` using that resource's `disaster_name` (`断衡之灾`) / `normal_description` (`重力失序的断崖恢复了稳定与宁静`).
 
 ## B-key backpack & ESC pause menu
 
-The global `PauseMenu` (`res://night/ui/pause_menu/pause_menu.tscn`, the same
-scene AppRoot hosts in `GlobalUI`) is embedded in `golden_cliff.tscn` so the
-standalone showcase level is self-contained:
-
-- `PauseMenuLayer` — `CanvasLayer`, `layer = 200`, script
-  `day/levels/golden_cliff/pause_menu_host.gd`.
-- `PauseMenuLayer/PauseMenu` — instanced from `pause_menu.tscn` (starts hidden;
-  pages: SETTINGS / CODEX / BACKPACK / HELP).
-
-`pause_menu_host.gd` mirrors `app_root._unhandled_input` for standalone runs:
-
-- **B (`open_backpack`)** opens the menu on the BACKPACK page — the potion/items
-  inventory bound from `DayLevelEnvironment.get_player_data()` (the same shared
-  `PlayerData` instance the PotionThrower and hotbar use).
-- **ESC (`ui_cancel`)** opens the pause menu (SETTINGS page by default). While
-  open the menu handles ESC/B itself (B toggles between the backpack and the
-  previous page, ESC closes) and the tree is paused (`get_tree().paused`).
-- Guards `day_modal_input_locked` and LineEdit/TextEdit focus, exactly like
-  `app_root.gd`.
-
-When the level runs under `DayRuntime` (via AppRoot), `day_level_environment.gd`
-disables the embedded `PauseMenuLayer`/`PauseMenu` (same branch that disables the
-embedded DebugUI console); AppRoot's global `GlobalUI/PauseMenu` handles B/ESC
-there instead. The `PauseMenu` is fully standalone-safe: its settings service is
-null-guarded when unbound, and its inventory page handles an empty fresh
-`PlayerData`.
+The global `PauseMenu` (`res://night/ui/pause_menu/pause_menu.tscn`) is embedded in `golden_cliff.tscn` via `PauseMenuLayer` with `pause_menu_host.gd` for standalone runs.
 
 ## LevelData
 
@@ -72,33 +34,57 @@ null-guarded when unbound, and its inventory page handles an empty fresh
 - exit portal: `home/default` via `DoorPortal` (goes through `DayRuntime.switch_to_level()`)
 - content scene: `golden_cliff.tscn`, root script `day_level_environment.gd`
 
-## Core gameplay
+## Balance Mechanisms & Dual-Pan Weight System（衡石机关二次配置）
 
-1. The yellow spiritual-vein "balance break" corrupts the cliff; rock weights go
-   wrong (floating boulders, collapsing platforms, fall damage into the abyss).
-2. Three balance-stone mechanisms are `StaticBody2D` nodes implementing
-   `receive_potion_hit(hit)`; each direct potion hit performs one calibration and
-   each mechanism needs two hits.
-3. When all three balance stones are stable the root `DayLevelEnvironment` switches
-   to the uncorrupted state and the exit portal unlocks.
-4. Runtime effects are Godot-native (no sprite sheets): sine-motion
-   `AnimatableBody2D` floaters, `Area2D` collapse warnings with Tween shake/fall,
-   runtime `Polygon2D` debris, `Line2D` hit rings and portal-repair sparks,
-   `Parallax2D` background.
+The balance stones operate as physical dual-pan weighing scales with beam tilt dynamics, visual stone stacking, indicator needle-to-notch alignment, and environmental linkages:
+
+### Structure & Hit Detection
+- `BalanceMechanism` (`balance_mechanism.gd`)
+  - `Base`: Fixed sandstone pedestal.
+  - `BeamPivot`: Central rotating fulcrum node.
+    - `Beam`: Horizontal balance beam.
+    - `LeftPan` (`left_hit_area` with `pan_hit_receiver.gd`, `side = &"left"`): Left weight container and hit area.
+    - `RightPan` (`right_hit_area` with `pan_hit_receiver.gd`, `side = &"right"`): Right weight container and hit area.
+  - `CenterIndicator`: Needle / pointer rotating with the beam pivot.
+  - `TargetIndicator`: Target notch displaying the required tilt angle for resolution.
+  - `ResetArea` & `ResetHint`: Base interaction area for resetting weights via `E` key or hit.
+
+### Weight Calibration & Dynamics
+- Direct potion hits on LeftPan add 1 weight to `left_weight` (capped at `max_weight = 4`).
+- Direct potion hits on RightPan add 1 weight to `right_weight` (capped at `max_weight = 4`).
+- Procedural sandstone blocks (`Polygon2D`/`Line2D`) dynamically render in each pan representing the current weight.
+- Beam rotation smoothly tweens:
+  $$\text{target\_rotation} = \frac{\text{right\_weight} - \text{left\_weight}}{\text{max\_weight}} \times \text{max\_tilt\_angle}$$
+- When `left_weight == target_left_weight` and `right_weight == target_right_weight`, a 0.6-second stability delay occurs before calling `_stabilize()`.
+- Mechanism completion produces a 0.15s gentle shake, elastic beam alignment, pointer/notch golden glow, expanding `Line2D` ripple wave, falling sandstone particles, and emits `stabilized(mechanism_id)`.
+- Resetting: Approaching the central base and pressing `E` (or calling `reset_balance()`) restores initial weights and tweens the beam back to initial position without penalty.
+
+### Three Distinct Balance Configurations & Terrain Linkages
+1. **`west_balance`** (`target_left_weight = 2`, `target_right_weight = 2`):
+   - Educational symmetry puzzle (both sides equal weight).
+   - **Linkage**: Western floating boulders (`BoulderA`, `BoulderB`) transition from `FloatState.UNSTABLE` (amplitude 18px, wobble rotation ±2°, high speed) to `FloatState.STABLE` (amplitude 3px, rotation 0°, low speed), forming a stable crossing path.
+2. **`middle_balance`** (`target_left_weight = 1`, `target_right_weight = 3`):
+   - Asymmetrical balance puzzle (right pan naturally heavier, requiring pointer to match target notch).
+   - **Linkage**: A tilted sandstone bridge (`SlopeA`) smoothly tweens its rotation to horizontal level (0.0°), bridging the chasm.
+3. **`east_balance`** (`target_left_weight = 3`, `target_right_weight = 2`):
+   - Complex asymmetrical calibration puzzle (left pan heavier).
+   - **Linkage**: Eastern floating boulders (`BoulderC`, `BoulderD`, `ExitPlatform`) transition to stable state and lower to reachable jumping height before the exit portal.
+
+### Portal Restoration
+- `GoldenCliffController` (`golden_cliff_controller.gd`) tracks all three mechanism states.
+- The exit portal remains inactive and disabled until all 3 mechanisms are stabilized.
+- Upon completing all three puzzles, a 2.5s restoration sequence plays:
+  1. Door vibration
+  2. Three golden light orbs converge to the socket
+  3. Rotating `Line2D` energy rings
+  4. Yellow energy fill inside the portal
+  5. Upward drifting golden sparks
+  6. Portal collision, visual, and interaction unlock.
 
 ## Validation
 
-From the project root (replace `godot` with your Godot 4.6 console executable):
+Run the dedicated smoke test:
 
 ```powershell
-godot --headless --path . --editor --quit
-godot --headless --path . --script res://tests/golden_cliff_smoke_test.gd
+godot --headless --path . --script res://day/levels/golden_cliff/golden_cliff_smoke_test.gd
 ```
-
-The smoke test instantiates `golden_cliff.tscn` (loading `day_runtime.tscn` first,
-in the game's real load order), asserts the embedded `DebugUI`/`DeveloperConsole`
-and `PauseMenuLayer`/`PauseMenu` wiring, asserts the `golden_cliff` LevelData is
-registered in `DayRuntime.LEVELS` with title-card data set, and simulates B-key
-(backpack page opens) and ESC (menu closes, tree unpauses) keypresses. Simulated
-key events set both `keycode` and `physical_keycode` (Godot 4.6 `is_action_pressed`
-is event-based).

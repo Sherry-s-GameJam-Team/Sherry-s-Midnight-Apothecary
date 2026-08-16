@@ -6,6 +6,7 @@ extends Camera2D
 
 
 func _ready() -> void:
+	process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 	_sync_limits()
 
 

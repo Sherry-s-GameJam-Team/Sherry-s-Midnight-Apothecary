@@ -140,10 +140,13 @@ func _get_player_data() -> PlayerData:
 	return runtime.get_player_data() if runtime != null else null
 
 
-func _get_day_runtime() -> DayRuntime:
+func _get_day_runtime() -> Node:
+	# Duck-typed on purpose: referencing DayRuntime here would create a
+	# compile-time preload cycle (day_runtime.gd -> LEVELS -> level.tres ->
+	# level.tscn -> this script -> DayRuntime). See day_runtime.gd header.
 	var cursor: Node = get_parent()
 	while cursor != null:
-		if cursor is DayRuntime:
-			return cursor as DayRuntime
+		if cursor.has_method("get_player_data"):
+			return cursor
 		cursor = cursor.get_parent()
 	return null

@@ -36,6 +36,7 @@ Before adding a file, read `sherry’s-midnight-apothecary/docs/PROJECT_STRUCTUR
 
 ## Editing and verification
 
+- **Autonomous execution**: Do not block to ask for user confirmation before making code edits or running implementations. Directly apply changes, execute verification tests, and report results concisely.
 - Preserve existing user changes and avoid unrelated cleanup or bulk file moves.
 - Use `res://` paths rooted at `sherry’s-midnight-apothecary/`; never encode absolute local filesystem paths in Godot resources.
 - Keep `.gd.uid` files paired with their scripts when Godot has generated them. Do not hand-create import-cache files.
@@ -49,3 +50,4 @@ godot --headless --path . --script res://tests/run_tests.gd
 ```
 
 Use the narrowest relevant test during iteration, then run both commands above for changes that affect shared contracts or project structure. If `godot` is unavailable, report that validation was not run.
+

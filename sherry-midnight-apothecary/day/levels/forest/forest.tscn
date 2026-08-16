@@ -8,13 +8,12 @@
 [ext_resource type="SpriteFrames" path="res://characters/luca/luca_sprite_frames.tres" id="6_s7dby"]
 [ext_resource type="Script" uid="uid://dfwmdrgwhtb00" path="res://day/levels/forest/area_2d.gd" id="7_3qgp4"]
 [ext_resource type="Resource" uid="uid://cfv8bc6tv5uff" path="res://day/levels/forest/dialog/before_stream.dialogue" id="8_luca_dialogue"]
-[ext_resource type="Resource" path="res://day/levels/forest/dialog/after_stream.dialogue" id="9_luca_after_dialogue"]
+[ext_resource type="Resource" uid="uid://b4yw4qpil82tj" path="res://day/levels/forest/dialog/after_stream.dialogue" id="9_luca_after_dialogue"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="12_player"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="13_potions"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="14_sherry_presentation"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="15_sherry_collision"]
 [ext_resource type="PackedScene" uid="uid://bl3k5xs5gqr5n" path="res://day/levels/forest/exterior/lotus_platform.tscn" id="16_lotus"]
-[ext_resource type="Texture2D" uid="uid://c2q2o8cyev3qv" path="res://day/levels/forest/art/environments/forest/exterior/forest_corrupted_mud_set.png" id="16_rhy1x"]
 [ext_resource type="PackedScene" uid="uid://b40std3gpssc2" path="res://day/levels/forest/exterior/waterwheel.tscn" id="17_wheel"]
 [ext_resource type="PackedScene" uid="uid://bqbchkqu21o6d" path="res://day/levels/forest/exterior/corrupted_mud.tscn" id="18_mud"]
 [ext_resource type="PackedScene" uid="uid://cb43g8ycvuo6q" path="res://day/levels/forest/arvis_tree_gate.tscn" id="19_gate"]
@@ -39,7 +38,7 @@ a = Vector2(9, 23)
 b = Vector2(642, 207)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_slli8"]
-size = Vector2(1185.8411, 47.9337)
+size = Vector2(1707.4495, 88.36868)
 
 [sub_resource type="RectangleShape2D" id="EntranceShape"]
 size = Vector2(177, 330)
@@ -72,6 +71,7 @@ script = ExtResource("12_player")
 [node name="SherryPresentation" parent="Player" unique_id=2001449172 instance=ExtResource("14_sherry_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1906065549]
+process_callback = 0
 position = Vector2(100, -130)
 limit_left = 0
 limit_top = 0
@@ -99,14 +99,11 @@ frame_progress = 0.43258443
 [node name="DialogueTrigger" type="Area2D" parent="LucaDialogueNpc" unique_id=11588109]
 position = Vector2(-23, 6.5)
 collision_layer = 0
-collision_mask = 1
 script = ExtResource("7_3qgp4")
 dialogue_resource = ExtResource("8_luca_dialogue")
 before_stream_dialogue = ExtResource("8_luca_dialogue")
 after_stream_dialogue = ExtResource("9_luca_after_dialogue")
 gate_path = NodePath("../../Exterior/ArvisTreeGate")
-dialogue_title = "start"
-interaction_hint_text = "按[E]与卢卡交谈"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LucaDialogueNpc/DialogueTrigger" unique_id=1345541275]
 z_index = 1
@@ -194,11 +191,11 @@ shape = SubResource("ExteriorGroundShape")
 z_index = 3
 
 [node name="Channel01" type="Sprite2D" parent="Exterior/WaterChannels" unique_id=2124059478]
-position = Vector2(755, 536)
-scale = Vector2(1.045, 0.88)
+position = Vector2(775.99994, 557)
+scale = Vector2(0.5632005, 0.50348216)
 texture = ExtResource("5_channel")
 region_enabled = true
-region_rect = Rect2(33.653442, 1083.4502, 893.67847, 473.42163)
+region_rect = Rect2(36.88733, 1537.4419, 1333.269, 672.7505)
 
 [node name="OneWayPlatformDemo" type="StaticBody2D" parent="Exterior/WaterChannels/Channel01" unique_id=1163167534]
 position = Vector2(164.59332, -103.40909)
@@ -212,37 +209,48 @@ shape = SubResource("SegmentShape2D_slli8")
 one_way_collision = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Exterior/WaterChannels/Channel01/OneWayPlatformDemo" unique_id=393699746]
-position = Vector2(-13, 2)
-polygon = PackedVector2Array(-560, -55, -489, -55, -484, 0, 143, 177, 151, 144, 214, 146, 217, 210, 152, 211, -563, 14)
+position = Vector2(56.11444, -59.918877)
+scale = Vector2(1.5404543, 1.5998307)
+polygon = PackedVector2Array(-560, -55, -489, -55, -484, 0, 143, 177, 151, 144, 214, 146, 217, 210, 152, 211, -112.64429, 138.0841, -563, 14)
 one_way_collision = true
 
 [node name="Channel02" type="Sprite2D" parent="Exterior/WaterChannels" unique_id=663543050]
-position = Vector2(2493, 627)
-scale = Vector2(0.565, 0.605)
+position = Vector2(2405.8433, 607.08)
+scale = Vector2(0.4755627, 0.50923085)
 texture = ExtResource("5_channel")
 region_enabled = true
-region_rect = Rect2(16.426727, 0, 1320.0426, 277.66034)
+region_rect = Rect2(16.426727, 0, 1949.4246, 416.6695)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Exterior/WaterChannels/Channel02" unique_id=1176976381]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exterior/WaterChannels/Channel02/StaticBody2D" unique_id=1911526462]
-position = Vector2(7.0791016, 4.1324463)
+position = Vector2(-41.725098, -12.921509)
+scale = Vector2(1, 0.9999998)
 shape = SubResource("RectangleShape2D_slli8")
 
 [node name="Channel03" type="Sprite2D" parent="Exterior/WaterChannels" unique_id=956280995]
-position = Vector2(3700, 610)
-scale = Vector2(0.42, 0.42)
+z_index = -3
+position = Vector2(3590.9998, 589)
+scale = Vector2(0.36170527, 0.36142385)
 texture = ExtResource("5_channel")
 region_enabled = true
-region_rect = Rect2(0, 260, 500, 260)
+region_rect = Rect2(41.37732, 388.12854, 697.214, 366.95483)
 
 [node name="Channel04" type="Sprite2D" parent="Exterior/WaterChannels" unique_id=1340779889]
-z_index = -3
-position = Vector2(4784, 585.00006)
-scale = Vector2(0.42, 0.42)
+z_index = -2
+position = Vector2(5192.9995, 459)
+scale = Vector2(0.62708825, 0.5876283)
 texture = ExtResource("5_channel")
 region_enabled = true
-region_rect = Rect2(956.24384, 677.953, 353.5965, 343.135)
+region_rect = Rect2(4.681885, 771.39246, 1280.2644, 750.2186)
+
+[node name="Channel05" type="Sprite2D" parent="Exterior/WaterChannels" unique_id=476052743]
+z_index = -2
+position = Vector2(4725.0396, 545.8841)
+scale = Vector2(0.59307146, 0.6020847)
+texture = ExtResource("5_channel")
+region_enabled = true
+region_rect = Rect2(16.913696, 379.974, 762.45056, 399.573)
 
 [node name="LotusPlatforms" type="Node2D" parent="Exterior" unique_id=127997089]
 
@@ -283,7 +291,7 @@ wheel_id = &"waterwheel_1"
 
 [node name="Waterwheel02" parent="Exterior/Waterwheels" unique_id=2056383923 instance=ExtResource("17_wheel")]
 z_index = 3
-position = Vector2(2583, 549)
+position = Vector2(2581, 527)
 wheel_id = &"waterwheel_2"
 
 [node name="Waterwheel03" parent="Exterior/Waterwheels" unique_id=1567387020 instance=ExtResource("17_wheel")]
@@ -291,7 +299,9 @@ position = Vector2(3776, 564)
 wheel_id = &"waterwheel_3"
 
 [node name="Waterwheel04" parent="Exterior/Waterwheels" unique_id=1398805371 instance=ExtResource("17_wheel")]
-position = Vector2(4903, 589)
+z_index = 2
+position = Vector2(4912, 572)
+scale = Vector2(-1.41, 1.405)
 wheel_id = &"waterwheel_4"
 
 [node name="Muds" type="Node2D" parent="Exterior" unique_id=1676489848]
@@ -305,27 +315,6 @@ position = Vector2(3150, 620)
 [node name="Mud03" parent="Exterior/Muds" unique_id=1603693472 instance=ExtResource("18_mud")]
 position = Vector2(4539, 622)
 
-[node name="Sprite2D2" type="Sprite2D" parent="Exterior/Muds" unique_id=1032103989]
-z_index = 1
-position = Vector2(5414, 405)
-texture = ExtResource("16_rhy1x")
-region_enabled = true
-region_rect = Rect2(800.0831, 834.9694, 332.86377, 218.73907)
-
-[node name="Sprite2D" type="Sprite2D" parent="Exterior/Muds" unique_id=2057500963]
-z_index = 1
-position = Vector2(5296, 478)
-texture = ExtResource("16_rhy1x")
-region_enabled = true
-region_rect = Rect2(568.02954, 11.369316, 460.3031, 367.1012)
-
-[node name="Sprite2D3" type="Sprite2D" parent="Exterior/Muds" unique_id=284361562]
-z_index = 1
-position = Vector2(5533, 207)
-texture = ExtResource("16_rhy1x")
-region_enabled = true
-region_rect = Rect2(476.72977, 414.61002, 228.24948, 321.45132)
-
 [node name="ArvisTreeGate" parent="Exterior" unique_id=1611753189 instance=ExtResource("19_gate")]
 position = Vector2(6065.0005, 346)
 scale = Vector2(2.61, 2.61)
@@ -335,7 +324,6 @@ position = Vector2(6280, 500)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exterior/InteriorEntrance" unique_id=1694475243]
-position = Vector2(-208.5, 0)
 shape = SubResource("EntranceShape")
 debug_color = Color(0, 0.64914376, 0.16705999, 0.41960785)
 

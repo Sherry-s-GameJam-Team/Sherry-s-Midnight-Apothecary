@@ -56,9 +56,12 @@ func _restore_immediately() -> void:
     position = _origin
     rotation = 0.0
     modulate = Color.WHITE
-    visual.position = _visual_origin
-    collision.set_deferred("disabled", false)
-    sensor.set_deferred("monitoring", true)
+    if visual != null:
+        visual.position = _visual_origin
+    if collision != null:
+        collision.set_deferred("disabled", false)
+    if sensor != null:
+        sensor.set_deferred("monitoring", true)
 
 func _spawn_dust(world_position: Vector2, count: int) -> void:
     for index in range(count):

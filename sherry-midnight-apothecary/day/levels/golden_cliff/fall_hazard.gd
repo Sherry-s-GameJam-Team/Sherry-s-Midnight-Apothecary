@@ -11,19 +11,20 @@ func _on_body_entered(body: Node2D) -> void:
         return
     var runtime := _find_day_runtime()
     if runtime != null:
-        var died := runtime.apply_player_damage(damage, source_id)
-        if died:
+        if bool(runtime.apply_player_damage(damage, source_id)):
             return
     var respawn := _find_respawn_position(body.global_position)
     body.global_position = respawn
     if body is CharacterBody2D:
         (body as CharacterBody2D).velocity = Vector2.ZERO
 
-func _find_day_runtime() -> DayRuntime:
+func _find_day_runtime() -> Node:
+    # Duck-typed: avoids compile-time preload cycle via DayRuntime (see
+    # day_runtime.gd LEVELS chain and emerald_field_level.gd note).
     var current: Node = self
     while current != null:
-        if current is DayRuntime:
-            return current as DayRuntime
+        if current.has_method("get_player_data"):
+            return current
         current = current.get_parent()
     return null
 

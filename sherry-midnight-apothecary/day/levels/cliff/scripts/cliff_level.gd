@@ -103,10 +103,12 @@ func _set_player_control(body: Node, enabled: bool) -> void:
 		body.call("set_potion_action_locked", not enabled)
 
 
-func _get_day_runtime() -> DayRuntime:
+func _get_day_runtime() -> Node:
+	# Duck-typed: avoids compile-time preload cycle via DayRuntime (see
+	# day_runtime.gd LEVELS chain and emerald_field_level.gd note).
 	var cursor: Node = get_parent()
 	while cursor != null:
-		if cursor is DayRuntime:
-			return cursor as DayRuntime
+		if cursor.has_method("get_player_data"):
+			return cursor
 		cursor = cursor.get_parent()
 	return null

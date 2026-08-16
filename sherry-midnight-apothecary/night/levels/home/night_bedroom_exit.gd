@@ -14,10 +14,11 @@ func _on_body_entered(body: Node2D) -> void:
 		bedroom.request_return()
 
 
-func _find_bedroom() -> NightBedroom:
+func _find_bedroom() -> Node:
+	# Duck-typed: avoids compile-time class cycle with NightBedroom.
 	var current := get_parent()
 	while current != null:
-		if current is NightBedroom:
-			return current as NightBedroom
+		if current.has_method("request_return"):
+			return current
 		current = current.get_parent()
 	return null

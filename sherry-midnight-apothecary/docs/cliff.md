@@ -47,9 +47,11 @@ CliffLevel
 
 ```text
 ResonanceWave / AvalancheZone / FallResetZone
-→ CliffHazardController
+→ CliffHazardController._apply_hazard_damage()
+→ DayLevelEnvironment.apply_player_damage()（自动向上委托至 DayRuntime 或结算至独立 PlayerData）
+→ 若致命则触发 DayRuntime 死亡流程；若存活则继续受击表现
 → 锁定对话与药水动作输入
-→ DayPlayerController.play_hazard_hit()（已有 hit 动画）
+→ DayPlayerController.play_hazard_hit()（触发 hit / hit_right 动画与击退状态）
 → 灾害方向短击退 + Camera2D 轻震
 → 0.38 s 反馈
 → UI/FadeRect 淡黑

@@ -41,10 +41,11 @@ func refresh_interaction_hints() -> void:
 			interaction.call("refresh_hint")
 
 
-func _find_night_runtime() -> NightRuntime:
+func _find_night_runtime() -> Node:
+	# Duck-typed: avoids compile-time class cycle with NightRuntime.
 	var current := get_parent()
 	while current != null:
-		if current is NightRuntime:
-			return current as NightRuntime
+		if current.has_method("get_player_data"):
+			return current
 		current = current.get_parent()
 	return null

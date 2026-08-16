@@ -36,6 +36,7 @@ func _ready() -> void:
 	super._ready()
 	if camera != null:
 		camera.add_to_group("lake_transition_camera")
+		camera.process_callback = Camera2D.CAMERA2D_PROCESS_PHYSICS
 		# This scene owns one smoothing stage. Camera2D's built-in smoothing would
 		# otherwise lag behind this controller and make the water crossing drift.
 		camera.position_smoothing_enabled = false
@@ -86,7 +87,7 @@ func _disable_nested_lakebed_runtime() -> void:
 		nested_debug.process_mode = Node.PROCESS_MODE_DISABLED
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint() or camera == null or _camera_target == null:
 		return
 	var desired := _clamp_camera_center(_camera_target_position())

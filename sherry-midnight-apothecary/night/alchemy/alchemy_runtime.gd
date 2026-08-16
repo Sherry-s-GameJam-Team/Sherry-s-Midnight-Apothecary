@@ -49,7 +49,7 @@ var powder_shelf_state := PowderShelfState.new()
 var cauldron_powders: Dictionary = {}
 var current_panel := PanelMode.BREWING
 var _stage_tween: Tween
-var standalone_developer_console: DeveloperConsole
+var standalone_developer_console: Node
 var _distillation_fill_target := 0.0
 var _distillation_completion_queued := false
 var _distillation_total_seconds := DISTILLATION_BASE_SECONDS
@@ -159,16 +159,17 @@ func _ensure_standalone_console() -> void:
 	console_layer.name = "StandaloneDeveloperConsoleLayer"
 	console_layer.layer = 220
 	add_child(console_layer)
-	standalone_developer_console = console_scene.instantiate() as DeveloperConsole
+	standalone_developer_console = console_scene.instantiate()
 	console_layer.add_child(standalone_developer_console)
 	standalone_developer_console.setup_alchemy(self)
 
 
-func _night_runtime_ancestor() -> NightRuntime:
+func _night_runtime_ancestor() -> Node:
+	# Duck-typed: avoids compile-time class cycle with NightRuntime.
 	var ancestor := get_parent()
 	while ancestor != null:
-		if ancestor is NightRuntime:
-			return ancestor as NightRuntime
+		if ancestor.has_method("get_player_data"):
+			return ancestor
 		ancestor = ancestor.get_parent()
 	return null
 
