@@ -17,5 +17,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 520, 360)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1389200493]
-position = Vector2(-52, -33)
+position = Vector2(-33, -32)
 shape = SubResource("MudShape")
+one_way_collision = true

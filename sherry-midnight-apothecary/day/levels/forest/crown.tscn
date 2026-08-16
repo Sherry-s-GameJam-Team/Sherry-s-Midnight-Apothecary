@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://c0hm5cchinakn"]
+
+[ext_resource type="Texture2D" uid="uid://dkioiavewfxmu" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_bg_corrupted.png" id="1_g468k"]
+[ext_resource type="Texture2D" uid="uid://cssytyb1gfo5x" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_fg_platform.png" id="2_g02jd"]
+[ext_resource type="Texture2D" uid="uid://cmbaqq8i4maem" path="res://day/levels/forest/art/environments/forest/crown/forest_boss_seraph_corrupted.png" id="3_ec2b4"]
+[ext_resource type="Texture2D" uid="uid://sklejebipj84" path="res://day/levels/forest/art/environments/forest/crown/forest_boss_seraph_normal.png" id="4_yorqk"]
+[ext_resource type="Script" uid="uid://dawtn4jock4wu" path="res://day/levels/forest/boss/forest_boss_trigger.gd" id="5_w7our"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0w4e"]
+size = Vector2(3000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2f1s"]
+size = Vector2(640, 620)
+
+[node name="Crown" type="Node2D" unique_id=427463027]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=2096250261]
+z_index = -35
+position = Vector2(8800, 0)
+texture = ExtResource("1_g468k")
+centered = false
+
+[node name="BackgroundRepeat" type="Sprite2D" parent="." unique_id=469989427]
+z_index = -35
+position = Vector2(10972, 0)
+texture = ExtResource("1_g468k")
+centered = false
+
+[node name="ForegroundPlatform" type="Sprite2D" parent="." unique_id=115826909]
+z_index = 2
+position = Vector2(9893, 634.00006)
+scale = Vector2(0.52261406, 0.38120085)
+texture = ExtResource("2_g02jd")
+
+[node name="CrownGround" type="StaticBody2D" parent="." unique_id=1372144625]
+position = Vector2(10300, 680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CrownGround" unique_id=1781569816]
+shape = SubResource("RectangleShape2D_d0w4e")
+
+[node name="SherryEntry" type="Marker2D" parent="." unique_id=1867278967]
+position = Vector2(9000, 560)
+
+[node name="LucaEntry" type="Marker2D" parent="." unique_id=681849149]
+position = Vector2(9250, 560)
+
+[node name="SeraphCorrupted" type="Sprite2D" parent="." unique_id=210633554]
+z_index = 4
+position = Vector2(9908, 360)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("3_ec2b4")
+
+[node name="SeraphNormal" type="Sprite2D" parent="." unique_id=196389050]
+visible = false
+z_index = 4
+position = Vector2(10600, 395)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("4_yorqk")
+
+[node name="BossTrigger" type="Area2D" parent="." unique_id=1985826897]
+position = Vector2(10400, 390)
+collision_layer = 0
+script = ExtResource("5_w7our")
+boss_interface_path = NodePath("../../BossInterface")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossTrigger" unique_id=214705171]
+position = Vector2(715, -79)
+shape = SubResource("RectangleShape2D_x2f1s")

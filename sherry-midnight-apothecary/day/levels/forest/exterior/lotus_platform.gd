@@ -29,6 +29,12 @@ func _on_body_entered(body: Node) -> void:
 		return
 	activate()
 
+
+## Any direct potion impact activates the lotus. PotionProjectile discovers this
+## method on the collision body, so no potion-specific collision setup is needed.
+func receive_potion_hit(_hit: Dictionary) -> void:
+	activate()
+
 func activate() -> void:
 	if activated:
 		return

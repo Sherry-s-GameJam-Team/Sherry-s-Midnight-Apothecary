@@ -21,6 +21,10 @@ const ROLL_SPEED_MULTIPLIER := 1.3
 const POTION_CAST_RELEASE_TIME := 0.708333
 const WALK_FOOTSTEP_INTERVAL := 0.44
 const RUN_FOOTSTEP_INTERVAL := 0.27
+## Collision layer 2 is reserved for one-way platforms that players can drop through.
+const DROP_THROUGH_PLATFORM_LAYER := 1 << 1
+const DROP_THROUGH_DURATION := 0.18
+const DROP_THROUGH_START_SPEED := 80.0
 
 ## Scene-owned visual scale. Every playable scene serializes this value so indoor
 ## and outdoor presentation tuning cannot leak through this fallback default.
@@ -64,6 +68,8 @@ var _potion_cast_active := false
 var _sprite_base_position := Vector2.ZERO
 var _footstep_timer := 0.0
 var _dialogue_locked := false
+var _drop_through_timer := 0.0
+var _default_floor_snap_length := 0.0
 
 
 func _ready() -> void:
@@ -76,6 +82,10 @@ func _ready() -> void:
 	add_to_group("dialogue_lockable")
 	animation_player.animation_finished.connect(_on_animation_finished)
 	floor_snap_length = 12.0
+	_default_floor_snap_length = floor_snap_length
+	# Scenes opt into the global one-way platform contract by placing platforms
+	# on collision layer 2.
+	collision_mask |= DROP_THROUGH_PLATFORM_LAYER
 	_facing_right = initial_facing_right
 	_apply_visual_scale()
 	_play("idle")
@@ -84,6 +94,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
+	_update_drop_through_timer(delta)
 	var direction := 0.0 if _potion_action_locked else _get_input_direction()
 	_update_jump_timers(delta)
 	_try_consume_buffered_jump()
@@ -111,6 +122,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		_try_start_roll("move_left" if event.is_action_pressed("move_left") else "move_right")
 	if event.is_action_pressed("jump"):
 		_request_jump()
+	if event.is_action_pressed("drop_through"):
+		_try_drop_through()
 	match key_event.keycode:
 		KEY_SPACE:
 			_play_one_shot("throw")
@@ -177,7 +190,7 @@ func _update_velocity(delta: float, direction: float) -> void:
 		_horizontal_velocity = move_toward(_horizontal_velocity, target_speed, accel * delta)
 		velocity.x = _horizontal_velocity
 
-	if not is_on_floor():
+	if _drop_through_timer > 0.0 or not is_on_floor():
 		var gravity := lerpf(WALK_JUMP_GRAVITY, RUN_JUMP_GRAVITY, _jump_speed_ratio)
 		
 		if velocity.y < 0.0 and not Input.is_action_pressed("jump"):
@@ -297,6 +310,36 @@ func _start_jump() -> void:
 	velocity.y = lerpf(WALK_JUMP_VELOCITY, RUN_JUMP_VELOCITY, _jump_speed_ratio)
 	_horizontal_velocity = velocity.x
 	_play("prejump")
+
+
+func _try_drop_through() -> void:
+	if _is_rolling or _is_airborne or not is_on_floor() or not _is_on_drop_through_platform():
+		return
+	_drop_through_timer = DROP_THROUGH_DURATION
+	collision_mask &= ~DROP_THROUGH_PLATFORM_LAYER
+	floor_snap_length = 0.0
+	velocity.y = DROP_THROUGH_START_SPEED
+	_horizontal_velocity = velocity.x
+	_is_airborne = true
+	_play("jump_fall")
+
+
+func _update_drop_through_timer(delta: float) -> void:
+	if _drop_through_timer <= 0.0:
+		return
+	_drop_through_timer = maxf(_drop_through_timer - delta, 0.0)
+	if _drop_through_timer <= 0.0:
+		collision_mask |= DROP_THROUGH_PLATFORM_LAYER
+		floor_snap_length = _default_floor_snap_length
+
+
+func _is_on_drop_through_platform() -> bool:
+	for collision_index in get_slide_collision_count():
+		var collision := get_slide_collision(collision_index)
+		var collider := collision.get_collider() as CollisionObject2D
+		if collider != null and (collider.collision_layer & DROP_THROUGH_PLATFORM_LAYER) != 0:
+			return true
+	return false
 
 
 func _try_start_roll(action_name: StringName) -> void:

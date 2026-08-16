@@ -137,3 +137,4 @@ script = ExtResource("2")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WaterReceiver" unique_id=875410574]
 position = Vector2(-79, 29)
 polygon = PackedVector2Array(-4, -6, -9, 115, 166, 115, 165, 79, 143, 79, 142, 94, 18, 93, 18, 78, 14, 78, 13, 39, 19, 12, 49, 10, 49, 6, 27, 1, 26, -5)
+one_way_collision = true

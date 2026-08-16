@@ -30,9 +30,9 @@ var _respawning := false
 @onready var camera: Camera2D = $Player/Camera2D
 @onready var party: ForestPartyController = $ForestController/PartyController
 @onready var gate: ForestArvisTreeGate = $Exterior/ArvisTreeGate
-@onready var direct_lift: ForestDirectLift = $Interior/LucaWorldOnly/DirectLift
-@onready var stream_corrupted: CanvasItem = $Interior/BloodStream
-@onready var stream_normal: CanvasItem = $Interior/ClearStream
+@onready var direct_lift: ForestDirectLift = get_node_or_null("Interior/LucaWorldOnly/DirectLift")
+@onready var stream_corrupted: CanvasItem = get_node_or_null("Interior/BloodStream")
+@onready var stream_normal: CanvasItem = get_node_or_null("Interior/ClearStream")
 @onready var wheel_label: Label = $UI/Margin/VBox/WaterwheelCounter
 @onready var character_label: Label = $UI/Margin/VBox/Character
 @onready var pressure_label: Label = $UI/Margin/VBox/Pressure
@@ -77,7 +77,7 @@ func register_waterwheel(wheel_id: StringName) -> void:
 	waterwheel_progress_changed.emit(_wheel_ids.size(), 4)
 	_update_ui()
 	if _wheel_ids.size() >= 4 and not tree_gate_opened:
-		_open_tree_gate()
+		gate.set_ready_to_open(true)
 
 func activate_interior_control(control_id: StringName) -> void:
 	if _interior_controls.has(control_id):
@@ -91,12 +91,18 @@ func unlock_direct_lift() -> void:
 	if direct_lift_unlocked:
 		return
 	direct_lift_unlocked = true
-	direct_lift.set_unlocked(true)
+	if direct_lift != null:
+		direct_lift.set_unlocked(true)
 	_store_flag(DIRECT_LIFT_FLAG, true)
 
 func open_final_passage() -> void:
-	$Interior/FinalPassage/CollisionShape2D.set_deferred("disabled", true)
-	$Interior/FinalPassage.visible = false
+	var final_passage := get_node_or_null("Interior/FinalPassage")
+	if final_passage == null:
+		return
+	var collision := final_passage.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if collision != null:
+		collision.set_deferred("disabled", true)
+	final_passage.visible = false
 
 func complete_restoration() -> void:
 	boss_purified = true
@@ -108,7 +114,9 @@ func complete_restoration() -> void:
 	for mud: Node in get_tree().get_nodes_in_group("forest_mud"):
 		if is_ancestor_of(mud) and mud.has_method("restore_purified"):
 			mud.call("restore_purified")
-	$Crown/BossTrigger.monitoring = false
+	var boss_trigger := get_node_or_null("Crown/BossTrigger") as Area2D
+	if boss_trigger != null:
+		boss_trigger.monitoring = false
 	_enable_gathering(true)
 
 func request_checkpoint(checkpoint_id: StringName) -> void:
@@ -144,14 +152,18 @@ func enter_interior(body: Node2D) -> void:
 	_set_phase(ForestPhase.INTERIOR)
 
 func enter_crown(body: Node2D) -> void:
-	if body == player:
-		player.global_position = $Crown/SherryEntry.global_position
+	var sherry_entry := get_node_or_null("Crown/SherryEntry") as Marker2D
+	var luca_entry := get_node_or_null("Crown/LucaEntry") as Marker2D
+	if body == player and sherry_entry != null:
+		player.global_position = sherry_entry.global_position
 		_set_phase(ForestPhase.CROWN)
-	elif body == luca:
-		luca.global_position = $Crown/LucaEntry.global_position
+	elif body == luca and luca_entry != null:
+		luca.global_position = luca_entry.global_position
 		_apply_camera_for_active_character()
 
 func _open_tree_gate() -> void:
+	if tree_gate_opened or _wheel_ids.size() < 4:
+		return
 	tree_gate_opened = true
 	_store_flag(TREE_GATE_FLAG, true)
 	_set_phase(ForestPhase.TREE_GATE_OPEN)
@@ -162,14 +174,23 @@ func _connect_runtime_nodes() -> void:
 	for wheel: Node in $Exterior/Waterwheels.get_children():
 		if wheel.has_signal("activated"):
 			wheel.activated.connect(register_waterwheel)
-	$Exterior/InteriorEntrance.body_entered.connect(enter_interior)
-	$Interior/CrownEntrance.body_entered.connect(enter_crown)
-	direct_lift.luca_lift_requested.connect(_on_luca_lift_requested)
+	gate.open_requested.connect(_open_tree_gate)
+	var interior_entrance := get_node_or_null("Exterior/InteriorEntrance") as Area2D
+	if interior_entrance != null:
+		interior_entrance.body_entered.connect(enter_interior)
+	var crown_entrance := get_node_or_null("Interior/CrownEntrance") as Area2D
+	if crown_entrance != null:
+		crown_entrance.body_entered.connect(enter_crown)
+	if direct_lift != null:
+		direct_lift.luca_lift_requested.connect(_on_luca_lift_requested)
 	party.active_character_changed.connect(_on_active_character_changed)
-	$Interior/LucaWorldOnly/RootControlSwitch.activated.connect(_on_control_switch_activated)
-	$Interior/LucaWorldOnly/WaterPressureSwitch.activated.connect(_on_control_switch_activated)
-	$Interior/LucaWorldOnly/CrownGateSwitch.activated.connect(_on_control_switch_activated)
-	$Interior/LucaWorldOnly/FinalSwitch.activated.connect(func(_id): open_final_passage())
+	for control_name: String in ["RootControlSwitch", "WaterPressureSwitch", "CrownGateSwitch"]:
+		var control := get_node_or_null("Interior/LucaWorldOnly/%s" % control_name)
+		if control != null and control.has_signal("activated"):
+			control.activated.connect(_on_control_switch_activated)
+	var final_switch := get_node_or_null("Interior/LucaWorldOnly/FinalSwitch")
+	if final_switch != null and final_switch.has_signal("activated"):
+		final_switch.activated.connect(func(_id): open_final_passage())
 	$BossInterface.boss_started.connect(_on_boss_started)
 
 func _on_control_switch_activated(control_id: StringName) -> void:
@@ -231,17 +252,25 @@ func _apply_persistent_state() -> void:
 			if wheel.has_method("restore_active"):
 				wheel.call("restore_active")
 				_wheel_ids[wheel.get("wheel_id")] = true
-	if direct_lift_unlocked:
+	elif _wheel_ids.size() >= 4:
+		gate.set_ready_to_open(true)
+	if direct_lift != null and direct_lift_unlocked:
 		direct_lift.set_unlocked(true)
-	else:
+	elif direct_lift != null:
 		direct_lift.set_unlocked(false)
 	luca.visible = false
 
 func _apply_corruption_visuals() -> void:
-	stream_corrupted.visible = _is_corrupted
-	stream_normal.visible = not _is_corrupted
-	$Crown/SeraphCorrupted.visible = _is_corrupted and not boss_purified
-	$Crown/SeraphNormal.visible = not _is_corrupted
+	if stream_corrupted != null:
+		stream_corrupted.visible = _is_corrupted
+	if stream_normal != null:
+		stream_normal.visible = not _is_corrupted
+	var seraph_corrupted := get_node_or_null("Crown/SeraphCorrupted") as CanvasItem
+	if seraph_corrupted != null:
+		seraph_corrupted.visible = _is_corrupted and not boss_purified
+	var seraph_normal := get_node_or_null("Crown/SeraphNormal") as CanvasItem
+	if seraph_normal != null:
+		seraph_normal.visible = not _is_corrupted
 	$Exterior/CorruptionTint.visible = _is_corrupted
 
 func _enable_gathering(enabled: bool) -> void:
@@ -254,7 +283,10 @@ func _update_ui() -> void:
 	_update_pressure_ui()
 
 func _update_pressure_ui() -> void:
-	var spray: ForestSprayDevice = $Interior/LucaWorldOnly/SprayDevice
+	var spray: ForestSprayDevice = get_node_or_null("Interior/LucaWorldOnly/SprayDevice")
+	if spray == null:
+		pressure_label.visible = false
+		return
 	pressure_label.text = "水压 %d / %d   CD %.1fs" % [int(spray.pressure), int(spray.max_pressure), spray.cooldown_remaining()]
 	pressure_label.visible = party.active_character == &"luca" and phase >= ForestPhase.INTERIOR
 

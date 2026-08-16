@@ -6,6 +6,8 @@ Forest 沿用 Grassland 参考包所展示的正式白天关卡结构：根场�
 
 主场景：`res://day/levels/forest/forest.tscn`
 
+树冠区域作为 `res://day/levels/forest/crown.tscn` 的实例挂载在主场景的 `Crown` 节点下。主场景在编辑时可暂时省略 `Interior`；运行时代码会保留外部区域和树冠的安全初始化，直到室内场景重新接入。
+
 LevelData：`res://day/levels/forest/forest_level.tres`
 
 Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册此 LevelData，替代已移除的旧 `raintree` 资源。
@@ -15,7 +17,7 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 1. Exterior 横向林场探索。
 2. 玩家可自由选择顺序踩下与四座水车空间对齐的莲花。
 3. 莲花首次踩踏后永久进入放水状态；水流使用 `Area2D` 与 `ForestWaterReceiver` 的真实空间重叠判定，不在 Lotus 脚本里硬编码水车编号。
-4. 四座水车全部启动后，阿尔维斯母树树心门播放 24 帧、6 FPS、约 4 秒的开门动画和同步音效。
+4. 四座水车全部启动后，阿尔维斯母树树心门进入可交互状态；玩家靠近门并按 E，才会播放 24 帧、6 FPS、约 4 秒的开门动画和同步音效。
 5. 树心门开启后写入 `forest_tree_gate_opened`，并通过 `request_checkpoint(&"forest_tree_gate_opened")` 暴露关键点接口。
 6. 进入 Interior，开启 Sherry / Luca 切换。
 7. Luca 视角显示 `LucaWorldOnly` 和青白滤镜；Sherry 视角隐藏旧世界层。
@@ -30,11 +32,15 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 
 ### Lotus
 
-`lotus_platform.tscn` 为 `AnimatableBody2D`。首次踩踏会下沉约 10 px 后回弹，并永久切换到带清水的莲花图。水流 `WaterStreamArea` 向下延伸，与水车的 `WaterReceiver` 重叠后送水。
+`lotus_platform.tscn` 为 `AnimatableBody2D`。首次踩踏或被任意药水直接命中都会下沉约 10 px 后回弹，并永久切换到带清水的莲花图；重复触发不会改变状态。水流 `WaterStreamArea` 向下延伸，与水车的 `WaterReceiver` 重叠后送水。
 
 ### Waterwheel
 
 源素材 `forest_waterwheel_cutout_alpha.mov` 已按 6 FPS 抽为 24 张 RGBA PNG。`waterwheel.tscn` 使用 AnimatedSprite2D：`idle` → `activate` → `loop`。
+
+### 单向平台示例
+
+`Exterior/OneWayPlatformDemo` 位于入口右侧。它使用碰撞层 2 和 `one_way_collision`，可从下方跳上；站在其上时按 S 会下落。具体全局角色约定见 `res://characters/sherry/README.md`。
 
 ### Mud
 
@@ -57,6 +63,8 @@ Interior 使用纵向 Camera Bounds。中央 `stream.png` 同时构建 BloodStre
 `ForestPartyController` 默认优先控制 Sherry。进入树内后允许 Tab 切换；如果工程已配置 `switch_character` Input Action，则优先使用该 Action。非当前角色不接受移动输入，保留坐标与碰撞。Camera2D 在两角色之间 reparent，不创建第二台永久主摄像机。
 
 本包没有拿到完整工程中的正式可操控 Luca 场景，因此附带 `ForestLucaController` + 简单程序化占位 Presentation 保证场景本身有可执行 fallback。集成到完整工程时，应优先把 `Luca/FallbackPresentation` 换成项目正式 Luca Presentation；无需改 PartyController 接口，只要正式 Luca 支持 `set_control_enabled(bool)`，或在现有角色切换层做适配。
+
+场景中的 `LucaDialogueNpc` 是独立的对话 NPC，不替代可切换的 `Luca` 角色。其 `DialogueTrigger` 使用碰撞掩码 1 检测 Player，进入范围后通过全局 `TopHintUI` 显示“按[E]与卢卡交谈”；按 E（InputMap 的 `interact`）后，`area_2d.gd` 会根据 `ArvisTreeGate.is_open` 选择对话：开门前为 `res://day/levels/forest/dialog/before_stream.dialogue`，开门后为 `res://day/levels/forest/dialog/after_stream.dialogue`。每个阶段在单次场景运行中各播放一次。
 
 ### Luca old world
 

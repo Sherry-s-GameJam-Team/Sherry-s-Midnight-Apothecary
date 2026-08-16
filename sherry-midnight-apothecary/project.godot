@@ -169,7 +169,12 @@ switch_protagonist={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":81,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
 ]
 }
+drop_through={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":83,"physical_keycode":83,"key_label":0,"unicode":115,"location":0,"echo":false,"script":null)
+]
+}
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://night/dialogue/apothecary_test.dialogue", "res://night/dialogue/test.dialogue", "res://day/art/lake/dialog/mews.dialogue", "res://day/levels/grassland/npc/sleeping_hound/sleeping_hound.dialogue", "res://day/levels/grassland/npc/sleeping_hound/luca_after_purification.dialogue", "res://day/levels/home/bedroom_stick.dialogue", "res://day/levels/home/home_day_one_intro.dialogue", "res://day/levels/grassland/dialog1.dialogue")
+locale/translations_pot_files=PackedStringArray("res://night/dialogue/apothecary_test.dialogue", "res://night/dialogue/test.dialogue", "res://day/art/lake/dialog/mews.dialogue", "res://day/levels/grassland/npc/sleeping_hound/sleeping_hound.dialogue", "res://day/levels/grassland/npc/sleeping_hound/luca_after_purification.dialogue", "res://day/levels/home/bedroom_stick.dialogue", "res://day/levels/home/home_day_one_intro.dialogue", "res://day/levels/grassland/dialog1.dialogue", "res://day/levels/forest/dialog/before_stream.dialogue", "res://day/levels/forest/dialog/after_stream.dialogue")

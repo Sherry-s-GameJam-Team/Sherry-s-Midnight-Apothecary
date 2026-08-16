@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://bl3k5xs5gqr5n"]
 
-[ext_resource type="Script" path="res://day/levels/forest/exterior/lotus_platform.gd" id="1"]
-[ext_resource type="Texture2D" path="res://day/levels/forest/art/environments/forest/exterior/forest_lotus_platform_closed.png" id="2"]
-[ext_resource type="Texture2D" path="res://day/levels/forest/art/environments/forest/exterior/forest_lotus_water_stream.png" id="3"]
+[ext_resource type="Script" uid="uid://ddvud30e7hti1" path="res://day/levels/forest/exterior/lotus_platform.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c56sjcg7oyp7h" path="res://day/levels/forest/art/environments/forest/exterior/forest_lotus_platform_closed.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://0becpe16ap7m" path="res://day/levels/forest/art/environments/forest/exterior/forest_lotus_water_stream.png" id="3"]
+
+[sub_resource type="RectangleShape2D" id="StreamShape"]
+size = Vector2(64, 430)
 
 [sub_resource type="RectangleShape2D" id="PlatformShape"]
 size = Vector2(178, 26)
@@ -10,46 +13,40 @@ size = Vector2(178, 26)
 [sub_resource type="RectangleShape2D" id="TriggerShape"]
 size = Vector2(190, 48)
 
-[sub_resource type="RectangleShape2D" id="StreamShape"]
-size = Vector2(64, 430)
-
-[node name="LotusPlatform" type="AnimatableBody2D"]
+[node name="LotusPlatform" type="AnimatableBody2D" unique_id=1673454851]
 script = ExtResource("1")
-collision_layer = 1
-collision_mask = 1
 
-[node name="ClosedVisual" type="Sprite2D" parent="."]
+[node name="ClosedVisual" type="Sprite2D" parent="." unique_id=2008690936]
 position = Vector2(0, -96)
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("2")
 
-[node name="WaterStream" type="Node2D" parent="."]
+[node name="WaterStream" type="Node2D" parent="." unique_id=1171635038]
 visible = false
+position = Vector2(-1, 259)
 
-[node name="Visual" type="Sprite2D" parent="WaterStream"]
+[node name="Visual" type="Sprite2D" parent="WaterStream" unique_id=799246780]
 position = Vector2(0, -96)
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("3")
 
-[node name="WaterStreamArea" type="Area2D" parent="WaterStream"]
+[node name="WaterStreamArea" type="Area2D" parent="WaterStream" unique_id=1290492636]
 position = Vector2(0, 220)
 collision_layer = 0
 collision_mask = 16
-monitorable = true
-monitoring = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStream/WaterStreamArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterStream/WaterStreamArea" unique_id=38097969]
 shape = SubResource("StreamShape")
 disabled = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=449938949]
+position = Vector2(4, 80)
 shape = SubResource("PlatformShape")
 
-[node name="StepTrigger" type="Area2D" parent="."]
-position = Vector2(0, -18)
+[node name="StepTrigger" type="Area2D" parent="." unique_id=2053978906]
+position = Vector2(1, -66)
 collision_layer = 0
-collision_mask = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StepTrigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StepTrigger" unique_id=1138891705]
+position = Vector2(1, 145)
 shape = SubResource("TriggerShape")

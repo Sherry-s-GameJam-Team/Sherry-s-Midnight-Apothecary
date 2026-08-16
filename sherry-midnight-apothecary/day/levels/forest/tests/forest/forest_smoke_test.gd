@@ -30,9 +30,9 @@ func _run() -> void:
 
 	var lotus := LOTUS_SCENE.instantiate()
 	add_child(lotus)
-	lotus.activate()
+	lotus.receive_potion_hit({"potion_id": &"any_potion"})
 	await get_tree().physics_frame
-	_check(lotus.activated, "Lotus did not activate")
+	_check(lotus.activated, "Potion impact did not activate lotus")
 	lotus.activate()
 	_check(lotus.activated, "Lotus repeated activation changed state")
 

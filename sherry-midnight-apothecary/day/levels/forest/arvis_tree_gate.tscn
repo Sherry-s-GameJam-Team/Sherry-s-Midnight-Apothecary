@@ -115,6 +115,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="GateBlockerShape"]
 size = Vector2(180, 316)
 
+[sub_resource type="RectangleShape2D" id="GateInteractionShape"]
+size = Vector2(280, 360)
+
 [node name="ArvisTreeGate" type="Node2D" unique_id=2112541590]
 script = ExtResource("1")
 
@@ -137,6 +140,14 @@ position = Vector2(0, 25)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Blocker" unique_id=190362032]
 position = Vector2(0, -52)
 shape = SubResource("GateBlockerShape")
+
+[node name="InteractionZone" type="Area2D" parent="."]
+position = Vector2(-110, 20)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+shape = SubResource("GateInteractionShape")
 
 [node name="OpenSFX" type="AudioStreamPlayer2D" parent="." unique_id=1141251892]
 stream = ExtResource("3")

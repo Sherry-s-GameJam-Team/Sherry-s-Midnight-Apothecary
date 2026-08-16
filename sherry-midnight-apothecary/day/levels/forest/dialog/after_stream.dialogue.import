@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b4yw4qpil82tj"
+path="res://.godot/imported/after_stream.dialogue-a21042f201cc8919a1a0035b6633c599.tres"
+
+[deps]
+
+source_file="res://day/levels/forest/dialog/after_stream.dialogue"
+dest_files=["res://.godot/imported/after_stream.dialogue-a21042f201cc8919a1a0035b6633c599.tres"]
+
+[params]
+
+defaults=true

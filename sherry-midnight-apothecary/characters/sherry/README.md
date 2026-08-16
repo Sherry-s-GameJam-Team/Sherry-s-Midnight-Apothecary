@@ -22,4 +22,10 @@
 
 所有动画帧和关键帧均保存在 `sherry_animations.tres`，而非运行时脚本生成。
 
+## 全局角色移动：单向平台
+
+所有使用 `res://shared/player/day_player_controller.gd` 的白天可控角色都遵循同一单向平台约定：平台使用 **物理碰撞层 2**，其 `CollisionShape2D` 勾选 `one_way_collision`。角色可从下方跳上平台；站在该层平台时按 **S**（InputMap：`drop_through`）会在 0.18 秒内忽略该层并向下穿过。普通地面不在此层，因此按 S 不会让角色穿过地板。
+
+森林场景 `res://day/levels/forest/forest.tscn` 的 `Exterior/OneWayPlatformDemo` 是该全局逻辑的可玩示例。
+
 每个左向动作都有对应的 `*_right` 动画轨道。右向轨道复用相同的左向 PNG 与位置关键帧，只在 `SherryVisual:scale` 的逐帧关键帧中设置负 X 缩放；角色脚本仅选择显式动画名称，不会再镜像节点或贴图。

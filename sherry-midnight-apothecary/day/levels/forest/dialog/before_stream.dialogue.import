@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cfv8bc6tv5uff"
+path="res://.godot/imported/before_stream.dialogue-d10fb91a89b305ad6972678e9c2e6cd7.tres"
+
+[deps]
+
+source_file="res://day/levels/forest/dialog/before_stream.dialogue"
+dest_files=["res://.godot/imported/before_stream.dialogue-d10fb91a89b305ad6972678e9c2e6cd7.tres"]
+
+[params]
+
+defaults=true
