@@ -119,7 +119,7 @@ func _setup_hit_areas() -> void:
 		left_hit_area.add_child(col)
 		left_pan.add_child(left_hit_area)
 		left_hit_area.set_meta("side", &"left")
-		left_hit_area.set_script(preload("res://day/levels/golden_cliff/pan_hit_receiver.gd"))
+		left_hit_area.set_script(load("res://day/levels/golden_cliff/pan_hit_receiver.gd"))
 		left_hit_area.set("mechanism", self)
 
 	# Right pan hit receiver
@@ -136,7 +136,7 @@ func _setup_hit_areas() -> void:
 		right_hit_area.add_child(col)
 		right_pan.add_child(right_hit_area)
 		right_hit_area.set_meta("side", &"right")
-		right_hit_area.set_script(preload("res://day/levels/golden_cliff/pan_hit_receiver.gd"))
+		right_hit_area.set_script(load("res://day/levels/golden_cliff/pan_hit_receiver.gd"))
 		right_hit_area.set("mechanism", self)
 
 func _setup_reset_area() -> void:

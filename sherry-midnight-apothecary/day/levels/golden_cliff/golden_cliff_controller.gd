@@ -252,8 +252,9 @@ func _play_portal_restoration_sequence() -> void:
 			spark.queue_free()
 	
 	# Unlock portal after 2.2 seconds
-	var tree := get_tree()
-	if tree != null:
-		var unlock_timer := tree.create_timer(2.2)
-		await unlock_timer.timeout
+	if is_inside_tree():
+		var tree := get_tree()
+		if tree != null:
+			var unlock_timer := tree.create_timer(2.2)
+			await unlock_timer.timeout
 	_set_portal_active(true)

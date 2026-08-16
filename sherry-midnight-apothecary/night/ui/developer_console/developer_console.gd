@@ -23,21 +23,21 @@ var _welcomed := false
 var _toggle_key_was_down := false
 var _fallback_player_data: PlayerData
 
-const FALLBACK_INGREDIENTS: Array[IngredientData] = [
-	preload("res://shared/definitions/data/ingredients/herdsmans_loaf_bush.tres"),
-	preload("res://shared/definitions/data/ingredients/stardust_puffy_lion.tres"),
-	preload("res://shared/definitions/data/ingredients/grail_lily.tres"),
-	preload("res://shared/definitions/data/ingredients/dew_flask_herb.tres"),
-	preload("res://shared/definitions/data/ingredients/old_mans_noose.tres"),
-	preload("res://shared/definitions/data/ingredients/praise_star_maple.tres"),
-	preload("res://shared/definitions/data/ingredients/amber_root.tres"),
-	preload("res://shared/definitions/data/ingredients/blue_bell.tres"),
-	preload("res://shared/definitions/data/ingredients/mist_leaf.tres"),
-	preload("res://shared/definitions/data/ingredients/moon_mint.tres"),
-	preload("res://shared/definitions/data/ingredients/red_berry.tres"),
-	preload("res://shared/definitions/data/ingredients/star_lavender.tres"),
-	preload("res://shared/definitions/data/ingredients/sun_daisy.tres"),
-	preload("res://shared/definitions/data/ingredients/violet_thistle.tres"),
+const FALLBACK_INGREDIENT_PATHS: Array[String] = [
+	"res://shared/definitions/data/ingredients/herdsmans_loaf_bush.tres",
+	"res://shared/definitions/data/ingredients/stardust_puffy_lion.tres",
+	"res://shared/definitions/data/ingredients/grail_lily.tres",
+	"res://shared/definitions/data/ingredients/dew_flask_herb.tres",
+	"res://shared/definitions/data/ingredients/old_mans_noose.tres",
+	"res://shared/definitions/data/ingredients/praise_star_maple.tres",
+	"res://shared/definitions/data/ingredients/amber_root.tres",
+	"res://shared/definitions/data/ingredients/blue_bell.tres",
+	"res://shared/definitions/data/ingredients/mist_leaf.tres",
+	"res://shared/definitions/data/ingredients/moon_mint.tres",
+	"res://shared/definitions/data/ingredients/red_berry.tres",
+	"res://shared/definitions/data/ingredients/star_lavender.tres",
+	"res://shared/definitions/data/ingredients/sun_daisy.tres",
+	"res://shared/definitions/data/ingredients/violet_thistle.tres",
 ]
 
 @onready var output: RichTextLabel = %Output
@@ -219,13 +219,16 @@ func execute_command(raw_command: String) -> String:
 func _mode_command(parts: PackedStringArray) -> String:
 	if parts.size() != 1:
 		return "错误：用法 day 或 night"
-	var app_root := get_node_or_null("/root/AppRoot") as AppRoot
-	if app_root == null or app_root.game_flow == null:
+	var app_root: Node = get_node_or_null("/root/AppRoot")
+	if app_root == null:
 		return "错误：GameFlow 尚未初始化。"
-	var target_mode := GameFlow.Mode.DAY if parts[0].to_lower() == "day" else GameFlow.Mode.NIGHT
-	if app_root.game_flow.current_mode == target_mode:
+	var flow: Node = app_root.get("game_flow")
+	if flow == null:
+		return "错误：GameFlow 尚未初始化。"
+	var target_mode: int = 0 if parts[0].to_lower() == "day" else 1
+	if flow.get("current_mode") == target_mode:
 		return "mode = %s" % parts[0].to_lower()
-	if not app_root.game_flow.debug_switch_mode(target_mode):
+	if not flow.has_method("debug_switch_mode") or not flow.call("debug_switch_mode", target_mode):
 		return "错误：无法切换到 %s。" % parts[0].to_lower()
 	return "mode = %s" % parts[0].to_lower()
 
@@ -315,9 +318,13 @@ func _inventory_command(parts: PackedStringArray, direction: int) -> String:
 		var alchemy := _alchemy()
 		if alchemy == null or alchemy.ingredients.is_empty():
 			var plant_number := int(parts[1])
-			if plant_number < 1 or plant_number > FALLBACK_INGREDIENTS.size():
+			if plant_number < 1 or plant_number > FALLBACK_INGREDIENT_PATHS.size():
 				return "错误：植物序号超出范围。"
-			ingredient_id = FALLBACK_INGREDIENTS[plant_number - 1].id
+			var loaded_res = load(FALLBACK_INGREDIENT_PATHS[plant_number - 1])
+			if loaded_res != null and "id" in loaded_res:
+				ingredient_id = loaded_res.id
+			else:
+				return "错误：第 %d 株植物的数据无法加载。" % plant_number
 			var new_count := maxi(int(player.inventory.get(ingredient_id, 0)) + count * direction, 0)
 			_set_inventory_count(player, ingredient_id, new_count)
 			return "inventory.%s = %d" % [ingredient_id, new_count]

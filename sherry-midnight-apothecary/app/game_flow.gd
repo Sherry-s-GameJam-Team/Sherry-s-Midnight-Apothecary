@@ -14,8 +14,8 @@ enum Mode {
 
 const FINAL_DAY := 30
 const INITIAL_DAY := 0
-const DAY_SCENE := preload("res://day/day_runtime.tscn")
-const NIGHT_SCENE := preload("res://night/night_runtime.tscn")
+const DAY_SCENE_PATH := "res://day/day_runtime.tscn"
+const NIGHT_SCENE_PATH := "res://night/night_runtime.tscn"
 
 var current_day := INITIAL_DAY
 var current_mode := Mode.DAY
@@ -133,7 +133,11 @@ func _load_mode(
 			sound_manager.call("stop_bgm")
 
 	if mode != Mode.ENDING:
-		var scene: PackedScene = DAY_SCENE if mode == Mode.DAY else NIGHT_SCENE
+		var scene_path: String = DAY_SCENE_PATH if mode == Mode.DAY else NIGHT_SCENE_PATH
+		var scene: PackedScene = load(scene_path) as PackedScene
+		if scene == null:
+			_switching = false
+			return false
 		current_runtime = scene.instantiate()
 		if mode == Mode.DAY:
 			_capture_day_start_snapshot()
