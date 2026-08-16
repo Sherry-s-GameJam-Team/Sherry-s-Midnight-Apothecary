@@ -71,8 +71,8 @@ script = ExtResource("12_player")
 [node name="SherryPresentation" parent="Player" unique_id=2001449172 instance=ExtResource("14_sherry_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1906065549]
-process_callback = 0
 position = Vector2(100, -130)
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 6500
@@ -310,7 +310,7 @@ wheel_id = &"waterwheel_4"
 position = Vector2(1650, 634)
 
 [node name="Mud02" parent="Exterior/Muds" unique_id=156808446 instance=ExtResource("18_mud")]
-position = Vector2(3150, 620)
+position = Vector2(3154, 626)
 
 [node name="Mud03" parent="Exterior/Muds" unique_id=1603693472 instance=ExtResource("18_mud")]
 position = Vector2(4539, 622)
@@ -324,6 +324,7 @@ position = Vector2(6280, 500)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exterior/InteriorEntrance" unique_id=1694475243]
+position = Vector2(-205, 9)
 shape = SubResource("EntranceShape")
 debug_color = Color(0, 0.64914376, 0.16705999, 0.41960785)
 

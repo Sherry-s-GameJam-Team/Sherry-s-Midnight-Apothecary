@@ -81,10 +81,26 @@ The balance stones operate as physical dual-pan weighing scales with beam tilt d
   5. Upward drifting golden sparks
   6. Portal collision, visual, and interaction unlock.
 
+## Village Scene（涟汀村 / 倒悬码头）
+
+`res://day/levels/golden_cliff/village/village.tscn`:
+
+- **3-Layer Parallax Architecture**:
+  - **FS (`z_index = -30`, `scroll_scale = (0.05, 0.03)`)**: `background.png` 缩放至 `scale = 1.75` + 镜像对称无缝循环（Normal + Mirrored，单循环单元宽 `13258px`，`repeat_size = (13258, 0)`，保持沉稳低视差倍率）。
+  - **MS (`z_index = -15`, `scroll_scale = (0.55, 0.55)`)**: `倒悬船坞.png` (中景倒悬船坞构装) + `空崖码头.png` (中景码头栈桥).
+  - **CS (`z_index = -5`, `scroll_scale = (0.9, 0.9)`)**: `涟汀村近景.png` (近景前景村落平台与民居) + `湖祭石阶.png` (近景石阶台阶) + `大司鱼观潮台.png` (近景巨型观潮台构筑) + `WorldBounds` 物理碰撞体（作为 CS 子节点保持统一视差偏移）。
+- **Core Integration**:
+  - `Player`: `DayPlayerController` + `SherryCollision` + `SherryPresentation` + `PotionThrower` + `Camera2D` (跟踪界限设置为 `limit_left = -1118`, `limit_top = -1389`, `limit_right = 6977`, `limit_bottom = 803`，完整覆盖所有 Ground 碰撞多边形范围)。
+  - `DebugUI`: Layer 200 `DeveloperConsole`.
+  - `PauseMenuLayer`: Layer 200 `PauseMenu` with `pause_menu_host.gd`.
+  - `WorldBounds` & `EntryPoints`: `default`, `from_cliff`, `from_lake`, and `ExitPortal` (`DoorPortal` to `home`).
+
 ## Validation
 
-Run the dedicated smoke test:
+Run the dedicated smoke tests:
 
 ```powershell
 godot --headless --path . --script res://day/levels/golden_cliff/golden_cliff_smoke_test.gd
+godot --headless --path . --script res://tests/village_smoke_test.gd
 ```
+

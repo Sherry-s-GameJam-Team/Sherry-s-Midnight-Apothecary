@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://cqr1funkp3x8r"]
+
+[ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="1_environment"]
+[ext_resource type="Texture2D" uid="uid://jk1m7pr18h0p" path="res://day/levels/golden_cliff/village/art/background.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://bmpdtdcdpigjt" path="res://day/levels/golden_cliff/village/art/大司鱼观潮台.png" id="3_platform"]
+[ext_resource type="Texture2D" uid="uid://x1g7jftaq0y8" path="res://day/levels/golden_cliff/village/art/倒悬船坞.png" id="4_dock"]
+[ext_resource type="Texture2D" uid="uid://cj2wsv6mf7fql" path="res://day/levels/golden_cliff/village/art/空崖码头.png" id="5_pier"]
+[ext_resource type="Texture2D" uid="uid://do6d47csfhsrd" path="res://day/levels/golden_cliff/village/art/涟汀村近景.png" id="6_village"]
+[ext_resource type="Texture2D" uid="uid://bkh6ro4oq6qo0" path="res://day/levels/golden_cliff/village/art/湖祭石阶.png" id="7_stairs"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="8_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="9_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="10_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="11_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="12_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="13_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="14_console"]
+[ext_resource type="Texture2D" uid="uid://b0op5lj11ncbn" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_02.png" id="14_portal_vis"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="15_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="16_pause_menu"]
+
+[sub_resource type="RectangleShape2D" id="Rect_barrier"]
+size = Vector2(128, 3000)
+
+[sub_resource type="RectangleShape2D" id="Rect_portal"]
+size = Vector2(200, 320)
+
+[node name="Village" type="Node2D" unique_id=1965816465]
+script = ExtResource("1_environment")
+debug_scene_id = "golden_cliff_village"
+
+[node name="FS" type="Parallax2D" parent="." unique_id=101000001]
+z_index = -30
+scroll_scale = Vector2(0.05, 0.03)
+scroll_offset = Vector2(-2986, 317)
+repeat_size = Vector2(13258, 0)
+repeat_times = 4
+
+[node name="Background" type="Sprite2D" parent="FS" unique_id=101000002]
+position = Vector2(0, -700)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("2_bg")
+centered = false
+
+[node name="Background_Mirror" type="Sprite2D" parent="FS" unique_id=101000012]
+position = Vector2(6629, -700)
+scale = Vector2(1.75, 1.75)
+texture = ExtResource("2_bg")
+centered = false
+flip_h = true
+
+[node name="MS" type="Parallax2D" parent="." unique_id=102000001]
+z_index = -15
+scroll_scale = Vector2(0.55, 0.55)
+
+[node name="InvertedDock" type="Sprite2D" parent="MS" unique_id=102000002]
+position = Vector2(1506.9999, 227)
+scale = Vector2(0.62667966, 0.62667966)
+texture = ExtResource("4_dock")
+centered = false
+
+[node name="CS" type="Parallax2D" parent="." unique_id=103000001]
+z_index = -5
+scroll_scale = Vector2(0.9, 0.9)
+scroll_offset = Vector2(468, 37)
+
+[node name="VillageForeground" type="Sprite2D" parent="CS" unique_id=103000002]
+position = Vector2(-1243.0001, -629)
+scale = Vector2(2.1726518, 2.1726518)
+texture = ExtResource("6_village")
+centered = false
+
+[node name="RitualStairs" type="Sprite2D" parent="CS" unique_id=103000003]
+position = Vector2(3654, -17)
+scale = Vector2(-0.99104327, 0.9)
+texture = ExtResource("7_stairs")
+centered = false
+
+[node name="TideObservationPlatform" type="Sprite2D" parent="CS" unique_id=101000004]
+z_index = -1
+position = Vector2(-155, -853)
+scale = Vector2(-0.9938632, 0.8266947)
+texture = ExtResource("3_platform")
+centered = false
+
+[node name="EmptyCliffPier" type="Sprite2D" parent="CS" unique_id=102000003]
+z_index = -1
+position = Vector2(3543.0002, -106)
+scale = Vector2(0.95, 1.128453)
+texture = ExtResource("5_pier")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="CS" unique_id=104000001]
+
+[node name="Ground" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000002]
+position = Vector2(0, 660)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1627018295]
+polygon = PackedVector2Array(1616, -303, 1582, -279, 1525, 34, 942, 11, 549, -14, 68, -14, 5, -28, 1, -61, -223, -75, -241, -399, -100, -408, -110, -446, -671.23535, -473.88986, -785, -479, -1055, -457, -1050, -449, -779, -467, -764, 86, 1637, 69)
+one_way_collision = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1244144554]
+polygon = PackedVector2Array(542, -13, 737, -120, 936, -118, 936, 8)
+one_way_collision = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=223649272]
+polygon = PackedVector2Array(380, -243, 472, -241, 674, -124, 743, -120, 745, -99, 568, -99, 566, -124)
+one_way_collision = true
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=62078988]
+polygon = PackedVector2Array(474, -242, 835, -244, 1004, -308, 1034, -318, 1613, -316, 1592, -286, 1039, -284, 873, -229, 499, -226)
+one_way_collision = true
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=380640130]
+polygon = PackedVector2Array(992, -313, 631, -316, 600, -425, 258, -433, 188, -415, -122, -592, -177, -595, -190, -620, -217, -620, -217, -644, -230, -645, -232, -657, -244, -658, -245, -670, -278, -673, -278, -703, -300, -704, -303, -734, -322, -735, -323, -760, -345, -765, -347, -789, -362, -790, -362, -810, -377, -812, -380, -834, -401, -842, -405, -869, -438, -872, -436, -898, -463, -900, -465, -926, -484, -926, -487, -954, -537, -956, -539, -980, -1505, -978, -1509, -762, -413, -755, -386, -651, -223, -592, -196, -555, -124, -555, 183, -389, 576, -384, 602, -276, 954, -277)
+one_way_collision = true
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=746686759]
+polygon = PackedVector2Array(1491, -281, 1768, -50, 2495, -35, 2683, -149, 2719, -151, 2840, -209, 2886, -210, 3037, -312, 3101, -311, 3184, -362, 3206, -363, 3373, -465, 3608, -474, 3659, -423, 5445, -422, 5451, -405, 3852, -401, 3718, -405, 2847, 6, 1747, 11, 1412, -283)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1916232396]
+polygon = PackedVector2Array(-24, -324, -11, -295, 375, -281, 388, -308, 188, -302)
+one_way_collision = true
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1585546497]
+polygon = PackedVector2Array(-189, -864, 184, -852, 184, -804, -190, -816, -298, -809, -326, -843)
+one_way_collision = true
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=2108545383]
+polygon = PackedVector2Array(350, -803, 450, -823, 810, -812, 804, -787, 453, -794, 357, -779)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=995229452]
+position = Vector2(11, -88)
+polygon = PackedVector2Array(1097, -704, 1162, -714, 1327, -704, 1327, -657, 1173, -657, 1080, -650, 861, -652, 781, -679, 794, -715, 868, -675, 983, -663, 1055, -680)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=367797070]
+polygon = PackedVector2Array(-427, -863, -209, -571, -209, -451, -271, -363, -264, -8, -1067, -7, -1064, -878)
+
+[node name="LeftBarrier" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000004]
+position = Vector2(-1563, -263)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/WorldBounds/LeftBarrier" unique_id=104000005]
+shape = SubResource("Rect_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000006]
+position = Vector2(6159, -293)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/WorldBounds/RightBarrier" unique_id=104000007]
+shape = SubResource("Rect_barrier")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=105000001]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=105000002]
+position = Vector2(360, 580)
+
+[node name="from_cliff" type="Marker2D" parent="EntryPoints" unique_id=105000003]
+position = Vector2(200, 580)
+
+[node name="from_lake" type="Marker2D" parent="EntryPoints" unique_id=105000004]
+position = Vector2(3500, 580)
+
+[node name="ExitPortal" type="Area2D" parent="." unique_id=106000001]
+position = Vector2(180, 500)
+script = ExtResource("13_portal")
+destination_level = &"home"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "返回药水铺"
+
+[node name="Visual" type="Sprite2D" parent="ExitPortal" unique_id=106000003]
+position = Vector2(0, 40)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("14_portal_vis")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPortal" unique_id=106000002]
+position = Vector2(0, 40)
+shape = SubResource("Rect_portal")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=107000001]
+z_index = 5
+position = Vector2(381, 533)
+script = ExtResource("8_player")
+
+[node name="SherryCollision" parent="Player" unique_id=107000002 instance=ExtResource("9_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=107000003 instance=ExtResource("10_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=107000004]
+process_callback = 0
+limit_left = -1118
+limit_top = -1389
+limit_right = 6977
+limit_bottom = 803
+script = ExtResource("11_camera")
+left_barrier_path = NodePath("../../CS/WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../CS/WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=107000005 instance=ExtResource("12_potions")]
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=108000001]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=108000002 instance=ExtResource("14_console")]
+visible = false
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=109000001]
+layer = 200
+script = ExtResource("15_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=109000002 instance=ExtResource("16_pause_menu")]
