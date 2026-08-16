@@ -14,12 +14,12 @@ var switching_enabled := false
 @onready var sherry: Node2D = get_node(sherry_path)
 @onready var luca: Node2D = get_node(luca_path)
 @onready var camera: Camera2D = get_node(camera_path)
-@onready var luca_world_controller: ForestLucaWorldController = get_node(luca_world_controller_path)
+@onready var luca_world_controller: Node = get_node_or_null(luca_world_controller_path)
 
 func _ready() -> void:
 	_set_control(sherry, true)
 	_set_control(luca, false)
-	luca_world_controller.set_luca_view(false)
+	_set_luca_view(false)
 
 func enable_switching(enabled: bool) -> void:
 	switching_enabled = enabled
@@ -48,11 +48,15 @@ func set_active_character(character_id: StringName) -> void:
 	camera.reparent(target, true)
 	camera.position = Vector2.ZERO
 	active_character = character_id
-	luca_world_controller.set_luca_view(active_character == &"luca")
+	_set_luca_view(active_character == &"luca")
 	active_character_changed.emit(active_character)
 
 func active_body() -> Node2D:
 	return luca if active_character == &"luca" else sherry
+
+func _set_luca_view(enabled: bool) -> void:
+	if luca_world_controller != null and luca_world_controller.has_method("set_luca_view"):
+		luca_world_controller.call("set_luca_view", enabled)
 
 func _set_control(body: Node, enabled: bool) -> void:
 	if body.has_method("set_control_enabled"):

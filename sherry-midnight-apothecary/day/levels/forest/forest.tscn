@@ -18,16 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://b40std3gpssc2" path="res://day/levels/forest/exterior/waterwheel.tscn" id="17_wheel"]
 [ext_resource type="PackedScene" uid="uid://bqbchkqu21o6d" path="res://day/levels/forest/exterior/corrupted_mud.tscn" id="18_mud"]
 [ext_resource type="PackedScene" uid="uid://cb43g8ycvuo6q" path="res://day/levels/forest/arvis_tree_gate.tscn" id="19_gate"]
-[ext_resource type="Script" uid="uid://c0dyladubtgcm" path="res://day/levels/forest/interior/forest_luca_controller.gd" id="20_luca"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="20_luca"]
 [ext_resource type="Script" uid="uid://x3x7m62dkn7y" path="res://day/levels/forest/shared/forest_party_controller.gd" id="21_party"]
 [ext_resource type="Script" uid="uid://dr7gfp66os802" path="res://day/levels/forest/interior/luca_world_controller.gd" id="22_luca_world"]
 [ext_resource type="Script" uid="uid://d4bulfbo3pqws" path="res://day/levels/forest/boss/forest_boss_interface.gd" id="31_boss_interface"]
 [ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="33_herb"]
 [ext_resource type="PackedScene" uid="uid://c0hm5cchinakn" path="res://day/levels/forest/crown.tscn" id="34_crown"]
-
-[sub_resource type="CapsuleShape2D" id="LucaShape"]
-radius = 24.0
-height = 72.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
 size = Vector2(138, 167)
@@ -86,20 +82,9 @@ position_smoothing_speed = 7.0
 
 [node name="PotionThrower" parent="Player" unique_id=165284612 instance=ExtResource("13_potions")]
 
-[node name="Luca" type="CharacterBody2D" parent="." unique_id=1741066522 groups=["forest_character", "luca"]]
+[node name="Luca" parent="." unique_id=1741066522 groups=["forest_character", "luca"] instance=ExtResource("20_luca")]
 visible = false
-z_index = 10
 position = Vector2(7180, 380)
-script = ExtResource("20_luca")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Luca" unique_id=1678033476]
-position = Vector2(0, -36)
-shape = SubResource("LucaShape")
-
-[node name="FallbackPresentation" type="Polygon2D" parent="Luca" unique_id=392443482]
-position = Vector2(0, -32)
-color = Color(0.12, 0.13, 0.15, 1)
-polygon = PackedVector2Array(-42, -46, -16, -64, 8, -58, 28, -44, 44, -22, 38, 0, 20, 4, 6, -4, -16, 2, -34, -8, -48, -26)
 
 [node name="LucaDialogueNpc" type="Node2D" parent="." unique_id=1826486977]
 position = Vector2(5835, 590)
@@ -131,6 +116,7 @@ shape = SubResource("RectangleShape2D_3qgp4")
 
 [node name="LucaWorldController" type="Node" parent="ForestController" unique_id=2070391116]
 script = ExtResource("22_luca_world")
+luca_world_path = NodePath("../../Interior/LucaWorldOnly")
 overlay_path = NodePath("../../UI/LucaOverlay")
 
 [node name="PartyController" type="Node" parent="ForestController" unique_id=221915510]

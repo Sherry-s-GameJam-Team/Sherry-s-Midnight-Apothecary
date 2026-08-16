@@ -15,3 +15,11 @@
 - [Potion direct hits](potion_hits.md): collision-box impact receiver contract and splash-effect integration.
 
 - [Day health and recovery](day_health.md): global HP, healing effects, hazard damage, same-day rollback, and Bedroom revival.
+
+- [Day character switching](CHARACTER_SWITCHING.md): remote scene-assembly contract for Sherry/Luca node paths, controls, camera ownership, and validation.
+
+- [Forest level](../day/levels/forest/docs/FOREST_LEVEL.md): exterior waterwheel progression, tree-gate handoff to the standalone interior level, restoration flow, and Crown handoff.
+
+- [Forest interior level](../day/levels/forest/docs/FOREST_INTERIOR_LEVEL.md): standalone tree-interior dual-character level — control rooms, spray purification, lifts, sluice gate, and crown-exit placeholder.
+
+- [Golden cliff](golden_cliff.md): standalone `烁金横崖` day level — balance-stone calibration, floating/debris hazards, portal repair, embedded standalone DeveloperConsole, embedded PauseMenu (B-key backpack, ESC menu), and `LEVELS` registration for the global SceneTitleCard.

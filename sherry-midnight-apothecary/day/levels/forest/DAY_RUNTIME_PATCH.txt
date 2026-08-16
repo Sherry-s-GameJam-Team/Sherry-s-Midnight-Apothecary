@@ -1,0 +1,13 @@
+目标文件：res://day/day_runtime.gd
+
+请按当前文件的既有 preload / LEVELS 写法合并：
+
+const FOREST_INTERIOR_LEVEL := preload("res://day/levels/forest/interior/forest_interior_level.tres")
+
+在 LEVELS 中加入：
+&"forest_interior": FOREST_INTERIOR_LEVEL,
+
+不要加入 DAILY_LEVELS。
+
+外部 Forest 树门进入：
+switch_to_level(&"forest_interior", &"from_forest")

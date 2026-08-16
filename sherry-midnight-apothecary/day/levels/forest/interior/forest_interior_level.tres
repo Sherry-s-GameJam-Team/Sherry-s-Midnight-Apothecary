@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/forest/interior/forest_interior.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"forest_interior"
+display_name = "阿尔维斯母树"
+disaster_name = "血河"
+normal_description = "阿尔维斯母树内部的古老水路与旅门维护设施。"
+corrupted_description = "血水贯穿树心，旧有水路与根系机关陷入停滞。"
+scene_description = "沿树心向上，寻找血河灾变的源头。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"from_forest"
+show_title_card = false
+native_ingredient_ids = Array[StringName]([])

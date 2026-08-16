@@ -33,6 +33,13 @@ func _ready() -> void:
 		var embedded_debug_ui := get_node_or_null("DebugUI")
 		if embedded_debug_ui != null:
 			embedded_debug_ui.process_mode = Node.PROCESS_MODE_DISABLED
+		var embedded_pause_menu_layer := get_node_or_null("PauseMenuLayer")
+		if embedded_pause_menu_layer != null:
+			embedded_pause_menu_layer.process_mode = Node.PROCESS_MODE_DISABLED
+			var embedded_pause_menu := embedded_pause_menu_layer.get_node_or_null("PauseMenu")
+			if embedded_pause_menu != null:
+				embedded_pause_menu.process_mode = Node.PROCESS_MODE_DISABLED
+				embedded_pause_menu.visible = false
 		return
 	var console := get_node_or_null("DebugUI/DeveloperConsole")
 	if console != null:

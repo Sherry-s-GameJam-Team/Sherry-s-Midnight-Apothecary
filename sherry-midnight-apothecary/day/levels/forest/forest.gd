@@ -136,7 +136,7 @@ func request_respawn(body: Node2D, reason: StringName, damage: int) -> void:
 	_set_body_control(body, false)
 	if body is CharacterBody2D:
 		body.velocity = Vector2.ZERO
-	var target := interior_respawn if phase >= ForestPhase.INTERIOR and phase < ForestPhase.CROWN else exterior_respawn
+	var target := _interior_respawn_for(body) if phase >= ForestPhase.INTERIOR and phase < ForestPhase.CROWN else exterior_respawn
 	body.global_position = target
 	await get_tree().physics_frame
 	_set_body_control(body, true)
@@ -145,11 +145,12 @@ func request_respawn(body: Node2D, reason: StringName, damage: int) -> void:
 func enter_interior(body: Node2D) -> void:
 	if not tree_gate_opened or body != player:
 		return
-	player.global_position = interior_respawn
-	luca.global_position = interior_respawn + Vector2(90, 0)
-	luca.visible = true
-	party.enable_switching(true)
-	_set_phase(ForestPhase.INTERIOR)
+	# The interior is now a standalone level registered in DayRuntime.LEVELS
+	# (res://day/levels/forest/interior/forest_interior_level.tres). Hand off to
+	# it instead of driving the old embedded interior phase in place.
+	var runtime := _get_day_runtime()
+	if runtime != null and runtime.has_method("switch_to_level"):
+		runtime.call("switch_to_level", "forest_interior", &"from_forest")
 
 func enter_crown(body: Node2D) -> void:
 	var sherry_entry := get_node_or_null("Crown/SherryEntry") as Marker2D
@@ -312,3 +313,12 @@ func _set_body_control(body: Node, enabled: bool) -> void:
 		body.call("set_control_enabled", enabled)
 	elif body.has_method("set_dialogue_locked"):
 		body.call("set_dialogue_locked", not enabled)
+
+func _interior_respawn_for(body: Node2D) -> Vector2:
+	var marker_name := "RespawnBottom"
+	if body.global_position.y < -2100.0:
+		marker_name = "RespawnUpper"
+	elif body.global_position.y < -900.0:
+		marker_name = "RespawnMid"
+	var marker := get_node_or_null("Interior/%s" % marker_name) as Marker2D
+	return marker.global_position if marker != null else interior_respawn

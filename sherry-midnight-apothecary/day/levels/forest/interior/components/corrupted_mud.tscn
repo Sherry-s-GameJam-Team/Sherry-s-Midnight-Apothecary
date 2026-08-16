@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://day/levels/forest/interior/scripts/corrupted_mud.gd" id="1_script"]
+
+[sub_resource type="Shader" id="Shader_mud"]
+code = "shader_type canvas_item;\nuniform vec4 dark_color : source_color = vec4(0.09, 0.035, 0.08, 1.0);\nuniform vec4 pulse_color : source_color = vec4(0.42, 0.08, 0.14, 1.0);\nuniform float cleanse_progress : hint_range(0.0, 1.0) = 0.0;\nvoid fragment(){\n vec2 uv=UV;\n float w=sin(uv.x*14.0+TIME*1.7)*sin(uv.y*9.0-TIME*1.1);\n float p=0.5+w*0.18;\n vec4 c=mix(dark_color,pulse_color,p);\n c.rgb=mix(c.rgb,vec3(0.55,0.85,0.78),cleanse_progress*0.7);\n c.a*=1.0-cleanse_progress*0.25;\n COLOR=c;\n}"
+
+[sub_resource type="ShaderMaterial" id="Material_mud"]
+shader = SubResource("Shader_mud")
+
+[sub_resource type="RectangleShape2D" id="Shape_mud"]
+size = Vector2(300, 135)
+
+[node name="CorruptedMud" type="StaticBody2D"]
+collision_layer = 3
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="Visual" type="Polygon2D" parent="."]
+material = SubResource("Material_mud")
+polygon = PackedVector2Array(-150, 55, -146, 5, -126, -34, -88, -56, -43, -44, 4, -65, 46, -46, 92, -58, 132, -26, 150, 16, 142, 55)
+color = Color(0.2, 0.05, 0.1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("Shape_mud")
+
+[node name="Bubbles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -38)
+amount = 10
+lifetime = 1.4
+randomness = 0.7
+emission_shape = 3
+emission_rect_extents = Vector2(130, 30)
+direction = Vector2(0, -1)
+spread = 40.0
+gravity = Vector2(0, -8)
+initial_velocity_min = 8.0
+initial_velocity_max = 22.0
+scale_amount_min = 1.5
+scale_amount_max = 3.5
+color = Color(0.35, 0.05, 0.16, 0.55)

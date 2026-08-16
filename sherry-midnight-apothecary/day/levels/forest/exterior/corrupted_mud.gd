@@ -2,9 +2,12 @@ class_name ForestCorruptedMud
 extends StaticBody2D
 
 signal purified
+signal water_progress_changed(progress: float)
 
 @export var required_potion_id: StringName = &"purification_potion"
 var is_purified := false
+var water_progress := 0.0
+@export var water_required_seconds := 0.8
 
 @onready var visual: CanvasItem = $Visual
 @onready var collision: CollisionShape2D = $CollisionShape2D
@@ -26,6 +29,14 @@ func purify() -> void:
 	await tween.finished
 	visible = false
 	purified.emit()
+
+func receive_water(delta: float) -> void:
+	if is_purified:
+		return
+	water_progress = minf(water_required_seconds, water_progress + delta)
+	water_progress_changed.emit(water_progress)
+	if water_progress >= water_required_seconds:
+		purify()
 
 func restore_purified() -> void:
 	is_purified = true

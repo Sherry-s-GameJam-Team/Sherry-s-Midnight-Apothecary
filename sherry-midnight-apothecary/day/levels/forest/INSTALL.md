@@ -1,75 +1,52 @@
-# Forest Level Pack 安装
+# 安装
 
-将 ZIP 解压到 Godot 项目根目录，使 ZIP 内的 `day/`、`art/`、`tests/`、`docs/` 与项目现有 `res://` 根目录对应。
+1. 将 ZIP 内容直接解压到 Godot 工程根目录，即 `project.godot` 所在目录。
+2. 不要创建第二个 `project.godot`。
+3. 确认工程已有以下正式接口文件：
+   - `res://day/systems/day_level_environment.gd`
+   - `res://shared/player/day_player_controller.gd`
+   - `res://shared/player/camera_bounds.gd`
+   - `res://characters/sherry/sherry_outdoor_collision.tscn`
+   - `res://characters/sherry/sherry_presentation.tscn`
+   - `res://day/potions/potion_player_system.tscn`
+   - `res://characters/luca/luca_player.tscn`
+   - `res://day/levels/forest/shared/forest_party_controller.gd`
+   - `res://shared/definitions/level_data.gd`
+4. 在 `res://day/day_runtime.gd` 的 `LEVELS` 中显式注册 `forest_interior_level.tres`。不要加入 `DAILY_LEVELS`。
 
-## 新增主文件
+推荐写法按你当前 `DayRuntime` 的既有风格合并：
 
-- `res://day/levels/forest/forest.tscn`
-- `res://day/levels/forest/forest.gd`
-- `res://day/levels/forest/forest_level.tres`
-- `res://day/levels/forest/boss/forest_boss_interface.gd`
-- `res://tests/forest/forest_smoke_test.tscn`
+```gdscript
+const FOREST_INTERIOR_LEVEL := preload("res://day/levels/forest/interior/forest_interior_level.tres")
 
-## 依赖的现有工程资源
+# 在现有 LEVELS 字典中加入：
+&"forest_interior": FOREST_INTERIOR_LEVEL,
+```
 
-这些路径来自 grassland 架构参考包，本 ZIP 不覆盖它们：
+Forest 外部树门完成后：
 
-- `res://shared/definitions/level_data.gd`
-- `res://shared/player/day_player_controller.gd`
-- `res://day/potions/potion_player_system.tscn`
-- `res://characters/sherry/sherry_presentation.tscn`
-- `res://characters/sherry/sherry_outdoor_collision.tscn`
-- `res://day/interactables/herb/herb_spawn_director.gd`
+```gdscript
+day_runtime.switch_to_level(&"forest_interior", &"from_forest")
+```
 
-如果完整工程实际路径已经调整，以工程当前路径为准修改 Forest 的对应 ext_resource；不要复制第二套 Player 或 Potion 系统。
+后续树冠 Boss 场景应注册：
 
-## Level ID / 入口
-
-- Level ID：`forest`
-- 默认入口：`default`
-- 额外入口：`from_home`、`restored_return`
-
-`forest_level.tres` 已按 Grassland 的 LevelData 字段创建。由于本次提供的是美术包 + grassland 参考包，而不是完整项目，无法确认项目的 Level Registry 是自动扫描还是手工数组。若工程自动扫描 `day/levels/**/_level.tres`，无需额外操作；若工程使用显式注册表，请把 `res://day/levels/forest/forest_level.tres` 加入现有注册表，禁止新建 Forest 注册器。
-
-## Input
-
-- 角色切换：优先使用 `switch_character`；若项目尚未配置，Forest fallback 接受 `Tab`。
-- 交互：优先使用 `interact`；fallback 接受 `E`。
-- Luca 移动：优先 `move_left` / `move_right` / `jump`，否则使用 `ui_left` / `ui_right` / `ui_accept`。
-
-建议在项目现有 InputMap 中正式加入 `switch_character = Tab`，但本包没有直接覆盖 `project.godot`，避免误删你工程中的其它 Input Action。
+```text
+level_id = forest_crown
+entry_id = from_interior
+```
 
 ## 测试
 
-完整工程中执行：
+在完整项目根目录运行：
 
-```bash
-godot --headless --editor --path <project_root> --quit
+```powershell
+& 'C:\Users\jisub\Downloads\Godot_v4.6-stable_win64.exe\Godot_v4.6-stable_win64_console.exe' --headless --path . --editor --quit
+& 'C:\Users\jisub\Downloads\Godot_v4.6-stable_win64.exe\Godot_v4.6-stable_win64_console.exe' --headless --path . --script res://tests/forest_interior_smoke_test.gd
 ```
 
-然后：
+也可以在编辑器内直接 F6 运行：
 
-```bash
-godot --headless --path <project_root> res://tests/forest/forest_smoke_test.tscn
-```
+`res://day/levels/forest/interior/forest_interior.tscn`
 
-Godot 4.6.x 首次导入大量 PNG 后，建议先完成一次 editor/headless import，再跑 smoke test。
-
-## Boss placeholder
-
-Boss 只有 Trigger + Interface + corrupted/normal 视觉。未来正式 Boss 脚本调用：
-
-```gdscript
-$BossInterface.begin_boss()
-$BossInterface.purify_boss()
-```
-
-`purify_boss()` 会完成 Forest 恢复，不会击杀熾天使。
-
-## Checkpoint
-
-树门开启后写 `PlayerData.tutorial_flags["forest_tree_gate_opened"] = true`，并调用 `request_checkpoint(&"forest_tree_gate_opened")`。如果现有 DayRuntime 已提供同名 checkpoint 方法会自动转发，否则通过 Forest 的 `checkpoint_requested` signal 暴露。
-
-## Luca
-
-参考包未包含完整工程中的正式可操控 Luca 场景，所以本包带一个 Forest-local fallback controller 以保证节点与流程完整。接入完整项目后，优先复用项目已有 Luca Presentation/控制器并保留 `set_control_enabled(bool)` 兼容入口。
+F6 模式下树冠出口只作为结束占位，不会强行切换未安装的 Boss 场景。

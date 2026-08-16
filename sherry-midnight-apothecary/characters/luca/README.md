@@ -16,3 +16,13 @@ luca.set_movement_direction(1.0) # 向右
 luca.set_movement_direction(-1.0) # 向左
 luca.stop_moving()
 ```
+
+## 关卡角色切换接口
+
+`LucaPlayer` 也提供统一接口：
+
+```gdscript
+luca.set_control_enabled(enabled: bool)
+```
+
+启用时恢复玩家输入；禁用时关闭输入并清除外部移动方向与水平速度。Forest 的 `ForestPartyController` 使用该接口在 Sherry 与 Luca 间切换控制权。

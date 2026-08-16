@@ -10,9 +10,11 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/home/home_level.tres"),
 	preload("res://day/levels/home/bedroom_level.tres"),
 	preload("res://day/levels/forest/forest_level.tres"),
+	preload("res://day/levels/forest/interior/forest_interior_level.tres"),
 	preload("res://day/levels/lake/lake_level.tres"),
 	preload("res://day/levels/grassland/grassland_level.tres"),
 	preload("res://day/levels/grassland/emerald_field_level.tres"),
+	preload("res://day/levels/golden_cliff/golden_cliff_level.tres"),
 ]
 
 # Home is available through its door, but does not consume a day in the normal

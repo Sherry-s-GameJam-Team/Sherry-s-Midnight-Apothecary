@@ -54,6 +54,14 @@ func set_movement_direction(direction: float) -> void:
 	_external_direction = clampf(direction, -1.0, 1.0)
 
 
+## Compatibility interface for scene-level party controllers. Disabling control
+## also clears any externally supplied movement so Luca cannot drift after a swap.
+func set_control_enabled(enabled: bool) -> void:
+	input_enabled = enabled
+	if not enabled:
+		stop_moving()
+
+
 func stop_moving() -> void:
 	_external_direction = 0.0
 	_set_active_direction(0.0)

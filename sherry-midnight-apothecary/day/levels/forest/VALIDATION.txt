@@ -1,11 +1,13 @@
-FOREST PACK STATIC VALIDATION
-=============================
-Godot runtime executable in environment: NOT FOUND
-Internal/external res:// references scanned: 97
-PNG files verified by Pillow: 61
-Waterwheel RGBA frames: 24
-Gate frames supplied/used: 23
-Known external project dependencies: 6
-Validation errors: 0
-Static validation PASS: no missing internal resources, broken TSCN resource IDs, invalid PNGs, or forbidden duplicate architecture patterns detected.
-Runtime note: actual Godot headless execution cannot be claimed in this sandbox because no Godot executable is installed and binary download is unavailable. Run tests/forest/forest_smoke_test.tscn inside the full project.
+Forest interior package static validation
+Files: 49
+Scripts: 13
+Scene nodes: 177
+External canonical dependencies: 7
+NOTE external dependency: res://characters/luca/luca_player.tscn
+NOTE external dependency: res://characters/sherry/sherry_outdoor_collision.tscn
+NOTE external dependency: res://characters/sherry/sherry_presentation.tscn
+NOTE external dependency: res://day/levels/forest/shared/forest_party_controller.gd
+NOTE external dependency: res://day/potions/potion_player_system.tscn
+NOTE external dependency: res://shared/player/camera_bounds.gd
+NOTE external dependency: res://shared/player/day_player_controller.gd
+STATIC VALIDATION: PASS

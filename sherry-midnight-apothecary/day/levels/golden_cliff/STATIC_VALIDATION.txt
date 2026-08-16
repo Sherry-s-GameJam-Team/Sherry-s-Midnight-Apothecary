@@ -1,0 +1,6 @@
+golden_cliff package static validation
+====================================
+errors: 0
+
+Validated: required DayLevelEnvironment/EntryPoints/Player/WorldBounds contracts, level-local res:// references, art presence.
+NOTE: Godot 4.6 executable is not installed in this sandbox, so engine parsing/headless tests could not be executed here.

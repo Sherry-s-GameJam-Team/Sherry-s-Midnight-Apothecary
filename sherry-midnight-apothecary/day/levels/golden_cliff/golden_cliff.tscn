@@ -1,0 +1,479 @@
+[gd_scene format=3 uid="uid://bdlo71kdnfix7"]
+
+[ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="1_environment"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://cc0qtg8w2rr0i" path="res://day/levels/golden_cliff/art/skybox.png" id="2_qlso4"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="3_camera"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="4_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="5_presentation"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="6_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="7_door_portal"]
+[ext_resource type="Script" uid="uid://cat2fwnxendec" path="res://day/levels/golden_cliff/golden_cliff_controller.gd" id="8_controller"]
+[ext_resource type="Script" uid="uid://dowe7k5dwnrfo" path="res://day/levels/golden_cliff/balance_mechanism.gd" id="9_balance"]
+[ext_resource type="Script" uid="uid://ch4hgxq4uk7gn" path="res://day/levels/golden_cliff/floating_boulder.gd" id="10_float"]
+[ext_resource type="Script" uid="uid://bf6bayb7uabav" path="res://day/levels/golden_cliff/breakable_platform.gd" id="11_break"]
+[ext_resource type="Script" uid="uid://dxwss8ikjx62" path="res://day/levels/golden_cliff/fall_hazard.gd" id="12_fall"]
+[ext_resource type="Texture2D" uid="uid://don03if78hu8n" path="res://day/levels/golden_cliff/art/cliff_bg_cloud_far_01.png" id="13_far"]
+[ext_resource type="Texture2D" uid="uid://cnu27bi7m8t8p" path="res://day/levels/golden_cliff/art/cliff_yellow_mg_cliffs_ruins_01.png" id="15_mid"]
+[ext_resource type="Texture2D" uid="uid://b7w5f2k8nx2r8" path="res://day/levels/golden_cliff/art/cliff_yellow_plat_flat_01.png" id="16_flat"]
+[ext_resource type="Texture2D" uid="uid://0b2b4i6ot6sk" path="res://day/levels/golden_cliff/art/cliff_yellow_plat_floating_boulder_01.png" id="17_boulder"]
+[ext_resource type="Texture2D" uid="uid://db2l4gnicocl3" path="res://day/levels/golden_cliff/art/cliff_yellow_plat_slope_01.png" id="18_slope"]
+[ext_resource type="Texture2D" uid="uid://da1uaddrtu1ge" path="res://day/levels/golden_cliff/art/cliff_yellow_mech_balance_01.png" id="19_balance_base"]
+[ext_resource type="Texture2D" uid="uid://bnnmsthj0s7ns" path="res://day/levels/golden_cliff/art/cliff_yellow_mech_balance_02.png" id="20_balance_beam"]
+[ext_resource type="Texture2D" uid="uid://ctie136qfvfxe" path="res://day/levels/golden_cliff/art/cliff_yellow_mech_balance_03.png" id="21_balance_left"]
+[ext_resource type="Texture2D" uid="uid://v7r2mn02tucb" path="res://day/levels/golden_cliff/art/cliff_yellow_mech_balance_04.png" id="22_balance_right"]
+[ext_resource type="Texture2D" uid="uid://cski3xqwlmu7e" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_01.png" id="23_portal_broken"]
+[ext_resource type="Texture2D" uid="uid://b0op5lj11ncbn" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_02.png" id="24_portal_repaired"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="25_console"]
+[ext_resource type="Script" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="26_pause_host"]
+[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="27_pause_menu"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
+
+[sub_resource type="RectangleShape2D" id="Rect_barrier"]
+size = Vector2(128, 2600)
+
+[sub_resource type="RectangleShape2D" id="Rect_floor_long"]
+size = Vector2(1520, 110)
+
+[sub_resource type="ConvexPolygonShape2D" id="Slope_collision"]
+points = PackedVector2Array(-360, 135, 360, -125, 360, 135)
+
+[sub_resource type="RectangleShape2D" id="Rect_floor_medium"]
+size = Vector2(1120, 110)
+
+[sub_resource type="RectangleShape2D" id="Rect_boulder"]
+size = Vector2(300, 70)
+
+[sub_resource type="RectangleShape2D" id="Rect_breakable"]
+size = Vector2(820, 90)
+
+[sub_resource type="RectangleShape2D" id="Rect_break_sensor"]
+size = Vector2(820, 150)
+
+[sub_resource type="RectangleShape2D" id="Rect_balance"]
+size = Vector2(360, 330)
+
+[sub_resource type="RectangleShape2D" id="Rect_portal"]
+size = Vector2(290, 420)
+
+[sub_resource type="RectangleShape2D" id="Rect_fall"]
+size = Vector2(12200, 300)
+
+[node name="GoldenCliff" type="Node2D" unique_id=1696788353]
+script = ExtResource("1_environment")
+debug_scene_id = "golden_cliff"
+start_corrupted = true
+
+[node name="SkyCanvas" type="CanvasLayer" parent="." unique_id=1867458413]
+layer = -100
+
+[node name="Skybox" type="Sprite2D" parent="SkyCanvas" unique_id=375834262]
+position = Vector2(1300, 487)
+scale = Vector2(1.34, 1.34)
+texture = ExtResource("2_qlso4")
+
+[node name="Background" type="Node2D" parent="." unique_id=82604871]
+z_index = -40
+position = Vector2(241, 199)
+
+[node name="FarParallax" type="Parallax2D" parent="Background" unique_id=42431068]
+scroll_scale = Vector2(0.18, 0.12)
+scroll_offset = Vector2(-2049, -91)
+repeat_size = Vector2(2172, 0)
+repeat_times = 7
+
+[node name="FarCliffs" type="Sprite2D" parent="Background/FarParallax" unique_id=892526891]
+position = Vector2(1086, 520)
+texture = ExtResource("13_far")
+
+[node name="MidParallax" type="Parallax2D" parent="Background" unique_id=825109701]
+scroll_scale = Vector2(0.46, 0.32)
+repeat_size = Vector2(2172, 0)
+repeat_times = 7
+
+[node name="MidCliffs" type="Sprite2D" parent="Background/MidParallax" unique_id=213054897]
+modulate = Color(0.96, 0.88, 0.67, 1)
+position = Vector2(1086, 520)
+texture = ExtResource("15_mid")
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1135914628]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=743730986]
+position = Vector2(0, 1450)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=1499910240]
+shape = SubResource("WorldBoundaryShape2D_ground")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1789407356]
+position = Vector2(-64, 520)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=1419671537]
+shape = SubResource("Rect_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=566758381]
+position = Vector2(12064, 520)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1407759834]
+shape = SubResource("Rect_barrier")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=341253836]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=518491963]
+position = Vector2(320, 550)
+
+[node name="from_south" type="Marker2D" parent="EntryPoints" unique_id=1725717940]
+position = Vector2(320, 550)
+
+[node name="from_lake" type="Marker2D" parent="EntryPoints" unique_id=269602947]
+position = Vector2(11600, 520)
+
+[node name="RespawnPoints" type="Node2D" parent="." unique_id=913209557]
+
+[node name="R0" type="Marker2D" parent="RespawnPoints" unique_id=1310169733]
+position = Vector2(320, 550)
+
+[node name="R1" type="Marker2D" parent="RespawnPoints" unique_id=615943642]
+position = Vector2(2920, 500)
+
+[node name="R2" type="Marker2D" parent="RespawnPoints" unique_id=1669302143]
+position = Vector2(5750, 490)
+
+[node name="R3" type="Marker2D" parent="RespawnPoints" unique_id=427714091]
+position = Vector2(8500, 500)
+
+[node name="R4" type="Marker2D" parent="RespawnPoints" unique_id=956099017]
+position = Vector2(10850, 500)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1408356051]
+z_index = 2
+position = Vector2(352, 784)
+script = ExtResource("2_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1901793950 instance=ExtResource("4_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=285167296 instance=ExtResource("5_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=703608565]
+limit_left = 0
+limit_top = 0
+limit_right = 12000
+limit_bottom = 1080
+script = ExtResource("3_camera")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=1111505702 instance=ExtResource("6_potions")]
+
+[node name="LevelController" type="Node" parent="." unique_id=1776016097]
+script = ExtResource("8_controller")
+
+[node name="Gameplay" type="Node2D" parent="." unique_id=1627503317]
+
+[node name="StaticPlatforms" type="Node2D" parent="Gameplay" unique_id=987217210]
+position = Vector2(26, 144)
+
+[node name="StartGround" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=1846974743]
+position = Vector2(820, 790)
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/StartGround" unique_id=298529069]
+position = Vector2(0, 155)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("16_flat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/StartGround" unique_id=897932682]
+position = Vector2(6, 135)
+shape = SubResource("Rect_floor_long")
+
+[node name="GroundA" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=184557861]
+position = Vector2(3260, 790)
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/GroundA" unique_id=2085038019]
+position = Vector2(0, 155)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("16_flat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/GroundA" unique_id=1048074937]
+position = Vector2(5, 137)
+shape = SubResource("Rect_floor_long")
+
+[node name="SlopeA" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=805342479]
+position = Vector2(4730, 735)
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/SlopeA" unique_id=466801956]
+position = Vector2(142, -98)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("18_slope")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/SlopeA" unique_id=1761052098]
+position = Vector2(92, -110)
+shape = SubResource("Slope_collision")
+
+[node name="GroundB" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=541301846]
+position = Vector2(5900, 700)
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/GroundB" unique_id=1998492023]
+position = Vector2(0, 130)
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("16_flat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/GroundB" unique_id=1861800452]
+position = Vector2(-1, 115)
+shape = SubResource("Rect_floor_medium")
+
+[node name="GroundC" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=1107326391]
+position = Vector2(8420, 790)
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/GroundC" unique_id=128236830]
+position = Vector2(0, 155)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("16_flat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/GroundC" unique_id=106368386]
+position = Vector2(26, 137)
+shape = SubResource("Rect_floor_long")
+
+[node name="EndGround" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=1506254687]
+position = Vector2(11150, 790)
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/EndGround" unique_id=1650259064]
+position = Vector2(0, 155)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("16_flat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/EndGround" unique_id=599035345]
+position = Vector2(8, 132)
+shape = SubResource("Rect_floor_long")
+
+[node name="FloatingBoulders" type="Node2D" parent="Gameplay" unique_id=1466208018]
+
+[node name="BoulderA" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=900254430]
+position = Vector2(1879, 713)
+script = ExtResource("10_float")
+bob_amplitude = 34.0
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderA" unique_id=1747644189]
+position = Vector2(0, 95)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("17_boulder")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderA" unique_id=1746784241]
+position = Vector2(-2, 84)
+shape = SubResource("Rect_boulder")
+
+[node name="BoulderB" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=1117612407]
+position = Vector2(2302, 585)
+script = ExtResource("10_float")
+bob_amplitude = 42.0
+horizontal_amplitude = 24.0
+phase = 1.7
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderB" unique_id=558666821]
+position = Vector2(0, 82)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("17_boulder")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderB" unique_id=538446489]
+position = Vector2(-6, 80)
+shape = SubResource("Rect_boulder")
+
+[node name="BoulderC" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=679803448]
+position = Vector2(6920, 650)
+script = ExtResource("10_float")
+bob_amplitude = 40.0
+phase = 0.8
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderC" unique_id=1132687136]
+position = Vector2(0, 90)
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("17_boulder")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderC" unique_id=2095161309]
+position = Vector2(1, 73)
+shape = SubResource("Rect_boulder")
+
+[node name="BoulderD" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=1029277167]
+position = Vector2(7360, 560)
+script = ExtResource("10_float")
+bob_amplitude = 32.0
+horizontal_amplitude = 30.0
+phase = 2.4
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderD" unique_id=1222477720]
+position = Vector2(0, 80)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("17_boulder")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderD" unique_id=665704966]
+position = Vector2(5, 66)
+shape = SubResource("Rect_boulder")
+
+[node name="Breakables" type="Node2D" parent="Gameplay" unique_id=1077642613]
+
+[node name="BreakA" type="Node2D" parent="Gameplay/Breakables" unique_id=593472430]
+position = Vector2(4050, 700)
+script = ExtResource("11_break")
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/Breakables/BreakA" unique_id=1863074091]
+position = Vector2(0, 90)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("16_flat")
+
+[node name="Body" type="StaticBody2D" parent="Gameplay/Breakables/BreakA" unique_id=1007666255]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/Breakables/BreakA/Body" unique_id=1370663857]
+position = Vector2(7, 83)
+shape = SubResource("Rect_breakable")
+
+[node name="Sensor" type="Area2D" parent="Gameplay/Breakables/BreakA" unique_id=1799461929]
+position = Vector2(0, -45)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/Breakables/BreakA/Sensor" unique_id=1814126423]
+position = Vector2(6, 89)
+shape = SubResource("Rect_break_sensor")
+
+[node name="BreakB" type="Node2D" parent="Gameplay/Breakables" unique_id=716039333]
+position = Vector2(9780, 700)
+script = ExtResource("11_break")
+warning_time = 1.05
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/Breakables/BreakB" unique_id=1386334633]
+position = Vector2(0, 90)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("16_flat")
+
+[node name="Body" type="StaticBody2D" parent="Gameplay/Breakables/BreakB" unique_id=997228282]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/Breakables/BreakB/Body" unique_id=395870365]
+position = Vector2(18, 92)
+shape = SubResource("Rect_breakable")
+
+[node name="Sensor" type="Area2D" parent="Gameplay/Breakables/BreakB" unique_id=434482026]
+position = Vector2(0, -45)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/Breakables/BreakB/Sensor" unique_id=1081039318]
+position = Vector2(7, 118)
+shape = SubResource("Rect_break_sensor")
+
+[node name="BalanceMechanisms" type="Node2D" parent="Gameplay" unique_id=112683316]
+position = Vector2(219, -6)
+
+[node name="BalanceA" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=123373794]
+position = Vector2(3060, 470)
+script = ExtResource("9_balance")
+mechanism_id = &"west_balance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=968536402]
+position = Vector2(1, 36)
+shape = SubResource("Rect_balance")
+
+[node name="Visual" type="Node2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=1233267032]
+scale = Vector2(0.32, 0.32)
+
+[node name="Base" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1286373798]
+position = Vector2(0, 3.125)
+texture = ExtResource("19_balance_base")
+
+[node name="Beam" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1301729396]
+texture = ExtResource("20_balance_beam")
+
+[node name="LeftPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1522000416]
+texture = ExtResource("21_balance_left")
+
+[node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1153638553]
+texture = ExtResource("22_balance_right")
+
+[node name="BalanceB" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=36538932]
+position = Vector2(5830, 390)
+script = ExtResource("9_balance")
+mechanism_id = &"middle_balance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceB" unique_id=997572605]
+position = Vector2(0, 70)
+shape = SubResource("Rect_balance")
+
+[node name="Visual" type="Node2D" parent="Gameplay/BalanceMechanisms/BalanceB" unique_id=1132137865]
+scale = Vector2(0.32, 0.32)
+
+[node name="Base" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=1772717503]
+texture = ExtResource("19_balance_base")
+
+[node name="Beam" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=455695286]
+texture = ExtResource("20_balance_beam")
+
+[node name="LeftPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=278091172]
+texture = ExtResource("21_balance_left")
+
+[node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=1767337149]
+texture = ExtResource("22_balance_right")
+
+[node name="BalanceC" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=1438202893]
+position = Vector2(8500, 470)
+script = ExtResource("9_balance")
+mechanism_id = &"east_balance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceC" unique_id=361604465]
+position = Vector2(0, 70)
+shape = SubResource("Rect_balance")
+
+[node name="Visual" type="Node2D" parent="Gameplay/BalanceMechanisms/BalanceC" unique_id=2053858448]
+scale = Vector2(0.32, 0.32)
+
+[node name="Base" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceC/Visual" unique_id=1382674097]
+texture = ExtResource("19_balance_base")
+
+[node name="Beam" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceC/Visual" unique_id=1291599447]
+texture = ExtResource("20_balance_beam")
+
+[node name="LeftPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceC/Visual" unique_id=1421420315]
+texture = ExtResource("21_balance_left")
+
+[node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceC/Visual" unique_id=1940378141]
+texture = ExtResource("22_balance_right")
+
+[node name="ExitPortal" type="Area2D" parent="Gameplay" unique_id=1947716457]
+position = Vector2(11370, 520)
+monitoring = false
+monitorable = false
+script = ExtResource("7_door_portal")
+destination_level = &"home"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+visual_path = NodePath("PortalRepaired")
+interaction_hint_enabled = true
+interaction_hint_text = "返回药典屋"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/ExitPortal" unique_id=1386626617]
+position = Vector2(-18, 132)
+shape = SubResource("Rect_portal")
+disabled = true
+
+[node name="PortalBroken" type="Sprite2D" parent="Gameplay/ExitPortal" unique_id=2120930915]
+position = Vector2(-14.999998, 157)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("23_portal_broken")
+
+[node name="PortalRepaired" type="Sprite2D" parent="Gameplay/ExitPortal" unique_id=1579314045]
+position = Vector2(0, 80)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("24_portal_repaired")
+
+[node name="Hazards" type="Node2D" parent="Gameplay" unique_id=750769578]
+
+[node name="FallReset" type="Area2D" parent="Gameplay/Hazards" unique_id=645863041]
+position = Vector2(6000, 1210)
+collision_layer = 0
+script = ExtResource("12_fall")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/Hazards/FallReset" unique_id=906037474]
+shape = SubResource("Rect_fall")
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=2139284601]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=2139284602 instance=ExtResource("25_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2139284603]
+layer = 200
+script = ExtResource("26_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=2139284604 instance=ExtResource("27_pause_menu")]

@@ -1,0 +1,4 @@
+# Add inside DayRuntime.LEVELS:
+preload("res://day/levels/golden_cliff/golden_cliff_level.tres"),
+
+# Do NOT add to DAILY_LEVELS unless this scene should participate in daily rotation.

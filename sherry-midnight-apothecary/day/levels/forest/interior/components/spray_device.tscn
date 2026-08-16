@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://day/levels/forest/interior/scripts/spray_device.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/interior/art/forest_spray_stream_horizontal.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="Shape_interact"]
+size = Vector2(280, 250)
+
+[sub_resource type="Gradient" id="Gradient_water"]
+colors = PackedColorArray(0.75, 0.98, 1, 0.25, 0.5, 0.95, 1, 0.95, 0.92, 1, 1, 0.65)
+
+[node name="SprayDevice" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_tex")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-20, 0)
+shape = SubResource("Shape_interact")
+
+[node name="Prompt" type="Label" parent="."]
+offset_left = -105.0
+offset_top = -185.0
+offset_right = 105.0
+offset_bottom = -150.0
+theme_override_colors/font_color = Color(0.75, 0.96, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+text = "[E] 操作水枪"
+horizontal_alignment = 1
+
+[node name="NozzlePivot" type="Node2D" parent="."]
+position = Vector2(123, 20)
+
+[node name="WaterLine" type="Line2D" parent="NozzlePivot"]
+width = 12.0
+gradient = SubResource("Gradient_water")
+points = PackedVector2Array(0, 0, 820, 0)
+antialiased = true
+
+[node name="NozzleParticles" type="CPUParticles2D" parent="NozzlePivot"]
+position = Vector2(10, 0)
+amount = 8
+lifetime = 0.4
+direction = Vector2(1, 0)
+spread = 18.0
+gravity = Vector2(0, 50)
+initial_velocity_min = 60.0
+initial_velocity_max = 140.0
+scale_amount_min = 1.0
+scale_amount_max = 2.5
+color = Color(0.55, 0.95, 1, 0.55)
+
+[node name="ImpactParticles" type="CPUParticles2D" parent="NozzlePivot"]
+amount = 12
+lifetime = 0.35
+spread = 180.0
+gravity = Vector2(0, 120)
+initial_velocity_min = 40.0
+initial_velocity_max = 120.0
+scale_amount_min = 1.0
+scale_amount_max = 3.0
+color = Color(0.75, 0.98, 1, 0.65)
