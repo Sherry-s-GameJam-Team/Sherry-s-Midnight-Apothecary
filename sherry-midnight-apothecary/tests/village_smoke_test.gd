@@ -1,6 +1,12 @@
 extends SceneTree
 
 func _initialize() -> void:
+	var level_data := load("res://day/levels/golden_cliff/village/village_level.tres")
+	if level_data == null or level_data.id != &"golden_cliff_village":
+		push_error("village_smoke_test: Failed to load or validate village_level.tres")
+		quit(1)
+		return
+	
 	var scene := load("res://day/levels/golden_cliff/village/village.tscn") as PackedScene
 	if scene == null:
 		push_error("village_smoke_test: Failed to load village.tscn")
@@ -65,8 +71,19 @@ func _initialize() -> void:
 		quit(1)
 		return
 	
-	if camera.limit_left != -1118 or camera.limit_top != -1389 or camera.limit_right != 6977 or camera.limit_bottom != 803:
-		push_error("village_smoke_test: Camera limits not set to (-1118, -1389) -> (6977, 803). Found: (%d, %d, %d, %d)" % [camera.limit_left, camera.limit_top, camera.limit_right, camera.limit_bottom])
+	var one_way := world_bounds.get_node_or_null("OneWayPlatforms") as StaticBody2D
+	if one_way == null:
+		push_error("village_smoke_test: Missing OneWayPlatforms node under CS/WorldBounds")
+		quit(1)
+		return
+	
+	if one_way.collision_layer != 2:
+		push_error("village_smoke_test: OneWayPlatforms collision_layer must be 2. Found: %d" % one_way.collision_layer)
+		quit(1)
+		return
+	
+	if camera.limit_left != -1118 or camera.limit_top != -1389 or camera.limit_right != 8550 or camera.limit_bottom != 803:
+		push_error("village_smoke_test: Camera limits not set to (-1118, -1389) -> (8550, 803). Found: (%d, %d, %d, %d)" % [camera.limit_left, camera.limit_top, camera.limit_right, camera.limit_bottom])
 		quit(1)
 		return
 	

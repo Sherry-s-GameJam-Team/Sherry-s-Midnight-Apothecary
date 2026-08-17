@@ -38,14 +38,18 @@ description = "流明街以北的广阔草原，终年长风不息，是所有�
 [node name="Anchor02" type="Node2D" parent="AnchorPoints" unique_id=1067454492]
 position = Vector2(537, 545)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_02"
-display_name = "Anchor 02"
+destination_id = &"阿尔维斯"
+display_name = "阿尔维斯母树"
+subtitle = "万千根脉托起云林之心"
+description = "常霁云林中最古老的巨木，也是整片森林水脉与根系的汇聚之处。只要母树仍有清泉流过，常霁云林便不会真正枯死。"
 
 [node name="Anchor03" type="Node2D" parent="AnchorPoints" unique_id=752553803]
-position = Vector2(511, 403)
+position = Vector2(513, 403)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_03"
-display_name = "Anchor 03"
+destination_id = &"涟汀村·归潮门"
+display_name = "涟汀村·归潮门"
+subtitle = "湖边浅汀之村"
+description = "涟汀村靠近阿里特之泪的下层崖台，过去承担渔获转运、旅人通行与湖岸邮路中转。湖水尚盛时，门前便是繁忙码头"
 
 [node name="Anchor04" type="Node2D" parent="AnchorPoints" unique_id=155104425]
 position = Vector2(613, 372)

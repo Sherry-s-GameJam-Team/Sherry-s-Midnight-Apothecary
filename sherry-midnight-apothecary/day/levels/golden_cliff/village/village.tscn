@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://jk1m7pr18h0p" path="res://day/levels/golden_cliff/village/art/background.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://bmpdtdcdpigjt" path="res://day/levels/golden_cliff/village/art/大司鱼观潮台.png" id="3_platform"]
 [ext_resource type="Texture2D" uid="uid://x1g7jftaq0y8" path="res://day/levels/golden_cliff/village/art/倒悬船坞.png" id="4_dock"]
+[ext_resource type="Texture2D" uid="uid://c4meyolvn40mg" path="res://day/levels/golden_cliff/village/art/cover.png" id="4_q4gjk"]
 [ext_resource type="Texture2D" uid="uid://cj2wsv6mf7fql" path="res://day/levels/golden_cliff/village/art/空崖码头.png" id="5_pier"]
+[ext_resource type="Texture2D" uid="uid://b4hav5v1crmm" path="res://day/levels/golden_cliff/village/art/cover2.png" id="6_uf5qm"]
 [ext_resource type="Texture2D" uid="uid://do6d47csfhsrd" path="res://day/levels/golden_cliff/village/art/涟汀村近景.png" id="6_village"]
 [ext_resource type="Texture2D" uid="uid://bkh6ro4oq6qo0" path="res://day/levels/golden_cliff/village/art/湖祭石阶.png" id="7_stairs"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="8_player"]
@@ -27,6 +29,7 @@ size = Vector2(200, 320)
 [node name="Village" type="Node2D" unique_id=1965816465]
 script = ExtResource("1_environment")
 debug_scene_id = "golden_cliff_village"
+start_corrupted = false
 
 [node name="FS" type="Parallax2D" parent="." unique_id=101000001]
 z_index = -30
@@ -63,15 +66,29 @@ z_index = -5
 scroll_scale = Vector2(0.9, 0.9)
 scroll_offset = Vector2(468, 37)
 
+[node name="cover" type="Sprite2D" parent="CS" unique_id=2135464603]
+z_index = 20
+position = Vector2(-1241, -629)
+scale = Vector2(2.1726518, 2.1726518)
+texture = ExtResource("4_q4gjk")
+centered = false
+
 [node name="VillageForeground" type="Sprite2D" parent="CS" unique_id=103000002]
 position = Vector2(-1243.0001, -629)
 scale = Vector2(2.1726518, 2.1726518)
 texture = ExtResource("6_village")
 centered = false
 
+[node name="RitualStairscover2" type="Sprite2D" parent="CS" unique_id=419971977]
+z_index = 30
+position = Vector2(4861, -575)
+scale = Vector2(-1.828377, 1.6805267)
+texture = ExtResource("6_uf5qm")
+centered = false
+
 [node name="RitualStairs" type="Sprite2D" parent="CS" unique_id=103000003]
-position = Vector2(3654, -17)
-scale = Vector2(-0.99104327, 0.9)
+position = Vector2(4861, -575)
+scale = Vector2(-1.8264663, 1.6824417)
 texture = ExtResource("7_stairs")
 centered = false
 
@@ -84,7 +101,7 @@ centered = false
 
 [node name="EmptyCliffPier" type="Sprite2D" parent="CS" unique_id=102000003]
 z_index = -1
-position = Vector2(3543.0002, -106)
+position = Vector2(4741.0005, -545)
 scale = Vector2(0.95, 1.128453)
 texture = ExtResource("5_pier")
 centered = false
@@ -95,35 +112,7 @@ centered = false
 position = Vector2(0, 660)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1627018295]
-polygon = PackedVector2Array(1616, -303, 1582, -279, 1525, 34, 942, 11, 549, -14, 68, -14, 5, -28, 1, -61, -223, -75, -241, -399, -100, -408, -110, -446, -671.23535, -473.88986, -785, -479, -1055, -457, -1050, -449, -779, -467, -764, 86, 1637, 69)
-one_way_collision = true
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1244144554]
-polygon = PackedVector2Array(542, -13, 737, -120, 936, -118, 936, 8)
-one_way_collision = true
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=223649272]
-polygon = PackedVector2Array(380, -243, 472, -241, 674, -124, 743, -120, 745, -99, 568, -99, 566, -124)
-one_way_collision = true
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=62078988]
-polygon = PackedVector2Array(474, -242, 835, -244, 1004, -308, 1034, -318, 1613, -316, 1592, -286, 1039, -284, 873, -229, 499, -226)
-one_way_collision = true
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=380640130]
-polygon = PackedVector2Array(992, -313, 631, -316, 600, -425, 258, -433, 188, -415, -122, -592, -177, -595, -190, -620, -217, -620, -217, -644, -230, -645, -232, -657, -244, -658, -245, -670, -278, -673, -278, -703, -300, -704, -303, -734, -322, -735, -323, -760, -345, -765, -347, -789, -362, -790, -362, -810, -377, -812, -380, -834, -401, -842, -405, -869, -438, -872, -436, -898, -463, -900, -465, -926, -484, -926, -487, -954, -537, -956, -539, -980, -1505, -978, -1509, -762, -413, -755, -386, -651, -223, -592, -196, -555, -124, -555, 183, -389, 576, -384, 602, -276, 954, -277)
-one_way_collision = true
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=746686759]
-polygon = PackedVector2Array(1491, -281, 1768, -50, 2495, -35, 2683, -149, 2719, -151, 2840, -209, 2886, -210, 3037, -312, 3101, -311, 3184, -362, 3206, -363, 3373, -465, 3608, -474, 3659, -423, 5445, -422, 5451, -405, 3852, -401, 3718, -405, 2847, 6, 1747, 11, 1412, -283)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1916232396]
-polygon = PackedVector2Array(-24, -324, -11, -295, 375, -281, 388, -308, 188, -302)
-one_way_collision = true
-
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1585546497]
-polygon = PackedVector2Array(-189, -864, 184, -852, 184, -804, -190, -816, -298, -809, -326, -843)
-one_way_collision = true
+polygon = PackedVector2Array(1039, -319, 1042, -189, 1230, -183, 1238, 20, 942, 11, 549, -14, 68, -14, 5, -28, 1, -61, -223, -75, -241, -399, -100, -408, -110, -446, -671.23535, -473.88986, -785, -479, -1055, -457, -1050, -449, -779, -467, -764, 86, 1836, 44, 1414, -314)
 
 [node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=2108545383]
 polygon = PackedVector2Array(350, -803, 450, -823, 810, -812, 804, -787, 453, -794, 357, -779)
@@ -135,6 +124,40 @@ polygon = PackedVector2Array(1097, -704, 1162, -714, 1327, -704, 1327, -657, 117
 [node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=367797070]
 polygon = PackedVector2Array(-427, -863, -209, -571, -209, -451, -271, -363, -264, -8, -1067, -7, -1064, -878)
 
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=121609593]
+polygon = PackedVector2Array(2689, -34, 3142, -250, 3245, -313, 3334, -317, 3371, -316, 3675, -491, 3736, -548, 3826, -594, 3906, -606, 3986, -667, 4309, -823, 4343, -852, 6642, -855, 6643, -798, 4364, -785, 2832, 57)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=746686759]
+polygon = PackedVector2Array(1414, -315, 1763, -37, 2737, -38, 2847, 6, 1747, 11, 1314, -314)
+
+[node name="OneWayPlatforms" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000010]
+position = Vector2(0, 660)
+collision_layer = 2
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=1244144554]
+polygon = PackedVector2Array(542, -13, 737, -120, 936, -118, 936, 8)
+one_way_collision = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=223649272]
+polygon = PackedVector2Array(380, -243, 472, -241, 674, -124, 743, -120, 745, -99, 568, -99, 566, -124)
+one_way_collision = true
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=62078988]
+polygon = PackedVector2Array(474, -242, 835, -244, 1004, -308, 1033, -320, 1405, -315, 1402, -288, 1037, -283, 873, -229, 499, -226)
+one_way_collision = true
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=380640130]
+polygon = PackedVector2Array(1012, -317, 631, -316, 600, -425, 258, -433, 188, -415, -122, -592, -177, -595, -190, -620, -217, -620, -217, -644, -230, -645, -232, -657, -244, -658, -245, -670, -278, -673, -278, -703, -300, -704, -303, -734, -322, -735, -323, -760, -345, -765, -347, -789, -362, -790, -362, -810, -377, -812, -380, -834, -401, -842, -405, -869, -438, -872, -436, -898, -463, -900, -465, -926, -484, -926, -487, -954, -537, -956, -539, -980, -1505, -978, -1509, -762, -413, -755, -386, -651, -223, -592, -196, -555, -124, -555, 183, -389, 576, -384, 602, -276, 948, -290)
+one_way_collision = true
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=1916232396]
+polygon = PackedVector2Array(-24, -324, -11, -295, 375, -281, 388, -308, 188, -302)
+one_way_collision = true
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=1585546497]
+polygon = PackedVector2Array(-189, -864, 184, -852, 184, -804, -190, -816, -298, -809, -326, -843)
+one_way_collision = true
+
 [node name="LeftBarrier" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000004]
 position = Vector2(-1563, -263)
 
@@ -142,7 +165,7 @@ position = Vector2(-1563, -263)
 shape = SubResource("Rect_barrier")
 
 [node name="RightBarrier" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000006]
-position = Vector2(6159, -293)
+position = Vector2(8550, -238)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CS/WorldBounds/RightBarrier" unique_id=104000007]
 shape = SubResource("Rect_barrier")
@@ -159,7 +182,7 @@ position = Vector2(200, 580)
 position = Vector2(3500, 580)
 
 [node name="ExitPortal" type="Area2D" parent="." unique_id=106000001]
-position = Vector2(180, 500)
+position = Vector2(354, 543)
 script = ExtResource("13_portal")
 destination_level = &"home"
 fallback_scene_path = "res://day/levels/home/home.tscn"
@@ -188,7 +211,7 @@ script = ExtResource("8_player")
 process_callback = 0
 limit_left = -1118
 limit_top = -1389
-limit_right = 6977
+limit_right = 8550
 limit_bottom = 803
 script = ExtResource("11_camera")
 left_barrier_path = NodePath("../../CS/WorldBounds/LeftBarrier/CollisionShape2D")

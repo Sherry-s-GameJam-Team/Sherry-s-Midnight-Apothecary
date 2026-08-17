@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://3oa4j2kk0eig"]
+
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://cqr1funkp3x8r" path="res://day/levels/golden_cliff/village/village.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"golden_cliff_village"
+display_name = "涟汀村"
+disaster_name = "渔歌绵长之乡"
+normal_description = "金黄色断崖下的避风村落，倒悬船坞与湖祭石阶静卧于岸边。"
+scene_description = "探索涟汀村，沿着湖祭石阶与断崖码头前行。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
