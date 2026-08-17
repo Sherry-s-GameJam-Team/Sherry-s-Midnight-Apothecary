@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://eg3xkyksvukm"
+path="res://.godot/imported/night_bedroom_barrier.dialogue-9d9822620688ffff11ee769dd92c9ee0.tres"
+
+[deps]
+
+source_file="res://night/levels/home/night_bedroom_barrier.dialogue"
+dest_files=["res://.godot/imported/night_bedroom_barrier.dialogue-9d9822620688ffff11ee769dd92c9ee0.tres"]
+
+[params]
+
+defaults=true

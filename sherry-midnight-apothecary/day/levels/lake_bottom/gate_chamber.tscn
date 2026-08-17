@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://df2k6n4x8qmvt"]
+
+[ext_resource type="Script" uid="uid://cveretudpo5vu" path="res://day/levels/lake_bottom/gate_chamber.gd" id="1_chamber"]
+[ext_resource type="Texture2D" uid="uid://dm55nd0k7v67k" path="res://day/levels/lake_bottom/art/arit_bg_gate_chamber_01.png" id="2_bg"]
+[ext_resource type="Script" uid="uid://ddd6b12hipig7" path="res://day/levels/lake_bottom/scripts/gate_chamber_door.gd" id="3_door"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="4_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="5_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="6_presentation"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="7_potions"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="9_pause_menu"]
+
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(3258, 139)
+
+[sub_resource type="RectangleShape2D" id="WallShape"]
+size = Vector2(100, 1080)
+
+[sub_resource type="RectangleShape2D" id="DeckShape"]
+size = Vector2(736, 24)
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(240, 280)
+
+[node name="GateChamber" type="Node2D" unique_id=889107057]
+script = ExtResource("1_chamber")
+debug_scene_id = "gate_chamber"
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1689430250 groups=["player"]]
+z_index = 20
+position = Vector2(1629, 850)
+script = ExtResource("4_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1950350476 instance=ExtResource("5_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=330989134 instance=ExtResource("6_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1259113383]
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 3258
+limit_bottom = 1080
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+
+[node name="PotionThrower" parent="Player" unique_id=933400075 instance=ExtResource("7_potions")]
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=811036698]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=596080582]
+position = Vector2(1629, 850)
+
+[node name="from_lake" type="Marker2D" parent="EntryPoints" unique_id=1711804768]
+position = Vector2(1629, 850)
+
+[node name="Background" type="Node2D" parent="." unique_id=2063218780]
+
+[node name="ChamberArt" type="Sprite2D" parent="Background" unique_id=1863948271]
+position = Vector2(1629, 543)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_bg")
+
+[node name="Physics" type="Node2D" parent="." unique_id=150405436]
+
+[node name="MainFloor" type="StaticBody2D" parent="Physics" unique_id=485991498]
+position = Vector2(1629, 970)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/MainFloor" unique_id=1449995669]
+position = Vector2(0, 10.5)
+shape = SubResource("FloorShape")
+
+[node name="LeftWall" type="StaticBody2D" parent="Physics" unique_id=929690000]
+position = Vector2(50, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/LeftWall" unique_id=1021467745]
+shape = SubResource("WallShape")
+
+[node name="RightWall" type="StaticBody2D" parent="Physics" unique_id=2083315216]
+position = Vector2(3208, 540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/RightWall" unique_id=1451525683]
+shape = SubResource("WallShape")
+
+[node name="UpperDeckLeft" type="StaticBody2D" parent="Physics" unique_id=1856376146]
+position = Vector2(560, 570)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/UpperDeckLeft" unique_id=1982733960]
+position = Vector2(-16, -164)
+shape = SubResource("DeckShape")
+one_way_collision = true
+
+[node name="UpperDeckRight" type="StaticBody2D" parent="Physics" unique_id=350079922]
+position = Vector2(2698, 570)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/UpperDeckRight" unique_id=2008109778]
+position = Vector2(-110, -160)
+shape = SubResource("DeckShape")
+one_way_collision = true
+
+[node name="CentralGateDoor" type="Area2D" parent="." unique_id=2071066190]
+position = Vector2(1629, 800)
+script = ExtResource("3_door")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CentralGateDoor" unique_id=915248733]
+shape = SubResource("DoorShape")
+
+[node name="Prompt" type="Label" parent="CentralGateDoor" unique_id=1395876513]
+offset_left = -140.0
+offset_top = -180.0
+offset_right = 140.0
+offset_bottom = -145.0
+text = "E 返回阿里特之泪湖床"
+horizontal_alignment = 1
+
+[node name="Glow" type="PointLight2D" parent="CentralGateDoor" unique_id=1237811959]
+color = Color(0.25, 0.85, 1, 1)
+energy = 0.6
+texture_scale = 3.0
+
+[node name="LocalHUD" type="CanvasLayer" parent="." unique_id=1893305054]
+layer = 40
+
+[node name="Panel" type="PanelContainer" parent="LocalHUD" unique_id=627959137]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 570.0
+offset_bottom = 118.0
+
+[node name="VBox" type="VBoxContainer" parent="LocalHUD/Panel" unique_id=1675173851]
+layout_mode = 2
+
+[node name="Objective" type="Label" parent="LocalHUD/Panel/VBox" unique_id=1519336777]
+layout_mode = 2
+text = "旧旅门维护站内部"
+
+[node name="Hint" type="Label" parent="LocalHUD/Panel/VBox" unique_id=1913912896]
+layout_mode = 2
+text = "调查室内的古老中继机关与大司鱼的痕迹。"
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=1978112066]
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1131032660 instance=ExtResource("8_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2047182196]
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=2129750951 instance=ExtResource("9_pause_menu")]

@@ -1,0 +1,92 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece_script")
+id = &"tundra_snow_whisk_piece_01"
+display_name = "冻原拂雪花·部位01"
+kind = 2
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(1939, 568, 1092, 3082)
+area_ratio = 0.333333
+detachable = true
+grindable = true
+color_id = &"blue"
+spectrum_x = 0.790
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece_script")
+id = &"tundra_snow_whisk_piece_02"
+display_name = "冻原拂雪花·部位02"
+kind = 2
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(1297, 67, 1502, 3961)
+area_ratio = 0.333333
+detachable = true
+grindable = true
+color_id = &"blue"
+spectrum_x = 0.790
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece_script")
+id = &"tundra_snow_whisk_piece_03"
+display_name = "冻原拂雪花·部位03"
+kind = 2
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(1472, 812, 1152, 2472)
+area_ratio = 0.333333
+detachable = true
+grindable = true
+color_id = &"blue"
+spectrum_x = 0.790
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer_script")
+id = &"tundra_snow_whisk_blue_layer"
+display_name = "蓝色部位层"
+color_id = &"blue"
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
+spectrum_x = 0.790
+layer_yield_multiplier = 1.0
+pieces = Array[ExtResource("3_piece_script")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient_script")
+id = &"tundra_snow_whisk"
+display_name = "冻原拂雪花"
+english_name = "Tundra Snow-Whisk"
+description = "雪白绒穗可浸酒析出微苦的抗寒成分，适合制作御寒药剂。"
+lore = "雪山脚下居民会将数株绑成拂雪刷，用来扫去皮袄和靴子上的积雪；巡山守卫则饮用拂雪酒延缓手脚冻木。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer_script")]([SubResource("Layer_main")])
+base_value = 16
+spectrum_start = 0.775
+spectrum_end = 0.805
+base_quality = 1.05
+base_concentration = 1.0
+

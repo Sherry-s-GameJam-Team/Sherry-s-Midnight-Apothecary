@@ -54,8 +54,10 @@ description = "涟汀村靠近阿里特之泪的下层崖台，过去承担渔�
 [node name="Anchor04" type="Node2D" parent="AnchorPoints" unique_id=155104425]
 position = Vector2(613, 372)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_04"
-display_name = "Anchor 04"
+destination_id = &"潜息门"
+display_name = "潜息门"
+subtitle = "沉默于泪水中的旧装置"
+description = "潜息门位于阿里特之泪最深处的旧湖床，原是维阿利亚旅门社为水下航路设置的特殊门站。门体周围设有能够隔绝湖水、维持空气的古老避水装置，供守门人与维修人员长期驻留。"
 
 [node name="Anchor05" type="Node2D" parent="AnchorPoints" unique_id=78806156]
 position = Vector2(659, 314)

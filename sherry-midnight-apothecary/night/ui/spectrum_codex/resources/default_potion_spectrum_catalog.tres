@@ -1,0 +1,468 @@
+[gd_resource type="Resource" script_class="PotionSpectrumCatalog" load_steps=31 format=3 uid="uid://bcfcdxcat001"]
+
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_band.gd" id="1_band"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_function_definition.gd" id="2_func"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_recipe_definition.gd" id="3_rec"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_catalog.gd" id="4_cat"]
+
+[sub_resource type="Resource" id="Band_Red"]
+script = ExtResource("1_band")
+id = &"band_red"
+display_name = "红光波段 · 赤绯"
+color = Color(0.85, 0.26, 0.21, 1)
+order = 0
+spectrum_min = 0.0
+spectrum_max = 0.1428
+primary_effect_name = "止血、循环"
+description = "红光波段主掌血液与脉络涌动。高浓度赤色药液能迅速收敛创口或加速体内微循环。"
+
+[sub_resource type="Resource" id="Band_Orange"]
+script = ExtResource("1_band")
+id = &"band_orange"
+display_name = "橙光波段 · 暮琥"
+color = Color(0.9, 0.49, 0.13, 1)
+order = 1
+spectrum_min = 0.1428
+spectrum_max = 0.2857
+primary_effect_name = "活化、体力"
+description = "橙光波段蕴含充沛的生机与热量，用于唤醒肌肉活性并补充消耗的体力。"
+
+[sub_resource type="Resource" id="Band_Yellow"]
+script = ExtResource("1_band")
+id = &"band_yellow"
+display_name = "黄光波段 · 炽金"
+color = Color(0.94, 0.77, 0.06, 1)
+order = 2
+spectrum_min = 0.2857
+spectrum_max = 0.4285
+primary_effect_name = "镇痛、抗炎"
+description = "黄光波段具备强烈的舒缓与抑制特质，可麻痹受损神经并平息组织炎症。"
+
+[sub_resource type="Resource" id="Band_Green"]
+script = ExtResource("1_band")
+id = &"band_green"
+display_name = "绿光波段 · 翠薇"
+color = Color(0.18, 0.68, 0.38, 1)
+order = 3
+spectrum_min = 0.4285
+spectrum_max = 0.5714
+primary_effect_name = "修复、再生"
+description = "绿光波段是自然生命的谐振源，主导肉体组织修复与断裂纤维的加速再生。"
+
+[sub_resource type="Resource" id="Band_Cyan"]
+script = ExtResource("1_band")
+id = &"band_cyan"
+display_name = "青光波段 · 苍霜"
+color = Color(0.09, 0.63, 0.52, 1)
+order = 4
+spectrum_min = 0.5714
+spectrum_max = 0.7142
+primary_effect_name = "降温、稳定"
+description = "青光波段具有极佳的吸热吸能效应，可迅速降低狂暴魔力与高热创口温度。"
+
+[sub_resource type="Resource" id="Band_Blue"]
+script = ExtResource("1_band")
+id = &"band_blue"
+display_name = "蓝光波段 · 幽海"
+color = Color(0.16, 0.5, 0.73, 1)
+order = 5
+spectrum_min = 0.7142
+spectrum_max = 0.8571
+primary_effect_name = "净化、驱邪"
+description = "蓝光波段能够中和深层毒素，并涤荡附着于灵魂与肉体的阴秽侵蚀。"
+
+[sub_resource type="Resource" id="Band_Purple"]
+script = ExtResource("1_band")
+id = &"band_purple"
+display_name = "紫光波段 · 幻堇"
+color = Color(0.56, 0.27, 0.68, 1)
+order = 6
+spectrum_min = 0.8571
+spectrum_max = 1.0
+primary_effect_name = "镇静、精神"
+description = "紫光波段直达深层神识，能够抚平狂躁的思绪或激发不可思议的精神洞察。"
+
+[sub_resource type="Resource" id="Func_Hemostasis"]
+script = ExtResource("2_func")
+id = &"func_hemostasis"
+band_id = &"band_red"
+display_name = "快速凝血"
+description = "收敛血管创口，使血液迅速凝固成保护薄膜。"
+primary_tag = &"止血"
+secondary_tag = &"止血"
+sort_index = 0
+spectrum_position = 0.05
+matrix_row = 0
+matrix_col = 0
+
+[sub_resource type="Resource" id="Func_Circulation"]
+script = ExtResource("2_func")
+id = &"func_circulation"
+band_id = &"band_red"
+display_name = "脉冲循环"
+description = "加速周身血液循环，使药力在体内迅速散布。"
+primary_tag = &"止血"
+secondary_tag = &"循环"
+sort_index = 1
+spectrum_position = 0.10
+matrix_row = 0
+matrix_col = 1
+
+[sub_resource type="Resource" id="Func_VigorBoost"]
+script = ExtResource("2_func")
+id = &"func_vigor_boost"
+band_id = &"band_orange"
+display_name = "体力激发"
+description = "刺激器官机能，恢复持续剧烈活动造成的体力亏空。"
+primary_tag = &"活化"
+secondary_tag = &"体力"
+sort_index = 0
+spectrum_position = 0.19
+matrix_row = 1
+matrix_col = 2
+
+[sub_resource type="Resource" id="Func_MuscleActive"]
+script = ExtResource("2_func")
+id = &"func_muscle_active"
+band_id = &"band_orange"
+display_name = "肌体活化"
+description = "强化肌肉束拉伸极限，瞬间爆发敏捷与力量。"
+primary_tag = &"活化"
+secondary_tag = &"循环"
+sort_index = 1
+spectrum_position = 0.24
+matrix_row = 1
+matrix_col = 1
+
+[sub_resource type="Resource" id="Func_Analgesia"]
+script = ExtResource("2_func")
+id = &"func_analgesia"
+band_id = &"band_yellow"
+display_name = "神经镇痛"
+description = "阻断痛觉中枢传递，防止因剧痛休克。"
+primary_tag = &"镇痛"
+secondary_tag = &"止血"
+sort_index = 0
+spectrum_position = 0.33
+matrix_row = 2
+matrix_col = 0
+
+[sub_resource type="Resource" id="Func_AntiInflam"]
+script = ExtResource("2_func")
+id = &"func_anti_inflam"
+band_id = &"band_yellow"
+display_name = "创口抗炎"
+description = "消除红肿热痛，防止创口发生恶性溃烂。"
+primary_tag = &"镇痛"
+secondary_tag = &"抗炎"
+sort_index = 1
+spectrum_position = 0.38
+matrix_row = 2
+matrix_col = 3
+
+[sub_resource type="Resource" id="Func_TissueRepair"]
+script = ExtResource("2_func")
+id = &"func_tissue_repair"
+band_id = &"band_green"
+display_name = "组织修复"
+description = "填补表皮与真皮创损，平滑缝合创痕。"
+primary_tag = &"修复"
+secondary_tag = &"止血"
+sort_index = 0
+spectrum_position = 0.47
+matrix_row = 3
+matrix_col = 0
+
+[sub_resource type="Resource" id="Func_CellRegrowth"]
+script = ExtResource("2_func")
+id = &"func_cell_regrowth"
+band_id = &"band_green"
+display_name = "细胞再生"
+description = "促使深层脏器与神经纤维进行高速增殖再造。"
+primary_tag = &"修复"
+secondary_tag = &"再生"
+sort_index = 1
+spectrum_position = 0.52
+matrix_row = 3
+matrix_col = 4
+
+[sub_resource type="Resource" id="Func_Cooling"]
+script = ExtResource("2_func")
+id = &"func_cooling"
+band_id = &"band_cyan"
+display_name = "寒霜降温"
+description = "迅速降低局部组织过高温度，平复烈火与灼伤。"
+primary_tag = &"降温"
+secondary_tag = &"稳定"
+sort_index = 0
+spectrum_position = 0.62
+matrix_row = 4
+matrix_col = 5
+
+[sub_resource type="Resource" id="Func_FluxStabilize"]
+script = ExtResource("2_func")
+id = &"func_flux_stabilize"
+band_id = &"band_cyan"
+display_name = "能量稳定"
+description = "镇定紊乱的药理波动，防止魔力回流炸炉。"
+primary_tag = &"降温"
+secondary_tag = &"稳定"
+sort_index = 1
+spectrum_position = 0.67
+matrix_row = 4
+matrix_col = 5
+
+[sub_resource type="Resource" id="Func_Detox"]
+script = ExtResource("2_func")
+id = &"func_detox"
+band_id = &"band_blue"
+display_name = "毒素分解"
+description = "瓦解进入体内的植物或魔物毒素分子链。"
+primary_tag = &"净化"
+secondary_tag = &"抗炎"
+sort_index = 0
+spectrum_position = 0.76
+matrix_row = 5
+matrix_col = 3
+
+[sub_resource type="Resource" id="Func_Dispel"]
+script = ExtResource("2_func")
+id = &"func_dispel"
+band_id = &"band_blue"
+display_name = "晦气驱散"
+description = "净化侵蚀神魂的怨灵之气与诅咒污秽。"
+primary_tag = &"净化"
+secondary_tag = &"驱邪"
+sort_index = 1
+spectrum_position = 0.81
+matrix_row = 5
+matrix_col = 6
+
+[sub_resource type="Resource" id="Func_MindCalm"]
+script = ExtResource("2_func")
+id = &"func_mind_calm"
+band_id = &"band_purple"
+display_name = "意识安抚"
+description = "引导过度紧绷的精神进入恬静深沉的沉眠状态。"
+primary_tag = &"镇静"
+secondary_tag = &"体力"
+sort_index = 0
+spectrum_position = 0.90
+matrix_row = 6
+matrix_col = 2
+
+[sub_resource type="Resource" id="Func_SpiritFocus"]
+script = ExtResource("2_func")
+id = &"func_spirit_focus"
+band_id = &"band_purple"
+display_name = "灵视专注"
+description = "拓展感知视界，洞察隐藏的灵气与微观魔力流动。"
+primary_tag = &"镇静"
+secondary_tag = &"驱邪"
+sort_index = 1
+spectrum_position = 0.95
+matrix_row = 6
+matrix_col = 6
+
+[sub_resource type="Resource" id="Rec_BloodPaste"]
+script = ExtResource("3_rec")
+id = &"recipe_blood_stop_paste"
+function_id = &"func_hemostasis"
+display_name = "凝血软膏"
+description = "采用赤红草本初温萃取的经典外敷药膏，能立刻封堵表层渗血。"
+primary_tag = &"止血"
+secondary_tag = &"止血"
+matrix_row = 0
+matrix_col = 0
+is_special = false
+unlock_hint = "使用红色草药进行常温研磨萃取"
+
+[sub_resource type="Resource" id="Rec_DeepClot"]
+script = ExtResource("3_rec")
+id = &"recipe_deep_clot"
+function_id = &"func_hemostasis"
+display_name = "深创封堵灵剂"
+description = "高纯度浓缩的深红晶液，可在数秒内形成强韧胶体封堵重度创伤。"
+primary_tag = &"止血"
+secondary_tag = &"循环"
+matrix_row = 0
+matrix_col = 1
+is_special = true
+unlock_hint = "赤色精粹与循环辅料在高温下浓缩反应"
+
+[sub_resource type="Resource" id="Rec_WarmPulse"]
+script = ExtResource("3_rec")
+id = &"recipe_warm_pulse_elixir"
+function_id = &"func_circulation"
+display_name = "暖脉灵药"
+description = "温润的赤橙药液，驱散体内严寒并使虚弱的脉搏重新平稳有力。"
+primary_tag = &"止血"
+secondary_tag = &"循环"
+matrix_row = 0
+matrix_col = 1
+is_special = false
+unlock_hint = "红橙双色交界处稳定慢速搅拌"
+
+[sub_resource type="Resource" id="Rec_VitalityDraft"]
+script = ExtResource("3_rec")
+id = &"recipe_vigor_boost"
+function_id = &"func_vigor_boost"
+display_name = "活力合剂"
+description = "带有甘甜气味的橙色浓汁，能迅速缓解长途跋涉带来的虚脱与倦意。"
+primary_tag = &"活化"
+secondary_tag = &"体力"
+matrix_row = 1
+matrix_col = 2
+is_special = false
+unlock_hint = "橙色根茎切片于中温浸泡"
+
+[sub_resource type="Resource" id="Rec_TigerEssence"]
+script = ExtResource("3_rec")
+id = &"recipe_tiger_essence"
+function_id = &"func_muscle_active"
+display_name = "强筋活化液"
+description = "蕴含爆发力因子的特殊药方，短时间内大幅提升奔跑与攀爬耐受度。"
+primary_tag = &"活化"
+secondary_tag = &"循环"
+matrix_row = 1
+matrix_col = 1
+is_special = true
+unlock_hint = "橙黄交界矿物粉末催化浓缩"
+
+[sub_resource type="Resource" id="Rec_NumbDrop"]
+script = ExtResource("3_rec")
+id = &"recipe_numb_drop"
+function_id = &"func_analgesia"
+display_name = "麻痹止痛滴剂"
+description = "金黄色的清亮滴剂，几滴即可让灼痛或撕裂感显著缓和。"
+primary_tag = &"镇痛"
+secondary_tag = &"止血"
+matrix_row = 2
+matrix_col = 0
+is_special = false
+unlock_hint = "黄花精油滴入冷凝管过滤"
+
+[sub_resource type="Resource" id="Rec_GoldenSalve"]
+script = ExtResource("3_rec")
+id = &"recipe_golden_salve"
+function_id = &"func_anti_inflam"
+display_name = "金盏舒缓膏"
+description = "特殊调配的黄金药膏，能在创口处形成降热消肿的天然保护层。"
+primary_tag = &"镇痛"
+secondary_tag = &"抗炎"
+matrix_row = 2
+matrix_col = 3
+is_special = true
+unlock_hint = "金盏花瓣研磨后冷萃分层取出上清液"
+
+[sub_resource type="Resource" id="Rec_MossBalm"]
+script = ExtResource("3_rec")
+id = &"recipe_moss_balm"
+function_id = &"func_tissue_repair"
+display_name = "青苔愈合膏"
+description = "采集林间翠绿地衣制成，能迅速促使擦伤与割伤结痂愈合。"
+primary_tag = &"修复"
+secondary_tag = &"止血"
+matrix_row = 3
+matrix_col = 0
+is_special = false
+unlock_hint = "翠绿苔藓经过低温研磨蒸馏"
+
+[sub_resource type="Resource" id="Rec_EmeraldDew"]
+script = ExtResource("3_rec")
+id = &"recipe_emerald_dew"
+function_id = &"func_cell_regrowth"
+display_name = "翠露再生药剂"
+description = "极为珍贵的再生圣药，连陈年旧伤与受损经络都能重新焕发生机。"
+primary_tag = &"修复"
+secondary_tag = &"再生"
+matrix_row = 3
+matrix_col = 4
+is_special = true
+unlock_hint = "绿草晨露与极纯冷泉共振结晶"
+
+[sub_resource type="Resource" id="Rec_FrostMist"]
+script = ExtResource("3_rec")
+id = &"recipe_frost_mist"
+function_id = &"func_cooling"
+display_name = "霜雾凝液"
+description = "轻微挥发即能散发阵阵寒意的青色药水，用于急救高热与烫伤。"
+primary_tag = &"降温"
+secondary_tag = &"稳定"
+matrix_row = 4
+matrix_col = 5
+is_special = false
+unlock_hint = "悬崖冰晶融水低火搅拌"
+
+[sub_resource type="Resource" id="Rec_TranquilCrystal"]
+script = ExtResource("3_rec")
+id = &"recipe_tranquil_crystal"
+function_id = &"func_flux_stabilize"
+display_name = "宁息水晶液"
+description = "能让狂暴魔力归于死寂的特殊稳定剂，是复杂复合炼金的必备底剂。"
+primary_tag = &"降温"
+secondary_tag = &"稳定"
+matrix_row = 4
+matrix_col = 5
+is_special = true
+unlock_hint = "青蓝过渡波段恒温保持反应10秒"
+
+[sub_resource type="Resource" id="Rec_PureDrop"]
+script = ExtResource("3_rec")
+id = &"recipe_pure_drop"
+function_id = &"func_detox"
+display_name = "清心净毒水"
+description = "澄澈幽蓝的药剂，饮下后可在体内快速吸附并降解外来毒质。"
+primary_tag = &"净化"
+secondary_tag = &"抗炎"
+matrix_row = 5
+matrix_col = 3
+is_special = false
+unlock_hint = "深蓝浆果于蒸馏器中反复净化"
+
+[sub_resource type="Resource" id="Rec_HolyTide"]
+script = ExtResource("3_rec")
+id = &"recipe_holy_tide"
+function_id = &"func_dispel"
+display_name = "圣潮驱邪合剂"
+description = "散发微弱圣洁光晕的药水，能彻底驱散残留在体内的死灵怨气。"
+primary_tag = &"净化"
+secondary_tag = &"驱邪"
+matrix_row = 5
+matrix_col = 6
+is_special = true
+unlock_hint = "幽蓝矿粉与月光沉淀过滤而成"
+
+[sub_resource type="Resource" id="Rec_DreamNectar"]
+script = ExtResource("3_rec")
+id = &"recipe_dream_nectar"
+function_id = &"func_mind_calm"
+display_name = "月华沉眠露"
+description = "具有迷人紫罗兰香气的安眠露水，能抚平噩梦与焦躁情绪。"
+primary_tag = &"镇静"
+secondary_tag = &"体力"
+matrix_row = 6
+matrix_col = 2
+is_special = false
+unlock_hint = "紫罗兰夜露以微火轻摇调匀"
+
+[sub_resource type="Resource" id="Rec_AstralClarity"]
+script = ExtResource("3_rec")
+id = &"recipe_astral_clarity"
+function_id = &"func_spirit_focus"
+display_name = "星辉明澈精粹"
+description = "能够点亮精神世界并看透迷障的秘药，灵视感知获得极大提升。"
+primary_tag = &"镇静"
+secondary_tag = &"驱邪"
+matrix_row = 6
+matrix_col = 6
+is_special = true
+unlock_hint = "紫水晶粉末与高纯度驱邪溶液共振"
+
+[resource]
+script = ExtResource("4_cat")
+bands = Array[ExtResource("1_band")]([SubResource("Band_Red"), SubResource("Band_Orange"), SubResource("Band_Yellow"), SubResource("Band_Green"), SubResource("Band_Cyan"), SubResource("Band_Blue"), SubResource("Band_Purple")])
+functions = Array[ExtResource("2_func")]([SubResource("Func_Hemostasis"), SubResource("Func_Circulation"), SubResource("Func_VigorBoost"), SubResource("Func_MuscleActive"), SubResource("Func_Analgesia"), SubResource("Func_AntiInflam"), SubResource("Func_TissueRepair"), SubResource("Func_CellRegrowth"), SubResource("Func_Cooling"), SubResource("Func_FluxStabilize"), SubResource("Func_Detox"), SubResource("Func_Dispel"), SubResource("Func_MindCalm"), SubResource("Func_SpiritFocus")])
+recipes = Array[ExtResource("3_rec")]([SubResource("Rec_BloodPaste"), SubResource("Rec_DeepClot"), SubResource("Rec_WarmPulse"), SubResource("Rec_VitalityDraft"), SubResource("Rec_TigerEssence"), SubResource("Rec_NumbDrop"), SubResource("Rec_GoldenSalve"), SubResource("Rec_MossBalm"), SubResource("Rec_EmeraldDew"), SubResource("Rec_FrostMist"), SubResource("Rec_TranquilCrystal"), SubResource("Rec_PureDrop"), SubResource("Rec_HolyTide"), SubResource("Rec_DreamNectar"), SubResource("Rec_AstralClarity")])
+matrix_row_labels = Array[String](["止血 (Red)", "活化 (Orange)", "镇痛 (Yellow)", "修复 (Green)", "降温 (Cyan)", "净化 (Blue)", "镇静 (Purple)"])
+matrix_col_labels = Array[String](["止血", "循环", "体力", "抗炎", "再生", "稳定", "驱邪"])

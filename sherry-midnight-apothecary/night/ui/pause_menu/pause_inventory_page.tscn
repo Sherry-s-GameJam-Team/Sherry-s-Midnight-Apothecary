@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3]
+[gd_scene load_steps=42 format=3]
 
 [ext_resource type="Script" path="res://night/ui/pause_menu/pause_inventory_page.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://night/ui/pause_menu/potion_loadout_slot.tscn" id="2_slot"]
@@ -28,11 +28,21 @@
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/star_lavender.tres" id="31_lavender"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/sun_daisy.tres" id="32_daisy"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/violet_thistle.tres" id="33_thistle"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/chalice_ice_spire.tres" id="40_chalice"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tundra_snow_whisk.tres" id="41_tundra"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/vesper_blue_thicket.tres" id="42_vesper"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/dusk_water_opuntia.tres" id="43_dusk"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/stagnant_breeze_bell_vine.tres" id="44_stagnant"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/slumber_marrow_geode.tres" id="45_slumber"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/drop_cliff_whistle_leaf.tres" id="46_whistle"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/eyrie_nest_seed_ball.tres" id="47_eyrie"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/wind_cutter_rye.tres" id="48_rye"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/egg_climbers_honey_pot.tres" id="49_honey"]
 
 [node name="PauseInventoryPage" type="Control"]
 script = ExtResource("1_script")
 potion_definitions = Array[PotionData]([ExtResource("10_red"), ExtResource("11_orange"), ExtResource("12_yellow"), ExtResource("13_green"), ExtResource("14_cyan"), ExtResource("15_blue"), ExtResource("16_purple"), ExtResource("18_purification"), ExtResource("17_black")])
-ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle")])
+ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey")])
 lock_icon = ExtResource("3_lock")
 empty_slot_icon = ExtResource("4_empty")
 story_item_placeholder = ExtResource("5_story")

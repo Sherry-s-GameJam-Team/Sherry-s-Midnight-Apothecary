@@ -1,0 +1,91 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/eyrie_nest_seed_ball/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/eyrie_nest_seed_ball/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/eyrie_nest_seed_ball/pieces/yellow/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/eyrie_nest_seed_ball/pieces/yellow/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/eyrie_nest_seed_ball/pieces/yellow/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece_script")
+id = &"eyrie_nest_seed_ball_piece_01"
+display_name = "�³����Ѳݡ���λ01"
+kind = 2
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(400, 1634, 2032, 1955)
+area_ratio = 0.333333
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.345
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece_script")
+id = &"eyrie_nest_seed_ball_piece_02"
+display_name = "�³����Ѳݡ���λ02"
+kind = 2
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(684, 724, 2231, 2648)
+area_ratio = 0.333333
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.345
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece_script")
+id = &"eyrie_nest_seed_ball_piece_03"
+display_name = "�³����Ѳݡ���λ03"
+kind = 2
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(2135, 1118, 1334, 2332)
+area_ratio = 0.333333
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.345
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer_script")
+id = &"eyrie_nest_seed_ball_yellow_layer"
+display_name = "��ɫ��λ��"
+color_id = &"yellow"
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+spectrum_x = 0.345
+layer_yield_multiplier = 1.0
+pieces = Array[ExtResource("3_piece_script")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient_script")
+id = &"eyrie_nest_seed_ball"
+display_name = "�³����Ѳ�"
+english_name = "Eyrie-Nest Seed-Ball"
+description = "���ҶƬΧ�ɳ�״���壬�������Ѻ����º͵Ŀ����Է�ĩ��"
+lore = "���¾������������������������ɣ���������ķ��򳣱������ж�Ǩ����Ⱥ��ʱ�鳲��"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer_script")]([SubResource("Layer_main")])
+base_value = 17
+spectrum_start = 0.330
+spectrum_end = 0.360
+base_quality = 1.05
+base_concentration = 1.0

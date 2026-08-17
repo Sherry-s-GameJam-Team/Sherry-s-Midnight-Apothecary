@@ -15,7 +15,7 @@ const POTIONS: Array[PotionData] = [
 ]
 const MAX_PATIENCE := 100.0
 const REFUSAL_PATIENCE_LOSS := 25.0
-const WALKOUT_REPUTATION_LOSS := 10
+const PATIENCE_RECOVERY_ON_PERFECT := 25.0
 const MIN_SATISFACTION := 0.5
 const MAX_SATISFACTION := 1.5
 
@@ -35,6 +35,7 @@ const MAX_SATISFACTION := 1.5
 @onready var end_button: Button = %EndButton
 @onready var feedback: SaleFeedback = %SaleFeedback
 @onready var confirm_dialog: ConfirmationDialog = %ConfirmDialog
+@onready var reject_confirm_dialog: ConfirmationDialog = get_node_or_null("%RejectConfirmDialog")
 
 var player_data: PlayerData
 var night_result: NightResult
@@ -80,18 +81,25 @@ func _build_customer_queue() -> Array[Dictionary]:
 	var reputation := player_data.store_reputation if player_data != null else 100
 	var available: Array[Dictionary] = []
 	for customer: Dictionary in CustomerEventCatalog.eligible_for_day(day, player_data.tutorial_flags if player_data != null else {}):
+		var npc_id := str(customer.get("npc_id", customer.get("event_id", "customer")))
+		var customer_state: Dictionary = player_data.customer_states.get(npc_id, {}) if player_data != null else {}
+		if bool(customer_state.get("permanently_lost", false)) or float(customer_state.get("patience", MAX_PATIENCE)) <= 0.0:
+			continue
 		if reputation >= 70 or float(customer.get("modifier", 1.0)) <= 1.05:
 			available.append(customer)
 	var target_count := 8 if reputation >= 70 else 2 if reputation >= 40 else 1
 	var queue: Array[Dictionary] = []
 	for index in range(mini(target_count, available.size())):
 		var customer := available[index].duplicate()
+		var npc_id := str(customer.get("npc_id", customer.get("event_id", "customer")))
+		var customer_state: Dictionary = player_data.customer_states.get(npc_id, {}) if player_data != null else {}
+		var saved_patience := float(customer_state.get("patience", MAX_PATIENCE))
 		if reputation < 70:
 			customer["modifier"] = float(customer.get("modifier", 1.0)) * 0.9
 		if reputation < 40:
 			customer["modifier"] = float(customer.get("modifier", 1.0)) * 0.85
 			customer["identity"] = "谨慎的" + str(customer.get("identity", "顾客"))
-		customer["patience"] = MAX_PATIENCE
+		customer["patience"] = saved_patience
 		queue.append(customer)
 	return queue
 
@@ -102,6 +110,18 @@ func refresh_from_runtime() -> void:
 
 func current_customer() -> Dictionary:
 	return _customer_queue.front() if not _customer_queue.is_empty() else {}
+
+
+func get_remaining_customer_count() -> int:
+	return _customer_queue.size()
+
+
+func get_completed_customer_count() -> int:
+	return completed_customer_count
+
+
+func has_operated() -> bool:
+	return completed_customer_count > 0 or session_earnings > 0 or (night_result != null and not night_result.sold_potions.is_empty())
 
 
 func _refresh() -> void:
@@ -232,42 +252,93 @@ func _on_sell_pressed() -> void:
 	var reputation_gain := customer_feedback.reputation_delta
 	night_result.reputation_delta += reputation_gain
 	session_earnings += value
+
+	var patience_recovered := 0.0
+	if match.outcome == PotionMatchResult.Outcome.PERFECT or match.outcome == PotionMatchResult.Outcome.SPECIAL or match.total_score >= 80:
+		var current_patience := float(customer.get("patience", MAX_PATIENCE))
+		var new_patience := minf(current_patience + PATIENCE_RECOVERY_ON_PERFECT, MAX_PATIENCE)
+		patience_recovered = new_patience - current_patience
+		customer["patience"] = new_patience
+
 	_record_customer_result(customer, instance, match, customer_feedback)
-	_flash_sale_feedback(value, satisfaction, reputation_gain, customer_feedback.immediate_text)
+	_flash_sale_feedback(value, satisfaction, reputation_gain, customer_feedback.immediate_text, patience_recovered, float(customer.get("patience", MAX_PATIENCE)))
 	_complete_current_customer()
 
 
 func _on_reject_pressed() -> void:
 	if transition_lock or current_customer().is_empty():
 		return
-	var customer: Dictionary = _customer_queue.pop_front()
+	var customer: Dictionary = current_customer()
+	var current_patience := float(customer.get("patience", MAX_PATIENCE))
+	if current_patience <= REFUSAL_PATIENCE_LOSS:
+		_show_reject_confirm_dialog(customer)
+	else:
+		_execute_reject(customer)
+
+
+func _show_reject_confirm_dialog(customer: Dictionary) -> void:
+	var customer_name := str(customer.get("name", "顾客"))
+	var current_patience := roundi(float(customer.get("patience", MAX_PATIENCE)))
+	if reject_confirm_dialog != null:
+		reject_confirm_dialog.dialog_text = "该顾客（%s）当前耐心仅剩 %d%%。\n再次拒绝将扣除 25%% 耐心并导致耐心归零，该顾客将永久离开药水铺，之后不再光顾！\n\n确定要拒绝该顾客吗？" % [customer_name, current_patience]
+		reject_confirm_dialog.popup_centered()
+	else:
+		_execute_reject(customer)
+
+
+func _on_reject_confirmed() -> void:
+	if current_customer().is_empty():
+		return
+	_execute_reject(current_customer())
+
+
+func _execute_reject(customer: Dictionary) -> void:
+	if _customer_queue.is_empty():
+		return
+	_customer_queue.pop_front()
+	completed_customer_count += 1
+
+	var npc_id := str(customer.get("npc_id", customer.get("event_id", "customer")))
+	var state: Dictionary = player_data.customer_states.get(npc_id, {}) if player_data != null else {}
+	var refusal_count := int(state.get("refusal_count", 0)) + 1
+	state["refusal_count"] = refusal_count
+
 	var remaining_patience := maxf(float(customer.get("patience", MAX_PATIENCE)) - REFUSAL_PATIENCE_LOSS, 0.0)
 	customer["patience"] = remaining_patience
-	if remaining_patience > 0.0:
-		_customer_queue.append(customer)
-		_flash_rejection_feedback(customer, false)
+	state["patience"] = remaining_patience
+
+	var reputation_penalty := int(pow(2.0, refusal_count))
+	if night_result != null:
+		night_result.reputation_delta -= reputation_penalty
+
+	if remaining_patience <= 0.0:
+		state["permanently_lost"] = true
+		_flash_rejection_feedback(customer, reputation_penalty, true)
 	else:
-		completed_customer_count += 1
-		if night_result != null:
-			night_result.reputation_delta -= WALKOUT_REPUTATION_LOSS
-		_flash_rejection_feedback(customer, true)
+		_flash_rejection_feedback(customer, reputation_penalty, false)
+
+	if player_data != null:
+		player_data.customer_states[npc_id] = state
+
 	selected_potion_id = &""
 	selected_uid = ""
 	_refresh()
 
 
-func _flash_rejection_feedback(customer: Dictionary, walked_out: bool) -> void:
+func _flash_rejection_feedback(customer: Dictionary, reputation_penalty: int, permanently_lost: bool) -> void:
 	if feedback == null:
 		return
-	if walked_out:
-		feedback.flash("%s 失去耐心并离开，店铺声誉 -%d。" % [customer.get("name", "顾客"), WALKOUT_REPUTATION_LOSS], false)
+	var customer_name := str(customer.get("name", "顾客"))
+	if permanently_lost:
+		feedback.flash("%s 耐心耗尽，已永久离开药水铺！店铺声誉 -%d。" % [customer_name, reputation_penalty], false)
 	else:
-		feedback.flash("%s 回到队尾，耐心 -%d。" % [customer.get("name", "顾客"), roundi(REFUSAL_PATIENCE_LOSS)], false)
+		feedback.flash("%s 离开了药水铺，耐心 -25%%（剩余 %.0f%%），店铺声誉 -%d。" % [customer_name, float(customer.get("patience", 0.0)), reputation_penalty], false)
 
 
-func _flash_sale_feedback(value: int, satisfaction: float, reputation_gain: int, text: String) -> void:
+func _flash_sale_feedback(value: int, satisfaction: float, reputation_gain: int, text: String, patience_recovered: float = 0.0, current_patience: float = 100.0) -> void:
 	if feedback != null:
-		feedback.flash("%s\n成交 +%d曜 · 满意度 %.0f%% · 声誉 %+d" % [text, value, satisfaction * 100.0, reputation_gain], reputation_gain >= 0)
+		var recovery_text := " · 耐心 +%.0f%%（当前 %.0f%%）" % [patience_recovered, current_patience] if patience_recovered > 0.0 else ""
+		feedback.flash("%s\n成交 +%d曜 · 满意度 %.0f%% · 声誉 %+d%s" % [text, value, satisfaction * 100.0, reputation_gain, recovery_text], reputation_gain >= 0)
 
 
 func _record_customer_result(customer: Dictionary, instance: Dictionary, match: PotionMatchResult, result: CustomerFeedbackResult) -> void:
@@ -280,6 +351,7 @@ func _record_customer_result(customer: Dictionary, instance: Dictionary, match: 
 	state["next_visit_day"] = day + result.revisit_after_days if result.schedule_revisit else 0
 	state["last_outcome"] = str(match.outcome_id()).to_lower()
 	state["relationship"] = int(state.get("relationship", 0)) + result.relationship_delta
+	state["patience"] = float(customer.get("patience", MAX_PATIENCE))
 	var selected_potion: PotionData = _potion_by_id.get(selected_potion_id)
 	state["last_treatment"] = {
 		"primary_effect": str(PotionMatchService.effect_for(selected_potion.main_effect_id)) if selected_potion != null else "",

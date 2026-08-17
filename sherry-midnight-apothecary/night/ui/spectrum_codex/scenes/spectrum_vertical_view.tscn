@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cxvertview001"]
+
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_vertical_view.gd" id="1_script"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_ribbon_bar.gd" id="2_ribbon"]
+
+[node name="SpectrumVerticalView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_script")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 1
+vertical_scroll_mode = 1
+
+[node name="ContentMargin" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBox" type="HBoxContainer" parent="ScrollContainer/ContentMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="SpectrumRibbonBar" type="Control" parent="ScrollContainer/ContentMargin/HBox"]
+custom_minimum_size = Vector2(48, 120)
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_ribbon")
+
+[node name="BandsContainer" type="VBoxContainer" parent="ScrollContainer/ContentMargin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 14

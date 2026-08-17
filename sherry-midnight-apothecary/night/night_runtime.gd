@@ -35,6 +35,27 @@ func get_player_data() -> PlayerData:
 	return _standalone_player_data
 
 
+func get_remaining_customer_count() -> int:
+	_resolve_scene_nodes()
+	if business_placeholder != null and business_placeholder.has_method("get_remaining_customer_count"):
+		return business_placeholder.get_remaining_customer_count()
+	return 0
+
+
+func get_completed_customer_count() -> int:
+	_resolve_scene_nodes()
+	if business_placeholder != null and business_placeholder.has_method("get_completed_customer_count"):
+		return business_placeholder.get_completed_customer_count()
+	return 0
+
+
+func has_operated() -> bool:
+	_resolve_scene_nodes()
+	if business_placeholder != null and business_placeholder.has_method("has_operated"):
+		return business_placeholder.has_operated()
+	return false
+
+
 func configure(shared_player_data: PlayerData, current_day: int) -> void:
 	player_data = shared_player_data
 	day = current_day

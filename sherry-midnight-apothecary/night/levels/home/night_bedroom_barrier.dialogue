@@ -1,0 +1,35 @@
+~ check_barrier
+if has_operated
+	if remaining_customers > 0
+		雪莉: 今晚已经经营过了，不过柜台前目前还有 {{remaining_customers}} 名顾客在等候。
+		雪莉: 是否要结束今晚的营业？
+		- 结束营业
+			do confirm_end_business()
+			=> END
+		- 继续营业
+			=> END
+	else
+		雪莉: 今晚的顾客已经全部接待完毕了。
+		雪莉: 是否要结束今晚的营业并回房休息？
+		- 结束营业
+			do confirm_end_business()
+			=> END
+		- 再等等
+			=> END
+else
+	if remaining_customers > 0
+		雪莉: 今晚还没有开始营业，柜台前目前有 {{remaining_customers}} 名顾客在等候。
+		雪莉: 确定现在就要结束今晚的营业并回房休息吗？
+		- 结束营业
+			do confirm_end_business()
+			=> END
+		- 先去营业
+			=> END
+	else
+		雪莉: 今晚还没有开始营业，柜台前暂无顾客。
+		雪莉: 是否要结束今晚的营业并回房休息？
+		- 结束营业
+			do confirm_end_business()
+			=> END
+		- 再等等
+			=> END

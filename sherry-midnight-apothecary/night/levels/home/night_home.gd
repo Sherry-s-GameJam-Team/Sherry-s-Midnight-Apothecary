@@ -18,6 +18,27 @@ func get_player_data() -> PlayerData:
 	return _standalone_player_data
 
 
+func get_remaining_customer_count() -> int:
+	var runtime := _find_night_runtime()
+	if runtime != null and runtime.has_method("get_remaining_customer_count"):
+		return runtime.get_remaining_customer_count()
+	return 0
+
+
+func get_completed_customer_count() -> int:
+	var runtime := _find_night_runtime()
+	if runtime != null and runtime.has_method("get_completed_customer_count"):
+		return runtime.get_completed_customer_count()
+	return 0
+
+
+func has_operated() -> bool:
+	var runtime := _find_night_runtime()
+	if runtime != null and runtime.has_method("has_operated"):
+		return runtime.has_operated()
+	return false
+
+
 func request_business() -> void:
 	business_requested.emit()
 

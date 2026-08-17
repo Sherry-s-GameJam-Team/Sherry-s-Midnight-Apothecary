@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/lake_bottom/lake.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"lake_bottom"
+display_name = "阿里特之泪·湖床"
+disaster_name = "涸泪之灾"
+normal_description = "阿里特之泪湖底暴露出的远古泉脉与沉没旅门。"
+corrupted_description = "噬潮眼盘踞深处，古代泉路与沉泪门被黑色旋涡封锁。"
+scene_description = "在裸露湖床调查大司鱼痕迹，启动三座古代泉脉阀，以门泉净化枪驱散噬潮眼。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = true
+native_ingredient_ids = Array[StringName]([])

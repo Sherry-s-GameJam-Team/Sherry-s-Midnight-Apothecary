@@ -1,0 +1,111 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/wind_cutter_rye/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/wind_cutter_rye/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/wind_cutter_rye/pieces/yellow/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/wind_cutter_rye/pieces/yellow/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/wind_cutter_rye/pieces/yellow/piece_03.png" id="8_piece_03"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/wind_cutter_rye/pieces/yellow/piece_04.png" id="9_piece_04"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece_script")
+id = &"wind_cutter_rye_piece_01"
+display_name = "索道截风麦·部位01"
+kind = 2
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(2175, 899, 949, 2970)
+area_ratio = 0.250000
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.380
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece_script")
+id = &"wind_cutter_rye_piece_02"
+display_name = "索道截风麦·部位02"
+kind = 2
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(622, 653, 1091, 3216)
+area_ratio = 0.250000
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.380
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece_script")
+id = &"wind_cutter_rye_piece_03"
+display_name = "索道截风麦·部位03"
+kind = 2
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(1409, 64, 1270, 3810)
+area_ratio = 0.250000
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.380
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 3
+
+[sub_resource type="Resource" id="Piece_04"]
+script = ExtResource("3_piece_script")
+id = &"wind_cutter_rye_piece_04"
+display_name = "索道截风麦·部位04"
+kind = 2
+texture = ExtResource("9_piece_04")
+source_rect = Rect2i(1137, 1496, 1177, 2380)
+area_ratio = 0.250000
+detachable = true
+grindable = true
+color_id = &"yellow"
+spectrum_x = 0.380
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+yield_multiplier = 1.0
+quality_multiplier = 1.0
+concentration_multiplier = 1.0
+z_order = 4
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer_script")
+id = &"wind_cutter_rye_yellow_layer"
+display_name = "黄色部位层"
+color_id = &"yellow"
+display_color = Color(0.8862745, 0.7843137, 0.3019608, 1.0)
+spectrum_x = 0.380
+layer_yield_multiplier = 1.0
+pieces = Array[ExtResource("3_piece_script")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03"), SubResource("Piece_04")])
+
+[resource]
+script = ExtResource("1_ingredient_script")
+id = &"wind_cutter_rye"
+display_name = "索道截风麦"
+english_name = "Wind-Cutter Rye"
+description = "坚韧麦秆能在索道强风中直立，研磨后可提供稳定而集中的黄色药性。"
+lore = "索道看守人会把麦秆编进缆绳护套。它迎风时叶缘如刀，却能替附近作物截断最猛烈的侧风。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer_script")]([SubResource("Layer_main")])
+base_value = 16
+spectrum_start = 0.365
+spectrum_end = 0.395
+base_quality = 1.0
+base_concentration = 1.15
+

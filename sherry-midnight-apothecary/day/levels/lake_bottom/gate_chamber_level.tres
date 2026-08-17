@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/lake_bottom/gate_chamber.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"gate_chamber"
+display_name = "旧旅门维护站"
+disaster_name = "涸泪之灾"
+normal_description = "阿里特之泪湖床下的旧旅门维护设施，残留着远古导水装置与魔导中继核心。"
+corrupted_description = "湖底沉陷后未被完全侵蚀的安全室内，大司鱼在此避难。"
+scene_description = "调查旧旅门维护站内部，寻找大司鱼与古代泉脉线索。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"from_lake"
+show_title_card = false
+native_ingredient_ids = Array[StringName]([])

@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://cxfuncitem001"]
+
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_function_item.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.94, 0.9, 0.82, 0.85)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.65, 0.52, 0.38, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 3.0
+bg_color = Color(0.89, 0.83, 0.72, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 6.0
+content_margin_top = 3.0
+content_margin_right = 6.0
+content_margin_bottom = 3.0
+bg_color = Color(0.98, 0.94, 0.86, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.52, 0.22, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="SpectrumFunctionItem" type="PanelContainer"]
+custom_minimum_size = Vector2(240, 40)
+offset_right = 240.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("1_script")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeaderButton" type="Button" parent="VBox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+
+[node name="HBox" type="HBoxContainer" parent="VBox/HeaderButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 3.0
+offset_right = -6.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="BranchPrefix" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.42, 0.22, 1)
+theme_override_font_sizes/font_size = 11
+text = "├─"
+
+[node name="NameLabel" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.24, 0.16, 0.08, 1)
+theme_override_font_sizes/font_size = 13
+text = "未知功能分支"
+vertical_alignment = 1
+
+[node name="TagsLabel" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.42, 0.28, 0.9)
+theme_override_font_sizes/font_size = 11
+text = "[未解锁]"
+vertical_alignment = 1
+
+[node name="LockIcon" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.45, 0.35, 0.9)
+theme_override_font_sizes/font_size = 12
+text = "🔒"
+vertical_alignment = 1
+
+[node name="RecipesMargin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+
+[node name="RecipesContainer" type="HFlowContainer" parent="VBox/RecipesMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 6

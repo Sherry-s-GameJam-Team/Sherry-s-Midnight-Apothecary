@@ -25,6 +25,16 @@
 [ext_resource type="Script" uid="uid://cgivirjk3d0gp" path="res://night/alchemy/heat/heat_controller.gd" id="33_heat_controller"]
 [ext_resource type="Resource" path="res://night/alchemy/heat/profiles/default_heat_profile.tres" id="34_default_heat"]
 [ext_resource type="PackedScene" path="res://night/alchemy/bottling_panel.tscn" id="35_bottling"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/chalice_ice_spire.tres" id="40_chalice"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tundra_snow_whisk.tres" id="41_tundra"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/vesper_blue_thicket.tres" id="42_vesper"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/dusk_water_opuntia.tres" id="43_dusk"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/stagnant_breeze_bell_vine.tres" id="44_stagnant"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/slumber_marrow_geode.tres" id="45_slumber"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/drop_cliff_whistle_leaf.tres" id="46_whistle"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/eyrie_nest_seed_ball.tres" id="47_eyrie"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/wind_cutter_rye.tres" id="48_rye"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/egg_climbers_honey_pot.tres" id="49_honey"]
 
 [node name="AlchemyRuntime" type="Control" unique_id=1797314839]
 layout_mode = 3
@@ -34,7 +44,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_runtime")
-ingredients = Array[ExtResource("2_1vxw6")]([ExtResource("18_herdsman"), ExtResource("19_stardust"), ExtResource("20_grail"), ExtResource("30_dew_flask"), ExtResource("31_old_mans_noose"), ExtResource("32_praise_star_maple")])
+ingredients = Array[ExtResource("2_1vxw6")]([ExtResource("18_herdsman"), ExtResource("19_stardust"), ExtResource("20_grail"), ExtResource("30_dew_flask"), ExtResource("31_old_mans_noose"), ExtResource("32_praise_star_maple"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey")])
 potions = Array[ExtResource("11_hti2p")]([ExtResource("20_red"), ExtResource("21_orange"), ExtResource("22_yellow"), ExtResource("23_green"), ExtResource("24_cyan"), ExtResource("25_blue"), ExtResource("26_purple")])
 special_potions = Array[ExtResource("11_hti2p")]([ExtResource("28_purification")])
 failed_potion = ExtResource("27_black")

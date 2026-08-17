@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://cxbanditem001"]
+
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_band_item.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.96, 0.92, 0.83, 0.95)
+border_width_left = 3
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.4, 0.24, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.2, 0.15, 0.08, 0.15)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_normal"]
+content_margin_left = 8.0
+content_margin_top = 5.0
+content_margin_right = 8.0
+content_margin_bottom = 5.0
+bg_color = Color(0.9, 0.84, 0.72, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_hover"]
+content_margin_left = 8.0
+content_margin_top = 5.0
+content_margin_right = 8.0
+content_margin_bottom = 5.0
+bg_color = Color(0.98, 0.95, 0.88, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.75, 0.55, 0.25, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="SpectrumBandItem" type="PanelContainer"]
+custom_minimum_size = Vector2(320, 60)
+offset_right = 320.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+script = ExtResource("1_script")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderButton" type="Button" parent="VBox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_header_hover")
+
+[node name="HBox" type="HBoxContainer" parent="VBox/HeaderButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="ColorBar" type="ColorRect" parent="VBox/HeaderButton/HBox"]
+custom_minimum_size = Vector2(8, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+color = Color(0.8, 0.2, 0.2, 1)
+
+[node name="Level1Badge" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.35, 0.15, 1)
+theme_override_font_sizes/font_size = 11
+text = "[I]"
+
+[node name="NameLabel" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.24, 0.15, 0.08, 1)
+theme_override_font_sizes/font_size = 14
+text = "红光波段 · 赤绯"
+vertical_alignment = 1
+
+[node name="EffectLabel" type="Label" parent="VBox/HeaderButton/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.5, 0.38, 0.25, 0.95)
+theme_override_font_sizes/font_size = 12
+text = "主功能: 止血、循环"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="IndentMargin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+
+[node name="FunctionsContainer" type="VBoxContainer" parent="VBox/IndentMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6

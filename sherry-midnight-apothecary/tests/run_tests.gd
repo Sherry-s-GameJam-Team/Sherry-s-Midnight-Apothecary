@@ -27,6 +27,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/heat_controller_test.gd"),
 	preload("res://tests/temperature_gauge_editor_test.gd"),
 	preload("res://tests/production_test.gd"),
+	preload("res://tests/colored_plant_library_test.gd"),
 	preload("res://tests/pause_menu_test.gd"),
 	preload("res://tests/settings_service_test.gd"),
 	preload("res://tests/pause_inventory_page_test.gd"),
@@ -34,6 +35,9 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/dialogue_integration_test.gd"),
 	preload("res://tests/dual_world_structure_test.gd"),
 	preload("res://tests/crimson_aqueduct_test.gd"),
+	preload("res://tests/night_luca_interaction_test.gd"),
+	preload("res://tests/spectrum_codex_test.gd"),
+	preload("res://tests/night_bedroom_barrier_test.gd"),
 ]
 
 

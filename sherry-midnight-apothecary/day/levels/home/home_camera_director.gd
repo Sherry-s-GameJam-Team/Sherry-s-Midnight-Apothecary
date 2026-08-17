@@ -169,12 +169,22 @@ func _physics_process(delta: float) -> void:
 		_return_to_main_room()
 
 
+var entrance_handler: Callable
+
+
 func _input(event: InputEvent) -> void:
 	if get_tree().has_meta("day_modal_input_locked") or _bedroom_active or not _player_near_entrance or not _is_interact_event(event):
 		return
 	var viewport := get_viewport()
 	if viewport != null:
 		viewport.set_input_as_handled()
+	if entrance_handler.is_valid():
+		entrance_handler.call()
+	else:
+		_enter_bedroom()
+
+
+func open_barrier() -> void:
 	_enter_bedroom()
 
 

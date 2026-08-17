@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cxdemo001"]
+
+[ext_resource type="Theme" path="res://night/ui/spectrum_codex/styles/spectrum_codex_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_codex_demo.gd" id="2_demo"]
+[ext_resource type="PackedScene" path="res://night/ui/spectrum_codex/scenes/spectrum_codex_panel.tscn" id="3_panel"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_debug_bar"]
+content_margin_left = 10.0
+content_margin_top = 6.0
+content_margin_right = 10.0
+content_margin_bottom = 6.0
+bg_color = Color(0.88, 0.82, 0.7, 0.95)
+border_width_bottom = 2
+border_color = Color(0.55, 0.4, 0.25, 0.9)
+
+[node name="SpectrumCodexDemo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_demo")
+
+[node name="SpectrumCodexPanel" parent="." instance=ExtResource("3_panel")]
+layout_mode = 1
+offset_top = 44.0
+
+[node name="DebugControls" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_debug_bar")
+
+[node name="HBox" type="HBoxContainer" parent="DebugControls"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="DebugControls/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.28, 0.12, 1)
+text = "[测试工具栏]"
+
+[node name="BtnUnlockFunc" type="Button" parent="DebugControls/HBox"]
+layout_mode = 2
+text = "解锁功能: 神经镇痛"
+
+[node name="BtnUnlockRec" type="Button" parent="DebugControls/HBox"]
+layout_mode = 2
+text = "解锁药方: 麻痹止痛滴剂"
+
+[node name="BtnSwitchMode" type="Button" parent="DebugControls/HBox"]
+layout_mode = 2
+text = "切换视图模式"
+
+[node name="BtnFocusSample" type="Button" parent="DebugControls/HBox"]
+layout_mode = 2
+text = "聚焦药方: 深创封堵灵剂"

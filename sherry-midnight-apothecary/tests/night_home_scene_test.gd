@@ -57,10 +57,13 @@ static func run(test: TestSupport) -> void:
 	var bedroom_door_entry := home.get_node("EntryPoints/bedroomdoor") as Marker2D
 	test.expect_equal(player.global_position, bedroom_door_entry.global_position, "Returning from the bedroom uses the home bedroom-door marker.")
 
+	var luca_npc := home.get_node_or_null("LucaNightNPC") as LucaNightNPC
+	test.expect(luca_npc != null, "NightHome contains the LucaNightNPC interaction node.")
+
 	home.business_requested.emit()
 	test.expect(not runtime.shop_slot.visible, "Opening business hides the explorable shop.")
 	test.expect(runtime.customer_slot.visible, "Opening business shows the replaceable business scene.")
-	test.expect(runtime.business_placeholder.offer_list.get_child_count() > 0, "Opening business refreshes its potion shelf from current night data.")
+	test.expect(runtime.business_placeholder.potion_shelf_panel != null, "Opening business refreshes its potion shelf from current night data.")
 	test.expect(not player.is_physics_processing(), "Opening business pauses player movement.")
 	runtime.business_placeholder.request_return.emit()
 	test.expect(runtime.shop_slot.visible, "Returning from business restores the shop.")

@@ -11,7 +11,8 @@ static func run(test: TestSupport) -> void:
 		test.expect(town_anchor != null and town_anchor.destination_id == &"market", "Anchor00 routes to the Town level.")
 		test.expect(grass_anchor != null and grass_anchor.destination_id == &"grassland", "Anchor01 routes to the Grassland level.")
 		map.free()
-	var map_controller := load("res://day/interactables/map_switch/scripts/map_switch_controller.gd").new()
+	var map_controller_script := load("res://day/interactables/map_switch/scripts/map_switch_controller.gd") as GDScript
+	var map_controller: Object = map_controller_script.new()
 	var locked_player_data := PlayerData.new()
 	test.expect(map_controller.can_lock_destination({"id": &"market"}, locked_player_data), "The initially unlocked Town anchor can be selected.")
 	test.expect(map_controller.can_lock_destination({"id": &"grassland"}, locked_player_data), "The Grassland anchor is unlocked from the start.")

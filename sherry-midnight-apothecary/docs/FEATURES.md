@@ -8,6 +8,8 @@
 
 - [Herb harvesting](herb_harvesting.md): normal-state daily field pickup refreshes for alchemy ingredients.
 
+- [Colored plant library](colored_plant_library.md): ten yellow, blue, and purple production plants with alpha-trimmed detachable artwork and explicit spectrum assignments.
+
 - [Magic Map Switch](../day/interactables/map_switch/README.md): Home Transformer route-anchor alignment and first-use navigation tutorial.
 
 - [Scene title card](scene_title_card.md): per-level `DisasterName` and `NormalDescription` subtitle data, daily presentation rules, and title replay behavior.
@@ -23,3 +25,9 @@
 - [Forest interior level](../day/levels/forest/docs/FOREST_INTERIOR_LEVEL.md): standalone tree-interior dual-character level — control rooms, spray purification, lifts, sluice gate, and crown-exit placeholder.
 
 - [Golden cliff](golden_cliff.md): standalone `烁金横崖` day level — balance-stone calibration, floating/debris hazards, portal repair, embedded standalone DeveloperConsole, embedded PauseMenu (B-key backpack, ESC menu), and `LEVELS` registration for the global SceneTitleCard.
+
+- [Night home & Luca interaction](night_home.md): nighttime apothecary interior, Luca intro dialogue sequence, herb rewards, hintUI feedback, alchemy guidance, and bedroom barrier business check with remaining customer confirmation.
+
+- [Lake bottom](lake_bottom.md): exposed lakebed day level — three spring valves, Tide Eye boss purification, standard Sherry player controller, embedded developer console & pause menu, and LevelData registration.
+
+- [Potion Spectrum Codex](spectrum_codex.md): interactive, data-driven codex UI featuring vertical spectrum zoom/pan LOD view, cross-table primary x secondary function matrix view, and unlock progress tracking.

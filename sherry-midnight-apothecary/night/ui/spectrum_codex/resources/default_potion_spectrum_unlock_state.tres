@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PotionSpectrumUnlockState" load_steps=2 format=3 uid="uid://cxulkstate001"]
+
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_unlock_state.gd" id="1_state"]
+
+[resource]
+script = ExtResource("1_state")
+unlocked_function_ids = Array[StringName]([&"func_hemostasis", &"func_tissue_repair", &"func_cooling"])
+unlocked_recipe_ids = Array[StringName]([&"recipe_blood_stop_paste", &"recipe_moss_balm"])
+unlocked_matrix_cells = Array[Vector2i]([Vector2i(0, 0), Vector2i(3, 0)])

@@ -242,7 +242,15 @@ ok_button_text = "退回室内"
 dialog_text = "已完成的交易会保留，并在入睡时结算。现在退回室内吗？"
 cancel_button_text = "继续营业"
 
+[node name="RejectConfirmDialog" type="ConfirmationDialog" parent="." unique_id=1987654321]
+unique_name_in_owner = true
+title = "警告：即将永久失去顾客"
+ok_button_text = "确认拒绝"
+dialog_text = "该顾客当前耐心仅剩 25%。\n再次拒绝将导致其耐心归零，该顾客将永久离开药水铺，之后不再光顾！\n\n确定要拒绝该顾客吗？"
+cancel_button_text = "取消"
+
 [connection signal="pressed" from="RootVBox/Footer/FooterMargin/FooterHBox/RejectButton" to="." method="_on_reject_pressed"]
 [connection signal="pressed" from="RootVBox/Footer/FooterMargin/FooterHBox/SellButton" to="." method="_on_sell_pressed"]
 [connection signal="pressed" from="RootVBox/Footer/FooterMargin/FooterHBox/EndButton" to="." method="_on_end_pressed"]
 [connection signal="confirmed" from="ConfirmDialog" to="." method="_on_confirmed_end"]
+[connection signal="confirmed" from="RejectConfirmDialog" to="." method="_on_reject_confirmed"]

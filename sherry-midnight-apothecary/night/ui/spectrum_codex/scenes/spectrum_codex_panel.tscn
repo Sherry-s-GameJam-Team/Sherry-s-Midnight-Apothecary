@@ -1,0 +1,240 @@
+[gd_scene format=3 uid="uid://cxpanel001"]
+
+[ext_resource type="Theme" path="res://night/ui/spectrum_codex/styles/spectrum_codex_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_codex_panel.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://night/ui/spectrum_codex/scenes/spectrum_vertical_view.tscn" id="3_vert"]
+[ext_resource type="PackedScene" path="res://night/ui/spectrum_codex/scenes/spectrum_matrix_view.tscn" id="4_mat"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.16, 0.12, 0.07, 0.85)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toolbar"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.92, 0.87, 0.77, 0.95)
+border_width_bottom = 2
+border_color = Color(0.55, 0.4, 0.24, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_view_container"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.95, 0.91, 0.82, 0.92)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.6, 0.48, 0.32, 0.75)
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_detail"]
+content_margin_left = 14.0
+content_margin_top = 14.0
+content_margin_right = 14.0
+content_margin_bottom = 14.0
+bg_color = Color(0.96, 0.92, 0.84, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.52, 0.38, 0.24, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.2, 0.15, 0.08, 0.25)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+content_margin_left = 8.0
+content_margin_top = 3.0
+content_margin_right = 8.0
+content_margin_bottom = 3.0
+bg_color = Color(0.84, 0.75, 0.62, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.46, 0.3, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="SpectrumCodexPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="Backdrop" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LeftArea" type="VBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.4
+theme_override_constants/separation = 8
+
+[node name="Toolbar" type="PanelContainer" parent="Margin/HBox/LeftArea"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_toolbar")
+
+[node name="ToolbarHBox" type="HBoxContainer" parent="Margin/HBox/LeftArea/Toolbar"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Margin/HBox/LeftArea/Toolbar/ToolbarHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.22, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+text = "✦ 药水光谱图鉴"
+
+[node name="VSeparator1" type="VSeparator" parent="Margin/HBox/LeftArea/Toolbar/ToolbarHBox"]
+layout_mode = 2
+
+[node name="ModeLabel" type="Label" parent="Margin/HBox/LeftArea/Toolbar/ToolbarHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48, 0.35, 0.22, 1)
+theme_override_font_sizes/font_size = 13
+text = "当前模式: 光谱视图"
+
+[node name="ModeSwitchButton" type="Button" parent="Margin/HBox/LeftArea/Toolbar/ToolbarHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+text = "切换为交叉表"
+
+[node name="Spacer" type="Control" parent="Margin/HBox/LeftArea/Toolbar/ToolbarHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseButton" type="Button" parent="Margin/HBox/LeftArea/Toolbar/ToolbarHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "✕"
+
+[node name="ViewContainer" type="PanelContainer" parent="Margin/HBox/LeftArea"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_view_container")
+
+[node name="SpectrumVerticalView" parent="Margin/HBox/LeftArea/ViewContainer" instance=ExtResource("3_vert")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SpectrumMatrixView" parent="Margin/HBox/LeftArea/ViewContainer" instance=ExtResource("4_mat")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="RightDetailPanel" type="PanelContainer" parent="Margin/HBox"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_detail")
+
+[node name="Scroll" type="ScrollContainer" parent="Margin/HBox/RightDetailPanel"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="DetailVBox" type="VBoxContainer" parent="Margin/HBox/RightDetailPanel/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="HeaderHBox" type="HBoxContainer" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DetailTitle" type="Label" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox/HeaderHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.35, 0.2, 0.08, 1)
+theme_override_font_sizes/font_size = 16
+text = "药水光谱图鉴"
+autowrap_mode = 3
+
+[node name="DetailTypeBadge" type="Label" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox/HeaderHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.2, 0.1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = "总览"
+
+[node name="DetailStatusBadge" type="Label" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.38, 0.18, 1)
+theme_override_font_sizes/font_size = 12
+text = "就绪"
+
+[node name="HSeparator1" type="HSeparator" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+layout_mode = 2
+
+[node name="DetailDescription" type="RichTextLabel" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "请点击左侧色谱区间、功能节点或特殊药方，查看详细解析与炼制线索。"
+fit_content = true
+
+[node name="HSeparator2" type="HSeparator" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+layout_mode = 2
+
+[node name="DetailExtraVBox" type="VBoxContainer" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="DetailRecipesTitle" type="Label" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.48, 0.28, 0.1, 1)
+theme_override_font_sizes/font_size = 13
+text = "相关药方:"
+
+[node name="DetailRecipesList" type="VBoxContainer" parent="Margin/HBox/RightDetailPanel/Scroll/DetailVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
