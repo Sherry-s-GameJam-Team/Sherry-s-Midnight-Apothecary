@@ -162,6 +162,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HerbInventoryArt" type="TextureRect" parent="." unique_id=185994241]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.72
@@ -188,9 +189,64 @@ anchor_right = 0.929
 anchor_bottom = 0.869
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 5
-theme_override_constants/v_separation = 7
+theme_override_constants/h_separation = 13
+theme_override_constants/v_separation = 9
 columns = 4
+
+[node name="HerbPageMask" type="ColorRect" parent="HerbInventoryArt"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33
+anchor_top = 0.916
+anchor_right = 0.66
+anchor_bottom = 0.961
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.902, 0.765, 0.545, 1)
+
+[node name="HerbPageLabel" type="Label" parent="HerbInventoryArt/HerbPageMask"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.22, 0.12, 0.05, 1)
+theme_override_font_sizes/font_size = 18
+text = "1 / 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HerbPreviousButton" type="Button" parent="HerbInventoryArt"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.188
+anchor_top = 0.912
+anchor_right = 0.274
+anchor_bottom = 0.965
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "上一页药草"
+focus_mode = 0
+flat = true
+
+[node name="HerbNextButton" type="Button" parent="HerbInventoryArt"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.735
+anchor_top = 0.912
+anchor_right = 0.821
+anchor_bottom = 0.965
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "下一页药草"
+focus_mode = 0
+flat = true
 
 [node name="ProcessBoard" type="PanelContainer" parent="." unique_id=2083389324]
 unique_name_in_owner = true

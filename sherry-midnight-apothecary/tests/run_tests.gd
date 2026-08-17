@@ -38,6 +38,9 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/night_luca_interaction_test.gd"),
 	preload("res://tests/spectrum_codex_test.gd"),
 	preload("res://tests/night_bedroom_barrier_test.gd"),
+	preload("res://tests/village_mew_npc_test.gd"),
+	preload("res://tests/bottling_panel_test.gd"),
+	preload("res://tests/dialogue_portrait_test.gd"),
 ]
 
 

@@ -1,21 +1,19 @@
 ~ start
 悬而未决的奥古之钟: 你好，陌生人。
-雪莉: 这套对话框已经接入 Dialogue Manager 3，你可以点击空白处或按 Enter 推进。
-- 先看看今日委托
-	雪莉: 委托单上写着：一瓶能让噩梦安静下来的药水。
-	雪莉: 我们需要月露草和一小撮星尘。
+do show_portrait("年轻村民", "default", "left", "slide_in")
+年轻村民 #portrait(slot=left, expr=default): 这套对话框已经装载了角色立绘系统！
+雪莉 #portrait(slot=right, expr=default, anim=slide_in): 支持左、中、右三个插槽，并且说话时会自动高亮聚焦。
+- 测试表情切换与动画
+	年轻村民 #portrait(slot=left, expr=happy, anim=bounce): 看到我弹跳了一下并且切换了表情吗？
+	雪莉 #portrait(slot=right, expr=thinking, anim=nod): 也可以平滑淡入淡出或者点头！
+	do show_portrait("女学者", "default", "center", "fade_in")
+	女学者: 我也可以从中间插槽登场。
+	do hide_portrait("center", "fade_out")
 - 问问按钮怎么用
 	雪莉: 上方可以快进、自动播放、查看记录、调整文字速度，也可以发出读取存档请求。
 - 今晚先打烊
 	雪莉: 好吧，招牌灯会一直为迷路的客人亮着。
-- 1 
-	x: en
-- 2
-	x: en 
-- 1 
-	x: en
-- 2
-	x: en 
-	=> END
+	do clear_portraits()
 雪莉: 测试完成。你也可以从 Dialogue Manager 编辑器直接运行这段对话。
+do clear_portraits()
 => END

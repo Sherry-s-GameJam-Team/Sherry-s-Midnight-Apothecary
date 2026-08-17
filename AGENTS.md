@@ -5,12 +5,12 @@
 This repository has an outer workspace directory and one nested Godot project.
 
 - Repository/workspace root: the directory containing this `AGENTS.md` and `.git/`.
-- **Canonical Godot project root:** `sherry’s-midnight-apothecary/` (curly apostrophe `’`).
+- **Canonical Godot project root:** `sherry-midnight-apothecary/`.
 - `project.godot`, `README.md`, game source, assets, tests, tools, and project documentation all belong under the canonical Godot project root.
 - Unless a task explicitly targets repository-level metadata, **do not create game files, notes, generated assets, scripts, or temporary files beside `AGENTS.md`**.
-- Run Godot commands from `sherry’s-midnight-apothecary/`, or pass that directory to `--path`.
+- Run Godot commands from `sherry-midnight-apothecary/`, or pass that directory to `--path`.
 
-Before adding a file, read `sherry’s-midnight-apothecary/docs/PROJECT_STRUCTURE.md` and choose the documented destination. If no destination fits, ask before inventing a new top-level directory.
+Before adding a file, read `sherry-midnight-apothecary/docs/PROJECT_STRUCTURE.md` and choose the documented destination. If no destination fits, ask before inventing a new top-level directory.
 
 ## Architecture boundaries
 
@@ -38,10 +38,10 @@ Before adding a file, read `sherry’s-midnight-apothecary/docs/PROJECT_STRUCTUR
 
 - **Autonomous execution**: Do not block to ask for user confirmation before making code edits or running implementations. Directly apply changes, execute verification tests, and report results concisely.
 - Preserve existing user changes and avoid unrelated cleanup or bulk file moves.
-- Use `res://` paths rooted at `sherry’s-midnight-apothecary/`; never encode absolute local filesystem paths in Godot resources.
+- Use `res://` paths rooted at `sherry-midnight-apothecary/`; never encode absolute local filesystem paths in Godot resources.
 - Keep `.gd.uid` files paired with their scripts when Godot has generated them. Do not hand-create import-cache files.
 - When moving a Godot resource, update all `res://` references in the same change and verify parsing.
-- Every time a feature is added or its player-visible behavior, controls, data flow, or architecture changes, update the relevant Markdown documentation in `sherry’s-midnight-apothecary/docs/` in the same change. If no suitable feature document exists, create one there and add it to `docs/FEATURES.md`; do not consider the feature complete while its documentation is stale.
+- Every time a feature is added or its player-visible behavior, controls, data flow, or architecture changes, update the relevant Markdown documentation in `sherry-midnight-apothecary/docs/` in the same change. If no suitable feature document exists, create one there and add it to `docs/FEATURES.md`; do not consider the feature complete while its documentation is stale.
 - Minimum validation from the Godot project root:
 
 ```powershell

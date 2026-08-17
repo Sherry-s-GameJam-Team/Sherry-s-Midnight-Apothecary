@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://x1g7jftaq0y8" path="res://day/levels/golden_cliff/village/art/倒悬船坞.png" id="4_dock"]
 [ext_resource type="Texture2D" uid="uid://c4meyolvn40mg" path="res://day/levels/golden_cliff/village/art/cover.png" id="4_q4gjk"]
 [ext_resource type="Texture2D" uid="uid://cj2wsv6mf7fql" path="res://day/levels/golden_cliff/village/art/空崖码头.png" id="5_pier"]
+[ext_resource type="Texture2D" uid="uid://bf2g5uq6n6myl" path="res://day/levels/golden_cliff/village/art/cover1.png" id="6_mkyy4"]
 [ext_resource type="Texture2D" uid="uid://b4hav5v1crmm" path="res://day/levels/golden_cliff/village/art/cover2.png" id="6_uf5qm"]
 [ext_resource type="Texture2D" uid="uid://do6d47csfhsrd" path="res://day/levels/golden_cliff/village/art/涟汀村近景.png" id="6_village"]
 [ext_resource type="Texture2D" uid="uid://bkh6ro4oq6qo0" path="res://day/levels/golden_cliff/village/art/湖祭石阶.png" id="7_stairs"]
@@ -19,6 +20,300 @@
 [ext_resource type="Texture2D" uid="uid://b0op5lj11ncbn" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_02.png" id="14_portal_vis"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="15_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="16_pause_menu"]
+[ext_resource type="Texture2D" uid="uid://ycvegjm3gji6" path="res://characters/mew/fishing.png" id="18_hltob"]
+[ext_resource type="Script" uid="uid://d2nbli6p03dlx" path="res://characters/mew/mew_npc.gd" id="19_mew_npc"]
+[ext_resource type="Resource" uid="uid://b2mchd1h471oq" path="res://characters/mew/mew.dialogue" id="20_mew_dialogue"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_0"]
+atlas = ExtResource("18_hltob")
+region = Rect2(0, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_1"]
+atlas = ExtResource("18_hltob")
+region = Rect2(1002, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_2"]
+atlas = ExtResource("18_hltob")
+region = Rect2(2004, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_3"]
+atlas = ExtResource("18_hltob")
+region = Rect2(3006, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_4"]
+atlas = ExtResource("18_hltob")
+region = Rect2(4008, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_5"]
+atlas = ExtResource("18_hltob")
+region = Rect2(5010, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_6"]
+atlas = ExtResource("18_hltob")
+region = Rect2(6012, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_7"]
+atlas = ExtResource("18_hltob")
+region = Rect2(7014, 0, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_8"]
+atlas = ExtResource("18_hltob")
+region = Rect2(0, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_9"]
+atlas = ExtResource("18_hltob")
+region = Rect2(1002, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_10"]
+atlas = ExtResource("18_hltob")
+region = Rect2(2004, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_11"]
+atlas = ExtResource("18_hltob")
+region = Rect2(3006, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_12"]
+atlas = ExtResource("18_hltob")
+region = Rect2(4008, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_13"]
+atlas = ExtResource("18_hltob")
+region = Rect2(5010, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_14"]
+atlas = ExtResource("18_hltob")
+region = Rect2(6012, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_15"]
+atlas = ExtResource("18_hltob")
+region = Rect2(7014, 690, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_16"]
+atlas = ExtResource("18_hltob")
+region = Rect2(0, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_17"]
+atlas = ExtResource("18_hltob")
+region = Rect2(1002, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_18"]
+atlas = ExtResource("18_hltob")
+region = Rect2(2004, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_19"]
+atlas = ExtResource("18_hltob")
+region = Rect2(3006, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_20"]
+atlas = ExtResource("18_hltob")
+region = Rect2(4008, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_21"]
+atlas = ExtResource("18_hltob")
+region = Rect2(5010, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_22"]
+atlas = ExtResource("18_hltob")
+region = Rect2(6012, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_23"]
+atlas = ExtResource("18_hltob")
+region = Rect2(7014, 1380, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_24"]
+atlas = ExtResource("18_hltob")
+region = Rect2(0, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_25"]
+atlas = ExtResource("18_hltob")
+region = Rect2(1002, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_26"]
+atlas = ExtResource("18_hltob")
+region = Rect2(2004, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_27"]
+atlas = ExtResource("18_hltob")
+region = Rect2(3006, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_28"]
+atlas = ExtResource("18_hltob")
+region = Rect2(4008, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_29"]
+atlas = ExtResource("18_hltob")
+region = Rect2(5010, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_30"]
+atlas = ExtResource("18_hltob")
+region = Rect2(6012, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_31"]
+atlas = ExtResource("18_hltob")
+region = Rect2(7014, 2070, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_32"]
+atlas = ExtResource("18_hltob")
+region = Rect2(0, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_33"]
+atlas = ExtResource("18_hltob")
+region = Rect2(1002, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_34"]
+atlas = ExtResource("18_hltob")
+region = Rect2(2004, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_35"]
+atlas = ExtResource("18_hltob")
+region = Rect2(3006, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_36"]
+atlas = ExtResource("18_hltob")
+region = Rect2(4008, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_37"]
+atlas = ExtResource("18_hltob")
+region = Rect2(5010, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_38"]
+atlas = ExtResource("18_hltob")
+region = Rect2(6012, 2760, 1002, 690)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fish_39"]
+atlas = ExtResource("18_hltob")
+region = Rect2(7014, 2760, 1002, 690)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_npax6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_13")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_26")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_29")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fish_39")
+}],
+"loop": true,
+"name": &"fishing",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mew_interaction"]
+size = Vector2(1451.3568, 800)
 
 [sub_resource type="RectangleShape2D" id="Rect_barrier"]
 size = Vector2(128, 3000)
@@ -29,17 +324,16 @@ size = Vector2(200, 320)
 [node name="Village" type="Node2D" unique_id=1965816465]
 script = ExtResource("1_environment")
 debug_scene_id = "golden_cliff_village"
-start_corrupted = false
 
 [node name="FS" type="Parallax2D" parent="." unique_id=101000001]
 z_index = -30
 scroll_scale = Vector2(0.05, 0.03)
-scroll_offset = Vector2(-2986, 317)
+scroll_offset = Vector2(-2986, 269)
 repeat_size = Vector2(13258, 0)
 repeat_times = 4
 
 [node name="Background" type="Sprite2D" parent="FS" unique_id=101000002]
-position = Vector2(0, -700)
+position = Vector2(0, -701)
 scale = Vector2(1.75, 1.75)
 texture = ExtResource("2_bg")
 centered = false
@@ -83,7 +377,7 @@ centered = false
 z_index = 30
 position = Vector2(4861, -575)
 scale = Vector2(-1.828377, 1.6805267)
-texture = ExtResource("6_uf5qm")
+texture = ExtResource("6_mkyy4")
 centered = false
 
 [node name="RitualStairs" type="Sprite2D" parent="CS" unique_id=103000003]
@@ -93,10 +387,17 @@ texture = ExtResource("7_stairs")
 centered = false
 
 [node name="TideObservationPlatform" type="Sprite2D" parent="CS" unique_id=101000004]
-z_index = -1
 position = Vector2(-155, -853)
 scale = Vector2(-0.9938632, 0.8266947)
 texture = ExtResource("3_platform")
+centered = false
+
+[node name="TideObservationPlatformcover2" type="Sprite2D" parent="CS" unique_id=1118987546]
+z_index = 30
+position = Vector2(-155, -853)
+rotation = 3.1415927
+scale = Vector2(0.9938632, -0.8266947)
+texture = ExtResource("6_uf5qm")
 centered = false
 
 [node name="EmptyCliffPier" type="Sprite2D" parent="CS" unique_id=102000003]
@@ -105,6 +406,25 @@ position = Vector2(4741.0005, -545)
 scale = Vector2(0.95, 1.128453)
 texture = ExtResource("5_pier")
 centered = false
+
+[node name="Mew" type="Area2D" parent="CS" unique_id=361027674]
+position = Vector2(-1149, -452)
+rotation = 3.1415927
+scale = Vector2(0.21337947, -0.21402825)
+script = ExtResource("19_mew_npc")
+dialogue_resource = ExtResource("20_mew_dialogue")
+interaction_hint_text = "按[E]与喵呜交谈"
+
+[node name="FishingLoop" type="AnimatedSprite2D" parent="CS/Mew" unique_id=361027675]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_npax6")
+animation = &"fishing"
+frame = 13
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/Mew" unique_id=361027676]
+position = Vector2(-431.8838, -60.739624)
+scale = Vector2(0.99999994, 1)
+shape = SubResource("RectangleShape2D_mew_interaction")
 
 [node name="WorldBounds" type="Node2D" parent="CS" unique_id=104000001]
 
@@ -122,10 +442,10 @@ position = Vector2(11, -88)
 polygon = PackedVector2Array(1097, -704, 1162, -714, 1327, -704, 1327, -657, 1173, -657, 1080, -650, 861, -652, 781, -679, 794, -715, 868, -675, 983, -663, 1055, -680)
 
 [node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=367797070]
-polygon = PackedVector2Array(-427, -863, -209, -571, -209, -451, -271, -363, -264, -8, -1067, -7, -1064, -878)
+polygon = PackedVector2Array(-427, -863, -209, -571, -209, -451, -271, -363, -264, -8, -1122, -9, -1121, -1398, -997, -1397, -992, -974, -787, -982)
 
 [node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=121609593]
-polygon = PackedVector2Array(2689, -34, 3142, -250, 3245, -313, 3334, -317, 3371, -316, 3675, -491, 3736, -548, 3826, -594, 3906, -606, 3986, -667, 4309, -823, 4343, -852, 6642, -855, 6643, -798, 4364, -785, 2832, 57)
+polygon = PackedVector2Array(2689, -34, 3142, -250, 3259, -262, 3326, -292, 3371, -316, 3675, -491, 3736, -548, 3826, -594, 3906, -606, 3986, -667, 4309, -823, 4343, -852, 6642, -855, 6643, -798, 4364, -785, 2832, 57)
 
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=746686759]
 polygon = PackedVector2Array(1414, -315, 1763, -37, 2737, -38, 2847, 6, 1747, 11, 1314, -314)
@@ -147,7 +467,7 @@ polygon = PackedVector2Array(474, -242, 835, -244, 1004, -308, 1033, -320, 1405,
 one_way_collision = true
 
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=380640130]
-polygon = PackedVector2Array(1012, -317, 631, -316, 600, -425, 258, -433, 188, -415, -122, -592, -177, -595, -190, -620, -217, -620, -217, -644, -230, -645, -232, -657, -244, -658, -245, -670, -278, -673, -278, -703, -300, -704, -303, -734, -322, -735, -323, -760, -345, -765, -347, -789, -362, -790, -362, -810, -377, -812, -380, -834, -401, -842, -405, -869, -438, -872, -436, -898, -463, -900, -465, -926, -484, -926, -487, -954, -537, -956, -539, -980, -1505, -978, -1509, -762, -413, -755, -386, -651, -223, -592, -196, -555, -124, -555, 183, -389, 576, -384, 602, -276, 948, -290)
+polygon = PackedVector2Array(1012, -317, 631, -316, 600, -425, 258, -433, 188, -415, -122, -592, -177, -595, -190, -620, -217, -620, -217, -644, -230, -645, -232, -657, -244, -658, -245, -670, -278, -673, -278, -703, -300, -704, -303, -734, -322, -735, -323, -760, -345, -765, -347, -789, -362, -790, -362, -810, -377, -812, -380, -834, -401, -842, -405, -869, -438, -872, -436, -898, -463, -900, -465, -926, -484, -926, -487, -954, -537, -956, -543, -981, -794, -986, -865, -1044, -988, -1045, -990, -1399, -1121, -1400, -1117, -1067, -1131, -1047, -1273, -1042, -1329, -989, -1505, -978, -1509, -762, -413, -755, -386, -651, -223, -592, -196, -555, -124, -555, 183, -389, 576, -384, 602, -276, 948, -290)
 one_way_collision = true
 
 [node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="CS/WorldBounds/OneWayPlatforms" unique_id=1916232396]

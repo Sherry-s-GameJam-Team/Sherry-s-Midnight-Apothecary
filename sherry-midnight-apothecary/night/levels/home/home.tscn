@@ -9,6 +9,7 @@
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://shared/shaders/interaction_outline.gdshader" id="7_outline"]
 [ext_resource type="Texture2D" uid="uid://bspflplmb646m" path="res://day/levels/home/table.png" id="8_table"]
 [ext_resource type="Texture2D" uid="uid://b0cq20puj1m7o" path="res://day/levels/home/equip.png" id="9_equip"]
+[ext_resource type="Texture2D" uid="uid://c0ql7o82wld7t" path="res://day/levels/home/transsformer.png" id="10_transformer"]
 [ext_resource type="Texture2D" uid="uid://c2ywnit3lhswg" path="res://day/levels/home/bedroom.png" id="11_bedroom"]
 [ext_resource type="Shader" uid="uid://cqj6mkygmcjps" path="res://day/levels/home/bedroom_barrier_dissolve.gdshader" id="12_barrier_shader"]
 [ext_resource type="Texture2D" uid="uid://x303tlcn0gfs" path="res://day/levels/home/shader.png" id="13_barrier"]
@@ -67,6 +68,14 @@ shader_parameter/outline_width = 2.0
 
 [sub_resource type="RectangleShape2D" id="TableShape"]
 size = Vector2(520, 250)
+
+[sub_resource type="ShaderMaterial" id="TransformerOutline"]
+shader = ExtResource("7_outline")
+shader_parameter/outline_color = Color(0.44, 0.72, 1, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="TransformerShape"]
+size = Vector2(367, 619)
 
 [sub_resource type="ShaderMaterial" id="BedroomBarrier"]
 shader = ExtResource("12_barrier_shader")
@@ -249,6 +258,22 @@ texture = ExtResource("8_table")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Table" unique_id=890507475]
 position = Vector2(0, -12)
 shape = SubResource("TableShape")
+
+[node name="Transsformer" type="Area2D" parent="."]
+process_mode = 4
+position = Vector2(2217, 526)
+monitoring = false
+monitorable = false
+
+[node name="Visual" type="Sprite2D" parent="Transsformer"]
+material = SubResource("TransformerOutline")
+scale = Vector2(0.8276242, 0.82674414)
+texture = ExtResource("10_transformer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transsformer"]
+position = Vector2(2.5, 8.5)
+shape = SubResource("TransformerShape")
+disabled = true
 
 [node name="LucaNightNPC" parent="." unique_id=192837465 instance=ExtResource("22_luca_npc")]
 position = Vector2(2341, 789)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d1ijfb2ftskh8"]
 
-[ext_resource type="Script" path="res://day/ui/scene_title_card.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bsd56lsqqdywd" path="res://day/ui/scene_title_card.gd" id="1_script"]
 [ext_resource type="SpriteFrames" path="res://assets/title_border/title_border_frames.tres" id="2_frames"]
 
 [sub_resource type="SystemFont" id="SystemFont_cjk"]
@@ -64,10 +64,10 @@ vertical_alignment = 1
 [node name="LocationLabel" type="Label" parent="ScreenRoot/TitleRoot" unique_id=274266322]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 300.0
-offset_top = 245.0
-offset_right = 780.0
-offset_bottom = 400.0
+offset_left = 302.0
+offset_top = 226.0
+offset_right = 782.0
+offset_bottom = 381.0
 theme_override_colors/font_color = Color(0.985, 0.89, 0.65, 1)
 theme_override_colors/font_outline_color = Color(0.11, 0.035, 0.065, 1)
 theme_override_constants/outline_size = 7
@@ -79,10 +79,10 @@ vertical_alignment = 1
 [node name="SubtitleLabel" type="Label" parent="ScreenRoot/TitleRoot" unique_id=72484377]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 220.0
-offset_top = 488.0
-offset_right = 860.0
-offset_bottom = 556.0
+offset_left = 226.0
+offset_top = 457.0
+offset_right = 866.0
+offset_bottom = 525.0
 theme_override_colors/font_color = Color(0.96, 0.86, 0.64, 1)
 theme_override_colors/font_outline_color = Color(0.12, 0.045, 0.08, 0.98)
 theme_override_constants/outline_size = 4
@@ -94,10 +94,10 @@ vertical_alignment = 1
 [node name="DisasterLabel" type="Label" parent="ScreenRoot/TitleRoot" unique_id=892275951]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 260.0
-offset_top = 418.0
-offset_right = 820.0
-offset_bottom = 474.0
+offset_left = 263.0
+offset_top = 379.0
+offset_right = 823.0
+offset_bottom = 435.0
 theme_override_colors/font_color = Color(0.94, 0.52, 0.42, 1)
 theme_override_colors/font_outline_color = Color(0.12, 0.045, 0.08, 0.98)
 theme_override_constants/outline_size = 4

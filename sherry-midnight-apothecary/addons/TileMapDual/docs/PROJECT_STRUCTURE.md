@@ -10,13 +10,13 @@ Sherry-s-Midnight-Apothecary/          仓库 / Codex 工作区根目录
 ├── .gitattributes
 ├── AGENTS.md                           AI 工作规则（英文执行版）
 ├── AGENTS.zh-CN.md                     AI 工作规则（中文译本）
-└── sherry’s-midnight-apothecary/       唯一正式 Godot 工程根目录
+└── sherry-midnight-apothecary/         唯一正式 Godot 工程根目录
     ├── project.godot
     ├── export_presets.cfg
     └── ...
 ```
 
-Godot 的 `res://` 指向内层 `sherry’s-midnight-apothecary/`，不是外层仓库根目录。所有游戏源码、场景、资源、测试、工具和项目文档默认都必须位于内层。不要在外层创建 `app/`、`assets/`、`scripts/`、`tmp/` 等平行目录。
+Godot 的 `res://` 指向内层 `sherry-midnight-apothecary/`，不是外层仓库根目录。所有游戏源码、场景、资源、测试、工具和项目文档默认都必须位于内层。不要在外层创建 `app/`、`assets/`、`scripts/`、`tmp/` 等平行目录。
 
 ## 2. 游戏定位与运行流程
 

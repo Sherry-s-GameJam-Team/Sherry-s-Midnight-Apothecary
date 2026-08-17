@@ -615,7 +615,9 @@ func _on_heat_finished(heat_result: HeatResult) -> void:
 	instance.created_day = day
 	var liquid_color := BURNT_LIQUID_COLOR if instance.was_burned else _cauldron_liquid_color(active_prediction)
 	instance.actual_color = [liquid_color.r, liquid_color.g, liquid_color.b, liquid_color.a]
-	if instance.was_burned:
+	# Both thermal burns and formula/spectrum failures produce the fixed black
+	# bottle. They bypass the customization panel and commit immediately.
+	if instance.was_burned or bool(active_prediction.get("failed", false)):
 		instance.bottle_style_id = &"black"
 		_commit_brew_instance(instance, result_potion)
 		bottling_panel.show_auto_stored(result_potion, instance.to_dict())

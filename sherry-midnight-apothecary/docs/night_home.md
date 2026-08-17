@@ -25,6 +25,8 @@ On Day 1 night (or initial entry before completion), Luca is present in the shop
 ## Night Bedroom Barrier Check (Ending Night Business)
 
 When the player approaches the left bedroom barrier (`BedroomEntrance`) at night and triggers it (`按[E]进入卧室区域`):
+0. **Immediate Input Binding**:
+   - `NightBedroomBarrier` binds `HomeCameraDirector.entrance_handler` during `_ready()`, so the entrance cannot bypass the business-state check during the first rendered frame.
 1. **Business State Check**:
    - Checks whether the shop has operated tonight (`has_operated`), how many customers have been completed (`completed_customers`), and the number of customers currently waiting at the counter (`remaining_customers = n`).
 2. **Interactive Confirmation Dialogue**:
@@ -35,9 +37,35 @@ When the player approaches the left bedroom barrier (`BedroomEntrance`) at night
    - If the player chooses **结束营业**: `NightBedroomBarrier` invokes `HomeCameraDirector.open_barrier()`, dissolving the barrier visual and unlocking physical passage into the bedroom area.
    - If the player chooses **继续营业 / 先去营业 / 再等等**: the barrier remains locked, allowing the player to continue brewing and serving customers.
 
+## Customer Patience & Rejection Rules
+
+1. **Immediate Departure & Patience Loss**:
+   - Refusing a customer immediately removes them from the current night's queue (`顾客离场`).
+   - Deducts **25%** patience (`REFUSAL_PATIENCE_LOSS = 25.0`), persistent across days.
+2. **Exponential Reputation Penalty**:
+   - Each refusal of a customer incurs a store reputation penalty of $2^n$ (`int(pow(2.0, refusal_count))`), where $n$ is the cumulative number of times this customer has been refused.
+3. **Accurate Medication Recovery**:
+   - Precise/perfect potion matching (`Outcome.PERFECT`, `Outcome.SPECIAL`, or score $\ge 80$) restores customer patience by **+25%** (capped at 100%).
+4. **Final Refusal Warning & Permanent Loss**:
+   - When a customer's current patience is $\le 25\%$ (the next refusal would reduce patience to 0%), clicking reject triggers a `RejectConfirmDialog` modal warning: refusing again will permanently lose this customer.
+   - Once a customer's patience reaches **0%**, they are marked `permanently_lost` and will never visit the apothecary again.
+
+## Night Exit Transformer
+
+The night scene retains the `Transsformer` artwork at the same room position as the daytime home, but disables the node's processing, monitoring, interaction script, and collision. It is presentation-only at night: approaching or pressing `E` produces no hint, message, or map transition.
+
+## Current Queue Sizes
+
+- Store reputation `>= 70`: up to 8 eligible customers.
+- Store reputation `40–69`: up to 2 customers, without premium customers.
+- Store reputation `< 40`: up to 1 low-tier customer.
+
+These values replace the prototype test expectation of three customers at high reputation.
+
 ## Automated Verification
 
-Tests for Luca's night interaction, NightHome scene, and the Night Bedroom Barrier are located in:
+Tests for Luca's night interaction, NightHome scene, shop operations, and the Night Bedroom Barrier are located in:
 - `res://tests/night_luca_interaction_test.gd`
 - `res://tests/night_home_scene_test.gd`
 - `res://tests/night_bedroom_barrier_test.gd`
+- `res://tests/business_shop_test.gd`

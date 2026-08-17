@@ -1,6 +1,9 @@
 class_name ApothecaryDialogueBalloon
 extends CanvasLayer
 
+const DialoguePortraitDatabase := preload("res://night/dialogue/portrait_database.gd")
+const DialoguePortraitSlot := preload("res://night/dialogue/dialogue_portrait_slot.gd")
+
 signal load_requested
 signal settings_requested
 signal dialogue_event(event_name: StringName, payload: Variant)
@@ -20,19 +23,28 @@ signal hint_hide_requested(hint_id: String)
 
 @onready var balloon: Control = %Balloon
 @onready var frame_dock: AspectRatioContainer = %FrameDock
+@onready var portrait_layer: Control = _resolve_slot_node("%PortraitLayer", "Balloon/PortraitLayer")
+@onready var left_slot: DialoguePortraitSlot = _resolve_slot_node("%LeftSlot", "Balloon/PortraitLayer/LeftSlot") as DialoguePortraitSlot
+@onready var center_slot: DialoguePortraitSlot = _resolve_slot_node("%CenterSlot", "Balloon/PortraitLayer/CenterSlot") as DialoguePortraitSlot
+@onready var right_slot: DialoguePortraitSlot = _resolve_slot_node("%RightSlot", "Balloon/PortraitLayer/RightSlot") as DialoguePortraitSlot
 @onready var character_label: RichTextLabel = %CharacterLabel
 @onready var dialogue_label: DialogueLabel = %DialogueLabel
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 @onready var progress: Control = %Progress
 @onready var progress_mark: DialogueProgressIndicator = %AnimatedMark
+@onready var fast_button: TextureButton = get_node_or_null("%FastButton") as TextureButton
 @onready var auto_button: TextureButton = %AutoButton
+@onready var back_button: TextureButton = get_node_or_null("%BackButton") as TextureButton
+@onready var history_button: TextureButton = get_node_or_null("%HistoryButton") as TextureButton
 @onready var history_panel: PanelContainer = %HistoryPanel
+@onready var history_close_button: Button = get_node_or_null("%HistoryCloseButton") as Button
 @onready var history_label: RichTextLabel = %HistoryLabel
 @onready var status_label: Label = %StatusLabel
 
 var temporary_game_states: Array = []
 var is_waiting_for_input := false
 var auto_mode := false
+var fast_mode := false
 var will_hide_balloon := false
 var locals: Dictionary = {}
 var dialogue_line: DialogueLine:
@@ -46,6 +58,9 @@ var dialogue_line: DialogueLine:
 		return dialogue_line
 
 var _history: Array[String] = []
+var _history_stack: Array[Dictionary] = []
+var _is_rolling_back := false
+var _ctrl_fast_active := false
 var _locale := TranslationServer.get_locale()
 var _mutation_cooldown := Timer.new()
 var _status_tween: Tween
@@ -70,6 +85,7 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	_set_dialogue_targets_locked(false)
+	clear_portraits()
 
 
 func _process(_delta: float) -> void:
@@ -178,6 +194,268 @@ func hide_hint(hint_id: String) -> void:
 		top_hint.hide_interaction_hint(hint_id)
 
 
+## Dialogue command: do show_portrait("character", "expression", "slot", "animation")
+func show_portrait(
+	character_name: String,
+	expression: String = "default",
+	slot_name: String = "",
+	animation: String = "slide_in"
+) -> void:
+	var target_slot := slot_name
+	if target_slot.is_empty():
+		target_slot = DialoguePortraitDatabase.get_default_slot_for_character(character_name)
+	var slot := get_slot(target_slot)
+	if slot != null:
+		slot.show_portrait(character_name, expression, animation)
+		_update_portrait_focus(character_name)
+
+
+## Dialogue command: do hide_portrait("slot", "animation")
+func hide_portrait(slot_name: String = "center", animation: String = "slide_out") -> void:
+	var slot := get_slot(slot_name)
+	if slot != null:
+		slot.hide_portrait(animation)
+
+
+## Dialogue command: do clear_portraits()
+func clear_portraits() -> void:
+	for slot in [left_slot, center_slot, right_slot]:
+		if is_instance_valid(slot):
+			slot.clear_instant()
+
+
+## Dialogue command: do set_portrait_focus("slot_or_character")
+func set_portrait_focus(slot_or_character: String) -> void:
+	_update_portrait_focus(slot_or_character)
+
+
+func _resolve_slot_node(unique_path: String, fallback_path: String) -> Node:
+	var n := get_node_or_null(unique_path)
+	if n != null:
+		return n
+	return get_node_or_null(fallback_path)
+
+
+func get_slot(slot_name: String) -> DialoguePortraitSlot:
+	var norm := DialoguePortraitDatabase.normalize_slot(slot_name)
+	match norm:
+		"left":
+			if left_slot == null:
+				left_slot = _resolve_slot_node("%LeftSlot", "Balloon/PortraitLayer/LeftSlot") as DialoguePortraitSlot
+			return left_slot
+		"right":
+			if right_slot == null:
+				right_slot = _resolve_slot_node("%RightSlot", "Balloon/PortraitLayer/RightSlot") as DialoguePortraitSlot
+			return right_slot
+		"center":
+			if center_slot == null:
+				center_slot = _resolve_slot_node("%CenterSlot", "Balloon/PortraitLayer/CenterSlot") as DialoguePortraitSlot
+			return center_slot
+	if center_slot == null:
+		center_slot = _resolve_slot_node("%CenterSlot", "Balloon/PortraitLayer/CenterSlot") as DialoguePortraitSlot
+	return center_slot
+
+
+func _clean_character_name(raw_char: String) -> String:
+	var c := raw_char.strip_edges()
+	if c.contains("#"):
+		var idx := c.find("#")
+		c = c.substr(0, idx).strip_edges()
+	if c.contains("(") and c.ends_with(")"):
+		var idx := c.find("(")
+		c = c.substr(0, idx).strip_edges()
+	return c
+
+
+func _extract_character_tags(raw_char: String) -> Array[String]:
+	var extracted: Array[String] = []
+	if not raw_char.contains("#"):
+		return extracted
+	var idx := raw_char.find("#")
+	var tag_str := raw_char.substr(idx).strip_edges()
+	var parts := tag_str.split("#")
+	for part in parts:
+		var p := part.strip_edges()
+		if not p.is_empty():
+			extracted.append(p)
+	return extracted
+
+
+func _process_portrait_syntax(line: DialogueLine) -> void:
+	if line == null:
+		return
+
+	var clean_speaker := _clean_character_name(line.character)
+
+	# 1. Process tags embedded in character name (e.g. "角色 #left(happy)")
+	var char_tags := _extract_character_tags(line.character)
+	for tag in char_tags:
+		_parse_single_portrait_tag(tag, clean_speaker)
+
+	# 2. Process DialogueManager native line tags
+	if line.tags != null and not line.tags.is_empty():
+		for tag in line.tags:
+			_parse_single_portrait_tag(tag, clean_speaker)
+
+	# 3. Process inline bbcode [portrait=...]
+	if line.text.contains("[portrait"):
+		_parse_inline_portrait_bbcode(line.text, clean_speaker)
+
+	# 4. Update active speaking focus
+	_update_portrait_focus(clean_speaker)
+
+
+func _parse_single_portrait_tag(tag: String, speaker: String) -> void:
+	var t := tag.strip_edges()
+	if t.begins_with("#"):
+		t = t.substr(1).strip_edges()
+	if t.is_empty():
+		return
+
+	if t.begins_with("portrait(") and t.ends_with(")"):
+		var body := t.substr(9, t.length() - 10).strip_edges()
+		if body in ["clear", "reset", "hide_all"]:
+			clear_portraits()
+			return
+		if body.begins_with("hide=") or body.begins_with("hide:"):
+			var slot := body.substr(5).strip_edges()
+			hide_portrait(slot)
+			return
+
+		var char_name := speaker
+		var slot_name := ""
+		var expr_name := "default"
+		var anim_name := "slide_in"
+		var parts := body.split(",")
+		for part in parts:
+			var p := part.strip_edges()
+			if p.contains("="):
+				var kv := p.split("=", true, 1)
+				var k := kv[0].strip_edges().to_lower()
+				var v := kv[1].strip_edges()
+				match k:
+					"slot", "pos", "position":
+						slot_name = v
+					"expr", "expression", "face", "mood":
+						expr_name = v
+					"anim", "animation", "motion":
+						anim_name = v
+					"char", "character", "name", "who":
+						char_name = v
+			elif not p.is_empty():
+				var p_lower := p.to_lower()
+				if slot_name.is_empty() and (p_lower in ["left", "right", "center", "l", "r", "c", "mid", "左", "右", "中"]):
+					slot_name = p
+				elif p_lower in ["slide_in", "fade_in", "bounce", "pop", "shake", "nod"]:
+					anim_name = p
+				elif expr_name == "default":
+					expr_name = p
+
+		if not char_name.is_empty():
+			show_portrait(char_name, expr_name, slot_name, anim_name)
+
+	elif t.begins_with("portrait=") or t.begins_with("portrait:"):
+		var body := t.substr(9).strip_edges()
+		if body in ["clear", "reset"]:
+			clear_portraits()
+			return
+		var tokens := body.split(":")
+		var slot_name := ""
+		var expr_name := "default"
+		var anim_name := "slide_in"
+		var char_name := speaker
+		if tokens.size() >= 1 and not tokens[0].is_empty():
+			slot_name = tokens[0]
+		if tokens.size() >= 2 and not tokens[1].is_empty():
+			expr_name = tokens[1]
+		if tokens.size() >= 3 and not tokens[2].is_empty():
+			anim_name = tokens[2]
+		if not char_name.is_empty():
+			show_portrait(char_name, expr_name, slot_name, anim_name)
+
+	elif t.begins_with("hide_portrait(") and t.ends_with(")"):
+		var slot := t.substr(14, t.length() - 15).strip_edges()
+		hide_portrait(slot)
+
+	elif t.begins_with("left(") or t.begins_with("right(") or t.begins_with("center("):
+		var slot := t.substr(0, t.find("(")).to_lower()
+		var body := t.substr(t.find("(") + 1, t.length() - t.find("(") - 2).strip_edges()
+		var parts := body.split(",")
+		var expr := parts[0].strip_edges() if parts.size() > 0 and not parts[0].strip_edges().is_empty() else "default"
+		var anim := parts[1].strip_edges() if parts.size() > 1 and not parts[1].strip_edges().is_empty() else "slide_in"
+		if not speaker.is_empty():
+			show_portrait(speaker, expr, slot, anim)
+
+
+func _parse_inline_portrait_bbcode(text: String, speaker: String) -> void:
+	var regex := RegEx.new()
+	regex.compile("\\[portrait=([^\\]]+)\\]")
+	var result := regex.search(text)
+	if result != null:
+		var content := result.get_string(1).strip_edges()
+		if content in ["clear", "reset"]:
+			clear_portraits()
+			return
+		var tokens := content.split(":")
+		var char_name := speaker
+		var expr_name := "default"
+		var slot_name := ""
+		var anim_name := "slide_in"
+
+		if tokens.size() == 1:
+			expr_name = tokens[0]
+		elif tokens.size() == 2:
+			expr_name = tokens[0]
+			slot_name = tokens[1]
+		elif tokens.size() == 3:
+			char_name = tokens[0]
+			expr_name = tokens[1]
+			slot_name = tokens[2]
+		elif tokens.size() >= 4:
+			char_name = tokens[0]
+			expr_name = tokens[1]
+			slot_name = tokens[2]
+			anim_name = tokens[3]
+
+		if not char_name.is_empty():
+			show_portrait(char_name, expr_name, slot_name, anim_name)
+
+
+func _update_portrait_focus(speaking_character: String) -> void:
+	var clean_speaker := speaking_character.strip_edges().to_lower()
+	var slots := [left_slot, center_slot, right_slot]
+	var matched_any := false
+
+	for slot in slots:
+		if not is_instance_valid(slot) or not slot.is_active:
+			continue
+		var matches: bool = (
+			not clean_speaker.is_empty()
+			and (
+				slot.current_character.to_lower() == clean_speaker
+				or DialoguePortraitDatabase.normalize_slot(clean_speaker) == _slot_to_name(slot)
+			)
+		)
+		if matches:
+			slot.set_focused(true)
+			matched_any = true
+		else:
+			slot.set_focused(false)
+
+	if not matched_any:
+		for slot in slots:
+			if is_instance_valid(slot) and slot.is_active:
+				slot.set_focused(true)
+
+
+func _slot_to_name(slot: DialoguePortraitSlot) -> String:
+	if slot == left_slot:
+		return "left"
+	if slot == right_slot:
+		return "right"
+	return "center"
+
+
 func _find_top_hint() -> TopHintUI:
 	var current: Node = self
 	while current != null:
@@ -188,19 +466,46 @@ func _find_top_hint() -> TopHintUI:
 	return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.keycode == KEY_CTRL:
+			var prev := _ctrl_fast_active
+			_ctrl_fast_active = event.is_pressed()
+			if _ctrl_fast_active != prev:
+				_update_fast_button_visual()
+				if _ctrl_fast_active and is_waiting_for_input and is_instance_valid(dialogue_line):
+					_trigger_fast_advance()
+		elif event.is_pressed() and event.keycode == KEY_ESCAPE:
+			if history_panel != null and history_panel.visible:
+				history_panel.hide()
+				get_viewport().set_input_as_handled()
+
+
+func _is_fast_forward_active() -> bool:
+	return fast_mode or _ctrl_fast_active or Input.is_key_pressed(KEY_CTRL)
+
+
+func _update_fast_button_visual() -> void:
+	if fast_button != null:
+		var active := _is_fast_forward_active()
+		fast_button.modulate = Color(1.2, 0.95, 0.55) if active else Color.WHITE
+
+
 func apply_dialogue_line() -> void:
 	_mutation_cooldown.stop()
 	progress.hide()
 	progress_mark.set_playing(false)
 	is_waiting_for_input = false
 
-	character_label.visible = not dialogue_line.character.is_empty()
-	character_label.text = tr(dialogue_line.character, "dialogue")
+	var clean_speaker := _clean_character_name(dialogue_line.character)
+	character_label.visible = not clean_speaker.is_empty()
+	character_label.text = tr(clean_speaker, "dialogue")
 	dialogue_label.hide()
 	dialogue_label.dialogue_line = dialogue_line
 	responses_menu.hide()
 	responses_menu.responses = dialogue_line.responses
 	_append_history(dialogue_line)
+	_process_portrait_syntax(dialogue_line)
 
 	will_hide_balloon = false
 	var current_line_id := dialogue_line.id
@@ -211,9 +516,14 @@ func apply_dialogue_line() -> void:
 	balloon.focus_mode = Control.FOCUS_ALL
 	balloon.grab_focus()
 	dialogue_label.show()
-	if not dialogue_line.text.is_empty():
+
+	var fast_active := _is_fast_forward_active()
+	if fast_active:
+		dialogue_label.skip_typing()
+	elif not dialogue_line.text.is_empty():
 		dialogue_label.type_out()
 		await dialogue_label.finished_typing
+
 	if not is_instance_valid(dialogue_line) or dialogue_line.id != current_line_id:
 		return
 
@@ -225,6 +535,10 @@ func apply_dialogue_line() -> void:
 		# Every conditional response failed. Continue instead of showing an
 		# empty, unfocusable response menu.
 		next(dialogue_line.next_id)
+	elif _is_fast_forward_active():
+		await get_tree().create_timer(0.2).timeout
+		if is_instance_valid(dialogue_line) and dialogue_line.id == current_line_id and _is_fast_forward_active():
+			next(dialogue_line.next_id)
 	elif dialogue_line.time != "":
 		var wait_time := dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		await get_tree().create_timer(wait_time).timeout
@@ -242,8 +556,84 @@ func apply_dialogue_line() -> void:
 func next(next_id: String) -> void:
 	if _is_transitioning or _is_closing:
 		return
-	history_panel.hide()
+	if history_panel != null:
+		history_panel.hide()
+	if not _is_rolling_back:
+		_save_history_snapshot()
 	dialogue_line = await dialogue_resource.get_next_dialogue_line(next_id, temporary_game_states)
+
+
+func _save_history_snapshot() -> void:
+	if not is_instance_valid(dialogue_line):
+		return
+	var snapshot := {
+		"line": dialogue_line,
+		"character": dialogue_line.character,
+		"text": dialogue_line.text,
+		"tags": dialogue_line.tags.duplicate() if dialogue_line.tags != null else PackedStringArray(),
+		"time": dialogue_line.time,
+		"responses": dialogue_line.responses.duplicate() if dialogue_line.responses != null else [],
+		"left_active": left_slot.is_active if left_slot != null else false,
+		"left_char": left_slot.current_character if left_slot != null else "",
+		"left_expr": left_slot.current_expression if left_slot != null else "default",
+		"center_active": center_slot.is_active if center_slot != null else false,
+		"center_char": center_slot.current_character if center_slot != null else "",
+		"center_expr": center_slot.current_expression if center_slot != null else "default",
+		"right_active": right_slot.is_active if right_slot != null else false,
+		"right_char": right_slot.current_character if right_slot != null else "",
+		"right_expr": right_slot.current_expression if right_slot != null else "default",
+	}
+	_history_stack.append(snapshot)
+	if _history_stack.size() > 50:
+		_history_stack.pop_front()
+
+
+func _restore_history_snapshot(snapshot: Dictionary) -> void:
+	_is_rolling_back = true
+	_mutation_cooldown.stop()
+	progress.hide()
+	progress_mark.set_playing(false)
+	is_waiting_for_input = false
+
+	# Restore portrait slots
+	_restore_slot(left_slot, snapshot.get("left_active", false), snapshot.get("left_char", ""), snapshot.get("left_expr", "default"))
+	_restore_slot(center_slot, snapshot.get("center_active", false), snapshot.get("center_char", ""), snapshot.get("center_expr", "default"))
+	_restore_slot(right_slot, snapshot.get("right_active", false), snapshot.get("right_char", ""), snapshot.get("right_expr", "default"))
+
+	# Restore character name
+	var raw_char: String = snapshot.get("character", "")
+	var clean_speaker := _clean_character_name(raw_char)
+	character_label.visible = not clean_speaker.is_empty()
+	character_label.text = tr(clean_speaker, "dialogue")
+
+	# Restore dialogue line & immediate text display
+	var prev_line: DialogueLine = snapshot.get("line")
+	dialogue_line = prev_line
+	dialogue_label.dialogue_line = prev_line
+	dialogue_label.show()
+	dialogue_label.skip_typing()
+
+	# Restore responses
+	responses_menu.hide()
+	var responses: Array = snapshot.get("responses", [])
+	responses_menu.responses = responses
+	if not responses.is_empty():
+		responses_menu.show()
+
+	_update_portrait_focus(clean_speaker)
+	is_waiting_for_input = true
+	balloon.focus_mode = Control.FOCUS_ALL
+	balloon.grab_focus()
+	_is_rolling_back = false
+
+
+func _restore_slot(slot: DialoguePortraitSlot, active: bool, character_name: String, expression: String) -> void:
+	if slot == null:
+		return
+	if active and not character_name.is_empty():
+		slot.show_portrait(character_name, expression, "fade_in")
+	else:
+		slot.clear_instant()
 
 
 func is_transitioning() -> bool:
@@ -320,6 +710,7 @@ func _close_balloon() -> void:
 	_has_entered = false
 	balloon.hide()
 	_set_dialogue_targets_locked(false)
+	clear_portraits()
 	if owner == null:
 		queue_free()
 	else:
@@ -343,10 +734,14 @@ func _kill_transition_tween() -> void:
 
 
 func _append_history(line: DialogueLine) -> void:
-	var speaker := tr(line.character, "dialogue")
+	var clean_speaker := _clean_character_name(line.character)
+	var speaker := tr(clean_speaker, "dialogue")
 	var body := tr(line.text, "dialogue")
-	_history.append(("[color=#754319][b]%s[/b][/color]\n%s" % [speaker, body]) if not speaker.is_empty() else body)
-	if _history.size() > 30:
+	if not speaker.is_empty():
+		_history.append("[color=#e5be7a][b]◆ %s[/b][/color]\n[color=#eae2d5]%s[/color]" % [speaker, body])
+	else:
+		_history.append("[color=#c2b7a3][i]%s[/i][/color]" % [body])
+	if _history.size() > 40:
 		_history.pop_front()
 
 
@@ -372,9 +767,23 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 func _on_fast_pressed() -> void:
 	if _is_transitioning or _is_closing:
 		return
-	if dialogue_label.is_typing:
-		dialogue_label.skip_typing()
-	elif is_waiting_for_input and is_instance_valid(dialogue_line):
+	fast_mode = not fast_mode
+	_update_fast_button_visual()
+	_show_status("快进模式：开启 (0.2s/页)" if fast_mode else "快进模式：关闭")
+	if fast_mode:
+		if dialogue_label.is_typing:
+			dialogue_label.skip_typing()
+		elif is_waiting_for_input and is_instance_valid(dialogue_line):
+			_trigger_fast_advance()
+
+
+func _trigger_fast_advance() -> void:
+	if not is_waiting_for_input or not is_instance_valid(dialogue_line) or not responses_menu.get_menu_items().is_empty():
+		return
+	is_waiting_for_input = false
+	dialogue_label.skip_typing()
+	await get_tree().create_timer(0.2).timeout
+	if is_instance_valid(dialogue_line) and _is_fast_forward_active():
 		next(dialogue_line.next_id)
 
 
@@ -394,16 +803,36 @@ func _on_auto_pressed() -> void:
 func _on_back_pressed() -> void:
 	if _is_transitioning or _is_closing:
 		return
+	if history_panel != null:
+		history_panel.hide()
+	if _history_stack.is_empty():
+		_show_status("已是第一句话")
+		return
+
+	var prev_snapshot: Dictionary = _history_stack.pop_back()
+	_restore_history_snapshot(prev_snapshot)
+	_show_status("已回退至上一句")
+
+
+func _on_history_pressed() -> void:
+	if _is_transitioning or _is_closing:
+		return
 	history_panel.visible = not history_panel.visible
 	if history_panel.visible:
 		history_label.text = "\n\n".join(_history)
 		history_label.scroll_to_line(maxi(0, history_label.get_line_count() - 1))
 
 
+func _on_history_close_pressed() -> void:
+	if history_panel != null:
+		history_panel.hide()
+
+
 func _on_settings_pressed() -> void:
 	if _is_transitioning or _is_closing:
 		return
-	history_panel.hide()
+	if history_panel != null:
+		history_panel.hide()
 	settings_requested.emit()
 	var pause_menu := get_tree().get_first_node_in_group("pause_menu") as PauseMenu
 	if is_instance_valid(pause_menu):
@@ -415,6 +844,8 @@ func _on_settings_pressed() -> void:
 func _on_load_pressed() -> void:
 	if _is_transitioning or _is_closing:
 		return
+	if history_panel != null:
+		history_panel.hide()
 	load_requested.emit()
 	var current_scene := get_tree().current_scene
 	if is_instance_valid(current_scene) and current_scene.has_method("load_game"):

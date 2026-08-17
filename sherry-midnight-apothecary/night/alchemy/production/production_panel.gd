@@ -2,6 +2,13 @@ class_name ProductionPanel
 extends Control
 
 const HERB_ICON_COLUMNS := 4
+const HERB_ICON_ROWS := 3
+const HERB_PAGE_SIZE := HERB_ICON_COLUMNS * HERB_ICON_ROWS
+# `herb_inventory.png` is 1792 × 2272. These gaps are measured between its
+# painted 4 × 3 slots and are scaled with the artwork at runtime.
+const HERB_ART_NATIVE_SIZE := Vector2(1792.0, 2272.0)
+const HERB_SLOT_HORIZONTAL_GAP := 44.0
+const HERB_SLOT_VERTICAL_GAP := 41.0
 
 @export var pack_delay_seconds := 3.0
 
@@ -16,8 +23,13 @@ var ground_powder: PowderInstanceData
 var drag_mode := true
 var packing := false
 var drag_button: TextureButton
+var herb_page := 0
 
 @onready var herb_grid: GridContainer = %HerbGrid
+@onready var herb_inventory_art: TextureRect = %HerbInventoryArt
+@onready var herb_previous_button: Button = %HerbPreviousButton
+@onready var herb_next_button: Button = %HerbNextButton
+@onready var herb_page_label: Label = %HerbPageLabel
 @onready var process_board: ProcessBoard = %ProcessBoard
 @onready var spectrum_preview: ColorRect = %SpectrumPreview
 @onready var spectrum_label: Label = %SpectrumLabel
@@ -41,7 +53,11 @@ func _ready() -> void:
 	grind_button.pressed.connect(grind_selected_pieces)
 	pack_button.pressed.connect(pack_powder)
 	redo_button.pressed.connect(redo_current_process)
+	herb_previous_button.pressed.connect(show_previous_herb_page)
+	herb_next_button.pressed.connect(show_next_herb_page)
 	pack_timer.timeout.connect(_on_pack_timer_timeout)
+	herb_inventory_art.resized.connect(_align_herb_grid_to_art)
+	_align_herb_grid_to_art()
 	_refresh_all()
 
 
@@ -201,6 +217,24 @@ func refresh_inventory() -> void:
 	_refresh_herbs()
 
 
+func herb_page_count() -> int:
+	return maxi(1, ceili(float(_available_herb_definitions().size()) / float(HERB_PAGE_SIZE)))
+
+
+func show_previous_herb_page() -> void:
+	_set_herb_page(herb_page - 1)
+
+
+func show_next_herb_page() -> void:
+	_set_herb_page(herb_page + 1)
+
+
+func _set_herb_page(page: int) -> void:
+	var page_count := herb_page_count()
+	herb_page = posmod(page, page_count)
+	_refresh_herbs()
+
+
 func _on_pack_timer_timeout() -> void:
 	if not packing or ground_powder == null or current_herb == null:
 		return
@@ -314,28 +348,38 @@ func _source_ingredient_counts() -> Dictionary:
 func _refresh_herbs() -> void:
 	if herb_grid == null:
 		return
+	_align_herb_grid_to_art()
+	var available_definitions := _available_herb_definitions()
+	var page_count := maxi(1, ceili(float(available_definitions.size()) / float(HERB_PAGE_SIZE)))
+	herb_page = clampi(herb_page, 0, page_count - 1)
+	var first_index := herb_page * HERB_PAGE_SIZE
+	var visible_definitions: Array[IngredientData] = []
+	for index in range(first_index, mini(first_index + HERB_PAGE_SIZE, available_definitions.size())):
+		visible_definitions.append(available_definitions[index])
 	var current_cards: Dictionary = {}
+	var current_card_order: Array[StringName] = []
 	for child: Node in herb_grid.get_children():
 		if child is HerbCard:
 			var card := child as HerbCard
 			if card.ingredient_data != null and not current_cards.has(card.ingredient_data.id):
 				current_cards[card.ingredient_data.id] = card
-	var can_update_in_place := current_cards.size() == ingredient_definitions.size()
+				current_card_order.append(card.ingredient_data.id)
+	var can_update_in_place := current_cards.size() == visible_definitions.size()
 	if can_update_in_place:
-		for ingredient: IngredientData in ingredient_definitions:
-			if ingredient == null or not current_cards.has(ingredient.id):
+		for index in visible_definitions.size():
+			var ingredient := visible_definitions[index]
+			if not current_cards.has(ingredient.id) or current_card_order[index] != ingredient.id:
 				can_update_in_place = false
 				break
 	if can_update_in_place:
-		for ingredient: IngredientData in ingredient_definitions:
+		for ingredient: IngredientData in visible_definitions:
 			var card := current_cards[ingredient.id] as HerbCard
 			card.update_available(alchemy_runtime.available_count(ingredient.id) if alchemy_runtime != null else 0)
+		_update_herb_page_controls(page_count)
 		return
 	for child: Node in herb_grid.get_children():
 		child.free()
-	for ingredient: IngredientData in ingredient_definitions:
-		if ingredient == null:
-			continue
+	for ingredient: IngredientData in visible_definitions:
 		var card := HerbCard.new()
 		card.compact_visual = true
 		card.compact_icon = ingredient.icon
@@ -343,12 +387,39 @@ func _refresh_herbs() -> void:
 		card.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		card.setup(ingredient, alchemy_runtime.available_count(ingredient.id) if alchemy_runtime != null else 0)
 		herb_grid.add_child(card)
-	while herb_grid.get_child_count() < HERB_ICON_COLUMNS * 3:
+	while herb_grid.get_child_count() < HERB_PAGE_SIZE:
 		var empty_slot := Control.new()
 		empty_slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		empty_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		empty_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		herb_grid.add_child(empty_slot)
+	_update_herb_page_controls(page_count)
+
+
+func _available_herb_definitions() -> Array[IngredientData]:
+	var definitions: Array[IngredientData] = []
+	for ingredient: IngredientData in ingredient_definitions:
+		if ingredient != null:
+			definitions.append(ingredient)
+	return definitions
+
+
+func _update_herb_page_controls(page_count: int) -> void:
+	if herb_page_label != null:
+		herb_page_label.text = "%d / %d" % [herb_page + 1, page_count]
+	if herb_previous_button != null:
+		herb_previous_button.visible = page_count > 1
+	if herb_next_button != null:
+		herb_next_button.visible = page_count > 1
+
+
+func _align_herb_grid_to_art() -> void:
+	if herb_grid == null or herb_inventory_art == null:
+		return
+	var horizontal_gap := roundi(herb_inventory_art.size.x / HERB_ART_NATIVE_SIZE.x * HERB_SLOT_HORIZONTAL_GAP)
+	var vertical_gap := roundi(herb_inventory_art.size.y / HERB_ART_NATIVE_SIZE.y * HERB_SLOT_VERTICAL_GAP)
+	herb_grid.add_theme_constant_override("h_separation", horizontal_gap)
+	herb_grid.add_theme_constant_override("v_separation", vertical_gap)
 
 
 func _refresh_board() -> void:

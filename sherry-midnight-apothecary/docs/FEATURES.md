@@ -31,3 +31,8 @@
 - [Lake bottom](lake_bottom.md): exposed lakebed day level — three spring valves, Tide Eye boss purification, standard Sherry player controller, embedded developer console & pause menu, and LevelData registration.
 
 - [Potion Spectrum Codex](spectrum_codex.md): interactive, data-driven codex UI featuring vertical spectrum zoom/pan LOD view, cross-table primary x secondary function matrix view, and unlock progress tracking.
+
+- [Potion Bottling Workshop](potion_bottling.md): nighttime alchemy bottling UI with arrow-based bottle style switcher, smart default naming, primary/secondary effect breakdown, and medieval parchment styling.
+
+- [Night production herb inventory](production_processing.md): artwork-aligned 4 × 3 herb shelf with responsive slot spacing and paged navigation.
+- [Dialogue Character Portraits](dialogue_portrait.md): 3-slot (left, center, right) character portrait presentation, Dialogue Manager tag/command syntax integration, expression cross-fading, focus dimming, and entrance/reaction animations.

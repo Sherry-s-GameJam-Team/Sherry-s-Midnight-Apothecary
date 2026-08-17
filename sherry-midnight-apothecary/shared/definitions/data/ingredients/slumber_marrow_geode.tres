@@ -1,28 +1,22 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=9 format=3]
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://btujxq77yiof5"]
 
-[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
-[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
-[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/slumber_marrow_geode/preview/herb_slot_thumb.png" id="4_icon"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/slumber_marrow_geode/preview/herb_preview.png" id="5_preview"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/slumber_marrow_geode/pieces/purple/piece_01.png" id="6_piece_01"]
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
+[ext_resource type="Texture2D" uid="uid://dpbi43fk8ct7n" path="res://day/interactables/herb/herbs/slumber_marrow_geode/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://7n5kfsfr3j1o" path="res://day/interactables/herb/herbs/slumber_marrow_geode/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://dcv20wueaocdo" path="res://day/interactables/herb/herbs/slumber_marrow_geode/pieces/purple/piece_01.png" id="6_piece_01"]
 
 [sub_resource type="Resource" id="Piece_01"]
 script = ExtResource("3_piece_script")
 id = &"slumber_marrow_geode_piece_01"
 display_name = "眠谷梦髓晶洞·部位01"
-kind = 2
 texture = ExtResource("6_piece_01")
 source_rect = Rect2i(837, 320, 2492, 3264)
-area_ratio = 1.000000
-detachable = true
-grindable = true
+area_ratio = 1.0
 color_id = &"purple"
-spectrum_x = 0.980
-display_color = Color(0.5215686, 0.3411765, 0.6509804, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.98
+display_color = Color(0.5215686, 0.3411765, 0.6509804, 1)
 z_order = 1
 
 [sub_resource type="Resource" id="Layer_main"]
@@ -30,9 +24,8 @@ script = ExtResource("2_layer_script")
 id = &"slumber_marrow_geode_purple_layer"
 display_name = "紫色部位层"
 color_id = &"purple"
-display_color = Color(0.5215686, 0.3411765, 0.6509804, 1.0)
-spectrum_x = 0.980
-layer_yield_multiplier = 1.0
+display_color = Color(0.5215686, 0.3411765, 0.6509804, 1)
+spectrum_x = 0.98
 pieces = Array[ExtResource("3_piece_script")]([SubResource("Piece_01")])
 
 [resource]
@@ -51,4 +44,3 @@ spectrum_start = 0.965
 spectrum_end = 0.995
 base_quality = 1.25
 base_concentration = 1.2
-

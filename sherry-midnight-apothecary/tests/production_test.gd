@@ -144,7 +144,7 @@ static func run(test: TestSupport) -> void:
 
 	test.expect_equal(panel.pack_delay_seconds, 3.0, "Production packaging keeps the required three-second display delay.")
 	test.expect_equal(panel.herb_grid.columns, 4, "The production inventory follows the artwork's four-column layout.")
-	test.expect_equal(panel.herb_grid.get_child_count(), 12, "Empty controls preserve all three artwork rows.")
+	test.expect_equal(panel.herb_grid.get_child_count(), ProductionPanel.HERB_PAGE_SIZE, "The herb artwork always contains exactly its twelve 4 × 3 slots.")
 	var shelf_cards: Array[Node] = panel.herb_grid.get_children().filter(func(child: Node) -> bool: return child is HerbCard)
 	test.expect(shelf_cards.size() >= 6, "All six formal plants appear in the herb shelf.")
 	var herb_card := shelf_cards.filter(func(card: HerbCard) -> bool: return card.ingredient_data.id == HERB_ID)[0] as HerbCard
@@ -530,6 +530,7 @@ static func run(test: TestSupport) -> void:
 	runtime.distillation_fill.stop_animation()
 	runtime.distillation_fill.set_fill_progress(1.0)
 	runtime._on_distillation_fill_animation_finished(1.0)
+	runtime._on_bottling_confirmed(&"health", "")
 	test.expect(not runtime.last_brewed_instance.is_empty(), "A filled distillation vessel commits a processed powder potion.")
 	test.expect_equal(result.spent_ingredients.get(HERB_ID), spent_before_brew, "Brewing powder does not deduct its source plant twice.")
 	player.apply_night_result(result)
@@ -600,6 +601,25 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal((board.board_items.get_child(0) as HerbAssemblyView).get_child_count(), 9, "The production board never places the full tree into the processing assembly.")
 	test.expect(panel.separate_herb() and board.get_piece_views().size() == 9, "All nine tied fruits detach into independently draggable views.")
 	panel.redo_current_process()
+
+	# The HerbInventoryArt texture contains exactly twelve painted slots. Extra
+	# definitions move to a new page instead of creating a fourth visual row.
+	test.expect_equal(panel.herb_page_count(), 2, "Sixteen registered ingredients are split across two herb-inventory pages.")
+	test.expect_equal(panel.herb_page, 0, "The herb shelf begins on its first page.")
+	test.expect_equal(panel.herb_page_label.text, "1 / 2", "The artwork page indicator reports the first page.")
+	test.expect(panel.herb_previous_button.visible and panel.herb_next_button.visible, "Page arrows are available when more than twelve herbs are registered.")
+	panel.show_next_herb_page()
+	test.expect_equal(panel.herb_page, 1, "The next arrow opens the second herb page.")
+	test.expect_equal(panel.herb_page_label.text, "2 / 2", "The artwork page indicator updates after paging.")
+	test.expect_equal(panel.herb_grid.get_child_count(), ProductionPanel.HERB_PAGE_SIZE, "The second page preserves the fixed twelve-slot grid with blank slots.")
+	var second_page_cards: Array[Node] = panel.herb_grid.get_children().filter(func(child: Node) -> bool: return child is HerbCard)
+	test.expect_equal(second_page_cards.size(), 4, "Only the four remaining registered herbs occupy the second page.")
+	panel.show_next_herb_page()
+	test.expect_equal(panel.herb_page, 0, "The next arrow wraps from the final page to the first page.")
+	panel.show_previous_herb_page()
+	test.expect_equal(panel.herb_page, 1, "The previous arrow wraps from the first page to the final page.")
+	panel.show_previous_herb_page()
+	test.expect_equal(panel.herb_page, 0, "The previous arrow returns to the first page.")
 	runtime.free()
 
 

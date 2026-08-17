@@ -7,12 +7,12 @@
 本仓库包含一个外层工作区目录，以及一个嵌套的 Godot 工程。
 
 - 仓库／工作区根目录：包含本文件、`AGENTS.md` 和 `.git/` 的目录。
-- **唯一正式 Godot 工程根目录：**`sherry’s-midnight-apothecary/`（名称中使用弯引号 `’`）。
+- **唯一正式 Godot 工程根目录：**`sherry-midnight-apothecary/`。
 - `project.godot`、`README.md`、游戏源码、资源、测试、工具和项目文档都应位于正式 Godot 工程根目录之下。
 - 除非任务明确针对仓库级元数据，**禁止在 `AGENTS.md` 同级位置创建游戏文件、笔记、生成资源、脚本或临时文件**。
-- Godot 命令应从 `sherry’s-midnight-apothecary/` 中运行，或者通过 `--path` 指向该目录。
+- Godot 命令应从 `sherry-midnight-apothecary/` 中运行，或者通过 `--path` 指向该目录。
 
-新增文件前，必须先阅读 `sherry’s-midnight-apothecary/docs/PROJECT_STRUCTURE.md`，并根据文档选择目标目录。若没有合适位置，应先询问，不得擅自创建新的顶层目录。
+新增文件前，必须先阅读 `sherry-midnight-apothecary/docs/PROJECT_STRUCTURE.md`，并根据文档选择目标目录。若没有合适位置，应先询问，不得擅自创建新的顶层目录。
 
 ## 架构边界
 
@@ -39,10 +39,10 @@
 ## 编辑与验证
 
 - 保留用户已有修改，避免无关清理或大规模文件移动。
-- 使用以 `sherry’s-midnight-apothecary/` 为根的 `res://` 路径；禁止在 Godot Resource 中写入本机绝对路径。
+- 使用以 `sherry-midnight-apothecary/` 为根的 `res://` 路径；禁止在 Godot Resource 中写入本机绝对路径。
 - Godot 已生成 `.gd.uid` 时，应保持它与对应脚本配对；不得手工创建导入缓存文件。
 - 移动 Godot Resource 时，必须在同一次修改中更新所有 `res://` 引用并验证解析。
-- 每次新增功能，或者改变功能的玩家可见行为、操作方式、数据流或架构时，必须在同一次修改中同步更新 `sherry’s-midnight-apothecary/docs/` 下对应的 Markdown 功能文档。若没有合适文档，应在该目录新建，并登记到 `docs/FEATURES.md`；功能文档仍然过期时，不得视为功能已完成。
+- 每次新增功能，或者改变功能的玩家可见行为、操作方式、数据流或架构时，必须在同一次修改中同步更新 `sherry-midnight-apothecary/docs/` 下对应的 Markdown 功能文档。若没有合适文档，应在该目录新建，并登记到 `docs/FEATURES.md`；功能文档仍然过期时，不得视为功能已完成。
 - 最低验证要求是在 Godot 工程根目录运行：
 
 ```powershell

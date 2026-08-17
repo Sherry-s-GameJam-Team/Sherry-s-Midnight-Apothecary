@@ -44,9 +44,10 @@ static func run(test: TestSupport) -> void:
 	test.expect(not first.is_empty(), "A valid batch produces an instance.")
 	test.expect(first.has("thermal_score") and first.has("potency") and first.has("duration"), "Brewed instances persist their thermal treatment attributes.")
 	test.expect_equal(player.inventory, inventory_before, "Brewing does not directly mutate PlayerData inventory.")
-	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 1, "Committed batch records one ingredient exactly once.")
+	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), null, "A batch does not spend its ingredient before bottling confirmation.")
 	test.expect_equal(result.produced_potions.get(&"green_potion", []).size(), 0, "A completed brew waits for bottling before entering production.")
 	runtime._on_bottling_confirmed(&"moon", "试验药")
+	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 1, "Bottling commits one ingredient exactly once.")
 	test.expect_equal(result.produced_potions[&"green_potion"].size(), 1, "Confirmed bottling appends a dynamic potion instance.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["bottle_style_id"], "moon", "Bottling stores the selected bottle style.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["custom_name"], "试验药", "Bottling stores the custom name.")
@@ -58,6 +59,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(runtime.set_processing_selection(0.40, 0.46), "Second batch can be cut.")
 	test.expect(runtime.add_processing_to_cauldron(), "Second batch ingredient enters cauldron.")
 	test.expect(not _brew_to_completion(runtime).is_empty(), "Second batch brews.")
+	runtime._on_bottling_confirmed(&"health", "")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 2, "Two committed batches spend two, without double subtraction.")
 	test.expect_equal(result.produced_potions[&"green_potion"].size(), 2, "Two potion instances are preserved.")
 
@@ -110,6 +112,7 @@ static func run(test: TestSupport) -> void:
 	runtime.cauldron_ingredients.assign([special_dew])
 	var brewed_purification := _brew_to_completion(runtime)
 	test.expect_equal(brewed_purification.get("potion_id"), &"purification_potion", "Pure blue dew completes as the dedicated purification potion.")
+	runtime._on_bottling_confirmed(&"ice", "")
 	test.expect_equal(result.produced_potions[&"purification_potion"].size(), 1, "Dedicated purification is committed to nightly production.")
 
 	player.apply_night_result(result)
@@ -134,4 +137,6 @@ static func _brew_to_completion(runtime: AlchemyRuntime) -> Dictionary:
 	runtime.distillation_fill.stop_animation()
 	runtime.distillation_fill.set_fill_progress(1.0)
 	runtime._on_distillation_fill_animation_finished(1.0)
+	if runtime.pending_bottling_instance != null:
+		return runtime.pending_bottling_instance.to_dict()
 	return runtime.last_brewed_instance

@@ -56,7 +56,7 @@ func request_bedroom() -> void:
 
 
 func refresh_interaction_hints() -> void:
-	for node_name: StringName in [&"Table", &"Equip", &"Transsformer"]:
+	for node_name: StringName in [&"Table", &"Equip"]:
 		var interaction := get_node_or_null(NodePath(node_name))
 		if interaction != null and interaction.has_method("refresh_hint"):
 			interaction.call("refresh_hint")

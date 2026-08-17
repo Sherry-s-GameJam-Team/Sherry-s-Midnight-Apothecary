@@ -1,66 +1,48 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=13 format=3]
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://d2vrxccvwl4sf"]
 
-[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
-[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
-[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/dusk_water_opuntia/preview/herb_slot_thumb.png" id="4_icon"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/dusk_water_opuntia/preview/herb_preview.png" id="5_preview"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/dusk_water_opuntia/pieces/purple/piece_01.png" id="6_piece_01"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/dusk_water_opuntia/pieces/purple/piece_02.png" id="7_piece_02"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/dusk_water_opuntia/pieces/purple/piece_03.png" id="8_piece_03"]
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
+[ext_resource type="Texture2D" uid="uid://5lnhd0rh0jpo" path="res://day/interactables/herb/herbs/dusk_water_opuntia/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://bcpxgh68xayas" path="res://day/interactables/herb/herbs/dusk_water_opuntia/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://ci8f8xv4ua84b" path="res://day/interactables/herb/herbs/dusk_water_opuntia/pieces/purple/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://dph4uwp8o4kfy" path="res://day/interactables/herb/herbs/dusk_water_opuntia/pieces/purple/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://cei2rv22uch8n" path="res://day/interactables/herb/herbs/dusk_water_opuntia/pieces/purple/piece_03.png" id="8_piece_03"]
 
 [sub_resource type="Resource" id="Piece_01"]
 script = ExtResource("3_piece_script")
 id = &"dusk_water_opuntia_piece_01"
 display_name = "昏光水囊掌·部位01"
-kind = 2
 texture = ExtResource("6_piece_01")
 source_rect = Rect2i(293, 794, 1543, 2880)
 area_ratio = 0.333333
-detachable = true
-grindable = true
 color_id = &"purple"
-spectrum_x = 0.880
-display_color = Color(0.5215686, 0.3411765, 0.6509804, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.88
+display_color = Color(0.5215686, 0.3411765, 0.6509804, 1)
 z_order = 1
 
 [sub_resource type="Resource" id="Piece_02"]
 script = ExtResource("3_piece_script")
 id = &"dusk_water_opuntia_piece_02"
 display_name = "昏光水囊掌·部位02"
-kind = 2
 texture = ExtResource("7_piece_02")
 source_rect = Rect2i(1374, 625, 1290, 2978)
 area_ratio = 0.333333
-detachable = true
-grindable = true
 color_id = &"purple"
-spectrum_x = 0.880
-display_color = Color(0.5215686, 0.3411765, 0.6509804, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.88
+display_color = Color(0.5215686, 0.3411765, 0.6509804, 1)
 z_order = 2
 
 [sub_resource type="Resource" id="Piece_03"]
 script = ExtResource("3_piece_script")
 id = &"dusk_water_opuntia_piece_03"
 display_name = "昏光水囊掌·部位03"
-kind = 2
 texture = ExtResource("8_piece_03")
 source_rect = Rect2i(1874, 1079, 2219, 2617)
 area_ratio = 0.333333
-detachable = true
-grindable = true
 color_id = &"purple"
-spectrum_x = 0.880
-display_color = Color(0.5215686, 0.3411765, 0.6509804, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.88
+display_color = Color(0.5215686, 0.3411765, 0.6509804, 1)
 z_order = 3
 
 [sub_resource type="Resource" id="Layer_main"]
@@ -68,9 +50,8 @@ script = ExtResource("2_layer_script")
 id = &"dusk_water_opuntia_purple_layer"
 display_name = "紫色部位层"
 color_id = &"purple"
-display_color = Color(0.5215686, 0.3411765, 0.6509804, 1.0)
-spectrum_x = 0.880
-layer_yield_multiplier = 1.0
+display_color = Color(0.5215686, 0.3411765, 0.6509804, 1)
+spectrum_x = 0.88
 pieces = Array[ExtResource("3_piece_script")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
 
 [resource]
@@ -89,4 +70,3 @@ spectrum_start = 0.865
 spectrum_end = 0.895
 base_quality = 1.05
 base_concentration = 1.15
-

@@ -51,5 +51,5 @@ static func run(test: TestSupport) -> void:
 				test.expect(piece.spectrum_x >= 0.8571 and piece.spectrum_x <= 1.0, "%s stays inside the purple band." % piece.id)
 	for ingredient_id: StringName in EXPECTED_COLORS:
 		test.expect(seen_ids.has(ingredient_id), "Colored plant is registered in AlchemyRuntime: %s" % ingredient_id)
-	test.expect_equal(total_piece_count, 31, "All supplied colored plant parts are registered for production.")
+	test.expect_equal(total_piece_count, 32, "All supplied colored plant parts are registered for production.")
 	runtime.free()

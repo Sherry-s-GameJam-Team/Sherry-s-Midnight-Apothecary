@@ -1,66 +1,48 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=13 format=3]
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://cu6rs8u83gudw"]
 
-[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
-[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
-[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/preview/herb_slot_thumb.png" id="4_icon"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/preview/herb_preview.png" id="5_preview"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_01.png" id="6_piece_01"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_02.png" id="7_piece_02"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_03.png" id="8_piece_03"]
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient_script"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer_script"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece_script"]
+[ext_resource type="Texture2D" uid="uid://b0kohuwlw2fsg" path="res://day/interactables/herb/herbs/tundra_snow_whisk/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://dtxvycpc4ph72" path="res://day/interactables/herb/herbs/tundra_snow_whisk/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://c21tuanudy4eh" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://dpto4qk8hvtje" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://s2kivi4jomg7" path="res://day/interactables/herb/herbs/tundra_snow_whisk/pieces/blue/piece_03.png" id="8_piece_03"]
 
 [sub_resource type="Resource" id="Piece_01"]
 script = ExtResource("3_piece_script")
 id = &"tundra_snow_whisk_piece_01"
 display_name = "冻原拂雪花·部位01"
-kind = 2
 texture = ExtResource("6_piece_01")
 source_rect = Rect2i(1939, 568, 1092, 3082)
 area_ratio = 0.333333
-detachable = true
-grindable = true
 color_id = &"blue"
-spectrum_x = 0.790
-display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.79
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1)
 z_order = 1
 
 [sub_resource type="Resource" id="Piece_02"]
 script = ExtResource("3_piece_script")
 id = &"tundra_snow_whisk_piece_02"
 display_name = "冻原拂雪花·部位02"
-kind = 2
 texture = ExtResource("7_piece_02")
 source_rect = Rect2i(1297, 67, 1502, 3961)
 area_ratio = 0.333333
-detachable = true
-grindable = true
 color_id = &"blue"
-spectrum_x = 0.790
-display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.79
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1)
 z_order = 2
 
 [sub_resource type="Resource" id="Piece_03"]
 script = ExtResource("3_piece_script")
 id = &"tundra_snow_whisk_piece_03"
 display_name = "冻原拂雪花·部位03"
-kind = 2
 texture = ExtResource("8_piece_03")
 source_rect = Rect2i(1472, 812, 1152, 2472)
 area_ratio = 0.333333
-detachable = true
-grindable = true
 color_id = &"blue"
-spectrum_x = 0.790
-display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
-yield_multiplier = 1.0
-quality_multiplier = 1.0
-concentration_multiplier = 1.0
+spectrum_x = 0.79
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1)
 z_order = 3
 
 [sub_resource type="Resource" id="Layer_main"]
@@ -68,9 +50,8 @@ script = ExtResource("2_layer_script")
 id = &"tundra_snow_whisk_blue_layer"
 display_name = "蓝色部位层"
 color_id = &"blue"
-display_color = Color(0.3215686, 0.4666667, 0.7411765, 1.0)
-spectrum_x = 0.790
-layer_yield_multiplier = 1.0
+display_color = Color(0.3215686, 0.4666667, 0.7411765, 1)
+spectrum_x = 0.79
 pieces = Array[ExtResource("3_piece_script")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
 
 [resource]
@@ -88,5 +69,3 @@ base_value = 16
 spectrum_start = 0.775
 spectrum_end = 0.805
 base_quality = 1.05
-base_concentration = 1.0
-

@@ -29,6 +29,9 @@ static func run(test: TestSupport) -> void:
 	var camera_director := home.get_node_or_null("HomeCameraDirector") as HomeCameraDirector
 	test.expect(camera_director != null, "HomeCameraDirector exists.")
 	test.expect(camera_director.entrance_handler.is_valid(), "HomeCameraDirector entrance_handler is connected by NightBedroomBarrier.")
+	# State tests do not need to leave asynchronous Dialogue Manager balloons in
+	# the shared test tree after NightRuntime is freed.
+	barrier_controller.dialogue_resource = null
 
 	# 1. Check initial state before operating business
 	test.expect(not runtime.has_operated(), "Initially has_operated is false.")

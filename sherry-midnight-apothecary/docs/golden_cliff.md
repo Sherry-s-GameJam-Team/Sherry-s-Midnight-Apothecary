@@ -91,6 +91,7 @@ The balance stones operate as physical dual-pan weighing scales with beam tilt d
   - **CS (`z_index = -5`, `scroll_scale = (0.9, 0.9)`)**: `涟汀村近景.png` (近景前景村落平台与民居) + `湖祭石阶.png` (近景石阶台阶) + `大司鱼观潮台.png` (近景巨型观潮台构筑) + `WorldBounds` 物理碰撞体（`Ground` 实地位于 Collision Layer 1，`OneWayPlatforms` 单向平台位于 Collision Layer 2，支持 S 键下穿）。
 - **Core Integration**:
   - `Player`: `DayPlayerController` + `SherryCollision` + `SherryPresentation` + `PotionThrower` + `Camera2D` (跟踪界限设置为 `limit_left = -1118`, `limit_top = -1389`, `limit_right = 8550`, `limit_bottom = 803`，完整覆盖所有 Ground 碰撞多边形范围)。
+  - `Mew`: `MewNPC` (`res://characters/mew/mew_npc.gd`) 钓鱼喵呜交互节点。具备正反循环往复循环播放（Ping-Pong Loop，帧数 0..39..0 无缝循环），并集成 `Area2D` 靠近感应与按 `E` 触发 `res://characters/mew/mew.dialogue` 对话功能。玩家进入感应范围时，提示文字通过共享 `TopHintUI`/HintUI 的 `show_interaction_hint()` 显示；离开范围、开始对话或卸载场景时使用同一 hint id 清除，不创建跟随世界坐标的独立 Label。对话流支持 4 项分支问询追踪（村长、村子、父亲失踪、涌水药水与纤绳机），全部问询完成后平滑进入常驻 `question_menu`。
   - `DebugUI`: Layer 200 `DeveloperConsole`.
   - `PauseMenuLayer`: Layer 200 `PauseMenu` with `pause_menu_host.gd`.
   - `WorldBounds` & `EntryPoints`: `default`, `from_cliff`, `from_lake`, and `ExitPortal` (`DoorPortal` to `home`)。
@@ -103,4 +104,3 @@ Run the dedicated smoke tests:
 godot --headless --path . --script res://day/levels/golden_cliff/golden_cliff_smoke_test.gd
 godot --headless --path . --script res://tests/village_smoke_test.gd
 ```
-

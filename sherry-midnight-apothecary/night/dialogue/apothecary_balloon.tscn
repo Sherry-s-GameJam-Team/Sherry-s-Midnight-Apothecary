@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://b23pvlvss4xj8" path="res://night/dialogue/art/dialogue_button_load_pressed.png" id="19"]
 [ext_resource type="Texture2D" uid="uid://bxhkk8xp84rhh" path="res://night/dialogue/art/progress/dialogue_progress_sheet.png" id="20_progress"]
 [ext_resource type="Script" uid="uid://cx3pxw7586pgr" path="res://night/dialogue/dialogue_progress_indicator.gd" id="21_progress_script"]
+[ext_resource type="Script" path="res://night/dialogue/dialogue_portrait_slot.gd" id="22_portrait_slot"]
 
 [sub_resource type="StyleBoxFlat" id="response_hover"]
 content_margin_left = 16.0
@@ -82,21 +83,56 @@ Button/styles/hover = SubResource("response_hover")
 Button/styles/normal = SubResource("response_normal")
 Button/styles/pressed = SubResource("response_pressed")
 
+[sub_resource type="StyleBoxFlat" id="close_button_normal"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.22, 0.15, 0.09, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.55, 0.3, 0.8)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="close_button_hover"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.42, 0.28, 0.15, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.96, 0.82, 0.52, 0.95)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="overlay_panel"]
-content_margin_left = 18.0
-content_margin_top = 14.0
-content_margin_right = 18.0
-content_margin_bottom = 14.0
-bg_color = Color(0.98, 0.9, 0.73, 0.97)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.53, 0.3, 0.1, 0.9)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+content_margin_left = 24.0
+content_margin_top = 18.0
+content_margin_right = 24.0
+content_margin_bottom = 18.0
+bg_color = Color(0.11, 0.08, 0.06, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.84, 0.66, 0.38, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 14
+shadow_offset = Vector2(0, 4)
 
 [node name="ApothecaryBalloon" type="CanvasLayer" unique_id=1308115970]
 layer = 100
@@ -111,6 +147,58 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("dialogue_theme")
+
+[node name="PortraitLayer" type="Control" parent="Balloon" unique_id=1050000001]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LeftSlot" type="Control" parent="Balloon/PortraitLayer" unique_id=1050000002]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.14
+anchor_right = 0.42
+anchor_bottom = 0.88
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+script = ExtResource("22_portrait_slot")
+slot_id = 0
+
+[node name="CenterSlot" type="Control" parent="Balloon/PortraitLayer" unique_id=1050000003]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31
+anchor_top = 0.10
+anchor_right = 0.69
+anchor_bottom = 0.88
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+script = ExtResource("22_portrait_slot")
+slot_id = 1
+
+[node name="RightSlot" type="Control" parent="Balloon/PortraitLayer" unique_id=1050000004]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.58
+anchor_top = 0.14
+anchor_right = 0.96
+anchor_bottom = 0.88
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+script = ExtResource("22_portrait_slot")
+slot_id = 2
 
 [node name="FrameDock" type="AspectRatioContainer" parent="Balloon" unique_id=603802136]
 unique_name_in_owner = true
@@ -231,15 +319,15 @@ frames_per_second = 12.0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.544
+anchor_left = 0.49
 anchor_top = 0.108
-anchor_right = 0.63
+anchor_right = 0.575
 anchor_bottom = 0.234
 offset_left = -17.320068
 offset_top = 99.129745
 offset_right = -57.400024
 offset_bottom = 77.9809
-tooltip_text = "立即显示文字或推进一句"
+tooltip_text = "快进 (点击开启 / 按住Ctrl，0.2秒/页)"
 texture_normal = ExtResource("5")
 texture_pressed = ExtResource("7")
 texture_hover = ExtResource("6")
@@ -250,15 +338,15 @@ stretch_mode = 0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.631
+anchor_left = 0.575
 anchor_top = 0.108
-anchor_right = 0.718
+anchor_right = 0.66
 anchor_bottom = 0.234
 offset_left = -43.679993
 offset_top = 99.129745
 offset_right = -85.03998
 offset_bottom = 77.9809
-tooltip_text = "切换自动播放"
+tooltip_text = "自动播放"
 toggle_mode = true
 texture_normal = ExtResource("8")
 texture_pressed = ExtResource("10")
@@ -270,15 +358,34 @@ stretch_mode = 0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.718
+anchor_left = 0.66
 anchor_top = 0.108
-anchor_right = 0.805
+anchor_right = 0.745
 anchor_bottom = 0.234
 offset_left = -73.03998
 offset_top = 99.129745
 offset_right = -114.400024
 offset_bottom = 77.9809
-tooltip_text = "查看对话记录"
+tooltip_text = "回退至上一句话"
+texture_normal = ExtResource("11")
+texture_pressed = ExtResource("13")
+texture_hover = ExtResource("12")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="HistoryButton" type="TextureButton" parent="Balloon/FrameDock/DesignRoot" unique_id=1101522635]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.745
+anchor_top = 0.108
+anchor_right = 0.83
+anchor_bottom = 0.234
+offset_left = -88.03998
+offset_top = 99.129745
+offset_right = -129.400024
+offset_bottom = 77.9809
+tooltip_text = "对话回溯 (查看历史记录)"
 texture_normal = ExtResource("11")
 texture_pressed = ExtResource("13")
 texture_hover = ExtResource("12")
@@ -289,9 +396,9 @@ stretch_mode = 0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.805
+anchor_left = 0.83
 anchor_top = 0.108
-anchor_right = 0.892
+anchor_right = 0.905
 anchor_bottom = 0.234
 offset_left = -103.400024
 offset_top = 99.129745
@@ -308,7 +415,7 @@ stretch_mode = 0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.891
+anchor_left = 0.905
 anchor_top = 0.108
 anchor_right = 0.985
 anchor_bottom = 0.234
@@ -325,24 +432,59 @@ stretch_mode = 0
 
 [node name="HistoryPanel" type="PanelContainer" parent="Balloon/FrameDock/DesignRoot" unique_id=870400270]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.11
-anchor_top = 0.27
-anchor_right = 0.89
-anchor_bottom = 0.87
-offset_left = -22.800003
-offset_top = -396.63306
-offset_right = -9.199951
-offset_bottom = -254.199
+anchor_left = 0.08
+anchor_top = 0.22
+anchor_right = 0.92
+anchor_bottom = 0.88
+offset_left = 0.0
+offset_top = -430.0
+offset_right = 0.0
+offset_bottom = -235.0
 theme_override_styles/panel = SubResource("overlay_panel")
 
-[node name="HistoryLabel" type="RichTextLabel" parent="Balloon/FrameDock/DesignRoot/HistoryPanel" unique_id=132936006]
+[node name="HistoryContent" type="VBoxContainer" parent="Balloon/FrameDock/DesignRoot/HistoryPanel" unique_id=870400271]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HistoryHeader" type="HBoxContainer" parent="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent" unique_id=870400272]
+layout_mode = 2
+
+[node name="HistoryTitle" type="Label" parent="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent/HistoryHeader" unique_id=870400273]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.78, 0.48, 1)
+theme_override_font_sizes/font_size = 19
+text = "✦  对 话 回 溯  ·  历 史 记 录  ✦"
+
+[node name="HeaderSpacer" type="Control" parent="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent/HistoryHeader" unique_id=870400274]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HistoryCloseButton" type="Button" parent="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent/HistoryHeader" unique_id=870400275]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/default_color = Color(0.25, 0.12, 0.025, 1)
-theme_override_font_sizes/normal_font_size = 21
+tooltip_text = "关闭历史记录 (ESC)"
+theme_override_colors/font_color = Color(0.92, 0.82, 0.65, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("close_button_normal")
+theme_override_styles/hover = SubResource("close_button_hover")
+theme_override_styles/pressed = SubResource("close_button_hover")
+text = "  ✕ 关闭  "
+
+[node name="HSeparator" type="HSeparator" parent="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent" unique_id=870400276]
+layout_mode = 2
+
+[node name="HistoryLabel" type="RichTextLabel" parent="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent" unique_id=132936006]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.92, 0.88, 0.82, 1)
+theme_override_font_sizes/normal_font_size = 19
+theme_override_constants/line_separation = 6
 bbcode_enabled = true
+scroll_following = true
 
 [node name="StatusLabel" type="Label" parent="Balloon/FrameDock/DesignRoot" unique_id=1832330479]
 unique_name_in_owner = true
@@ -361,5 +503,7 @@ horizontal_alignment = 2
 [connection signal="pressed" from="Balloon/FrameDock/DesignRoot/FastButton" to="." method="_on_fast_pressed"]
 [connection signal="pressed" from="Balloon/FrameDock/DesignRoot/AutoButton" to="." method="_on_auto_pressed"]
 [connection signal="pressed" from="Balloon/FrameDock/DesignRoot/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Balloon/FrameDock/DesignRoot/HistoryButton" to="." method="_on_history_pressed"]
 [connection signal="pressed" from="Balloon/FrameDock/DesignRoot/SettingsButton" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Balloon/FrameDock/DesignRoot/LoadButton" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="Balloon/FrameDock/DesignRoot/HistoryPanel/HistoryContent/HistoryHeader/HistoryCloseButton" to="." method="_on_history_close_pressed"]

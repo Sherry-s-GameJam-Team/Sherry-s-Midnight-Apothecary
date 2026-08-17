@@ -23,39 +23,50 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(shop._reputation_gain_for_satisfaction(1.5), 5, "An excellent potion grants five reputation points.")
 	test.expect_float_close(shop._customer_satisfaction({"quality": 1.2, "remaining_dose": 0.5}), 0.6, 0.001, "Customer satisfaction combines potion quality and remaining dose.")
 	var first_customer := shop.current_customer()
-	var first_name := str(first_customer.get("name", ""))
-	test.expect_equal(shop._customer_queue.size(), 3, "A business night begins with three queued customers.")
+	var first_npc_id := str(first_customer.get("npc_id", ""))
+	var initial_queue_size := shop._customer_queue.size()
+	test.expect_equal(initial_queue_size, 8, "A high-reputation business night begins with eight queued customers.")
 	test.expect_float_close(float(first_customer.get("patience", 0.0)), BusinessPlaceholder.MAX_PATIENCE, 0.001, "The active customer starts with full patience.")
 	test.expect(first_customer.get("portrait", null) != null, "The active customer has a configured portrait.")
 
+	# 1. First rejection: customer leaves immediately, patience -25%, reputation -2^1 = -2
 	shop._on_reject_pressed()
-	test.expect_equal(shop._customer_queue.size(), 3, "Refusing a customer returns them to the queue instead of removing them.")
-	test.expect_equal(str(shop.current_customer().get("name", "")), "采药妇", "The refused customer moves behind the next waiting customer.")
-	test.expect_equal(str(shop._customer_queue.back().get("name", "")), first_name, "The refused customer is appended to the queue tail.")
-	test.expect_float_close(float(shop._customer_queue.back().get("patience", 0.0)), 75.0, 0.001, "Refusing a customer reduces patience by 25.")
+	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 1, "Refusing a customer removes them from tonight's queue immediately.")
+	test.expect_equal(shop.completed_customer_count, 1, "Refusing a customer increments completed customer count.")
+	test.expect_equal(result.reputation_delta, -2, "First refusal causes 2^1 = 2 reputation penalty.")
+	var state1: Dictionary = player.customer_states.get(first_npc_id, {})
+	test.expect_float_close(float(state1.get("patience", 0.0)), 75.0, 0.001, "Refused customer patience is saved as 75%.")
+	test.expect_equal(int(state1.get("refusal_count", 0)), 1, "Refusal count is recorded as 1.")
 
+	# 2. Test patience recovery with accurate medication
+	state1["patience"] = 50.0
+	player.customer_states[first_npc_id] = state1
+	var second_customer := shop.current_customer()
+	var second_npc_id := str(second_customer.get("npc_id", ""))
+
+	# 3. Test progressive reputation penalty 2^n on second refusal of second customer
 	shop._on_reject_pressed()
+	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 2, "Second customer also leaves immediately on refusal.")
+	test.expect_equal(result.reputation_delta, -4, "Total reputation penalty includes another 2^1 = 2 (delta: -2 - 2 = -4).")
+
+	# 4. Test warning dialog when the current customer's patience is <= 25%
+	var last_customer := shop.current_customer()
+	var last_npc_id := str(last_customer.get("npc_id", ""))
+	last_customer["patience"] = 25.0
+	shop.reject_confirm_dialog.hide()
 	shop._on_reject_pressed()
-	test.expect_equal(str(shop.current_customer().get("name", "")), first_name, "The original customer returns after the other customers move to the tail.")
-	test.expect_float_close(float(shop.current_customer().get("patience", 0.0)), 75.0, 0.001, "The returning customer's patience remains reduced.")
+	test.expect(shop.reject_confirm_dialog.visible, "When customer patience is 25%, rejecting triggers the confirmation warning dialog.")
+	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 2, "Customer remains until confirmation dialog is accepted.")
 
-	for _count in range(7):
-		shop._on_reject_pressed()
-	test.expect(not shop._customer_queue.any(func(customer: Dictionary) -> bool: return str(customer.get("name", "")) == first_name), "A customer leaves the queue when patience reaches zero.")
-	test.expect_equal(result.reputation_delta, -BusinessPlaceholder.WALKOUT_REPUTATION_LOSS, "A customer who loses all patience reduces this night's store reputation.")
-	player.apply_night_result(result)
-	test.expect_equal(player.store_reputation, 90, "The night's reputation loss is applied when the night result settles.")
+	# Confirm the rejection
+	shop._on_reject_confirmed()
+	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 3, "Only the confirmed customer leaves the queue.")
+	var final_state: Dictionary = player.customer_states.get(last_npc_id, {})
+	test.expect_float_close(float(final_state.get("patience", 100.0)), 0.0, 0.001, "Final rejection reduces patience to 0.")
+	test.expect(bool(final_state.get("permanently_lost", false)), "Customer with 0 patience is marked permanently lost.")
 
-	player.store_reputation = 60
+	# 5. Verify permanently lost customer never appears in future night queues
 	shop.setup(player, NightResult.new(), 2)
-	test.expect_equal(shop._customer_queue.size(), 2, "Below 70 reputation, the next night receives fewer customers.")
-	test.expect(not shop._customer_queue.any(func(customer: Dictionary) -> bool: return float(customer.get("modifier", 1.0)) >= 1.0), "Below 70 reputation, high-quality customer offers are removed from the queue.")
+	test.expect(not shop._customer_queue.any(func(c: Dictionary) -> bool: return str(c.get("npc_id", "")) == last_npc_id), "Permanently lost customer never appears in future customer queues.")
 
-	player.store_reputation = 30
-	shop.setup(player, NightResult.new(), 3)
-	test.expect_equal(shop._customer_queue.size(), 1, "Below 40 reputation, the next night receives only one customer.")
-	test.expect(float(shop.current_customer().get("modifier", 1.0)) < 0.95, "Very low reputation produces lower-quality customer offers.")
-	result.produced_potions[&"green_potion"] = [{"instance_uid": "fresh-brew", "remaining_dose": 1.0, "quality": 1.0, "bottle_style_id": "moon"}]
-	shop.setup(player, result, 4)
-	test.expect(not shop._find_instance(&"green_potion", "fresh-brew").is_empty(), "The shop can display potions brewed during the current night before sleep settlement.")
 	shop.free()

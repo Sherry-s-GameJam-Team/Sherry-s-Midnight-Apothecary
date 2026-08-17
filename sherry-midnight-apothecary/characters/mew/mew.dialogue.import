@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://b2mchd1h471oq"
+path="res://.godot/imported/mew.dialogue-517517dd1f42c4020be95fcf736881bb.tres"
+
+[deps]
+
+source_file="res://characters/mew/mew.dialogue"
+dest_files=["res://.godot/imported/mew.dialogue-517517dd1f42c4020be95fcf736881bb.tres"]
+
+[params]
+
+defaults=true

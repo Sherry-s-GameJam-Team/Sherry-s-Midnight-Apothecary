@@ -23,7 +23,17 @@ var _balloon: Node
 
 
 func _ready() -> void:
-	call_deferred("_setup_camera_director")
+	# HomeCameraDirector is a sibling that has already entered the tree when this
+	# node becomes ready. Bind immediately so the entrance never has a one-frame
+	# window in which it bypasses the night barrier check.
+	_setup_camera_director()
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(_balloon):
+		_balloon.queue_free()
+	_balloon = null
+	_release_modal_lock()
 
 
 func _setup_camera_director() -> void:

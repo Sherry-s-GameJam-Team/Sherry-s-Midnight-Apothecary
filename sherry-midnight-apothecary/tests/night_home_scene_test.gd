@@ -33,12 +33,13 @@ static func run(test: TestSupport) -> void:
 
 	var table := home.get_node("Table") as NightStationInteraction
 	var equip := home.get_node("Equip") as NightStationInteraction
-	var transformer := home.get_node("Transsformer") as NightStationInteraction
+	var transformer := home.get_node("Transsformer") as Area2D
 	test.expect_equal(table.interaction_hint_text, "按[E]开始营业", "The table advertises the business interaction.")
 	test.expect_equal(table.action, NightStationInteraction.Action.BUSINESS, "The table requests the business scene.")
 	test.expect_equal(equip.action, NightStationInteraction.Action.PRODUCTION, "Equip requests the production workflow directly.")
-	test.expect_equal(transformer.pressed_message, "夜晚还是不要出去了", "The transformer gives the night travel warning.")
-	test.expect_equal(transformer.action, NightStationInteraction.Action.MESSAGE, "The transformer is message-only and cannot open the map.")
+	test.expect(transformer.get_script() == null, "The night transformer has no interaction script.")
+	test.expect(not transformer.monitoring and not transformer.monitorable, "The night transformer interaction area is disabled.")
+	test.expect((transformer.get_node("CollisionShape2D") as CollisionShape2D).disabled, "The night transformer collision is disabled.")
 	test.expect(home.get_node_or_null("HomeCameraDirector") is HomeCameraDirector, "The night home reuses the day barrier and camera transition behavior.")
 	test.expect(home.get_node_or_null("BedroomPortal") is NightBedroomPortal, "The opened bedroom area leads to a dedicated night bedroom scene.")
 
