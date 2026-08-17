@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="20_collision"]
 [ext_resource type="PackedScene" uid="uid://c4d1p8n7x2ra0" path="res://day/interactables/control_system/lever_switch.tscn" id="26_hfyy8"]
 [ext_resource type="PackedScene" uid="uid://clalnrbslmree" path="res://day/levels/grassland/emerald_field/poison_gas.tscn" id="27_dsfo1"]
+[ext_resource type="PackedScene" uid="uid://drwyj0v1ur1c8" path="res://day/interactables/hint_area.tscn" id="31_hfyy8"]
 
 [sub_resource type="RectangleShape2D" id="Rect_P09"]
 size = Vector2(287, 72.2)
@@ -311,6 +312,21 @@ shape = SubResource("Rect_EndGround")
 position = Vector2(2550, 164)
 controlled_nodes = Array[NodePath]([NodePath("../P06")])
 
+[node name="P07" parent="Platforms" unique_id=212984754 instance=ExtResource("12_hfyy8")]
+position = Vector2(2754, 160)
+
+[node name="P10" parent="Platforms" unique_id=1622197045 instance=ExtResource("12_hfyy8")]
+position = Vector2(2706, 262)
+
+[node name="P12" parent="Platforms" unique_id=1619537169 instance=ExtResource("12_hfyy8")]
+position = Vector2(2740, 69)
+
+[node name="P16" parent="Platforms" unique_id=1116689536 instance=ExtResource("12_hfyy8")]
+position = Vector2(2790, 2)
+
+[node name="P17" parent="Platforms" unique_id=775578391 instance=ExtResource("12_hfyy8")]
+position = Vector2(2783, -79)
+
 [node name="Hazards" type="Node2D" parent="." unique_id=367085625]
 
 [node name="PoisonGasA" parent="Hazards" unique_id=6779716 instance=ExtResource("27_dsfo1")]
@@ -394,20 +410,9 @@ texture = ExtResource("2_2ney1")
 position = Vector2(95.72637, 739.4042)
 
 [node name="TriangleLong" type="Sprite2D" parent="." unique_id=2081603214]
-position = Vector2(-1066, 1898)
+position = Vector2(131, 1809)
 texture = ExtResource("15")
 
-[node name="P05" parent="." unique_id=212984754 instance=ExtResource("12_hfyy8")]
-position = Vector2(2754, 160)
-
-[node name="P06" parent="." unique_id=1622197045 instance=ExtResource("12_hfyy8")]
-position = Vector2(2706, 262)
-
-[node name="P07" parent="." unique_id=1619537169 instance=ExtResource("12_hfyy8")]
-position = Vector2(2740, 69)
-
-[node name="P08" parent="." unique_id=1116689536 instance=ExtResource("12_hfyy8")]
-position = Vector2(2790, 2)
-
-[node name="P09" parent="." unique_id=775578391 instance=ExtResource("12_hfyy8")]
-position = Vector2(2783, -79)
+[node name="HintArea" parent="." unique_id=596019908 instance=ExtResource("31_hfyy8")]
+position = Vector2(2400, 679)
+hint_text = "按住奔跑键的同时起跳，可以跳得更远。"

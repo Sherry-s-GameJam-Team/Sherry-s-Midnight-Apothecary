@@ -10,6 +10,8 @@
 
 - [Magic Map Switch](../day/interactables/map_switch/README.md): Home Transformer route-anchor alignment and first-use navigation tutorial.
 
+- [Day interactables](../day/interactables/README.md): reusable daytime interaction helpers, including proximity hint areas and the controller/controlled system.
+
 - [Scene title card](scene_title_card.md): per-level `DisasterName` and `NormalDescription` subtitle data, daily presentation rules, and title replay behavior.
 
 - [Potion direct hits](potion_hits.md): collision-box impact receiver contract and splash-effect integration.
