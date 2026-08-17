@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://d0fcu2cn2lhio"]
+
+[ext_resource type="Texture2D" uid="uid://2r58uv0lmhg2" path="res://day/levels/grassland/emerald_field/art/platforms/stairs.png" id="1_gpb4j"]
+
+[node name="P08" type="StaticBody2D" unique_id=127482441]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1723240212]
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("1_gpb4j")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1404143286]
+polygon = PackedVector2Array(-224, -62, -223, 39, 228, 41, 226, -1, 87, 1, 64, -14, -29, -14, -40, -64)

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://vwldb8pnmtax"]
+
+[ext_resource type="Script" uid="uid://tr6k0icc71w" path="res://day/levels/grassland/emerald_field/scripts/collapse_platform.gd" id="1_gb54r"]
+[ext_resource type="Texture2D" uid="uid://mqki86nhyphg" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid_broken.png" id="2_it33m"]
+
+[sub_resource type="RectangleShape2D" id="Rect_Collapse01"]
+size = Vector2(342.8, 48.7)
+
+[node name="Collapse01" type="AnimatableBody2D" unique_id=1586150626]
+script = ExtResource("1_gb54r")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=934874258]
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("2_it33m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1322727725]
+position = Vector2(4, 19.999992)
+shape = SubResource("Rect_Collapse01")
+
+[node name="Trigger" type="Area2D" parent="." unique_id=2130708711]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger" unique_id=577624448]
+position = Vector2(1, -30.000008)
+shape = SubResource("Rect_Collapse01")

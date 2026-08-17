@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://clalnrbslmree"]
+
+[ext_resource type="Script" uid="uid://crfp386hv65g4" path="res://day/levels/grassland/emerald_field/scripts/poison_gas.gd" id="1_3oolc"]
+
+[sub_resource type="RectangleShape2D" id="Rect_Gas1"]
+size = Vector2(980, 330)
+
+[node name="PoisonGasA" type="Area2D" unique_id=6779716 groups=["resettable"]]
+collision_layer = 0
+script = ExtResource("1_3oolc")
+max_exposure = 1.25
+
+[node name="GasVisual" type="Polygon2D" parent="." unique_id=302982240]
+position = Vector2(-386, -158)
+color = Color(0.35, 0.92, 0.38, 0.3)
+polygon = PackedVector2Array(-490, -165, 490, -165, 490, 165, -490, 165)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=366510226]
+position = Vector2(-386, -162)
+shape = SubResource("Rect_Gas1")

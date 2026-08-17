@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bghtv7tkf86vk"]
+
+[ext_resource type="Texture2D" uid="uid://d2ve3h0u4xvm3" path="res://day/levels/grassland/emerald_field/art/platforms/triangle.png" id="1_7j4g5"]
+
+[sub_resource type="RectangleShape2D" id="Rect_P06"]
+size = Vector2(265.6, 66.8)
+
+[node name="P06" type="StaticBody2D" unique_id=1561054440]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1931885891]
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("1_7j4g5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=115636767]
+position = Vector2(0, -37.99999)
+shape = SubResource("Rect_P06")
