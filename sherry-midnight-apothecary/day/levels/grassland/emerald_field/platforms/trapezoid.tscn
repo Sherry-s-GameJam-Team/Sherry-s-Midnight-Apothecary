@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ca6a6x6a3wrrp"]
+
+[ext_resource type="Texture2D" uid="uid://c7n47bwhkxbqd" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid.png" id="1_ko84a"]
+
+[sub_resource type="RectangleShape2D" id="Rect_P02"]
+size = Vector2(389.6, 49.9)
+
+[node name="P02" type="StaticBody2D" unique_id=295530810]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1764516035]
+scale = Vector2(0.78, 0.82)
+texture = ExtResource("1_ko84a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1047167484]
+position = Vector2(-1, -27.999989)
+shape = SubResource("Rect_P02")

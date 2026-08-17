@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ddq4x3ffms08r"]
+
+[ext_resource type="Script" uid="uid://kh02fsqvuh51g" path="res://day/interactables/control_system/controlled_moving_platform.gd" id="1_platform"]
+
+[sub_resource type="RectangleShape2D" id="PlatformShape"]
+size = Vector2(120, 40)
+
+[node name="ControlledMovingPlatform" type="Node2D"]
+script = ExtResource("1_platform")
+
+[node name="Visual" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-60, -20, 60, -20, 60, 20, -60, 20)
+color = Color(0.5, 0.5, 0.55, 1)
+
+[node name="DestinationMarker" type="Marker2D" parent="."]
+position = Vector2(100, 0)
+gizmo_color = Color(0.2, 0.76, 0.42, 0.5)
+
+[node name="Body" type="AnimatableBody2D" parent="."]
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("PlatformShape")

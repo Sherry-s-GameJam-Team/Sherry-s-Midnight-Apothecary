@@ -1,70 +1,114 @@
-[gd_resource type="SpriteFrames" load_steps=63 format=3]
+[gd_resource type="SpriteFrames" format=3 uid="uid://qk777aldy5l6"]
 
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_001.png" id="idle_001"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_002.png" id="idle_002"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_003.png" id="idle_003"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_004.png" id="idle_004"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_005.png" id="idle_005"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_006.png" id="idle_006"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_007.png" id="idle_007"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_008.png" id="idle_008"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_009.png" id="idle_009"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_010.png" id="idle_010"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_011.png" id="idle_011"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_012.png" id="idle_012"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_013.png" id="idle_013"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_014.png" id="idle_014"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_015.png" id="idle_015"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_016.png" id="idle_016"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_017.png" id="idle_017"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_018.png" id="idle_018"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_019.png" id="idle_019"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_020.png" id="idle_020"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_021.png" id="idle_021"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_022.png" id="idle_022"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_023.png" id="idle_023"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_024.png" id="idle_024"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_025.png" id="idle_025"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_026.png" id="idle_026"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_027.png" id="idle_027"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_028.png" id="idle_028"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/idle/dog_029.png" id="idle_029"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_064.png" id="run_064"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_065.png" id="run_065"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_066.png" id="run_066"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_067.png" id="run_067"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_068.png" id="run_068"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_069.png" id="run_069"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_070.png" id="run_070"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_071.png" id="run_071"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_072.png" id="run_072"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_073.png" id="run_073"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_074.png" id="run_074"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_075.png" id="run_075"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_076.png" id="run_076"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_077.png" id="run_077"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_078.png" id="run_078"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_079.png" id="run_079"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_080.png" id="run_080"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_081.png" id="run_081"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_082.png" id="run_082"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_083.png" id="run_083"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_084.png" id="run_084"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_085.png" id="run_085"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_086.png" id="run_086"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_087.png" id="run_087"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_088.png" id="run_088"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_089.png" id="run_089"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_090.png" id="run_090"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_091.png" id="run_091"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_092.png" id="run_092"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_093.png" id="run_093"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_094.png" id="run_094"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_095.png" id="run_095"]
-[ext_resource type="Texture2D" path="res://characters/luca/frames/run/dog_096.png" id="run_096"]
+[ext_resource type="Texture2D" uid="uid://b182aubwrmqfa" path="res://characters/luca/frames/idle/dog_001.png" id="idle_001"]
+[ext_resource type="Texture2D" uid="uid://cmbbq0f82cav8" path="res://characters/luca/frames/idle/dog_002.png" id="idle_002"]
+[ext_resource type="Texture2D" uid="uid://d3f58ekey2ylf" path="res://characters/luca/frames/idle/dog_003.png" id="idle_003"]
+[ext_resource type="Texture2D" uid="uid://cnxx674e35fob" path="res://characters/luca/frames/idle/dog_004.png" id="idle_004"]
+[ext_resource type="Texture2D" uid="uid://dkron1rb7n2gk" path="res://characters/luca/frames/idle/dog_005.png" id="idle_005"]
+[ext_resource type="Texture2D" uid="uid://dl3qovpwdqx8d" path="res://characters/luca/frames/idle/dog_006.png" id="idle_006"]
+[ext_resource type="Texture2D" uid="uid://b2r06hu62x4mr" path="res://characters/luca/frames/idle/dog_007.png" id="idle_007"]
+[ext_resource type="Texture2D" uid="uid://cmexya182gt41" path="res://characters/luca/frames/idle/dog_008.png" id="idle_008"]
+[ext_resource type="Texture2D" uid="uid://d0i0vtq8ofwq2" path="res://characters/luca/frames/idle/dog_009.png" id="idle_009"]
+[ext_resource type="Texture2D" uid="uid://dfxtphscjappa" path="res://characters/luca/frames/idle/dog_010.png" id="idle_010"]
+[ext_resource type="Texture2D" uid="uid://cc3w2ey6kik57" path="res://characters/luca/frames/idle/dog_011.png" id="idle_011"]
+[ext_resource type="Texture2D" uid="uid://d1upl3vry32rr" path="res://characters/luca/frames/idle/dog_012.png" id="idle_012"]
+[ext_resource type="Texture2D" uid="uid://drakfs7hagm2o" path="res://characters/luca/frames/idle/dog_013.png" id="idle_013"]
+[ext_resource type="Texture2D" uid="uid://cjqeh80js80f2" path="res://characters/luca/frames/idle/dog_014.png" id="idle_014"]
+[ext_resource type="Texture2D" uid="uid://b0uwpxy3ghnl2" path="res://characters/luca/frames/idle/dog_015.png" id="idle_015"]
+[ext_resource type="Texture2D" uid="uid://c5512lp0wqyaj" path="res://characters/luca/frames/idle/dog_016.png" id="idle_016"]
+[ext_resource type="Texture2D" uid="uid://do73lu0dioxps" path="res://characters/luca/frames/idle/dog_017.png" id="idle_017"]
+[ext_resource type="Texture2D" uid="uid://1muha2jhyd3l" path="res://characters/luca/frames/idle/dog_018.png" id="idle_018"]
+[ext_resource type="Texture2D" uid="uid://f2pkjlqbltyw" path="res://characters/luca/frames/idle/dog_019.png" id="idle_019"]
+[ext_resource type="Texture2D" uid="uid://c5jt3k5r38d4n" path="res://characters/luca/frames/idle/dog_020.png" id="idle_020"]
+[ext_resource type="Texture2D" uid="uid://blxywlqacyiir" path="res://characters/luca/frames/idle/dog_021.png" id="idle_021"]
+[ext_resource type="Texture2D" uid="uid://66w4cqyy3vea" path="res://characters/luca/frames/idle/dog_022.png" id="idle_022"]
+[ext_resource type="Texture2D" uid="uid://cd0mtdy6njjco" path="res://characters/luca/frames/idle/dog_023.png" id="idle_023"]
+[ext_resource type="Texture2D" uid="uid://d1ef6l5fx50rw" path="res://characters/luca/frames/idle/dog_024.png" id="idle_024"]
+[ext_resource type="Texture2D" uid="uid://cecjsy76igtc7" path="res://characters/luca/frames/idle/dog_025.png" id="idle_025"]
+[ext_resource type="Texture2D" uid="uid://be0pgw5e2rerk" path="res://characters/luca/frames/idle/dog_026.png" id="idle_026"]
+[ext_resource type="Texture2D" uid="uid://qetc363kba2p" path="res://characters/luca/frames/idle/dog_027.png" id="idle_027"]
+[ext_resource type="Texture2D" uid="uid://c6e41rw1nhlpk" path="res://characters/luca/frames/idle/dog_028.png" id="idle_028"]
+[ext_resource type="Texture2D" uid="uid://da1168qr22oed" path="res://characters/luca/frames/idle/dog_029.png" id="idle_029"]
+[ext_resource type="Texture2D" uid="uid://dfbgn82smf2kn" path="res://characters/luca/frames/run/dog_064.png" id="run_064"]
+[ext_resource type="Texture2D" uid="uid://c1wt36r3clfvd" path="res://characters/luca/frames/run/dog_065.png" id="run_065"]
+[ext_resource type="Texture2D" uid="uid://dpssr0vkw1igy" path="res://characters/luca/frames/run/dog_066.png" id="run_066"]
+[ext_resource type="Texture2D" uid="uid://brxaqyskjxrw4" path="res://characters/luca/frames/run/dog_067.png" id="run_067"]
+[ext_resource type="Texture2D" uid="uid://cpowgkpnsdc36" path="res://characters/luca/frames/run/dog_068.png" id="run_068"]
+[ext_resource type="Texture2D" uid="uid://cuna7e8cg6y1d" path="res://characters/luca/frames/run/dog_069.png" id="run_069"]
+[ext_resource type="Texture2D" uid="uid://bokwjwihkryf5" path="res://characters/luca/frames/run/dog_070.png" id="run_070"]
+[ext_resource type="Texture2D" uid="uid://7uvfwlqlvtjp" path="res://characters/luca/frames/run/dog_071.png" id="run_071"]
+[ext_resource type="Texture2D" uid="uid://dixnlx0idcwef" path="res://characters/luca/frames/run/dog_072.png" id="run_072"]
+[ext_resource type="Texture2D" uid="uid://cq0p5lalq8kbp" path="res://characters/luca/frames/run/dog_073.png" id="run_073"]
+[ext_resource type="Texture2D" uid="uid://bhnft3gvn0ahi" path="res://characters/luca/frames/run/dog_074.png" id="run_074"]
+[ext_resource type="Texture2D" uid="uid://uc3dqp5e3rdd" path="res://characters/luca/frames/run/dog_075.png" id="run_075"]
+[ext_resource type="Texture2D" uid="uid://bslj0rei5ps31" path="res://characters/luca/frames/run/dog_076.png" id="run_076"]
+[ext_resource type="Texture2D" uid="uid://ci6prxp2p416r" path="res://characters/luca/frames/run/dog_077.png" id="run_077"]
+[ext_resource type="Texture2D" uid="uid://dtjs4k6ykk3tj" path="res://characters/luca/frames/run/dog_078.png" id="run_078"]
+[ext_resource type="Texture2D" uid="uid://bwtlcwtscb8wh" path="res://characters/luca/frames/run/dog_079.png" id="run_079"]
+[ext_resource type="Texture2D" uid="uid://toblw4bktcup" path="res://characters/luca/frames/run/dog_080.png" id="run_080"]
+[ext_resource type="Texture2D" uid="uid://borsp8kr5xwnu" path="res://characters/luca/frames/run/dog_081.png" id="run_081"]
+[ext_resource type="Texture2D" uid="uid://e51vbfx8v8sg" path="res://characters/luca/frames/run/dog_082.png" id="run_082"]
+[ext_resource type="Texture2D" uid="uid://dkrnn8d6ytehy" path="res://characters/luca/frames/run/dog_083.png" id="run_083"]
+[ext_resource type="Texture2D" uid="uid://dfm75iqq1mxyd" path="res://characters/luca/frames/run/dog_084.png" id="run_084"]
+[ext_resource type="Texture2D" uid="uid://b5x1aor1krxkg" path="res://characters/luca/frames/run/dog_085.png" id="run_085"]
+[ext_resource type="Texture2D" uid="uid://jrt4g4dy2i3k" path="res://characters/luca/frames/run/dog_086.png" id="run_086"]
+[ext_resource type="Texture2D" uid="uid://61k3wmigxleu" path="res://characters/luca/frames/run/dog_087.png" id="run_087"]
+[ext_resource type="Texture2D" uid="uid://djcn356jv2ef" path="res://characters/luca/frames/run/dog_088.png" id="run_088"]
+[ext_resource type="Texture2D" uid="uid://cxawwb812bym5" path="res://characters/luca/frames/run/dog_089.png" id="run_089"]
+[ext_resource type="Texture2D" uid="uid://du8hfysasexvc" path="res://characters/luca/frames/run/dog_090.png" id="run_090"]
+[ext_resource type="Texture2D" uid="uid://b8678duxuikcy" path="res://characters/luca/frames/run/dog_091.png" id="run_091"]
+[ext_resource type="Texture2D" uid="uid://buw17bj64jwim" path="res://characters/luca/frames/run/dog_092.png" id="run_092"]
+[ext_resource type="Texture2D" uid="uid://cbxw82nbsikkg" path="res://characters/luca/frames/run/dog_093.png" id="run_093"]
+[ext_resource type="Texture2D" uid="uid://bmrpordnwkuf7" path="res://characters/luca/frames/run/dog_094.png" id="run_094"]
+[ext_resource type="Texture2D" uid="uid://011ugjoas0ny" path="res://characters/luca/frames/run/dog_095.png" id="run_095"]
+[ext_resource type="Texture2D" uid="uid://g2og8jf6jqcs" path="res://characters/luca/frames/run/dog_096.png" id="run_096"]
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("run_084")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_085")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_086")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_087")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_088")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_089")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_090")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_091")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_092")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_093")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_094")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_095")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_096")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 15.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("idle_001")
@@ -159,115 +203,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("run_064")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_065")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_066")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_067")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_068")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_069")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_070")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_071")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_072")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_073")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_074")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_075")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_076")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_077")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_078")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_079")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_080")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_081")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_082")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_083")
-}],
-"loop": false,
-"name": &"run_start",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("run_084")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_085")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_086")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_087")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_088")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_089")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_090")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_091")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_092")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_093")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_094")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_095")
-}, {
-"duration": 1.0,
-"texture": ExtResource("run_096")
-}],
-"loop": true,
-"name": &"run_loop",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("run_084")
 }, {
 "duration": 1.0,
@@ -351,8 +286,71 @@ animations = [{
 "texture": ExtResource("run_096")
 }],
 "loop": true,
-"name": &"fall",
+"name": &"run_loop",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("run_064")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_065")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_066")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_067")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_068")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_069")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_070")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_071")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_072")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_073")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_074")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_075")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_076")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_077")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_078")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_079")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_080")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_081")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_082")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_083")
+}],
+"loop": false,
+"name": &"run_start",
 "speed": 15.0
 }]
-
-

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://y1vdbr27i6tn"]
+
+[ext_resource type="Script" uid="uid://bs0uugqtrs37" path="res://day/levels/grassland/emerald_field/scripts/moving_platform.gd" id="1_1nrbf"]
+[ext_resource type="Texture2D" uid="uid://b6nbg3s8ri46" path="res://day/levels/grassland/emerald_field/art/platforms/rectangle.png" id="2_vcp6e"]
+
+[sub_resource type="RectangleShape2D" id="Rect_Move02"]
+size = Vector2(374.8, 57.2)
+
+[node name="Move02" type="AnimatableBody2D" unique_id=1716449123 groups=["resettable"]]
+script = ExtResource("1_1nrbf")
+motion = Vector2(0, -185)
+travel_time = 2.2
+phase = 0.3
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=850257687]
+scale = Vector2(0.58, 0.58)
+texture = ExtResource("2_vcp6e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1372513133]
+position = Vector2(3, -24.000008)
+shape = SubResource("Rect_Move02")
