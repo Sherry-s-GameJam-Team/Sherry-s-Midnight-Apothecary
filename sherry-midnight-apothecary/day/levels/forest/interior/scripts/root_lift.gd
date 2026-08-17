@@ -11,6 +11,7 @@ var _moving := false
 
 
 func _ready() -> void:
+	sync_to_physics = false
 	_low_position = position
 	_high = starts_high
 	if starts_high:
@@ -23,9 +24,12 @@ func toggle_state() -> void:
 	set_high(not _high)
 
 
+var _tween: Tween = null
+
+
 func set_high(value: bool, instant := false) -> void:
-	if _moving and not instant:
-		return
+	if _tween != null and _tween.is_valid():
+		_tween.kill()
 	_high = value
 	var target := _low_position + (travel if value else Vector2.ZERO)
 	if instant:
@@ -33,9 +37,9 @@ func set_high(value: bool, instant := false) -> void:
 		_moving = false
 		return
 	_moving = true
-	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "position", target, travel_time)
-	await tween.finished
+	_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween.tween_property(self, "position", target, travel_time)
+	await _tween.finished
 	_moving = false
 
 

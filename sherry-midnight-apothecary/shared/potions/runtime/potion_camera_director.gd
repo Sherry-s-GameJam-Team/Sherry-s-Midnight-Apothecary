@@ -74,6 +74,6 @@ func _finish_return() -> void:
 
 
 func _exit_tree() -> void:
-	if _original_camera != null and is_instance_valid(_original_camera):
+	if _original_camera != null and is_instance_valid(_original_camera) and _original_camera.is_inside_tree():
 		_original_camera.enabled = true
 		_original_camera.make_current()

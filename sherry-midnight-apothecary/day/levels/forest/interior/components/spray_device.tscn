@@ -68,3 +68,6 @@ initial_velocity_max = 120.0
 scale_amount_min = 1.0
 scale_amount_max = 3.0
 color = Color(0.75, 0.98, 1, 0.65)
+
+[node name="CameraFocus" type="Node2D" parent="."]
+position = Vector2(450, -120)

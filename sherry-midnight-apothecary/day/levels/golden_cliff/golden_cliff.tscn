@@ -25,8 +25,8 @@
 [ext_resource type="Texture2D" uid="uid://cski3xqwlmu7e" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_01.png" id="23_portal_broken"]
 [ext_resource type="Texture2D" uid="uid://b0op5lj11ncbn" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_02.png" id="24_portal_repaired"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="25_console"]
-[ext_resource type="Script" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="26_pause_host"]
-[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="27_pause_menu"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="26_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="27_pause_menu"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 
@@ -94,7 +94,8 @@ repeat_times = 7
 
 [node name="MidCliffs" type="Sprite2D" parent="Background/MidParallax" unique_id=213054897]
 modulate = Color(0.96, 0.88, 0.67, 1)
-position = Vector2(1086, 520)
+position = Vector2(766, 520)
+scale = Vector2(1.1335175, 1)
 texture = ExtResource("15_mid")
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=1135914628]
@@ -251,7 +252,6 @@ shape = SubResource("Rect_floor_long")
 [node name="BoulderA" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=900254430]
 position = Vector2(1879, 713)
 script = ExtResource("10_float")
-bob_amplitude = 34.0
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderA" unique_id=1747644189]
 position = Vector2(0, 95)
@@ -265,8 +265,6 @@ shape = SubResource("Rect_boulder")
 [node name="BoulderB" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=1117612407]
 position = Vector2(2302, 585)
 script = ExtResource("10_float")
-bob_amplitude = 42.0
-horizontal_amplitude = 24.0
 phase = 1.7
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderB" unique_id=558666821]
@@ -281,7 +279,6 @@ shape = SubResource("Rect_boulder")
 [node name="BoulderC" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=679803448]
 position = Vector2(6920, 650)
 script = ExtResource("10_float")
-bob_amplitude = 40.0
 phase = 0.8
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderC" unique_id=1132687136]
@@ -296,8 +293,6 @@ shape = SubResource("Rect_boulder")
 [node name="BoulderD" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=1029277167]
 position = Vector2(7360, 560)
 script = ExtResource("10_float")
-bob_amplitude = 32.0
-horizontal_amplitude = 30.0
 phase = 2.4
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderD" unique_id=1222477720]
@@ -362,9 +357,6 @@ position = Vector2(219, -6)
 [node name="BalanceA" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=123373794]
 position = Vector2(3060, 470)
 script = ExtResource("9_balance")
-mechanism_id = &"west_balance"
-target_left_weight = 2
-target_right_weight = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=968536402]
 position = Vector2(1, 36)
@@ -417,7 +409,6 @@ position = Vector2(8500, 470)
 script = ExtResource("9_balance")
 mechanism_id = &"east_balance"
 target_left_weight = 3
-target_right_weight = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceC" unique_id=361604465]
 position = Vector2(0, 70)

@@ -18,8 +18,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _nearby_luca == null or (_used and one_shot):
 		return
 	if (InputMap.has_action(&"interact") and event.is_action_pressed(&"interact")) or (event is InputEventKey and event.pressed and event.keycode == KEY_E):
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 		_use_switch()
-		get_viewport().set_input_as_handled()
 
 func _use_switch() -> void:
 	if target_path != NodePath("") and target_method != &"":

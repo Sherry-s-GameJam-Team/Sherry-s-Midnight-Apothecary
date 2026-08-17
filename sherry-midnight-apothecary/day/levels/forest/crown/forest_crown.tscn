@@ -1,0 +1,511 @@
+[gd_scene format=3 uid="uid://c0hm5cchinakn"]
+
+[ext_resource type="Script" uid="uid://bgc8y5bm30c2g" path="res://day/levels/forest/crown/forest_crown.gd" id="1_level"]
+[ext_resource type="Texture2D" uid="uid://dkioiavewfxmu" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_bg_corrupted.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://cssytyb1gfo5x" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_fg_platform.png" id="3_platform"]
+[ext_resource type="Texture2D" uid="uid://cmbaqq8i4maem" path="res://day/levels/forest/art/environments/forest/crown/forest_boss_seraph_corrupted.png" id="4_seraph_c"]
+[ext_resource type="Texture2D" uid="uid://sklejebipj84" path="res://day/levels/forest/art/environments/forest/crown/forest_boss_seraph_normal.png" id="5_seraph_n"]
+[ext_resource type="Texture2D" uid="uid://cf8g4b4w5co3w" path="res://day/levels/forest/interior/art/root_long.png" id="6_root_long"]
+[ext_resource type="Texture2D" uid="uid://d26mtye3mc5vq" path="res://day/levels/forest/interior/art/root_ledge.png" id="7_root_ledge"]
+[ext_resource type="Script" uid="uid://cnoqqngdtu3ct" path="res://day/levels/forest/crown/seraph_boss.gd" id="8_boss"]
+[ext_resource type="Script" uid="uid://b3avt5d5orym2" path="res://day/levels/forest/crown/corruption_ring.gd" id="9_ring"]
+[ext_resource type="Script" uid="uid://d2v04dbaamfcq" path="res://day/levels/forest/crown/seraph_weakpoint.gd" id="10_weakpoint"]
+[ext_resource type="Script" uid="uid://b5q7te6ap478x" path="res://day/levels/forest/crown/blood_rain_controller.gd" id="11_blood_rain"]
+[ext_resource type="Script" uid="uid://bqjfvlrevsfh1" path="res://day/levels/forest/crown/crown_vfx_controller.gd" id="12_vfx"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="13_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="14_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="15_presentation"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="16_potions"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="17_camera"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="19_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="20_pause_menu"]
+
+[sub_resource type="Shader" id="Shader_gloomy_mood"]
+code = "shader_type canvas_item;
+uniform vec4 tint_color : source_color = vec4(0.06, 0.04, 0.12, 0.32);
+uniform vec4 vignette_color : source_color = vec4(0.02, 0.01, 0.06, 0.65);
+uniform float vignette_strength : hint_range(0.0, 1.0) = 0.55;
+uniform float rain_mist_density : hint_range(0.0, 1.0) = 0.25;
+void fragment(){
+ vec2 uv = UV;
+ float d = distance(uv, vec2(0.5, 0.45));
+ float vig = smoothstep(0.3, 0.85, d) * vignette_strength;
+ float mist = sin(uv.x * 6.0 + TIME * 0.8) * cos(uv.y * 4.0 - TIME * 0.5);
+ float mist_val = (0.5 + mist * 0.5) * rain_mist_density;
+ vec4 col = mix(tint_color, vignette_color, vig);
+ col.a = clamp(col.a + mist_val * 0.15, 0.0, 1.0);
+ COLOR = col;
+}"
+
+[sub_resource type="ShaderMaterial" id="Material_gloomy_mood"]
+shader = SubResource("Shader_gloomy_mood")
+shader_parameter/tint_color = Color(0.06, 0.04, 0.12, 0.32)
+shader_parameter/vignette_color = Color(0.02, 0.01, 0.06, 0.65)
+shader_parameter/vignette_strength = 0.55
+shader_parameter/rain_mist_density = 0.25
+
+[sub_resource type="RectangleShape2D" id="Shape_main_plat"]
+size = Vector2(1233, 70)
+
+[sub_resource type="RectangleShape2D" id="Shape_side_plat"]
+size = Vector2(280, 36)
+
+[sub_resource type="RectangleShape2D" id="Shape_step_plat"]
+size = Vector2(160, 28)
+
+[sub_resource type="RectangleShape2D" id="Shape_barrier_v"]
+size = Vector2(80, 1200)
+
+[sub_resource type="RectangleShape2D" id="Shape_barrier_h"]
+size = Vector2(2400, 80)
+
+[sub_resource type="RectangleShape2D" id="Shape_fall"]
+size = Vector2(2400, 160)
+
+[sub_resource type="CircleShape2D" id="Shape_boss_body"]
+radius = 85.0
+
+[sub_resource type="CircleShape2D" id="Shape_core"]
+radius = 36.0
+
+[sub_resource type="Shader" id="Shader_shockwave"]
+code = "shader_type canvas_item;
+uniform vec2 center = vec2(0.5, 0.4);
+uniform float radius : hint_range(0.0, 2.0) = 0.0;
+uniform float width : hint_range(0.0, 0.2) = 0.04;
+void fragment(){
+ float d = distance(UV, center);
+ float ring = smoothstep(radius - width, radius, d) - smoothstep(radius, radius + width, d);
+ COLOR = vec4(0.85, 1.0, 0.95, ring * 0.85);
+}"
+
+[sub_resource type="ShaderMaterial" id="Material_shockwave"]
+shader = SubResource("Shader_shockwave")
+shader_parameter/center = Vector2(0.5, 0.4)
+shader_parameter/radius = 0.0
+shader_parameter/width = 0.04
+
+[node name="ForestCrown" type="Node2D" unique_id=2021886778 groups=["day_level"]]
+script = ExtResource("1_level")
+debug_scene_id = "forest_crown"
+start_corrupted = true
+
+[node name="Background" type="Node2D" parent="." unique_id=802263332]
+z_index = -30
+
+[node name="CrownBackground" type="Sprite2D" parent="Background" unique_id=23832234]
+position = Vector2(1046, 461)
+scale = Vector2(1.3650242, 1.2107717)
+texture = ExtResource("2_bg")
+
+[node name="GloomyOverlay" type="ColorRect" parent="Background" unique_id=247319991]
+material = SubResource("Material_gloomy_mood")
+offset_left = -100.0
+offset_top = -200.0
+offset_right = 2100.0
+offset_bottom = 900.0
+mouse_filter = 2
+
+[node name="RainLayerFar" type="CPUParticles2D" parent="Background" unique_id=432128909]
+position = Vector2(1000, -150)
+amount = 160
+lifetime = 1.4
+emission_shape = 3
+emission_rect_extents = Vector2(1150, 20)
+direction = Vector2(-0.35, 1)
+spread = 5.0
+gravity = Vector2(-60, 520)
+initial_velocity_min = 320.0
+initial_velocity_max = 480.0
+scale_amount_min = 1.2
+scale_amount_max = 2.5
+color = Color(0.65, 0.75, 0.9, 0.35)
+
+[node name="RainLayerMid" type="CPUParticles2D" parent="Background" unique_id=1923150562]
+position = Vector2(1000, -150)
+amount = 120
+lifetime = 1.1
+emission_shape = 3
+emission_rect_extents = Vector2(1150, 20)
+direction = Vector2(-0.35, 1)
+spread = 4.0
+gravity = Vector2(-80, 680)
+initial_velocity_min = 450.0
+initial_velocity_max = 650.0
+scale_amount_min = 2.0
+scale_amount_max = 3.8
+color = Color(0.7, 0.82, 0.95, 0.55)
+
+[node name="LightningOverlay" type="ColorRect" parent="Background" unique_id=313279356]
+offset_left = -97.0
+offset_top = -221.0
+offset_right = 2103.0
+offset_bottom = 879.0
+mouse_filter = 2
+color = Color(0.85, 0.92, 1, 0.6)
+
+[node name="Arena" type="Node2D" parent="." unique_id=467408159]
+
+[node name="MainPlatform" type="StaticBody2D" parent="Arena" unique_id=1523016283]
+position = Vector2(1000, 640)
+
+[node name="ForegroundPlatform" type="Sprite2D" parent="Arena/MainPlatform" unique_id=560285105]
+z_index = 2
+position = Vector2(-8.999999, 64.99999)
+scale = Vector2(0.48, 0.42)
+texture = ExtResource("3_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/MainPlatform" unique_id=731391364]
+position = Vector2(-1, 62)
+shape = SubResource("Shape_main_plat")
+
+[node name="LeftPlatform" type="StaticBody2D" parent="Arena" unique_id=1242010464]
+position = Vector2(450, 460)
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/LeftPlatform" unique_id=1958099742]
+scale = Vector2(0.24, 0.28)
+texture = ExtResource("6_root_long")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/LeftPlatform" unique_id=1386576435]
+shape = SubResource("Shape_side_plat")
+one_way_collision = true
+
+[node name="RightPlatform" type="StaticBody2D" parent="Arena" unique_id=1235921165]
+position = Vector2(1550, 460)
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/RightPlatform" unique_id=718286]
+position = Vector2(-17, 17)
+scale = Vector2(0.24, 0.28)
+texture = ExtResource("6_root_long")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/RightPlatform" unique_id=521360434]
+position = Vector2(-30, 19)
+shape = SubResource("Shape_side_plat")
+one_way_collision = true
+
+[node name="LeftStep" type="StaticBody2D" parent="Arena" unique_id=1775931399]
+position = Vector2(680, 550)
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/LeftStep" unique_id=1489396413]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_root_ledge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/LeftStep" unique_id=1798197938]
+position = Vector2(4, -44)
+shape = SubResource("Shape_step_plat")
+one_way_collision = true
+
+[node name="RightStep" type="StaticBody2D" parent="Arena" unique_id=187536678]
+position = Vector2(1320, 550)
+
+[node name="Sprite2D" type="Sprite2D" parent="Arena/RightStep" unique_id=1843466136]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_root_ledge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/RightStep" unique_id=1229467136]
+position = Vector2(3, -39)
+shape = SubResource("Shape_step_plat")
+one_way_collision = true
+
+[node name="PlatformSplashes" type="CPUParticles2D" parent="Arena" unique_id=2128655558]
+position = Vector2(1000, 630)
+amount = 48
+lifetime = 0.35
+emission_shape = 3
+emission_rect_extents = Vector2(650, 8)
+direction = Vector2(0, -1)
+spread = 70.0
+gravity = Vector2(0, 260)
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+color = Color(0.75, 0.88, 1, 0.65)
+
+[node name="ArenaBounds" type="Node2D" parent="Arena" unique_id=1433490918]
+
+[node name="LeftBarrier" type="StaticBody2D" parent="Arena/ArenaBounds" unique_id=1711693829]
+position = Vector2(-20, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/ArenaBounds/LeftBarrier" unique_id=979426954]
+shape = SubResource("Shape_barrier_v")
+
+[node name="RightBarrier" type="StaticBody2D" parent="Arena/ArenaBounds" unique_id=987493582]
+position = Vector2(2020, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/ArenaBounds/RightBarrier" unique_id=34329265]
+shape = SubResource("Shape_barrier_v")
+
+[node name="TopBarrier" type="StaticBody2D" parent="Arena/ArenaBounds" unique_id=823943546]
+position = Vector2(1000, -220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/ArenaBounds/TopBarrier" unique_id=369933996]
+shape = SubResource("Shape_barrier_h")
+
+[node name="FallZone" type="Area2D" parent="Arena" unique_id=1996672132]
+position = Vector2(1000, 840)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arena/FallZone" unique_id=994962527]
+shape = SubResource("Shape_fall")
+
+[node name="Boss" type="Node2D" parent="." unique_id=997090768 groups=["boss"]]
+position = Vector2(985, 289)
+script = ExtResource("8_boss")
+
+[node name="SeraphSprite" type="Sprite2D" parent="Boss" unique_id=952463317]
+z_index = 4
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("4_seraph_c")
+
+[node name="SeraphNormalSprite" type="Sprite2D" parent="Boss" unique_id=1672304004]
+z_index = 4
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("5_seraph_n")
+
+[node name="BossBody" type="Area2D" parent="Boss" unique_id=1677434796]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/BossBody" unique_id=1389348551]
+position = Vector2(0, 10)
+shape = SubResource("Shape_boss_body")
+
+[node name="HaloOuter" type="Node2D" parent="Boss" unique_id=1812549319]
+script = ExtResource("9_ring")
+ring_radius = 160.0
+
+[node name="HaloInner" type="Node2D" parent="Boss" unique_id=635584517]
+script = ExtResource("9_ring")
+ring_radius = 105.0
+rotation_speed = -1.1
+
+[node name="CorruptionCore" type="Node2D" parent="Boss" unique_id=412710097]
+position = Vector2(0, -95)
+
+[node name="CoreVisual" type="Polygon2D" parent="Boss/CorruptionCore" unique_id=1786190293]
+color = Color(0.2, 0.02, 0.16, 0.95)
+polygon = PackedVector2Array(0, -36, 26, -26, 36, 0, 26, 26, 0, 36, -26, 26, -36, 0, -26, -26)
+
+[node name="CoreGlow" type="Polygon2D" parent="Boss/CorruptionCore" unique_id=1852555561]
+color = Color(0.8, 0.1, 0.35, 0.45)
+polygon = PackedVector2Array(0, -46, 33, -33, 46, 0, 33, 33, 0, 46, -33, 33, -46, 0, -33, -33)
+
+[node name="CoreWeakpoint" type="Area2D" parent="Boss/CorruptionCore" unique_id=1470300846]
+collision_layer = 3
+script = ExtResource("10_weakpoint")
+point_radius = 32.0
+is_core = true
+
+[node name="VisualCore" type="Polygon2D" parent="Boss/CorruptionCore/CoreWeakpoint" unique_id=933738466]
+
+[node name="VisualGlow" type="Polygon2D" parent="Boss/CorruptionCore/CoreWeakpoint" unique_id=687586714]
+
+[node name="Particles" type="CPUParticles2D" parent="Boss/CorruptionCore/CoreWeakpoint" unique_id=2002161814]
+amount = 12
+lifetime = 0.8
+spread = 180.0
+gravity = Vector2(0, -10)
+initial_velocity_min = 12.0
+initial_velocity_max = 35.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color = Color(0.9, 0.2, 0.4, 0.8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss/CorruptionCore/CoreWeakpoint" unique_id=822971981]
+shape = SubResource("Shape_core")
+
+[node name="AttackOrigins" type="Node2D" parent="Boss" unique_id=2016881487]
+
+[node name="LeftWing" type="Marker2D" parent="Boss/AttackOrigins" unique_id=1424495823]
+position = Vector2(-70, 0)
+
+[node name="RightWing" type="Marker2D" parent="Boss/AttackOrigins" unique_id=905616949]
+position = Vector2(70, 0)
+
+[node name="Hazards" type="Node2D" parent="." unique_id=1126521751]
+
+[node name="BloodRain" type="Node2D" parent="Hazards" unique_id=1805740462]
+script = ExtResource("11_blood_rain")
+arena_min_x = 420.0
+arena_max_x = 1580.0
+strike_y_top = -120.0
+strike_y_ground = 640.0
+
+[node name="FeatherStorm" type="Node2D" parent="Hazards" unique_id=1753510543]
+
+[node name="CorruptionWaves" type="Node2D" parent="Hazards" unique_id=232026219]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1347425401 groups=["player"]]
+z_index = 20
+position = Vector2(700, 560)
+script = ExtResource("13_player")
+
+[node name="SherryCollision" parent="Player" unique_id=441750392 instance=ExtResource("14_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=348094583 instance=ExtResource("15_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1714942607]
+position = Vector2(0, -80)
+process_callback = 0
+limit_left = 0
+limit_top = -150
+limit_right = 2000
+limit_bottom = 800
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("17_camera")
+left_barrier_path = NodePath("../../Arena/ArenaBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../Arena/ArenaBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=20335767 instance=ExtResource("16_potions")]
+
+[node name="RainLayerForeground" type="CPUParticles2D" parent="." unique_id=1647730494]
+z_index = 25
+position = Vector2(1000, -150)
+amount = 80
+lifetime = 0.85
+emission_shape = 3
+emission_rect_extents = Vector2(1150, 20)
+direction = Vector2(-0.4, 1)
+spread = 3.0
+gravity = Vector2(-100, 850)
+initial_velocity_min = 600.0
+initial_velocity_max = 900.0
+scale_amount_min = 3.0
+scale_amount_max = 5.5
+color = Color(0.8, 0.9, 1, 0.7)
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=1081344035]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=2130980212]
+position = Vector2(700, 560)
+
+[node name="from_interior" type="Marker2D" parent="EntryPoints" unique_id=1713248867]
+position = Vector2(700, 560)
+
+[node name="ExitPortal" type="Area2D" parent="." unique_id=1234383299]
+position = Vector2(1550, 420)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPortal" unique_id=1270780444]
+position = Vector2(-4, -46)
+shape = SubResource("Shape_side_plat")
+
+[node name="PortalGlow" type="Polygon2D" parent="ExitPortal" unique_id=1342566313]
+position = Vector2(-3, -43)
+color = Color(0.35, 0.95, 0.8, 0.4)
+polygon = PackedVector2Array(0, -60, 40, -40, 60, 0, 40, 40, 0, 60, -40, 40, -60, 0, -40, -40)
+
+[node name="Prompt" type="Label" parent="ExitPortal" unique_id=11971093]
+offset_left = -100.0
+offset_top = -90.0
+offset_right = 100.0
+offset_bottom = -60.0
+theme_override_colors/font_color = Color(0.9, 1, 0.85, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+text = "[E] 返回树下"
+horizontal_alignment = 1
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1811822926]
+layer = 100
+
+[node name="PurificationGauge" type="PanelContainer" parent="UI" unique_id=309009990]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 22.0
+offset_right = 220.0
+offset_bottom = 86.0
+grow_horizontal = 2
+
+[node name="Margin" type="MarginContainer" parent="UI/PurificationGauge" unique_id=413067506]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="UI/PurificationGauge/Margin" unique_id=903221728]
+layout_mode = 2
+
+[node name="ValueLabel" type="Label" parent="UI/PurificationGauge/Margin/VBox" unique_id=453092328]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 1, 1)
+text = "【 污染程度 】 100%"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/PurificationGauge/Margin/VBox" unique_id=1990093381]
+custom_minimum_size = Vector2(380, 16)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="BossHint" type="PanelContainer" parent="UI" unique_id=1803667050]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -100.0
+offset_right = 320.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="UI/BossHint" unique_id=429158291]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 1, 1)
+text = "寻找净化窗口……"
+horizontal_alignment = 1
+
+[node name="ShockwaveRect" type="ColorRect" parent="UI" unique_id=638214849]
+visible = false
+material = SubResource("Material_shockwave")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FadeRect" type="ColorRect" parent="UI" unique_id=1880006477]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CrownVFX" type="Node2D" parent="." unique_id=637955477]
+script = ExtResource("12_vfx")
+seraph_corrupted_path = NodePath("../Boss/SeraphSprite")
+seraph_normal_path = NodePath("../Boss/SeraphNormalSprite")
+shockwave_rect_path = NodePath("../UI/ShockwaveRect")
+rain_far_path = NodePath("../Background/RainLayerFar")
+rain_mid_path = NodePath("../Background/RainLayerMid")
+rain_foreground_path = NodePath("../RainLayerForeground")
+platform_splashes_path = NodePath("../Arena/PlatformSplashes")
+gloomy_overlay_path = NodePath("../Background/GloomyOverlay")
+lightning_overlay_path = NodePath("../Background/LightningOverlay")
+background_sprite_path = NodePath("../Background/CrownBackground")
+
+[node name="CrownController" type="Node" parent="." unique_id=1900463949]
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=2139284620]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=2139284621 instance=ExtResource("18_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2139284622]
+layer = 200
+script = ExtResource("19_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=2139284623 instance=ExtResource("20_pause_menu")]

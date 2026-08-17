@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://dps7vx6e4qm1k"]
+
+[ext_resource type="Script" uid="uid://c45h7pdt4r1vl" path="res://day/levels/Crimson Vale/hazards/blood_leaf_swarm.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://drx2c4rcolsbf" path="res://day/levels/Crimson Vale/shaders/blood_leaf_swarm.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" uid="uid://bknet0plpm0n5" path="res://day/levels/Crimson Vale/maple1.png" id="3_maple1"]
+[ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="4_maple"]
+[ext_resource type="Script" uid="uid://bebydwklh0uoh" path="res://day/levels/Crimson Vale/hazards/blood_leaf_telegraph.gd" id="5_telegraph"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_back_a"]
+shader = ExtResource("2_shader")
+shader_parameter/target_position = Vector2(0, 0)
+shader_parameter/wind_velocity = Vector2(0, 0)
+shader_parameter/disperse = 0.0
+shader_parameter/chase_intensity = 0.0
+shader_parameter/swarm_radius = 80.0
+shader_parameter/attract_force = 500.0
+shader_parameter/orbit_speed = 3.4
+shader_parameter/base_scale = 0.95
+shader_parameter/wobble_speed = 4.2
+shader_parameter/drag_factor = 2.0
+shader_parameter/tint_from = Color(0.72, 0.1, 0.1, 1)
+shader_parameter/tint_to = Color(0.85, 0.32, 0.14, 1)
+shader_parameter/alpha_mult = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_back_b"]
+shader = ExtResource("2_shader")
+shader_parameter/target_position = Vector2(0, 0)
+shader_parameter/wind_velocity = Vector2(0, 0)
+shader_parameter/disperse = 0.0
+shader_parameter/chase_intensity = 0.0
+shader_parameter/swarm_radius = 75.0
+shader_parameter/attract_force = 460.0
+shader_parameter/orbit_speed = 3.0
+shader_parameter/base_scale = 0.8
+shader_parameter/wobble_speed = 5.2
+shader_parameter/drag_factor = 2.0
+shader_parameter/tint_from = Color(0.65, 0.08, 0.08, 1)
+shader_parameter/tint_to = Color(0.75, 0.25, 0.1, 1)
+shader_parameter/alpha_mult = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_front_a"]
+shader = ExtResource("2_shader")
+shader_parameter/target_position = Vector2(0, 0)
+shader_parameter/wind_velocity = Vector2(0, 0)
+shader_parameter/disperse = 0.0
+shader_parameter/chase_intensity = 0.0
+shader_parameter/swarm_radius = 75.0
+shader_parameter/attract_force = 560.0
+shader_parameter/orbit_speed = 3.8
+shader_parameter/base_scale = 1.15
+shader_parameter/wobble_speed = 4.8
+shader_parameter/drag_factor = 2.0
+shader_parameter/tint_from = Color(0.92, 0.2, 0.16, 1)
+shader_parameter/tint_to = Color(1, 0.52, 0.22, 1)
+shader_parameter/alpha_mult = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_front_b"]
+shader = ExtResource("2_shader")
+shader_parameter/target_position = Vector2(0, 0)
+shader_parameter/wind_velocity = Vector2(0, 0)
+shader_parameter/disperse = 0.0
+shader_parameter/chase_intensity = 0.0
+shader_parameter/swarm_radius = 70.0
+shader_parameter/attract_force = 500.0
+shader_parameter/orbit_speed = 3.4
+shader_parameter/base_scale = 0.95
+shader_parameter/wobble_speed = 5.6
+shader_parameter/drag_factor = 2.0
+shader_parameter/tint_from = Color(0.82, 0.15, 0.14, 1)
+shader_parameter/tint_to = Color(0.92, 0.4, 0.16, 1)
+shader_parameter/alpha_mult = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_core"]
+radius = 60.0
+
+[node name="BloodLeafSwarm" type="Node2D" unique_id=591125817]
+script = ExtResource("1_script")
+
+[node name="LeafParticlesA_Back" type="GPUParticles2D" parent="." unique_id=1847192831]
+z_index = -5
+amount = 70
+texture = ExtResource("3_maple1")
+lifetime = 2.5
+randomness = 0.3
+visibility_rect = Rect2(-1200, -1200, 2400, 2400)
+process_material = SubResource("ShaderMaterial_back_a")
+
+[node name="LeafParticlesB_Back" type="GPUParticles2D" parent="." unique_id=1984210943]
+z_index = -5
+amount = 50
+texture = ExtResource("4_maple")
+lifetime = 2.7
+randomness = 0.35
+visibility_rect = Rect2(-1200, -1200, 2400, 2400)
+process_material = SubResource("ShaderMaterial_back_b")
+
+[node name="LeafParticlesA" type="GPUParticles2D" parent="." unique_id=1333873245]
+z_index = 5
+amount = 90
+texture = ExtResource("3_maple1")
+lifetime = 2.4
+randomness = 0.25
+visibility_rect = Rect2(-1200, -1200, 2400, 2400)
+process_material = SubResource("ShaderMaterial_front_a")
+
+[node name="LeafParticlesB" type="GPUParticles2D" parent="." unique_id=1344843472]
+z_index = 5
+amount = 70
+texture = ExtResource("4_maple")
+lifetime = 2.6
+randomness = 0.35
+visibility_rect = Rect2(-1200, -1200, 2400, 2400)
+process_material = SubResource("ShaderMaterial_front_b")
+
+[node name="DamageArea" type="Area2D" parent="." unique_id=470402147]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=1578247255]
+shape = SubResource("CircleShape2D_core")
+
+[node name="DamageTick" type="Timer" parent="." unique_id=2084835891]
+wait_time = 0.35
+autostart = true
+
+[node name="Telegraph" type="Node2D" parent="." unique_id=2139574314]
+z_index = -1
+script = ExtResource("5_telegraph")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1420959122]

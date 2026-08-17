@@ -6,9 +6,12 @@ extends ControllerBase
 
 @export var activation_layer := 1
 @export var require_bodies := 1
+@export var texture_off: Texture2D
+@export var texture_on: Texture2D
 
 @onready var _area: Area2D = $Area2D
-@onready var _visual: Polygon2D = $Visual
+@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D")
+@onready var _visual: Node2D = get_node_or_null("Visual")
 
 var _bodies_on_plate := 0
 
@@ -42,8 +45,13 @@ func _is_valid_body(body: Node2D) -> bool:
 
 
 func _update_visual() -> void:
-	if _visual == null:
-		return
-	_visual.color = active_color if is_active else inactive_color
-	var depressed := -6.0 if is_active else 0.0
-	_visual.position.y = depressed
+	if _sprite != null:
+		if is_active and texture_on != null:
+			_sprite.texture = texture_on
+		elif not is_active and texture_off != null:
+			_sprite.texture = texture_off
+
+	if _visual != null and _visual is Polygon2D:
+		_visual.color = active_color if is_active else inactive_color
+		var depressed := -6.0 if is_active else 0.0
+		_visual.position.y = depressed

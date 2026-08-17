@@ -37,9 +37,9 @@ func configure(initial_velocity: Vector2, shared_payload: Dictionary, definition
 
 
 func _ready() -> void:
-	if collision_shape.shape is CircleShape2D:
+	if collision_shape != null and collision_shape.shape is CircleShape2D:
 		(collision_shape.shape as CircleShape2D).radius = projectile_radius
-	if potion != null:
+	if potion != null and bottle_sprite != null:
 		bottle_sprite.texture = PotionSvgRenderer.get_bottle_texture(bottle_color, 72, 1.0, float(payload.get("potency", 1.0)))
 
 
@@ -52,7 +52,55 @@ func _physics_process(delta: float) -> void:
 		return
 	velocity.y += gravity * delta
 	rotation = velocity.angle() + PI * 0.5
-	var collision := move_and_collide(velocity * delta)
+
+	var from_pos := global_position
+	var motion := velocity * delta
+	var to_pos := from_pos + motion
+
+	var space := get_world_2d().direct_space_state
+	if space != null:
+		var excludes: Array[RID] = [get_rid()]
+		for p in get_tree().get_nodes_in_group("player"):
+			if p is CollisionObject2D:
+				excludes.append((p as CollisionObject2D).get_rid())
+		for l in get_tree().get_nodes_in_group("forest_luca_runtime"):
+			if l is CollisionObject2D:
+				excludes.append((l as CollisionObject2D).get_rid())
+
+		# 1. Raycast for fast Area2D / Body collision along the trajectory line
+		var query := PhysicsRayQueryParameters2D.create(from_pos, to_pos)
+		query.collide_with_areas = true
+		query.collide_with_bodies = true
+		query.collision_mask = 0xFFFFFFFF
+		query.exclude = excludes
+
+		var hit := space.intersect_ray(query)
+		if not hit.is_empty():
+			var collider: Object = hit.get("collider")
+			var hit_pos: Vector2 = hit.get("position", to_pos)
+			var hit_normal: Vector2 = hit.get("normal", -velocity.normalized())
+			if collider != null and collider != self:
+				_break(hit_pos, hit_normal, collider)
+				return
+
+		# 2. Shape overlap check for Area2D targets (e.g. boss weakpoints / rings)
+		var circle := CircleShape2D.new()
+		circle.radius = projectile_radius
+		var shape_query := PhysicsShapeQueryParameters2D.new()
+		shape_query.shape = circle
+		shape_query.transform = Transform2D(0.0, to_pos)
+		shape_query.collide_with_areas = true
+		shape_query.collide_with_bodies = false
+		shape_query.collision_mask = 0xFFFFFFFF
+		shape_query.exclude = excludes
+		var shape_hits := space.intersect_shape(shape_query, 1)
+		if not shape_hits.is_empty():
+			var collider: Object = shape_hits[0].get("collider")
+			if collider != null and collider != self:
+				_break(to_pos, -velocity.normalized(), collider)
+				return
+
+	var collision := move_and_collide(motion)
 	if collision != null:
 		_break(collision.get_position(), collision.get_normal(), collision.get_collider())
 
@@ -62,18 +110,22 @@ func _break(point: Vector2, normal: Vector2, direct_collider: Object = null) -> 
 		return
 	_has_broken = true
 	velocity = Vector2.ZERO
-	bottle_sprite.visible = false
-	collision_shape.set_deferred("disabled", true)
+	if bottle_sprite != null:
+		bottle_sprite.visible = false
+	if collision_shape != null:
+		collision_shape.set_deferred("disabled", true)
 	_notify_direct_hit(direct_collider, point, normal)
-	var executor := PotionEffectExecutor.new()
-	executor.tuning = effect_tuning
-	get_parent().add_child(executor)
-	executor.execute(potion, payload, point, normal, self)
-	executor.queue_free()
-	var splash := PotionSplash.new()
-	get_parent().add_child(splash)
-	splash.global_position = point
-	splash.setup(bottle_color)
+	if effect_tuning != null and get_parent() != null:
+		var executor := PotionEffectExecutor.new()
+		executor.tuning = effect_tuning
+		get_parent().add_child(executor)
+		executor.execute(potion, payload, point, normal, self)
+		executor.queue_free()
+	if get_parent() != null:
+		var splash := PotionSplash.new()
+		get_parent().add_child(splash)
+		splash.global_position = point
+		splash.setup(bottle_color)
 	broken.emit(point, normal)
 	queue_free()
 

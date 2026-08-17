@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/forest/crown/forest_crown.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"forest_crown"
+display_name = "母树树冠·炽天使"
+disaster_name = "血河"
+normal_description = "阿尔维斯母树顶端的宁静树冠，古老的炽天使静静守护着云林的晴雨平衡。"
+corrupted_description = "暴雨与黑魔法肆虐的树冠，被痛苦侵蚀的炽天使正等待着净化与拯救。"
+scene_description = "在暴雨与黑魔法干扰中寻找净化窗口，净化被侵蚀的炽天使。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"from_interior"
+show_title_card = true
+native_ingredient_ids = Array[StringName]([])

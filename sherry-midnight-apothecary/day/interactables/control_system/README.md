@@ -16,7 +16,14 @@
 ## 控制器
 
 - `PressurePlateController`：压力板，足够数量的 `CharacterBody2D` 站在板上时保持激活。
+  - 支持通过 `texture_off` 与 `texture_on` 导出纹理，自动根据激活状态切换 `Sprite2D` 纹理。
+  - 预制体：
+    - `pressure_plate.tscn`（默认压力板样式，对应 `art/plateA_off.png` / `art/plateA_on.png`）
+    - `pressure_plate_a.tscn`（压力板变体，对应 `art/plate_off.png` / `art/plate_on.png`）
+    - `pressure_plate_square.tscn`（方形变体，对应 `art/square_off.png` / `art/square_on.png`）
 - `LeverSwitchController`：拉杆开关，玩家进入范围后按交互键切换状态。
+  - 支持通过 `texture_off` 与 `texture_on` 导出纹理，自动根据激活状态切换 `Sprite2D` 纹理。
+  - 预制体：`lever_switch.tscn`（对应 `art/switch_off.png` / `art/switch_on.png`）。
 - `DualWorldPressurePlateController`：双世界压力板变体。
 
 ## 受控组件

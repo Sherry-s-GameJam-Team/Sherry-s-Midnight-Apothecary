@@ -29,12 +29,12 @@ func _on_body_exited(body: Node2D) -> void:
 	_hide_interaction_hint()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _player == null or _has_played_current_dialogue():
+	if _player == null or _has_played_current_dialogue() or not _is_interact_event(event):
 		return
-	if not _is_interact_event(event):
-		return
+	var vp := get_viewport()
+	if vp != null:
+		vp.set_input_as_handled()
 	_start_dialogue()
-	get_viewport().set_input_as_handled()
 
 func _start_dialogue() -> void:
 	var active_dialogue := _active_dialogue()

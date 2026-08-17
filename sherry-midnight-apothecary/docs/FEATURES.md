@@ -26,6 +26,8 @@
 
 - [Forest interior level](../day/levels/forest/docs/FOREST_INTERIOR_LEVEL.md): standalone tree-interior dual-character level — control rooms, spray purification, lifts, sluice gate, and crown-exit placeholder.
 
+- [Forest crown boss level](../day/levels/forest/docs/FOREST_CROWN_LEVEL.md): standalone Seraph boss encounter — 3-phase corruption mechanics, halo/core weakpoints, feather storm, procedural blood rain, and radial purification VFX.
+
 - [Golden cliff](golden_cliff.md): standalone `烁金横崖` day level — balance-stone calibration, floating/debris hazards, portal repair, embedded standalone DeveloperConsole, embedded PauseMenu (B-key backpack, ESC menu), and `LEVELS` registration for the global SceneTitleCard.
 
 - [Night home & Luca interaction](night_home.md): nighttime apothecary interior, Luca intro dialogue sequence, herb rewards, hintUI feedback, alchemy guidance, and bedroom barrier business check with remaining customer confirmation.
@@ -38,3 +40,5 @@
 
 - [Night production herb inventory](production_processing.md): artwork-aligned 4 × 3 herb shelf with responsive slot spacing and paged navigation.
 - [Dialogue Character Portraits](dialogue_portrait.md): 3-slot (left, center, right) character portrait presentation, Dialogue Manager tag/command syntax integration, expression cross-fading, focus dimming, and entrance/reaction animations.
+- [Crimson Vale](crimson_vale.md): daytime Crimson Vale level — 3-layer parallax background, village buildings and maple resin props, Danxin Gate restoration state machine, player controller integration, and LevelData registration.
+- [Blood Leaf Swarm](blood_leaf_swarm.md): reusable delayed-tracking maple leaf swarm hazard, GPUParticles2D particle shader with 3D fluttering & swirling, and wind/explosion/purification potion interactions.

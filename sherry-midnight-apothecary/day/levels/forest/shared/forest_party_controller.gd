@@ -25,20 +25,22 @@ func _ready() -> void:
 
 func enable_switching(enabled: bool) -> void:
 	switching_enabled = enabled
-	if not enabled and active_character != &"sherry":
-		set_active_character(&"sherry")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not switching_enabled:
 		return
 	var requested := false
-	if InputMap.has_action(&"switch_character"):
-		requested = event.is_action_pressed(&"switch_character")
-	elif event is InputEventKey:
-		requested = event.pressed and not event.echo and event.keycode == KEY_TAB
+	if InputMap.has_action(&"switch_character") and event.is_action_pressed(&"switch_character"):
+		requested = true
+	elif InputMap.has_action(&"switch_protagonist") and event.is_action_pressed(&"switch_protagonist"):
+		requested = true
+	elif event is InputEventKey and event.pressed and not event.echo:
+		requested = event.keycode == KEY_C or event.physical_keycode == KEY_C or event.keycode == KEY_TAB or event.physical_keycode == KEY_TAB
 	if requested:
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 		set_active_character(&"luca" if active_character == &"sherry" else &"sherry")
-		get_viewport().set_input_as_handled()
 
 func set_active_character(character_id: StringName) -> void:
 	if character_id == active_character:

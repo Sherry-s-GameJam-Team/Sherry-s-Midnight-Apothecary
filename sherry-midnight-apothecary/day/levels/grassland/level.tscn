@@ -26,7 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://clalnrbslmree" path="res://day/levels/grassland/emerald_field/poison_gas.tscn" id="27_dsfo1"]
 [ext_resource type="PackedScene" uid="uid://b2qk4vyp3s0s0" path="res://day/interactables/control_system/pressure_plate.tscn" id="31_dsfo1"]
 [ext_resource type="PackedScene" uid="uid://drwyj0v1ur1c8" path="res://day/interactables/hint_area.tscn" id="31_hfyy8"]
-[ext_resource type="Script" uid="uid://cq7b8owep3fiw" path="res://day/interactables/control_system/controlled_moving_platform.gd" id="32_mai4o"]
+[ext_resource type="Script" path="res://day/interactables/control_system/controlled_moving_platform.gd" id="32_mai4o"]
 [ext_resource type="PackedScene" uid="uid://dlw7v1x4uu0x6" path="res://day/interactables/herb/herb.tscn" id="33_mai4o"]
 
 [sub_resource type="RectangleShape2D" id="Rect_Move03"]
@@ -164,6 +164,8 @@ shape = SubResource("Rect_Move03")
 
 [node name="LeverSwitch" parent="Platforms" unique_id=875500127 instance=ExtResource("26_hfyy8")]
 position = Vector2(2550, 164)
+texture_off = null
+texture_on = null
 controlled_nodes = Array[NodePath]([NodePath("../P06")])
 
 [node name="P07" parent="Platforms" unique_id=212984754 instance=ExtResource("12_hfyy8")]
@@ -282,15 +284,21 @@ hint_text = "按住奔跑键的同时起跳，可以跳得更远。"
 position = Vector2(3941, 725)
 
 [node name="PressurePlate" parent="." unique_id=1000758929 instance=ExtResource("31_dsfo1")]
-position = Vector2(3936, 636)
+position = Vector2(3939, 662)
+texture_off = null
+texture_on = null
 controlled_nodes = Array[NodePath]([NodePath("../P05")])
 
 [node name="PressurePlate2" parent="." unique_id=2007997537 instance=ExtResource("31_dsfo1")]
-position = Vector2(3698, 638)
+position = Vector2(3704, 662)
+texture_off = null
+texture_on = null
 controlled_nodes = Array[NodePath]([NodePath("../P06")])
 
 [node name="PressurePlate3" parent="." unique_id=677719381 instance=ExtResource("31_dsfo1")]
-position = Vector2(4177, 638)
+position = Vector2(4173, 659)
+texture_off = null
+texture_on = null
 controlled_nodes = Array[NodePath]([NodePath("../P07")])
 
 [node name="P05" parent="." unique_id=214769604 instance=ExtResource("12_hfyy8")]
@@ -330,6 +338,8 @@ position = Vector2(2930, 173)
 
 [node name="LeverSwitch" parent="." unique_id=82523895 instance=ExtResource("26_hfyy8")]
 position = Vector2(4892, 550)
+texture_off = null
+texture_on = null
 controlled_nodes = Array[NodePath]([NodePath("../StartGround2")])
 
 [node name="StartGround3" parent="." unique_id=664593224 instance=ExtResource("8_a8nu6")]
@@ -343,6 +353,8 @@ position = Vector2(6786, 367)
 
 [node name="LeverSwitch2" parent="." unique_id=1757458974 instance=ExtResource("26_hfyy8")]
 position = Vector2(6786, 273)
+texture_off = null
+texture_on = null
 controlled_nodes = Array[NodePath]([NodePath("../StartGround4")])
 
 [node name="StartGround4" parent="." unique_id=1223556854 instance=ExtResource("8_a8nu6")]

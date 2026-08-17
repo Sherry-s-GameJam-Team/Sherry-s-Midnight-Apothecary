@@ -10,6 +10,7 @@ var _moving := false
 
 
 func _ready() -> void:
+	sync_to_physics = false
 	_closed_position = position
 
 
@@ -21,9 +22,12 @@ func close_gate(instant := false) -> void:
 	_set_open(false, instant)
 
 
+var _tween: Tween = null
+
+
 func _set_open(value: bool, instant: bool) -> void:
-	if _moving and not instant:
-		return
+	if _tween != null and _tween.is_valid():
+		_tween.kill()
 	_open = value
 	var target := _closed_position + (open_offset if value else Vector2.ZERO)
 	if instant:
@@ -31,7 +35,7 @@ func _set_open(value: bool, instant: bool) -> void:
 		_moving = false
 		return
 	_moving = true
-	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "position", target, open_time)
-	await tween.finished
+	_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween.tween_property(self, "position", target, open_time)
+	await _tween.finished
 	_moving = false

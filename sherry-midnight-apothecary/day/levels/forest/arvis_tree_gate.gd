@@ -60,8 +60,10 @@ func set_ready_to_open(ready: bool) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _ready_to_open or not _player_in_range or not _is_interact_event(event):
 		return
+	var vp := get_viewport()
+	if vp != null:
+		vp.set_input_as_handled()
 	open_requested.emit()
-	get_viewport().set_input_as_handled()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name != "Player":

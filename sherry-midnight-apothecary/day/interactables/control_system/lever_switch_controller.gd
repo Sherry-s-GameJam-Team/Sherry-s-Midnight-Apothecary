@@ -5,11 +5,14 @@ extends ControllerBase
 
 @export var interact_action := &"interact"
 @export var toggle_mode := true
+@export var texture_off: Texture2D
+@export var texture_on: Texture2D
 
 @onready var _area: Area2D = $Area2D
-@onready var _visual: Polygon2D = $Visual
-@onready var _lever: Polygon2D = $Visual/Lever
-@onready var _hint_label: Label = $HintLabel
+@onready var _sprite: Sprite2D = get_node_or_null("Sprite2D")
+@onready var _visual: Node2D = get_node_or_null("Visual")
+@onready var _lever: Node2D = get_node_or_null("Visual/Lever")
+@onready var _hint_label: Label = get_node_or_null("HintLabel")
 
 var _player_inside := false
 
@@ -49,7 +52,13 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _update_visual() -> void:
-	if _visual == null or _lever == null:
-		return
-	_visual.color = active_color if is_active else inactive_color
-	_lever.rotation_degrees = 35.0 if is_active else -35.0
+	if _sprite != null:
+		if is_active and texture_on != null:
+			_sprite.texture = texture_on
+		elif not is_active and texture_off != null:
+			_sprite.texture = texture_off
+
+	if _visual != null and _visual is Polygon2D:
+		_visual.color = active_color if is_active else inactive_color
+	if _lever != null:
+		_lever.rotation_degrees = 35.0 if is_active else -35.0

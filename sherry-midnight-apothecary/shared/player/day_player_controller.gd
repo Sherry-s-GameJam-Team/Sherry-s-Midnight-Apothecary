@@ -112,8 +112,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_apply_visual_scale()
 	_update_landing(direction)
-	if not _is_transition() and not _is_airborne and not _is_rolling:
-		_update_locomotion(direction)
+	if not _is_airborne and not _is_rolling:
+		if _state == "cast" and not is_zero_approx(direction):
+			_interrupt_cast_by_movement(direction)
+		elif not _is_transition():
+			_update_locomotion(direction)
 	_update_footstep_sfx(delta)
 	_update_animation_speed()
 
@@ -122,7 +125,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint() or _dialogue_locked:
 		return
 	var key_event := event as InputEventKey
-	if key_event == null or not key_event.pressed or key_event.echo or _is_transition() or _potion_action_locked or _is_text_input_focused():
+	if key_event == null or not key_event.pressed or key_event.echo or _potion_action_locked or _is_text_input_focused():
+		return
+	if _state != "cast" and _is_transition():
 		return
 	if event.is_action_pressed("roll"):
 		_try_start_roll("roll")
@@ -317,6 +322,10 @@ func _play_one_shot(action: String) -> void:
 func _start_jump() -> void:
 	if _is_airborne or _is_rolling:
 		return
+	if _state == "cast":
+		_potion_cast_active = false
+		if potion_thrower != null and potion_thrower.has_method("on_cast_animation_finished"):
+			potion_thrower.call("on_cast_animation_finished")
 	var takeoff_speed := absf(_get_input_direction()) * _current_move_speed()
 	_jump_speed_ratio = clampf(takeoff_speed / run_speed, 0.0, 1.0)
 	_is_airborne = true
@@ -409,12 +418,10 @@ func _ground_action_for(direction: float) -> String:
 	return "run" if _is_running() else "walk"
 
 
-func can_start_potion_aim(allow_air_aim: bool = false) -> bool:
-	if _dialogue_locked or _potion_action_locked or _is_rolling or _potion_cast_active:
+func can_start_potion_aim(_allow_air_aim: bool = true) -> bool:
+	if _dialogue_locked or _potion_action_locked or _is_text_input_focused():
 		return false
-	if not is_on_floor() or _is_airborne:
-		return allow_air_aim and _state in ["jump_takeoff", "jump_fall", "fall"]
-	return not _is_transition() and _state in ["idle", "walk", "run"]
+	return true
 
 
 func set_potion_action_locked(locked: bool) -> void:
@@ -461,26 +468,32 @@ func is_facing_right() -> bool:
 
 
 func set_potion_aim_facing(facing_right: bool) -> void:
-	if _potion_cast_active or _facing_right == facing_right:
+	if _facing_right == facing_right:
 		return
 	_facing_right = facing_right
-	if _potion_action_locked and _state in ["idle", "walk", "run"]:
-		_play("idle")
+	if _state in ["idle", "walk", "run"]:
+		_play(_state)
 
 
 func play_potion_cast() -> void:
 	_potion_cast_active = true
-	_potion_action_locked = true
 	_transition_target = "idle"
 	_call_sound_manager(&"play_spell_cast")
 	_play("cast")
-	get_tree().create_timer(POTION_CAST_RELEASE_TIME, true, false, true).timeout.connect(potion_cast_release, CONNECT_ONE_SHOT)
+	potion_cast_release()
 
 
 func potion_cast_release() -> void:
 	if _potion_cast_active and potion_thrower != null and potion_thrower.has_method("on_cast_release"):
 		_call_sound_manager(&"play_spell_release")
 		potion_thrower.call("on_cast_release")
+
+
+func _interrupt_cast_by_movement(direction: float) -> void:
+	_potion_cast_active = false
+	if potion_thrower != null and potion_thrower.has_method("on_cast_animation_finished"):
+		potion_thrower.call("on_cast_animation_finished")
+	_play(_ground_action_for(direction))
 
 
 func apply_potion_effect(effect_id: StringName, context: Dictionary) -> void:

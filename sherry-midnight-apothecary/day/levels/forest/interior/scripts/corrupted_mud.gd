@@ -16,6 +16,17 @@ func _ready() -> void:
 	add_to_group("forest_mud")
 
 
+func apply_potion_effect(effect_id: StringName, _context: Dictionary = {}) -> void:
+	if _purified:
+		return
+	if effect_id == &"purify" or effect_id == &"purification":
+		purify()
+
+
+func apply_potion_purify(_context: Dictionary = {}) -> void:
+	purify()
+
+
 func receive_potion_hit(hit: Dictionary) -> void:
 	if _purified:
 		return
@@ -27,7 +38,7 @@ func receive_water_jet(delta: float) -> void:
 	if _purified or not _environment_corrupted:
 		return
 	_water_progress = minf(water_seconds_to_cleanse, _water_progress + delta)
-	if visual.material is ShaderMaterial:
+	if visual != null and visual.material is ShaderMaterial:
 		(visual.material as ShaderMaterial).set_shader_parameter("cleanse_progress", _water_progress / water_seconds_to_cleanse)
 	if _water_progress >= water_seconds_to_cleanse:
 		purify()
@@ -37,16 +48,27 @@ func purify(instant := false) -> void:
 	if _purified:
 		return
 	_purified = true
-	collision.set_deferred("disabled", true)
-	bubbles.emitting = false
+	collision_layer = 0
+	collision_mask = 0
+	if collision != null:
+		collision.disabled = true
+		collision.set_deferred("disabled", true)
+	if bubbles != null:
+		bubbles.emitting = false
 	if instant:
 		visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED
 		return
 	var tween := create_tween().set_parallel(true)
 	tween.tween_property(self, "modulate:a", 0.0, 0.35)
 	tween.tween_property(self, "scale", Vector2(scale.x, scale.y * 0.15), 0.35)
 	await tween.finished
 	visible = false
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func restore_purified() -> void:
+	purify(true)
 
 
 func set_environment_corrupted(corrupted: bool) -> void:

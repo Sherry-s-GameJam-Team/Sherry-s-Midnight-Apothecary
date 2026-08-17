@@ -1,37 +1,39 @@
 class_name PotionThrower
 extends Node2D
 
-const PROJECTILE_SCENE := preload("res://shared/potions/runtime/potion_projectile.tscn")
-
 signal projectile_spawned(projectile: PotionProjectile)
+
+const PROJECTILE_SCENE := preload("res://shared/potions/runtime/potion_projectile.tscn")
 
 @export var throw_tuning: PotionThrowTuning
 @export var effect_tuning: PotionEffectTuning
+@export var tutorial_hint_id := "tutorial_throw_potion"
+@export var default_definitions: Array[PotionData] = []
 @export var potion_definitions: Array[PotionData] = []
 
-@onready var aim_origin: Node2D = $AimOrigin
-@onready var magic_circle: PotionMagicCircle = $AimOrigin/MagicCircle
-@onready var trajectory_preview: PotionTrajectoryPreview = $TrajectoryPreview
-@onready var camera_director: PotionCameraDirector = $CameraDirector
-@onready var hotbar: PotionHotbar = $PotionHotbar
+@onready var aim_origin: Node2D = (get_node_or_null("AimOrigin") as Node2D)
+@onready var magic_circle: PotionMagicCircle = (get_node_or_null("AimOrigin/MagicCircle") if has_node("AimOrigin/MagicCircle") else get_node_or_null("MagicCircle")) as PotionMagicCircle
+@onready var trajectory_preview: PotionTrajectoryPreview = (get_node_or_null("TrajectoryPreview") as PotionTrajectoryPreview)
+@onready var camera_director: PotionCameraDirector = (get_node_or_null("CameraDirector") as PotionCameraDirector)
+@onready var hotbar: PotionHotbar = (get_node_or_null("PotionHotbar") if has_node("PotionHotbar") else get_node_or_null("HotbarCanvas/PotionHotbarUI")) as PotionHotbar
 
 var inventory_service: PotionInventoryService
 var _definition_by_id: Dictionary = {}
-var _reservation: PotionDoseReservation
-var _drag_start_mouse := Vector2.ZERO
-var _pending_velocity := Vector2.ZERO
 var _aiming := false
 var _casting := false
+var _drag_start_mouse := Vector2.ZERO
+var _pending_velocity := Vector2.ZERO
+var _reservation: PotionDoseReservation
 var _original_time_scale := 1.0
 var _active_projectile: PotionProjectile
 
 
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	for potion: PotionData in potion_definitions:
-		if potion != null:
-			_definition_by_id[potion.id] = potion
-	camera_director.follow_finished.connect(_on_camera_returned)
+	_init_definitions()
+	if throw_tuning == null:
+		throw_tuning = PotionThrowTuning.new()
+	if effect_tuning == null:
+		effect_tuning = PotionEffectTuning.new()
 	call_deferred("_connect_player_data")
 
 
@@ -49,11 +51,15 @@ func _input(event: InputEvent) -> void:
 		return
 	if _aiming and event.is_action_pressed("potion_cancel"):
 		cancel_aim()
-		get_viewport().set_input_as_handled()
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 	elif _aiming and event.is_action_released("potion_aim"):
 		_finish_aim()
-		get_viewport().set_input_as_handled()
-	elif not _aiming and not _casting and not hotbar.is_detail_open():
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+	elif not _aiming and not hotbar.is_detail_open():
 		_handle_slot_input(event)
 
 
@@ -62,13 +68,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _should_block_for_console(event):
 		return
-	if not _aiming and not _casting and event.is_action_pressed("potion_aim"):
+	if not _aiming and event.is_action_pressed("potion_aim"):
 		if _begin_aim():
-			get_viewport().set_input_as_handled()
+			var vp := get_viewport()
+			if vp != null:
+				vp.set_input_as_handled()
 
 
 func on_cast_release() -> void:
-	if not _casting or _reservation == null or not _reservation.active:
+	_casting = false
+	if _reservation == null or not _reservation.active:
 		return
 	var potion_id := _reservation.potion_id
 	var potion: PotionData = _definition_by_id.get(potion_id)
@@ -114,8 +123,6 @@ func cancel_aim() -> void:
 	_casting = false
 	trajectory_preview.hide_preview()
 	magic_circle.hide_circle()
-	if get_parent().has_method("set_potion_action_locked"):
-		get_parent().call("set_potion_action_locked", false)
 	_restore_time()
 
 
@@ -136,7 +143,7 @@ func _begin_aim() -> bool:
 	if hotbar.is_detail_open():
 		return false
 	var player := get_parent()
-	if not player.has_method("can_start_potion_aim") or not bool(player.call("can_start_potion_aim", throw_tuning.allow_air_aim)):
+	if not player.has_method("can_start_potion_aim") or not bool(player.call("can_start_potion_aim", true)):
 		return false
 	var potion_id := selected_potion_id()
 	if potion_id == &"" or potion_id == &"black_potion" or not _definition_by_id.has(potion_id):
@@ -144,7 +151,10 @@ func _begin_aim() -> bool:
 	_reservation = inventory_service.reserve_dose(potion_id, throw_tuning.dose_per_throw)
 	if _reservation == null:
 		return false
-	_original_time_scale = Engine.time_scale
+	if camera_director != null and camera_director._active:
+		camera_director.stop_follow()
+	_casting = false
+	_original_time_scale = 1.0
 	Engine.time_scale = throw_tuning.aim_time_scale
 	_aiming = true
 	_show_throw_tutorial_once()
@@ -153,7 +163,6 @@ func _begin_aim() -> bool:
 	var potion: PotionData = _definition_by_id[potion_id]
 	var next := inventory_service.get_next_instance(potion_id)
 	magic_circle.show_circle(PotionColorResolver.resolve(potion, next))
-	player.call("set_potion_action_locked", true)
 	return true
 
 
@@ -164,12 +173,11 @@ func _finish_aim() -> void:
 		return
 	_pending_velocity = _velocity_from_drag(drag)
 	_aiming = false
-	_casting = true
 	trajectory_preview.hide_preview()
 	if get_parent().has_method("play_potion_cast"):
 		get_parent().call("play_potion_cast")
 	else:
-		_abort_cast()
+		on_cast_release()
 
 
 func _update_aim_preview() -> void:
@@ -201,16 +209,22 @@ func _handle_slot_input(event: InputEvent) -> void:
 		if event.is_action_pressed("potion_slot_%d" % (index + 1)):
 			player_data.select_potion_slot(index)
 			hotbar.close_detail()
-			get_viewport().set_input_as_handled()
+			var vp := get_viewport()
+			if vp != null:
+				vp.set_input_as_handled()
 			return
 	if event.is_action_pressed("potion_next_slot"):
 		player_data.select_potion_slot(posmod(player_data.selected_potion_slot + 1, player_data.potion_slot_count))
 		hotbar.close_detail()
-		get_viewport().set_input_as_handled()
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 	elif event.is_action_pressed("potion_previous_slot"):
 		player_data.select_potion_slot(posmod(player_data.selected_potion_slot - 1, player_data.potion_slot_count))
 		hotbar.close_detail()
-		get_viewport().set_input_as_handled()
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
 
 
 func _connect_player_data() -> void:
@@ -232,56 +246,69 @@ func _connect_player_data() -> void:
 func _on_projectile_broken(_point: Vector2, _normal: Vector2) -> void:
 	_active_projectile = null
 	camera_director.stop_follow()
+	if not _aiming:
+		_restore_time()
 
 
 func _on_projectile_exiting(projectile: PotionProjectile) -> void:
 	if _active_projectile == projectile:
 		_active_projectile = null
 		camera_director.stop_follow()
+		if not _aiming:
+			_restore_time()
 
 
-func _on_camera_returned() -> void:
+func _restore_time() -> void:
+	Engine.time_scale = 1.0
+
+
+func _exit_tree() -> void:
 	_restore_time()
 
 
 func _abort_cast() -> void:
+	_casting = false
 	if _reservation != null:
 		inventory_service.cancel_reservation(_reservation)
 		_reservation = null
-	_casting = false
 	magic_circle.hide_circle()
-	if get_parent().has_method("set_potion_action_locked"):
-		get_parent().call("set_potion_action_locked", false)
 	_restore_time()
 
 
-func _restore_time() -> void:
-	Engine.time_scale = _original_time_scale if _original_time_scale > 0.0 else 1.0
-
-
-func _is_text_input_focused() -> bool:
-	var focused := get_viewport().gui_get_focus_owner()
-	return focused is LineEdit or focused is TextEdit
+func _should_block_for_console(event: InputEvent) -> bool:
+	var console := get_tree().root.find_child("DeveloperConsole", true, false)
+	return console != null and console.has_method("is_open") and bool(console.call("is_open")) and event is InputEventKey
 
 
 func _show_throw_tutorial_once() -> void:
-	var player_data := inventory_service.player_data
-	const FLAG := "potion_throw_controls_shown"
-	if bool(player_data.tutorial_flags.get(FLAG, false)):
+	if tutorial_hint_id.is_empty():
 		return
-	var app_root := get_tree().current_scene
-	var top_hint := app_root.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI if app_root != null else null
-	if top_hint == null:
+	var top_hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+	if top_hint != null:
+		top_hint.push_hint(tutorial_hint_id)
+
+
+func _init_definitions() -> void:
+	_definition_by_id.clear()
+	var defs := potion_definitions if not potion_definitions.is_empty() else default_definitions
+	for definition in defs:
+		if definition != null and definition.id != &"":
+			_definition_by_id[definition.id] = definition
+	if not _definition_by_id.is_empty():
 		return
-	player_data.tutorial_flags[FLAG] = true
-	top_hint.push_text("按住鼠标左键后向反方向拖拽，松开即可投掷药水。", FLAG)
-
-
-func _should_block_for_console(event: InputEvent) -> bool:
-	return event is InputEventKey and _is_text_input_focused()
-
-
-func _exit_tree() -> void:
-	if inventory_service != null and _reservation != null:
-		inventory_service.cancel_reservation(_reservation)
-	Engine.time_scale = _original_time_scale if _original_time_scale > 0.0 else 1.0
+	var paths := [
+		"res://shared/definitions/data/potions/red_potion.tres",
+		"res://shared/definitions/data/potions/orange_potion.tres",
+		"res://shared/definitions/data/potions/yellow_potion.tres",
+		"res://shared/definitions/data/potions/green_potion.tres",
+		"res://shared/definitions/data/potions/cyan_potion.tres",
+		"res://shared/definitions/data/potions/blue_potion.tres",
+		"res://shared/definitions/data/potions/purple_potion.tres",
+		"res://shared/definitions/data/potions/purification_potion.tres",
+		"res://shared/definitions/data/potions/black_potion.tres",
+	]
+	for path in paths:
+		if ResourceLoader.exists(path):
+			var resource := load(path) as PotionData
+			if resource != null:
+				_definition_by_id[resource.id] = resource

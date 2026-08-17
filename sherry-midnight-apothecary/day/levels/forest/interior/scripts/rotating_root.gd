@@ -11,6 +11,7 @@ var _moving := false
 
 
 func _ready() -> void:
+	sync_to_physics = false
 	_horizontal = starts_horizontal
 	rotation_degrees = horizontal_degrees if starts_horizontal else vertical_degrees
 
@@ -27,9 +28,12 @@ func toggle_state() -> void:
 	_set_rotation_state(not _horizontal, false)
 
 
+var _tween: Tween = null
+
+
 func _set_rotation_state(horizontal: bool, instant: bool) -> void:
-	if _moving and not instant:
-		return
+	if _tween != null and _tween.is_valid():
+		_tween.kill()
 	_horizontal = horizontal
 	var target := horizontal_degrees if horizontal else vertical_degrees
 	if instant:
@@ -37,7 +41,7 @@ func _set_rotation_state(horizontal: bool, instant: bool) -> void:
 		_moving = false
 		return
 	_moving = true
-	var tween := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(self, "rotation_degrees", target, rotate_time)
-	await tween.finished
+	_tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_tween.tween_property(self, "rotation_degrees", target, rotate_time)
+	await _tween.finished
 	_moving = false

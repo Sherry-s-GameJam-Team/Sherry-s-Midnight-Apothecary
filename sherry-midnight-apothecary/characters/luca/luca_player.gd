@@ -22,6 +22,8 @@ const FALL_ANIMATION := &"fall"
 
 ## Collision layer 2 is reserved for one-way platforms that players can drop through.
 const DROP_THROUGH_PLATFORM_LAYER := 1 << 1
+## Collision layer 3 (value 4) is reserved for spirit/machinery platforms in LucaWorld that only Luca can stand on.
+const LUCA_WORLD_PLATFORM_LAYER := 1 << 2
 const DROP_THROUGH_DURATION := 0.18
 const DROP_THROUGH_START_SPEED := 80.0
 
@@ -55,7 +57,7 @@ var _default_floor_snap_length := 0.0
 func _ready() -> void:
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	_default_floor_snap_length = floor_snap_length
-	collision_mask |= DROP_THROUGH_PLATFORM_LAYER
+	collision_mask |= DROP_THROUGH_PLATFORM_LAYER | LUCA_WORLD_PLATFORM_LAYER
 	_sync_camera_process_mode()
 	_play_idle()
 

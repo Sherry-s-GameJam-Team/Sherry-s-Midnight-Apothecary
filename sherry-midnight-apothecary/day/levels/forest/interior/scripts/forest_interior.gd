@@ -92,6 +92,8 @@ func _apply_environment_state(corrupted: bool, force := false) -> void:
 
 
 func is_luca_active() -> bool:
+	if party != null and "active_character" in party:
+		return party.active_character == &"luca"
 	return luca != null and luca.get_node_or_null("Camera2D") != null
 
 
@@ -206,18 +208,13 @@ func _set_character_control(body: Node, enabled: bool) -> void:
 func request_exit_to_crown() -> void:
 	_set_flag(COMPLETED_FLAG, true)
 	var runtime := _get_day_runtime()
-	var crown_registered := false
-	# Avoid a compile-time reference to DayRuntime here: DayRuntime.LEVELS
-	# preloads this level's tres, which would create a cyclic preload through
-	# this script. Query the runtime duck-typed instead.
-	if runtime != null and runtime.has_method("_find_level"):
-		crown_registered = runtime.call("_find_level", CROWN_LEVEL_ID) != null
-	if runtime != null and crown_registered:
-		runtime.call("switch_to_level", CROWN_LEVEL_ID, CROWN_ENTRY_ID)
-	elif runtime != null:
-		push_warning("ForestInterior: forest_crown is not registered yet; exit remains a placeholder.")
+	if runtime != null:
+		if runtime.has_method("transition_to_level_with_blackout"):
+			runtime.call("transition_to_level_with_blackout", "forest_crown", &"from_interior", true)
+		elif runtime.has_method("switch_to_level"):
+			runtime.call("switch_to_level", CROWN_LEVEL_ID, CROWN_ENTRY_ID)
 	else:
-		push_warning("ForestInterior F6 mode: crown exit reached. Register forest_crown to continue.")
+		get_tree().change_scene_to_file("res://day/levels/forest/crown/forest_crown.tscn")
 
 
 func _restore_persistent_progress() -> void:

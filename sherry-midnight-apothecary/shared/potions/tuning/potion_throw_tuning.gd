@@ -3,7 +3,7 @@ extends Resource
 
 @export_range(0.05, 1.0, 0.05) var aim_time_scale := 0.3
 @export_range(0.05, 1.0, 0.05) var flight_time_scale := 0.5
-@export var allow_air_aim := false
+@export var allow_air_aim := true
 @export_range(50.0, 2000.0, 10.0) var minimum_throw_speed := 350.0
 @export_range(50.0, 2500.0, 10.0) var maximum_throw_speed := 1050.0
 @export_range(1.0, 200.0, 1.0) var minimum_valid_drag_distance := 28.0
