@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b0fe2y2mpcq2i"]
+
+[ext_resource type="Script" uid="uid://tr6k0icc71w" path="res://day/levels/grassland/emerald_field/scripts/collapse_platform.gd" id="1_ov8u4"]
+[ext_resource type="Texture2D" uid="uid://bt0ld633b3v3f" path="res://day/levels/grassland/emerald_field/art/platforms/disc.png" id="2_8lhd1"]
+
+[sub_resource type="RectangleShape2D" id="Rect_Collapse02"]
+size = Vector2(328, 63.8)
+
+[node name="Collapse02" type="AnimatableBody2D" unique_id=1098822554]
+script = ExtResource("1_ov8u4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=482901457]
+scale = Vector2(0.68, 0.68)
+texture = ExtResource("2_8lhd1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1675633808]
+position = Vector2(1, 32)
+shape = SubResource("Rect_Collapse02")
+
+[node name="Trigger" type="Area2D" parent="." unique_id=1423360675]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger" unique_id=507744831]
+position = Vector2(0, 2)
+shape = SubResource("Rect_Collapse02")

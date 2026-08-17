@@ -4,21 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://xlhrhrr4fc4r" path="res://day/levels/grassland/art/corrupted_skybox.png" id="2_2ney1"]
 [ext_resource type="Script" uid="uid://bs0uugqtrs37" path="res://day/levels/grassland/emerald_field/scripts/moving_platform.gd" id="3"]
 [ext_resource type="Texture2D" uid="uid://drb8odoqcoy61" path="res://day/levels/grassland/art/skybox_corruped.png" id="3_1jms1"]
-[ext_resource type="Script" uid="uid://tr6k0icc71w" path="res://day/levels/grassland/emerald_field/scripts/collapse_platform.gd" id="4"]
 [ext_resource type="Script" uid="uid://crfp386hv65g4" path="res://day/levels/grassland/emerald_field/scripts/poison_gas.gd" id="5"]
 [ext_resource type="Script" uid="uid://bcc8vqdfc8r0s" path="res://day/levels/grassland/emerald_field/scripts/fall_reset_zone.gd" id="6"]
 [ext_resource type="Script" uid="uid://c8jr1d5y7nhjv" path="res://day/levels/grassland/emerald_field/scripts/goal_marker.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://by7rn8arku5jo" path="res://day/levels/grassland/emerald_field/platforms/start_ground.tscn" id="8_a8nu6"]
-[ext_resource type="Texture2D" uid="uid://bt0ld633b3v3f" path="res://day/levels/grassland/emerald_field/art/platforms/disc.png" id="9"]
 [ext_resource type="PackedScene" uid="uid://ca6a6x6a3wrrp" path="res://day/levels/grassland/emerald_field/platforms/trapezoid.tscn" id="9_i62k2"]
-[ext_resource type="Texture2D" uid="uid://b6nbg3s8ri46" path="res://day/levels/grassland/emerald_field/art/platforms/rectangle.png" id="10"]
 [ext_resource type="PackedScene" uid="uid://banrgecpe6nug" path="res://day/levels/grassland/emerald_field/platforms/move.tscn" id="10_pd584"]
 [ext_resource type="PackedScene" uid="uid://vwldb8pnmtax" path="res://day/levels/grassland/emerald_field/platforms/collapse.tscn" id="11_6ubb8"]
-[ext_resource type="Texture2D" uid="uid://c7n47bwhkxbqd" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid.png" id="12"]
 [ext_resource type="PackedScene" uid="uid://cp4c1irxtl02a" path="res://day/levels/grassland/emerald_field/platforms/short.tscn" id="12_hfyy8"]
-[ext_resource type="Texture2D" uid="uid://mqki86nhyphg" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid_broken.png" id="13"]
 [ext_resource type="PackedScene" uid="uid://bghtv7tkf86vk" path="res://day/levels/grassland/emerald_field/platforms/triangle.tscn" id="13_dsfo1"]
-[ext_resource type="Texture2D" uid="uid://d2ve3h0u4xvm3" path="res://day/levels/grassland/emerald_field/art/platforms/triangle.png" id="14"]
 [ext_resource type="Script" uid="uid://b7hjb0osdmmw0" path="res://day/interactables/control_system/controlled_door.gd" id="14_6ubb8"]
 [ext_resource type="PackedScene" uid="uid://y1vdbr27i6tn" path="res://day/levels/grassland/emerald_field/platforms/move_up.tscn" id="14_mai4o"]
 [ext_resource type="Texture2D" uid="uid://dw1pntgafsmuw" path="res://day/levels/grassland/emerald_field/art/platforms/triangle_long.png" id="15"]
@@ -30,40 +24,16 @@
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="20_collision"]
 [ext_resource type="PackedScene" uid="uid://c4d1p8n7x2ra0" path="res://day/interactables/control_system/lever_switch.tscn" id="26_hfyy8"]
 [ext_resource type="PackedScene" uid="uid://clalnrbslmree" path="res://day/levels/grassland/emerald_field/poison_gas.tscn" id="27_dsfo1"]
+[ext_resource type="PackedScene" uid="uid://b2qk4vyp3s0s0" path="res://day/interactables/control_system/pressure_plate.tscn" id="31_dsfo1"]
 [ext_resource type="PackedScene" uid="uid://drwyj0v1ur1c8" path="res://day/interactables/hint_area.tscn" id="31_hfyy8"]
-
-[sub_resource type="RectangleShape2D" id="Rect_P09"]
-size = Vector2(287, 72.2)
-
-[sub_resource type="RectangleShape2D" id="Rect_Collapse02"]
-size = Vector2(328, 63.8)
-
-[sub_resource type="RectangleShape2D" id="Rect_P11"]
-size = Vector2(209, 56.3)
+[ext_resource type="Script" uid="uid://cq7b8owep3fiw" path="res://day/interactables/control_system/controlled_moving_platform.gd" id="32_mai4o"]
+[ext_resource type="PackedScene" uid="uid://dlw7v1x4uu0x6" path="res://day/interactables/herb/herb.tscn" id="33_mai4o"]
 
 [sub_resource type="RectangleShape2D" id="Rect_Move03"]
 size = Vector2(209, 56.3)
 
-[sub_resource type="RectangleShape2D" id="Rect_P13"]
-size = Vector2(369.6, 47.5)
-
-[sub_resource type="RectangleShape2D" id="Rect_P14"]
-size = Vector2(514.7, 48.3)
-
-[sub_resource type="RectangleShape2D" id="Rect_P15"]
-size = Vector2(213.6, 56.3)
-
-[sub_resource type="RectangleShape2D" id="Rect_Collapse03"]
-size = Vector2(361.8, 51.4)
-
-[sub_resource type="RectangleShape2D" id="Rect_Move04"]
-size = Vector2(328, 63.8)
-
-[sub_resource type="RectangleShape2D" id="Rect_EndGround"]
-size = Vector2(620.4, 80.9)
-
 [sub_resource type="RectangleShape2D" id="Rect_Gas2"]
-size = Vector2(1050, 360)
+size = Vector2(456, 360)
 
 [sub_resource type="RectangleShape2D" id="Rect_Fall"]
 size = Vector2(9000, 420)
@@ -148,6 +118,9 @@ position_smoothing_speed = 7.0
 
 [node name="Platforms" type="Node2D" parent="." unique_id=1579105145]
 
+[node name="P03" parent="Platforms" unique_id=2075409793 instance=ExtResource("9_i62k2")]
+position = Vector2(2256, 759)
+
 [node name="StartGround" parent="Platforms" unique_id=1117612648 instance=ExtResource("8_a8nu6")]
 position = Vector2(320, 610)
 
@@ -164,56 +137,15 @@ position = Vector2(2191, 346)
 position = Vector2(2554, 262)
 
 [node name="P06" parent="Platforms" unique_id=1561054440 instance=ExtResource("13_dsfo1")]
-position = Vector2(3174, 288)
+position = Vector2(3178, 252)
 script = ExtResource("14_6ubb8")
 open_offset = Vector2(0, 500)
 
 [node name="Move02" parent="Platforms" unique_id=1716449123 instance=ExtResource("14_mai4o")]
-position = Vector2(1832, 752)
+position = Vector2(1735, 735)
 
 [node name="P08" parent="Platforms" unique_id=127482441 instance=ExtResource("15_0w01k")]
-position = Vector2(2246, 740)
-
-[node name="P09" type="StaticBody2D" parent="Platforms" unique_id=63300391]
-position = Vector2(4200, 470)
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/P09" unique_id=1842182207]
-scale = Vector2(0.67, 0.67)
-texture = ExtResource("14")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P09" unique_id=1680153341]
-position = Vector2(0, -51)
-shape = SubResource("Rect_P09")
-
-[node name="Collapse02" type="AnimatableBody2D" parent="Platforms" unique_id=1709667775]
-position = Vector2(4610, 390)
-script = ExtResource("4")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Collapse02" unique_id=347828404]
-scale = Vector2(0.68, 0.68)
-texture = ExtResource("9")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse02" unique_id=166446634]
-position = Vector2(1, 32)
-shape = SubResource("Rect_Collapse02")
-
-[node name="Trigger" type="Area2D" parent="Platforms/Collapse02" unique_id=1791290292]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse02/Trigger" unique_id=1094099717]
-position = Vector2(0, 2)
-shape = SubResource("Rect_Collapse02")
-
-[node name="P11" type="StaticBody2D" parent="Platforms" unique_id=2035180329]
-position = Vector2(4950, 470)
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/P11" unique_id=1978022179]
-scale = Vector2(0.9, 0.82)
-texture = ExtResource("16")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P11" unique_id=950392479]
-position = Vector2(1, -25.000011)
-shape = SubResource("Rect_P11")
+position = Vector2(2248, 664)
 
 [node name="Move03" type="AnimatableBody2D" parent="Platforms" unique_id=358192187 groups=["resettable"]]
 position = Vector2(5170, 345)
@@ -229,84 +161,6 @@ texture = ExtResource("16")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Move03" unique_id=1963043085]
 position = Vector2(0, -24.000011)
 shape = SubResource("Rect_Move03")
-
-[node name="P13" type="StaticBody2D" parent="Platforms" unique_id=772211831]
-position = Vector2(5660, 435)
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/P13" unique_id=1554808073]
-scale = Vector2(0.74, 0.78)
-texture = ExtResource("12")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P13" unique_id=1824095375]
-position = Vector2(-1, -18)
-shape = SubResource("Rect_P13")
-
-[node name="P14" type="StaticBody2D" parent="Platforms" unique_id=1191683329]
-position = Vector2(6100, 535)
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/P14" unique_id=151218831]
-scale = Vector2(0.58, 0.68)
-texture = ExtResource("15")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P14" unique_id=1709889824]
-position = Vector2(2, -12.999992)
-shape = SubResource("Rect_P14")
-
-[node name="P15" type="StaticBody2D" parent="Platforms" unique_id=331932992]
-position = Vector2(6670, 405)
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/P15" unique_id=78981281]
-scale = Vector2(0.92, 0.82)
-texture = ExtResource("16")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/P15" unique_id=1265389659]
-position = Vector2(2, -23.000011)
-shape = SubResource("Rect_P15")
-
-[node name="Collapse03" type="AnimatableBody2D" parent="Platforms" unique_id=2116378154]
-position = Vector2(7000, 485)
-script = ExtResource("4")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Collapse03" unique_id=357296211]
-scale = Vector2(0.76, 0.76)
-texture = ExtResource("13")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse03" unique_id=1970883241]
-position = Vector2(7, 5.9999886)
-shape = SubResource("Rect_Collapse03")
-
-[node name="Trigger" type="Area2D" parent="Platforms/Collapse03" unique_id=1947226330]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Collapse03/Trigger" unique_id=1610633982]
-position = Vector2(3, -19.000015)
-shape = SubResource("Rect_Collapse03")
-
-[node name="Move04" type="AnimatableBody2D" parent="Platforms" unique_id=1644485162 groups=["resettable"]]
-position = Vector2(7440, 405)
-script = ExtResource("3")
-motion = Vector2(0, -190)
-travel_time = 2.35
-phase = 0.55
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/Move04" unique_id=1586535307]
-scale = Vector2(0.68, 0.68)
-texture = ExtResource("9")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Move04" unique_id=845796899]
-position = Vector2(1, -5)
-shape = SubResource("Rect_Move04")
-
-[node name="EndGround" type="StaticBody2D" parent="Platforms" unique_id=717539309]
-position = Vector2(8050, 585)
-
-[node name="Sprite2D" type="Sprite2D" parent="Platforms/EndGround" unique_id=433600287]
-scale = Vector2(0.96, 0.82)
-texture = ExtResource("10")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/EndGround" unique_id=86666627]
-position = Vector2(1, -29.000023)
-shape = SubResource("Rect_EndGround")
 
 [node name="LeverSwitch" parent="Platforms" unique_id=875500127 instance=ExtResource("26_hfyy8")]
 position = Vector2(2550, 164)
@@ -330,7 +184,7 @@ position = Vector2(2783, -79)
 [node name="Hazards" type="Node2D" parent="." unique_id=367085625]
 
 [node name="PoisonGasA" parent="Hazards" unique_id=6779716 instance=ExtResource("27_dsfo1")]
-position = Vector2(4541, 296)
+position = Vector2(5640, 1064)
 
 [node name="PoisonGasB" type="Area2D" parent="Hazards" unique_id=151336606 groups=["resettable"]]
 position = Vector2(4950, 720)
@@ -340,10 +194,13 @@ max_exposure = 1.05
 poison_color = Color(0.42, 0.95, 0.35, 0.34)
 
 [node name="GasVisual" type="Polygon2D" parent="Hazards/PoisonGasB" unique_id=1899384102]
+position = Vector2(-2209, 217)
+scale = Vector2(0.4342857, 1)
 color = Color(0.42, 0.95, 0.35, 0.34)
-polygon = PackedVector2Array(-525, -180, 525, -180, 525, 180, -525, 180)
+polygon = PackedVector2Array(-525, -180, -17.077637, -180, 525, -180, 525, 180, -525, 180)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/PoisonGasB" unique_id=946153381]
+position = Vector2(-2211, 217)
 shape = SubResource("Rect_Gas2")
 
 [node name="FallResetZone" type="Area2D" parent="Hazards" unique_id=1045581831]
@@ -409,10 +266,92 @@ texture = ExtResource("2_2ney1")
 [node name="Move01" parent="CorruptedSkybox2" unique_id=1533917558 instance=ExtResource("10_pd584")]
 position = Vector2(95.72637, 739.4042)
 
+[node name="Herb" parent="CorruptedSkybox2/Move01" unique_id=316247259 instance=ExtResource("33_mai4o")]
+position = Vector2(16.504639, -77.0213)
+scale = Vector2(1.1003039, 1.1003039)
+
 [node name="TriangleLong" type="Sprite2D" parent="." unique_id=2081603214]
 position = Vector2(131, 1809)
 texture = ExtResource("15")
 
 [node name="HintArea" parent="." unique_id=596019908 instance=ExtResource("31_hfyy8")]
-position = Vector2(2400, 679)
+position = Vector2(2408, 607)
 hint_text = "按住奔跑键的同时起跳，可以跳得更远。"
+
+[node name="StartGround" parent="." unique_id=1200993386 instance=ExtResource("8_a8nu6")]
+position = Vector2(3941, 725)
+
+[node name="PressurePlate" parent="." unique_id=1000758929 instance=ExtResource("31_dsfo1")]
+position = Vector2(3936, 636)
+controlled_nodes = Array[NodePath]([NodePath("../P05")])
+
+[node name="PressurePlate2" parent="." unique_id=2007997537 instance=ExtResource("31_dsfo1")]
+position = Vector2(3698, 638)
+controlled_nodes = Array[NodePath]([NodePath("../P06")])
+
+[node name="PressurePlate3" parent="." unique_id=677719381 instance=ExtResource("31_dsfo1")]
+position = Vector2(4177, 638)
+controlled_nodes = Array[NodePath]([NodePath("../P07")])
+
+[node name="P05" parent="." unique_id=214769604 instance=ExtResource("12_hfyy8")]
+position = Vector2(4700, 488)
+script = ExtResource("32_mai4o")
+
+[node name="DestinationMarker" type="Marker2D" parent="P05" unique_id=1391907598]
+position = Vector2(-700, 0)
+
+[node name="P06" parent="." unique_id=1432325031 instance=ExtResource("12_hfyy8")]
+position = Vector2(3936, 262)
+script = ExtResource("32_mai4o")
+
+[node name="DestinationMarker" type="Marker2D" parent="P06" unique_id=870846115]
+position = Vector2(0, 350)
+
+[node name="P07" parent="." unique_id=597509312 instance=ExtResource("12_hfyy8")]
+position = Vector2(4729, 214)
+script = ExtResource("32_mai4o")
+
+[node name="DestinationMarker" type="Marker2D" parent="P07" unique_id=1665669097]
+position = Vector2(0, 200)
+
+[node name="StartGround2" parent="." unique_id=1639787881 instance=ExtResource("8_a8nu6")]
+position = Vector2(4404, 833)
+script = ExtResource("32_mai4o")
+target_offset = Vector2(-1000, 0)
+
+[node name="P08" parent="." unique_id=1780846244 instance=ExtResource("12_hfyy8")]
+position = Vector2(4884, 644)
+
+[node name="P09" parent="." unique_id=590431422 instance=ExtResource("12_hfyy8")]
+position = Vector2(2897, 265)
+
+[node name="Herb" parent="." unique_id=1261828179 instance=ExtResource("33_mai4o")]
+position = Vector2(2930, 173)
+
+[node name="LeverSwitch" parent="." unique_id=82523895 instance=ExtResource("26_hfyy8")]
+position = Vector2(4892, 550)
+controlled_nodes = Array[NodePath]([NodePath("../StartGround2")])
+
+[node name="StartGround3" parent="." unique_id=664593224 instance=ExtResource("8_a8nu6")]
+position = Vector2(6084, 645)
+
+[node name="Collapse01" parent="." unique_id=1620709514 instance=ExtResource("11_6ubb8")]
+position = Vector2(6510, 489)
+
+[node name="P10" parent="." unique_id=1563214254 instance=ExtResource("12_hfyy8")]
+position = Vector2(6786, 367)
+
+[node name="LeverSwitch2" parent="." unique_id=1757458974 instance=ExtResource("26_hfyy8")]
+position = Vector2(6786, 273)
+controlled_nodes = Array[NodePath]([NodePath("../StartGround4")])
+
+[node name="StartGround4" parent="." unique_id=1223556854 instance=ExtResource("8_a8nu6")]
+position = Vector2(7397, 1091)
+script = ExtResource("14_6ubb8")
+open_offset = Vector2(0, -500)
+
+[node name="StartGround5" parent="." unique_id=1965236829 instance=ExtResource("8_a8nu6")]
+position = Vector2(8151, 591)
+
+[node name="P11" parent="." unique_id=274435198 instance=ExtResource("12_hfyy8")]
+position = Vector2(3458, 701)

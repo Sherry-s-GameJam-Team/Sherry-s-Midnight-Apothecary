@@ -27,3 +27,11 @@
   - 继承 `ControlledBase`。
   - 激活时向顶部 `TopHintUI` 推送 `hint_text`。
   - 通过 `hint_id` 与 `auto_hide_seconds` 控制提示标识和自动隐藏时间。
+
+- `ControlledMovingPlatform`：受控往复移动平台。
+  - 继承 `ControlledBase`。
+  - 激活时沿 `target_offset` 做往复运动（去程、停留、回程、停留）。
+  - 未激活时立刻停在当前位置，再次激活后从当前位置继续循环。
+  - 通过 `travel_time` 与 `pause_time` 控制单程耗时与端点停留时间。
+  - 通过 `easing` 切换线性或 Smooth（端点减速、中段加速）运动。
+  - 可在子节点添加 `Marker2D` 并命名为 `DestinationMarker` 来可视化标记终点；存在时会覆盖 `target_offset`。
