@@ -1097,7 +1097,7 @@ action_id = &"root_lift_b"
 prompt_text = "[E] 升降根平台 (Luca)"
 
 [node name="FinalGateConsole" parent="LucaWorldOnly" unique_id=28082042 instance=ExtResource("37_console")]
-position = Vector2(250, -3740)
+position = Vector2(311, -3935)
 action_id = &"final_gate"
 prompt_text = "[E] 开启最终根门 (Luca)"
 

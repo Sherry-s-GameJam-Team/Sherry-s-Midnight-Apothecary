@@ -102,7 +102,7 @@ func _ready() -> void:
 	if auto_start:
 		if proximity_trigger and target != null:
 			var dist := _current_anchor_pos.distance_to(target.global_position)
-			if dist <= detection_radius:
+			if dist <= detection_radius and not is_target_sheltered():
 				start_attack(target)
 			else:
 				_enter_idle_state()
@@ -135,12 +135,28 @@ func _physics_process(delta: float) -> void:
 	_sync_shader_uniforms()
 
 
+func is_target_sheltered() -> bool:
+	if target == null or not is_instance_valid(target):
+		return false
+	if target.get_meta("sheltered", false):
+		return true
+	if target.is_in_group("sheltered"):
+		return true
+	if Time.get_ticks_msec() <= int(target.get_meta("potion_concealed_until_ms", 0)):
+		return true
+	return false
+
+
 func start_attack(new_target: Node2D = null) -> void:
 	if _is_purified:
 		return
 	if new_target != null:
 		target = new_target
 	_update_target_reference()
+
+	if is_target_sheltered():
+		_enter_idle_state()
+		return
 
 	_current_state = State.TELEGRAPH
 	_state_timer = 0.0
@@ -296,12 +312,18 @@ func _process_idle(delta: float) -> void:
 	_current_anchor_pos = _current_anchor_pos.move_toward(_spawn_origin, 70.0 * delta)
 
 	if target != null and is_instance_valid(target):
+		if is_target_sheltered():
+			return
 		var dist := _current_anchor_pos.distance_to(target.global_position)
 		if dist <= detection_radius:
 			start_attack(target)
 
 
 func _process_telegraph(delta: float) -> void:
+	if is_target_sheltered():
+		_finish_attack()
+		return
+
 	_state_timer += delta
 	if telegraph_node != null and telegraph_node.has_method("set_progress"):
 		telegraph_node.call("set_progress", clampf(_state_timer / maxf(telegraph_time, 0.01), 0.0, 1.0))
@@ -321,6 +343,10 @@ func _enter_tracking_state() -> void:
 
 
 func _process_tracking(delta: float) -> void:
+	if is_target_sheltered():
+		_finish_attack()
+		return
+
 	_attack_elapsed += delta
 
 	var delayed_target_pos := _get_delayed_target_position()
@@ -341,7 +367,7 @@ func _process_cooldown(delta: float) -> void:
 	_state_timer += delta
 	# Hover or gently circle in place during cooldown
 	if _state_timer >= loop_interval:
-		if target != null and is_instance_valid(target):
+		if target != null and is_instance_valid(target) and not is_target_sheltered():
 			var dist := _current_anchor_pos.distance_to(target.global_position)
 			if dist <= leashing_radius:
 				start_attack(target)
@@ -352,7 +378,7 @@ func _process_cooldown(delta: float) -> void:
 func _process_dispersed(delta: float) -> void:
 	_disperse_remaining -= delta
 	if _disperse_remaining <= 0.0:
-		if _attack_elapsed < attack_duration:
+		if _attack_elapsed < attack_duration and not is_target_sheltered():
 			_current_state = State.TRACKING
 			if damage_area != null:
 				damage_area.monitoring = true
@@ -464,6 +490,10 @@ func _check_and_damage_player(node: Node, checked: Dictionary) -> void:
 	if player_node == null or checked.has(player_node.get_instance_id()):
 		return
 	checked[player_node.get_instance_id()] = true
+
+	# Don't damage if player is sheltered
+	if is_target_sheltered():
+		return
 
 	var knockback_dir := (player_node.global_position - _current_anchor_pos).normalized()
 	if knockback_dir.is_zero_approx():

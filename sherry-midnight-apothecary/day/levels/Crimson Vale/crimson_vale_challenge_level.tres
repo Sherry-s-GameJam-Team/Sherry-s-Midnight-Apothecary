@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/crimson_vale_challenge.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"crimson_vale_challenge"
+display_name = "赤染绝壁·血叶疾行"
+disaster_name = "血叶之灾"
+normal_description = "险峻的断崖与村落飞檐，枫树下错落着可供遮蔽的枫脂架。"
+corrupted_description = "血叶群在断崖狂乱盘旋，追猎闯入者；利用前景遮蔽与平台跳跃抵达丹心门。"
+scene_description = "平台跳跃闯关：利用前景掩体躲避血叶群锁定，穿越断崖与飞檐。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = true
+native_ingredient_ids = Array[StringName]([])

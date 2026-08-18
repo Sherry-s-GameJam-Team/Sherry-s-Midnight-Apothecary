@@ -3,23 +3,30 @@ extends DayLevelEnvironment
 
 signal objective_updated(text: String, hint: String)
 signal gate_restored
+signal challenge_completed
+signal secret_found
 
 @export var is_gate_repaired := false
+@export var fall_damage: int = 1
 
 @onready var danxin_gate_broken: Sprite2D = get_node_or_null("World/DanxinGate/GateBroken")
 @onready var danxin_gate_restored: Sprite2D = get_node_or_null("World/DanxinGate/GateRestored")
 @onready var gate_portal: DoorPortal = get_node_or_null("World/DanxinGate/GatePortal")
-@onready var wind_chime: Area2D = get_node_or_null("World/Village/WindChime")
+@onready var wind_chime: Node2D = get_node_or_null("World/Village/WindChime")
 @onready var maple_rack: Area2D = get_node_or_null("World/Village/MapleRack")
+@onready var abyss_hazard: Area2D = get_node_or_null("World/AbyssHazard")
+@onready var wind_chime_secret: Node2D = get_node_or_null("World/Props/WindChimeSecret")
 
-var _wind_chime_tween: Tween
+var _last_checkpoint_pos: Vector2 = Vector2(6250, 520)
+var _is_respawning: bool = false
 
 
 func _ready() -> void:
 	super._ready()
 	_update_gate_visuals()
-	if wind_chime != null and not wind_chime.is_connected("body_entered", _on_wind_chime_body_entered):
-		wind_chime.body_entered.connect(_on_wind_chime_body_entered)
+	_setup_wind_chimes()
+	_setup_shelters()
+	_setup_abyss_hazard()
 	if maple_rack != null and not maple_rack.is_connected("body_entered", _on_maple_rack_body_entered):
 		maple_rack.body_entered.connect(_on_maple_rack_body_entered)
 
@@ -31,7 +38,7 @@ func on_level_entered(entry_id: StringName) -> void:
 		"from_village":
 			objective_updated.emit("穿行于赤染村落。", "收集散落的枫脂与草药。")
 		_:
-			objective_updated.emit("踏入赤染之谷。", "沿着枫红溪谷向前探索。")
+			objective_updated.emit("踏入赤染之谷。", "沿着枫红溪谷向东探索血叶断崖。")
 
 
 func set_corrupted(corrupted: bool) -> void:
@@ -65,6 +72,72 @@ func _update_gate_visuals() -> void:
 		portal.visible = show_restored
 
 
+func _setup_wind_chimes() -> void:
+	if wind_chime != null:
+		if wind_chime.has_signal("player_passed") and not wind_chime.is_connected("player_passed", _on_wind_chime_player_passed):
+			wind_chime.connect("player_passed", _on_wind_chime_player_passed)
+		elif wind_chime.has_signal("body_entered") and not wind_chime.is_connected("body_entered", _on_wind_chime_body_entered):
+			wind_chime.connect("body_entered", _on_wind_chime_body_entered)
+
+	if wind_chime_secret != null:
+		if wind_chime_secret.has_signal("player_passed") and not wind_chime_secret.is_connected("player_passed", _on_secret_wind_chime_player_passed):
+			wind_chime_secret.connect("player_passed", _on_secret_wind_chime_player_passed)
+
+
+func _setup_shelters() -> void:
+	var shelters := get_tree().get_nodes_in_group("foreground_shelter")
+	for shelter in shelters:
+		if shelter is ForegroundShelter and not shelter.shelter_entered.is_connected(_on_shelter_entered):
+			shelter.shelter_entered.connect(_on_shelter_entered)
+
+
+func _setup_abyss_hazard() -> void:
+	if abyss_hazard != null and not abyss_hazard.body_entered.is_connected(_on_abyss_body_entered):
+		abyss_hazard.body_entered.connect(_on_abyss_body_entered)
+
+
+func _on_shelter_entered(body: Node2D) -> void:
+	if body is CharacterBody2D and (body.name == "Player" or body.is_in_group("player")):
+		_last_checkpoint_pos = body.global_position
+
+
+func _on_abyss_body_entered(body: Node2D) -> void:
+	if _is_respawning:
+		return
+	if body is CharacterBody2D and (body.name == "Player" or body.is_in_group("player")):
+		_respawn_player(body as CharacterBody2D)
+
+
+func _respawn_player(player: CharacterBody2D) -> void:
+	_is_respawning = true
+	apply_player_damage(fall_damage, &"crimson_abyss_fall")
+
+	player.velocity = Vector2.ZERO
+	player.global_position = _last_checkpoint_pos
+
+	var presentation := player.get_node_or_null("SherryPresentation") as CanvasItem
+	if presentation != null:
+		var tw := create_tween()
+		if tw != null:
+			tw.tween_property(presentation, "modulate:a", 0.3, 0.15)
+			tw.tween_property(presentation, "modulate:a", 1.0, 0.25)
+			tw.tween_callback(func() -> void: _is_respawning = false)
+		else:
+			_is_respawning = false
+	else:
+		_is_respawning = false
+
+
+func _on_wind_chime_player_passed(_player: CharacterBody2D) -> void:
+	_ring_wind_chime()
+
+
+func _on_secret_wind_chime_player_passed(_player: CharacterBody2D) -> void:
+	if wind_chime_secret != null and wind_chime_secret.has_method("ring_all"):
+		wind_chime_secret.call("ring_all", 7.0)
+	secret_found.emit()
+
+
 func _on_wind_chime_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":
 		_ring_wind_chime()
@@ -76,13 +149,5 @@ func _on_maple_rack_body_entered(body: Node2D) -> void:
 
 
 func _ring_wind_chime() -> void:
-	var sprite := get_node_or_null("World/Village/WindChime/Visual") as Sprite2D
-	if sprite == null:
-		return
-	if _wind_chime_tween != null and _wind_chime_tween.is_valid():
-		_wind_chime_tween.kill()
-	_wind_chime_tween = create_tween()
-	_wind_chime_tween.tween_property(sprite, "rotation_degrees", 8.0, 0.15).set_trans(Tween.TRANS_SINE)
-	_wind_chime_tween.tween_property(sprite, "rotation_degrees", -6.0, 0.2).set_trans(Tween.TRANS_SINE)
-	_wind_chime_tween.tween_property(sprite, "rotation_degrees", 3.0, 0.25).set_trans(Tween.TRANS_SINE)
-	_wind_chime_tween.tween_property(sprite, "rotation_degrees", 0.0, 0.3).set_trans(Tween.TRANS_SINE)
+	if wind_chime != null and wind_chime.has_method("ring_all"):
+		wind_chime.call("ring_all", 5.0)

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://d3m7y1v8e6q5k" path="res://day/levels/Crimson Vale/boss/alkeon_arena.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"alkeon_boss"
+display_name = "赤角古道·丹心门前"
+disaster_name = "血叶猎王之灾"
+normal_description = "丹心门前古道宁谧，神圣圣鹿守望界门。"
+corrupted_description = "血叶猎王阿尔凯昂狂暴肆虐，血叶潮汹涌封锁古道。"
+scene_description = "与血叶猎王阿尔凯昂决战，利用风铃预警与御风药水净化灾厄。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = true
+native_ingredient_ids = Array[StringName]([])

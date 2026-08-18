@@ -389,19 +389,19 @@ position = Vector2(1550, 420)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPortal" unique_id=1270780444]
-position = Vector2(-4, -46)
+position = Vector2(-567, 118)
 shape = SubResource("Shape_side_plat")
 
 [node name="PortalGlow" type="Polygon2D" parent="ExitPortal" unique_id=1342566313]
-position = Vector2(-3, -43)
+position = Vector2(-568, 119)
 color = Color(0.35, 0.95, 0.8, 0.4)
 polygon = PackedVector2Array(0, -60, 40, -40, 60, 0, 40, 40, 0, 60, -40, 40, -60, 0, -40, -40)
 
 [node name="Prompt" type="Label" parent="ExitPortal" unique_id=11971093]
-offset_left = -100.0
-offset_top = -90.0
-offset_right = 100.0
-offset_bottom = -60.0
+offset_left = -669.0
+offset_top = 89.0
+offset_right = -469.0
+offset_bottom = 119.0
 theme_override_colors/font_color = Color(0.9, 1, 0.85, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
 theme_override_constants/shadow_offset_x = 2

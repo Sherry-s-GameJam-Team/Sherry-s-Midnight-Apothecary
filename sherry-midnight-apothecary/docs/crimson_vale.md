@@ -33,19 +33,24 @@ CrimsonVale (CrimsonValeLevel)
 │  │  ├─ House (Sprite2D: house.png)
 │  │  ├─ Shop (Sprite2D: shop.png)
 │  │  ├─ MapleRack (Area2D: 晒枫脂架.png)
-│  │  └─ WindChime (Area2D: 风铃.png, 附微风摆动 Tween)
+│  │  └─ WindChime (Node2D: wind_chime.tscn, 静态框架风铃.png + p1~p7单摆碰撞摇晃物理模拟)
 │  ├─ DanxinGate
 │  │  ├─ GateBroken (Sprite2D: 丹心门_破损态.png)
 │  │  ├─ GateRestored (Sprite2D: 丹心门_修复态.png)
 │  │  └─ GatePortal (DoorPortal 传送门)
-│  └─ LeftBarrier / RightBarrier
+│  ├─ ChallengePlatforms (无缝接入右侧的血叶断崖浮岛跳台群、碎石柱与终点平台)
+│  ├─ Shelters (ForegroundShelter: 断崖枫脂架、枫村屋檐、绝谷枫影掩体)
+│  ├─ Swarms (BloodLeafSwarm 1~3: 守关血叶群)
+│  ├─ AbyssHazard (深渊跌落保护与检查点重生)
+│  └─ LeftBarrier (-150px) / RightBarrier (11200px)
 ├─ EntryPoints
-│  ├─ default
-│  ├─ from_home
-│  ├─ from_village
-│  └─ gate
+│  ├─ default / from_home (6250, 520)
+│  ├─ from_village (4328, 520)
+│  ├─ gate (1700, 520)
+│  ├─ challenge_start (6750, 520)
+│  └─ challenge_end (10450, 520)
 ├─ ExitPortal (DoorPortal 返回药水铺)
-├─ Player
+├─ Player (Camera2D limits: -150 ~ 11200)
 ├─ DebugUI
 └─ PauseMenuLayer
 ```

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c6xk5y7d1qm3f"]
+
+[ext_resource type="Script" uid="uid://dmg56ukm75nbu" path="res://day/levels/Crimson Vale/hazards/foreground_shelter.gd" id="1_shelter_script"]
+[ext_resource type="Texture2D" uid="uid://bvlg4ql7p0duq" path="res://day/levels/Crimson Vale/晒枫脂架.png" id="2_rack_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shelter"]
+size = Vector2(160, 140)
+
+[node name="ForegroundShelter" type="Area2D" groups=["foreground_shelter"]]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_shelter_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -70)
+shape = SubResource("RectangleShape2D_shelter")
+
+[node name="ForegroundVisual" type="Sprite2D" parent="."]
+z_index = 20
+position = Vector2(0, -65)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_rack_texture")

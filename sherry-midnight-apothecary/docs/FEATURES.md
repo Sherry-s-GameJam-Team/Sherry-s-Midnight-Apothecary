@@ -42,3 +42,5 @@
 - [Dialogue Character Portraits](dialogue_portrait.md): 3-slot (left, center, right) character portrait presentation, Dialogue Manager tag/command syntax integration, expression cross-fading, focus dimming, and entrance/reaction animations.
 - [Crimson Vale](crimson_vale.md): daytime Crimson Vale level — 3-layer parallax background, village buildings and maple resin props, Danxin Gate restoration state machine, player controller integration, and LevelData registration.
 - [Blood Leaf Swarm](blood_leaf_swarm.md): reusable delayed-tracking maple leaf swarm hazard, GPUParticles2D particle shader with 3D fluttering & swirling, and wind/explosion/purification potion interactions.
+- [Crimson Vale Challenge](crimson_vale_challenge.md): horizontal platforming gauntlet with broken cliff jumps, village rooftop leaps, Blood Leaf Swarm hazards, and ForegroundShelter stealth mask mechanics.
+- [Alkeon Boss Encounter](alkeon_boss.md): 3-phase Blood Leaf Hunt King boss battle — 3-zone arena, wind chime acoustic/visual telegraphs, Blood Leaf Surge hazards, Wind Potion headwind counterplay, and Danxin Gate to Orem Clocktower transition.

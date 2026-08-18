@@ -1,0 +1,330 @@
+[gd_scene format=3 uid="uid://b6k5v8d3r1eqp"]
+
+[ext_resource type="Script" uid="uid://cvkfjpmgrw5ge" path="res://day/levels/Crimson Vale/crimson_vale_challenge.gd" id="1_challenge_env"]
+[ext_resource type="Texture2D" uid="uid://3rjx2d3ycyns" path="res://day/levels/Crimson Vale/FS.png" id="2_fs"]
+[ext_resource type="Texture2D" uid="uid://tsi42khh5bo" path="res://day/levels/Crimson Vale/MS.png" id="3_ms"]
+[ext_resource type="Texture2D" uid="uid://b4wcq823dggnk" path="res://day/levels/Crimson Vale/CS.png" id="4_cs"]
+[ext_resource type="Texture2D" uid="uid://c0sufcbyjoqj4" path="res://day/levels/Crimson Vale/ground.png" id="6_ground"]
+[ext_resource type="Texture2D" uid="uid://67l3etx42dku" path="res://day/levels/Crimson Vale/broken_ground.png" id="8_broken_ground"]
+[ext_resource type="PackedScene" uid="uid://dps8m2k5n7v4q" path="res://day/levels/Crimson Vale/props/wind_chime.tscn" id="11_chime"]
+[ext_resource type="Texture2D" uid="uid://y0i3xyyux4ie" path="res://day/levels/Crimson Vale/丹心门_修复态.png" id="13_gate_restored"]
+[ext_resource type="PackedScene" uid="uid://dps7vx6e4qm1k" path="res://day/levels/Crimson Vale/hazards/blood_leaf_swarm.tscn" id="14_swarm"]
+[ext_resource type="PackedScene" uid="uid://c6xk5y7d1qm3f" path="res://day/levels/Crimson Vale/hazards/foreground_shelter.tscn" id="15_shelter"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="16_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="17_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="18_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="19_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="20_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="21_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="22_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="23_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="24_pause_menu"]
+
+[sub_resource type="RectangleShape2D" id="Rect_start_ground"]
+size = Vector2(850, 86)
+
+[sub_resource type="RectangleShape2D" id="Rect_platform1"]
+size = Vector2(616, 40)
+
+[sub_resource type="RectangleShape2D" id="Rect_platform2"]
+size = Vector2(670, 40)
+
+[sub_resource type="RectangleShape2D" id="Rect_pillar1"]
+size = Vector2(617, 40)
+
+[sub_resource type="RectangleShape2D" id="Rect_pillar2"]
+size = Vector2(532, 40)
+
+[sub_resource type="RectangleShape2D" id="Rect_goal_ground"]
+size = Vector2(813, 200)
+
+[sub_resource type="RectangleShape2D" id="Rect_abyss"]
+size = Vector2(3600, 140)
+
+[sub_resource type="RectangleShape2D" id="Rect_barrier"]
+size = Vector2(80, 1400)
+
+[sub_resource type="RectangleShape2D" id="Rect_portal"]
+size = Vector2(120, 180)
+
+[node name="CrimsonValeChallenge" type="Node2D" unique_id=1983710294]
+script = ExtResource("1_challenge_env")
+debug_scene_id = "crimson_vale_challenge"
+
+[node name="Background" type="Node2D" parent="." unique_id=1099995543]
+position = Vector2(0, 27)
+scale = Vector2(1.0194938, 1.0469277)
+
+[node name="FS" type="Parallax2D" parent="Background" unique_id=179748029]
+z_index = -30
+scroll_scale = Vector2(0.1, 0.05)
+repeat_size = Vector2(2172, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FS" unique_id=632166319]
+position = Vector2(0, -23.879396)
+scale = Vector2(1, 1.0329826)
+texture = ExtResource("2_fs")
+centered = false
+
+[node name="MS" type="Parallax2D" parent="Background" unique_id=1414992829]
+z_index = -20
+scroll_scale = Vector2(0.4, 0.2)
+repeat_size = Vector2(4344, 0)
+repeat_times = 2
+
+[node name="MS1" type="Sprite2D" parent="Background/MS" unique_id=103179333]
+position = Vector2(200, 60)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("3_ms")
+centered = false
+
+[node name="MS2" type="Sprite2D" parent="Background/MS" unique_id=1959142205]
+position = Vector2(3945.0002, 92)
+scale = Vector2(-0.8242168, 0.813359)
+texture = ExtResource("3_ms")
+centered = false
+
+[node name="CS" type="Parallax2D" parent="Background" unique_id=1358143100]
+z_index = -10
+scroll_scale = Vector2(0.75, 0.35)
+repeat_size = Vector2(4344, 0)
+repeat_times = 2
+
+[node name="CS1" type="Sprite2D" parent="Background/CS" unique_id=1090837842]
+position = Vector2(-50, 20)
+texture = ExtResource("4_cs")
+centered = false
+
+[node name="CS2" type="Sprite2D" parent="Background/CS" unique_id=642527864]
+position = Vector2(2174, 17)
+texture = ExtResource("4_cs")
+centered = false
+
+[node name="World" type="Node2D" parent="." unique_id=836276453]
+
+[node name="StartGround" type="StaticBody2D" parent="World" unique_id=1230971159]
+collision_layer = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="World/StartGround" unique_id=1589680587]
+position = Vector2(-150, 560)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("6_ground")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/StartGround" unique_id=743100242]
+position = Vector2(300, 727)
+shape = SubResource("Rect_start_ground")
+
+[node name="Platform1" type="StaticBody2D" parent="World" unique_id=1847192832]
+position = Vector2(960, 490)
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Platform1" unique_id=1847192833]
+position = Vector2(-226, -102.99999)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("8_broken_ground")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform1" unique_id=1847192834]
+position = Vector2(121, 14)
+shape = SubResource("Rect_platform1")
+one_way_collision = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Platform1" unique_id=405403437]
+polygon = PackedVector2Array(439, -6, 507, -6, 443, 77, 414, 77)
+
+[node name="Platform2" type="StaticBody2D" parent="World" unique_id=1847192835]
+position = Vector2(1520, 420)
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Platform2" unique_id=1847192836]
+position = Vector2(-101, 110.999985)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("8_broken_ground")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platform2" unique_id=1847192837]
+position = Vector2(304, 226)
+shape = SubResource("Rect_platform2")
+one_way_collision = true
+
+[node name="Pillar1" type="StaticBody2D" parent="World" unique_id=1847192844]
+position = Vector2(2960, 380)
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Pillar1" unique_id=1847192845]
+position = Vector2(-652, 20)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("8_broken_ground")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Pillar1" unique_id=1847192846]
+position = Vector2(-293, 129)
+shape = SubResource("Rect_pillar1")
+one_way_collision = true
+
+[node name="Pillar2" type="StaticBody2D" parent="World" unique_id=1847192847]
+position = Vector2(3360, 460)
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Pillar2" unique_id=1847192848]
+position = Vector2(-115, -25)
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("8_broken_ground")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Pillar2" unique_id=1847192849]
+position = Vector2(185, 86)
+shape = SubResource("Rect_pillar2")
+one_way_collision = true
+
+[node name="GoalGround" type="StaticBody2D" parent="World" unique_id=1847192850]
+position = Vector2(3800, 580)
+collision_layer = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="World/GoalGround" unique_id=1847192851]
+position = Vector2(-100, -60)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("6_ground")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/GoalGround" unique_id=1847192852]
+position = Vector2(364, 165)
+shape = SubResource("Rect_goal_ground")
+
+[node name="AbyssHazard" type="Area2D" parent="World" unique_id=1847192853]
+position = Vector2(2300, 840)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/AbyssHazard" unique_id=1847192854]
+shape = SubResource("Rect_abyss")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="World" unique_id=1539831837]
+position = Vector2(-120, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftBarrier" unique_id=1638745069]
+shape = SubResource("Rect_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="World" unique_id=795816470]
+position = Vector2(4700, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightBarrier" unique_id=950848111]
+shape = SubResource("Rect_barrier")
+
+[node name="Props" type="Node2D" parent="World" unique_id=1847192855]
+
+[node name="WindChimeSecret" parent="World/Props" unique_id=1847192856 instance=ExtResource("11_chime")]
+position = Vector2(3483, 269)
+scale = Vector2(0.24, 0.24)
+
+[node name="DanxinGate" type="Node2D" parent="World" unique_id=1329113952]
+position = Vector2(4150, 160)
+
+[node name="GateRestored" type="Sprite2D" parent="World/DanxinGate" unique_id=1343015295]
+position = Vector2(57.999992, 175)
+scale = Vector2(0.30837932, 0.30837932)
+texture = ExtResource("13_gate_restored")
+centered = false
+
+[node name="GatePortal" type="Area2D" parent="World/DanxinGate" unique_id=20737638]
+position = Vector2(460, 380)
+script = ExtResource("21_portal")
+destination_level = &"crimson_vale"
+destination_entry_id = &"gate"
+fallback_scene_path = "res://day/levels/Crimson Vale/crimson_vale.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "穿过丹心门通关"
+
+[node name="Visual" type="Sprite2D" parent="World/DanxinGate/GatePortal" unique_id=1200715905]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/DanxinGate/GatePortal" unique_id=475206396]
+position = Vector2(-179, -4)
+shape = SubResource("Rect_portal")
+
+[node name="Shelters" type="Node2D" parent="World" unique_id=1847192859]
+
+[node name="Shelter1_Rack" parent="World/Shelters" unique_id=1847192860 instance=ExtResource("15_shelter")]
+position = Vector2(1822, 589)
+shelter_name = "断崖枫脂架"
+
+[node name="Shelter2_HouseEave" parent="World/Shelters" unique_id=1847192861 instance=ExtResource("15_shelter")]
+position = Vector2(2540, 444)
+shelter_name = "枫村屋檐"
+
+[node name="Shelter3_Canopy" parent="World/Shelters" unique_id=1847192862 instance=ExtResource("15_shelter")]
+position = Vector2(4037, 607)
+shelter_name = "绝谷枫影"
+
+[node name="Swarms" type="Node2D" parent="World" unique_id=1847192863]
+
+[node name="BloodLeafSwarm1" parent="World/Swarms" unique_id=1847192864 instance=ExtResource("14_swarm")]
+position = Vector2(1060, 360)
+detection_radius = 650.0
+
+[node name="BloodLeafSwarm2" parent="World/Swarms" unique_id=1847192865 instance=ExtResource("14_swarm")]
+position = Vector2(2120, 180)
+detection_radius = 600.0
+attack_duration = 4.5
+
+[node name="BloodLeafSwarm3" parent="World/Swarms" unique_id=1847192866 instance=ExtResource("14_swarm")]
+position = Vector2(3420, 360)
+detection_radius = 680.0
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=249566877]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1098249795]
+position = Vector2(250, 520)
+
+[node name="challenge_start" type="Marker2D" parent="EntryPoints" unique_id=1537534598]
+position = Vector2(250, 520)
+
+[node name="from_vale" type="Marker2D" parent="EntryPoints" unique_id=943454819]
+position = Vector2(250, 520)
+
+[node name="ExitPortal" type="Area2D" parent="." unique_id=1115641034]
+position = Vector2(120, 480)
+script = ExtResource("21_portal")
+destination_level = &"crimson_vale"
+fallback_scene_path = "res://day/levels/Crimson Vale/crimson_vale.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "返回赤染之谷"
+
+[node name="Visual" type="Sprite2D" parent="ExitPortal" unique_id=2086533172]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPortal" unique_id=1757113474]
+shape = SubResource("Rect_portal")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1086386805]
+z_index = 10
+position = Vector2(250, 520)
+script = ExtResource("16_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1058900186 instance=ExtResource("17_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=34766192 instance=ExtResource("18_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=966391061]
+process_callback = 0
+limit_left = -100
+limit_top = -200
+limit_right = 4700
+limit_bottom = 850
+script = ExtResource("19_camera")
+left_barrier_path = NodePath("../../World/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../World/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=829228782 instance=ExtResource("20_potions")]
+position = Vector2(-5, 33)
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=1473945002]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1483979570 instance=ExtResource("22_console")]
+visible = false
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=4679857]
+layer = 200
+script = ExtResource("23_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=452275820 instance=ExtResource("24_pause_menu")]

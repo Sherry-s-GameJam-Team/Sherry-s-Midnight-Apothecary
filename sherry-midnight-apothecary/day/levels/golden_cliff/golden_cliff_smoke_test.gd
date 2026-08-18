@@ -12,6 +12,7 @@ func _initialize() -> void:
 	
 	var required_paths := [
 		"EntryPoints/default",
+		"EntryPoints/from_home",
 		"Player",
 		"Player/SherryCollision",
 		"Player/SherryPresentation",
@@ -19,6 +20,7 @@ func _initialize() -> void:
 		"Player/PotionThrower",
 		"WorldBounds",
 		"Gameplay/BalanceMechanisms",
+		"Gameplay/EntrancePortal",
 		"Gameplay/ExitPortal",
 		"LevelController"
 	]

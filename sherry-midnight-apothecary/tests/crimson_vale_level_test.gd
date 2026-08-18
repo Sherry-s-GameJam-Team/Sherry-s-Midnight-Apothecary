@@ -54,6 +54,17 @@ static func run(test: TestSupport) -> void:
 	var chime: Node = level.get_node_or_null("World/Village/WindChime")
 	test.expect(house != null and shop != null and rack != null and chime != null, "Village buildings and props are deployed.")
 
+	# One-way drop-through platform configuration testing
+	var floor_node: StaticBody2D = level.get_node_or_null("World/floor") as StaticBody2D
+	var ground_node: StaticBody2D = level.get_node_or_null("World/Ground") as StaticBody2D
+	test.expect(floor_node != null, "World/floor exists.")
+	if floor_node != null:
+		test.expect_equal(int(floor_node.collision_layer), 2, "World/floor must have collision_layer = 2 (DROP_THROUGH_PLATFORM_LAYER) for S-key drop-through.")
+		var poly1: CollisionPolygon2D = floor_node.get_node_or_null("CollisionPolygon2D2") as CollisionPolygon2D
+		test.expect(poly1 != null and poly1.one_way_collision, "Floor polygon 1 has one_way_collision enabled.")
+	if ground_node != null:
+		test.expect_equal(int(ground_node.collision_layer), 1, "World/Ground must have collision_layer = 1 for solid ground.")
+
 	# State testing
 	level.call("set_corrupted", true)
 	test.expect(gate_broken.visible, "Broken gate is visible in corrupted state.")

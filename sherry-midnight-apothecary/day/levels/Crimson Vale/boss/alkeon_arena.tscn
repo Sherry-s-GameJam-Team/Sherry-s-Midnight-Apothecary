@@ -1,0 +1,298 @@
+[gd_scene format=3 uid="uid://d3m7y1v8e6q5k"]
+
+[ext_resource type="Script" uid="uid://brbyypov4ugi2" path="res://day/levels/Crimson Vale/boss/alkeon_arena.gd" id="1_arena"]
+[ext_resource type="Texture2D" uid="uid://3rjx2d3ycyns" path="res://day/levels/Crimson Vale/FS.png" id="2_fs"]
+[ext_resource type="Texture2D" uid="uid://tsi42khh5bo" path="res://day/levels/Crimson Vale/MS.png" id="3_ms"]
+[ext_resource type="Texture2D" uid="uid://b4wcq823dggnk" path="res://day/levels/Crimson Vale/CS.png" id="4_cs"]
+[ext_resource type="Texture2D" uid="uid://c0sufcbyjoqj4" path="res://day/levels/Crimson Vale/ground.png" id="5_ground"]
+[ext_resource type="PackedScene" uid="uid://dps8m2k5n7v4q" path="res://day/levels/Crimson Vale/props/wind_chime.tscn" id="7_chime"]
+[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/boss/alkeon_boss.tscn" id="8_boss"]
+[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/boss/blood_leaf_surge.tscn" id="9_surge"]
+[ext_resource type="Script" uid="uid://ct6yaua0kv3pv" path="res://day/levels/Crimson Vale/boss/alkeon_audio_synth.gd" id="10_synth"]
+[ext_resource type="Texture2D" uid="uid://d2cda21rxytw" path="res://day/levels/Crimson Vale/丹心门_破损态.png" id="11_gate_broken"]
+[ext_resource type="Texture2D" uid="uid://y0i3xyyux4ie" path="res://day/levels/Crimson Vale/丹心门_修复态.png" id="12_gate_restored"]
+[ext_resource type="Texture2D" uid="uid://go1vhoc1bw5t" path="res://day/levels/Crimson Vale/ground_2.png" id="13_b7v4i"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="13_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="14_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="15_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="16_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="17_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="18_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="19_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="20_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="21_pause_menu"]
+[ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="22_maple"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
+size = Vector2(140, 220)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1850, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_66wwa"]
+size = Vector2(508.5, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(80, 1200)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_victory"]
+emission_shape = 3
+emission_box_extents = Vector3(850, 20, 1)
+spread = 25.0
+initial_velocity_min = 40.0
+initial_velocity_max = 90.0
+angular_velocity_min = -60.0
+angular_velocity_max = 60.0
+gravity = Vector3(0, 35, 0)
+scale_min = 0.35
+scale_max = 0.55
+color = Color(1, 0.75, 0.3, 0.95)
+
+[node name="AlkeonArena" type="Node2D" unique_id=2081739501]
+script = ExtResource("1_arena")
+debug_scene_id = "alkeon_arena"
+
+[node name="AudioSynth" type="Node" parent="." unique_id=2081739502]
+script = ExtResource("10_synth")
+
+[node name="Background" type="Node2D" parent="." unique_id=1099995543]
+
+[node name="FS" type="Parallax2D" parent="Background" unique_id=179748029]
+z_index = -30
+scroll_scale = Vector2(0.1, 0.05)
+repeat_size = Vector2(2172, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/FS" unique_id=632166319]
+texture = ExtResource("2_fs")
+centered = false
+
+[node name="MS" type="Parallax2D" parent="Background" unique_id=1414992829]
+z_index = -20
+scroll_scale = Vector2(0.4, 0.2)
+repeat_size = Vector2(4344, 0)
+
+[node name="MS1" type="Sprite2D" parent="Background/MS" unique_id=103179333]
+position = Vector2(0, 60)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("3_ms")
+centered = false
+
+[node name="CS" type="Parallax2D" parent="Background" unique_id=1358143100]
+z_index = -10
+scroll_scale = Vector2(0.75, 0.35)
+repeat_size = Vector2(4344, 0)
+
+[node name="CS1" type="Sprite2D" parent="Background/CS" unique_id=1090837842]
+position = Vector2(-100, 20)
+texture = ExtResource("4_cs")
+centered = false
+
+[node name="DanxinGate" type="Node2D" parent="." unique_id=1329113952]
+z_index = -15
+position = Vector2(247, -165)
+
+[node name="GateBroken" type="Sprite2D" parent="DanxinGate" unique_id=920372975]
+visible = false
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("11_gate_broken")
+centered = false
+
+[node name="GateRestored" type="Sprite2D" parent="DanxinGate" unique_id=1343015295]
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("12_gate_restored")
+centered = false
+
+[node name="GateClock" type="Sprite2D" parent="DanxinGate" unique_id=2081739503]
+modulate = Color(1.3, 0.85, 0.3, 0)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("12_gate_restored")
+centered = false
+
+[node name="GatePortal" type="Area2D" parent="DanxinGate" unique_id=20737638]
+position = Vector2(16, 347)
+script = ExtResource("18_portal")
+destination_level = &"orem_clocktower"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "前往【奥雷姆钟庭】"
+
+[node name="Visual" type="Sprite2D" parent="DanxinGate/GatePortal" unique_id=2081739520]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DanxinGate/GatePortal" unique_id=475206396]
+shape = SubResource("RectangleShape2D_portal")
+
+[node name="Boss" parent="." unique_id=2081739504 instance=ExtResource("8_boss")]
+z_index = -5
+position = Vector2(850, 280)
+
+[node name="Surges" type="Node2D" parent="." unique_id=2081739505]
+
+[node name="SurgeLeft" parent="Surges" unique_id=2081739506 instance=ExtResource("9_surge")]
+position = Vector2(-23, -22.999985)
+scale = Vector2(1.0210866, 2.1362734)
+
+[node name="SurgeCenter" parent="Surges" unique_id=2081739507 instance=ExtResource("9_surge")]
+position = Vector2(568, -16)
+scale = Vector2(1.0709784, 1.432629)
+zone_index = 1
+zone_rect = Rect2(0, 0, 600, 480)
+
+[node name="SurgeRight" parent="Surges" unique_id=2081739508 instance=ExtResource("9_surge")]
+position = Vector2(1182, -14)
+scale = Vector2(0.9746241, 1.7400572)
+zone_index = 2
+
+[node name="Bells" type="Node2D" parent="." unique_id=2081739509]
+position = Vector2(-118, -345)
+scale = Vector2(1.2545346, 1.5389353)
+
+[node name="BellLeft" parent="Bells" unique_id=2081739510 instance=ExtResource("7_chime")]
+position = Vector2(141.08818, 398.97714)
+scale = Vector2(0.24, 0.24)
+
+[node name="BellCenter" parent="Bells" unique_id=2081739511 instance=ExtResource("7_chime")]
+position = Vector2(611.382, 399.6269)
+scale = Vector2(0.24, 0.24)
+
+[node name="BellRight" parent="Bells" unique_id=2081739512 instance=ExtResource("7_chime")]
+position = Vector2(1111.1691, 405.47507)
+scale = Vector2(0.24, 0.24)
+
+[node name="World" type="Node2D" parent="." unique_id=836276453]
+
+[node name="Ground" type="StaticBody2D" parent="World" unique_id=1230971159]
+position = Vector2(850, 620)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground" unique_id=743100242]
+position = Vector2(26, 140)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="SpriteLeft" type="Sprite2D" parent="World/Ground" unique_id=1571859621]
+position = Vector2(-900, -75)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("5_ground")
+centered = false
+
+[node name="SpriteCenter" type="Sprite2D" parent="World/Ground" unique_id=932653309]
+position = Vector2(-200, -75)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("5_ground")
+centered = false
+
+[node name="SpriteRight" type="Sprite2D" parent="World/Ground" unique_id=1838776235]
+position = Vector2(400, -75)
+scale = Vector2(0.44, 0.44)
+texture = ExtResource("5_ground")
+centered = false
+
+[node name="Pillars" type="Node2D" parent="World" unique_id=2081739513]
+position = Vector2(25, 99)
+
+[node name="PillarL" type="Sprite2D" parent="World/Pillars" unique_id=1305975637]
+z_index = -1
+position = Vector2(273, 402)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("5_ground")
+
+[node name="PillarR" type="Sprite2D" parent="World/Pillars" unique_id=926259064]
+z_index = -1
+position = Vector2(1439, 390)
+scale = Vector2(-0.28, 0.28)
+texture = ExtResource("13_b7v4i")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Pillars" unique_id=2019640802]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Pillars/StaticBody2D" unique_id=759000920]
+position = Vector2(275, 425)
+shape = SubResource("RectangleShape2D_66wwa")
+one_way_collision = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=851272613]
+polygon = PackedVector2Array(1196, 318, 1645, 436, 1713, 451, 1679, 480, 1204, 376)
+one_way_collision = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=1459348022]
+position = Vector2(-26.15789, -214.35426)
+scale = Vector2(1.2631577, 1.3282712)
+polygon = PackedVector2Array(126, 300, 132, 334, 316, 335, 316, 297, 300, 297, 298, 316, 150, 319, 145, 299)
+one_way_collision = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=1321445216]
+position = Vector2(559.0691, -222.46298)
+scale = Vector2(1.2598684, 1.3552626)
+polygon = PackedVector2Array(126, 300, 132, 334, 316, 335, 316, 297, 300, 297, 298, 316, 150, 319, 145, 299)
+one_way_collision = true
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=1193296034]
+position = Vector2(1187.8422, -195.09225)
+scale = Vector2(1.2631575, 1.2993425)
+polygon = PackedVector2Array(126, 300, 132, 334, 316, 335, 316, 297, 300, 297, 298, 316, 150, 319, 145, 299)
+one_way_collision = true
+
+[node name="LeftBarrier" type="StaticBody2D" parent="World" unique_id=1539831837]
+position = Vector2(-60, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/LeftBarrier" unique_id=1638745069]
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="World" unique_id=795816470]
+position = Vector2(1760, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightBarrier" unique_id=950848111]
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="Swarms" type="Node2D" parent="." unique_id=2081739514]
+
+[node name="VictoryLeaves" type="GPUParticles2D" parent="." unique_id=2081739515]
+position = Vector2(850, -50)
+emitting = false
+amount = 60
+texture = ExtResource("22_maple")
+lifetime = 3.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_victory")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=249566877]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1098249795]
+position = Vector2(250, 500)
+
+[node name="from_vale" type="Marker2D" parent="EntryPoints" unique_id=2081739516]
+position = Vector2(250, 500)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1086386805]
+z_index = 10
+position = Vector2(250, 500)
+script = ExtResource("13_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1058900186 instance=ExtResource("14_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=34766192 instance=ExtResource("15_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=966391061]
+process_callback = 0
+limit_left = -60
+limit_top = -200
+limit_right = 1760
+limit_bottom = 700
+script = ExtResource("16_camera")
+left_barrier_path = NodePath("../../World/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../World/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=829228782 instance=ExtResource("17_potions")]
+position = Vector2(-4, -80)
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=1473945002]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1483979570 instance=ExtResource("19_console")]
+visible = false
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=4679857]
+layer = 200
+script = ExtResource("20_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=452275820 instance=ExtResource("21_pause_menu")]

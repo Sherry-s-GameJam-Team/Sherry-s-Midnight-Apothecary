@@ -30,8 +30,10 @@ The global `PauseMenu` (`res://night/ui/pause_menu/pause_menu.tscn`) is embedded
 
 - id: `golden_cliff`, display name `烁金横崖`
 - disaster: `断衡之灾` (corrupted by default, `start_corrupted = true`)
-- default entry: `EntryPoints/default`; extra entries: `from_south`, `from_lake`
-- exit portal: `home/default` via `DoorPortal` (goes through `DayRuntime.switch_to_level()`)
+- default entry: `EntryPoints/default`; extra entries: `from_home`, `from_south`, `from_lake`
+- entrance portal: `Gameplay/EntrancePortal` via `DoorPortal` (`destination_level = &"home"`, `destination_entry_id = &"from_cliff"`, linked to Map Switch Anchor 3 / `golden_cliff`)
+- exit portal: `Gameplay/ExitPortal` via `DoorPortal` (`destination_level = &"home"`, unlocked after 3 balance mechanisms are stabilized)
+- map anchor linkage: `res://day/interactables/map_switch/data/map.tscn` Anchor03 (`destination_id = &"golden_cliff"`)
 - content scene: `golden_cliff.tscn`, root script `day_level_environment.gd`
 
 ## Balance Mechanisms & Dual-Pan Weight System（衡石机关二次配置）

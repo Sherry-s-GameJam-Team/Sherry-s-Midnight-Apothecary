@@ -419,7 +419,7 @@ interaction_hint_text = "按[E]与喵呜交谈"
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_npax6")
 animation = &"fishing"
-frame = 13
+frame = 25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CS/Mew" unique_id=361027676]
 position = Vector2(-431.8838, -60.739624)

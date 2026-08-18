@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://c8n4y8e7d2m1p"]
+
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/boss/blood_leaf_surge.gd" id="1_surge"]
+[ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="2_leaf_texture"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_surge"]
+size = Vector2(550, 480)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_leaves"]
+emission_shape = 3
+emission_box_extents = Vector3(260, 220, 1)
+spread = 15.0
+initial_velocity_min = 280.0
+initial_velocity_max = 380.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+gravity = Vector3(0, 40, 0)
+scale_min = 0.35
+scale_max = 0.55
+color = Color(0.85, 0.12, 0.16, 0.95)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_headwind"]
+emission_shape = 3
+emission_box_extents = Vector3(260, 220, 1)
+direction = Vector3(-1, 0, 0)
+spread = 25.0
+initial_velocity_min = 220.0
+initial_velocity_max = 340.0
+gravity = Vector3(0, -30, 0)
+scale_min = 0.4
+scale_max = 0.65
+color = Color(0.3, 0.95, 0.85, 0.9)
+
+[node name="BloodLeafSurge" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_surge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(275, 240)
+shape = SubResource("RectangleShape2D_surge")
+
+[node name="TelegraphIndicator" type="Node2D" parent="."]
+modulate = Color(1, 0.3, 0.3, 0.6)
+
+[node name="ColorRect" type="ColorRect" parent="TelegraphIndicator"]
+offset_right = 550.0
+offset_bottom = 480.0
+color = Color(0.9, 0.1, 0.15, 0.18)
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+position = Vector2(275, 240)
+emitting = false
+amount = 45
+process_material = SubResource("ParticleProcessMaterial_leaves")
+texture = ExtResource("2_leaf_texture")
+lifetime = 1.4
+
+[node name="HeadwindParticles" type="GPUParticles2D" parent="."]
+position = Vector2(275, 240)
+emitting = false
+amount = 35
+process_material = SubResource("ParticleProcessMaterial_headwind")
+texture = ExtResource("2_leaf_texture")
+lifetime = 1.2

@@ -135,7 +135,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		_try_start_roll("move_left" if event.is_action_pressed("move_left") else "move_right")
 	if event.is_action_pressed("jump"):
 		_request_jump()
-	if event.is_action_pressed("drop_through"):
+	if event.is_action_pressed("drop_through") or (key_event != null and (key_event.keycode == KEY_S or key_event.physical_keycode == KEY_S)):
 		_try_drop_through()
 	match key_event.keycode:
 		KEY_SPACE:
@@ -360,6 +360,16 @@ func _is_on_drop_through_platform() -> bool:
 		var collision := get_slide_collision(collision_index)
 		var collider := collision.get_collider() as CollisionObject2D
 		if collider != null and (collider.collision_layer & DROP_THROUGH_PLATFORM_LAYER) != 0:
+			return true
+	var last_collision := get_last_slide_collision()
+	if last_collision != null:
+		var last_collider := last_collision.get_collider() as CollisionObject2D
+		if last_collider != null and (last_collider.collision_layer & DROP_THROUGH_PLATFORM_LAYER) != 0:
+			return true
+	var test_collision := KinematicCollision2D.new()
+	if test_move(global_transform, Vector2.DOWN * 6.0, test_collision):
+		var test_collider := test_collision.get_collider() as CollisionObject2D
+		if test_collider != null and (test_collider.collision_layer & DROP_THROUGH_PLATFORM_LAYER) != 0:
 			return true
 	return false
 

@@ -56,6 +56,24 @@ func _run() -> void:
 	if _failed:
 		return
 
+	# --- EntrancePortal & Map Switch Anchor 3 deployment --------------------
+	var from_home := scene.get_node_or_null("EntryPoints/from_home") as Marker2D
+	_assert(from_home != null, "EntryPoints/from_home is deployed for Map Switch arrivals")
+	var entrance_portal := scene.get_node_or_null("Gameplay/EntrancePortal") as Area2D
+	_assert(entrance_portal != null, "Gameplay/EntrancePortal is instanced in golden_cliff.tscn")
+	_assert(entrance_portal == null or entrance_portal.get("destination_level") == &"home", "EntrancePortal destination_level is home")
+	_assert(entrance_portal == null or entrance_portal.get("destination_entry_id") == &"from_cliff", "EntrancePortal destination_entry_id is from_cliff")
+	var map_scene := load("res://day/interactables/map_switch/data/map.tscn") as PackedScene
+	_assert(map_scene != null, "map.tscn loads")
+	if map_scene != null:
+		var map_inst := map_scene.instantiate()
+		var anchor3 := map_inst.get_node_or_null("AnchorPoints/Anchor03") as MapSwitchAnchor
+		_assert(anchor3 != null, "AnchorPoints/Anchor03 exists in map.tscn")
+		_assert(anchor3 == null or anchor3.destination_id == &"golden_cliff", "Anchor03 destination_id links to golden_cliff")
+		map_inst.free()
+	if _failed:
+		return
+
 	# --- Pause menu / B-key backpack deployment -----------------------------
 	var pause_layer := scene.get_node_or_null("PauseMenuLayer") as CanvasLayer
 	_assert(pause_layer != null, "PauseMenuLayer canvas layer is embedded")

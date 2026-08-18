@@ -126,6 +126,9 @@ position = Vector2(320, 550)
 [node name="from_south" type="Marker2D" parent="EntryPoints" unique_id=1725717940]
 position = Vector2(320, 550)
 
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=1725717941]
+position = Vector2(320, 550)
+
 [node name="from_lake" type="Marker2D" parent="EntryPoints" unique_id=269602947]
 position = Vector2(11600, 520)
 
@@ -428,6 +431,25 @@ texture = ExtResource("21_balance_left")
 
 [node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceC/Visual" unique_id=1940378141]
 texture = ExtResource("22_balance_right")
+
+[node name="EntrancePortal" type="Area2D" parent="Gameplay" unique_id=1947716458]
+position = Vector2(320, 680)
+script = ExtResource("7_door_portal")
+destination_level = &"home"
+destination_entry_id = &"from_cliff"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+visual_path = NodePath("Visual")
+interaction_hint_enabled = true
+interaction_hint_text = "按[E]返回药水铺"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/EntrancePortal" unique_id=1386626618]
+position = Vector2(0, 80)
+shape = SubResource("Rect_portal")
+
+[node name="Visual" type="Sprite2D" parent="Gameplay/EntrancePortal" unique_id=1579314046]
+position = Vector2(0, 80)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("24_portal_repaired")
 
 [node name="ExitPortal" type="Area2D" parent="Gameplay" unique_id=1947716457]
 position = Vector2(11370, 520)

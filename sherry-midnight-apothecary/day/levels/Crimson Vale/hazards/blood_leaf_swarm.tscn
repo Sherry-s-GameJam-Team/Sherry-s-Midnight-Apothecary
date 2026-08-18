@@ -71,7 +71,7 @@ shader_parameter/tint_to = Color(0.92, 0.4, 0.16, 1)
 shader_parameter/alpha_mult = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_core"]
-radius = 60.0
+radius = 113.07078
 
 [node name="BloodLeafSwarm" type="Node2D" unique_id=591125817]
 script = ExtResource("1_script")
