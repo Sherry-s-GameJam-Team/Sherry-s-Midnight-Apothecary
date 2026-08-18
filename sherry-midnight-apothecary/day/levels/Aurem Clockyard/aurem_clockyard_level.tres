@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dnsnrq48ghrpy"]
+
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://be4g67p41tq0c" path="res://day/levels/Aurem Clockyard/aurem_clockyard.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"aurem_clockyard"
+display_name = "奥伦钟庭"
+disaster_name = "时律之灾"
+normal_description = "齿轮与钟摆再次有序回响，金穗农庄与巨钟塔恢复了精确的日夜时律。"
+corrupted_description = "巨型钟塔的齿轮锈蚀停摆，紊乱的时律侵蚀了金穗农庄与钟庭工坊。"
+scene_description = "探索奥伦钟庭，穿过金穗农庄与齿轮工坊，修复巨钟塔的时律中枢。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"

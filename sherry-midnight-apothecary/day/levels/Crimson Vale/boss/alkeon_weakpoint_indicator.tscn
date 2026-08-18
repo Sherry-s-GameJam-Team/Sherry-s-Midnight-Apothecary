@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://c5m4w8k2r1n8y"]
+
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/boss/alkeon_weakpoint_indicator.gd" id="1_indicator"]
+[ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="2_leaf"]
+
+[node name="WeakpointIndicator" type="Node2D"]
+z_index = 25
+script = ExtResource("1_indicator")
+
+[node name="ReticleRing" type="Node2D" parent="."]
+modulate = Color(1, 0.6, 0.1, 0.9)
+
+[node name="CornerTL" type="Line2D" parent="ReticleRing"]
+points = PackedVector2Array(-55, -25, -55, -55, -25, -55)
+width = 4.0
+default_color = Color(1, 1, 1, 0.95)
+
+[node name="CornerTR" type="Line2D" parent="ReticleRing"]
+points = PackedVector2Array(25, -55, 55, -55, 55, -25)
+width = 4.0
+default_color = Color(1, 1, 1, 0.95)
+
+[node name="CornerBR" type="Line2D" parent="ReticleRing"]
+points = PackedVector2Array(55, 25, 55, 55, 25, 55)
+width = 4.0
+default_color = Color(1, 1, 1, 0.95)
+
+[node name="CornerBL" type="Line2D" parent="ReticleRing"]
+points = PackedVector2Array(-25, 55, -55, 55, -55, 25)
+width = 4.0
+default_color = Color(1, 1, 1, 0.95)
+
+[node name="ReticleCore" type="Node2D" parent="."]
+
+[node name="Diamond" type="Line2D" parent="ReticleCore"]
+points = PackedVector2Array(0, -32, 32, 0, 0, 32, -32, 0, 0, -32)
+width = 3.0
+default_color = Color(1, 0.85, 0.3, 0.85)
+
+[node name="CenterGlow" type="Sprite2D" parent="ReticleCore"]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_leaf")
+modulate = Color(1.8, 1.2, 0.4, 0.8)
+
+[node name="PointerArrow" type="Label" parent="."]
+offset_left = -60.0
+offset_top = -70.0
+offset_right = 60.0
+offset_bottom = -45.0
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_font_sizes/font_size = 18
+text = "▼ 破绽"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusBadge" type="Label" parent="."]
+offset_left = -120.0
+offset_top = 55.0
+offset_right = 120.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_font_sizes/font_size = 15
+text = "【核心暴露·弱点】"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PromptLabel" type="Label" parent="."]
+offset_left = -180.0
+offset_top = 80.0
+offset_right = 180.0
+offset_bottom = 105.0
+theme_override_colors/font_color = Color(1, 0.95, 0.4, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.95)
+theme_override_font_sizes/font_size = 14
+text = "⚡ 投掷 爆炸/净化 破除护盾"
+horizontal_alignment = 1
+vertical_alignment = 1

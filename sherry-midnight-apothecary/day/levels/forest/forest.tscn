@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b3ocrsdyseiqq" path="res://day/levels/forest/art/environments/forest/exterior/forest_bg_mid_hanging_lotus_normal.png" id="3_mid"]
 [ext_resource type="Texture2D" uid="uid://cxpuntiuixtin" path="res://day/levels/forest/art/environments/forest/exterior/forest_fg_ground_normal.png" id="4_ground"]
 [ext_resource type="Texture2D" uid="uid://cp00vo7lpwotm" path="res://day/levels/forest/art/environments/forest/exterior/forest_water_channel_set.png" id="5_channel"]
-[ext_resource type="SpriteFrames" path="res://characters/luca/luca_sprite_frames.tres" id="6_s7dby"]
+[ext_resource type="SpriteFrames" uid="uid://qk777aldy5l6" path="res://characters/luca/luca_sprite_frames.tres" id="6_s7dby"]
 [ext_resource type="Script" uid="uid://dfwmdrgwhtb00" path="res://day/levels/forest/area_2d.gd" id="7_3qgp4"]
 [ext_resource type="Resource" uid="uid://cfv8bc6tv5uff" path="res://day/levels/forest/dialog/before_stream.dialogue" id="8_luca_dialogue"]
 [ext_resource type="Resource" uid="uid://b4yw4qpil82tj" path="res://day/levels/forest/dialog/after_stream.dialogue" id="9_luca_after_dialogue"]
@@ -91,7 +91,8 @@ position = Vector2(5835, 590)
 
 [node name="LucaVisual" type="AnimatedSprite2D" parent="LucaDialogueNpc" unique_id=1797148628]
 z_index = 3
-scale = Vector2(0.22, 0.22)
+position = Vector2(-6, 15)
+scale = Vector2(0.125632, 0.1312544)
 sprite_frames = ExtResource("6_s7dby")
 animation = &"idle"
 frame_progress = 0.43258443

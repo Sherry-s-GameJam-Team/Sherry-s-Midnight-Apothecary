@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cb5k2qam1r8w7"]
+
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/boss/alkeon_execution_effect.gd" id="1_effect"]
+[ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="2_leaf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_converge"]
+emission_shape = 2
+emission_sphere_radius = 850.0
+spread = 180.0
+radial_velocity_min = -700.0
+radial_velocity_max = -450.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.35
+scale_max = 0.65
+color = Color(1.2, 0.3, 0.2, 0.95)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_burst"]
+emission_shape = 2
+emission_sphere_radius = 25.0
+spread = 180.0
+initial_velocity_min = 350.0
+initial_velocity_max = 850.0
+angular_velocity_min = -240.0
+angular_velocity_max = 240.0
+gravity = Vector3(0, 60, 0)
+scale_min = 0.4
+scale_max = 0.8
+color = Color(1.5, 0.85, 0.3, 1)
+
+[node name="AlkeonExecutionEffect" type="Node2D"]
+z_index = 50
+script = ExtResource("1_effect")
+
+[node name="ConvergeParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 120
+process_material = SubResource("ParticleProcessMaterial_converge")
+texture = ExtResource("2_leaf")
+lifetime = 1.4
+one_shot = true
+
+[node name="GlowOrb" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_leaf")
+modulate = Color(2, 1.2, 0.4, 0.9)
+
+[node name="ShockwaveRing" type="Line2D" parent="."]
+visible = false
+points = PackedVector2Array(0, -60, 42, -42, 60, 0, 42, 42, 0, 60, -42, 42, -60, 0, -42, -42, 0, -60)
+width = 8.0
+default_color = Color(1.8, 1.4, 0.6, 1)
+
+[node name="BurstParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 160
+process_material = SubResource("ParticleProcessMaterial_burst")
+texture = ExtResource("2_leaf")
+lifetime = 1.6
+one_shot = true
+explosiveness = 0.9

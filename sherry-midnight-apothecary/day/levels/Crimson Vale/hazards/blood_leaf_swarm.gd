@@ -73,10 +73,22 @@ var _fade_tween: Tween
 var _intensity_tween: Tween
 
 
+const MAX_CONCURRENT_SWARMS: int = 4
+
+
 func _ready() -> void:
 	add_to_group("blood_leaf_swarm")
 	add_to_group("hazard")
 	add_to_group("corrupted")
+	add_to_group("potion_target")
+	add_to_group("potion_interactive")
+
+	if is_inside_tree():
+		var swarms := get_tree().get_nodes_in_group("blood_leaf_swarm").filter(func(n: Node) -> bool: return n is BloodLeafSwarm and n != self and not bool(n.get("_is_purified")))
+		if swarms.size() >= MAX_CONCURRENT_SWARMS:
+			queue_free()
+			return
+
 	_current_hp = corruption_hp
 	_spawn_origin = global_position
 	_current_anchor_pos = global_position
@@ -212,9 +224,42 @@ func hit_by_wind(direction: Vector2, strength: float = 420.0, duration: float = 
 	wind_blown.emit(direction, strength)
 
 
+func take_damage(amount: float) -> void:
+	if _is_purified:
+		return
+	_current_hp -= amount
+	damaged.emit(_current_hp)
+
+	# Visual flash / momentary scattering response
+	var hit_tween := _safe_create_tween()
+	if hit_tween != null:
+		hit_tween.tween_method(_set_disperse_factor_value, 0.9, 0.0, 0.3)
+
+	if _current_hp <= 0.0:
+		_purify_and_dismiss()
+
+
+func receive_hit(damage_amount: float, knockback: Vector2 = Vector2.ZERO) -> void:
+	take_damage(damage_amount)
+	if not _is_purified and not knockback.is_zero_approx():
+		hit_by_wind(knockback.normalized(), knockback.length(), 0.5)
+
+
+func receive_damage(amount: float) -> void:
+	take_damage(amount)
+
+
 func hit_by_explosion(explosion_position: Vector2, strength: float = 1.0) -> void:
 	if _is_purified:
 		return
+	# Deal normal/explosion damage to eliminate swarm
+	_current_hp -= strength * 1.5
+	damaged.emit(_current_hp)
+
+	if _current_hp <= 0.0:
+		_purify_and_dismiss()
+		return
+
 	var disperse_duration := randf_range(0.45, 0.7)
 	var away := (_current_anchor_pos - explosion_position).normalized()
 	if away.is_zero_approx():
@@ -254,25 +299,27 @@ func hit_by_purification(power: float = 1.0) -> void:
 		_purify_and_dismiss()
 
 
-func apply_potion_effect(effect_id: StringName, context: Dictionary) -> void:
+func apply_potion_effect(effect_id: StringName, context: Dictionary = {}) -> void:
 	if _is_purified:
 		return
 	var impact_pt: Vector2 = context.get("impact_point", global_position)
 	var multiplier: float = float(context.get("multiplier", 1.0))
 	var potency: float = float(context.get("potency", 1.0))
 	var combined_power: float = multiplier * potency
+	var eid_str := String(effect_id).to_lower()
 
-	match effect_id:
-		&"attack", &"lightning_meteor":
-			hit_by_explosion(impact_pt, combined_power)
-		&"purify":
-			hit_by_purification(combined_power)
-		&"speed", &"wind":
-			var dir := (global_position - impact_pt).normalized()
-			if dir.is_zero_approx():
-				var normal: Vector2 = context.get("impact_normal", Vector2.UP)
-				dir = -normal if not normal.is_zero_approx() else Vector2.UP
-			hit_by_wind(dir, 450.0 * combined_power, 0.8)
+	if eid_str.contains("attack") or eid_str.contains("lightning") or eid_str.contains("explosion"):
+		hit_by_explosion(impact_pt, combined_power)
+	elif eid_str.contains("purif") or eid_str.contains("cure"):
+		hit_by_purification(combined_power * 3.0)
+	elif eid_str.contains("speed") or eid_str.contains("wind") or eid_str.contains("cyan"):
+		var dir := (global_position - impact_pt).normalized()
+		if dir.is_zero_approx():
+			var normal: Vector2 = context.get("impact_normal", Vector2.UP)
+			dir = -normal if not normal.is_zero_approx() else Vector2.UP
+		hit_by_wind(dir, 450.0 * combined_power, 0.8)
+	else:
+		take_damage(combined_power * 1.5)
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
@@ -280,7 +327,9 @@ func receive_potion_hit(hit: Dictionary) -> void:
 		return
 	var potion: PotionData = hit.get("potion")
 	var potion_id: StringName = hit.get("potion_id", &"")
+	var effect_id: StringName = hit.get("main_effect_id", &"")
 	var pt: Vector2 = hit.get("impact_point", global_position)
+	var pid_str := String(potion_id).to_lower()
 
 	if potion != null and potion.main_effect_id != &"":
 		apply_potion_effect(potion.main_effect_id, {
@@ -288,13 +337,17 @@ func receive_potion_hit(hit: Dictionary) -> void:
 			"multiplier": 1.0,
 			"potency": 1.0
 		})
-	elif potion_id == &"red_potion":
-		hit_by_explosion(pt, 1.0)
-	elif potion_id == &"purification_potion":
-		hit_by_purification(1.0)
-	elif potion_id == &"orange_potion":
+	elif effect_id != &"":
+		apply_potion_effect(effect_id, { "impact_point": pt })
+	elif pid_str.contains("red") or pid_str.contains("attack") or pid_str.contains("explosion"):
+		hit_by_explosion(pt, 1.5)
+	elif pid_str.contains("purif") or pid_str.contains("pure"):
+		hit_by_purification(3.0)
+	elif pid_str.contains("orange") or pid_str.contains("cyan") or pid_str.contains("wind"):
 		var dir := (global_position - pt).normalized()
 		hit_by_wind(dir if not dir.is_zero_approx() else Vector2.UP, 450.0, 0.8)
+	else:
+		take_damage(1.5)
 
 
 func _enter_idle_state() -> void:

@@ -11,6 +11,7 @@ extends Area2D
 @export_node_path("Sprite2D") var visual_path: NodePath
 @export var interaction_hint_enabled := false
 @export var interaction_hint_text := "按[E]出门"
+@export var trigger_on_touch := false
 
 var visual: Sprite2D
 var _outline_material: Material
@@ -35,6 +36,10 @@ func _input(event: InputEvent) -> void:
 	var viewport := get_viewport()
 	if viewport != null:
 		viewport.set_input_as_handled()
+	_execute_transition()
+
+
+func _execute_transition() -> void:
 	var sound_manager := get_node_or_null("/root/SoundManager")
 	if sound_manager != null and sound_manager.has_method("play_door_transition"):
 		sound_manager.call("play_door_transition")
@@ -54,6 +59,8 @@ func _on_body_entered(body: Node2D) -> void:
 		_player_is_inside = true
 		_set_active(true)
 		_show_interaction_hint()
+		if trigger_on_touch:
+			_execute_transition()
 
 
 func _on_body_exited(body: Node2D) -> void:

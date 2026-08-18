@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://c8m2k5xap4n7x"]
+
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/boss/player_hitbox_core.gd" id="1_core"]
+[ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="2_leaf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_core"]
+radius = 24.0
+
+[node name="HitboxCore" type="Node2D"]
+z_index = 25
+script = ExtResource("1_core")
+
+[node name="Ring" type="Node2D" parent="."]
+
+[node name="RingLine" type="Line2D" parent="Ring"]
+points = PackedVector2Array(0, -22, 16, -16, 22, 0, 16, 16, 0, 22, -16, 16, -22, 0, -16, -16, 0, -22)
+width = 3.5
+default_color = Color(0.2, 0.95, 1, 0.95)
+
+[node name="CoreSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_leaf")
+modulate = Color(1.8, 1.8, 2.5, 1)
+
+[node name="CenterDot" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 1)
+polygon = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+
+[node name="HurtboxArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxArea"]
+shape = SubResource("CircleShape2D_core")

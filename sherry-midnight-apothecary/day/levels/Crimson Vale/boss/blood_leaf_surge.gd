@@ -39,10 +39,10 @@ var _hit_targets: Dictionary = {}
 
 
 func _ready() -> void:
-	collision_layer = 1 | 2
-	collision_mask = 3
+	collision_layer = 0
+	collision_mask = 1
 	monitoring = false
-	monitorable = true
+	monitorable = false
 	add_to_group("blood_leaf_surge")
 	add_to_group("potion_target")
 
@@ -99,12 +99,16 @@ func make_headwind_safe(duration: float = 1.8) -> void:
 
 func receive_potion_hit(hit: Dictionary) -> void:
 	var potion_id: StringName = hit.get("potion_id", &"")
-	if potion_id == &"wind" or String(potion_id).contains("wind") or String(potion_id).contains("gust"):
+	var effect_id: StringName = hit.get("main_effect_id", &"")
+	var pid_str := String(potion_id).to_lower()
+	var eid_str := String(effect_id).to_lower()
+	if pid_str.contains("wind") or pid_str.contains("cyan") or pid_str.contains("purification") or pid_str.contains("pure") or eid_str.contains("wind") or eid_str.contains("purification"):
 		make_headwind_safe(2.0)
 
 
 func apply_potion_effect(effect_id: StringName, _context: Dictionary = {}) -> void:
-	if effect_id == &"wind" or String(effect_id).contains("wind") or String(effect_id).contains("gust"):
+	var eid_str := String(effect_id).to_lower()
+	if eid_str.contains("wind") or eid_str.contains("cyan") or eid_str.contains("purification") or eid_str.contains("pure") or eid_str.contains("gust"):
 		make_headwind_safe(2.0)
 
 

@@ -34,6 +34,7 @@ enum HeadState {
 @onready var shield_particles: GPUParticles2D = $LeafShield/ShieldParticles
 @onready var disaster_core: Area2D = $DisasterCore
 @onready var core_sprite: Sprite2D = $DisasterCore/CoreVisual
+@onready var weakpoint_indicator: AlkeonWeakpointIndicator = get_node_or_null("DisasterCore/WeakpointIndicator")
 
 var current_phase: Phase = Phase.PHASE1_RED_HORN
 var head_state: HeadState = HeadState.NORMAL
@@ -64,10 +65,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# Gentle majestic breathing/floating
 	_float_time += delta * 1.6
-	if not _is_transitioning and head_state != HeadState.BOWED:
+	if not _is_transitioning and head_state != HeadState.BOWED and head_state != HeadState.FINAL_EXPOSED:
 		position.y = _base_position.y + sin(_float_time) * 10.0
 
-	if head_state == HeadState.BOWED or head_state == HeadState.FINAL_EXPOSED:
+	# Only standard vulnerability has a timeout. FINAL_EXPOSED remains active for climax execution.
+	if head_state == HeadState.BOWED:
 		_bowed_timer -= delta
 		if _bowed_timer <= 0.0:
 			raise_head()
@@ -79,9 +81,17 @@ func enter_bowed_state(duration: float = 3.5) -> void:
 
 	head_state = HeadState.BOWED
 	_bowed_timer = duration
-	_shield_broken = false
+	_shield_broken = (current_phase == Phase.PHASE3_GREAT_HUNT)
 	_wind_barrier_active = false
 	_final_step = 0
+
+	if disaster_core != null:
+		disaster_core.visible = true
+	if weakpoint_indicator != null:
+		if current_phase == Phase.PHASE3_GREAT_HUNT:
+			weakpoint_indicator.activate("core_exposed")
+		else:
+			weakpoint_indicator.activate("shield")
 
 	# Bow down visually
 	var tw := create_tween()
@@ -92,24 +102,29 @@ func enter_bowed_state(duration: float = 3.5) -> void:
 func enter_final_purification_window() -> void:
 	if current_phase == Phase.PURIFIED_RESTORED:
 		return
+	current_phase = Phase.FINAL_PURIFICATION
 	head_state = HeadState.FINAL_EXPOSED
-	_bowed_timer = 12.0
-	_shield_broken = false
+	_shield_broken = true
 	_wind_barrier_active = false
 	_final_step = 0
 
-	var tw := create_tween()
-	tw.tween_property(self, "position:y", _base_position.y + 40.0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	if disaster_core != null:
 		disaster_core.visible = true
-	head_bowed.emit(12.0)
+	if weakpoint_indicator != null:
+		weakpoint_indicator.activate("final_execute")
+
+	var tw := create_tween()
+	tw.tween_property(self, "position:y", _base_position.y + 40.0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	head_bowed.emit(999.0)
 
 
 func raise_head() -> void:
-	if current_phase == Phase.PURIFIED_RESTORED:
+	if current_phase == Phase.PURIFIED_RESTORED or current_phase == Phase.FINAL_PURIFICATION:
 		return
 
 	head_state = HeadState.NORMAL
+	if weakpoint_indicator != null:
+		weakpoint_indicator.deactivate()
 	_reset_shield()
 
 	var tw := create_tween()
@@ -120,55 +135,80 @@ func raise_head() -> void:
 func receive_potion_hit(hit: Dictionary) -> void:
 	var potion_id: StringName = hit.get("potion_id", &"")
 	var pid_str := String(potion_id).to_lower()
+	var is_pure := pid_str.contains("purification") or pid_str.contains("pure") or pid_str.contains("cure")
+	var is_dmg := pid_str.contains("explosion") or pid_str.contains("burst") or pid_str.contains("bomb") or pid_str.contains("attack") or pid_str.contains("red") or is_pure
+	var is_wind := pid_str.contains("wind") or pid_str.contains("cyan") or pid_str.contains("gust") or is_pure
+
+	if head_state == HeadState.FINAL_EXPOSED or current_phase == Phase.FINAL_PURIFICATION:
+		# Final Execution: ANY potion executes the boss!
+		_trigger_purified_victory()
+		return
 
 	if head_state == HeadState.NORMAL:
-		# Shield reflects or absorbs
+		# Shield reflects or absorbs during bullet barrage
 		_flash_shield()
 		return
 
 	if head_state == HeadState.BOWED:
+		if current_phase == Phase.PHASE3_GREAT_HUNT:
+			# Phase 3: Potion hits open weakpoint after dodging barrage
+			_apply_core_damage(20.0)
+			if weakpoint_indicator != null:
+				weakpoint_indicator.play_hit_pulse()
+			if current_hp <= 0.0:
+				enter_final_purification_window()
+			else:
+				raise_head()
+			return
+
 		# Phase 1 & 2 vulnerability
 		if not _shield_broken:
-			if pid_str.contains("explosion") or pid_str.contains("burst") or pid_str.contains("bomb"):
+			if is_dmg:
 				_break_shield()
+				if is_pure:
+					_apply_core_damage(12.0)
+					raise_head()
 			else:
 				_flash_shield()
 		else:
-			if pid_str.contains("purification") or pid_str.contains("pure") or pid_str.contains("cure"):
+			if is_pure or is_dmg:
 				_apply_core_damage(12.0)
 				raise_head()
-
-	elif head_state == HeadState.FINAL_EXPOSED:
-		# Phase 3 Three-Step Purification Puzzle
-		match _final_step:
-			0:
-				if pid_str.contains("explosion") or pid_str.contains("bomb"):
-					_final_step = 1
-					_break_shield()
-				else:
-					_flash_shield()
-			1:
-				if pid_str.contains("wind") or pid_str.contains("gust"):
-					_final_step = 2
-					_activate_wind_lock()
-				else:
-					_flash_shield()
-			2:
-				if pid_str.contains("purification") or pid_str.contains("pure"):
-					_trigger_purified_victory()
-				else:
-					_flash_shield()
 
 
 func apply_potion_effect(effect_id: StringName, _context: Dictionary = {}) -> void:
 	var eid_str := String(effect_id).to_lower()
+	var is_pure := eid_str.contains("purification") or eid_str.contains("pure") or eid_str.contains("cure")
+	var is_dmg := eid_str.contains("explosion") or eid_str.contains("burst") or eid_str.contains("attack") or is_pure
+	var is_wind := eid_str.contains("wind") or eid_str.contains("cyan") or eid_str.contains("gust") or is_pure
+
+	if head_state == HeadState.FINAL_EXPOSED or current_phase == Phase.FINAL_PURIFICATION:
+		_trigger_purified_victory()
+		return
+
+	if head_state == HeadState.NORMAL:
+		_flash_shield()
+		return
+
 	if head_state == HeadState.BOWED:
-		if not _shield_broken and (eid_str.contains("explosion") or eid_str.contains("burst")):
+		if current_phase == Phase.PHASE3_GREAT_HUNT:
+			_apply_core_damage(20.0)
+			if weakpoint_indicator != null:
+				weakpoint_indicator.play_hit_pulse()
+			if current_hp <= 0.0:
+				enter_final_purification_window()
+			else:
+				raise_head()
+			return
+
+		if not _shield_broken and is_dmg:
 			_break_shield()
-	elif head_state == HeadState.FINAL_EXPOSED:
-		if _final_step == 1 and (eid_str.contains("wind") or eid_str.contains("gust")):
-			_final_step = 2
-			_activate_wind_lock()
+			if is_pure:
+				_apply_core_damage(12.0)
+				raise_head()
+		elif _shield_broken and (is_pure or is_dmg):
+			_apply_core_damage(12.0)
+			raise_head()
 
 
 func _apply_core_damage(amount: float) -> void:
@@ -180,6 +220,8 @@ func _apply_core_damage(amount: float) -> void:
 		_start_phase_transition(Phase.PHASE2_WILD_HUNT)
 	elif current_phase == Phase.PHASE2_WILD_HUNT and current_hp <= 34.0:
 		_start_phase_transition(Phase.PHASE3_GREAT_HUNT)
+	elif current_phase == Phase.PHASE3_GREAT_HUNT and current_hp <= 0.0:
+		enter_final_purification_window()
 
 
 func _start_phase_transition(target_phase: Phase) -> void:
@@ -202,6 +244,11 @@ func _start_phase_transition(target_phase: Phase) -> void:
 			current_phase = target_phase
 			_is_transitioning = false
 			_update_visual_for_phase()
+			if current_phase == Phase.PHASE3_GREAT_HUNT:
+				if disaster_core != null:
+					disaster_core.visible = true
+				if weakpoint_indicator != null:
+					weakpoint_indicator.activate("core_exposed")
 			phase_changed.emit(int(current_phase))
 			transformation_finished.emit(int(target_phase))
 		)
@@ -213,22 +260,35 @@ func _trigger_purified_victory() -> void:
 	health_changed.emit(0.0, max_hp)
 	head_state = HeadState.NORMAL
 
+	if weakpoint_indicator != null:
+		weakpoint_indicator.deactivate()
 	if leaf_shield != null:
 		leaf_shield.visible = false
 	if disaster_core != null:
 		disaster_core.visible = false
 
-	# Play restoration morph to Sacred Deer Spirit
-	if animated_sprite != null:
-		animated_sprite.visible = false
-	if restored_sprite != null:
-		restored_sprite.visible = true
-		restored_sprite.modulate = Color(1.5, 1.5, 1.5, 0.0)
-		var tw := create_tween()
-		tw.tween_property(restored_sprite, "modulate", Color(1.0, 1.0, 1.0, 1.0), 1.5)
-		tw.tween_property(self, "position:y", _base_position.y + 20.0, 1.2).set_trans(Tween.TRANS_SINE)
-
-	boss_purified.emit()
+	# Play convergence & burst execution effect
+	var effect_scene: PackedScene = load("res://day/levels/Crimson Vale/boss/alkeon_execution_effect.tscn")
+	if effect_scene != null and is_inside_tree():
+		var effect: Node2D = effect_scene.instantiate() as Node2D
+		get_parent().add_child(effect)
+		if effect.has_method("play_execution"):
+			effect.call(
+				"play_execution",
+				global_position + Vector2(0, -50),
+				func() -> void:
+					# Boss vanishes upon explosion
+					visible = false
+					if animated_sprite != null: animated_sprite.visible = false
+					if restored_sprite != null: restored_sprite.visible = false
+					boss_purified.emit()
+			)
+		else:
+			visible = false
+			boss_purified.emit()
+	else:
+		visible = false
+		boss_purified.emit()
 
 
 func _break_shield() -> void:
@@ -240,15 +300,24 @@ func _break_shield() -> void:
 	if disaster_core != null:
 		disaster_core.visible = true
 		disaster_core.modulate = Color(1.5, 1.5, 1.5, 1.0)
+	if weakpoint_indicator != null:
+		if head_state == HeadState.FINAL_EXPOSED:
+			weakpoint_indicator.set_mode("final_1")
+		else:
+			weakpoint_indicator.set_mode("core_exposed")
 
 
 func _activate_wind_lock() -> void:
 	_wind_barrier_active = true
 	if disaster_core != null:
 		disaster_core.modulate = Color(0.4, 1.4, 1.2, 1.0)
+	if weakpoint_indicator != null:
+		weakpoint_indicator.set_mode("final_2")
 
 
 func _flash_shield() -> void:
+	if weakpoint_indicator != null and weakpoint_indicator.visible:
+		weakpoint_indicator.play_hit_pulse()
 	if leaf_shield != null:
 		var tw := create_tween()
 		tw.tween_property(leaf_shield, "modulate", Color(2.0, 0.6, 0.6, 1.0), 0.08)

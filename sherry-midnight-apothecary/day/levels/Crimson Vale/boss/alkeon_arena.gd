@@ -10,10 +10,10 @@ signal boss_battle_completed
 
 @onready var boss: AlkeonBoss = $Boss
 @onready var audio_synth: AlkeonAudioSynth = $AudioSynth
-@onready var danxin_gate_broken: Sprite2D = $DanxinGate/GateBroken
-@onready var danxin_gate_restored: Sprite2D = $DanxinGate/GateRestored
-@onready var danxin_gate_clock: Sprite2D = $DanxinGate/GateClock
-@onready var gate_portal: DoorPortal = $DanxinGate/GatePortal
+@onready var danxin_gate_broken: Sprite2D = get_node_or_null("Background/CS/DanxinGate/GateBroken") if get_node_or_null("Background/CS/DanxinGate/GateBroken") != null else get_node_or_null("DanxinGate/GateBroken")
+@onready var danxin_gate_restored: Sprite2D = get_node_or_null("Background/CS/DanxinGate/GateRestored") if get_node_or_null("Background/CS/DanxinGate/GateRestored") != null else get_node_or_null("DanxinGate/GateRestored")
+@onready var danxin_gate_clock: Sprite2D = get_node_or_null("Background/CS/DanxinGate/GateClock") if get_node_or_null("Background/CS/DanxinGate/GateClock") != null else get_node_or_null("DanxinGate/GateClock")
+@onready var gate_portal: DoorPortal = get_node_or_null("Background/CS/DanxinGate/GatePortal") if get_node_or_null("Background/CS/DanxinGate/GatePortal") != null else get_node_or_null("DanxinGate/GatePortal")
 @onready var bell_left: WindChime = $Bells/BellLeft
 @onready var bell_center: WindChime = $Bells/BellCenter
 @onready var bell_right: WindChime = $Bells/BellRight
@@ -23,6 +23,7 @@ signal boss_battle_completed
 @onready var swarms_container: Node2D = $Swarms
 @onready var player_node: CharacterBody2D = $Player
 @onready var victory_leaves: GPUParticles2D = $VictoryLeaves
+@onready var boss_health_bar: AlkeonBossHealthBarUI = get_node_or_null("BossHealthBar")
 
 var _bag_zones: Array[int] = []
 var _wave_count: int = 0
@@ -40,6 +41,57 @@ func _ready() -> void:
 	_reset_bag()
 	if is_battle_active:
 		objective_updated.emit("迎战【血叶猎王·阿尔凯昂】！", "观察风铃声响与摆动，躲避致命血叶潮。")
+
+
+func _ensure_player_battle_potions() -> void:
+	var pdata := get_player_data()
+	if pdata == null:
+		return
+	var has_potions := false
+	for id in pdata.equipped_potion_ids:
+		if id != &"" and pdata.potions.has(id) and not pdata.potions[id].is_empty():
+			has_potions = true
+			break
+	if not has_potions:
+		pdata.potions.clear()
+		var pure_instances: Array[Dictionary] = []
+		var cyan_instances: Array[Dictionary] = []
+		var red_instances: Array[Dictionary] = []
+		for i in range(10):
+			pure_instances.append({
+				"potion_id": "purification_potion",
+				"instance_uid": "pure_%d" % i,
+				"remaining_dose": 1.0,
+				"potency": 1.0,
+				"quality": 1.0,
+				"duration": 1.0,
+				"thermal_score": 1.0,
+			})
+			cyan_instances.append({
+				"potion_id": "cyan_potion",
+				"instance_uid": "cyan_%d" % i,
+				"remaining_dose": 1.0,
+				"potency": 1.0,
+				"quality": 1.0,
+				"duration": 1.0,
+				"thermal_score": 1.0,
+			})
+			red_instances.append({
+				"potion_id": "red_potion",
+				"instance_uid": "red_%d" % i,
+				"remaining_dose": 1.0,
+				"potency": 1.0,
+				"quality": 1.0,
+				"duration": 1.0,
+				"thermal_score": 1.0,
+			})
+		pdata.potions[&"purification_potion"] = pure_instances
+		pdata.potions[&"cyan_potion"] = cyan_instances
+		pdata.potions[&"red_potion"] = red_instances
+		pdata.equip_potion(0, &"purification_potion")
+		pdata.equip_potion(1, &"cyan_potion")
+		pdata.equip_potion(2, &"red_potion")
+		pdata.selected_potion_slot = 0
 
 
 func _physics_process(delta: float) -> void:
@@ -99,67 +151,112 @@ func _execute_phase1_attack() -> void:
 		_attack_timer = 3.6
 
 
+const LAYER_UPPER: float = 180.0
+const LAYER_MIDDLE: float = 330.0
+const LAYER_LOWER: float = 480.0
+
+
 func _execute_phase2_attack() -> void:
 	_wave_count += 1
-	var safe_zone := randi() % 3
-	var danger_zones: Array[int] = []
-	for z in range(3):
-		if z != safe_zone:
-			danger_zones.append(z)
+	_clear_phase1_swarms()
 
-	# Dual zone telegraph
-	for dz in danger_zones:
-		_telegraph_zone(dz, 1.4)
+	# Track player's current vertical layer
+	var player_y := player_node.global_position.y if player_node != null else LAYER_LOWER
+	var layers: Array[float] = [LAYER_UPPER, LAYER_MIDDLE, LAYER_LOWER]
+	var closest_layer := LAYER_LOWER
+	var min_diff := 9999.0
+	for ly in layers:
+		var diff := absf(player_y - ly)
+		if diff < min_diff:
+			min_diff = diff
+			closest_layer = ly
 
-	# Staggered swarm pressure
-	if _wave_count % 2 == 0:
-		_spawn_pressure_swarm(safe_zone, 0.45)
+	# Always cover 2 layers simultaneously (player's tracked layer + 1 other layer, leaving 1 safe layer)
+	var target_layers: Array[float] = [closest_layer]
+	var remaining := layers.filter(func(l: float) -> bool: return l != closest_layer)
+	if not remaining.is_empty():
+		target_layers.append(remaining.pick_random())
 
+	var dir: float = 1.0 if (_wave_count % 2 == 1) else -1.0
+	for ly in target_layers:
+		_spawn_shockwave(ly, dir, 0.85)
+
+	# Boss vulnerability window every 3 waves
 	if _wave_count % 3 == 0:
-		_attack_timer = 5.2
-		get_tree().create_timer(1.6).timeout.connect(func() -> void:
+		_attack_timer = 4.5
+		get_tree().create_timer(1.4).timeout.connect(func() -> void:
 			if boss != null and boss.current_phase == AlkeonBoss.Phase.PHASE2_WILD_HUNT:
 				boss.enter_bowed_state(3.0)
 		)
 	else:
-		_attack_timer = 3.8
+		_attack_timer = 2.6
+
+
+func _spawn_shockwave(layer_y: float, direction: float, telegraph_time: float) -> void:
+	var shockwave_scene: PackedScene = load("res://day/levels/Crimson Vale/boss/blood_leaf_shockwave.tscn")
+	if shockwave_scene == null:
+		return
+	var wave: Area2D = shockwave_scene.instantiate() as Area2D
+	add_child(wave)
+	if wave.has_method("start_shockwave"):
+		wave.call("start_shockwave", layer_y, direction, telegraph_time)
 
 
 func _execute_phase3_pattern() -> void:
 	_wave_count += 1
-	var patterns := [
-		[0, 1, 2],       # Pattern A: L -> C -> R
-		[0, 1, 2, 1],    # Pattern B: L+C -> R -> C
-		[2, 0, 1],       # Pattern C: R -> L -> C
-		[1, 0, 2]        # Pattern D: C -> L -> R
-	]
-	var chosen_pattern: Array = patterns[_wave_count % patterns.size()]
+	var pattern_type := _wave_count % 3
+	var boss_core_pos: Vector2 = (boss.global_position + Vector2(0, -60)) if boss != null else Vector2(850, 220)
 
-	# False bell chance
-	if randf() < 0.4:
-		if audio_synth != null:
-			audio_synth.play_false_bell()
+	objective_updated.emit("万叶狂澜！专注走位躲避四周红黄血叶！", "弹幕发射期间仅需走位规避，弹幕结束后猎王将暴露破绽！")
 
-	for i in range(chosen_pattern.size()):
-		var z: int = chosen_pattern[i]
-		get_tree().create_timer(float(i) * 1.1).timeout.connect(func() -> void:
-			_telegraph_zone(z, 1.1)
-		)
+	match pattern_type:
+		0: # Spaced Twin Rings: 12 leaves now, followed by 12 leaves offset by 15 deg
+			_spawn_bullet_ring(boss_core_pos, 12, 250.0, 0.0)
+			get_tree().create_timer(0.7).timeout.connect(func() -> void:
+				if is_battle_active and boss != null and boss.current_phase == AlkeonBoss.Phase.PHASE3_GREAT_HUNT:
+					_spawn_bullet_ring(boss_core_pos, 12, 280.0, PI / 12.0)
+			)
+		1: # Spaced Quadrant Clusters (8 cardinal & diagonal leaves, then 8 rotated leaves)
+			_spawn_bullet_ring(boss_core_pos, 8, 260.0, 0.0)
+			get_tree().create_timer(0.65).timeout.connect(func() -> void:
+				if is_battle_active and boss != null and boss.current_phase == AlkeonBoss.Phase.PHASE3_GREAT_HUNT:
+					_spawn_bullet_ring(boss_core_pos, 8, 300.0, PI / 8.0)
+			)
+		2: # Orbiting 3-wave flower bursts (6 spaced leaves per burst)
+			for w in range(3):
+				get_tree().create_timer(float(w) * 0.45).timeout.connect(func() -> void:
+					if is_battle_active and boss != null and boss.current_phase == AlkeonBoss.Phase.PHASE3_GREAT_HUNT:
+						_spawn_bullet_ring(boss_core_pos, 6, 270.0, float(w) * (PI / 6.0))
+				)
 
-	if _wave_count % 3 == 0 and boss.current_hp > 10.0:
-		_attack_timer = 5.0
-		get_tree().create_timer(2.2).timeout.connect(func() -> void:
-			if boss != null and boss.current_phase == AlkeonBoss.Phase.PHASE3_GREAT_HUNT:
-				boss.enter_bowed_state(3.0)
-		)
-	else:
-		_attack_timer = 4.2
+	# After barrage clears (2.2s), open Boss vulnerability window for counterattack!
+	get_tree().create_timer(2.2).timeout.connect(func() -> void:
+		if is_battle_active and boss != null and boss.current_phase == AlkeonBoss.Phase.PHASE3_GREAT_HUNT:
+			objective_updated.emit("【猎王破绽暴露！】趁机投掷药水重创灾核！", "投掷任意药水直接造成巨额伤害！")
+			boss.enter_bowed_state(3.5)
+	)
+
+	_attack_timer = 6.0
+
+
+func _spawn_bullet_ring(origin: Vector2, count: int, speed: float, angle_offset: float = 0.0) -> void:
+	var bullet_scene: PackedScene = load("res://day/levels/Crimson Vale/boss/blood_leaf_bullet.tscn")
+	if bullet_scene == null:
+		return
+	var angle_step := TAU / float(count)
+	for i in range(count):
+		var bullet: Area2D = bullet_scene.instantiate() as Area2D
+		add_child(bullet)
+		bullet.global_position = origin
+		var dir := Vector2.RIGHT.rotated(angle_offset + float(i) * angle_step)
+		if bullet.has_method("launch"):
+			bullet.call("launch", dir, speed)
 
 
 func _execute_ultimate_skill() -> void:
 	_is_ultimate_active = true
 	_attack_timer = 15.0
-	objective_updated.emit("【万叶归猎】！全场血叶袭来！", "使用【御风药水】强行制造逆风安全区！")
+	objective_updated.emit("【万叶归猎】！全场血叶袭来！", "使用【御风药水】制造安全区，并投掷任意药水执行处决！")
 
 	# Sequence bells L -> C -> R out of sync
 	if audio_synth != null:
@@ -178,28 +275,41 @@ func _execute_ultimate_skill() -> void:
 		if surge_right != null: surge_right.start_telegraph(0.4)
 	)
 
-	# After 3.5s of ultimate, open Final Purification Window
-	get_tree().create_timer(4.5).timeout.connect(func() -> void:
+	# Open Final Execution Window
+	get_tree().create_timer(2.5).timeout.connect(func() -> void:
 		if boss != null:
-			objective_updated.emit("灾核外露！执行终极净化！", "顺序使用：爆炸药水(碎甲) → 御风药水(定风) → 净化药水(净核)！")
+			objective_updated.emit("灾核外露！投掷【任意药水】执行处决！", "投掷任意药水即可完成最终净化！")
 			boss.enter_final_purification_window()
 	)
 
 
+func _clear_phase1_swarms() -> void:
+	if swarms_container != null:
+		for child in swarms_container.get_children():
+			child.queue_free()
+
+
+func _clear_all_hazards() -> void:
+	_clear_phase1_swarms()
+	for shockwave in get_tree().get_nodes_in_group("blood_leaf_shockwave"):
+		if shockwave is Node and is_instance_valid(shockwave):
+			shockwave.queue_free()
+	for bullet in get_tree().get_nodes_in_group("blood_leaf_bullet"):
+		if bullet is Node and is_instance_valid(bullet):
+			bullet.queue_free()
+
+
 func _telegraph_zone(zone: int, duration: float) -> void:
-	# 1. Chime toll & sway
 	if audio_synth != null:
 		audio_synth.play_chime_select(zone)
 	_ring_bell(zone, 1.8)
 
-	# 2. Urgent chime before impact
 	get_tree().create_timer(duration * 0.55).timeout.connect(func() -> void:
 		if audio_synth != null:
 			audio_synth.play_chime_urgent(zone)
 		_ring_bell(zone, 3.2)
 	)
 
-	# 3. Trigger Surge
 	var surge := _get_surge(zone)
 	if surge != null:
 		surge.start_telegraph(duration)
@@ -226,6 +336,13 @@ func _get_surge(zone: int) -> BloodLeafSurge:
 func _spawn_pressure_swarm(zone: int, delay: float) -> void:
 	if swarms_container == null:
 		return
+	var active_count := 0
+	for child in swarms_container.get_children():
+		if child is BloodLeafSwarm and not bool(child.get("_is_purified")):
+			active_count += 1
+	if active_count >= 4:
+		return
+
 	var swarm_scene: PackedScene = load("res://day/levels/Crimson Vale/hazards/blood_leaf_swarm.tscn")
 	if swarm_scene == null:
 		return
@@ -243,40 +360,74 @@ func _setup_boss_connections() -> void:
 		return
 	boss.phase_changed.connect(_on_boss_phase_changed)
 	boss.boss_purified.connect(_on_boss_purified)
+	if boss_health_bar != null:
+		boss_health_bar.setup_boss(boss)
 
 
 func _setup_bell_connections() -> void:
-	# Connecting wind chimes hit detection: explosion delays active surge
 	var bells: Array[WindChime] = [bell_left, bell_center, bell_right]
 	for i in range(bells.size()):
 		var bell: WindChime = bells[i]
 		if bell != null and bell.has_signal("chime_struck"):
 			bell.chime_struck.connect(func(_idx: int, strength: float) -> void:
-				if strength > 5.0: # Explosion hit
+				if strength > 5.0:
 					var surge := _get_surge(i)
 					if surge != null:
 						surge.delay_attack(1.0)
 			)
 
 
+func apply_potion_effect(effect_id: StringName, context: Dictionary = {}) -> void:
+	var eid_str := String(effect_id).to_lower()
+	if eid_str.contains("wind") or eid_str.contains("cyan") or eid_str.contains("purification") or eid_str.contains("pure") or eid_str.contains("gust"):
+		var splash_pos: Vector2 = context.get("position", Vector2.ZERO)
+		var zone := clampi(int(splash_pos.x / 570.0), 0, 2)
+		var surge := _get_surge(zone)
+		if surge != null:
+			surge.make_headwind_safe(2.0)
+
+
 func _on_boss_phase_changed(new_phase: int) -> void:
 	match new_phase:
-		AlkeonBoss.Phase.TRANSITION_1_TO_2:
-			objective_updated.emit("猎王暴怒！进入第二阶段【狂猎再临】！", "双区同时封锁，寻找唯一安全版面或用【御风药水】破局。")
+		AlkeonBoss.Phase.TRANSITION_1_TO_2, AlkeonBoss.Phase.PHASE2_WILD_HUNT:
+			_clear_phase1_swarms()
+			_enable_player_precision_hitbox(false)
+			objective_updated.emit("猎王狂暴！进入第二阶段【狂猎再临】！", "上中下三层血叶冲击波袭来！利用平台跳跃与下落规避伤害。")
 			if audio_synth != null:
 				audio_synth.play_chime_urgent(0)
 				audio_synth.play_chime_urgent(1)
 				audio_synth.play_chime_urgent(2)
-		AlkeonBoss.Phase.TRANSITION_2_TO_3:
-			objective_updated.emit("灾厄狂化！进入第三阶段【万叶大猎】！", "警惕虚假风铃！以版面实际风铃晃动为准。")
+		AlkeonBoss.Phase.TRANSITION_2_TO_3, AlkeonBoss.Phase.PHASE3_GREAT_HUNT:
+			_clear_all_hazards()
+			_enable_player_precision_hitbox(true)
+			objective_updated.emit("灾核全面外露！进入第三阶段【万叶大猎】！", "中心红点为受击判定核心！躲避密集弹幕，持续投掷药水攻击鹿头！")
+
+
+func _enable_player_precision_hitbox(enabled: bool) -> void:
+	if player_node != null:
+		var hitbox_core = player_node.get_node_or_null("HitboxCore")
+		if hitbox_core == null and enabled:
+			var core_scene: PackedScene = load("res://day/levels/Crimson Vale/boss/player_hitbox_core.tscn")
+			if core_scene != null:
+				hitbox_core = core_scene.instantiate()
+				hitbox_core.name = "HitboxCore"
+				hitbox_core.position = Vector2(0, 38)
+				player_node.add_child(hitbox_core)
+		if hitbox_core != null:
+			if enabled:
+				hitbox_core.call("activate")
+			else:
+				hitbox_core.call("deactivate")
 
 
 func _on_boss_purified() -> void:
 	is_battle_active = false
 	boss_battle_completed.emit()
-	objective_updated.emit("【血叶猎王·阿尔凯昂】净化完成！", "丹心门已启动，古钟轰鸣，通往【奥雷姆钟庭】。")
+	_enable_player_precision_hitbox(false)
+	objective_updated.emit("【血叶猎王·阿尔凯昂】净化完成！", "红叶消散，大门已修复为常态，通往【奥雷姆钟庭】。")
 
 	# Stop all surges and swarms
+	_clear_all_hazards()
 	if surge_left != null: surge_left._set_state(BloodLeafSurge.State.IDLE)
 	if surge_center != null: surge_center._set_state(BloodLeafSurge.State.IDLE)
 	if surge_right != null: surge_right._set_state(BloodLeafSurge.State.IDLE)
@@ -284,12 +435,18 @@ func _on_boss_purified() -> void:
 	if victory_leaves != null:
 		victory_leaves.emitting = true
 
+	# Restore gate from broken to normal
+	if danxin_gate_broken != null:
+		danxin_gate_broken.visible = false
+	if danxin_gate_restored != null:
+		danxin_gate_restored.visible = true
+		danxin_gate_restored.modulate.a = 1.0
+
 	# Play Danxin Gate -> Orem Clocktower transformation
 	_trigger_gate_clock_transformation()
 
 
 func _trigger_gate_clock_transformation() -> void:
-	# 1. Chimes toll sequentially L -> C -> R
 	if audio_synth != null:
 		audio_synth.play_chime_select(0)
 		get_tree().create_timer(0.6).timeout.connect(func() -> void:
@@ -303,12 +460,6 @@ func _trigger_gate_clock_transformation() -> void:
 			_clock_active = true
 		)
 
-	# 2. Gate visual shifts to Orange-Gold clockwork gear gate
-	if danxin_gate_restored != null and danxin_gate_clock != null:
-		var tw := create_tween()
-		tw.tween_property(danxin_gate_restored, "modulate:a", 0.0, 1.5)
-		tw.parallel().tween_property(danxin_gate_clock, "modulate:a", 1.0, 1.5)
-
 	if gate_portal != null:
 		gate_portal.destination_level = &"orem_clocktower"
 		gate_portal.fallback_scene_path = "res://day/levels/home/home.tscn"
@@ -319,13 +470,12 @@ func _trigger_gate_clock_transformation() -> void:
 
 func _update_gate_visuals() -> void:
 	if danxin_gate_broken != null:
-		danxin_gate_broken.visible = false
+		danxin_gate_broken.visible = true
 	if danxin_gate_restored != null:
-		danxin_gate_restored.visible = true
+		danxin_gate_restored.visible = false
 		danxin_gate_restored.modulate.a = 1.0
 	if danxin_gate_clock != null:
-		danxin_gate_clock.visible = true
-		danxin_gate_clock.modulate.a = 0.0
+		danxin_gate_clock.visible = false
 
 
 func _draw_from_bag() -> int:

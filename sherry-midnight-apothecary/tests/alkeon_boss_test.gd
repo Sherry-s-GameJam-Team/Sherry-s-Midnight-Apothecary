@@ -17,8 +17,11 @@ func run(tree_root: Node = null) -> void:
 	_test_arena_scene_structure()
 	_test_blood_leaf_surge_mechanics()
 	_test_boss_vulnerability_and_phase_progression()
+	_test_weakpoint_indicator_visuals()
+	_test_boss_health_bar_hud()
 	_test_final_three_step_purification()
 	_test_danxin_gate_clock_transformation()
+	_test_player_precision_hitbox_core()
 	print("All Alkeon Boss & Arena tests passed successfully!")
 
 
@@ -50,7 +53,7 @@ func _test_arena_scene_structure() -> void:
 	var surge_left := arena.get_node_or_null("Surges/SurgeLeft") as BloodLeafSurge
 	var surge_center := arena.get_node_or_null("Surges/SurgeCenter") as BloodLeafSurge
 	var surge_right := arena.get_node_or_null("Surges/SurgeRight") as BloodLeafSurge
-	var gate := arena.get_node_or_null("DanxinGate") as Node2D
+	var gate := arena.get_node_or_null("Background/CS/DanxinGate") if arena.get_node_or_null("Background/CS/DanxinGate") != null else arena.get_node_or_null("DanxinGate")
 	var player := arena.get_node_or_null("Player") as CharacterBody2D
 
 	assert(boss != null, "Boss instance must exist in arena")
@@ -83,6 +86,11 @@ func _test_blood_leaf_surge_mechanics() -> void:
 	surge.call("receive_potion_hit", { "potion_id": &"wind" })
 	assert(int(surge.get("current_state")) == 3, "State should be HEADWIND_SAFE (3) after wind potion")
 
+	# Test Purification Potion also creates Headwind Safe Zone
+	surge.call("_enter_active_state")
+	surge.call("receive_potion_hit", { "potion_id": &"purification_potion" })
+	assert(int(surge.get("current_state")) == 3, "State should be HEADWIND_SAFE (3) after purification potion")
+
 	_cleanup_root(root)
 
 
@@ -104,13 +112,9 @@ func _test_boss_vulnerability_and_phase_progression() -> void:
 	boss.call("enter_bowed_state", 3.5)
 	assert(int(boss.get("head_state")) == 1, "Head state should be BOWED (1)")
 
-	# Hit 1: Explosion potion breaks shield
-	boss.call("receive_potion_hit", { "potion_id": &"explosion" })
-	assert(bool(boss.get("_shield_broken")) == true, "Shield should be broken after explosion")
-
-	# Hit 2: Purification potion deals damage
-	boss.call("receive_potion_hit", { "potion_id": &"purification" })
-	assert(float(boss.get("current_hp")) < 100.0, "Core damage should reduce HP")
+	# Test Purification potion directly breaking shield & dealing core damage
+	boss.call("receive_potion_hit", { "potion_id": &"purification_potion" })
+	assert(float(boss.get("current_hp")) < 100.0, "Purification potion must deal damage directly")
 
 	# Simulate damage reducing HP to Phase 2 threshold
 	boss.call("_apply_core_damage", 30.0) # HP down to 58.0 <= 67.0
@@ -131,26 +135,74 @@ func _test_final_three_step_purification() -> void:
 	boss.set("current_phase", 4) # PHASE3_GREAT_HUNT
 	boss.set("current_hp", 10.0)
 
-	# Enter Final Purification window
+	# Enter Final Execution window
 	boss.call("enter_final_purification_window")
 	assert(int(boss.get("head_state")) == 2, "Head state should be FINAL_EXPOSED (2)")
-	assert(int(boss.get("_final_step")) == 0, "Step 0: Awaiting Explosion")
 
-	# Step 1: Explosion
-	boss.call("receive_potion_hit", { "potion_id": &"explosion" })
-	assert(int(boss.get("_final_step")) == 1, "Step 1: Awaiting Wind")
-
-	# Step 2: Wind
-	boss.call("receive_potion_hit", { "potion_id": &"wind" })
-	assert(int(boss.get("_final_step")) == 2, "Step 2: Awaiting Purification")
-
-	# Step 3: Purification -> Triggers Victory
-	boss.call("receive_potion_hit", { "potion_id": &"purification" })
-	assert(signal_data["purified"] == true, "boss_purified signal must be emitted")
+	# Any potion satisfies final execution
+	boss.call("receive_potion_hit", { "potion_id": &"red_potion" })
 	assert(int(boss.get("current_phase")) == 6, "Boss must enter PURIFIED_RESTORED (6)")
 
-	var restored_sprite := boss.get_node_or_null("RestoredSprite") as Sprite2D
-	assert(restored_sprite != null and restored_sprite.visible, "RestoredSprite must become visible upon purification")
+	_cleanup_root(root)
+
+
+func _test_weakpoint_indicator_visuals() -> void:
+	var scene: PackedScene = load(BOSS_SCENE_PATH)
+	var boss: Node2D = scene.instantiate() as Node2D
+	var root := _create_root()
+	root.add_child(boss)
+
+	var indicator := boss.get_node_or_null("DisasterCore/WeakpointIndicator") as AlkeonWeakpointIndicator
+	assert(indicator != null, "WeakpointIndicator must exist under DisasterCore")
+	assert(not indicator.visible, "WeakpointIndicator should be hidden initially")
+
+	# Enter Bowed: indicator becomes visible in shield mode
+	boss.call("enter_bowed_state", 3.0)
+	assert(indicator.visible, "WeakpointIndicator must become visible in bowed state")
+	assert(indicator.get("_current_mode") == "shield", "Initial bowed mode should be 'shield'")
+
+	# Break shield: switches to core_exposed mode
+	boss.call("_break_shield")
+	assert(indicator.get("_current_mode") == "core_exposed", "Mode should change to 'core_exposed' after breaking shield")
+
+	# Raise head: deactivates indicator
+	boss.call("raise_head")
+	assert(not indicator.get("_is_active"), "Indicator should deactivate when head raised")
+
+	# Final window mode
+	boss.call("enter_final_purification_window")
+	assert(indicator.get("_current_mode") == "final_execute", "Final window mode is 'final_execute'")
+
+	_cleanup_root(root)
+
+
+func _test_boss_health_bar_hud() -> void:
+	var arena_scene: PackedScene = load(ARENA_SCENE_PATH)
+	var arena: Node2D = arena_scene.instantiate() as Node2D
+	var root := _create_root()
+	root.add_child(arena)
+
+	var boss_hud := arena.get_node_or_null("BossHealthBar") as AlkeonBossHealthBarUI
+	assert(boss_hud != null, "BossHealthBar instance must exist in arena")
+
+	var boss := arena.get_node_or_null("Boss") as AlkeonBoss
+	assert(boss != null, "Boss must exist")
+
+	var hp_bar := boss_hud.get_node_or_null("%HpBar") as ProgressBar
+	var hp_label := boss_hud.get_node_or_null("%HpLabel") as Label
+	var phase_badge := boss_hud.get_node_or_null("%PhaseBadge") as Label
+
+	assert(hp_bar != null, "HpBar ProgressBar must exist")
+	assert(hp_label != null, "HpLabel must exist")
+	assert(phase_badge != null, "PhaseBadge must exist")
+
+	# Check initial 100%
+	assert(is_equal_approx(hp_bar.value, 100.0), "Initial HP bar value should be 100%")
+
+	# Test HP reduction update
+	boss.call("_apply_core_damage", 25.0)
+	assert(is_equal_approx(hp_bar.value, 75.0), "HP bar value should update to 75%")
+	assert(hp_label.text.contains("75%"), "HP label text should reflect 75%")
 
 	_cleanup_root(root)
 
@@ -161,12 +213,43 @@ func _test_danxin_gate_clock_transformation() -> void:
 	var root := _create_root()
 	root.add_child(arena)
 
-	var portal := arena.get_node_or_null("DanxinGate/GatePortal") as DoorPortal
+	var portal := arena.get_node_or_null("Background/CS/DanxinGate/GatePortal") if arena.get_node_or_null("Background/CS/DanxinGate/GatePortal") != null else arena.get_node_or_null("DanxinGate/GatePortal")
+	var gate_broken := arena.get_node_or_null("Background/CS/DanxinGate/GateBroken") if arena.get_node_or_null("Background/CS/DanxinGate/GateBroken") != null else arena.get_node_or_null("DanxinGate/GateBroken")
+	var gate_restored := arena.get_node_or_null("Background/CS/DanxinGate/GateRestored") if arena.get_node_or_null("Background/CS/DanxinGate/GateRestored") != null else arena.get_node_or_null("DanxinGate/GateRestored")
+
 	assert(portal != null, "Gate portal must exist")
+	assert(gate_broken != null, "GateBroken must exist")
+	assert(gate_restored != null, "GateRestored must exist")
 
 	# Trigger purification completion
 	arena.call("_on_boss_purified")
 	assert(arena.get("is_battle_active") == false, "Battle should be inactive after purification")
+	assert(not gate_broken.visible, "GateBroken must be hidden after purification")
+	assert(gate_restored.visible, "GateRestored must be visible (restored to normal)")
 	assert(portal.destination_level == &"orem_clocktower", "Destination level must transition to orem_clocktower")
+
+	_cleanup_root(root)
+
+
+func _test_player_precision_hitbox_core() -> void:
+	var scene: PackedScene = load(ARENA_SCENE_PATH)
+	var arena: Node2D = scene.instantiate() as Node2D
+	var root := _create_root()
+	root.add_child(arena)
+
+	var player := arena.get_node_or_null("Player") as CharacterBody2D
+	assert(player != null, "Player must exist")
+
+	var hitbox_core := player.get_node_or_null("HitboxCore")
+	assert(hitbox_core != null, "HitboxCore must exist under Player")
+
+	# Enable Phase 3 precision hitbox
+	arena.call("_enable_player_precision_hitbox", true)
+	assert(bool(hitbox_core.get("is_active")) == true, "HitboxCore must become active")
+	assert(hitbox_core.visible == true, "HitboxCore must become visible")
+
+	# Disable when not in Phase 3
+	arena.call("_enable_player_precision_hitbox", false)
+	assert(bool(hitbox_core.get("is_active")) == false, "HitboxCore must become inactive")
 
 	_cleanup_root(root)

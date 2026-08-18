@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b4wcq823dggnk" path="res://day/levels/Crimson Vale/CS.png" id="4_cs"]
 [ext_resource type="Texture2D" uid="uid://c0sufcbyjoqj4" path="res://day/levels/Crimson Vale/ground.png" id="5_ground"]
 [ext_resource type="PackedScene" uid="uid://dps8m2k5n7v4q" path="res://day/levels/Crimson Vale/props/wind_chime.tscn" id="7_chime"]
-[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/boss/alkeon_boss.tscn" id="8_boss"]
-[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/boss/blood_leaf_surge.tscn" id="9_surge"]
+[ext_resource type="PackedScene" uid="uid://cx4y1k7b8n2vq" path="res://day/levels/Crimson Vale/boss/alkeon_boss.tscn" id="8_boss"]
+[ext_resource type="PackedScene" uid="uid://c8n4y8e7d2m1p" path="res://day/levels/Crimson Vale/boss/blood_leaf_surge.tscn" id="9_surge"]
 [ext_resource type="Script" uid="uid://ct6yaua0kv3pv" path="res://day/levels/Crimson Vale/boss/alkeon_audio_synth.gd" id="10_synth"]
 [ext_resource type="Texture2D" uid="uid://d2cda21rxytw" path="res://day/levels/Crimson Vale/丹心门_破损态.png" id="11_gate_broken"]
 [ext_resource type="Texture2D" uid="uid://y0i3xyyux4ie" path="res://day/levels/Crimson Vale/丹心门_修复态.png" id="12_gate_restored"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="20_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="21_pause_menu"]
 [ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="22_maple"]
+[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/boss/alkeon_boss_health_bar.tscn" id="23_boss_hud"]
+[ext_resource type="PackedScene" uid="uid://c8m2k5w9p4n7x" path="res://day/levels/Crimson Vale/boss/player_hitbox_core.tscn" id="24_hitbox_core"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
 size = Vector2(140, 220)
@@ -64,6 +66,8 @@ repeat_size = Vector2(2172, 0)
 repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/FS" unique_id=632166319]
+position = Vector2(0, -24)
+scale = Vector2(1, 1.0331491)
 texture = ExtResource("2_fs")
 centered = false
 
@@ -88,38 +92,41 @@ position = Vector2(-100, 20)
 texture = ExtResource("4_cs")
 centered = false
 
-[node name="DanxinGate" type="Node2D" parent="." unique_id=1329113952]
+[node name="DanxinGate" type="Node2D" parent="Background/CS" unique_id=1329113952]
 z_index = -15
 position = Vector2(247, -165)
 
-[node name="GateBroken" type="Sprite2D" parent="DanxinGate" unique_id=920372975]
-visible = false
+[node name="GateBroken" type="Sprite2D" parent="Background/CS/DanxinGate" unique_id=920372975]
+z_index = 15
+position = Vector2(-2.0000002, 28.000004)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("11_gate_broken")
 centered = false
 
-[node name="GateRestored" type="Sprite2D" parent="DanxinGate" unique_id=1343015295]
+[node name="GateRestored" type="Sprite2D" parent="Background/CS/DanxinGate" unique_id=1343015295]
+z_index = 15
+position = Vector2(-2.0000002, 30.000004)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("12_gate_restored")
 centered = false
 
-[node name="GateClock" type="Sprite2D" parent="DanxinGate" unique_id=2081739503]
+[node name="GateClock" type="Sprite2D" parent="Background/CS/DanxinGate" unique_id=2081739503]
 modulate = Color(1.3, 0.85, 0.3, 0)
 scale = Vector2(0.85, 0.85)
 texture = ExtResource("12_gate_restored")
 centered = false
 
-[node name="GatePortal" type="Area2D" parent="DanxinGate" unique_id=20737638]
-position = Vector2(16, 347)
+[node name="GatePortal" type="Area2D" parent="Background/CS/DanxinGate" unique_id=20737638]
+position = Vector2(601, 628)
 script = ExtResource("18_portal")
 destination_level = &"orem_clocktower"
 fallback_scene_path = "res://day/levels/home/home.tscn"
 interaction_hint_enabled = true
 interaction_hint_text = "前往【奥雷姆钟庭】"
 
-[node name="Visual" type="Sprite2D" parent="DanxinGate/GatePortal" unique_id=2081739520]
+[node name="Visual" type="Sprite2D" parent="Background/CS/DanxinGate/GatePortal" unique_id=2081739520]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DanxinGate/GatePortal" unique_id=475206396]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/CS/DanxinGate/GatePortal" unique_id=475206396]
 shape = SubResource("RectangleShape2D_portal")
 
 [node name="Boss" parent="." unique_id=2081739504 instance=ExtResource("8_boss")]
@@ -152,8 +159,8 @@ position = Vector2(141.08818, 398.97714)
 scale = Vector2(0.24, 0.24)
 
 [node name="BellCenter" parent="Bells" unique_id=2081739511 instance=ExtResource("7_chime")]
-position = Vector2(611.382, 399.6269)
-scale = Vector2(0.24, 0.24)
+position = Vector2(664.1257, 505.38046)
+scale = Vector2(0.14460129, 0.13425268)
 
 [node name="BellRight" parent="Bells" unique_id=2081739512 instance=ExtResource("7_chime")]
 position = Vector2(1111.1691, 405.47507)
@@ -217,19 +224,19 @@ one_way_collision = true
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=1459348022]
 position = Vector2(-26.15789, -214.35426)
 scale = Vector2(1.2631577, 1.3282712)
-polygon = PackedVector2Array(126, 300, 132, 334, 316, 335, 316, 297, 300, 297, 298, 316, 150, 319, 145, 299)
+polygon = PackedVector2Array(132, 334, 316, 335, 315.20837, 319.47864, 128.37502, 318.7258)
 one_way_collision = true
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=1321445216]
-position = Vector2(559.0691, -222.46298)
-scale = Vector2(1.2598684, 1.3552626)
-polygon = PackedVector2Array(126, 300, 132, 334, 316, 335, 316, 297, 300, 297, 298, 316, 150, 319, 145, 299)
+position = Vector2(630.00006, -1.9999924)
+scale = Vector2(0.8340537, 1.1213996)
+polygon = PackedVector2Array(132, 334, 316, 335, 323.78848, 322.05048, 126.14877, 321.3126)
 one_way_collision = true
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="World/Pillars/StaticBody2D" unique_id=1193296034]
 position = Vector2(1187.8422, -195.09225)
 scale = Vector2(1.2631575, 1.2993425)
-polygon = PackedVector2Array(126, 300, 132, 334, 316, 335, 316, 297, 300, 297, 298, 316, 150, 319, 145, 299)
+polygon = PackedVector2Array(132, 334, 316, 335, 323.12512, 321.00256, 122.833374, 321.00256)
 one_way_collision = true
 
 [node name="LeftBarrier" type="StaticBody2D" parent="World" unique_id=1539831837]
@@ -270,6 +277,9 @@ script = ExtResource("13_player")
 
 [node name="SherryCollision" parent="Player" unique_id=1058900186 instance=ExtResource("14_collision")]
 
+[node name="HitboxCore" parent="Player" instance=ExtResource("24_hitbox_core")]
+position = Vector2(0, 38)
+
 [node name="SherryPresentation" parent="Player" unique_id=34766192 instance=ExtResource("15_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=966391061]
@@ -283,7 +293,7 @@ left_barrier_path = NodePath("../../World/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../World/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=829228782 instance=ExtResource("17_potions")]
-position = Vector2(-4, -80)
+position = Vector2(-3, 7)
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1473945002]
 layer = 200
@@ -296,3 +306,5 @@ layer = 200
 script = ExtResource("20_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=452275820 instance=ExtResource("21_pause_menu")]
+
+[node name="BossHealthBar" parent="." unique_id=1215020213 instance=ExtResource("23_boss_hud")]

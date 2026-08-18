@@ -1,0 +1,863 @@
+[gd_scene format=3 uid="uid://ovoyl7ej4l48"]
+
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside.gd" id="1_inside"]
+[ext_resource type="Script" uid="uid://b824pt5wh0kh6" path="res://day/levels/Aurem Clockyard/inside_systems/clocktower_audio.gd" id="2_audio"]
+[ext_resource type="Texture2D" uid="uid://cbpttrhpd1jla" path="res://day/levels/Aurem Clockyard/src/BG .png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://dnf32b2m3a3ha" path="res://day/levels/Aurem Clockyard/src/architecture/column_clock_arch.png" id="5_col_arch"]
+[ext_resource type="Texture2D" uid="uid://dxgc5rjsxd0ms" path="res://day/levels/Aurem Clockyard/src/architecture/window_gothic_tall.png" id="6_win_tall"]
+[ext_resource type="Texture2D" uid="uid://ce4gx7n0octxe" path="res://day/levels/Aurem Clockyard/src/architecture/platform_arch_gate.png" id="7_arch_gate"]
+[ext_resource type="Texture2D" uid="uid://m0pvn6kcjn72" path="res://day/levels/Aurem Clockyard/src/decorations/banner_clockyard_vertical.png" id="8_banner_vert"]
+[ext_resource type="Texture2D" uid="uid://cpct6jwruko78" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_cluster.png" id="11_gears"]
+[ext_resource type="Texture2D" uid="uid://cvxo3v1jsq2b4" path="res://day/levels/Aurem Clockyard/src/platforms/stone_platform_tiny_chain.png" id="12_djmk2"]
+[ext_resource type="Texture2D" uid="uid://ccramvrhuq0pa" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_lever.png" id="13_lever"]
+[ext_resource type="Texture2D" uid="uid://c4g5f1f20t2yl" path="res://day/levels/Aurem Clockyard/src/mechanisms/pendulum_orb.png" id="15_pend_orb"]
+[ext_resource type="Texture2D" uid="uid://blu3ov1qlo6q6" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_face_grand.png" id="16_clock_grand"]
+[ext_resource type="Texture2D" uid="uid://b1susoqm0wu2" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_pedestal.png" id="17_pedestal"]
+[ext_resource type="Texture2D" uid="uid://cra4wm1vqrfd3" path="res://day/levels/Aurem Clockyard/src/platforms/stone_arch_wide.png" id="18_stone_arch"]
+[ext_resource type="Texture2D" uid="uid://bvwp54l10tks1" path="res://day/levels/Aurem Clockyard/src/platforms/hanging_platform_wide.png" id="19_plat_wide"]
+[ext_resource type="Texture2D" uid="uid://c2c16wqtrms0c" path="res://day/levels/Aurem Clockyard/src/platforms/hanging_platform_long_chain.png" id="20_plat_chain"]
+[ext_resource type="Texture2D" uid="uid://bl46vrfb1csjd" path="res://day/levels/Aurem Clockyard/src/platforms/stone_platform_short.png" id="22_stone_short"]
+[ext_resource type="Texture2D" uid="uid://b1nnuh0eo5mjq" path="res://day/levels/Aurem Clockyard/src/props/ladder_platform.png" id="23_ladder_plat"]
+[ext_resource type="Texture2D" uid="uid://cxkak6m58ydce" path="res://day/levels/Aurem Clockyard/src/mechanisms/winch.png" id="24_winch"]
+[ext_resource type="Texture2D" uid="uid://bx84jysu4fc7s" path="res://day/levels/Aurem Clockyard/src/mechanisms/hanging_crane.png" id="25_crane"]
+[ext_resource type="Texture2D" uid="uid://ccs0gha2xi8fp" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_spirit.png" id="27_spirit"]
+[ext_resource type="Texture2D" uid="uid://biiepfrn6my4f" path="res://day/levels/Aurem Clockyard/src/mechanisms/retro_clockbird.png" id="28_bird"]
+[ext_resource type="Texture2D" uid="uid://dck431gtbmp8y" path="res://day/levels/Aurem Clockyard/src/mechanisms/beat_light.png" id="29_light"]
+[ext_resource type="Texture2D" uid="uid://bbbx38qv2as0r" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_hour.png" id="30_hour"]
+[ext_resource type="Texture2D" uid="uid://d2sws2lbtbp2a" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_minute.png" id="31_minute"]
+[ext_resource type="Texture2D" uid="uid://y131myfb5gvc" path="res://day/levels/Aurem Clockyard/src/mechanisms/synchronizer_rings.png" id="32_sync"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="33_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="34_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="35_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="36_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="37_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="38_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="39_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="40_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="41_pause_menu"]
+[ext_resource type="Script" uid="uid://bdyo35unvrw75" path="res://day/levels/Aurem Clockyard/inside_systems/floor1_spring_chamber.gd" id="42_floor1"]
+[ext_resource type="Script" uid="uid://ceos1morv8m51" path="res://day/levels/Aurem Clockyard/inside_systems/calibration_node.gd" id="43_node"]
+[ext_resource type="Script" uid="uid://b0w2x1iscqcgo" path="res://day/levels/Aurem Clockyard/inside_systems/gear_platform.gd" id="44_gear_plat"]
+[ext_resource type="Script" uid="uid://decno1uwxue4i" path="res://day/levels/Aurem Clockyard/inside_systems/calibration_lever.gd" id="45_lever"]
+[ext_resource type="Script" uid="uid://6b4e2dtkxdf" path="res://day/levels/Aurem Clockyard/inside_systems/swinging_pendulum.gd" id="47_pendulum"]
+[ext_resource type="Script" uid="uid://dh2rj6ua13fap" path="res://day/levels/Aurem Clockyard/inside_systems/beat_telegraph_light.gd" id="48_beat_light"]
+[ext_resource type="Script" uid="uid://dbe7xdq348312" path="res://day/levels/Aurem Clockyard/inside_systems/retro_clockbird.gd" id="49_bird"]
+[ext_resource type="Script" uid="uid://dfpj2ltftgclq" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hands_floor.gd" id="50_floor4"]
+[ext_resource type="Script" uid="uid://rpgkk6wow4nr" path="res://day/levels/Aurem Clockyard/inside_systems/tower_top_synchronizer.gd" id="51_top"]
+[ext_resource type="Script" uid="uid://bgk6g4dv0on1r" path="res://day/levels/Aurem Clockyard/inside_systems/winch_lift.gd" id="53_winch_lift"]
+
+[sub_resource type="RectangleShape2D" id="Rect_ground"]
+size = Vector2(1600, 100)
+
+[sub_resource type="RectangleShape2D" id="Rect_barrier_vert"]
+size = Vector2(80, 6000)
+
+[sub_resource type="RectangleShape2D" id="Rect_stone_short"]
+size = Vector2(140, 24)
+
+[sub_resource type="RectangleShape2D" id="Rect_plat_chain"]
+size = Vector2(274, 24)
+
+[sub_resource type="RectangleShape2D" id="Rect_plat_wide"]
+size = Vector2(220, 24)
+
+[sub_resource type="RectangleShape2D" id="Rect_plat_arch_dbl"]
+size = Vector2(240, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_ladder_plat"]
+size = Vector2(200, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_node_area"]
+size = Vector2(100, 100)
+
+[sub_resource type="CircleShape2D" id="Circle_gear_plat"]
+radius = 45.0
+
+[sub_resource type="RectangleShape2D" id="Rect_plat_arch"]
+size = Vector2(280, 30)
+
+[sub_resource type="RectangleShape2D" id="Rect_clock_hand_hr"]
+size = Vector2(36, 320)
+
+[sub_resource type="RectangleShape2D" id="Rect_clock_hand_min"]
+size = Vector2(30, 440)
+
+[sub_resource type="RectangleShape2D" id="Rect_portal"]
+size = Vector2(140, 200)
+
+[node name="Inside" type="Node2D" unique_id=1758081108]
+script = ExtResource("1_inside")
+debug_scene_id = "aurem_clockyard_inside"
+
+[node name="ClocktowerAudio" type="Node" parent="." unique_id=1010101010 groups=["clocktower_audio"]]
+script = ExtResource("2_audio")
+
+[node name="Background" type="Node2D" parent="." unique_id=1711654406]
+z_index = -50
+
+[node name="BG_Tile1" type="Sprite2D" parent="Background" unique_id=881484661]
+position = Vector2(557, -416)
+texture = ExtResource("3_bg")
+
+[node name="BG_Tile2" type="Sprite2D" parent="Background" unique_id=881484662]
+position = Vector2(600, -1200)
+texture = ExtResource("3_bg")
+
+[node name="BG_Tile3" type="Sprite2D" parent="Background" unique_id=881484663]
+position = Vector2(600, -2600)
+texture = ExtResource("3_bg")
+
+[node name="BG_Tile4" type="Sprite2D" parent="Background" unique_id=881484664]
+position = Vector2(600, -4000)
+texture = ExtResource("3_bg")
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1999559791]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=1809301718]
+position = Vector2(600, 560)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=160729638]
+position = Vector2(7, 128)
+shape = SubResource("Rect_ground")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1546655978]
+position = Vector2(-280, -2400)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=805611434]
+shape = SubResource("Rect_barrier_vert")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=762105956]
+position = Vector2(1250, -2400)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=56897074]
+shape = SubResource("Rect_barrier_vert")
+
+[node name="World" type="Node2D" parent="." unique_id=730810469]
+
+[node name="Floor1_SpringChamber" type="Node2D" parent="World" unique_id=1001]
+position = Vector2(-45, 4)
+script = ExtResource("42_floor1")
+
+[node name="PressureGauge" type="Sprite2D" parent="World/Floor1_SpringChamber" unique_id=1003]
+position = Vector2(762.00006, 332.99997)
+scale = Vector2(0.89749336, 0.853281)
+texture = ExtResource("17_pedestal")
+
+[node name="Needle" type="Node2D" parent="World/Floor1_SpringChamber/PressureGauge" unique_id=1004]
+
+[node name="Platform1_LowStone" type="StaticBody2D" parent="World/Floor1_SpringChamber" unique_id=1010]
+position = Vector2(443, 529)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/Platform1_LowStone" unique_id=1011]
+texture = ExtResource("22_stone_short")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Platform1_LowStone" unique_id=1012]
+position = Vector2(-5, -15)
+shape = SubResource("Rect_stone_short")
+one_way_collision = true
+
+[node name="Platform2_Chain" type="StaticBody2D" parent="World/Floor1_SpringChamber" unique_id=1013]
+position = Vector2(663, 426)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/Platform2_Chain" unique_id=1014]
+z_index = 6
+texture = ExtResource("20_plat_chain")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Platform2_Chain" unique_id=1015]
+position = Vector2(-3, -22)
+shape = SubResource("Rect_plat_chain")
+one_way_collision = true
+
+[node name="WinchLifts" type="Node2D" parent="World/Floor1_SpringChamber" unique_id=1005]
+position = Vector2(60, 115)
+
+[node name="WinchLift1" type="AnimatableBody2D" parent="World/Floor1_SpringChamber/WinchLifts" unique_id=1006]
+position = Vector2(857, 209)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("53_winch_lift")
+move_offset = Vector2(0, -140)
+move_duration = 2.2
+pause_time = 0.8
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift1" unique_id=1007]
+texture = ExtResource("19_plat_wide")
+
+[node name="WinchIcon" type="Sprite2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift1" unique_id=1008]
+position = Vector2(0, -35)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("24_winch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift1" unique_id=1009]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="WinchLift2_Crane" type="AnimatableBody2D" parent="World/Floor1_SpringChamber/WinchLifts" unique_id=1033]
+position = Vector2(490, -289)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("53_winch_lift")
+move_offset = Vector2(-160, -100)
+move_duration = 2.8
+pause_time = 0.8
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift2_Crane" unique_id=1034]
+texture = ExtResource("19_plat_wide")
+
+[node name="CraneIcon" type="Sprite2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift2_Crane" unique_id=1035]
+position = Vector2(0, -40)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("25_crane")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift2_Crane" unique_id=1036]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="Platform3_RightArch" type="StaticBody2D" parent="World/Floor1_SpringChamber" unique_id=1016]
+position = Vector2(1119, 148)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/Platform3_RightArch" unique_id=1017]
+scale = Vector2(-1.9226165, 1.1234962)
+texture = ExtResource("12_djmk2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Platform3_RightArch" unique_id=1018]
+position = Vector2(0, -46)
+shape = SubResource("Rect_plat_arch_dbl")
+one_way_collision = true
+
+[node name="Platform4_LadderGantry" type="StaticBody2D" parent="World/Floor1_SpringChamber" unique_id=1019]
+position = Vector2(777, -1)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/Platform4_LadderGantry" unique_id=1020]
+z_index = 6
+texture = ExtResource("23_ladder_plat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Platform4_LadderGantry" unique_id=1021]
+position = Vector2(-1, -26)
+shape = SubResource("Rect_ladder_plat")
+one_way_collision = true
+
+[node name="Platform5_HighBridge" type="StaticBody2D" parent="World/Floor1_SpringChamber" unique_id=1037]
+position = Vector2(247, -261)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/Platform5_HighBridge" unique_id=1038]
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor1_SpringChamber/Platform5_HighBridge" unique_id=419051506]
+polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
+one_way_collision = true
+
+[node name="PlatformNode1" type="StaticBody2D" parent="World/Floor1_SpringChamber" unique_id=1040]
+position = Vector2(695, -383)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/PlatformNode1" unique_id=1041]
+texture = ExtResource("18_stone_arch")
+
+[node name="GateDeco" type="Sprite2D" parent="World/Floor1_SpringChamber/PlatformNode1" unique_id=1042]
+position = Vector2(71, -171)
+texture = ExtResource("7_arch_gate")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor1_SpringChamber/PlatformNode1" unique_id=775203985]
+polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
+one_way_collision = true
+
+[node name="CalibrationNode1" type="Area2D" parent="World/Floor1_SpringChamber" unique_id=1022]
+position = Vector2(602, -515)
+script = ExtResource("43_node")
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor1_SpringChamber/CalibrationNode1" unique_id=1023]
+z_index = 1
+position = Vector2(-9, -6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="GlowSprite" type="Sprite2D" parent="World/Floor1_SpringChamber/CalibrationNode1" unique_id=1024]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("17_pedestal")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/CalibrationNode1" unique_id=1025]
+shape = SubResource("Rect_node_area")
+
+[node name="HangingPlatform_Secret" type="AnimatableBody2D" parent="World/Floor1_SpringChamber" unique_id=1050]
+position = Vector2(-97, -200)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("53_winch_lift")
+move_offset = Vector2(0, -216)
+move_duration = 2.0
+is_automatic = false
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/HangingPlatform_Secret" unique_id=1051]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/HangingPlatform_Secret" unique_id=1052]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="Floor1Lever" type="Area2D" parent="World/Floor1_SpringChamber" unique_id=1053]
+position = Vector2(247, -320)
+script = ExtResource("45_lever")
+target_gears = [NodePath("../HangingPlatform_Secret")]
+
+[node name="HandleSprite" type="Sprite2D" parent="World/Floor1_SpringChamber/Floor1Lever" unique_id=1054]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("13_lever")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Floor1Lever" unique_id=1055]
+shape = SubResource("Rect_node_area")
+
+[node name="Floor2_GearWell" type="Node2D" parent="World" unique_id=2001]
+position = Vector2(0, -900)
+
+[node name="MaintenancePlat2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2002]
+position = Vector2(300, 50)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/MaintenancePlat2" unique_id=2003]
+position = Vector2(51, 170)
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor2_GearWell/MaintenancePlat2" unique_id=1924307888]
+position = Vector2(50, 177)
+polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
+one_way_collision = true
+
+[node name="GearPlatform1" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2005]
+position = Vector2(400, -160)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("44_gear_plat")
+base_speed = 1.0
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/GearPlatform1" unique_id=2006]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearPlatform1" unique_id=2007]
+shape = SubResource("Circle_gear_plat")
+one_way_collision = true
+
+[node name="GearPlatform2_Reverse" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2008]
+position = Vector2(800, -160)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("44_gear_plat")
+mode = 1
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/GearPlatform2_Reverse" unique_id=2009]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearPlatform2_Reverse" unique_id=2010]
+shape = SubResource("Circle_gear_plat")
+one_way_collision = true
+
+[node name="GearPlatform3_Overspeed" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2011]
+position = Vector2(600, -360)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("44_gear_plat")
+mode = 2
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/GearPlatform3_Overspeed" unique_id=2012]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearPlatform3_Overspeed" unique_id=2013]
+shape = SubResource("Circle_gear_plat")
+one_way_collision = true
+
+[node name="MidPlatLever" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2014]
+position = Vector2(250, -500)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/MidPlatLever" unique_id=2015]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/MidPlatLever" unique_id=2016]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="CalibrationLever" type="Area2D" parent="World/Floor2_GearWell" unique_id=2017]
+position = Vector2(250, -550)
+script = ExtResource("45_lever")
+target_gears = Array[NodePath]([NodePath("../StairGear1"), NodePath("../StairGear2"), NodePath("../StairGear3")])
+
+[node name="HandleSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationLever" unique_id=2018]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("13_lever")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/CalibrationLever" unique_id=2019]
+shape = SubResource("Rect_node_area")
+
+[node name="TimerLabel" type="Label" parent="World/Floor2_GearWell/CalibrationLever" unique_id=2020]
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+offset_bottom = -17.0
+text = "6.0s"
+
+[node name="StairGear1" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2021]
+position = Vector2(500, -560)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("44_gear_plat")
+is_sync_controlled = true
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/StairGear1" unique_id=2022]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/StairGear1" unique_id=2023]
+shape = SubResource("Circle_gear_plat")
+one_way_collision = true
+
+[node name="StairGear2" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2024]
+position = Vector2(650, -700)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("44_gear_plat")
+is_sync_controlled = true
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/StairGear2" unique_id=2025]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/StairGear2" unique_id=2026]
+shape = SubResource("Circle_gear_plat")
+one_way_collision = true
+
+[node name="StairGear3" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2027]
+position = Vector2(800, -840)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("44_gear_plat")
+is_sync_controlled = true
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/StairGear3" unique_id=2028]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/StairGear3" unique_id=2029]
+shape = SubResource("Circle_gear_plat")
+one_way_collision = true
+
+[node name="GearSpiritEnemy" type="CharacterBody2D" parent="World/Floor2_GearWell" unique_id=2030]
+position = Vector2(850, -180)
+collision_layer = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/GearSpiritEnemy" unique_id=2031]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("27_spirit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearSpiritEnemy" unique_id=2032]
+shape = SubResource("Circle_gear_plat")
+
+[node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/GearSpiritEnemy" unique_id=2033]
+collision_layer = 0
+
+[node name="PlatformNode2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2035]
+position = Vector2(600, -1000)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=2036]
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=2037]
+shape = SubResource("Rect_plat_arch")
+one_way_collision = true
+
+[node name="CalibrationNode2" type="Area2D" parent="World/Floor2_GearWell" unique_id=2038]
+position = Vector2(600, -1050)
+script = ExtResource("43_node")
+node_id = 2
+node_name_cn = "校时节点Ⅱ：齿轮差速器"
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2039]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="GlowSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2040]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("17_pedestal")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2041]
+shape = SubResource("Rect_node_area")
+
+[node name="Floor3_PendulumHall" type="Node2D" parent="World" unique_id=3001]
+position = Vector2(0, -2000)
+
+[node name="MaintenancePlat3" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3002]
+position = Vector2(300, 50)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MaintenancePlat3" unique_id=3003]
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MaintenancePlat3" unique_id=3004]
+shape = SubResource("Rect_plat_arch")
+one_way_collision = true
+
+[node name="WindowGothic" type="Sprite2D" parent="World/Floor3_PendulumHall" unique_id=3005]
+position = Vector2(600, -400)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("6_win_tall")
+
+[node name="TelegraphLight" type="Node2D" parent="World/Floor3_PendulumHall" unique_id=3006]
+position = Vector2(600, -780)
+script = ExtResource("48_beat_light")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/TelegraphLight" unique_id=3007]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("29_light")
+
+[node name="GlowCircle" type="Sprite2D" parent="World/Floor3_PendulumHall/TelegraphLight" unique_id=3008]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("29_light")
+
+[node name="SwingingPendulum" type="Node2D" parent="World/Floor3_PendulumHall" unique_id=3009]
+position = Vector2(600, -700)
+script = ExtResource("47_pendulum")
+arm_length = 380.0
+
+[node name="ArmLine" type="Line2D" parent="World/Floor3_PendulumHall/SwingingPendulum" unique_id=3010]
+points = PackedVector2Array(0, 0, 0, 380)
+width = 6.0
+default_color = Color(0.7, 0.55, 0.2, 1)
+
+[node name="BobPlatform" type="AnimatableBody2D" parent="World/Floor3_PendulumHall/SwingingPendulum" unique_id=3011]
+position = Vector2(0, 380)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/SwingingPendulum/BobPlatform" unique_id=3012]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("15_pend_orb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/SwingingPendulum/BobPlatform" unique_id=3013]
+position = Vector2(0, -10)
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="RightTargetLedge" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3014]
+position = Vector2(980, -320)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/RightTargetLedge" unique_id=3015]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/RightTargetLedge" unique_id=3016]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="ClockbirdEnemy" type="Node2D" parent="World/Floor3_PendulumHall" unique_id=3017]
+position = Vector2(600, -560)
+script = ExtResource("49_bird")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy" unique_id=3018]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("28_bird")
+
+[node name="PlatformNode3" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3019]
+position = Vector2(600, -1080)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/PlatformNode3" unique_id=3020]
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/PlatformNode3" unique_id=3021]
+shape = SubResource("Rect_plat_arch")
+one_way_collision = true
+
+[node name="CalibrationNode3" type="Area2D" parent="World/Floor3_PendulumHall" unique_id=3022]
+position = Vector2(600, -1140)
+script = ExtResource("43_node")
+node_id = 3
+node_name_cn = "校时节点Ⅲ：擒纵机构"
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor3_PendulumHall/CalibrationNode3" unique_id=3023]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="GlowSprite" type="Sprite2D" parent="World/Floor3_PendulumHall/CalibrationNode3" unique_id=3024]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("17_pedestal")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/CalibrationNode3" unique_id=3025]
+shape = SubResource("Rect_node_area")
+
+[node name="Floor4_ClockHands" type="Node2D" parent="World" unique_id=4001]
+position = Vector2(0, -3200)
+script = ExtResource("50_floor4")
+
+[node name="MaintenancePlat4" type="StaticBody2D" parent="World/Floor4_ClockHands" unique_id=4002]
+position = Vector2(300, 50)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/MaintenancePlat4" unique_id=4003]
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/MaintenancePlat4" unique_id=4004]
+shape = SubResource("Rect_plat_arch")
+one_way_collision = true
+
+[node name="ClockDialBg" type="Sprite2D" parent="World/Floor4_ClockHands" unique_id=4005]
+position = Vector2(600, -500)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("16_clock_grand")
+
+[node name="ClockCenter" type="Node2D" parent="World/Floor4_ClockHands" unique_id=4006]
+position = Vector2(600, -500)
+
+[node name="HourHand" type="AnimatableBody2D" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4007]
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/ClockCenter/HourHand" unique_id=4008]
+position = Vector2(0, -150)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("30_hour")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/ClockCenter/HourHand" unique_id=4009]
+position = Vector2(0, -150)
+shape = SubResource("Rect_clock_hand_hr")
+one_way_collision = true
+
+[node name="MinuteHand" type="AnimatableBody2D" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4010]
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/ClockCenter/MinuteHand" unique_id=4011]
+position = Vector2(0, -210)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("31_minute")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/ClockCenter/MinuteHand" unique_id=4012]
+position = Vector2(0, -210)
+shape = SubResource("Rect_clock_hand_min")
+one_way_collision = true
+
+[node name="HandCrankArea" type="Area2D" parent="World/Floor4_ClockHands" unique_id=4013]
+position = Vector2(250, -50)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/HandCrankArea" unique_id=4015]
+shape = SubResource("Rect_node_area")
+
+[node name="SecretGate3" type="StaticBody2D" parent="World/Floor4_ClockHands" unique_id=4016]
+position = Vector2(980, -500)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/SecretGate3" unique_id=4017]
+texture = ExtResource("7_arch_gate")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/SecretGate3" unique_id=4018]
+shape = SubResource("Rect_plat_arch")
+
+[node name="SecretAlcovePlat" type="StaticBody2D" parent="World/Floor4_ClockHands" unique_id=4019]
+position = Vector2(1100, -500)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/SecretAlcovePlat" unique_id=4020]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/SecretAlcovePlat" unique_id=4021]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="TowerTop" type="Node2D" parent="World" unique_id=5001]
+position = Vector2(0, -4350)
+script = ExtResource("51_top")
+
+[node name="TopPlatform" type="StaticBody2D" parent="World/TowerTop" unique_id=5002]
+position = Vector2(600, 50)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/TowerTop/TopPlatform" unique_id=5003]
+scale = Vector2(1.8, 1)
+texture = ExtResource("18_stone_arch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/TopPlatform" unique_id=5004]
+shape = SubResource("Rect_ground")
+one_way_collision = true
+
+[node name="ColArchL" type="Sprite2D" parent="World/TowerTop" unique_id=5005]
+position = Vector2(250, -160)
+texture = ExtResource("5_col_arch")
+
+[node name="ColArchR" type="Sprite2D" parent="World/TowerTop" unique_id=5006]
+position = Vector2(950, -160)
+texture = ExtResource("5_col_arch")
+
+[node name="BannerL" type="Sprite2D" parent="World/TowerTop" unique_id=5007]
+position = Vector2(160, -200)
+texture = ExtResource("8_banner_vert")
+
+[node name="BannerR" type="Sprite2D" parent="World/TowerTop" unique_id=5008]
+position = Vector2(1040, -200)
+texture = ExtResource("8_banner_vert")
+
+[node name="DialBase" type="Sprite2D" parent="World/TowerTop" unique_id=5009]
+position = Vector2(600, -260)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("32_sync")
+
+[node name="OuterRing" type="Node2D" parent="World/TowerTop/DialBase" unique_id=5010]
+
+[node name="Marker" type="Sprite2D" parent="World/TowerTop/DialBase/OuterRing" unique_id=5011]
+position = Vector2(0, -150)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("11_gears")
+
+[node name="MiddleRing" type="Node2D" parent="World/TowerTop/DialBase" unique_id=5012]
+
+[node name="Marker" type="Sprite2D" parent="World/TowerTop/DialBase/MiddleRing" unique_id=5013]
+position = Vector2(0, -105)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("11_gears")
+
+[node name="InnerRing" type="Node2D" parent="World/TowerTop/DialBase" unique_id=5014]
+
+[node name="Marker" type="Sprite2D" parent="World/TowerTop/DialBase/InnerRing" unique_id=5015]
+position = Vector2(0, -60)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("15_pend_orb")
+
+[node name="Consoles" type="Node2D" parent="World/TowerTop" unique_id=5016]
+
+[node name="OuterLockConsole" type="Area2D" parent="World/TowerTop/Consoles" unique_id=5017]
+position = Vector2(380, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/Consoles/OuterLockConsole" unique_id=5019]
+shape = SubResource("Rect_node_area")
+
+[node name="MiddleLockConsole" type="Area2D" parent="World/TowerTop/Consoles" unique_id=5020]
+position = Vector2(600, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/Consoles/MiddleLockConsole" unique_id=5022]
+shape = SubResource("Rect_node_area")
+
+[node name="InnerLockConsole" type="Area2D" parent="World/TowerTop/Consoles" unique_id=5023]
+position = Vector2(820, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/Consoles/InnerLockConsole" unique_id=5025]
+shape = SubResource("Rect_node_area")
+
+[node name="CelebrationGlow" type="Sprite2D" parent="World/TowerTop" unique_id=5026]
+position = Vector2(600, -260)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("32_sync")
+
+[node name="ExitPortal" type="Area2D" parent="World/TowerTop" unique_id=5027]
+position = Vector2(600, -100)
+collision_layer = 0
+script = ExtResource("38_portal")
+destination_level = &"aurem_clockyard"
+destination_entry_id = &"from_tower"
+fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 穿过时律界门离开"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/ExitPortal" unique_id=5028]
+shape = SubResource("Rect_portal")
+
+[node name="Portals" type="Node2D" parent="World" unique_id=901]
+
+[node name="EntrancePortal" type="Area2D" parent="World/Portals" unique_id=902]
+position = Vector2(160, 440)
+collision_layer = 0
+script = ExtResource("38_portal")
+destination_level = &"aurem_clockyard"
+destination_entry_id = &"tower"
+fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 离开钟塔"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/EntrancePortal" unique_id=903]
+shape = SubResource("Rect_portal")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=1863523666]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=773708111]
+position = Vector2(240, 480)
+
+[node name="tower_inner" type="Marker2D" parent="EntryPoints" unique_id=773708112]
+position = Vector2(240, 480)
+
+[node name="floor2" type="Marker2D" parent="EntryPoints" unique_id=773708113]
+position = Vector2(300, -850)
+
+[node name="floor3" type="Marker2D" parent="EntryPoints" unique_id=773708114]
+position = Vector2(300, -2000)
+
+[node name="floor4" type="Marker2D" parent="EntryPoints" unique_id=773708115]
+position = Vector2(300, -3200)
+
+[node name="top" type="Marker2D" parent="EntryPoints" unique_id=773708116]
+position = Vector2(500, -4350)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=846311865]
+z_index = 10
+position = Vector2(240, 462)
+collision_mask = 3
+script = ExtResource("33_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1915840680 instance=ExtResource("34_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=491903976 instance=ExtResource("35_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1555194811]
+position = Vector2(0, -100)
+process_callback = 0
+limit_left = -350
+limit_top = -5200
+limit_right = 1300
+limit_bottom = 650
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("36_camera")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=1488921580 instance=ExtResource("37_potions")]
+position = Vector2(21, 37)
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=245175994]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1151012538 instance=ExtResource("39_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=906220773]
+layer = 200
+script = ExtResource("40_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=1830075792 instance=ExtResource("41_pause_menu")]

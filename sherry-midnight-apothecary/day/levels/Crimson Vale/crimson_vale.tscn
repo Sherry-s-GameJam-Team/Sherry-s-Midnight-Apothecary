@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://d2cda21rxytw" path="res://day/levels/Crimson Vale/丹心门_破损态.png" id="14_gate_broken"]
 [ext_resource type="PackedScene" uid="uid://dps7vx6e4qm1k" path="res://day/levels/Crimson Vale/hazards/blood_leaf_swarm.tscn" id="15_swarm"]
 [ext_resource type="Texture2D" uid="uid://y0i3xyyux4ie" path="res://day/levels/Crimson Vale/丹心门_修复态.png" id="16_gate_restored"]
+[ext_resource type="Texture2D" uid="uid://dnrdvs3k63dow" path="res://day/levels/Crimson Vale/maple_tree.png" id="17_ctq83"]
 [ext_resource type="PackedScene" uid="uid://c6xk5y7d1qm3f" path="res://day/levels/Crimson Vale/hazards/foreground_shelter.tscn" id="17_shelter"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="18_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="19_collision"]
@@ -26,10 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="26_pause_menu"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
-size = Vector2(4164, 206)
-
-[sub_resource type="RectangleShape2D" id="Rect_broken_ground"]
-size = Vector2(2172, 200)
+size = Vector2(4164, 190)
 
 [sub_resource type="RectangleShape2D" id="Rect_rack_trigger"]
 size = Vector2(260, 182)
@@ -122,15 +120,11 @@ texture = ExtResource("6_cs_village")
 collision_layer = 2
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="World/floor" unique_id=1434546816]
-polygon = PackedVector2Array(-41, 463, 520, 460, 561, 502, 998, 510, 1126, 517, 1255, 502, 1367, 475, 1480, 433, 1524, 409, 1973, 396, 1994, 91, 1929, 89, 1930, 346, 1778, 347, 1763, 356, 1689, 359, 1510, 375, 1467, 404, 1360, 444, 1252, 470, 1128, 481, 1005, 484, 562, 478, 533, 447, -36, 444)
+polygon = PackedVector2Array(126, 438, 520, 460, 561, 502, 998, 510, 1126, 517, 1255, 502, 1367, 475, 1480, 433, 1524, 409, 1973, 396, 1994, 91, 1929, 89, 1930, 346, 1778, 347, 1763, 356, 1689, 359, 1510, 375, 1467, 404, 1360, 444, 1252, 470, 1128, 481, 1005, 484, 595, 463, 531, 431, 66, 420)
 one_way_collision = true
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="World/floor" unique_id=800445032]
-polygon = PackedVector2Array(1483, 751, 1640, 753, 1684, 736, 2238, 726, 2238, 700, 1676, 720, 1638, 737, 1484, 738, 1384, 773)
-one_way_collision = true
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/floor" unique_id=496638404]
-polygon = PackedVector2Array(1681, 713, 1790, 609, 1889, 607, 1891, 590, 1778, 592, 1634, 732)
+polygon = PackedVector2Array(1602, 754, 1640, 753, 1684, 736, 2238, 726, 2238, 700, 1676, 720, 1638, 737, 1609, 737)
 one_way_collision = true
 
 [node name="Ground" type="StaticBody2D" parent="World" unique_id=1230971159]
@@ -166,23 +160,19 @@ texture = ExtResource("7_ground")
 centered = false
 
 [node name="BrokenGroundVisual" type="Sprite2D" parent="World/Ground" unique_id=1514885743]
-visible = false
 position = Vector2(4179, 632)
 scale = Vector2(-0.5082873, 0.5082873)
 texture = ExtResource("8_broken_ground")
 centered = false
 
 [node name="GroundCollision1" type="CollisionShape2D" parent="World/Ground" unique_id=743100242]
-position = Vector2(4538, 838)
+z_index = 1
+position = Vector2(4538, 846)
 shape = SubResource("Rect_ground_main")
 
-[node name="GroundCollision2" type="CollisionShape2D" parent="World/Ground" unique_id=309205679]
-visible = false
-position = Vector2(1103, 842)
-shape = SubResource("Rect_broken_ground")
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Ground" unique_id=2097679922]
-polygon = PackedVector2Array(2457, 847, -84, 846, -82, 443, -8, 473, 3, 472, 7, 485, 16, 484, 17, 500, 24, 502, 26, 520, 34, 522, 36, 536, 49, 538, 51, 555, 62, 554, 62, 567, 72, 569, 73, 584, 87, 585, 89, 602, 104, 603, 108, 623, 124, 623, 129, 646, 142, 646, 144, 668, 338, 721, 831, 729, 1370, 753, 1544, 791, 2096, 796, 2241, 771, 2508, 754)
+position = Vector2(12, -13)
+polygon = PackedVector2Array(2457, 847, -84, 846, -97, 441, -7, 442, 3, 472, 7, 485, 16, 484, 17, 500, 24, 502, 26, 520, 34, 522, 36, 536, 49, 538, 51, 555, 62, 554, 62, 567, 72, 569, 73, 584, 87, 585, 89, 602, 104, 603, 108, 623, 124, 623, 129, 646, 142, 646, 143, 671, 260, 677, 338, 721, 833, 747, 1370, 769, 1513, 801, 2096, 796, 2241, 771, 2456, 751)
 
 [node name="Village" type="Node2D" parent="World" unique_id=1381647914]
 
@@ -352,8 +342,13 @@ detection_radius = 600.0
 attack_duration = 4.5
 
 [node name="BloodLeafSwarm3" parent="World/Swarms" unique_id=1847192866 instance=ExtResource("15_swarm")]
-position = Vector2(9920, 360)
+position = Vector2(9735, 202)
 detection_radius = 680.0
+
+[node name="MapleTree" type="Sprite2D" parent="World/Swarms" unique_id=356257735]
+position = Vector2(9721, 324)
+scale = Vector2(0.37051117, 0.37051117)
+texture = ExtResource("17_ctq83")
 
 [node name="Props" type="Node2D" parent="World" unique_id=1847192855]
 
@@ -368,9 +363,10 @@ position = Vector2(-150, 300)
 shape = SubResource("Rect_barrier")
 
 [node name="RightBarrier" type="StaticBody2D" parent="World" unique_id=795816470]
-position = Vector2(11200, 300)
+position = Vector2(6550, 300)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightBarrier" unique_id=950848111]
+position = Vector2(0, 0)
 shape = SubResource("Rect_barrier")
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=249566877]
@@ -387,11 +383,8 @@ position = Vector2(4328, 520)
 [node name="gate" type="Marker2D" parent="EntryPoints" unique_id=606563004]
 position = Vector2(1700, 520)
 
-[node name="challenge_start" type="Marker2D" parent="EntryPoints" unique_id=1847192880]
-position = Vector2(6541, 596)
-
-[node name="challenge_end" type="Marker2D" parent="EntryPoints" unique_id=1847192881]
-position = Vector2(10450, 520)
+[node name="from_challenge" type="Marker2D" parent="EntryPoints" unique_id=1847192880]
+position = Vector2(6380, 520)
 
 [node name="level_completed" type="Marker2D" parent="EntryPoints" unique_id=1259381351]
 position = Vector2(6250, 520)
@@ -409,6 +402,21 @@ interaction_hint_text = "返回药水铺"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPortal" unique_id=1757113474]
 shape = SubResource("Rect_portal")
 
+[node name="ToChallengePortal" type="Area2D" parent="." unique_id=1847192890]
+position = Vector2(6500, 520)
+script = ExtResource("23_portal")
+destination_level = &"crimson_vale_challenge"
+destination_entry_id = &"from_vale"
+fallback_scene_path = "res://day/levels/Crimson Vale/crimson_vale_challenge.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "前往【赤染绝壁】"
+trigger_on_touch = true
+
+[node name="Visual" type="Sprite2D" parent="ToChallengePortal" unique_id=1847192891]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToChallengePortal" unique_id=1847192892]
+shape = SubResource("Rect_portal")
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1086386805]
 z_index = 10
 position = Vector2(1784, 249)
@@ -422,7 +430,7 @@ script = ExtResource("18_player")
 process_callback = 0
 limit_left = -150
 limit_top = -300
-limit_right = 11200
+limit_right = 6550
 limit_bottom = 800
 script = ExtResource("21_camera")
 left_barrier_path = NodePath("../../World/LeftBarrier/CollisionShape2D")

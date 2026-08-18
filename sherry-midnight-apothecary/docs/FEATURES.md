@@ -44,3 +44,4 @@
 - [Blood Leaf Swarm](blood_leaf_swarm.md): reusable delayed-tracking maple leaf swarm hazard, GPUParticles2D particle shader with 3D fluttering & swirling, and wind/explosion/purification potion interactions.
 - [Crimson Vale Challenge](crimson_vale_challenge.md): horizontal platforming gauntlet with broken cliff jumps, village rooftop leaps, Blood Leaf Swarm hazards, and ForegroundShelter stealth mask mechanics.
 - [Alkeon Boss Encounter](alkeon_boss.md): 3-phase Blood Leaf Hunt King boss battle — 3-zone arena, wind chime acoustic/visual telegraphs, Blood Leaf Surge hazards, Wind Potion headwind counterplay, and Danxin Gate to Orem Clocktower transition.
+- [Aurem Clockyard](aurem_clockyard.md): daytime Aurem Clockyard level — 3-layer parallax background (FS, MS, CS), Golden Farm normal/corrupted state machine, Great Clocktower exterior and inner core chamber, one-way drop-through platforms, Clockmaker NPC interaction, and LevelData registration.

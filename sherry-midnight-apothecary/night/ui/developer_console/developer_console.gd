@@ -199,6 +199,8 @@ func execute_command(raw_command: String) -> String:
 			result = _mode_command(parts)
 		"scene", "level":
 			result = _scene_command(parts)
+		"boss", "boos":
+			result = _boss_command(parts)
 		"title":
 			result = _title_command(parts)
 		"to":
@@ -481,27 +483,75 @@ func _status_text() -> String:
 	]
 
 
+func _boss_command(parts: PackedStringArray) -> String:
+	if parts.size() < 2:
+		return "用法：boss <2> (例如：boss 2 进入血叶猎王挑战并装备无限药水)"
+
+	var boss_arg := parts[1].to_lower()
+	match boss_arg:
+		"2", "alkeon", "alkeon_boss", "alkeon_arena", "deer", "blood_leaf":
+			var player := _player()
+			if player != null:
+				_equip_infinite_battle_potions(player)
+
+			var arena_path := "res://day/levels/Crimson Vale/boss/alkeon_arena.tscn"
+			close()
+
+			var tree := get_tree()
+			if tree != null:
+				tree.change_scene_to_file(arena_path)
+			return "已进入【血叶猎王·阿尔凯昂】Boss 挑战，并装备无限药水！"
+		_:
+			return "错误：未知 Boss 序号 %s。当前可用：boss 2 (血叶猎王·阿尔凯昂)。" % boss_arg
+
+
+func _equip_infinite_battle_potions(player: PlayerData) -> void:
+	if player == null:
+		return
+	var battle_potions: Array[StringName] = [
+		&"purification_potion",
+		&"cyan_potion",
+		&"red_potion",
+		&"orange_potion",
+		&"yellow_potion",
+		&"green_potion",
+		&"blue_potion",
+		&"purple_potion"
+	]
+	player.potions.clear()
+	for pot_id in battle_potions:
+		var instances: Array[Dictionary] = []
+		for i in range(99):
+			instances.append({
+				"potion_id": str(pot_id),
+				"instance_uid": "%s_%d" % [str(pot_id), i],
+				"remaining_dose": 1.0,
+				"potency": 1.5,
+				"quality": 1.5,
+				"duration": 1.0,
+				"thermal_score": 1.0,
+				"created_day": _day(),
+			})
+		player.potions[pot_id] = instances
+
+	player.equipped_potion_ids = [
+		&"red_potion",
+		&"cyan_potion",
+		&"purification_potion",
+		&"orange_potion"
+	]
+
+
 func _help_text() -> String:
 	return """Day scene commands:
-	  scene <town|home|raintree|lake|grassland>
+  scene <town|home|raintree|lake|grassland>
+  boss 2 (或 boos 2) - 直达血叶猎王Boss战并装备无限药水
   title
   to normal
   to corrupted
 
 Other commands:
-  day, night, status, get, set, add, give, take, potion, temp, clear, close"""
-	return """可用命令：
-  status
-  get <参数>
-  set <参数> <数值>
-  add <参数> <增量>
-  give <植物序号|ingredient_id> [数量]
-  take <植物序号|ingredient_id> [数量]
-  potion <potion_id> [数量] [品质]
-  temp <0–100>
-  clear / close
-参数：money、debt、health、max_health、temp、
-      inventory.<id>、potions.<id>"""
+  day, night, status, get, set, add, give, take, potion, boss, temp, clear, close"""
 
 
 func _player() -> PlayerData:

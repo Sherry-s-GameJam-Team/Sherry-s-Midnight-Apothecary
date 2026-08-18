@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="22_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="23_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="24_pause_menu"]
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/hazards/danxin_gate_boss_portal.gd" id="25_danxin_portal"]
 
 [sub_resource type="RectangleShape2D" id="Rect_start_ground"]
 size = Vector2(850, 86)
@@ -229,12 +230,12 @@ centered = false
 
 [node name="GatePortal" type="Area2D" parent="World/DanxinGate" unique_id=20737638]
 position = Vector2(460, 380)
-script = ExtResource("21_portal")
-destination_level = &"crimson_vale"
-destination_entry_id = &"gate"
-fallback_scene_path = "res://day/levels/Crimson Vale/crimson_vale.tscn"
+script = ExtResource("25_danxin_portal")
+destination_level = &"alkeon_boss"
+destination_entry_id = &"default"
+fallback_scene_path = "res://day/levels/Crimson Vale/boss/alkeon_arena.tscn"
 interaction_hint_enabled = true
-interaction_hint_text = "穿过丹心门通关"
+interaction_hint_text = "前有恶灵！[E] 开启丹心门迎战恶灵"
 
 [node name="Visual" type="Sprite2D" parent="World/DanxinGate/GatePortal" unique_id=1200715905]
 
@@ -286,9 +287,11 @@ position = Vector2(250, 520)
 position = Vector2(120, 480)
 script = ExtResource("21_portal")
 destination_level = &"crimson_vale"
+destination_entry_id = &"from_challenge"
 fallback_scene_path = "res://day/levels/Crimson Vale/crimson_vale.tscn"
 interaction_hint_enabled = true
 interaction_hint_text = "返回赤染之谷"
+trigger_on_touch = true
 
 [node name="Visual" type="Sprite2D" parent="ExitPortal" unique_id=2086533172]
 

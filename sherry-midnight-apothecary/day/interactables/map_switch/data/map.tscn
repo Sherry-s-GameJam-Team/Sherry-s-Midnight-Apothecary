@@ -41,6 +41,8 @@ script = ExtResource("2_anchor")
 destination_id = &"阿尔维斯"
 display_name = "阿尔维斯母树"
 subtitle = "万千根脉托起云林之心"
+danger = "中等"
+environment = "云林"
 description = "常霁云林中最古老的巨木，也是整片森林水脉与根系的汇聚之处。只要母树仍有清泉流过，常霁云林便不会真正枯死。"
 
 [node name="Anchor03" type="Node2D" parent="AnchorPoints" unique_id=752553803]
@@ -59,7 +61,9 @@ position = Vector2(613, 372)
 script = ExtResource("2_anchor")
 destination_id = &"潜息门"
 display_name = "潜息门"
-subtitle = "沉默于泪水中的旧装置"
+subtitle = "沉默于泪水中的鱼形装置"
+danger = "中等"
+environment = "水下"
 description = "潜息门位于阿里特之泪最深处的旧湖床，原是维阿利亚旅门社为水下航路设置的特殊门站。门体周围设有能够隔绝湖水、维持空气的古老避水装置，供守门人与维修人员长期驻留。"
 
 [node name="Anchor05" type="Node2D" parent="AnchorPoints" unique_id=78806156]

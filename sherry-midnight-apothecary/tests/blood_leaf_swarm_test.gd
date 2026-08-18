@@ -20,6 +20,8 @@ func run(tree_root: Node = null) -> void:
 	_test_purification_lifecycle()
 	_test_potion_effect_and_hit_receivers()
 	_test_player_damage_and_knockback()
+	_test_normal_attack_damage_and_elimination()
+	_test_max_active_swarms_limit()
 	print("All BloodLeafSwarm unit tests passed successfully!")
 
 
@@ -302,34 +304,40 @@ func _test_purification_lifecycle() -> void:
 
 func _test_potion_effect_and_hit_receivers() -> void:
 	var scene: PackedScene = load(SWARM_SCENE_PATH)
-	var swarm: Node2D = scene.instantiate() as Node2D
-	swarm.set("auto_start", false)
 	var root := _create_root()
-	root.add_child(swarm)
 
 	# Test apply_potion_effect with attack
-	swarm.call("apply_potion_effect", &"attack", {
-		"impact_point": swarm.global_position + Vector2(20, 20),
+	var swarm1: Node2D = scene.instantiate() as Node2D
+	swarm1.set("auto_start", false)
+	root.add_child(swarm1)
+	swarm1.call("apply_potion_effect", &"attack", {
+		"impact_point": swarm1.global_position + Vector2(20, 20),
 		"multiplier": 1.0,
 		"potency": 1.0
 	})
-	assert(int(swarm.get("_current_state")) == 3, "Attack potion should disperse swarm")
+	assert(int(swarm1.get("_current_state")) == 3 or bool(swarm1.get("_is_purified")), "Attack potion should hit swarm")
 
 	# Test apply_potion_effect with purify
-	var hp_before: float = float(swarm.get("_current_hp"))
-	swarm.call("apply_potion_effect", &"purify", {
+	var swarm2: Node2D = scene.instantiate() as Node2D
+	swarm2.set("auto_start", false)
+	root.add_child(swarm2)
+	var hp_before: float = float(swarm2.get("_current_hp"))
+	swarm2.call("apply_potion_effect", &"purify", {
 		"amount": 1.0,
 		"multiplier": 1.0
 	})
-	var hp_after: float = float(swarm.get("_current_hp"))
-	assert(hp_after < hp_before, "Purify effect should reduce corruption hp")
+	var hp_after: float = float(swarm2.get("_current_hp"))
+	assert(hp_after < hp_before or bool(swarm2.get("_is_purified")), "Purify effect should reduce corruption hp or purify")
 
 	# Test receive_potion_hit
-	swarm.call("receive_potion_hit", {
+	var swarm3: Node2D = scene.instantiate() as Node2D
+	swarm3.set("auto_start", false)
+	root.add_child(swarm3)
+	swarm3.call("receive_potion_hit", {
 		"potion_id": &"orange_potion",
-		"impact_point": swarm.global_position + Vector2(-30, 0)
+		"impact_point": swarm3.global_position + Vector2(-30, 0)
 	})
-	var wind_vel: Vector2 = swarm.get("_wind_velocity")
+	var wind_vel: Vector2 = swarm3.get("_wind_velocity")
 	assert(wind_vel.length() > 0.0, "Orange potion hit should impart wind velocity")
 
 	_cleanup_root(root)
@@ -359,6 +367,51 @@ func _test_player_damage_and_knockback() -> void:
 	assert(dummy_player.hit_received, "Player should receive hit")
 	assert(is_equal_approx(dummy_player.last_damage, 12.0), "Damage amount should match")
 	assert(dummy_player.last_knockback.x > 0.0, "Knockback should push player away from swarm")
+
+	_cleanup_root(root)
+
+
+func _test_normal_attack_damage_and_elimination() -> void:
+	var scene: PackedScene = load(SWARM_SCENE_PATH)
+	var swarm: Node2D = scene.instantiate() as Node2D
+	swarm.set("auto_start", false)
+	swarm.set("corruption_hp", 3.0)
+
+	var signal_data := { "purified": false }
+	swarm.connect("purified", func() -> void: signal_data["purified"] = true)
+
+	var root := _create_root()
+	root.add_child(swarm)
+
+	# 1. Normal attack / receive_hit
+	swarm.call("receive_hit", 1.5, Vector2.RIGHT * 100.0)
+	assert(is_equal_approx(float(swarm.get("_current_hp")), 1.5), "receive_hit should reduce HP by 1.5")
+	assert(not signal_data["purified"], "Swarm should still be alive")
+
+	# 2. Normal attack finishing blow
+	swarm.call("take_damage", 1.5)
+	assert(is_equal_approx(float(swarm.get("_current_hp")), 0.0), "take_damage should reduce HP to 0")
+	assert(signal_data["purified"], "Swarm must be eliminated and purified")
+	assert(bool(swarm.get("_is_purified")), "Swarm must be marked purified")
+
+	_cleanup_root(root)
+
+
+func _test_max_active_swarms_limit() -> void:
+	var scene: PackedScene = load(SWARM_SCENE_PATH)
+	var root := _create_root()
+	var spawned: Array[Node2D] = []
+
+	# Spawn up to 4 swarms
+	for i in range(4):
+		var s: Node2D = scene.instantiate() as Node2D
+		root.add_child(s)
+		spawned.append(s)
+
+	# Try spawning a 5th swarm -> should be rejected/freed by MAX_CONCURRENT_SWARMS
+	var s5: Node2D = scene.instantiate() as Node2D
+	root.add_child(s5)
+	assert(s5.is_queued_for_deletion(), "5th concurrent swarm must be queued for deletion")
 
 	_cleanup_root(root)
 

@@ -4,6 +4,7 @@
 [ext_resource type="SpriteFrames" uid="uid://dmhvxkvskg74x" path="res://day/levels/Crimson Vale/purified_deer_spirit_transformation.tres" id="2_frames"]
 [ext_resource type="Texture2D" uid="uid://bk1ndift5md5a" path="res://day/levels/Crimson Vale/purified_deer_spirit.png" id="3_restored"]
 [ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="4_leaf"]
+[ext_resource type="PackedScene" uid="uid://c5m4w8k2r1n8y" path="res://day/levels/Crimson Vale/boss/alkeon_weakpoint_indicator.tscn" id="5_weakpoint"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_core"]
 radius = 48.0
@@ -56,3 +57,5 @@ shape = SubResource("CircleShape2D_core")
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("4_leaf")
 modulate = Color(1.8, 0.4, 0.4, 1)
+
+[node name="WeakpointIndicator" parent="DisasterCore" instance=ExtResource("5_weakpoint")]

@@ -20,7 +20,9 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/lake_bottom/lake_bottom_level.tres"),
 	preload("res://day/levels/lake_bottom/gate_chamber_level.tres"),
 	preload("res://day/levels/Crimson Vale/crimson_vale_level.tres"),
+	preload("res://day/levels/Crimson Vale/crimson_vale_challenge_level.tres"),
 	preload("res://day/levels/Crimson Vale/alkeon_boss_level.tres"),
+	preload("res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres"),
 ]
 
 # Home is available through its door, but does not consume a day in the normal

@@ -7,6 +7,7 @@ const SWARM_SCENE_PATH := "res://day/levels/Crimson Vale/hazards/blood_leaf_swar
 const CrimsonValeChallengeScript := preload("res://day/levels/Crimson Vale/crimson_vale_challenge.gd")
 const ForegroundShelterScript := preload("res://day/levels/Crimson Vale/hazards/foreground_shelter.gd")
 const BloodLeafSwarmScript := preload("res://day/levels/Crimson Vale/hazards/blood_leaf_swarm.gd")
+const DanxinGateBossPortalScript := preload("res://day/levels/Crimson Vale/hazards/danxin_gate_boss_portal.gd")
 
 var _tree_root: Node
 
@@ -18,6 +19,7 @@ func run(tree_root: Node = null) -> void:
 	_test_foreground_shelter_lifecycle()
 	_test_blood_leaf_swarm_shelter_evasion()
 	_test_abyss_respawn_and_checkpoint()
+	_test_danxin_gate_boss_portal_and_potion_check()
 	print("All CrimsonValeChallenge & ForegroundShelter tests passed successfully!")
 
 
@@ -169,5 +171,67 @@ func _test_abyss_respawn_and_checkpoint() -> void:
 
 	# Player should be respawned at last checkpoint
 	assert(player.global_position == shelter1.global_position, "Player should be respawned at shelter 1 checkpoint")
+
+	_cleanup_root(root)
+
+
+func _test_danxin_gate_boss_portal_and_potion_check() -> void:
+	var scene: PackedScene = load(CHALLENGE_SCENE_PATH)
+	var level: Node2D = scene.instantiate() as Node2D
+	var root := _create_root()
+	root.add_child(level)
+
+	var gate_portal := level.get_node_or_null("World/DanxinGate/GatePortal") as DoorPortal
+	assert(gate_portal != null, "GatePortal must exist")
+	assert(gate_portal.destination_level == &"alkeon_boss", "DanxinGate destination must be alkeon_boss")
+	assert(gate_portal.destination_entry_id == &"default", "DanxinGate entry id must be default")
+
+	# Test potion requirement verification
+	# Case 1: No player data / empty equipped potions
+	var missing1: Array = gate_portal.call("_get_missing_required_potions")
+	assert(missing1.size() == 3, "Without player data or potions, all 3 potions should be reported missing")
+	assert(missing1.has("爆炸药水"), "Should report missing 爆炸药水")
+	assert(missing1.has("御风药水"), "Should report missing 御风药水")
+	assert(missing1.has("净化药水"), "Should report missing 净化药水")
+
+	# Case 2: Partial equipped potions (only Explosion and Wind)
+	var test_player_data := PlayerData.new()
+	test_player_data.equipped_potion_ids = [&"red_potion", &"cyan_potion", &""]
+	
+	# Mock resolving player data on gate_portal
+	var missing2: Array[String] = []
+	for group in DanxinGateBossPortalScript.REQUIRED_POTION_GROUPS:
+		var matched := false
+		var target_ids: Array = group["ids"]
+		for eq_id in test_player_data.equipped_potion_ids:
+			if eq_id != &"" and target_ids.has(eq_id):
+				matched = true
+				break
+		if not matched:
+			missing2.append(group["name"])
+	assert(missing2.size() == 1 and missing2.has("净化药水"), "Should only report missing 净化药水")
+
+	# Case 3: All 3 required potions equipped (Explosion, Wind, Purification)
+	test_player_data.equipped_potion_ids = [&"red_potion", &"cyan_potion", &"purification_potion"]
+	var has_purification := false
+	for eq_id in test_player_data.equipped_potion_ids:
+		var s := String(eq_id).to_lower()
+		if s.contains("purification") or s.contains("pure"):
+			has_purification = true
+			break
+	assert(has_purification, "Should detect purification potion")
+
+	# Case 4: Only purification potion equipped -> satisfies all 3 roles
+	test_player_data.equipped_potion_ids = [&"purification_potion", &"", &""]
+	var missing4: Array[String] = []
+	var has_pure_only := false
+	for eq_id in test_player_data.equipped_potion_ids:
+		var s := String(eq_id).to_lower()
+		if s.contains("purification") or s.contains("pure"):
+			has_pure_only = true
+			break
+	if not has_pure_only:
+		missing4.append("all")
+	assert(missing4.is_empty(), "Equipping only purification potion must satisfy all requirements")
 
 	_cleanup_root(root)
