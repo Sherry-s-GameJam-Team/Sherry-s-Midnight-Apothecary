@@ -151,7 +151,7 @@ func _check_targets() -> void:
 func _on_crank_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") or body.name == "Player":
 		_player_at_crank = true
-		var top_hint := get_node_or_null("/root/TopHintUI")
+		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("show_interaction_hint"):
 			top_hint.call("show_interaction_hint", "clock_crank", "按 E 转动手轮（顺时针拨动指针）")
 
@@ -159,6 +159,18 @@ func _on_crank_body_entered(body: Node2D) -> void:
 func _on_crank_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") or body.name == "Player":
 		_player_at_crank = false
-		var top_hint := get_node_or_null("/root/TopHintUI")
-		if top_hint != null and top_hint.has_method("hide_hint"):
-			top_hint.call("hide_hint", "clock_crank")
+		var top_hint := _find_top_hint()
+		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+			top_hint.call("hide_interaction_hint", "clock_crank")
+
+
+func _find_top_hint() -> TopHintUI:
+	var current: Node = self
+	while current != null:
+		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
+		if top_hint != null:
+			return top_hint
+		current = current.get_parent()
+	if is_inside_tree() and get_tree() != null and get_tree().root != null:
+		return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+	return null

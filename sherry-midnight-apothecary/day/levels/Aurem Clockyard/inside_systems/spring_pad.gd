@@ -33,12 +33,11 @@ func trigger_bounce(body: CharacterBody2D, boost: float = 1.0) -> void:
 
 	bounced.emit(body)
 
-	if is_inside_tree():
-		var tree := get_tree()
-		if tree != null:
-			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
-			if audio != null and audio.has_method("play_gear_clack"):
-				audio.call("play_gear_clack")
+	var tree: SceneTree = get_tree() if is_inside_tree() else null
+	if tree != null:
+		var audio: Node = tree.get_first_node_in_group("clocktower_audio")
+		if audio != null and audio.has_method("play_gear_clack"):
+			audio.call("play_gear_clack")
 
 	# Squash and stretch animation
 	if spring_sprite != null:
@@ -48,12 +47,10 @@ func trigger_bounce(body: CharacterBody2D, boost: float = 1.0) -> void:
 			tween.tween_property(spring_sprite, "scale", Vector2(0.85, 1.35), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tween.tween_property(spring_sprite, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_SINE)
 
-	if is_inside_tree():
-		var tree := get_tree()
-		if tree != null:
-			tree.create_timer(cooldown).timeout.connect(func() -> void:
-				_on_cooldown = false
-			)
+	if tree != null:
+		tree.create_timer(cooldown).timeout.connect(func() -> void:
+			_on_cooldown = false
+		)
 	else:
 		_on_cooldown = false
 

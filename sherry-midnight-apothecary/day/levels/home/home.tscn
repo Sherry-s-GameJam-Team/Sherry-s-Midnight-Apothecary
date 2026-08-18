@@ -203,6 +203,9 @@ position = Vector2(2549, 724)
 [node name="from_cliff" type="Marker2D" parent="EntryPoints" unique_id=1787413838]
 position = Vector2(2549, 724)
 
+[node name="from_forest" type="Marker2D" parent="EntryPoints" unique_id=1787413839]
+position = Vector2(2549, 724)
+
 [node name="bedroomdoor" type="Marker2D" parent="EntryPoints" unique_id=726330820]
 position = Vector2(-895, 723)
 

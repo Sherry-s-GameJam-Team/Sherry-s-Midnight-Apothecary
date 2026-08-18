@@ -39,6 +39,8 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="40_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="41_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="42_pause_menu"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="43_portal"]
+[ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://shared/shaders/interaction_outline.gdshader" id="44_outline"]
 
 [sub_resource type="Shader" id="Shader_stream"]
 code = "shader_type canvas_item;
@@ -54,6 +56,17 @@ size = Vector2(100, 6500)
 
 [sub_resource type="RectangleShape2D" id="RectBarrierH"]
 size = Vector2(1900, 100)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gate_outline"]
+shader = ExtResource("44_outline")
+shader_parameter/outline_color = Color(1, 0.84, 0.3, 0.95)
+shader_parameter/outline_width = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_home_gate"]
+size = Vector2(240, 340)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_from_forest_gate"]
+size = Vector2(200, 280)
 
 [sub_resource type="RectangleShape2D" id="RectGround"]
 size = Vector2(800, 80)
@@ -180,16 +193,51 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/TopBarrier" unique_id=1038636316]
 shape = SubResource("RectBarrierH")
 
+[node name="HomeDoor" type="Area2D" parent="." unique_id=1917169919]
+position = Vector2(441.99994, 471.00024)
+script = ExtResource("43_portal")
+destination_level = &"home"
+destination_entry_id = &"from_forest"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+visual_path = NodePath("Visual")
+interaction_hint_enabled = true
+interaction_hint_text = "按[E]返回药水铺"
+
+[node name="Visual" type="Sprite2D" parent="HomeDoor" unique_id=1917169918]
+material = SubResource("ShaderMaterial_gate_outline")
+scale = Vector2(0.3456938, 0.3456938)
+texture = ExtResource("36_gate_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HomeDoor" unique_id=1917169920]
+position = Vector2(0, 60)
+shape = SubResource("RectangleShape2D_home_gate")
+
+[node name="ForestReturnDoor" type="Area2D" parent="." unique_id=1929870745]
+position = Vector2(118, 550)
+script = ExtResource("43_portal")
+destination_level = &"forest"
+destination_entry_id = &"restored_return"
+fallback_scene_path = "res://day/levels/forest/forest.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按[E]返回森林"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForestReturnDoor" unique_id=1929870746]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_from_forest_gate")
+
 [node name="EntryPoints" type="Node2D" parent="." unique_id=1902716574]
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=1008116273]
-position = Vector2(320, 610)
+position = Vector2(445, 618)
 
 [node name="from_forest" type="Marker2D" parent="EntryPoints" unique_id=1929870744]
-position = Vector2(320, 610)
+position = Vector2(118, 621)
+
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=1929870747]
+position = Vector2(445, 618)
 
 [node name="from_crown" type="Marker2D" parent="EntryPoints" unique_id=1222117193]
-position = Vector2(900, -4720)
+position = Vector2(900, -4726)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=339529846 groups=["player"]]
 z_index = 20
@@ -215,10 +263,11 @@ left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=138859185 instance=ExtResource("6_potions")]
+position = Vector2(9, -2)
 
 [node name="Luca" parent="." unique_id=190311239 groups=["forest_luca_runtime"] instance=ExtResource("7_luca")]
 z_index = 20
-position = Vector2(470, 610)
+position = Vector2(610, 638)
 collision_mask = 7
 
 [node name="RealityWorld" type="Node2D" parent="." unique_id=1215221510]

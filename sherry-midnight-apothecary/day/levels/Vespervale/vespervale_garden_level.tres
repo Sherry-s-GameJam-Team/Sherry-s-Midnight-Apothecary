@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cx6rvy2epb8qu"]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://c44ilp2eve2ii" path="res://day/levels/Vespervale/garden.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"vespervale_garden"
+display_name = "暮息庭院"
+disaster_name = "长梦之灾"
+normal_description = "晚霞笼罩的静谧花园，沉睡的旅人渐渐在草药花香中苏醒。"
+corrupted_description = "迷梦毒雾笼罩着暮息庭院，沉眠的居民陷于无尽的梦魇之中。"
+scene_description = "探索暮息庭院与静语礼堂，唤醒沉睡的旅人并驱散梦魇迷雾。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/interactables/control_system/control_system_demo.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"control_system_demo"
+display_name = "机关控制系统演示"
+disaster_name = "机制演示"
+normal_description = "机关控制系统（压力板、拉杆、电动升降桥、控制门）演示场景。"
+corrupted_description = "机关控制系统演示。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = false
+native_ingredient_ids = Array[StringName]([])

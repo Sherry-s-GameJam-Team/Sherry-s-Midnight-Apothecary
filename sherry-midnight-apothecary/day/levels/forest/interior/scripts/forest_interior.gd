@@ -52,6 +52,15 @@ func _ready() -> void:
 		luca_world_controller.call("set_luca_view", false)
 	_apply_environment_state(start_corrupted, true)
 	_restore_persistent_progress()
+	_activate_travel_anchor()
+
+
+func _activate_travel_anchor() -> void:
+	var runtime := _get_day_runtime()
+	if runtime != null and runtime.has_method("activate_travel_anchor"):
+		runtime.call("activate_travel_anchor", &"forest_interior")
+	elif get_player_data() != null:
+		get_player_data().unlock_level(&"forest_interior")
 
 
 func _ensure_switch_character_input() -> void:

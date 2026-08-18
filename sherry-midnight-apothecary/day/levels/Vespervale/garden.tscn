@@ -1,0 +1,271 @@
+[gd_scene format=3 uid="uid://c44ilp2eve2ii"]
+
+[ext_resource type="Script" uid="uid://b6mwfyrjvxyme" path="res://day/levels/Vespervale/garden.gd" id="1_env"]
+[ext_resource type="Texture2D" uid="uid://cwiqjfnyv0axl" path="res://day/levels/Vespervale/skybox.png" id="3_skybox"]
+[ext_resource type="Texture2D" uid="uid://c5x5frfgwpia3" path="res://day/levels/Vespervale/village.png" id="4_village"]
+[ext_resource type="Texture2D" uid="uid://dj6fdff0dvuy" path="res://day/levels/Vespervale/cover1.png" id="5_1iu5j"]
+[ext_resource type="Texture2D" uid="uid://sg467q6k33ar" path="res://day/levels/Vespervale/real_garden.png" id="6_real_garden"]
+[ext_resource type="Texture2D" uid="uid://wx1yvtrpukbh" path="res://day/levels/Vespervale/dream_garden.png" id="7_dream_garden"]
+[ext_resource type="Texture2D" uid="uid://cjw6jnubdfngh" path="res://day/levels/Vespervale/church.png" id="10_church"]
+[ext_resource type="Texture2D" uid="uid://ch5a2ypwbpotw" path="res://day/levels/Vespervale/sleep_npcs.png" id="11_sleep_npcs"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="12_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="13_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="14_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="15_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="16_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="17_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="19_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="20_pause_menu"]
+
+[sub_resource type="RectangleShape2D" id="Rect_ground_main"]
+size = Vector2(7500, 160)
+
+[sub_resource type="RectangleShape2D" id="Rect_barrier"]
+size = Vector2(128, 2000)
+
+[sub_resource type="RectangleShape2D" id="Rect_portal"]
+size = Vector2(180, 260)
+
+[sub_resource type="RectangleShape2D" id="Rect_npc"]
+size = Vector2(80, 70)
+
+[sub_resource type="RectangleShape2D" id="Rect_abyss"]
+size = Vector2(8500, 200)
+
+[node name="Garden" type="Node2D" unique_id=567109954]
+texture_filter = 1
+script = ExtResource("1_env")
+debug_scene_id = "vespervale_garden"
+
+[node name="Background" type="Node2D" parent="." unique_id=1711654405]
+
+[node name="FS" type="Parallax2D" parent="Background" unique_id=1978539484]
+z_index = -30
+scroll_scale = Vector2(0.12, 0.05)
+
+[node name="FSBackground" type="Sprite2D" parent="Background/FS" unique_id=881484657]
+position = Vector2(-200, 0)
+scale = Vector2(1.0497237, 1)
+texture = ExtResource("3_skybox")
+centered = false
+
+[node name="Mid" type="Node2D" parent="Background" unique_id=74244773]
+z_index = -20
+
+[node name="VillageBG" type="Sprite2D" parent="Background/Mid" unique_id=1368437402]
+position = Vector2(-61, 30)
+texture = ExtResource("4_village")
+centered = false
+
+[node name="TreeGardenBG" type="Sprite2D" parent="Background/Mid" unique_id=1368437403]
+position = Vector2(2042, -93.99988)
+scale = Vector2(1.004, 1.026)
+texture = ExtResource("10_church")
+centered = false
+
+[node name="GardenAtmosphere" type="Node2D" parent="Background" unique_id=1404363253]
+visible = false
+z_index = -10
+
+[node name="RealGarden" type="Sprite2D" parent="Background/GardenAtmosphere" unique_id=776012572]
+visible = false
+position = Vector2(3072, 231)
+scale = Vector2(1.0201973, 0.9810298)
+texture = ExtResource("6_real_garden")
+centered = false
+
+[node name="DreamGarden" type="Sprite2D" parent="Background/GardenAtmosphere" unique_id=776012573]
+visible = false
+position = Vector2(2172, 0)
+texture = ExtResource("7_dream_garden")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1999559790]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=1809301717]
+position = Vector2(3250, 600)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=160729637]
+position = Vector2(38, 114)
+shape = SubResource("Rect_ground_main")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/Ground" unique_id=1513444407]
+position = Vector2(96, 26)
+scale = Vector2(1.004, 1.026)
+polygon = PackedVector2Array(-1222, 8, -854.5818, 6.822632, -750.00024, -99.41522, 259.9602, -103.31384, 123.50586, 87.7193, -1219, 98)
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1546655977]
+position = Vector2(-100, 360)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=805611433]
+shape = SubResource("Rect_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=762105955]
+position = Vector2(6600, 360)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=56897073]
+shape = SubResource("Rect_barrier")
+
+[node name="col" type="StaticBody2D" parent="WorldBounds" unique_id=948248753]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WorldBounds/col" unique_id=973258090]
+position = Vector2(848.00006, 269)
+scale = Vector2(0.5876433, 0.60052)
+polygon = PackedVector2Array(2866, 201, 3827, 208, 3829, 28, 4605, 23, 4472, -216, 3794, -178, 3697, 72, 2928, 80, 2884, 22, 2669, 11, 2665, 207, 2340, 180, 2741.459, 374.6753)
+
+[node name="World" type="Node2D" parent="." unique_id=730810468]
+
+[node name="Scenery" type="Node2D" parent="World" unique_id=381823531]
+
+[node name="Platforms" type="Node2D" parent="World" unique_id=381823532]
+
+[node name="Portals" type="Node2D" parent="World" unique_id=901072933]
+
+[node name="EntrancePortal" type="Area2D" parent="World/Portals" unique_id=1265216675]
+position = Vector2(91, 496)
+collision_layer = 0
+script = ExtResource("17_portal")
+destination_level = &"home"
+destination_entry_id = &"from_vespervale"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 返回雪莉药水铺"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/EntrancePortal" unique_id=1395027487]
+shape = SubResource("Rect_portal")
+
+[node name="ChurchPortal" type="Area2D" parent="World/Portals" unique_id=1174752081]
+position = Vector2(3870, 331)
+collision_layer = 0
+script = ExtResource("17_portal")
+destination_level = &"vespervale_church"
+destination_entry_id = &"church_entrance"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 瞻仰静语礼堂"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ChurchPortal" unique_id=1946061749]
+shape = SubResource("Rect_portal")
+
+[node name="NPCs" type="Node2D" parent="World" unique_id=2041798612]
+
+[node name="SleepNpcs" type="Area2D" parent="World/NPCs" unique_id=1113290553]
+position = Vector2(1435, 498)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=104213990]
+position = Vector2(298, 95)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_sleep_npcs")
+region_enabled = true
+region_rect = Rect2(775.1333, 396.86667, 322.66663, 281.6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/SleepNpcs" unique_id=560193779]
+position = Vector2(291, 103)
+shape = SubResource("Rect_npc")
+
+[node name="Sprite2D2" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=429756400]
+position = Vector2(-272, 97)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_sleep_npcs")
+region_enabled = true
+region_rect = Rect2(878.03735, 85.42583, 352.97778, 310.1059)
+
+[node name="Sprite2D3" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=1136028980]
+position = Vector2(-1170, 105)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_sleep_npcs")
+region_enabled = true
+region_rect = Rect2(1093.8668, 423.90668, 479.9668, 241.19342)
+
+[node name="Sprite2D4" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=1698112197]
+position = Vector2(918, 98)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_sleep_npcs")
+region_enabled = true
+region_rect = Rect2(3.190857, 411.99542, 356.83627, 256.2304)
+
+[node name="Sprite2D5" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=1711409404]
+position = Vector2(476, 105)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_sleep_npcs")
+region_enabled = true
+region_rect = Rect2(385.98764, 408.03232, 398.23538, 288.91586)
+
+[node name="Sprite2D6" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=970547618]
+position = Vector2(2313, -112)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("11_sleep_npcs")
+region_enabled = true
+region_rect = Rect2(1240.272, 57.920906, 289.3551, 334.23468)
+
+[node name="AbyssHazard" type="Area2D" parent="World" unique_id=2124796520]
+position = Vector2(3250, 1000)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/AbyssHazard" unique_id=1627748050]
+shape = SubResource("Rect_abyss")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=1863523665]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=773708110]
+position = Vector2(250, 520)
+
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=404092095]
+position = Vector2(250, 520)
+
+[node name="garden" type="Marker2D" parent="EntryPoints" unique_id=995249094]
+position = Vector2(2400, 520)
+
+[node name="church" type="Marker2D" parent="EntryPoints" unique_id=40190017]
+position = Vector2(4800, 520)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=846311864]
+z_index = 10
+position = Vector2(217, 587)
+scale = Vector2(0.61, 0.61)
+collision_mask = 3
+script = ExtResource("12_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1915840679 instance=ExtResource("13_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=491903975 instance=ExtResource("14_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1555194810]
+position = Vector2(0, -100)
+process_callback = 0
+limit_left = -100
+limit_top = -600
+limit_right = 6600
+limit_bottom = 724
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("15_camera")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=1488921579 instance=ExtResource("16_potions")]
+position = Vector2(48, 87)
+
+[node name="cover" type="Sprite2D" parent="." unique_id=1110404186]
+z_index = 20
+position = Vector2(2042.0001, -99)
+scale = Vector2(1.004, 1.026)
+texture = ExtResource("5_1iu5j")
+centered = false
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=245175993]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=1151012537 instance=ExtResource("18_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=906220772]
+layer = 200
+script = ExtResource("19_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=1830075791 instance=ExtResource("20_pause_menu")]

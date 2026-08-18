@@ -23,6 +23,208 @@ var _welcomed := false
 var _toggle_key_was_down := false
 var _fallback_player_data: PlayerData
 
+const ALL_DAY_LEVEL_PATHS: Array[String] = [
+	"res://day/levels/market/town/town_level.tres",
+	"res://day/levels/home/home_level.tres",
+	"res://day/levels/home/bedroom_level.tres",
+	"res://day/levels/forest/forest_level.tres",
+	"res://day/levels/forest/interior/forest_interior_level.tres",
+	"res://day/levels/forest/crown/forest_crown_level.tres",
+	"res://day/levels/lake/lake_level.tres",
+	"res://day/levels/grassland/grassland_level.tres",
+	"res://day/levels/grassland/emerald_field_level.tres",
+	"res://day/levels/golden_cliff/golden_cliff_level.tres",
+	"res://day/levels/golden_cliff/village/village_level.tres",
+	"res://day/levels/lake_bottom/lake_bottom_level.tres",
+	"res://day/levels/lake_bottom/gate_chamber_level.tres",
+	"res://day/levels/Crimson Vale/crimson_vale_level.tres",
+	"res://day/levels/Crimson Vale/crimson_vale_challenge_level.tres",
+	"res://day/levels/Crimson Vale/alkeon_boss_level.tres",
+	"res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres",
+	"res://day/levels/Aurem Clockyard/aurem_clockyard_inside_level.tres",
+	"res://day/levels/Vespervale/vespervale_garden_level.tres",
+	"res://day/levels/lake/lake_cliff_underwater_level.tres",
+	"res://day/levels/cliff/cliff_level.tres",
+	"res://day/levels/lakebed/lakebed_level.tres",
+	"res://day/levels/grassland/grassland_proto_level.tres",
+	"res://day/minigames/miasma_purifier/miasma_purifier_level.tres",
+	"res://day/interactables/control_system/control_system_demo_level.tres",
+]
+
+const SCENE_ALIASES: Dictionary = {
+	"town": "market",
+	"market": "market",
+	"流明街": "market",
+	"集市": "market",
+	"城镇": "market",
+	"市集": "market",
+
+	"home": "home",
+	"shop": "home",
+	"apothecary": "home",
+	"工坊": "home",
+	"家": "home",
+	"药水铺": "home",
+
+	"bedroom": "bedroom",
+	"bed": "bedroom",
+	"room": "bedroom",
+	"卧室": "bedroom",
+	"二楼": "bedroom",
+	"二楼卧室": "bedroom",
+
+	"forest": "forest",
+	"raintree": "forest",
+	"rain_tree": "forest",
+	"tree": "forest",
+	"常霁云林": "forest",
+	"雨树林": "forest",
+	"树林": "forest",
+	"森林": "forest",
+
+	"forest_interior": "forest_interior",
+	"interior": "forest_interior",
+	"luca": "forest_interior",
+	"tree_house": "forest_interior",
+	"treehouse": "forest_interior",
+	"云下树屋": "forest_interior",
+	"树屋": "forest_interior",
+	"卢卡工坊": "forest_interior",
+
+	"forest_crown": "forest_crown",
+	"crown": "forest_crown",
+	"rooftop": "forest_crown",
+	"树冠": "forest_crown",
+	"天台": "forest_crown",
+	"树冠天台": "forest_crown",
+
+	"lake": "lake",
+	"mirror_lake": "lake",
+	"镜湖": "lake",
+	"湖": "lake",
+
+	"grassland": "grassland",
+	"grass": "grassland",
+	"emerald": "grassland",
+	"翡翠原": "grassland",
+	"草地": "grassland",
+	"平原": "grassland",
+
+	"emerald_field": "emerald_field",
+	"field": "emerald_field",
+	"miasma": "emerald_field",
+	"翡翠原野": "emerald_field",
+	"原野": "emerald_field",
+	"瘴气": "emerald_field",
+
+	"golden_cliff": "golden_cliff",
+	"cliff": "golden_cliff",
+	"烁金横崖": "golden_cliff",
+	"横崖": "golden_cliff",
+	"断崖": "golden_cliff",
+	"烁金": "golden_cliff",
+
+	"golden_cliff_village": "golden_cliff_village",
+	"village": "golden_cliff_village",
+	"涟汀村": "golden_cliff_village",
+	"废村": "golden_cliff_village",
+	"村庄": "golden_cliff_village",
+
+	"lake_bottom": "lake_bottom",
+	"underwater": "lake_bottom",
+	"lakebed": "lake_bottom",
+	"湖床": "lake_bottom",
+	"湖底": "lake_bottom",
+	"沉没回廊": "lake_bottom",
+	"阿里特之泪": "lake_bottom",
+
+	"gate_chamber": "gate_chamber",
+	"chamber": "gate_chamber",
+	"gate": "gate_chamber",
+	"维护站": "gate_chamber",
+	"密室": "gate_chamber",
+	"旧旅门维护站": "gate_chamber",
+	"封印大门": "gate_chamber",
+
+	"crimson_vale": "crimson_vale",
+	"crimson": "crimson_vale",
+	"vale": "crimson_vale",
+	"猩红谷地": "crimson_vale",
+	"猩红": "crimson_vale",
+
+	"crimson_vale_challenge": "crimson_vale_challenge",
+	"challenge": "crimson_vale_challenge",
+	"vale_challenge": "crimson_vale_challenge",
+	"挑战关": "crimson_vale_challenge",
+	"猩红挑战": "crimson_vale_challenge",
+
+	"alkeon_boss": "alkeon_boss",
+	"alkeon": "alkeon_boss",
+	"boss2": "alkeon_boss",
+	"boss_2": "alkeon_boss",
+	"alkeon_arena": "alkeon_boss",
+	"血叶猎王": "alkeon_boss",
+	"阿尔凯昂": "alkeon_boss",
+	"猎王": "alkeon_boss",
+
+	"aurem_clockyard": "aurem_clockyard",
+	"clockyard": "aurem_clockyard",
+	"aurem": "aurem_clockyard",
+	"clock": "aurem_clockyard",
+	"奥勒姆钟庭": "aurem_clockyard",
+	"钟庭": "aurem_clockyard",
+	"奥勒姆": "aurem_clockyard",
+
+	"aurem_clockyard_inside": "aurem_clockyard_inside",
+	"clockyard_inside": "aurem_clockyard_inside",
+	"clocktower_inside": "aurem_clockyard_inside",
+	"钟塔内部": "aurem_clockyard_inside",
+	"钟楼内部": "aurem_clockyard_inside",
+	"发条室": "aurem_clockyard_inside",
+	"齿轮井": "aurem_clockyard_inside",
+	"钟摆厅": "aurem_clockyard_inside",
+	"校时台": "aurem_clockyard_inside",
+
+	"lake_cliff_underwater": "lake_cliff_underwater",
+	"lake_underwater": "lake_cliff_underwater",
+	"underwater_tunnel": "lake_cliff_underwater",
+	"cliff_underwater": "lake_cliff_underwater",
+	"水下暗道": "lake_cliff_underwater",
+	"水下通道": "lake_cliff_underwater",
+	"水下升降梯": "lake_cliff_underwater",
+
+	"shimmering_cliff": "cliff",
+	"resonance_cliff": "cliff",
+	"鸣晶断崖": "cliff",
+	"烁金断崖": "cliff",
+
+	"lakebed_proto": "lakebed",
+	"湖床遗迹": "lakebed",
+	"湖床原型": "lakebed",
+
+	"grass_proto": "grassland_proto",
+	"grassland_level": "grassland_proto",
+	"平原原型": "grassland_proto",
+
+	"purifier_minigame": "miasma_purifier",
+	"miasma_game": "miasma_purifier",
+	"净化小游戏": "miasma_purifier",
+	"瘴气小游戏": "miasma_purifier",
+
+	"mechanisms_demo": "control_system_demo",
+	"control_demo": "control_system_demo",
+	"机关演示": "control_system_demo",
+	"机关控制": "control_system_demo",
+
+	"vespervale": "vespervale_garden",
+	"vespervale_garden": "vespervale_garden",
+	"garden": "vespervale_garden",
+	"暮息谷": "vespervale_garden",
+	"暮息庭院": "vespervale_garden",
+	"花园": "vespervale_garden",
+	"庭院": "vespervale_garden",
+}
+
 const FALLBACK_INGREDIENT_PATHS: Array[String] = [
 	"res://shared/definitions/data/ingredients/herdsmans_loaf_bush.tres",
 	"res://shared/definitions/data/ingredients/stardust_puffy_lion.tres",
@@ -385,40 +587,136 @@ func _temperature_command(parts: PackedStringArray) -> String:
 	return "temp = %.1f" % alchemy.temperature
 
 
-func _scene_command(parts: PackedStringArray) -> String:
-	if day_runtime == null and day_scene == null:
-		return "错误：场景切换仅可在日间模式使用。"
-	if parts.size() != 2:
-		return "错误：用法 scene <town|home|raintree|lake|grassland>"
-	var requested := parts[1].to_lower()
-	var level_id := ""
-	match requested:
-		"town", "market":
-			level_id = "market"
-		"home":
-			level_id = "home"
-		"raintree", "rain_tree", "forest":
-			level_id = "forest"
-		"lake":
-			level_id = "lake"
-		"grass", "grassland":
-			level_id = "grassland"
-		_:
-			return "错误：未知场景。可用：town、home、raintree、lake、grassland。"
+func _get_available_day_levels() -> Array[LevelData]:
 	if day_runtime != null:
-		if not day_runtime.switch_to_level(level_id):
-			return "错误：无法切换到场景 %s。" % requested
+		var levels_prop = day_runtime.get("LEVELS")
+		if levels_prop is Array and not levels_prop.is_empty():
+			var levels_arr: Array[LevelData] = []
+			for item in levels_prop:
+				if item is LevelData:
+					levels_arr.append(item)
+			if not levels_arr.is_empty():
+				return levels_arr
+	var loaded_levels: Array[LevelData] = []
+	for path in ALL_DAY_LEVEL_PATHS:
+		var res = load(path) as LevelData
+		if res != null:
+			loaded_levels.append(res)
+	return loaded_levels
+
+
+func _format_scene_list() -> String:
+	var levels := _get_available_day_levels()
+	var lines: PackedStringArray = ["可用日间场景序号对照列表（支持 scene <序号 1-%d|场景ID|中文别名>）：" % levels.size()]
+	for i in levels.size():
+		var lvl: LevelData = levels[i]
+		var alias_hint := ""
+		match str(lvl.id):
+			"market": alias_hint = " / town"
+			"home": alias_hint = " / shop"
+			"bedroom": alias_hint = " / room"
+			"forest": alias_hint = " / raintree"
+			"forest_interior": alias_hint = " / interior / luca"
+			"forest_crown": alias_hint = " / crown"
+			"lake": alias_hint = " / mirror_lake"
+			"grassland": alias_hint = " / grass"
+			"emerald_field": alias_hint = " / miasma"
+			"golden_cliff": alias_hint = " / cliff"
+			"golden_cliff_village": alias_hint = " / village"
+			"lake_bottom": alias_hint = " / underwater"
+			"gate_chamber": alias_hint = " / chamber"
+			"crimson_vale": alias_hint = " / vale"
+			"crimson_vale_challenge": alias_hint = " / challenge"
+			"alkeon_boss": alias_hint = " / boss 2"
+			"aurem_clockyard": alias_hint = " / clockyard"
+			"aurem_clockyard_inside": alias_hint = " / clockyard_inside / inside"
+			"lake_cliff_underwater": alias_hint = " / underwater_tunnel"
+			"cliff": alias_hint = " / shimmering_cliff"
+			"lakebed": alias_hint = " / lakebed_proto"
+			"grassland_proto": alias_hint = " / grass_proto"
+			"miasma_purifier": alias_hint = " / purifier_minigame"
+			"control_system_demo": alias_hint = " / mechanisms_demo"
+			"vespervale_garden": alias_hint = " / vespervale / garden"
+		lines.append("[%d] %s (%s%s)" % [i + 1, lvl.id, lvl.display_name, alias_hint])
+	return "\n".join(lines)
+
+
+func _resolve_target_level(query: String) -> LevelData:
+	var levels := _get_available_day_levels()
+	var raw := query.strip_edges()
+	var lower := raw.to_lower()
+
+	# 1. Number lookup (1-based index)
+	if raw.is_valid_int():
+		var idx := int(raw) - 1
+		if idx >= 0 and idx < levels.size():
+			return levels[idx]
+		return null
+
+	# 2. Predefined alias mapping
+	var target_id := ""
+	if SCENE_ALIASES.has(lower):
+		target_id = SCENE_ALIASES[lower]
+	elif SCENE_ALIASES.has(raw):
+		target_id = SCENE_ALIASES[raw]
+
+	if not target_id.is_empty():
+		for lvl in levels:
+			if str(lvl.id).to_lower() == target_id:
+				return lvl
+
+	# 3. Exact ID match
+	for lvl in levels:
+		if str(lvl.id).to_lower() == lower:
+			return lvl
+
+	# 4. Exact Display Name match
+	for lvl in levels:
+		if lvl.display_name.to_lower() == lower or lvl.display_name == raw:
+			return lvl
+
+	# 5. Fuzzy match: contains in ID or DisplayName or DisasterName
+	for lvl in levels:
+		if str(lvl.id).to_lower().contains(lower) or lvl.display_name.to_lower().contains(lower) or (not lvl.disaster_name.is_empty() and lvl.disaster_name.to_lower().contains(lower)):
+			return lvl
+
+	return null
+
+
+func _scene_command(parts: PackedStringArray) -> String:
+	if parts.size() == 1 or (parts.size() == 2 and parts[1].to_lower() in ["list", "help", "?", "all"]):
+		return _format_scene_list()
+	if parts.size() != 2:
+		return "错误：用法 scene <序号 1-%d|场景ID|中文别名> 或 scene list" % _get_available_day_levels().size()
+
+	var target_level := _resolve_target_level(parts[1])
+	if target_level == null:
+		var levels_count := _get_available_day_levels().size()
+		if parts[1].is_valid_int():
+			return "错误：场景序号超出范围（可用：1–%d）。输入 scene list 查看全部。" % levels_count
+		return "错误：未知场景 \"%s\"。输入 scene list 查看可用序号与场景对照。" % parts[1]
+
+	if day_runtime != null:
+		if not day_runtime.switch_to_level(str(target_level.id)):
+			return "错误：无法切换到场景 %s。" % target_level.display_name
 		return "scene = %s" % day_runtime.current_level.display_name
-	var scene_path := {
-		"market": "res://day/levels/market/town/town.tscn",
-		"home": "res://day/levels/home/home.tscn",
-		"forest": "res://day/art/raintree/raintree.tscn",
-		"lake": "res://day/art/lake/lake.tscn",
-		"grassland": "res://day/levels/grassland/grass.tscn",
-	}.get(level_id, "") as String
-	if scene_path.is_empty() or get_tree().change_scene_to_file(scene_path) != OK:
-		return "错误：无法切换到场景 %s。" % requested
-	return "scene = %s" % requested
+
+	# Standalone mode fallback (direct scene change)
+	if target_level.content_scene == null:
+		return "错误：场景 %s 没有配置有效的内容场景。" % target_level.display_name
+
+	var tree := get_tree()
+	if tree == null:
+		return "错误：SceneTree 不可用。"
+
+	var scene_path := target_level.content_scene.resource_path
+	if not scene_path.is_empty():
+		if tree.change_scene_to_file(scene_path) != OK:
+			return "错误：无法切换到场景文件 %s。" % scene_path
+	else:
+		if tree.change_scene_to_packed(target_level.content_scene) != OK:
+			return "错误：无法切换到场景 %s。" % target_level.display_name
+	return "scene = %s" % target_level.display_name
 
 
 func _title_command(parts: PackedStringArray) -> String:
@@ -544,11 +842,12 @@ func _equip_infinite_battle_potions(player: PlayerData) -> void:
 
 func _help_text() -> String:
 	return """Day scene commands:
-  scene <town|home|raintree|lake|grassland>
+  scene [list] - 查看全部可用日间场景序号对照列表
+  scene <序号 1-17 | 场景ID | 中文别名> - 切换到指定场景 (如 scene 17 或 scene 钟庭)
   boss 2 (或 boos 2) - 直达血叶猎王Boss战并装备无限药水
-  title
-  to normal
-  to corrupted
+  title - 重新播放当前场景标题动画
+  to normal - 切换环境为常态
+  to corrupted - 切换环境为异变态
 
 Other commands:
   day, night, status, get, set, add, give, take, potion, boss, temp, clear, close"""

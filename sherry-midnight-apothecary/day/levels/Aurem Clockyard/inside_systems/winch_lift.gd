@@ -25,17 +25,30 @@ var _manual_target_progress: float = 0.0
 
 func _ready() -> void:
 	sync_to_physics = true
-	_initial_pos = position
-	_target_pos = _initial_pos + move_offset
+	_init_positions()
 	_pause_timer = start_delay
 	if not is_automatic:
 		_moving_to_target = false
 		_manual_target_progress = 0.0
 
 
+func _init_positions() -> void:
+	_initial_pos = position
+	_target_pos = _initial_pos + move_offset
+
+
+func get_target_position() -> Vector2:
+	if _target_pos == Vector2.ZERO and _initial_pos == Vector2.ZERO:
+		return position + move_offset
+	return _target_pos
+
+
 func toggle_lift() -> void:
 	if _is_frozen:
 		return
+
+	if _target_pos == Vector2.ZERO and _initial_pos == Vector2.ZERO:
+		_init_positions()
 
 	if is_automatic:
 		_moving_to_target = not _moving_to_target
@@ -72,6 +85,9 @@ func _physics_process(delta: float) -> void:
 			if sprite != null:
 				sprite.modulate = Color.WHITE
 		return
+
+	if _target_pos == Vector2.ZERO and _initial_pos == Vector2.ZERO:
+		_init_positions()
 
 	var speed := 1.0 / maxf(move_duration, 0.1)
 

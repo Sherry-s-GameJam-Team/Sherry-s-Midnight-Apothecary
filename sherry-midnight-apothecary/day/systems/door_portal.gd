@@ -20,14 +20,12 @@ var _player_is_inside := false
 
 func _ready() -> void:
 	visual = get_node_or_null(visual_path) as Sprite2D if not visual_path.is_empty() else get_node_or_null("Visual") as Sprite2D
-	if visual == null:
-		push_error("DoorPortal requires a Sprite2D visual.")
-		return
 	monitoring = true
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
-	_outline_material = visual.material
-	_set_active(false)
+	if visual != null:
+		_outline_material = visual.material
+		_set_active(false)
 
 
 func _input(event: InputEvent) -> void:
@@ -48,9 +46,12 @@ func _execute_transition() -> void:
 		if use_active_home_destination and runtime.has_method("travel_from_home"):
 			if not runtime.call("travel_from_home"):
 				push_warning("Home door has no unlocked active destination.")
+		elif runtime.has_method("transition_to_level_with_blackout"):
+			runtime.call("transition_to_level_with_blackout", str(destination_level), destination_entry_id, true)
 		else:
 			runtime.switch_to_level(str(destination_level), destination_entry_id)
 	elif not fallback_scene_path.is_empty():
+		get_tree().set_meta("pending_entry_id", destination_entry_id)
 		get_tree().change_scene_to_file(fallback_scene_path)
 
 

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/lake/lake_cliff_underwater.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"lake_cliff_underwater"
+display_name = "镜湖·水下暗道"
+disaster_name = "涸泪之灾"
+normal_description = "镜湖断崖升降梯与水下通道，通向湖底沉没遗迹。"
+corrupted_description = "暗流涌动，水下浮力失衡。"
+scene_description = "乘坐断崖升降梯探索镜湖水下暗道与湖底通道。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = false
+native_ingredient_ids = Array[StringName]([])

@@ -59,7 +59,7 @@ position = Vector2(420, 560)
 position = Vector2(420, 560)
 
 [node name="restored_return" type="Marker2D" parent="EntryPoints" unique_id=2112366671]
-position = Vector2(5600, 560)
+position = Vector2(5887, 563)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=244414513 groups=["forest_character", "player"]]
 z_index = 10
@@ -130,6 +130,7 @@ luca_world_controller_path = NodePath("../LucaWorldController")
 position = Vector2(-40, 360)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/ExteriorLeftBarrier" unique_id=1564122626]
+position = Vector2(-340, 8)
 shape = SubResource("ExteriorSideShape")
 
 [node name="ExteriorRightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1041141081]

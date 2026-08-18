@@ -168,9 +168,15 @@ func _trigger_grand_synchronization() -> void:
 
 				synchronization_completed.emit()
 
-				var top_hint := get_node_or_null("/root/TopHintUI")
+				var top_hint := _find_top_hint()
 				if top_hint != null and top_hint.has_method("show_interaction_hint"):
 					top_hint.call("show_interaction_hint", "tower_complete", "奥雷姆钟庭的时律已完全恢复！")
+					if tree != null:
+						tree.create_timer(4.0).timeout.connect(func() -> void:
+							var hint := _find_top_hint()
+							if hint != null and hint.has_method("hide_interaction_hint"):
+								hint.call("hide_interaction_hint", "tower_complete")
+						)
 			)
 	else:
 		synchronization_completed.emit()
@@ -180,7 +186,7 @@ func _on_console_entered(body: Node2D, id: String) -> void:
 	if body.is_in_group("player") or body.name == "Player":
 		_active_console_id = id
 		var names := {"outer": "发条环", "middle": "齿轮环", "inner": "钟摆环"}
-		var top_hint := get_node_or_null("/root/TopHintUI")
+		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("show_interaction_hint"):
 			top_hint.call("show_interaction_hint", "sync_console", "按 E 锁定/释放 " + names.get(id, "") + "（对齐12点）")
 
@@ -188,6 +194,18 @@ func _on_console_entered(body: Node2D, id: String) -> void:
 func _on_console_exited(body: Node2D, id: String) -> void:
 	if (body.is_in_group("player") or body.name == "Player") and _active_console_id == id:
 		_active_console_id = ""
-		var top_hint := get_node_or_null("/root/TopHintUI")
-		if top_hint != null and top_hint.has_method("hide_hint"):
-			top_hint.call("hide_hint", "sync_console")
+		var top_hint := _find_top_hint()
+		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+			top_hint.call("hide_interaction_hint", "sync_console")
+
+
+func _find_top_hint() -> TopHintUI:
+	var current: Node = self
+	while current != null:
+		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
+		if top_hint != null:
+			return top_hint
+		current = current.get_parent()
+	if is_inside_tree() and get_tree() != null and get_tree().root != null:
+		return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+	return null

@@ -2,27 +2,25 @@
 
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside.gd" id="1_inside"]
 [ext_resource type="Script" uid="uid://b824pt5wh0kh6" path="res://day/levels/Aurem Clockyard/inside_systems/clocktower_audio.gd" id="2_audio"]
-[ext_resource type="Texture2D" uid="uid://cbpttrhpd1jla" path="res://day/levels/Aurem Clockyard/src/BG .png" id="3_bg"]
+[ext_resource type="Texture2D" uid="uid://b8aj3elethp7l" path="res://day/levels/Aurem Clockyard/towerBG.png" id="3_djmk2"]
 [ext_resource type="Texture2D" uid="uid://dnf32b2m3a3ha" path="res://day/levels/Aurem Clockyard/src/architecture/column_clock_arch.png" id="5_col_arch"]
 [ext_resource type="Texture2D" uid="uid://dxgc5rjsxd0ms" path="res://day/levels/Aurem Clockyard/src/architecture/window_gothic_tall.png" id="6_win_tall"]
 [ext_resource type="Texture2D" uid="uid://ce4gx7n0octxe" path="res://day/levels/Aurem Clockyard/src/architecture/platform_arch_gate.png" id="7_arch_gate"]
 [ext_resource type="Texture2D" uid="uid://m0pvn6kcjn72" path="res://day/levels/Aurem Clockyard/src/decorations/banner_clockyard_vertical.png" id="8_banner_vert"]
 [ext_resource type="Texture2D" uid="uid://cpct6jwruko78" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_cluster.png" id="11_gears"]
 [ext_resource type="Texture2D" uid="uid://cvxo3v1jsq2b4" path="res://day/levels/Aurem Clockyard/src/platforms/stone_platform_tiny_chain.png" id="12_djmk2"]
-[ext_resource type="Texture2D" uid="uid://ccramvrhuq0pa" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_lever.png" id="13_lever"]
 [ext_resource type="Texture2D" uid="uid://c4g5f1f20t2yl" path="res://day/levels/Aurem Clockyard/src/mechanisms/pendulum_orb.png" id="15_pend_orb"]
 [ext_resource type="Texture2D" uid="uid://blu3ov1qlo6q6" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_face_grand.png" id="16_clock_grand"]
 [ext_resource type="Texture2D" uid="uid://b1susoqm0wu2" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_pedestal.png" id="17_pedestal"]
 [ext_resource type="Texture2D" uid="uid://cra4wm1vqrfd3" path="res://day/levels/Aurem Clockyard/src/platforms/stone_arch_wide.png" id="18_stone_arch"]
 [ext_resource type="Texture2D" uid="uid://bvwp54l10tks1" path="res://day/levels/Aurem Clockyard/src/platforms/hanging_platform_wide.png" id="19_plat_wide"]
 [ext_resource type="Texture2D" uid="uid://c2c16wqtrms0c" path="res://day/levels/Aurem Clockyard/src/platforms/hanging_platform_long_chain.png" id="20_plat_chain"]
+[ext_resource type="Texture2D" uid="uid://dtueuwccqv15v" path="res://day/levels/Aurem Clockyard/art.png" id="21_djmk2"]
 [ext_resource type="Texture2D" uid="uid://bl46vrfb1csjd" path="res://day/levels/Aurem Clockyard/src/platforms/stone_platform_short.png" id="22_stone_short"]
 [ext_resource type="Texture2D" uid="uid://b1nnuh0eo5mjq" path="res://day/levels/Aurem Clockyard/src/props/ladder_platform.png" id="23_ladder_plat"]
 [ext_resource type="Texture2D" uid="uid://cxkak6m58ydce" path="res://day/levels/Aurem Clockyard/src/mechanisms/winch.png" id="24_winch"]
 [ext_resource type="Texture2D" uid="uid://bx84jysu4fc7s" path="res://day/levels/Aurem Clockyard/src/mechanisms/hanging_crane.png" id="25_crane"]
-[ext_resource type="Texture2D" uid="uid://ccs0gha2xi8fp" path="res://day/levels/Aurem Clockyard/src/mechanisms/gear_spirit.png" id="27_spirit"]
 [ext_resource type="Texture2D" uid="uid://biiepfrn6my4f" path="res://day/levels/Aurem Clockyard/src/mechanisms/retro_clockbird.png" id="28_bird"]
-[ext_resource type="Texture2D" uid="uid://dck431gtbmp8y" path="res://day/levels/Aurem Clockyard/src/mechanisms/beat_light.png" id="29_light"]
 [ext_resource type="Texture2D" uid="uid://bbbx38qv2as0r" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_hour.png" id="30_hour"]
 [ext_resource type="Texture2D" uid="uid://d2sws2lbtbp2a" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_minute.png" id="31_minute"]
 [ext_resource type="Texture2D" uid="uid://y131myfb5gvc" path="res://day/levels/Aurem Clockyard/src/mechanisms/synchronizer_rings.png" id="32_sync"]
@@ -37,7 +35,6 @@
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="41_pause_menu"]
 [ext_resource type="Script" uid="uid://bdyo35unvrw75" path="res://day/levels/Aurem Clockyard/inside_systems/floor1_spring_chamber.gd" id="42_floor1"]
 [ext_resource type="Script" uid="uid://ceos1morv8m51" path="res://day/levels/Aurem Clockyard/inside_systems/calibration_node.gd" id="43_node"]
-[ext_resource type="Script" uid="uid://b0w2x1iscqcgo" path="res://day/levels/Aurem Clockyard/inside_systems/gear_platform.gd" id="44_gear_plat"]
 [ext_resource type="Script" uid="uid://decno1uwxue4i" path="res://day/levels/Aurem Clockyard/inside_systems/calibration_lever.gd" id="45_lever"]
 [ext_resource type="Script" uid="uid://6b4e2dtkxdf" path="res://day/levels/Aurem Clockyard/inside_systems/swinging_pendulum.gd" id="47_pendulum"]
 [ext_resource type="Script" uid="uid://dh2rj6ua13fap" path="res://day/levels/Aurem Clockyard/inside_systems/beat_telegraph_light.gd" id="48_beat_light"]
@@ -45,6 +42,9 @@
 [ext_resource type="Script" uid="uid://dfpj2ltftgclq" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hands_floor.gd" id="50_floor4"]
 [ext_resource type="Script" uid="uid://rpgkk6wow4nr" path="res://day/levels/Aurem Clockyard/inside_systems/tower_top_synchronizer.gd" id="51_top"]
 [ext_resource type="Script" uid="uid://bgk6g4dv0on1r" path="res://day/levels/Aurem Clockyard/inside_systems/winch_lift.gd" id="53_winch_lift"]
+[ext_resource type="Script" uid="uid://dd377ehg4yu1d" path="res://day/levels/Aurem Clockyard/inside_systems/hanging_platform.gd" id="54_hanging_plat"]
+[ext_resource type="Script" uid="uid://cu1vlairf3fkd" path="res://day/levels/Aurem Clockyard/inside_systems/chaotic_gear.gd" id="55_chaotic_gear"]
+[ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="56_top_hint"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
 size = Vector2(1600, 100)
@@ -59,7 +59,7 @@ size = Vector2(140, 24)
 size = Vector2(274, 24)
 
 [sub_resource type="RectangleShape2D" id="Rect_plat_wide"]
-size = Vector2(220, 24)
+size = Vector2(157, 39)
 
 [sub_resource type="RectangleShape2D" id="Rect_plat_arch_dbl"]
 size = Vector2(240, 30)
@@ -70,8 +70,8 @@ size = Vector2(200, 30)
 [sub_resource type="RectangleShape2D" id="Rect_node_area"]
 size = Vector2(100, 100)
 
-[sub_resource type="CircleShape2D" id="Circle_gear_plat"]
-radius = 45.0
+[sub_resource type="CircleShape2D" id="Circle_hazard_gear"]
+radius = 40.0
 
 [sub_resource type="RectangleShape2D" id="Rect_plat_arch"]
 size = Vector2(280, 30)
@@ -96,20 +96,9 @@ script = ExtResource("2_audio")
 z_index = -50
 
 [node name="BG_Tile1" type="Sprite2D" parent="Background" unique_id=881484661]
-position = Vector2(557, -416)
-texture = ExtResource("3_bg")
-
-[node name="BG_Tile2" type="Sprite2D" parent="Background" unique_id=881484662]
-position = Vector2(600, -1200)
-texture = ExtResource("3_bg")
-
-[node name="BG_Tile3" type="Sprite2D" parent="Background" unique_id=881484663]
-position = Vector2(600, -2600)
-texture = ExtResource("3_bg")
-
-[node name="BG_Tile4" type="Sprite2D" parent="Background" unique_id=881484664]
-position = Vector2(600, -4000)
-texture = ExtResource("3_bg")
+position = Vector2(515, -1730)
+scale = Vector2(2.2052102, 2.2052102)
+texture = ExtResource("3_djmk2")
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=1999559791]
 
@@ -171,7 +160,7 @@ z_index = 6
 texture = ExtResource("20_plat_chain")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Platform2_Chain" unique_id=1015]
-position = Vector2(-3, -22)
+position = Vector2(-3, -21)
 shape = SubResource("Rect_plat_chain")
 one_way_collision = true
 
@@ -196,6 +185,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("24_winch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift1" unique_id=1009]
+position = Vector2(0, 50)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -217,6 +207,7 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("25_crane")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/WinchLifts/WinchLift2_Crane" unique_id=1036]
+position = Vector2(2.5, 35.5)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -279,6 +270,7 @@ one_way_collision = true
 [node name="CalibrationNode1" type="Area2D" parent="World/Floor1_SpringChamber" unique_id=1022]
 position = Vector2(602, -515)
 script = ExtResource("43_node")
+linked_mechanism = NodePath("../HangingPlatform_Secret")
 
 [node name="GearSprite" type="Sprite2D" parent="World/Floor1_SpringChamber/CalibrationNode1" unique_id=1023]
 z_index = 1
@@ -291,34 +283,37 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("17_pedestal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/CalibrationNode1" unique_id=1025]
+position = Vector2(-9, -7)
 shape = SubResource("Rect_node_area")
 
 [node name="HangingPlatform_Secret" type="AnimatableBody2D" parent="World/Floor1_SpringChamber" unique_id=1050]
-position = Vector2(-97, -200)
+position = Vector2(596, -465)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("53_winch_lift")
-move_offset = Vector2(0, -216)
-move_duration = 2.0
-is_automatic = false
+script = ExtResource("54_hanging_plat")
+target_position = Vector2(602, -678)
+initial_position = Vector2(597, -453)
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor1_SpringChamber/HangingPlatform_Secret" unique_id=1051]
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/HangingPlatform_Secret" unique_id=1052]
+position = Vector2(-1, 35)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
 [node name="Floor1Lever" type="Area2D" parent="World/Floor1_SpringChamber" unique_id=1053]
 position = Vector2(247, -320)
 script = ExtResource("45_lever")
-target_gears = [NodePath("../HangingPlatform_Secret")]
+target_gears = Array[NodePath]([NodePath("../HangingPlatform_Secret")])
 
 [node name="HandleSprite" type="Sprite2D" parent="World/Floor1_SpringChamber/Floor1Lever" unique_id=1054]
+position = Vector2(45.999996, -37.999992)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("13_lever")
+texture = ExtResource("24_winch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor1_SpringChamber/Floor1Lever" unique_id=1055]
+position = Vector2(48, -61)
 shape = SubResource("Rect_node_area")
 
 [node name="Floor2_GearWell" type="Node2D" parent="World" unique_id=2001]
@@ -338,168 +333,194 @@ position = Vector2(50, 177)
 polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
 one_way_collision = true
 
-[node name="GearPlatform1" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2005]
-position = Vector2(400, -160)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("44_gear_plat")
-base_speed = 1.0
-
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/GearPlatform1" unique_id=2006]
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("11_gears")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearPlatform1" unique_id=2007]
-shape = SubResource("Circle_gear_plat")
-one_way_collision = true
-
-[node name="GearPlatform2_Reverse" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2008]
-position = Vector2(800, -160)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("44_gear_plat")
-mode = 1
-
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/GearPlatform2_Reverse" unique_id=2009]
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("11_gears")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearPlatform2_Reverse" unique_id=2010]
-shape = SubResource("Circle_gear_plat")
-one_way_collision = true
-
-[node name="GearPlatform3_Overspeed" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2011]
-position = Vector2(600, -360)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("44_gear_plat")
-mode = 2
-
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/GearPlatform3_Overspeed" unique_id=2012]
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("11_gears")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearPlatform3_Overspeed" unique_id=2013]
-shape = SubResource("Circle_gear_plat")
-one_way_collision = true
-
-[node name="MidPlatLever" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2014]
-position = Vector2(250, -500)
+[node name="Plat2_LowRight" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2005]
+position = Vector2(880, -160)
 collision_layer = 2
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/MidPlatLever" unique_id=2015]
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_LowRight" unique_id=2006]
 texture = ExtResource("19_plat_wide")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/MidPlatLever" unique_id=2016]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_LowRight" unique_id=2007]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="ChaoticGear1" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2008]
+position = Vector2(550, -220)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("55_chaotic_gear")
+base_speed = 170.0
+damage = 12
+bounds_min = Vector2(120, -420)
+bounds_max = Vector2(980, -80)
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/ChaoticGear1" unique_id=2009]
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear1" unique_id=2010]
+shape = SubResource("Circle_hazard_gear")
+one_way_collision = true
+
+[node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear1" unique_id=2011]
+collision_layer = 0
+
+[node name="Plat2_MidLeft" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2014]
+position = Vector2(250, -380)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_MidLeft" unique_id=2015]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidLeft" unique_id=2016]
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
 [node name="CalibrationLever" type="Area2D" parent="World/Floor2_GearWell" unique_id=2017]
-position = Vector2(250, -550)
+position = Vector2(250, -440)
 script = ExtResource("45_lever")
-target_gears = Array[NodePath]([NodePath("../StairGear1"), NodePath("../StairGear2"), NodePath("../StairGear3")])
+target_gears = Array[NodePath]([NodePath("../ChaoticGear1"), NodePath("../ChaoticGear2"), NodePath("../ChaoticGear3"), NodePath("../ChaoticGear4")])
 
 [node name="HandleSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationLever" unique_id=2018]
+position = Vector2(2.9999998, 37.999996)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("13_lever")
+texture = ExtResource("21_djmk2")
+region_enabled = true
+region_rect = Rect2(332.99762, 1286.6669, 77.33331, 95.333374)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/CalibrationLever" unique_id=2019]
+position = Vector2(-4, 22)
 shape = SubResource("Rect_node_area")
 
 [node name="TimerLabel" type="Label" parent="World/Floor2_GearWell/CalibrationLever" unique_id=2020]
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
-offset_bottom = -17.0
+offset_left = -13.0
+offset_top = -29.0
+offset_right = 27.0
+offset_bottom = -6.0
 text = "6.0s"
 
-[node name="StairGear1" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2021]
-position = Vector2(500, -560)
+[node name="ChaoticGear2" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2021]
+position = Vector2(580, -460)
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("44_gear_plat")
-is_sync_controlled = true
+script = ExtResource("55_chaotic_gear")
+motion_type = 1
+base_speed = 150.0
+damage = 12
+sweep_radius = Vector2(280, 80)
+sweep_frequency = 1.3
 
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/StairGear1" unique_id=2022]
-scale = Vector2(0.5, 0.5)
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/ChaoticGear2" unique_id=2022]
+scale = Vector2(0.65, 0.65)
 texture = ExtResource("11_gears")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/StairGear1" unique_id=2023]
-shape = SubResource("Circle_gear_plat")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear2" unique_id=2023]
+shape = SubResource("Circle_hazard_gear")
 one_way_collision = true
 
-[node name="StairGear2" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2024]
-position = Vector2(650, -700)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("44_gear_plat")
-is_sync_controlled = true
-
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/StairGear2" unique_id=2025]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("11_gears")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/StairGear2" unique_id=2026]
-shape = SubResource("Circle_gear_plat")
-one_way_collision = true
-
-[node name="StairGear3" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2027]
-position = Vector2(800, -840)
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("44_gear_plat")
-is_sync_controlled = true
-
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/StairGear3" unique_id=2028]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("11_gears")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/StairGear3" unique_id=2029]
-shape = SubResource("Circle_gear_plat")
-one_way_collision = true
-
-[node name="GearSpiritEnemy" type="CharacterBody2D" parent="World/Floor2_GearWell" unique_id=2030]
-position = Vector2(850, -180)
-collision_layer = 4
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/GearSpiritEnemy" unique_id=2031]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("27_spirit")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/GearSpiritEnemy" unique_id=2032]
-shape = SubResource("Circle_gear_plat")
-
-[node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/GearSpiritEnemy" unique_id=2033]
+[node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear2" unique_id=2024]
 collision_layer = 0
 
-[node name="PlatformNode2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2035]
+[node name="Plat2_MidRight" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2026]
+position = Vector2(880, -580)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_MidRight" unique_id=2027]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidRight" unique_id=2028]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="ChaoticGear3" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2029]
+position = Vector2(550, -680)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("55_chaotic_gear")
+damage = 12
+bounds_min = Vector2(150, -850)
+bounds_max = Vector2(950, -520)
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/ChaoticGear3" unique_id=2030]
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear3" unique_id=2031]
+shape = SubResource("Circle_hazard_gear")
+one_way_collision = true
+
+[node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear3" unique_id=2032]
+collision_layer = 0
+
+[node name="Plat2_HighLeft" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2034]
+position = Vector2(320, -780)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_HighLeft" unique_id=2035]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_HighLeft" unique_id=2036]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="ChaoticGear4" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2037]
+position = Vector2(600, -900)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("55_chaotic_gear")
+motion_type = 2
+base_speed = 160.0
+damage = 12
+sweep_radius = Vector2(50, 100)
+sweep_frequency = 1.4
+
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/ChaoticGear4" unique_id=2038]
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("11_gears")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear4" unique_id=2039]
+shape = SubResource("Circle_hazard_gear")
+one_way_collision = true
+
+[node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear4" unique_id=2040]
+collision_layer = 0
+
+[node name="PlatformNode2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2042]
 position = Vector2(600, -1000)
 collision_layer = 2
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=2036]
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=2043]
 texture = ExtResource("18_stone_arch")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=2037]
-shape = SubResource("Rect_plat_arch")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=378651798]
+polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
 one_way_collision = true
 
-[node name="CalibrationNode2" type="Area2D" parent="World/Floor2_GearWell" unique_id=2038]
+[node name="CalibrationNode2" type="Area2D" parent="World/Floor2_GearWell" unique_id=2045]
 position = Vector2(600, -1050)
 script = ExtResource("43_node")
 node_id = 2
 node_name_cn = "校时节点Ⅱ：齿轮差速器"
+linked_mechanisms = Array[NodePath]([NodePath("../ChaoticGear1"), NodePath("../ChaoticGear2"), NodePath("../ChaoticGear3"), NodePath("../ChaoticGear4")])
 
-[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2039]
+[node name="GearSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2046]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("11_gears")
 
-[node name="GlowSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2040]
+[node name="GlowSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2047]
+position = Vector2(45, -45)
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("17_pedestal")
+texture = ExtResource("21_djmk2")
+region_enabled = true
+region_rect = Rect2(440.9132, 815.43945, 161.43958, 85.42377)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2041]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2048]
+position = Vector2(-10, -100)
 shape = SubResource("Rect_node_area")
 
 [node name="Floor3_PendulumHall" type="Node2D" parent="World" unique_id=3001]
@@ -513,12 +534,12 @@ collision_mask = 0
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MaintenancePlat3" unique_id=3003]
 texture = ExtResource("18_stone_arch")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MaintenancePlat3" unique_id=3004]
-shape = SubResource("Rect_plat_arch")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor3_PendulumHall/MaintenancePlat3" unique_id=1323834051]
+polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
 one_way_collision = true
 
 [node name="WindowGothic" type="Sprite2D" parent="World/Floor3_PendulumHall" unique_id=3005]
-position = Vector2(600, -400)
+position = Vector2(167.00002, -723)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("6_win_tall")
 
@@ -527,12 +548,18 @@ position = Vector2(600, -780)
 script = ExtResource("48_beat_light")
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/TelegraphLight" unique_id=3007]
+position = Vector2(-310, -214)
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("29_light")
+texture = ExtResource("21_djmk2")
+region_enabled = true
+region_rect = Rect2(801.2606, 206.71628, 89.54004, 189.56671)
 
 [node name="GlowCircle" type="Sprite2D" parent="World/Floor3_PendulumHall/TelegraphLight" unique_id=3008]
+position = Vector2(3, -38.000004)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("29_light")
+texture = ExtResource("21_djmk2")
+region_enabled = true
+region_rect = Rect2(168.94296, 405.96558, 88.04123, 282.37622)
 
 [node name="SwingingPendulum" type="Node2D" parent="World/Floor3_PendulumHall" unique_id=3009]
 position = Vector2(600, -700)
@@ -550,11 +577,12 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/SwingingPendulum/BobPlatform" unique_id=3012]
+position = Vector2(-57.999996, 18.999998)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("15_pend_orb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/SwingingPendulum/BobPlatform" unique_id=3013]
-position = Vector2(0, -10)
+position = Vector2(-12.5, -24)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -861,3 +889,8 @@ layer = 200
 script = ExtResource("40_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=1830075792 instance=ExtResource("41_pause_menu")]
+
+[node name="GlobalUI" type="CanvasLayer" parent="." unique_id=245175995]
+layer = 200
+
+[node name="TopHintUI" parent="GlobalUI" unique_id=245175996 instance=ExtResource("56_top_hint")]

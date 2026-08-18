@@ -43,6 +43,7 @@ folder_colors={
 "res://day/levels/": "yellow",
 "res://day/levels/Aurem Clockyard/": "orange",
 "res://day/levels/Crimson Vale/": "red",
+"res://day/levels/Vespervale/": "purple",
 "res://day/levels/cliff/": "blue",
 "res://day/levels/forest/": "green",
 "res://day/levels/forest/interior/": "red",

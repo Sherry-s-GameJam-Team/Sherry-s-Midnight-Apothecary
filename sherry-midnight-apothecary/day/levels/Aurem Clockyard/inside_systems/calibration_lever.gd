@@ -51,6 +51,8 @@ func pull_lever() -> void:
 		if node != null:
 			if node.has_method("set_synchronized"):
 				node.call("set_synchronized", true, sync_duration)
+			elif node.has_method("set_slowdown"):
+				node.call("set_slowdown", sync_duration)
 			elif node.has_method("toggle_lift"):
 				node.call("toggle_lift")
 
@@ -83,14 +85,30 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") or body.name == "Player":
 		_player_in_range = true
-		var top_hint := get_node_or_null("/root/TopHintUI")
+		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("show_interaction_hint"):
-			top_hint.call("show_interaction_hint", "calib_lever", "按 E 拉动校准杆（齿轮同步）")
+			top_hint.call("show_interaction_hint", _hint_id(), "按 E 拉动校准杆（齿轮同步）")
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player") or body.name == "Player":
 		_player_in_range = false
-		var top_hint := get_node_or_null("/root/TopHintUI")
-		if top_hint != null and top_hint.has_method("hide_hint"):
-			top_hint.call("hide_hint", "calib_lever")
+		var top_hint := _find_top_hint()
+		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+			top_hint.call("hide_interaction_hint", _hint_id())
+
+
+func _hint_id() -> String:
+	return "calib_lever_%s" % name
+
+
+func _find_top_hint() -> TopHintUI:
+	var current: Node = self
+	while current != null:
+		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
+		if top_hint != null:
+			return top_hint
+		current = current.get_parent()
+	if is_inside_tree() and get_tree() != null and get_tree().root != null:
+		return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+	return null

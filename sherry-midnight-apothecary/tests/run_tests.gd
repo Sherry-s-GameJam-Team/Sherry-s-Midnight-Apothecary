@@ -46,6 +46,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/control_system_switch_plate_test.gd"),
 	preload("res://tests/aurem_clockyard_level_test.gd"),
 	preload("res://tests/aurem_clockyard_inside_test.gd"),
+	preload("res://tests/vespervale_garden_level_test.gd"),
 ]
 
 

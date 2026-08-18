@@ -16,7 +16,7 @@
 | 楼层 | 区域 | 核心机制 | 修复节点 / 关卡目标 |
 | :--- | :--- | :--- | :--- |
 | **第一层** (Y: 0 ~ -800) | **发条与工坊层** (Clockwork Chamber) | 吊链与卷扬机跳跃解密：利用低矮跳石、悬挂长链平台、升降卷扬机吊台、阶梯式梯架平台与滑移吊车横跨深壑，在规避机械蒸汽的同时逐级向上攀登 | **校时节点Ⅰ：主发条限位器** (稳定下层管线并平复吊机) |
-| **第二层** (Y: -900 ~ -2000) | **齿轮井** (Gear Well) | 齿轮相位：顺转、反转逆流、失速齿轮。拉动**校准杆**触发 6 秒齿轮同步对齐楼梯 | **校时节点Ⅱ：齿轮差速器** (统一齿轮转速) |
+| **第二层** (Y: -900 ~ -2000) | **齿轮井** (Gear Well) | **无序齿轮躲避与减速窗口**：暴走无序飞舞的碰撞伤害齿轮（弹射弹跳、椭圆横扫、垂直突进）。主角需在跳台间灵活躲避，利用**冰药水**将其冻为安全踏板，或拉动**校准拉杆**获取 6 秒大幅减速安全期 | **校时节点Ⅱ：齿轮差速器** (彻底平复齿轮暴走) |
 | **第三层** (Y: -2000 ~ -3200) | **钟摆厅** (Pendulum Hall) | 钟摆搭乘与节拍预兆：中央巨型摆锤扫过深壑，钟声提前 0.8s 预警。顶部**橙色节拍灯**预告跳拍异常（1闪正常，2闪异常） | **校时节点Ⅲ：擒纵机构** (恢复标准摆频) |
 | **第四层** (Y: -3200 ~ -4200) | **指针层** (Clock Hands Floor) | 钟面平台与手轮校调：12 个时间刻度，转动手轮使分针指向 Ⅲ 开门拿隐藏药材，指向 Ⅻ 对齐通向塔顶之路。指针倒退前具有 1s 齿轮磨损震动预警 | **开启塔顶登顶通道** |
 | **塔顶** (Y: -4200 ~ -5000) | **塔顶校时台** (Tower Top Synchronizer) | **三系统大校时谜题**：三组同心圆环（外环发条、中环齿轮、内环钟摆），操纵机台将三道刻度对齐 12 点钟，触发宏大铜钟轰鸣与全城时律复苏演出 | **钟庭全面恢复** (`aurem_clockyard_tower_synchronized`) |
@@ -25,11 +25,11 @@
 1. **纯粹纵向攀登体验**：
    - 关卡采用纯粹的经典物理坠落机制（无自动黑屏传送/FallReset），玩家失误掉落会直接坠至下方平台或底层，保留高空跃迁的紧张感与技巧成就感。
 2. **雪莉药水能力交互 (`receive_potion_hit`)**：
-   - **冰药水 (Blue/Ice)**：冻结暴走/失速齿轮与卷扬吊机 4 秒，提供安全立足点；直接冻结三环谜题至 12 点。
-   - **爆炸药水 (Red/Bomb)**：破坏卡死锁具，击退失准齿轮灵与逆行钟鸟。
+   - **冰药水 (Blue/Ice)**：冻结暴走无序齿轮与卷扬吊机 4.5 秒，取消其伤害并将其变为安全立足点；直接冻结三环谜题至 12 点。
+   - **爆炸药水 (Red/Bomb)**：击退失控齿轮并使其短暂减速，破坏卡死锁具。
    - **活化药水 (Orange/Speed)**：为停转机关与卷扬机注入魔力，快速推进手轮与指针。
-3. **钟庭机械敌人**：
-   - **失准齿轮灵 (`GearSpirit`)**：在平台间巡逻滚动的齿轮生物。
+3. **钟庭机械敌人与环境危害**：
+   - **无序伤害齿轮 (`ChaoticHazardGear`)**：在第二层多轨道、多模式弹跳和横扫的失控伤害齿轮。
    - **逆行钟鸟 (`RetroClockbird`)**：反向飞行并在上方投放黄铜螺栓的报时鸟造物。
 4. **声音合成器 (`ClocktowerAudio`)**：
    - 程序化合成机械滴答声、蒸汽喷射声、齿轮卡合声、磨损预警声、钟鸣预警声及塔顶震撼的黄钟大吕回响 (`play_grand_synchronization_toll`)。
@@ -48,13 +48,14 @@ Inside (AuremClocktowerInsideLevel)
 │  │  ├─ Platform1_LowStone + Platform2_Chain + Platform3_RightArch
 │  │  ├─ Platform4_LadderGantry + Platform5_HighBridge + PlatformNode1
 │  │  ├─ WinchLifts (WinchLift1, WinchLift2_Crane)
-│  │  └─ CalibrationNode1 (CalibrationNode: 主发条限位器)
+│  │  ├─ Floor1Lever (Area2D 拉杆部件)
+│  │  ├─ HangingPlatform_Secret (ClocktowerHangingPlatform 悬吊升降台 -> 自身脚本硬编码位移至 (-97, -416))
+│  │  └─ CalibrationNode1 (CalibrationNode: 主发条限位器 -> 修复后联动激活悬吊升降台)
 │  ├─ Floor2_GearWell
-│  │  ├─ GearPlatform1~3 (GearPlatform: 正转/反转/失速)
-│  │  ├─ StairGear1~3 (GearPlatform: 3 组错位阶梯齿轮)
-│  │  ├─ CalibrationLever (CalibrationLever: 6s 齿轮同步拉杆)
-│  │  ├─ GearSpiritEnemy (GearSpirit: 巡逻齿轮灵)
-│  │  └─ CalibrationNode2 (CalibrationNode: 齿轮差速器)
+│  │  ├─ Plat2_LowRight + Plat2_MidLeft + Plat2_MidRight + Plat2_HighLeft (宽跳台)
+│  │  ├─ ChaoticGear1~4 (ChaoticHazardGear: 弹跳/横扫/垂直无序运动齿轮，触碰伤害)
+│  │  ├─ CalibrationLever (CalibrationLever: 6s 齿轮大幅减速拉杆)
+│  │  └─ CalibrationNode2 (CalibrationNode: 齿轮差速器 -> 修复后永久平息齿轮伤害与暴走)
 │  ├─ Floor3_PendulumHall
 │  │  ├─ TelegraphLight (BeatTelegraphLight: 节拍预兆灯)
 │  │  ├─ SwingingPendulum (SwingingPendulum: 巨型搭乘摆锤)

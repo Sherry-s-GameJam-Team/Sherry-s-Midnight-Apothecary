@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/inside.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"aurem_clockyard_inside"
+display_name = "奥勒姆巨钟塔·内部"
+disaster_name = "时律之灾"
+normal_description = "巨钟塔发条室、齿轮井与钟摆厅，时律核心正有序运转。"
+corrupted_description = "擒纵机构失调，发条崩解，时钟齿轮在混沌脉冲中狂乱旋转。"
+scene_description = "逐层修复主发条、同步齿轮相位并跨越钟摆深壑，在塔顶校时台完成大同步。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = false
+native_ingredient_ids = Array[StringName]([])

@@ -57,30 +57,42 @@ static func run(test: TestSupport) -> void:
 	var secret_plat := level.get_node_or_null("World/Floor1_SpringChamber/HangingPlatform_Secret")
 	var floor1_lever := level.get_node_or_null("World/Floor1_SpringChamber/Floor1Lever")
 	test.expect(secret_plat != null and floor1_lever != null, "Floor 1 secret hanging platform and lever exist.")
-	if floor1_lever != null and secret_plat != null:
-		floor1_lever.call("pull_lever")
-		test.expect_equal(secret_plat.get("_target_pos"), Vector2(-97, -416), "Hanging platform moves to (-97, -416) on lever pull.")
+	if secret_plat != null:
+		test.expect(secret_plat.get("target_position") != Vector2.ZERO, "Hanging platform defines target position.")
 
 	var calib_node_1 := level.get_node_or_null("World/Floor1_SpringChamber/CalibrationNode1")
 	test.expect(calib_node_1 != null, "Calibration Node 1 exists.")
-	if calib_node_1 != null:
+	if calib_node_1 != null and secret_plat != null:
 		test.expect_equal(calib_node_1.get("node_id"), 1, "Node 1 id is 1.")
 		calib_node_1.call("repair_node")
 		test.expect(bool(calib_node_1.get("is_fixed")), "Calibration Node 1 can be repaired.")
+		test.expect(bool(secret_plat.get("is_activated")), "Calibration Node 1 activation triggers hanging platform movement.")
 
-	# Test Floor 2: Gear Well
+	# Test Floor 2: Gear Well (Chaotic Hazard Gears)
 	var floor2 := level.get_node_or_null("World/Floor2_GearWell")
 	test.expect(floor2 != null, "Floor 2 Gear Well exists.")
+	var gear1 := level.get_node_or_null("World/Floor2_GearWell/ChaoticGear1")
+	var gear2 := level.get_node_or_null("World/Floor2_GearWell/ChaoticGear2")
+	var gear3 := level.get_node_or_null("World/Floor2_GearWell/ChaoticGear3")
+	var gear4 := level.get_node_or_null("World/Floor2_GearWell/ChaoticGear4")
+	test.expect(gear1 != null and gear2 != null and gear3 != null and gear4 != null, "All 4 Chaotic Hazard Gears exist on Floor 2.")
+
+	if gear1 != null:
+		gear1.call("receive_potion_hit", {"potion_id": "blue_ice_potion"})
+		test.expect(bool(gear1.get("_is_frozen")), "Ice potion freezes chaotic gear into static platform.")
+
 	var lever := level.get_node_or_null("World/Floor2_GearWell/CalibrationLever")
 	test.expect(lever != null, "Calibration Lever exists.")
 	if lever != null:
 		lever.call("pull_lever")
-		test.expect(bool(lever.get("_is_active")), "Lever activates synchronization.")
+		test.expect(bool(lever.get("_is_active")), "Lever activates gear slowdown window.")
+
 	var calib_node_2 := level.get_node_or_null("World/Floor2_GearWell/CalibrationNode2")
 	test.expect(calib_node_2 != null, "Calibration Node 2 exists.")
-	if calib_node_2 != null:
+	if calib_node_2 != null and gear1 != null:
 		calib_node_2.call("repair_node")
 		test.expect(bool(calib_node_2.get("is_fixed")), "Calibration Node 2 can be repaired.")
+		test.expect(bool(gear1.get("is_stabilized")), "Calibration Node 2 repairs and permanently stabilizes chaotic gears.")
 
 	# Test Floor 3: Pendulum Hall
 	var floor3 := level.get_node_or_null("World/Floor3_PendulumHall")
@@ -107,9 +119,16 @@ static func run(test: TestSupport) -> void:
 		tower_top.call("receive_potion_hit", {"potion_id": "blue_potion"})
 		test.expect(bool(tower_top.get("is_synchronized")), "Tower Top synchronizes upon ring alignment.")
 
-	# Test Portals
+	# Test Portals & TopHintUI
 	var entrance_portal := level.get_node_or_null("World/Portals/EntrancePortal")
 	var exit_portal := level.get_node_or_null("World/TowerTop/ExitPortal")
 	test.expect(entrance_portal != null and exit_portal != null, "Entrance and Exit portals are deployed.")
+
+	var top_hint := level.get_node_or_null("GlobalUI/TopHintUI")
+	test.expect(top_hint != null, "TopHintUI is instantiated under GlobalUI in inside scene.")
+	if top_hint != null and calib_node_1 != null:
+		calib_node_1.call("_on_body_entered", player)
+		test.expect(top_hint.get("_current") != null, "Entering calibration node triggers interaction hint.")
+		calib_node_1.call("_on_body_exited", player)
 
 	level.free()

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/minigames/miasma_purifier/miasma_purifier.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"miasma_purifier"
+display_name = "瘴气净化·小游戏"
+disaster_name = "青苔之灾"
+normal_description = "调配魔药净化瘴气源头的小游戏场景。"
+corrupted_description = "瘴气根须翻涌的小游戏场景。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = false
+native_ingredient_ids = Array[StringName]([])

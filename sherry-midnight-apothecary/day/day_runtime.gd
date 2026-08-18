@@ -23,6 +23,14 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/Crimson Vale/crimson_vale_challenge_level.tres"),
 	preload("res://day/levels/Crimson Vale/alkeon_boss_level.tres"),
 	preload("res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres"),
+	preload("res://day/levels/Aurem Clockyard/aurem_clockyard_inside_level.tres"),
+	preload("res://day/levels/lake/lake_cliff_underwater_level.tres"),
+	preload("res://day/levels/cliff/cliff_level.tres"),
+	preload("res://day/levels/lakebed/lakebed_level.tres"),
+	preload("res://day/levels/grassland/grassland_proto_level.tres"),
+	preload("res://day/minigames/miasma_purifier/miasma_purifier_level.tres"),
+	preload("res://day/interactables/control_system/control_system_demo_level.tres"),
+	preload("res://day/levels/Vespervale/vespervale_garden_level.tres"),
 ]
 
 # Home is available through its door, but does not consume a day in the normal

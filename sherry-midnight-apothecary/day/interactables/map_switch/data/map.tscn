@@ -38,7 +38,7 @@ description = "流明街以北的广阔草原，终年长风不息，是所有�
 [node name="Anchor02" type="Node2D" parent="AnchorPoints" unique_id=1067454492]
 position = Vector2(537, 545)
 script = ExtResource("2_anchor")
-destination_id = &"阿尔维斯"
+destination_id = &"forest_interior"
 display_name = "阿尔维斯母树"
 subtitle = "万千根脉托起云林之心"
 danger = "中等"

@@ -47,7 +47,20 @@ func _ready() -> void:
 	_connect_runtime_nodes()
 	_apply_persistent_state()
 	_set_phase(ForestPhase.RESTORED if boss_purified else ForestPhase.EXTERIOR)
+	if get_tree().has_meta("pending_entry_id"):
+		var pending_id: StringName = get_tree().get_meta("pending_entry_id")
+		get_tree().remove_meta("pending_entry_id")
+		on_level_entered(pending_id)
+	else:
+		_apply_camera_for_active_character()
 	_update_ui()
+
+
+func on_level_entered(entry_id: StringName) -> void:
+	var entry := get_node_or_null("EntryPoints/%s" % entry_id) as Marker2D
+	if entry != null and player != null:
+		player.global_position = entry.global_position
+	_apply_camera_for_active_character()
 
 func _process(_delta: float) -> void:
 	if phase >= ForestPhase.INTERIOR and phase < ForestPhase.RESTORED:
@@ -218,22 +231,25 @@ func _on_boss_started() -> void:
 	_set_phase(ForestPhase.BOSS)
 
 func _apply_camera_for_active_character() -> void:
-	var body := party.active_body()
-	if body.global_position.x >= 8800.0:
-		_set_camera_limits(Rect2(8800, -200, 3000, 1000))
-	elif body.global_position.x >= 6600.0:
-		_set_camera_limits(Rect2(6600, -3400, 2000, 4200))
-	else:
-		_set_camera_limits(Rect2(0, 0, 6500, 724))
+	var body: Node2D = party.active_body() if party != null and party.has_method("active_body") else player
+	if body == null:
+		body = player
+	if body != null:
+		if body.global_position.x >= 8800.0:
+			_set_camera_limits(Rect2(8800, -200, 3000, 1000))
+		elif body.global_position.x >= 6600.0:
+			_set_camera_limits(Rect2(6600, -3400, 2000, 4200))
+		else:
+			_set_camera_limits(Rect2(0, 0, 6500, 724))
 
 func _set_phase(value: int) -> void:
 	phase = value
 	match phase:
-		ForestPhase.EXTERIOR, ForestPhase.TREE_GATE_OPEN:
+		ForestPhase.EXTERIOR, ForestPhase.TREE_GATE_OPEN, ForestPhase.RESTORED:
 			_set_camera_limits(Rect2(0, 0, 6500, 724))
 		ForestPhase.INTERIOR:
 			_set_camera_limits(Rect2(6600, -3400, 2000, 4200))
-		ForestPhase.CROWN, ForestPhase.BOSS, ForestPhase.RESTORED:
+		ForestPhase.CROWN, ForestPhase.BOSS:
 			_set_camera_limits(Rect2(8800, -200, 3000, 1000))
 	phase_changed.emit(phase)
 

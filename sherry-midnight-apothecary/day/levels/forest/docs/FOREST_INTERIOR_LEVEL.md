@@ -25,12 +25,14 @@
 | **现实世界 (RealityWorld)** | **Layer 1 (实体) / Layer 2 (单向板)**（Mask: `1 \| 2 = 3`） | **雪莉 (Sherry) & 卢卡 (Luca)** | 基础地面、升降梯、旋转桥、水闸、大门等实体机关，两名主角均可正常站立、踩踏与碰撞。 |
 | **卢卡世界 (LucaWorldOnly)** | **Layer 3 (灵体/机械层)**（Mask: `1 << 2 = 4`） | **仅限卢卡 (Luca Only)** | 右侧直通塔顶的灵体台阶（`LucaStep1` ~ `LucaStep67`）、灵体控制室浮空平台、树顶灵体桥（`LucaTopWalk`）与机械控制台，仅卢卡具备 Layer 3 碰撞遮罩（`collision_mask = 7`），雪莉（`collision_mask = 3`）直接穿透无视。 |
 
-```text
 ForestInterior
+├─ HomeDoor (DoorPortal, 传送锚点，按 E 返回药水铺 home.tscn)
+├─ ForestReturnDoor (DoorPortal, 按 E 返回常霁云林 forest.tscn 的 restored_return 标记点)
 ├─ EntryPoints
-│  ├─ default (Marker2D, 320, 610)
-│  ├─ from_forest (Marker2D, 320, 610)
-│  └─ from_crown (Marker2D, 900, -4720)
+│  ├─ default (Marker2D, 445, 618)
+│  ├─ from_forest (Marker2D, 118, 621)
+│  ├─ from_home (Marker2D, 445, 618)
+│  └─ from_crown (Marker2D, 900, -4726)
 ├─ Player (Sherry)
 │  ├─ SherryCollision
 │  ├─ SherryPresentation
