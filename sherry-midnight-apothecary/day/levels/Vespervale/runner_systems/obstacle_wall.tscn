@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://b08qjkn58y61a"]
+
+[ext_resource type="Script" uid="uid://c6lvy8b42217f" path="res://day/levels/Vespervale/runner_systems/runner_obstacle.gd" id="1_obstacle"]
+[ext_resource type="Texture2D" uid="uid://d0isnghicnki2" path="res://day/levels/Vespervale/src/wall.png" id="2_wall"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(55, 75)
+
+[sub_resource type="Curve" id="Curve_alpha"]
+_data = [Vector2(0, 0), 0.0, 3.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_alpha"]
+curve = SubResource("Curve_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dream"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(25, 35, 1)
+direction = Vector3(0, -1, 0)
+spread = 35.0
+initial_velocity_min = 15.0
+initial_velocity_max = 45.0
+gravity = Vector3(0, -10, 0)
+scale_min = 1.5
+scale_max = 3.5
+color = Color(0.85, 0.45, 1, 0.75)
+alpha_curve = SubResource("CurveTexture_alpha")
+
+[node name="ObstacleWall" type="Area2D" unique_id=3100001]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_obstacle")
+target_track = 0
+damage = 1
+obstacle_name = "Wall"
+
+[node name="DreamParticles" type="GPUParticles2D" parent="." unique_id=3100004]
+z_index = 2
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_dream")
+lifetime = 1.2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=3100002]
+modulate = Color(0.9, 0.75, 1.2, 0.95)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_wall")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=3100003]
+shape = SubResource("RectangleShape2D_wall")

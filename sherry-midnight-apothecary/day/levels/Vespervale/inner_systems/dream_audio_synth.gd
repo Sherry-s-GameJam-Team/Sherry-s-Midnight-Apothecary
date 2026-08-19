@@ -36,6 +36,18 @@ func play_telegraph_chime(is_entering_dream: bool) -> void:
 		_play_synth_bell(660.0 if is_entering_dream else 440.0, 0.8)
 
 
+func play_lock_bell() -> void:
+	if BELL_SAMPLE != null:
+		var p := _get_idle_player()
+		if p != null:
+			p.stream = BELL_SAMPLE
+			p.pitch_scale = 0.55 # Deep, ominous low bell chime
+			p.volume_db = -2.0
+			p.play()
+	else:
+		_play_synth_bell(220.0, 1.0)
+
+
 func play_shift_swoosh(is_dream: bool) -> void:
 	var p := _get_idle_player()
 	if p == null:

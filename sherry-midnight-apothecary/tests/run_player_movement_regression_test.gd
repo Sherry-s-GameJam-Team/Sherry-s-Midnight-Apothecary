@@ -45,7 +45,7 @@ func _run() -> void:
 	player.set_dialogue_locked(true)
 	_expect(player.is_physics_processing(), "Dialogue input lock does not stop player physics during a roll.")
 	_expect(player.animation_player.is_playing(), "Dialogue input lock does not pause the active roll animation.")
-	for _frame in range(30):
+	for _frame in range(60):
 		await physics_frame
 	_expect(player.global_position.x > roll_start_x, "Roll retains its horizontal movement.")
 	_expect(not player._is_rolling, "A roll naturally finishes while dialogue input is locked.")

@@ -2,13 +2,11 @@ class_name RunnerTrackGenerator
 extends Node2D
 
 ## Procedural and phased obstacle track generator for the 2-minute parkour corridor.
-## Spawns lower-track beds/stretchers (Space to jump) and upper-track vines/lamps (W to jump).
+## Spawns lower-track wall obstacles (W to jump) and upper-track corrupted wall obstacles (Space to jump).
 ## Dynamically creates and recycles corridor segments ahead of the runner.
 
-const BED_TEX := preload("res://day/levels/Vespervale/src/bed.png")
-const STRETCHER_TEX := preload("res://day/levels/Vespervale/src/stretcher.png")
-const LIGHT_TEX := preload("res://day/levels/Vespervale/src/light.png")
-const LIGHT_BROKEN_TEX := preload("res://day/levels/Vespervale/src/light_broken.png")
+const OBSTACLE_WALL_SCENE := preload("res://day/levels/Vespervale/runner_systems/obstacle_wall.tscn")
+const OBSTACLE_WALL_CORRUPTED_SCENE := preload("res://day/levels/Vespervale/runner_systems/obstacle_wall_corrupted.tscn")
 const WALL_TEX := preload("res://day/levels/Vespervale/inside church.png")
 
 @export var chunk_length: float = 2400.0
@@ -98,62 +96,30 @@ func _populate_chunk_obstacles(chunk: Node2D, global_start_x: float) -> void:
 		# Pattern determination by phase
 		var pattern := (_obstacle_index % 3)
 		if progress > 0.6 and (_obstacle_index % 4 == 0):
-			# Dual obstacle requiring simultaneous W + Space jump!
+			# Dual obstacle requiring simultaneous Space + W jump!
 			_create_lower_obstacle(chunk, local_x)
 			_create_upper_obstacle(chunk, local_x + 30.0)
 		elif pattern == 0 or pattern == 1:
-			# Sherry lower obstacle (Space jump)
+			# Sherry lower obstacle (W jump)
 			_create_lower_obstacle(chunk, local_x)
 		else:
-			# Luca upper obstacle (W jump)
+			# Luca upper obstacle (Space jump)
 			_create_upper_obstacle(chunk, local_x)
 
 
 func _create_lower_obstacle(chunk: Node2D, local_x: float) -> void:
-	var obs := Area2D.new()
-	obs.name = "LowerObs_%d" % _obstacle_index
-	obs.set_script(RunnerObstacle)
+	var obs := OBSTACLE_WALL_SCENE.instantiate() as Area2D
+	obs.name = "LowerWallObs_%d" % _obstacle_index
 	obs.set("target_track", RunnerObstacle.TargetTrack.LOWER_SHERRY)
-	obs.position = Vector2(local_x, lower_track_y - 15.0)
-
-	var is_stretcher := randf() > 0.5
-	var sprite := Sprite2D.new()
-	sprite.name = "Sprite2D"
-	sprite.texture = STRETCHER_TEX if is_stretcher else BED_TEX
-	sprite.scale = Vector2(0.4, 0.4)
-	obs.add_child(sprite)
-
-	var col := CollisionShape2D.new()
-	col.name = "CollisionShape2D"
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(70, 45)
-	col.shape = shape
-	obs.add_child(col)
-
+	obs.position = Vector2(local_x, lower_track_y - 37.5)
 	chunk.add_child(obs)
 
 
 func _create_upper_obstacle(chunk: Node2D, local_x: float) -> void:
-	var obs := Area2D.new()
-	obs.name = "UpperObs_%d" % _obstacle_index
-	obs.set_script(RunnerObstacle)
+	var obs := OBSTACLE_WALL_CORRUPTED_SCENE.instantiate() as Area2D
+	obs.name = "UpperCorruptedWallObs_%d" % _obstacle_index
 	obs.set("target_track", RunnerObstacle.TargetTrack.UPPER_LUCA)
-	obs.position = Vector2(local_x, upper_track_y - 20.0)
-
-	var is_broken := randf() > 0.5
-	var sprite := Sprite2D.new()
-	sprite.name = "Sprite2D"
-	sprite.texture = LIGHT_BROKEN_TEX if is_broken else LIGHT_TEX
-	sprite.scale = Vector2(0.4, 0.4)
-	obs.add_child(sprite)
-
-	var col := CollisionShape2D.new()
-	col.name = "CollisionShape2D"
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(50, 50)
-	col.shape = shape
-	obs.add_child(col)
-
+	obs.position = Vector2(local_x, upper_track_y - 27.5)
 	chunk.add_child(obs)
 
 

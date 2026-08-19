@@ -1,0 +1,164 @@
+[gd_scene format=3 uid="uid://c67ypb8e4nx3j"]
+
+[ext_resource type="Script" uid="uid://chvjkuo4r5b7l" path="res://day/levels/Vespervale/inner_systems/dream_grasp_hand_unit.gd" id="1_unit"]
+[ext_resource type="Texture2D" uid="uid://b1b36iynffn36" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_00.png" id="2_f00"]
+[ext_resource type="Texture2D" uid="uid://5141ff8k2v0i" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_01.png" id="3_f01"]
+[ext_resource type="Texture2D" uid="uid://3v4r2o6u5eac" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_02.png" id="4_f02"]
+[ext_resource type="Texture2D" uid="uid://df708453v0bcp" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_03.png" id="5_f03"]
+[ext_resource type="Texture2D" uid="uid://bxkn2b71lffy8" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_04.png" id="6_f04"]
+[ext_resource type="Texture2D" uid="uid://bk0q42m301k7j" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_05.png" id="7_f05"]
+[ext_resource type="Texture2D" uid="uid://5v2k20b41krc" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_06.png" id="8_f06"]
+[ext_resource type="Texture2D" uid="uid://c4tq0x8ek5cvi" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_07.png" id="9_f07"]
+[ext_resource type="Texture2D" uid="uid://ckep55b8v8f6o" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_08.png" id="10_f08"]
+[ext_resource type="Texture2D" uid="uid://b00t32q6a3wlh" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_09.png" id="11_f09"]
+[ext_resource type="Texture2D" uid="uid://d4e7g32a32u1q" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_10.png" id="12_f10"]
+[ext_resource type="Texture2D" uid="uid://cqj186n02bce0" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_11.png" id="13_f11"]
+[ext_resource type="Texture2D" uid="uid://de4u20m8v5x1y" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_12.png" id="14_f12"]
+[ext_resource type="Texture2D" uid="uid://bd1r5q2h00b3o" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_13.png" id="15_f13"]
+[ext_resource type="Texture2D" uid="uid://bm2c070w1t44v" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_14.png" id="16_f14"]
+[ext_resource type="Texture2D" uid="uid://bhx854a8b75ke" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_15.png" id="17_f15"]
+[ext_resource type="Texture2D" uid="uid://c6l824u4j4y2" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_16.png" id="18_f16"]
+[ext_resource type="Texture2D" uid="uid://b7b7vqu2p2e6p" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_17.png" id="19_f17"]
+[ext_resource type="Texture2D" uid="uid://dl5c47q74853j" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_18.png" id="20_f18"]
+[ext_resource type="Texture2D" uid="uid://4v5h5r25w2g5" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_19.png" id="21_f19"]
+[ext_resource type="Texture2D" uid="uid://be87747x6h3q1" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_20.png" id="22_f20"]
+[ext_resource type="Texture2D" uid="uid://c7t1u61y4k8ep" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_21.png" id="23_f21"]
+[ext_resource type="Texture2D" uid="uid://cy84w870r1x2p" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_22.png" id="24_f22"]
+[ext_resource type="Texture2D" uid="uid://bfk26m1p21w3k" path="res://day/levels/Vespervale/dream_grasp_hands_frames_24/dream_grasp_23.png" id="25_f23"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_grasp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_f03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_f04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_f05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_f06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_f07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_f08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_f09")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_f11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_f12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_f13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_f14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_f16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_f17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_f18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_f19")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_f20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_f21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_f22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_f23")
+}],
+"loop": false,
+"name": &"erupt",
+"speed": 24.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hitbox"]
+size = Vector2(70, 90)
+
+[sub_resource type="Curve" id="Curve_particles"]
+_data = [Vector2(0, 0), 0.0, 3.0, 0, 0, Vector2(0.3, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_particles"]
+curve = SubResource("Curve_particles")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_grasp"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(30, 20, 1)
+direction = Vector3(0, -1, 0)
+spread = 30.0
+initial_velocity_min = 30.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, -15, 0)
+scale_min = 2.0
+scale_max = 4.5
+color = Color(0.85, 0.45, 1, 0.8)
+alpha_curve = SubResource("CurveTexture_particles")
+
+[node name="DreamGraspHandUnit" type="Area2D" unique_id=2000520]
+z_index = 8
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_unit")
+
+[node name="TelegraphRing" type="Node2D" parent="." unique_id=2000521]
+modulate = Color(0.9, 0.5, 1, 0.75)
+position = Vector2(0, -4)
+
+[node name="RingVisual" type="Polygon2D" parent="TelegraphRing" unique_id=2000522]
+color = Color(0.85, 0.35, 1, 0.3)
+polygon = PackedVector2Array(-35, 0, -28, -6, 0, -8, 28, -6, 35, 0, 28, 6, 0, 8, -28, 6)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2000523]
+modulate = Color(1.1, 0.85, 1.25, 1)
+position = Vector2(0, -48)
+scale = Vector2(0.45, 0.45)
+sprite_frames = SubResource("SpriteFrames_grasp")
+animation = &"erupt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2000524]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_hitbox")
+
+[node name="DreamParticles" type="GPUParticles2D" parent="." unique_id=2000525]
+position = Vector2(0, -10)
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_grasp")
+lifetime = 0.8
+one_shot = true

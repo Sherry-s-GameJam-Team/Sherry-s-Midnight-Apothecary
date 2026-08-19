@@ -5,7 +5,10 @@ extends StaticBody2D
 ## In Reality Intrusion: completely disappears along with its collision box.
 ## In Dream state: solidifies into a safe, walkable dream platform with original clean sprite colors.
 
+const SAFE_ZONE_SCENE := preload("res://day/levels/Vespervale/inner_systems/dream_bed_safe_zone.tscn")
+
 var _is_dream: bool = false
+var _safe_zone: DreamBedSafeZone
 
 @onready var bed_sprite: Sprite2D = get_node_or_null("BedSprite")
 @onready var collision_shape: CollisionShape2D = get_node_or_null("CollisionShape2D")
@@ -21,6 +24,13 @@ func _ready() -> void:
 
 	if bed_sprite != null:
 		bed_sprite.modulate = Color.WHITE
+
+	# Automatically attach DreamBedSafeZone sanctuary
+	_safe_zone = get_node_or_null("DreamBedSafeZone") as DreamBedSafeZone
+	if _safe_zone == null and SAFE_ZONE_SCENE != null:
+		_safe_zone = SAFE_ZONE_SCENE.instantiate() as DreamBedSafeZone
+		_safe_zone.name = "DreamBedSafeZone"
+		add_child(_safe_zone)
 
 	var manager := _find_shift_manager()
 	if manager != null:
@@ -40,6 +50,9 @@ func _set_dream_state(in_dream: bool, animate: bool) -> void:
 	# In Reality: collision disabled; In Dream: collision enabled
 	if collision_shape != null:
 		collision_shape.set_deferred("disabled", not in_dream)
+	if _safe_zone != null:
+		_safe_zone.visible = in_dream
+		_safe_zone.set_deferred("monitoring", in_dream)
 
 	collision_layer = (1 | 2) if in_dream else 0
 

@@ -21,8 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://cxkak6m58ydce" path="res://day/levels/Aurem Clockyard/src/mechanisms/winch.png" id="24_winch"]
 [ext_resource type="Texture2D" uid="uid://bx84jysu4fc7s" path="res://day/levels/Aurem Clockyard/src/mechanisms/hanging_crane.png" id="25_crane"]
 [ext_resource type="Texture2D" uid="uid://biiepfrn6my4f" path="res://day/levels/Aurem Clockyard/src/mechanisms/retro_clockbird.png" id="28_bird"]
-[ext_resource type="Texture2D" uid="uid://bbbx38qv2as0r" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_hour.png" id="30_hour"]
-[ext_resource type="Texture2D" uid="uid://d2sws2lbtbp2a" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_minute.png" id="31_minute"]
+[ext_resource type="Texture2D" uid="uid://fwls47pg5mqr" path="res://day/levels/Aurem Clockyard/src/gear.png" id="29_tb65t"]
 [ext_resource type="Texture2D" uid="uid://y131myfb5gvc" path="res://day/levels/Aurem Clockyard/src/mechanisms/synchronizer_rings.png" id="32_sync"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="33_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="34_collision"]
@@ -45,6 +44,9 @@
 [ext_resource type="Script" uid="uid://dd377ehg4yu1d" path="res://day/levels/Aurem Clockyard/inside_systems/hanging_platform.gd" id="54_hanging_plat"]
 [ext_resource type="Script" uid="uid://cu1vlairf3fkd" path="res://day/levels/Aurem Clockyard/inside_systems/chaotic_gear.gd" id="55_chaotic_gear"]
 [ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="56_top_hint"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/moving_platform.gd" id="57_moving_plat"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_hour.tscn" id="58_hour_scene"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_minute.tscn" id="59_min_scene"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
 size = Vector2(1600, 100)
@@ -73,17 +75,8 @@ size = Vector2(100, 100)
 [sub_resource type="CircleShape2D" id="Circle_hazard_gear"]
 radius = 40.0
 
-[sub_resource type="CircleShape2D" id="Circle_hazard_hitbox"]
-radius = 46.0
-
 [sub_resource type="RectangleShape2D" id="Rect_plat_arch"]
 size = Vector2(280, 30)
-
-[sub_resource type="RectangleShape2D" id="Rect_clock_hand_hr"]
-size = Vector2(36, 320)
-
-[sub_resource type="RectangleShape2D" id="Rect_clock_hand_min"]
-size = Vector2(30, 440)
 
 [sub_resource type="RectangleShape2D" id="Rect_portal"]
 size = Vector2(140, 200)
@@ -270,6 +263,9 @@ texture = ExtResource("7_arch_gate")
 polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
 one_way_collision = true
 
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="World/Floor1_SpringChamber/PlatformNode1" unique_id=472982747]
+polygon = PackedVector2Array(-11, -253, -13, -153, 17, -155, 83, -225, 131, -149, 156, -150, 155, -254)
+
 [node name="CalibrationNode1" type="Area2D" parent="World/Floor1_SpringChamber" unique_id=1022]
 position = Vector2(602, -515)
 script = ExtResource("43_node")
@@ -323,21 +319,25 @@ shape = SubResource("Rect_node_area")
 position = Vector2(0, -900)
 
 [node name="MaintenancePlat2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2002]
-position = Vector2(300, 50)
+position = Vector2(309, -1)
 collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/MaintenancePlat2" unique_id=2003]
-position = Vector2(51, 170)
-texture = ExtResource("18_stone_arch")
+z_index = -1
+position = Vector2(-84.00001, 332)
+scale = Vector2(1.6041012, 1.402773)
+texture = ExtResource("21_djmk2")
+region_enabled = true
+region_rect = Rect2(747.2642, 1003.2339, 191.32867, 382.65735)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor2_GearWell/MaintenancePlat2" unique_id=1924307888]
 position = Vector2(50, 177)
-polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
+polygon = PackedVector2Array(-269, -90, -9, -92, -14, -60, -268, -57)
 one_way_collision = true
 
 [node name="Plat2_LowRight" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2005]
-position = Vector2(880, -160)
+position = Vector2(777, 4)
 collision_layer = 2
 collision_mask = 0
 
@@ -345,11 +345,12 @@ collision_mask = 0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_LowRight" unique_id=2007]
+position = Vector2(-1, 34)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
 [node name="ChaoticGear1" type="AnimatableBody2D" parent="World/Floor2_GearWell" unique_id=2008]
-position = Vector2(550, -220)
+position = Vector2(518, -124)
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("55_chaotic_gear")
@@ -370,7 +371,7 @@ one_way_collision = true
 collision_layer = 0
 
 [node name="Plat2_MidLeft" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2014]
-position = Vector2(250, -380)
+position = Vector2(255, -125)
 collision_layer = 2
 collision_mask = 0
 
@@ -378,11 +379,13 @@ collision_mask = 0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidLeft" unique_id=2016]
+position = Vector2(1, 34)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
 [node name="CalibrationLever" type="Area2D" parent="World/Floor2_GearWell" unique_id=2017]
-position = Vector2(250, -440)
+position = Vector2(256, -206)
+scale = Vector2(1.2735962, 1.2774842)
 script = ExtResource("45_lever")
 target_gears = Array[NodePath]([NodePath("../ChaoticGear1"), NodePath("../ChaoticGear2"), NodePath("../ChaoticGear3"), NodePath("../ChaoticGear4")])
 
@@ -427,7 +430,7 @@ one_way_collision = true
 collision_layer = 0
 
 [node name="Plat2_MidRight" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2026]
-position = Vector2(880, -580)
+position = Vector2(806, -293)
 collision_layer = 2
 collision_mask = 0
 
@@ -435,6 +438,7 @@ collision_mask = 0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidRight" unique_id=2028]
+position = Vector2(2, 36)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -459,7 +463,7 @@ one_way_collision = true
 collision_layer = 0
 
 [node name="Plat2_HighLeft" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2034]
-position = Vector2(320, -780)
+position = Vector2(370, -452)
 collision_layer = 2
 collision_mask = 0
 
@@ -467,6 +471,7 @@ collision_mask = 0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_HighLeft" unique_id=2036]
+position = Vector2(3, 39)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -493,19 +498,22 @@ one_way_collision = true
 collision_layer = 0
 
 [node name="PlatformNode2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2042]
-position = Vector2(600, -1000)
+position = Vector2(674, -1245)
+scale = Vector2(-1.1711309, 1.1966128)
 collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=2043]
+position = Vector2(-200, 219)
 texture = ExtResource("18_stone_arch")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor2_GearWell/PlatformNode2" unique_id=378651798]
+position = Vector2(-198, 221)
 polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, -185, -52)
 one_way_collision = true
 
 [node name="CalibrationNode2" type="Area2D" parent="World/Floor2_GearWell" unique_id=2045]
-position = Vector2(600, -1050)
+position = Vector2(899, -1102)
 script = ExtResource("43_node")
 node_id = 2
 node_name_cn = "校时节点Ⅱ：齿轮差速器"
@@ -515,22 +523,54 @@ linked_mechanisms = Array[NodePath]([NodePath("../ChaoticGear1"), NodePath("../C
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("11_gears")
 
-[node name="GlowSprite" type="Sprite2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2047]
-position = Vector2(45, -45)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("21_djmk2")
-region_enabled = true
-region_rect = Rect2(440.9132, 815.43945, 161.43958, 85.42377)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/CalibrationNode2" unique_id=2048]
-position = Vector2(-10, -100)
+position = Vector2(1, 1)
 shape = SubResource("Rect_node_area")
+
+[node name="Plat2_MidRight2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=1893988485]
+position = Vector2(808, -588)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_MidRight2" unique_id=446525836]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidRight2" unique_id=1913375488]
+position = Vector2(0, 35)
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="Plat2_MidRight3" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=1500371546]
+position = Vector2(354, -794)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_MidRight3" unique_id=1791292649]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidRight3" unique_id=2048956827]
+position = Vector2(1, 35)
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="Plat2_MidRight4" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2064884126]
+position = Vector2(787, -898)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor2_GearWell/Plat2_MidRight4" unique_id=274646652]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/Plat2_MidRight4" unique_id=815649126]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
 
 [node name="Floor3_PendulumHall" type="Node2D" parent="World" unique_id=3001]
 position = Vector2(0, -2000)
 
 [node name="MaintenancePlat3" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3002]
-position = Vector2(300, 50)
+position = Vector2(156, 101)
+scale = Vector2(1.4509054, 1.1764961)
 collision_layer = 2
 collision_mask = 0
 
@@ -580,12 +620,12 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/SwingingPendulum/BobPlatform" unique_id=3012]
-position = Vector2(-57.999996, 18.999998)
+position = Vector2(-69.99999, -143.99998)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("15_pend_orb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/SwingingPendulum/BobPlatform" unique_id=3013]
-position = Vector2(-12.5, -24)
+position = Vector2(-80, -217)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -595,9 +635,11 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/RightTargetLedge" unique_id=3015]
+position = Vector2(-233, 171)
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/RightTargetLedge" unique_id=3016]
+position = Vector2(-231, 204)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -619,10 +661,82 @@ one_way_collision = true
 
 [node name="Hitbox" type="Area2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy" unique_id=3029]
 collision_layer = 0
-collision_mask = 1 | 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy/Hitbox" unique_id=3030]
-shape = SubResource("Circle_hazard_hitbox")
+[node name="MovingPlat1" type="AnimatableBody2D" parent="World/Floor3_PendulumHall" unique_id=3031]
+position = Vector2(400, -330)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("57_moving_plat")
+move_distance = 260.0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MovingPlat1" unique_id=3032]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat1" unique_id=3033]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="MovingPlat2" type="AnimatableBody2D" parent="World/Floor3_PendulumHall" unique_id=3034]
+position = Vector2(750, -480)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("57_moving_plat")
+move_distance = 280.0
+move_speed = 100.0
+move_phase = 1.5
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MovingPlat2" unique_id=3035]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat2" unique_id=3036]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="MovingPlat3" type="AnimatableBody2D" parent="World/Floor3_PendulumHall" unique_id=3037]
+position = Vector2(350, -630)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("57_moving_plat")
+move_distance = 260.0
+move_speed = 95.0
+move_phase = 3.0
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MovingPlat3" unique_id=3038]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat3" unique_id=3039]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="MovingPlat4" type="AnimatableBody2D" parent="World/Floor3_PendulumHall" unique_id=3040]
+position = Vector2(720, -780)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("57_moving_plat")
+move_distance = 280.0
+move_speed = 105.0
+move_phase = 0.8
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MovingPlat4" unique_id=3041]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat4" unique_id=3042]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="MovingPlat5" type="AnimatableBody2D" parent="World/Floor3_PendulumHall" unique_id=3043]
+position = Vector2(500, -930)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("57_moving_plat")
+move_phase = 2.2
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/MovingPlat5" unique_id=3044]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat5" unique_id=3045]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
 
 [node name="PlatformNode3" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3019]
 position = Vector2(600, -1080)
@@ -643,14 +757,18 @@ node_id = 3
 node_name_cn = "校时节点Ⅲ：擒纵机构"
 
 [node name="GearSprite" type="Sprite2D" parent="World/Floor3_PendulumHall/CalibrationNode3" unique_id=3023]
+z_index = 1
+position = Vector2(61, -67)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("11_gears")
+texture = ExtResource("29_tb65t")
 
 [node name="GlowSprite" type="Sprite2D" parent="World/Floor3_PendulumHall/CalibrationNode3" unique_id=3024]
+position = Vector2(61, -49)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("17_pedestal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/CalibrationNode3" unique_id=3025]
+position = Vector2(61, -60)
 shape = SubResource("Rect_node_area")
 
 [node name="Floor4_ClockHands" type="Node2D" parent="World" unique_id=4001]
@@ -670,47 +788,42 @@ shape = SubResource("Rect_plat_arch")
 one_way_collision = true
 
 [node name="ClockDialBg" type="Sprite2D" parent="World/Floor4_ClockHands" unique_id=4005]
-position = Vector2(600, -500)
+position = Vector2(510, -347)
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("16_clock_grand")
 
 [node name="ClockCenter" type="Node2D" parent="World/Floor4_ClockHands" unique_id=4006]
-position = Vector2(600, -500)
+position = Vector2(510, -395)
 
-[node name="HourHand" type="AnimatableBody2D" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4007]
-collision_layer = 2
-collision_mask = 0
+[node name="HourHand" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4007 instance=ExtResource("58_hour_scene")]
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/ClockCenter/HourHand" unique_id=4008]
-position = Vector2(0, -150)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("30_hour")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/ClockCenter/HourHand" unique_id=4009]
-position = Vector2(0, -150)
-shape = SubResource("Rect_clock_hand_hr")
-one_way_collision = true
-
-[node name="MinuteHand" type="AnimatableBody2D" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4010]
-collision_layer = 2
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/ClockCenter/MinuteHand" unique_id=4011]
-position = Vector2(0, -210)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("31_minute")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/ClockCenter/MinuteHand" unique_id=4012]
-position = Vector2(0, -210)
-shape = SubResource("Rect_clock_hand_min")
-one_way_collision = true
+[node name="MinuteHand" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4010 instance=ExtResource("59_min_scene")]
 
 [node name="HandCrankArea" type="Area2D" parent="World/Floor4_ClockHands" unique_id=4013]
 position = Vector2(250, -50)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/HandCrankArea" unique_id=4015]
+position = Vector2(-3, -37)
 shape = SubResource("Rect_node_area")
+
+[node name="GearPedestal" type="Sprite2D" parent="World/Floor4_ClockHands/HandCrankArea" unique_id=704769604]
+position = Vector2(-5.0000076, -45)
+scale = Vector2(0.8536585, 0.85365856)
+texture = ExtResource("17_pedestal")
+
+[node name="HourCrankArea" type="Area2D" parent="World/Floor4_ClockHands" unique_id=4022]
+position = Vector2(370, -50)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/HourCrankArea" unique_id=4023]
+position = Vector2(-3, -37)
+shape = SubResource("Rect_node_area")
+
+[node name="GearPedestal" type="Sprite2D" parent="World/Floor4_ClockHands/HourCrankArea" unique_id=4024]
+position = Vector2(-5, -45)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("17_pedestal")
 
 [node name="SecretGate3" type="StaticBody2D" parent="World/Floor4_ClockHands" unique_id=4016]
 position = Vector2(980, -500)
@@ -721,6 +834,7 @@ collision_mask = 0
 texture = ExtResource("7_arch_gate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/SecretGate3" unique_id=4018]
+position = Vector2(4, -67)
 shape = SubResource("Rect_plat_arch")
 
 [node name="SecretAlcovePlat" type="StaticBody2D" parent="World/Floor4_ClockHands" unique_id=4019]
@@ -872,7 +986,7 @@ position = Vector2(500, -4350)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=846311865]
 z_index = 10
-position = Vector2(240, 462)
+position = Vector2(403, -3341)
 collision_mask = 3
 script = ExtResource("33_player")
 

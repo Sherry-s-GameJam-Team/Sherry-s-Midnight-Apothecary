@@ -40,6 +40,7 @@
 [ext_resource type="Script" uid="uid://dxo7a88sqw1w" path="res://day/levels/Vespervale/inner_systems/inner_party_controller.gd" id="40_party_controller"]
 [ext_resource type="Script" uid="uid://b0eh0d7fmhi65" path="res://day/levels/Vespervale/inner_systems/inner_party_switch_ui.gd" id="41_switch_ui"]
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="42_luca_scene"]
+[ext_resource type="Script" uid="uid://c7t8r2m81u91p" path="res://day/levels/Vespervale/inner_systems/dream_grasp_manager.gd" id="43_grasp_mgr"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
 size = Vector2(5600, 120)
@@ -121,6 +122,21 @@ script = ExtResource("40_party_controller")
 
 [node name="InnerPartySwitchUI" type="CanvasLayer" parent="." unique_id=2000009]
 script = ExtResource("41_switch_ui")
+
+[node name="DreamGraspManager" type="Node2D" parent="." unique_id=2000550]
+script = ExtResource("43_grasp_mgr")
+
+[node name="TrackingShadow" type="Node2D" parent="DreamGraspManager" unique_id=2000551]
+modulate = Color(0.7, 0.3, 0.9, 0.6)
+position = Vector2(0, -2)
+
+[node name="ShadowPolygon" type="Polygon2D" parent="DreamGraspManager/TrackingShadow" unique_id=2000552]
+color = Color(0.65, 0.25, 0.85, 0.45)
+polygon = PackedVector2Array(-40, 0, -30, -6, 0, -8, 30, -6, 40, 0, 30, 6, 0, 8, -30, 6)
+
+[node name="GroundRay" type="RayCast2D" parent="DreamGraspManager" unique_id=2000553]
+target_position = Vector2(0, 400)
+collision_mask = 3
 
 [node name="Background" type="Node2D" parent="." unique_id=2000010]
 z_index = -30
@@ -318,6 +334,45 @@ scale = Vector2(0.45, 0.45)
 texture = ExtResource("17_bed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone1_Bed2" unique_id=2000088]
+position = Vector2(0, 10)
+shape = SubResource("Rect_bed_solid")
+
+[node name="Zone2_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000581]
+position = Vector2(1950, 600)
+collision_mask = 0
+script = ExtResource("6_thorn_bed")
+
+[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone2_Bed1" unique_id=2000582]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("17_bed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone2_Bed1" unique_id=2000583]
+position = Vector2(0, 10)
+shape = SubResource("Rect_bed_solid")
+
+[node name="Zone3_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000586]
+position = Vector2(3100, 600)
+collision_mask = 0
+script = ExtResource("6_thorn_bed")
+
+[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone3_Bed1" unique_id=2000587]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("17_bed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_Bed1" unique_id=2000588]
+position = Vector2(0, 10)
+shape = SubResource("Rect_bed_solid")
+
+[node name="Zone4_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000591]
+position = Vector2(4150, 600)
+collision_mask = 0
+script = ExtResource("6_thorn_bed")
+
+[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_Bed1" unique_id=2000592]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("17_bed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone4_Bed1" unique_id=2000593]
 position = Vector2(0, 10)
 shape = SubResource("Rect_bed_solid")
 

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bxbq2jkxol38g"]
+
+[ext_resource type="Texture2D" uid="uid://bbbx38qv2as0r" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_hour.png" id="1_hour_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hour"]
+size = Vector2(36, 293)
+
+[node name="HourHand" type="AnimatableBody2D" unique_id=417221508]
+collision_layer = 2
+collision_mask = 0
+
+[node name="PivotMarker" type="Marker2D" parent="." unique_id=1692361022]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=474551918]
+position = Vector2(0, -146.5)
+shape = SubResource("RectangleShape2D_hour")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=881791972]
+position = Vector2(0, -105.000015)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("1_hour_tex")

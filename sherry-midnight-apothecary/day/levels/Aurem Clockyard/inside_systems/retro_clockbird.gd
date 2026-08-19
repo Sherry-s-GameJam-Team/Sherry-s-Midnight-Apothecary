@@ -272,6 +272,8 @@ func _draw() -> void:
 		draw_circle(local_target, 12.0 + 4.0 * pulse, Color(1.0, 0.2, 0.1, 0.5))
 
 
+const GEAR_BOLT_TEXTURE_PATH := "res://day/levels/Aurem Clockyard/src/gear.png"
+
 func _drop_bolt(aim_velocity: Vector2 = Vector2.ZERO) -> void:
 	var bolt := Area2D.new()
 	bolt.collision_layer = 0
@@ -279,15 +281,18 @@ func _drop_bolt(aim_velocity: Vector2 = Vector2.ZERO) -> void:
 
 	var col := CollisionShape2D.new()
 	var circle := CircleShape2D.new()
-	circle.radius = 10.0
+	circle.radius = 12.0
 	col.shape = circle
 	bolt.add_child(col)
 
 	var spr := Sprite2D.new()
-	if not _frames.is_empty():
+	if ResourceLoader.exists(GEAR_BOLT_TEXTURE_PATH) or FileAccess.file_exists(GEAR_BOLT_TEXTURE_PATH):
+		spr.texture = load(GEAR_BOLT_TEXTURE_PATH)
+		spr.scale = Vector2(0.45, 0.45)
+	elif not _frames.is_empty():
 		spr.texture = _frames[0]
 		spr.scale = Vector2(0.3, 0.3)
-	spr.modulate = Color(1.3, 0.8, 0.2)
+	spr.modulate = Color(1.2, 0.85, 0.3)
 	bolt.add_child(spr)
 
 	var parent := get_parent()
@@ -314,8 +319,10 @@ func _drop_bolt(aim_velocity: Vector2 = Vector2.ZERO) -> void:
 	var tween := bolt.create_tween()
 	var target_fall := bolt.position + Vector2(aim_velocity.x, maxf(aim_velocity.y, 350.0))
 	if tween != null:
+		tween.set_parallel(true)
 		tween.tween_property(bolt, "position", target_fall, 1.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-		tween.tween_callback(bolt.queue_free)
+		tween.tween_property(spr, "rotation", TAU * 3.0 * (1.0 if aim_velocity.x >= 0.0 else -1.0), 1.2)
+		tween.chain().tween_callback(bolt.queue_free)
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:

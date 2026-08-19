@@ -47,6 +47,25 @@ func _ready() -> void:
 	objective_updated.emit("深入巨钟塔发条室。", "观察机械脉冲节奏，修复主发条限位器。")
 
 
+var _camera: Camera2D = null
+var _player: Node2D = null
+
+
+func _process(delta: float) -> void:
+	if _camera == null:
+		if _player == null:
+			_player = get_node_or_null("Player")
+		if _player != null:
+			_camera = _player.get_node_or_null("Camera2D") as Camera2D
+
+	if _camera != null and _player != null:
+		var player_y: float = _player.global_position.y
+		# 到第三层 (Y: -1850 ~ -3200) 摄像机上移 150px (offset.y = -150)，直到触发第四层
+		var in_floor3: bool = (player_y <= -1850.0 and player_y > -3200.0 and current_floor_checkpoint < 4)
+		var target_offset_y: float = -150.0 if in_floor3 else 0.0
+		_camera.offset.y = move_toward(_camera.offset.y, target_offset_y, 400.0 * delta)
+
+
 func on_level_entered(entry_id: StringName) -> void:
 	match String(entry_id):
 		"floor2":

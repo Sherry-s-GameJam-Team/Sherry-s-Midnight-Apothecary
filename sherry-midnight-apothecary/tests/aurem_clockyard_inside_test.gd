@@ -113,12 +113,46 @@ static func run(test: TestSupport) -> void:
 		clockbird.call("receive_potion_hit", {"potion_id": "blue_ice_potion"})
 		test.expect_equal(clockbird.get("_state"), 5, "Clockbird transitions to FROZEN state upon ice potion hit.")
 
+	# Test Floor 3: Moving Platforms (150px spacing)
+	var mplat1 := level.get_node_or_null("World/Floor3_PendulumHall/MovingPlat1")
+	var mplat2 := level.get_node_or_null("World/Floor3_PendulumHall/MovingPlat2")
+	var mplat3 := level.get_node_or_null("World/Floor3_PendulumHall/MovingPlat3")
+	var mplat4 := level.get_node_or_null("World/Floor3_PendulumHall/MovingPlat4")
+	var mplat5 := level.get_node_or_null("World/Floor3_PendulumHall/MovingPlat5")
+	test.expect(mplat1 != null and mplat2 != null and mplat3 != null and mplat4 != null and mplat5 != null, "All 5 Floor 3 moving platforms exist.")
+	if mplat1 != null and mplat2 != null and mplat3 != null and mplat4 != null and mplat5 != null:
+		test.expect_equal(roundi(mplat1.position.y - mplat2.position.y), 150, "Vertical spacing between Plat1 and Plat2 is 150px.")
+		test.expect_equal(roundi(mplat2.position.y - mplat3.position.y), 150, "Vertical spacing between Plat2 and Plat3 is 150px.")
+		test.expect_equal(roundi(mplat3.position.y - mplat4.position.y), 150, "Vertical spacing between Plat3 and Plat4 is 150px.")
+		test.expect_equal(roundi(mplat4.position.y - mplat5.position.y), 150, "Vertical spacing between Plat4 and Plat5 is 150px.")
+		mplat1.call("receive_potion_hit", {"potion_id": "blue_ice_potion"})
+		test.expect(bool(mplat1.get("_is_frozen")), "Floor 3 moving platform can be frozen by ice potion.")
+
 	# Test Floor 4: Clock Hands Floor
 	var floor4 := level.get_node_or_null("World/Floor4_ClockHands")
 	test.expect(floor4 != null, "Floor 4 Clock Hands Floor exists.")
 	if floor4 != null:
-		floor4.call("advance_minute_hand", 2)
-		test.expect_equal(floor4.get("current_minute_hour"), 3, "Minute hand can be stepped to target III.")
+		var hour_crank := floor4.get_node_or_null("HourCrankArea")
+		var min_crank := floor4.get_node_or_null("HandCrankArea")
+		test.expect(hour_crank != null and min_crank != null, "Dual cranks (Hour and Minute) exist in Floor 4.")
+
+		# Reset starting position: Minute = 1, Hour = 12
+		floor4.set("current_minute_hour", 1)
+		floor4.set("current_hour_hour", 12)
+		floor4.set("_minute_step_counter", 0)
+
+		# Rule 1: Minute turns 3 times -> hour turns an extra 1 time
+		floor4.call("turn_minute_hand", 1)
+		test.expect_equal(floor4.get("current_minute_hour"), 2, "Minute hand turns 1 step to II.")
+		test.expect_equal(floor4.get("current_hour_hour"), 12, "Hour hand unchanged after 1 minute step.")
+		floor4.call("turn_minute_hand", 2)
+		test.expect_equal(floor4.get("current_minute_hour"), 4, "Minute hand reached IV after 3 total steps.")
+		test.expect_equal(floor4.get("current_hour_hour"), 1, "Hour hand advanced +1 to I after 3 minute turns.")
+
+		# Rule 2: Hour turns 1 time -> minute turns an extra 9 times
+		floor4.call("turn_hour_hand", 1)
+		test.expect_equal(floor4.get("current_hour_hour"), 2, "Hour hand advanced to II.")
+		test.expect_equal(floor4.get("current_minute_hour"), 1, "Minute hand advanced +9 from IV to I.")
 
 	# Test Tower Top
 	var tower_top := level.get_node_or_null("World/TowerTop")

@@ -110,6 +110,10 @@ func _physics_process(delta: float) -> void:
 	_update_ground_transition(direction)
 	_update_velocity(delta, direction)
 	move_and_slide()
+	if not is_on_floor() and not _is_airborne and not _is_rolling and _drop_through_timer <= 0.0:
+		_is_airborne = true
+		if _state != "jump_fall" and _state != "prejump" and _state != "jump_takeoff":
+			_play("jump_fall")
 	_apply_visual_scale()
 	_update_landing(direction)
 	if not _is_airborne and not _is_rolling:
@@ -389,15 +393,24 @@ func _is_on_drop_through_platform() -> bool:
 	return false
 
 
-func _try_start_roll(action_name: StringName) -> void:
+func _try_start_roll(action: Variant) -> void:
 	if _is_airborne or _is_rolling or not is_on_floor():
 		return
+	var action_name := &""
+	if action is int:
+		if action == KEY_A:
+			action_name = &"move_left"
+		elif action == KEY_D:
+			action_name = &"move_right"
+	else:
+		action_name = StringName(str(action))
+
 	var direction := 0.0
-	if action_name == "move_left":
+	if action_name == &"move_left":
 		direction = -1.0
-	elif action_name == "move_right":
+	elif action_name == &"move_right":
 		direction = 1.0
-	elif action_name == "roll":
+	elif action_name == &"roll":
 		direction = _get_input_direction()
 		if is_zero_approx(direction):
 			direction = 1.0 if _facing_right else -1.0
@@ -407,9 +420,9 @@ func _try_start_roll(action_name: StringName) -> void:
 		_play("roll")
 		return
 	var now := Time.get_ticks_msec()
-	var previous_tap := _last_a_tap_ms if action_name == "move_left" else _last_d_tap_ms
+	var previous_tap := _last_a_tap_ms if action_name == &"move_left" else _last_d_tap_ms
 	if now - previous_tap > DOUBLE_TAP_WINDOW_MS:
-		if action_name == "move_left":
+		if action_name == &"move_left":
 			_last_a_tap_ms = now
 		else:
 			_last_d_tap_ms = now
@@ -425,7 +438,10 @@ func _try_start_roll(action_name: StringName) -> void:
 func _get_input_direction() -> float:
 	if _dialogue_locked or _is_text_input_focused():
 		return 0.0
-	return Input.get_axis("move_left", "move_right")
+	var dir := Input.get_axis("move_left", "move_right")
+	if is_zero_approx(dir):
+		dir = Input.get_axis("ui_left", "ui_right")
+	return dir
 
 
 func _is_running() -> bool:

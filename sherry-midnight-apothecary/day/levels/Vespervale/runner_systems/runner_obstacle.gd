@@ -47,10 +47,17 @@ func _on_body_entered(body: Node2D) -> void:
 func _trigger_hit(body: Node2D) -> void:
 	_has_hit = true
 
-	# Stumble / hit flash on character
+	# Trigger character hit stumble animation via runner controller
+	var ctrl := _find_runner_controller()
+	if ctrl != null and ctrl.has_method("notify_character_hit"):
+		ctrl.call("notify_character_hit", body)
+	elif body.has_method("_play"):
+		body.call("_play", "hit")
+
+	# Character stumble flash
 	if body is Node2D:
 		var tw := create_tween()
-		tw.tween_property(body, "modulate", Color(1.5, 0.4, 0.4, 1.0), 0.1)
+		tw.tween_property(body, "modulate", Color(1.8, 0.4, 0.4, 1.0), 0.08)
 		tw.tween_property(body, "modulate", Color.WHITE, 0.2)
 
 	# Deliver damage to environment
@@ -60,10 +67,23 @@ func _trigger_hit(body: Node2D) -> void:
 	elif body.has_method("take_damage"):
 		body.call("take_damage", damage)
 
-	# Fade obstacle out slightly to show impact
+	# Purple dream dissolve burst on obstacle impact
 	if sprite != null:
 		var tw2 := create_tween()
-		tw2.tween_property(sprite, "modulate:a", 0.4, 0.2)
+		tw2.set_parallel(true)
+		tw2.tween_property(sprite, "modulate", Color(1.8, 0.6, 2.2, 0.35), 0.15)
+		tw2.tween_property(sprite, "scale", sprite.scale * 1.12, 0.15)
+		tw2.chain().tween_property(sprite, "modulate:a", 0.3, 0.2)
+
+
+func _find_runner_controller() -> Node:
+	var cur: Node = self
+	while cur != null:
+		var ctrl := cur.get_node_or_null("RunnerController")
+		if ctrl != null:
+			return ctrl
+		cur = cur.get_parent()
+	return null
 
 
 func _find_environment() -> Node:

@@ -14,8 +14,16 @@ signal exit_portal_unlocked
 @export var total_duration: float = 120.0 # 2 minutes
 @export var lower_track_y: float = 580.0
 @export var upper_track_y: float = 320.0
-@export var jump_velocity: float = 520.0
-@export var gravity: float = 1500.0
+
+@export var sherry_jump_velocity: float = 540.0
+@export var sherry_gravity: float = 1400.0
+
+@export var luca_jump_velocity: float = 580.0
+@export var luca_gravity: float = 1500.0
+
+# Backwards compatibility export
+@export var jump_velocity: float = 560.0
+@export var gravity: float = 1450.0
 
 var elapsed_time: float = 0.0
 var is_running: bool = false
@@ -25,8 +33,11 @@ var _current_speed: float = 0.0
 # Vertical velocities and airborne states for both characters
 var _sherry_vel_y: float = 0.0
 var _sherry_on_floor: bool = true
+var _sherry_hit_timer: float = 0.0
+
 var _luca_vel_y: float = 0.0
 var _luca_on_floor: bool = true
+var _luca_hit_timer: float = 0.0
 
 @export var sherry_path: NodePath = NodePath("../Player")
 @export var luca_path: NodePath = NodePath("../Luca")
@@ -70,8 +81,14 @@ func _setup_character_presentation() -> void:
 		sherry.set_process_unhandled_input(false)
 	if luca != null:
 		luca.position = Vector2(300, upper_track_y)
+		luca.scale = Vector2(0.61, 0.61)
 		if luca.has_method("set_control_enabled"):
 			luca.call("set_control_enabled", false)
+		if luca.has_method("_update_facing"):
+			luca.call("_update_facing", 1.0)
+		var l_spr := luca.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		if l_spr != null:
+			l_spr.flip_h = true
 		luca.set_physics_process(false)
 		luca.set_process_unhandled_input(false)
 
@@ -102,7 +119,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _try_sherry_jump() -> void:
 	if _sherry_on_floor:
-		_sherry_vel_y = -jump_velocity
+		_sherry_vel_y = -sherry_jump_velocity
 		_sherry_on_floor = false
 		if sherry != null and sherry.has_method("_play"):
 			sherry.call("_play", "jump_takeoff")
@@ -110,10 +127,23 @@ func _try_sherry_jump() -> void:
 
 func _try_luca_jump() -> void:
 	if _luca_on_floor:
-		_luca_vel_y = -jump_velocity
+		_luca_vel_y = -luca_jump_velocity
 		_luca_on_floor = false
 		if luca != null and luca.has_method("_play_jump"):
 			luca.call("_play_jump")
+
+
+func notify_character_hit(body: Node2D) -> void:
+	if body == sherry or body.name == "Player":
+		_sherry_hit_timer = 0.4
+		if sherry != null and sherry.has_method("_play"):
+			sherry.call("_play", "hit")
+	elif body == luca or body.name == "Luca":
+		_luca_hit_timer = 0.4
+		if luca != null:
+			var tw := create_tween()
+			tw.tween_property(luca, "position:x", luca.position.x - 15.0, 0.06)
+			tw.tween_property(luca, "position:x", luca.position.x, 0.1)
 
 
 func _physics_process(delta: float) -> void:
@@ -136,35 +166,45 @@ func _physics_process(delta: float) -> void:
 	if camera != null and not is_finished:
 		camera.position.x += move_x
 
+	# Update hit timers
+	if _sherry_hit_timer > 0.0:
+		_sherry_hit_timer = maxf(_sherry_hit_timer - delta, 0.0)
+	if _luca_hit_timer > 0.0:
+		_luca_hit_timer = maxf(_luca_hit_timer - delta, 0.0)
+
 	# Update vertical physics for Sherry
 	if not _sherry_on_floor or _sherry_vel_y != 0.0:
-		_sherry_vel_y += gravity * delta
+		_sherry_vel_y += sherry_gravity * delta
+		if _sherry_vel_y > 40.0 and sherry != null and sherry.has_method("_play") and _sherry_hit_timer <= 0.0:
+			sherry.call("_play", "jump_fall")
 		if sherry != null:
 			sherry.position.y += _sherry_vel_y * delta
 			if sherry.position.y >= lower_track_y:
 				sherry.position.y = lower_track_y
 				_sherry_vel_y = 0.0
 				_sherry_on_floor = true
-				if not is_finished and sherry.has_method("_play"):
+				if not is_finished and sherry.has_method("_play") and _sherry_hit_timer <= 0.0:
 					sherry.call("_play", "run")
 
 	# Update vertical physics for Luca
 	if not _luca_on_floor or _luca_vel_y != 0.0:
-		_luca_vel_y += gravity * delta
+		_luca_vel_y += luca_gravity * delta
+		if _luca_vel_y > 30.0 and luca != null and luca.has_method("_play_fall") and _luca_hit_timer <= 0.0:
+			luca.call("_play_fall")
 		if luca != null:
 			luca.position.y += _luca_vel_y * delta
 			if luca.position.y >= upper_track_y:
 				luca.position.y = upper_track_y
 				_luca_vel_y = 0.0
 				_luca_on_floor = true
-				if not is_finished and luca.has_method("_play_run_loop"):
+				if not is_finished and luca.has_method("_play_run_loop") and _luca_hit_timer <= 0.0:
 					luca.call("_play_run_loop")
 
 	# Maintain running animations while grounded and moving
 	if not is_finished and _current_speed > 20.0:
-		if _sherry_on_floor and sherry != null and sherry.has_method("_play"):
+		if _sherry_on_floor and sherry != null and sherry.has_method("_play") and _sherry_hit_timer <= 0.0:
 			sherry.call("_play", "run")
-		if _luca_on_floor and luca != null and luca.has_method("_play_run_loop"):
+		if _luca_on_floor and luca != null and luca.has_method("_play_run_loop") and _luca_hit_timer <= 0.0:
 			luca.call("_play_run_loop")
 
 

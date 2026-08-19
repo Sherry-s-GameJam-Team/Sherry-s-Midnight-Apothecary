@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cb33v11j5p6k8"]
+
+[ext_resource type="Script" uid="uid://cqj1d8v7d8s8v" path="res://day/levels/Vespervale/inner_systems/dream_bed_safe_zone.gd" id="1_safe_zone"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_safe"]
+size = Vector2(230, 160)
+
+[node name="DreamBedSafeZone" type="Area2D" unique_id=2000501]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_safe_zone")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2000502]
+position = Vector2(0, -50)
+shape = SubResource("RectangleShape2D_safe")
+
+[node name="SafeZoneAura" type="Node2D" parent="." unique_id=2000503]
+modulate = Color(0.9, 0.85, 1, 0.3)
+position = Vector2(0, -30)
+
+[node name="AuraVisual" type="Polygon2D" parent="SafeZoneAura" unique_id=2000504]
+color = Color(0.85, 0.78, 1, 0.22)
+polygon = PackedVector2Array(-110, 30, -90, -30, -50, -65, 0, -75, 50, -65, 90, -30, 110, 30, 80, 45, 0, 50, -80, 45)
