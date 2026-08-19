@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://cax3jvyewp1kd"]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://cwrb7287ak5kh" path="res://day/levels/Vespervale/inner.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"vespervale_inner"
+display_name = "梦疗院·病栋回廊"
+disaster_name = "长梦之灾"
+normal_description = "曾经寂静的梦疗院病栋回廊，在微光中显露出古旧的双层结构。"
+corrupted_description = "虚妄的梦境与病栋现实交错重叠，紫铃藤与弹幕撕裂了走廊的宁静。"
+scene_description = "洞察梦境切换的前兆，在上下两层回廊间规避机关与弹幕，激活梦髓节点。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"

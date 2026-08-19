@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cb8nvd6pqvj1k"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/inner_systems/dream_bullet.gd" id="1_bullet"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bullet"]
+radius = 8.0
+
+[node name="DreamBullet" type="Area2D" unique_id=9812401]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_bullet")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9812402]
+shape = SubResource("CircleShape2D_bullet")

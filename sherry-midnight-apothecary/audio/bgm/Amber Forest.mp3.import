@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cmtm1y8xi46gp"
+path="res://.godot/imported/Amber Forest.mp3-12a76cd34a60d6c9099cd26b875e12ca.mp3str"
+
+[deps]
+
+source_file="res://audio/bgm/Amber Forest.mp3"
+dest_files=["res://.godot/imported/Amber Forest.mp3-12a76cd34a60d6c9099cd26b875e12ca.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

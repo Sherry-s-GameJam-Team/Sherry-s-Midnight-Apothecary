@@ -73,6 +73,9 @@ size = Vector2(100, 100)
 [sub_resource type="CircleShape2D" id="Circle_hazard_gear"]
 radius = 40.0
 
+[sub_resource type="CircleShape2D" id="Circle_hazard_hitbox"]
+radius = 46.0
+
 [sub_resource type="RectangleShape2D" id="Rect_plat_arch"]
 size = Vector2(280, 30)
 
@@ -598,13 +601,28 @@ texture = ExtResource("19_plat_wide")
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
-[node name="ClockbirdEnemy" type="Node2D" parent="World/Floor3_PendulumHall" unique_id=3017]
+[node name="ClockbirdEnemy" type="CharacterBody2D" parent="World/Floor3_PendulumHall" unique_id=3017]
 position = Vector2(600, -560)
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("49_bird")
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy" unique_id=3018]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("28_bird")
+
+[node name="SolidCollision" type="CollisionShape2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy" unique_id=3028]
+position = Vector2(0, -10)
+shape = SubResource("Rect_plat_wide")
+disabled = true
+one_way_collision = true
+
+[node name="Hitbox" type="Area2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy" unique_id=3029]
+collision_layer = 0
+collision_mask = 1 | 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/ClockbirdEnemy/Hitbox" unique_id=3030]
+shape = SubResource("Circle_hazard_hitbox")
 
 [node name="PlatformNode3" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3019]
 position = Vector2(600, -1080)

@@ -43,6 +43,8 @@ const ALL_DAY_LEVEL_PATHS: Array[String] = [
 	"res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres",
 	"res://day/levels/Aurem Clockyard/aurem_clockyard_inside_level.tres",
 	"res://day/levels/Vespervale/vespervale_garden_level.tres",
+	"res://day/levels/Vespervale/vespervale_inner_level.tres",
+	"res://day/levels/Vespervale/vespervale_runner_level.tres",
 	"res://day/levels/lake/lake_cliff_underwater_level.tres",
 	"res://day/levels/cliff/cliff_level.tres",
 	"res://day/levels/lakebed/lakebed_level.tres",
@@ -223,6 +225,21 @@ const SCENE_ALIASES: Dictionary = {
 	"暮息庭院": "vespervale_garden",
 	"花园": "vespervale_garden",
 	"庭院": "vespervale_garden",
+
+	"vespervale_inner": "vespervale_inner",
+	"inner": "vespervale_inner",
+	"病栋": "vespervale_inner",
+	"回廊": "vespervale_inner",
+	"病栋回廊": "vespervale_inner",
+	"梦疗院": "vespervale_inner",
+
+	"vespervale_runner": "vespervale_runner",
+	"runner": "vespervale_runner",
+	"parkour": "vespervale_runner",
+	"跑酷": "vespervale_runner",
+	"疾驰": "vespervale_runner",
+	"疾驰回廊": "vespervale_runner",
+	"梦境疾驰": "vespervale_runner",
 }
 
 const FALLBACK_INGREDIENT_PATHS: Array[String] = [

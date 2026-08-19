@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://chvwt65e88y2a" path="res://shared/definitions/level_data.gd" id="1_data"]
+[ext_resource type="PackedScene" path="res://day/levels/Vespervale/runner.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"vespervale_runner"
+display_name = "梦疗院·疾驰回廊"
+disaster_name = "梦境疾驰"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+is_unlocked_by_default = true
+is_home = false
+unlocked_levels_on_anchor = Array[StringName]([])

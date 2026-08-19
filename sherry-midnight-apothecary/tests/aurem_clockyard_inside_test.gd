@@ -105,6 +105,14 @@ static func run(test: TestSupport) -> void:
 		calib_node_3.call("repair_node")
 		test.expect(bool(calib_node_3.get("is_fixed")), "Calibration Node 3 can be repaired.")
 
+	var clockbird := level.get_node_or_null("World/Floor3_PendulumHall/ClockbirdEnemy")
+	test.expect(clockbird != null, "Clockbird Enemy exists in Floor 3.")
+	if clockbird != null:
+		var frames: Array = clockbird.get("_frames")
+		test.expect(frames.size() == 24, "Clockbird loaded all 24 animation frames from res://day/levels/Aurem Clockyard/src/frames/.")
+		clockbird.call("receive_potion_hit", {"potion_id": "blue_ice_potion"})
+		test.expect_equal(clockbird.get("_state"), 5, "Clockbird transitions to FROZEN state upon ice potion hit.")
+
 	# Test Floor 4: Clock Hands Floor
 	var floor4 := level.get_node_or_null("World/Floor4_ClockHands")
 	test.expect(floor4 != null, "Floor 4 Clock Hands Floor exists.")

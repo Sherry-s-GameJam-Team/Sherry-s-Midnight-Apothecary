@@ -142,11 +142,11 @@ shape = SubResource("Rect_portal")
 position = Vector2(3870, 331)
 collision_layer = 0
 script = ExtResource("17_portal")
-destination_level = &"vespervale_church"
-destination_entry_id = &"church_entrance"
-fallback_scene_path = "res://day/levels/home/home.tscn"
+destination_level = &"vespervale_inner"
+destination_entry_id = &"from_garden"
+fallback_scene_path = "res://day/levels/Vespervale/inner.tscn"
 interaction_hint_enabled = true
-interaction_hint_text = "按 E 瞻仰静语礼堂"
+interaction_hint_text = "按 E 进入梦疗院病栋"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ChurchPortal" unique_id=1946061749]
 shape = SubResource("Rect_portal")

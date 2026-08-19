@@ -265,15 +265,30 @@ func _update_footstep_sfx(delta: float) -> void:
 
 
 func _play(action: String) -> void:
+	if sprite == null:
+		sprite = get_node_or_null("SherryPresentation/SherrySprite")
+	if animation_player == null:
+		animation_player = get_node_or_null("SherryPresentation/SherryAnimationPlayer")
 	var animation_name := "%s_right" % action if _facing_right else action
-	if _state == action and animation_player.current_animation == animation_name and animation_player.is_playing():
-		return
+	if animation_player != null and not animation_player.has_animation(animation_name):
+		animation_name = action
+		if not animation_player.has_animation(animation_name):
+			_state = action
+			return
+	if animation_player != null:
+		if _state == action and animation_player.current_animation == animation_name and animation_player.is_playing():
+			return
 	_state = action
 	_apply_visual_scale()
-	animation_player.play(animation_name)
+	if animation_player != null and animation_player.has_animation(animation_name):
+		animation_player.play(animation_name)
 
 
 func _apply_visual_scale() -> void:
+	if sprite == null:
+		sprite = get_node_or_null("SherryPresentation/SherrySprite")
+	if sprite == null:
+		return
 	var scale_multiplier := 1.0
 	if depth_scale_enabled:
 		var y_range := depth_scale_max_y - depth_scale_min_y

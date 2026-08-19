@@ -42,7 +42,7 @@ const DROP_THROUGH_START_SPEED := 80.0
 ## with right-facing art.
 @export var source_faces_right := false
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
 
 var locomotion_state := LocomotionState.IDLE
 var _movement_direction := 0.0
@@ -54,8 +54,16 @@ var _drop_through_timer := 0.0
 var _default_floor_snap_length := 0.0
 
 
+func _get_animated_sprite() -> AnimatedSprite2D:
+	if animated_sprite == null:
+		animated_sprite = get_node_or_null("AnimatedSprite2D")
+	return animated_sprite
+
+
 func _ready() -> void:
-	animated_sprite.animation_finished.connect(_on_animation_finished)
+	var sprite := _get_animated_sprite()
+	if sprite != null and not sprite.animation_finished.is_connected(_on_animation_finished):
+		sprite.animation_finished.connect(_on_animation_finished)
 	_default_floor_snap_length = floor_snap_length
 	collision_mask |= DROP_THROUGH_PLATFORM_LAYER | LUCA_WORLD_PLATFORM_LAYER
 	_sync_camera_process_mode()
@@ -246,40 +254,52 @@ func _set_active_direction(direction: float) -> void:
 
 
 func _update_facing(direction: float) -> void:
-	animated_sprite.flip_h = direction < 0.0 if source_faces_right else direction > 0.0
+	var sprite := _get_animated_sprite()
+	if sprite != null:
+		sprite.flip_h = direction < 0.0 if source_faces_right else direction > 0.0
 
 
 func _play_idle() -> void:
 	locomotion_state = LocomotionState.IDLE
-	animated_sprite.play(IDLE_ANIMATION)
+	var sprite := _get_animated_sprite()
+	if sprite != null:
+		sprite.play(IDLE_ANIMATION)
 
 
 func _play_run_start() -> void:
 	locomotion_state = LocomotionState.RUN_START
-	animated_sprite.play(RUN_START_ANIMATION)
+	var sprite := _get_animated_sprite()
+	if sprite != null:
+		sprite.play(RUN_START_ANIMATION)
 
 
 func _play_run_loop() -> void:
 	locomotion_state = LocomotionState.RUN_LOOP
-	animated_sprite.play(RUN_LOOP_ANIMATION)
+	var sprite := _get_animated_sprite()
+	if sprite != null:
+		sprite.play(RUN_LOOP_ANIMATION)
 
 
 func _play_jump() -> void:
 	locomotion_state = LocomotionState.JUMP
-	if animated_sprite.sprite_frames != null and animated_sprite.sprite_frames.has_animation(JUMP_ANIMATION):
-		animated_sprite.play(JUMP_ANIMATION)
-	else:
-		animated_sprite.play(RUN_LOOP_ANIMATION)
+	var sprite := _get_animated_sprite()
+	if sprite != null:
+		if sprite.sprite_frames != null and sprite.sprite_frames.has_animation(JUMP_ANIMATION):
+			sprite.play(JUMP_ANIMATION)
+		else:
+			sprite.play(RUN_LOOP_ANIMATION)
 
 
 func _play_fall() -> void:
 	locomotion_state = LocomotionState.FALL
-	if animated_sprite.sprite_frames != null and animated_sprite.sprite_frames.has_animation(FALL_ANIMATION):
-		animated_sprite.play(FALL_ANIMATION)
-	elif animated_sprite.sprite_frames != null and animated_sprite.sprite_frames.has_animation(JUMP_ANIMATION):
-		animated_sprite.play(JUMP_ANIMATION)
-	else:
-		animated_sprite.play(RUN_LOOP_ANIMATION)
+	var sprite := _get_animated_sprite()
+	if sprite != null:
+		if sprite.sprite_frames != null and sprite.sprite_frames.has_animation(FALL_ANIMATION):
+			sprite.play(FALL_ANIMATION)
+		elif sprite.sprite_frames != null and sprite.sprite_frames.has_animation(JUMP_ANIMATION):
+			sprite.play(JUMP_ANIMATION)
+		else:
+			sprite.play(RUN_LOOP_ANIMATION)
 
 
 func _try_drop_through() -> void:

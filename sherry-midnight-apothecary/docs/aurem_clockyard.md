@@ -30,7 +30,7 @@
    - **活化药水 (Orange/Speed)**：为停转机关与卷扬机注入魔力，快速推进手轮与指针。
 3. **钟庭机械敌人与环境危害**：
    - **无序伤害齿轮 (`ChaoticHazardGear`)**：在第二层多轨道、多模式弹跳和横扫的失控伤害齿轮。
-   - **逆行钟鸟 (`RetroClockbird`)**：反向飞行并在上方投放黄铜螺栓的报时鸟造物。
+   - **逆行时钟鸟 / 齿轮鸟 (`RetroClockbird`)**：基于 `res://day/levels/Aurem Clockyard/src/frames/` 24 帧序列动画与五段状态机 AI（巡航巡逻、红光锁定预警、贝塞尔俯冲突袭、黄铜螺栓轰炸、冰冻踩踏平台）。
 4. **声音合成器 (`ClocktowerAudio`)**：
    - 程序化合成机械滴答声、蒸汽喷射声、齿轮卡合声、磨损预警声、钟鸣预警声及塔顶震撼的黄钟大吕回响 (`play_grand_synchronization_toll`)。
 

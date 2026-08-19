@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://pwb7i8td8elp"]
+
+[ext_resource type="Script" uid="uid://bpcllormcm0c7" path="res://day/levels/Vespervale/runner.gd" id="1_runner"]
+[ext_resource type="Script" uid="uid://47ujkxmxo20u" path="res://day/levels/Vespervale/runner_systems/runner_controller.gd" id="2_controller"]
+[ext_resource type="Script" uid="uid://dsci4komxclk0" path="res://day/levels/Vespervale/runner_systems/runner_track_generator.gd" id="3_track"]
+[ext_resource type="Script" uid="uid://b3gcutonwredt" path="res://day/levels/Vespervale/runner_systems/runner_hud.gd" id="4_hud"]
+[ext_resource type="Texture2D" uid="uid://cwiqjfnyv0axl" path="res://day/levels/Vespervale/skybox.png" id="5_skybox"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="7_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="8_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="9_presentation"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="10_luca"]
+[ext_resource type="Texture2D" uid="uid://cx3umdskbl7un" path="res://day/levels/Vespervale/src/cabinet.png" id="11_cabinet"]
+[ext_resource type="Texture2D" uid="uid://b7jipmbgq7k8n" path="res://day/levels/Vespervale/src/sofa.png" id="12_sofa"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="13_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="14_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="15_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="16_pause_menu"]
+[ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="17_top_hint"]
+
+[sub_resource type="RectangleShape2D" id="Rect_infinite_ground"]
+size = Vector2(80000, 120)
+
+[sub_resource type="RectangleShape2D" id="Rect_portal"]
+size = Vector2(160, 240)
+
+[node name="RunnerLevel" type="Node2D" unique_id=3000001]
+texture_filter = 1
+script = ExtResource("1_runner")
+debug_scene_id = "vespervale_runner"
+
+[node name="RunnerController" type="Node2D" parent="." unique_id=3000002]
+script = ExtResource("2_controller")
+
+[node name="RunnerHUD" type="CanvasLayer" parent="." unique_id=3000003]
+script = ExtResource("4_hud")
+
+[node name="ScreenOverlay" type="CanvasModulate" parent="." unique_id=3000004]
+color = Color(0.8, 0.72, 0.9, 1)
+
+[node name="Background" type="Node2D" parent="." unique_id=3000010]
+z_index = -30
+
+[node name="FS" type="Parallax2D" parent="Background" unique_id=3000011]
+z_index = -30
+scroll_scale = Vector2(0.1, 0.04)
+repeat_size = Vector2(2750, 0)
+
+[node name="Skybox" type="Sprite2D" parent="Background/FS" unique_id=3000012]
+position = Vector2(0, -90)
+scale = Vector2(1.27, 1.25)
+texture = ExtResource("5_skybox")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=3000020]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=3000021]
+position = Vector2(20000, 640)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=3000022]
+position = Vector2(0, 88)
+shape = SubResource("Rect_infinite_ground")
+
+[node name="TrackGenerator" type="Node2D" parent="." unique_id=3000025]
+script = ExtResource("3_track")
+
+[node name="World" type="Node2D" parent="." unique_id=3000030]
+
+[node name="Props" type="Node2D" parent="World" unique_id=3000031]
+
+[node name="StartSofa" type="Sprite2D" parent="World/Props" unique_id=3000032]
+position = Vector2(150, 619)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("12_sofa")
+
+[node name="StartCabinet" type="Sprite2D" parent="World/Props" unique_id=3000033]
+position = Vector2(80, 260)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("11_cabinet")
+
+[node name="FinishAltar" type="Node2D" parent="World" unique_id=3000040]
+position = Vector2(36600, 520)
+
+[node name="CabinetAltar" type="Sprite2D" parent="World/FinishAltar" unique_id=3000041]
+position = Vector2(0, 20)
+scale = Vector2(0.7, 0.8)
+texture = ExtResource("11_cabinet")
+
+[node name="ExitPortal" type="Area2D" parent="World/FinishAltar" unique_id=3000042]
+position = Vector2(80, 0)
+collision_layer = 0
+script = ExtResource("13_portal")
+destination_level = &"vespervale_garden"
+destination_entry_id = &"church"
+fallback_scene_path = "res://day/levels/Vespervale/garden.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 离开梦境疾驰"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/FinishAltar/ExitPortal" unique_id=3000043]
+shape = SubResource("Rect_portal")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=3000050]
+z_index = 10
+position = Vector2(300, 580)
+scale = Vector2(0.61, 0.61)
+collision_mask = 3
+script = ExtResource("7_player")
+
+[node name="SherryCollision" parent="Player" unique_id=3000051 instance=ExtResource("8_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=3000052 instance=ExtResource("9_presentation")]
+
+[node name="Luca" parent="." unique_id=3000060 instance=ExtResource("10_luca")]
+position = Vector2(300, 320)
+scale = Vector2(-0.61, 0.61)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=3000070]
+position = Vector2(540, 420)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=3000080]
+layer = 120
+visible = false
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=3000081 instance=ExtResource("14_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=3000090]
+process_mode = 3
+layer = 100
+visible = false
+script = ExtResource("15_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=3000091 instance=ExtResource("16_pause_menu")]
+
+[node name="TopHintUI" parent="PauseMenuLayer" unique_id=3000092 instance=ExtResource("17_top_hint")]
