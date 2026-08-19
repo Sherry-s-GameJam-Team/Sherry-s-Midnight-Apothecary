@@ -23,6 +23,11 @@
 [ext_resource type="Script" uid="uid://d4bulfbo3pqws" path="res://day/levels/forest/boss/forest_boss_interface.gd" id="31_boss_interface"]
 [ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="33_herb"]
 [ext_resource type="PackedScene" uid="uid://c0hm5cchinakn" path="res://day/levels/forest/crown.tscn" id="34_crown"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="35_herb_spawn_point"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/stardust_puffy_lion/stardust_puffy_lion_herb.tscn" id="36_stardust"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/grail_lily/grail_lily_herb.tscn" id="37_grail_lily"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dew_flask_herb/dew_flask_herb_herb.tscn" id="38_dew_flask"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/old_mans_noose/old_mans_noose_herb.tscn" id="39_old_mans_noose"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
 size = Vector2(138, 167)
@@ -335,15 +340,23 @@ visible = false
 
 [node name="P01" type="Marker2D" parent="Exterior/HerbSpawns" unique_id=785343859]
 position = Vector2(900, 630)
+script = ExtResource("35_herb_spawn_point")
+herb_scene = ExtResource("36_stardust")
 
 [node name="P02" type="Marker2D" parent="Exterior/HerbSpawns" unique_id=835767544]
 position = Vector2(2250, 630)
+script = ExtResource("35_herb_spawn_point")
+herb_scene = ExtResource("37_grail_lily")
 
 [node name="P03" type="Marker2D" parent="Exterior/HerbSpawns" unique_id=1613205955]
 position = Vector2(4050, 630)
+script = ExtResource("35_herb_spawn_point")
+herb_scene = ExtResource("38_dew_flask")
 
 [node name="P04" type="Marker2D" parent="Exterior/HerbSpawns" unique_id=1179734693]
 position = Vector2(5600, 630)
+script = ExtResource("35_herb_spawn_point")
+herb_scene = ExtResource("39_old_mans_noose")
 
 [node name="HerbSpawnDirector" type="Node2D" parent="Exterior" unique_id=895051036]
 process_mode = 4

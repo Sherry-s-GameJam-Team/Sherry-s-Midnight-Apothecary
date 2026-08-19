@@ -1,0 +1,38 @@
+{
+  "herb_id": "tideplate_lotus",
+  "display_name_zh": "汐盘荷",
+  "english_name": "Tideplate Lotus",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "tideplate_lotus_piece_01",
+      "source_rect": [
+        1231,
+        2109,
+        2189,
+        1651
+      ]
+    },
+    {
+      "id": "tideplate_lotus_piece_02",
+      "source_rect": [
+        424,
+        245,
+        3442,
+        3464
+      ]
+    },
+    {
+      "id": "tideplate_lotus_piece_03",
+      "source_rect": [
+        552,
+        1672,
+        1593,
+        1705
+      ]
+    }
+  ]
+}

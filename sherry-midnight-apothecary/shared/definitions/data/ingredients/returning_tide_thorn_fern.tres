@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/returning_tide_thorn_fern/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/returning_tide_thorn_fern/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/returning_tide_thorn_fern/pieces/cyan/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/returning_tide_thorn_fern/pieces/cyan/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/returning_tide_thorn_fern/pieces/cyan/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece")
+id = &"returning_tide_thorn_fern_piece_01"
+display_name = "回潮棘蕨·部位01"
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(1591, 412, 1366, 3061)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.61
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece")
+id = &"returning_tide_thorn_fern_piece_02"
+display_name = "回潮棘蕨·部位02"
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(2070, 1550, 1880, 1951)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.61
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece")
+id = &"returning_tide_thorn_fern_piece_03"
+display_name = "回潮棘蕨·部位03"
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(470, 1497, 1767, 2474)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.61
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer")
+id = &"returning_tide_thorn_fern_cyan_layer"
+display_name = "青色部位层"
+color_id = &"cyan"
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+spectrum_x = 0.61
+pieces = Array[ExtResource("3_piece")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient")
+id = &"returning_tide_thorn_fern"
+display_name = "回潮棘蕨"
+english_name = "Returning-Tide Thorn Fern"
+description = "叶脉会在潮气回升时泛起青光的棘蕨，适合稳定清凉而持续的药性。"
+lore = "海雾退去后，岩缝里的棘蕨会把夜间凝结的水珠送回叶尖；渔民以此判断回潮将至。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer")]([SubResource("Layer_main")])
+base_value = 18
+spectrum_start = 0.595
+spectrum_end = 0.625
+base_quality = 1.05
+base_concentration = 1.1

@@ -1,6 +1,6 @@
 # Colored plant library
 
-The source set from `De Maga et Septem Dierum Maledictione/plant` is integrated as ten production-ready `IngredientData` resources. Static records live in `shared/definitions/data/ingredients/`; their feature-specific preview and detachable artwork lives under `day/interactables/herb/herbs/<ingredient_id>/`.
+The source set from `De Maga et Septem Dierum Maledictione/plant` is integrated as thirteen production-ready `IngredientData` resources. Static records live in `shared/definitions/data/ingredients/`; their feature-specific preview and detachable artwork lives under `day/interactables/herb/herbs/<ingredient_id>/`.
 
 ## Spectrum assignment
 
@@ -9,6 +9,7 @@ The source folder is the authoritative color ID. Plants are distributed within t
 | Color ID | Spectrum band | Imported plants |
 | --- | --- | --- |
 | `yellow` | `0.2857–0.4285` | Drop-Cliff Whistle-Leaf, Eyrie-Nest Seed-Ball, Wind-Cutter Rye, Egg-Climber’s Honey-Pot |
+| `cyan` | `0.5714–0.7142` | Returning-Tide Thorn Fern, Tideplate Lotus, Tide-Lantern Flower |
 | `blue` | `0.7142–0.8571` | Chalice-Ice Spire, Tundra Snow-Whisk, Vesper Blue-Thicket |
 | `purple` | `0.8571–1.0` | Dusk-Water Opuntia, Stagnant-Breeze Bell-Vine, Slumber-Marrow Geode |
 
@@ -16,7 +17,7 @@ Each part retains its position on the original 4096×4096 canvas. The stored tex
 
 ## Runtime registration
 
-`night/alchemy/alchemy_runtime.tscn` explicitly lists all ten ingredients. `night/ui/pause_menu/pause_inventory_page.tscn` lists the same definitions for material inspection. Runtime quantities remain in the shared `PlayerData.inventory` dictionary and use the ingredient resource ID as the key.
+`night/alchemy/alchemy_runtime.tscn` explicitly lists all thirteen colored-library ingredients. `night/ui/pause_menu/pause_inventory_page.tscn` lists the same definitions for material inspection. Runtime quantities remain in the shared `PlayerData.inventory` dictionary and use the ingredient resource ID as the key.
 
 Useful console examples:
 
@@ -24,4 +25,5 @@ Useful console examples:
 set inventory.chalice_ice_spire 10
 set inventory.dusk_water_opuntia 10
 set inventory.wind_cutter_rye 10
+set inventory.tideplate_lotus 10
 ```

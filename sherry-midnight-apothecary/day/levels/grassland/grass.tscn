@@ -20,11 +20,17 @@
 [ext_resource type="Texture2D" uid="uid://csq80pl4laeer" path="res://day/levels/grassland/art/house.png" id="17_grxfx"]
 [ext_resource type="Texture2D" uid="uid://5gccaew1k5bb" path="res://day/levels/grassland/art/hole_right.png" id="17_jmxaa"]
 [ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="17_looping_bgm"]
-[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="18_door_portal"]
-[ext_resource type="Script" path="res://day/levels/grassland/grassland_night_door.gd" id="24_night_door"]
 [ext_resource type="Texture2D" uid="uid://xlhrhrr4fc4r" path="res://day/levels/grassland/art/corrupted_skybox.png" id="19_corrupted_horizon"]
-[ext_resource type="Texture2D" uid="uid://b68l87jjdv1e4" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid.png" id="22_jmxaa"]
+[ext_resource type="Texture2D" uid="uid://c7n47bwhkxbqd" path="res://day/levels/grassland/emerald_field/art/platforms/trapezoid.png" id="22_jmxaa"]
 [ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="23_herb_spawns"]
+[ext_resource type="Script" uid="uid://141svtf7o838" path="res://day/levels/grassland/grassland_night_door.gd" id="24_night_door"]
+[ext_resource type="Script" uid="uid://j48yuwrhnne5" path="res://day/interactables/herb/herb_spawn_point.gd" id="25_herb_spawn_point"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/herdsmans_loaf_bush/herdsmans_loaf_bush_herb.tscn" id="26_herdsmans_loaf"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/stardust_puffy_lion/stardust_puffy_lion_herb.tscn" id="27_stardust"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/grail_lily/grail_lily_herb.tscn" id="28_grail_lily"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dew_flask_herb/dew_flask_herb_herb.tscn" id="29_dew_flask"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/old_mans_noose/old_mans_noose_herb.tscn" id="30_old_mans_noose"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/praise_star_maple/praise_star_maple_herb.tscn" id="31_praise_star_maple"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 distance = -667.0
@@ -150,8 +156,8 @@ script = ExtResource("4_player")
 [node name="SherryPresentation" parent="Player" unique_id=2056010217 instance=ExtResource("10_sherry_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=362910047]
-process_callback = 0
 position = Vector2(112, -291)
+process_callback = 0
 limit_left = 0
 limit_top = 0
 limit_right = 2168
@@ -237,6 +243,7 @@ dialogue_resource = ExtResource("8_dialog1_dialogue")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="issues/Dialog1Trigger" unique_id=315906906]
 position = Vector2(0, -228.5)
 shape = SubResource("RectangleShape2D_dialog1_trigger")
+debug_color = Color(1.732707e-06, 0.57213926, 0.83914167, 0.41960785)
 
 [node name="completed" type="Marker2D" parent="issues" unique_id=262761734]
 position = Vector2(1988, 165)
@@ -269,33 +276,53 @@ texture = ExtResource("22_jmxaa")
 
 [node name="P01" type="Marker2D" parent="HerbSpawns" unique_id=1086099643]
 position = Vector2(1210, 647)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("26_herdsmans_loaf")
 
 [node name="P02" type="Marker2D" parent="HerbSpawns" unique_id=1374330499]
 position = Vector2(1490, 667)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("27_stardust")
 
 [node name="P03" type="Marker2D" parent="HerbSpawns" unique_id=581225105]
 position = Vector2(1800, 637)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("28_grail_lily")
 
 [node name="P04" type="Marker2D" parent="HerbSpawns" unique_id=725045009]
 position = Vector2(2163, 686)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("29_dew_flask")
 
 [node name="P05" type="Marker2D" parent="HerbSpawns" unique_id=1849609505]
 position = Vector2(2430, 627)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("30_old_mans_noose")
 
 [node name="P06" type="Marker2D" parent="HerbSpawns" unique_id=908737456]
 position = Vector2(2750, 647)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("31_praise_star_maple")
 
 [node name="P07" type="Marker2D" parent="HerbSpawns" unique_id=1885563414]
 position = Vector2(-244, 655)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("26_herdsmans_loaf")
 
 [node name="P08" type="Marker2D" parent="HerbSpawns" unique_id=339157251]
 position = Vector2(-551, 637)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("27_stardust")
 
 [node name="P09" type="Marker2D" parent="HerbSpawns" unique_id=713651656]
 position = Vector2(-993, 633)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("28_grail_lily")
 
 [node name="P10" type="Marker2D" parent="HerbSpawns" unique_id=1303394020]
 position = Vector2(2981, 695)
+script = ExtResource("25_herb_spawn_point")
+herb_scene = ExtResource("29_dew_flask")
 
 [node name="HerbSpawnDirector" type="Node2D" parent="." unique_id=1942478901]
 script = ExtResource("23_herb_spawns")

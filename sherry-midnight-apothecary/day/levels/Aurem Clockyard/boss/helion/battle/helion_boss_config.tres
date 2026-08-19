@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="HelionBossConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss_config.gd" id="1_cfg"]
+
+[resource]
+script = ExtResource("1_cfg")
+max_hp = 2000
+phase2_threshold = 0.7
+phase3_threshold = 0.35
+final_sequence_threshold = 0.15
+attack_interval_min = 2.5
+attack_interval_max = 4.5
+sweep_damage = 15
+clock_mark_damage = 12
+ring_damage = 20
+clock_projectile_damage = 8
+rewind_seconds = 2.0
+rewind_record_buffer = 2.5
+rewind_safety_time = 0.2
+normal_damage_multiplier = 0.35
+exposed_damage_multiplier = 1.0
+explosive_multiplier = 1.35
+purify_multiplier = 1.0
+sector_warning_time = 1.2
+sector_retract_time = 1.4
+sector_restore_time = 0.6
+min_safe_sectors = 3
+hit_feedback_cooldown = 0.1
+hit_recoil_min_px = 8.0
+hit_recoil_max_px = 14.0
+hit_flash_duration = 0.08
+hit_recoil_return_time = 0.06
+final_purify_required = true
+max_clock_birds = 2
+clock_bird_spawn_interval = 8.0
+final_toll_duration = 9.0
+toll_interval = 0.75

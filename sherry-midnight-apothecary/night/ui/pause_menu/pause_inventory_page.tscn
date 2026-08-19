@@ -38,11 +38,14 @@
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/eyrie_nest_seed_ball.tres" id="47_eyrie"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/wind_cutter_rye.tres" id="48_rye"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/egg_climbers_honey_pot.tres" id="49_honey"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/returning_tide_thorn_fern.tres" id="50_returning_tide"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tideplate_lotus.tres" id="51_tideplate"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tide_lantern_flower.tres" id="52_tide_lantern"]
 
 [node name="PauseInventoryPage" type="Control"]
 script = ExtResource("1_script")
 potion_definitions = Array[PotionData]([ExtResource("10_red"), ExtResource("11_orange"), ExtResource("12_yellow"), ExtResource("13_green"), ExtResource("14_cyan"), ExtResource("15_blue"), ExtResource("16_purple"), ExtResource("18_purification"), ExtResource("17_black")])
-ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey")])
+ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey"), ExtResource("50_returning_tide"), ExtResource("51_tideplate"), ExtResource("52_tide_lantern")])
 lock_icon = ExtResource("3_lock")
 empty_slot_icon = ExtResource("4_empty")
 story_item_placeholder = ExtResource("5_story")

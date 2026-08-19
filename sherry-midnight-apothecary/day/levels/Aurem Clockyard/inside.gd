@@ -1,4 +1,4 @@
-class_name AuremClocktowerInsideLevel
+﻿class_name AuremClocktowerInsideLevel
 extends DayLevelEnvironment
 
 signal objective_updated(text: String, hint: String)
@@ -25,6 +25,7 @@ var _is_respawning: bool = false
 @onready var floor4: Node2D = get_node_or_null("World/Floor4_ClockHands")
 @onready var tower_top: Node2D = get_node_or_null("World/floor 5")
 @onready var floor6: Node2D = get_node_or_null("World/Top")
+@onready var helion_arena: Node2D = get_node_or_null("World/Top/HelionBossArena")
 
 @onready var calib_node_1: Area2D = get_node_or_null("World/Floor1_SpringChamber/CalibrationNode1")
 @onready var calib_node_2: Area2D = get_node_or_null("World/Floor2_GearWell/CalibrationNode2")
@@ -48,6 +49,12 @@ func _ready() -> void:
 		calib_node_3.connect("fixed", _on_node_3_fixed)
 	if tower_top != null and tower_top.has_signal("synchronization_completed"):
 		tower_top.connect("synchronization_completed", _on_grand_synchronization)
+
+	if helion_arena != null:
+		if helion_arena.has_signal("boss_started"):
+			helion_arena.connect("boss_started", _on_helion_boss_started)
+		if helion_arena.has_signal("boss_defeated"):
+			helion_arena.connect("boss_defeated", _on_helion_boss_defeated)
 
 	objective_updated.emit("深入巨钟塔发条室。", "观察机械脉冲节奏，修复主发条限位器。")
 
@@ -123,6 +130,24 @@ func on_floor_6_reached() -> void:
 		data.tutorial_flags["aurem_clockyard_tower_synchronized"] = true
 
 	objective_updated.emit("奥雷姆钟庭时律巅峰已到达！", "通过时律界门返回。")
+
+
+func _on_helion_boss_started() -> void:
+	current_floor_checkpoint = 6
+	var data := get_player_data()
+	if data != null and data.tutorial_flags != null:
+		data.tutorial_flags["aurem_helion_preboss"] = true
+	objective_updated.emit("击败十二刻守望者·赫利昂！", "利用核心暴露窗口投掷净化药水！")
+
+
+func _on_helion_boss_defeated(_boss_id: StringName) -> void:
+	on_floor_6_reached()
+	var data := get_player_data()
+	if data != null and data.tutorial_flags != null:
+		data.tutorial_flags["aurem_helion_cleared"] = true
+	var exit_portal := get_node_or_null("World/Top/ExitPortal")
+	if exit_portal != null:
+		exit_portal.visible = true
 
 
 func request_fall_respawn(player_body: Node2D, floor_id: int, damage: int) -> void:

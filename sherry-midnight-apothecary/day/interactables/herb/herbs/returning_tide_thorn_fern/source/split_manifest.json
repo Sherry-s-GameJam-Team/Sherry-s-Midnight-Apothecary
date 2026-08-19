@@ -1,0 +1,38 @@
+{
+  "herb_id": "returning_tide_thorn_fern",
+  "display_name_zh": "回潮棘蕨",
+  "english_name": "Returning-Tide Thorn Fern",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "returning_tide_thorn_fern_piece_01",
+      "source_rect": [
+        1591,
+        412,
+        1366,
+        3061
+      ]
+    },
+    {
+      "id": "returning_tide_thorn_fern_piece_02",
+      "source_rect": [
+        2070,
+        1550,
+        1880,
+        1951
+      ]
+    },
+    {
+      "id": "returning_tide_thorn_fern_piece_03",
+      "source_rect": [
+        470,
+        1497,
+        1767,
+        2474
+      ]
+    }
+  ]
+}

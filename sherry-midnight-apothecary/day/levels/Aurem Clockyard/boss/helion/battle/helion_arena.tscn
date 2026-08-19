@@ -1,0 +1,207 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.gd" id="1_arena"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss.tscn" id="2_boss"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/clock_floor_controller.gd" id="3_floor"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss_hud.tscn" id="4_hud"]
+
+[sub_resource type="RectangleShape2D" id="entry_shape"]
+size = Vector2(200, 60)
+
+[sub_resource type="RectangleShape2D" id="sector_shape"]
+size = Vector2(100, 30)
+
+[sub_resource type="RectangleShape2D" id="safety_plat_shape"]
+size = Vector2(80, 20)
+
+[sub_resource type="RectangleShape2D" id="arena_wall_shape"]
+size = Vector2(30, 800)
+
+[sub_resource type="RectangleShape2D" id="arena_ceiling_shape"]
+size = Vector2(1260, 30)
+
+[sub_resource type="RectangleShape2D" id="purify_shape"]
+size = Vector2(60, 40)
+
+[node name="HelionBossArena" type="Node2D"]
+script = ExtResource("1_arena")
+
+[node name="EntryTrigger" type="Area2D" parent="."]
+position = Vector2(0, -30)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntryTrigger"]
+shape = SubResource("entry_shape")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(0, -50)
+
+[node name="HelionBoss" parent="." instance=ExtResource("2_boss")]
+position = Vector2(0, -500)
+
+[node name="ClockFloor" type="Node2D" parent="."]
+script = ExtResource("3_floor")
+
+[node name="Sector01" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(-550, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector01"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector01"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector02" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(-450, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector02"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector02"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector03" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(-350, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector03"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector03"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector04" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(-250, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector04"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector04"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector05" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(-150, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector05"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector05"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector06" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(-50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector06"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector06"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector07" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector07"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector07"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector08" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(150, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector08"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector08"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector09" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(250, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector09"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector09"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector10" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(350, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector10"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector10"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector11" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(450, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector11"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector11"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="Sector12" type="StaticBody2D" parent="ClockFloor"]
+position = Vector2(550, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector12"]
+shape = SubResource("sector_shape")
+
+[node name="Visual" type="Sprite2D" parent="ClockFloor/Sector12"]
+modulate = Color(0.6, 0.5, 0.4, 1)
+scale = Vector2(3.125, 0.9375)
+
+[node name="LeftSafetyPlatform" type="StaticBody2D" parent="."]
+position = Vector2(-650, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftSafetyPlatform"]
+shape = SubResource("safety_plat_shape")
+
+[node name="RightSafetyPlatform" type="StaticBody2D" parent="."]
+position = Vector2(650, -100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightSafetyPlatform"]
+shape = SubResource("safety_plat_shape")
+
+[node name="ArenaBounds" type="StaticBody2D" parent="."]
+collision_layer = 0
+
+[node name="LeftWall" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(-615, -400)
+shape = SubResource("arena_wall_shape")
+
+[node name="RightWall" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(615, -400)
+shape = SubResource("arena_wall_shape")
+
+[node name="Ceiling" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(0, -800)
+shape = SubResource("arena_ceiling_shape")
+
+[node name="LastSafeMarker" type="Marker2D" parent="."]
+position = Vector2(0, -50)
+
+[node name="PurifySupplyPoint" type="Area2D" parent="."]
+visible = false
+position = Vector2(-500, -60)
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PurifySupplyPoint"]
+shape = SubResource("purify_shape")
+
+[node name="FX" type="Node2D" parent="."]
+
+[node name="BossHUD" parent="." instance=ExtResource("4_hud")]

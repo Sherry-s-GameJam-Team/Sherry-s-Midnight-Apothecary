@@ -8,7 +8,7 @@
 
 - [Herb harvesting](herb_harvesting.md): normal-state daily field pickup refreshes for alchemy ingredients.
 
-- [Colored plant library](colored_plant_library.md): ten yellow, blue, and purple production plants with alpha-trimmed detachable artwork and explicit spectrum assignments.
+- [Colored plant library](colored_plant_library.md): thirteen yellow, cyan, blue, and purple production plants with alpha-trimmed detachable artwork and explicit spectrum assignments.
 
 - [Magic Map Switch](../day/interactables/map_switch/README.md): Home Transformer route-anchor alignment and first-use navigation tutorial.
 

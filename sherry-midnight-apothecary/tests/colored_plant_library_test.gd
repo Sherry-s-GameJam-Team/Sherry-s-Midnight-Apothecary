@@ -13,6 +13,9 @@ const EXPECTED_COLORS := {
 	&"eyrie_nest_seed_ball": &"yellow",
 	&"wind_cutter_rye": &"yellow",
 	&"egg_climbers_honey_pot": &"yellow",
+	&"returning_tide_thorn_fern": &"cyan",
+	&"tideplate_lotus": &"cyan",
+	&"tide_lantern_flower": &"cyan",
 }
 
 
@@ -47,9 +50,11 @@ static func run(test: TestSupport) -> void:
 				test.expect(piece.spectrum_x >= 0.2857 and piece.spectrum_x <= 0.4285, "%s stays inside the yellow band." % piece.id)
 			elif expected_color == &"blue":
 				test.expect(piece.spectrum_x >= 0.7142 and piece.spectrum_x <= 0.8571, "%s stays inside the blue band." % piece.id)
+			elif expected_color == &"cyan":
+				test.expect(piece.spectrum_x >= 0.5714 and piece.spectrum_x <= 0.7142, "%s stays inside the cyan band." % piece.id)
 			else:
 				test.expect(piece.spectrum_x >= 0.8571 and piece.spectrum_x <= 1.0, "%s stays inside the purple band." % piece.id)
 	for ingredient_id: StringName in EXPECTED_COLORS:
 		test.expect(seen_ids.has(ingredient_id), "Colored plant is registered in AlchemyRuntime: %s" % ingredient_id)
-	test.expect_equal(total_piece_count, 32, "All supplied colored plant parts are registered for production.")
+	test.expect_equal(total_piece_count, 41, "All supplied colored plant parts are registered for production.")
 	runtime.free()

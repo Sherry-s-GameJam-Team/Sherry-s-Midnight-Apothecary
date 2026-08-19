@@ -1,0 +1,38 @@
+{
+  "herb_id": "tide_lantern_flower",
+  "display_name_zh": "潮灯花",
+  "english_name": "Tide-Lantern Flower",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "tide_lantern_flower_piece_01",
+      "source_rect": [
+        777,
+        721,
+        1680,
+        3129
+      ]
+    },
+    {
+      "id": "tide_lantern_flower_piece_02",
+      "source_rect": [
+        955,
+        244,
+        1694,
+        3626
+      ]
+    },
+    {
+      "id": "tide_lantern_flower_piece_03",
+      "source_rect": [
+        2199,
+        1166,
+        1538,
+        2726
+      ]
+    }
+  ]
+}

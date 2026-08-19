@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/boss/helion/godot/helion_animated_sprite.tscn" id="1_sprite"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss.gd" id="2_boss"]
+[ext_resource type="Resource" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss_config.tres" id="3_config"]
+[ext_resource type="Resource" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_animation_cues.tres" id="4_cues"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_hit_feedback.gd" id="5_hitfb"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/clock_hand_sweep.gd" id="6_sweep"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/fx/time_ring_fx.gd" id="7_ring"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/fx/rewind_afterimage_fx.gd" id="8_rewind_fx"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/player_rewind_recorder.gd" id="9_recorder"]
+
+[sub_resource type="RectangleShape2D" id="body_hurtbox_shape"]
+size = Vector2(180, 260)
+
+[sub_resource type="CircleShape2D" id="core_hurtbox_shape"]
+radius = 45.0
+
+[node name="HelionBoss" type="Node2D"]
+script = ExtResource("2_boss")
+config = ExtResource("3_config")
+cues_resource = ExtResource("4_cues")
+
+[node name="VisualRoot" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" parent="VisualRoot" instance=ExtResource("1_sprite")]
+scale = Vector2(1.5, 1.5)
+
+[node name="CoreGlow" type="Sprite2D" parent="VisualRoot"]
+modulate = Color(1, 0.85, 0.3, 0.3)
+position = Vector2(0, -50)
+scale = Vector2(0.3, 0.3)
+
+[node name="HitFlash" type="Sprite2D" parent="VisualRoot"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -50)
+scale = Vector2(0.3, 0.3)
+
+[node name="Hurtboxes" type="Node2D" parent="."]
+
+[node name="BodyHurtbox" type="Area2D" parent="Hurtboxes"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/BodyHurtbox"]
+position = Vector2(0, -100)
+shape = SubResource("body_hurtbox_shape")
+
+[node name="CoreHurtbox" type="Area2D" parent="Hurtboxes"]
+collision_layer = 0
+collision_mask = 4
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/CoreHurtbox"]
+position = Vector2(0, -80)
+shape = SubResource("core_hurtbox_shape")
+
+[node name="AttackRoot" type="Node2D" parent="."]
+
+[node name="SweepRoot" type="Node2D" parent="AttackRoot"]
+script = ExtResource("6_sweep")
+
+[node name="ProjectileRoot" type="Node2D" parent="AttackRoot"]
+
+[node name="RingFXRoot" type="Node2D" parent="AttackRoot"]
+script = ExtResource("7_ring")
+
+[node name="RewindFXRoot" type="Node2D" parent="AttackRoot"]
+script = ExtResource("8_rewind_fx")
+
+[node name="RewindRecorder" type="Node" parent="."]
+script = ExtResource("9_recorder")
+
+[node name="HitFeedback" type="Node" parent="."]
+script = ExtResource("5_hitfb")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AudioRoot" type="Node2D" parent="."]

@@ -1,0 +1,107 @@
+{
+  "boss_id": "helion",
+  "display_name": "十二刻守望者·赫利昂",
+  "source": {
+    "file": "source/helion_source_15s.mp4",
+    "fps": 24.039955604883463,
+    "frames": 361,
+    "width": 1112,
+    "height": 834,
+    "duration_seconds": 15.016666666666666
+  },
+  "processed": {
+    "fps": 12.0,
+    "frame_count": 180,
+    "width": 640,
+    "height": 480,
+    "format": "RGBA PNG",
+    "frame_pattern": "frames/helion_%04d.png"
+  },
+  "background_removal": {
+    "method": "HSV chroma/luminance key tuned for the source dark blue-gray background; soft alpha edge; amber/gold magic preserved",
+    "warning": "AI原片的灰白布料阴影与深灰背景颜色接近，自动抠图可能在少量阴影区域产生半透明/缺口。部署前请在实际场景背景上复核。"
+  },
+  "segments": [
+    {
+      "name": "idle_intro",
+      "label": "初始待机/前摇",
+      "start": 0.0,
+      "end": 0.58,
+      "loop": true,
+      "notes": "可作为第一阶段短待机；片段较短，建议游戏内配合轻微 Tween 延长。",
+      "start_frame": 0,
+      "end_frame": 6
+    },
+    {
+      "name": "minute_sweep",
+      "label": "分针横扫",
+      "start": 0.58,
+      "end": 2.25,
+      "loop": false,
+      "notes": "明显橙色环状/钟针横扫动作。",
+      "start_frame": 6,
+      "end_frame": 26
+    },
+    {
+      "name": "rewind_cast",
+      "label": "逆刻回拨",
+      "start": 2.25,
+      "end": 5.5,
+      "loop": false,
+      "notes": "包含时间残影、核心蓄力与逆时波纹，适合作为第二阶段技能。",
+      "start_frame": 27,
+      "end_frame": 65
+    },
+    {
+      "name": "phase3_transform",
+      "label": "零时失序/展开",
+      "start": 5.5,
+      "end": 7.58,
+      "loop": false,
+      "notes": "双臂展开、十二刻进入强化状态。",
+      "start_frame": 66,
+      "end_frame": 90
+    },
+    {
+      "name": "time_ring_burst",
+      "label": "时间环爆发/十二刻钟鸣视觉段",
+      "start": 7.58,
+      "end": 8.83,
+      "loop": false,
+      "notes": "8秒附近出现最强圆环爆发，可作为第三阶段大招释放段。",
+      "start_frame": 90,
+      "end_frame": 105
+    },
+    {
+      "name": "phase3_hold",
+      "label": "第三阶段悬停",
+      "start": 8.83,
+      "end": 10.75,
+      "loop": true,
+      "notes": "强化姿态保持，可作为第三阶段待机的基础。",
+      "start_frame": 105,
+      "end_frame": 128
+    },
+    {
+      "name": "recovery",
+      "label": "收势/恢复",
+      "start": 10.75,
+      "end": 12.67,
+      "loop": false,
+      "notes": "动作逐渐收回；生成视频没有形成清晰独立的受击硬直。",
+      "start_frame": 129,
+      "end_frame": 152
+    },
+    {
+      "name": "purified_idle",
+      "label": "净化后待机",
+      "start": 12.67,
+      "end": 15.0,
+      "loop": true,
+      "notes": "光效趋于平静，可用于Boss净化后的状态。",
+      "start_frame": 152,
+      "end_frame": 179
+    }
+  ],
+  "missing_planned_action": "原Prompt中的“受击破防”在实际生成视频中没有形成足够清晰的独立动作，因此未单独标记 hit 动画。建议 Godot 运行时使用 recoil Tween + 闪白 Shader 实现受击反馈。"
+}

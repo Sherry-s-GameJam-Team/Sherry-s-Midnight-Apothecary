@@ -1,0 +1,784 @@
+[gd_resource type="SpriteFrames" load_steps=181 format=3]
+
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0000.png" id="1_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0001.png" id="2_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0002.png" id="3_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0003.png" id="4_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0004.png" id="5_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0005.png" id="6_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0006.png" id="7_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0007.png" id="8_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0008.png" id="9_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0009.png" id="10_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0010.png" id="11_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0011.png" id="12_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0012.png" id="13_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0013.png" id="14_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0014.png" id="15_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0015.png" id="16_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0016.png" id="17_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0017.png" id="18_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0018.png" id="19_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0019.png" id="20_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0020.png" id="21_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0021.png" id="22_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0022.png" id="23_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0023.png" id="24_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0024.png" id="25_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0025.png" id="26_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0026.png" id="27_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0027.png" id="28_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0028.png" id="29_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0029.png" id="30_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0030.png" id="31_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0031.png" id="32_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0032.png" id="33_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0033.png" id="34_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0034.png" id="35_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0035.png" id="36_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0036.png" id="37_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0037.png" id="38_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0038.png" id="39_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0039.png" id="40_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0040.png" id="41_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0041.png" id="42_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0042.png" id="43_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0043.png" id="44_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0044.png" id="45_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0045.png" id="46_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0046.png" id="47_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0047.png" id="48_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0048.png" id="49_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0049.png" id="50_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0050.png" id="51_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0051.png" id="52_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0052.png" id="53_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0053.png" id="54_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0054.png" id="55_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0055.png" id="56_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0056.png" id="57_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0057.png" id="58_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0058.png" id="59_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0059.png" id="60_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0060.png" id="61_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0061.png" id="62_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0062.png" id="63_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0063.png" id="64_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0064.png" id="65_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0065.png" id="66_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0066.png" id="67_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0067.png" id="68_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0068.png" id="69_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0069.png" id="70_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0070.png" id="71_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0071.png" id="72_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0072.png" id="73_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0073.png" id="74_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0074.png" id="75_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0075.png" id="76_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0076.png" id="77_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0077.png" id="78_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0078.png" id="79_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0079.png" id="80_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0080.png" id="81_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0081.png" id="82_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0082.png" id="83_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0083.png" id="84_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0084.png" id="85_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0085.png" id="86_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0086.png" id="87_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0087.png" id="88_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0088.png" id="89_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0089.png" id="90_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0090.png" id="91_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0091.png" id="92_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0092.png" id="93_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0093.png" id="94_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0094.png" id="95_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0095.png" id="96_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0096.png" id="97_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0097.png" id="98_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0098.png" id="99_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0099.png" id="100_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0100.png" id="101_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0101.png" id="102_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0102.png" id="103_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0103.png" id="104_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0104.png" id="105_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0105.png" id="106_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0106.png" id="107_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0107.png" id="108_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0108.png" id="109_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0109.png" id="110_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0110.png" id="111_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0111.png" id="112_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0112.png" id="113_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0113.png" id="114_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0114.png" id="115_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0115.png" id="116_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0116.png" id="117_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0117.png" id="118_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0118.png" id="119_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0119.png" id="120_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0120.png" id="121_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0121.png" id="122_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0122.png" id="123_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0123.png" id="124_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0124.png" id="125_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0125.png" id="126_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0126.png" id="127_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0127.png" id="128_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0128.png" id="129_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0129.png" id="130_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0130.png" id="131_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0131.png" id="132_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0132.png" id="133_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0133.png" id="134_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0134.png" id="135_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0135.png" id="136_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0136.png" id="137_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0137.png" id="138_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0138.png" id="139_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0139.png" id="140_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0140.png" id="141_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0141.png" id="142_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0142.png" id="143_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0143.png" id="144_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0144.png" id="145_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0145.png" id="146_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0146.png" id="147_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0147.png" id="148_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0148.png" id="149_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0149.png" id="150_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0150.png" id="151_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0151.png" id="152_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0152.png" id="153_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0153.png" id="154_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0154.png" id="155_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0155.png" id="156_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0156.png" id="157_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0157.png" id="158_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0158.png" id="159_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0159.png" id="160_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0160.png" id="161_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0161.png" id="162_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0162.png" id="163_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0163.png" id="164_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0164.png" id="165_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0165.png" id="166_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0166.png" id="167_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0167.png" id="168_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0168.png" id="169_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0169.png" id="170_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0170.png" id="171_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0171.png" id="172_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0172.png" id="173_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0173.png" id="174_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0174.png" id="175_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0175.png" id="176_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0176.png" id="177_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0177.png" id="178_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0178.png" id="179_f"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/boss/helion/frames/helion_0179.png" id="180_f"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_f")
+}],
+"loop": true,
+"name": &"idle_intro",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_f")
+}],
+"loop": false,
+"name": &"minute_sweep",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("28_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_f")
+}],
+"loop": false,
+"name": &"rewind_cast",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("67_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_f")
+}],
+"loop": false,
+"name": &"phase3_transform",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("91_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_f")
+}],
+"loop": false,
+"name": &"time_ring_burst",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("106_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_f")
+}],
+"loop": true,
+"name": &"phase3_hold",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("130_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("139_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("142_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("148_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("150_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("151_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153_f")
+}],
+"loop": false,
+"name": &"recovery",
+"speed": 12.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("153_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("155_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("156_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("157_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("158_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("159_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("160_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("161_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("162_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("163_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("164_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("165_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("166_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("167_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("168_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("172_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("173_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("174_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("175_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("176_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("177_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("178_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("179_f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("180_f")
+}],
+"loop": true,
+"name": &"purified_idle",
+"speed": 12.0
+}]

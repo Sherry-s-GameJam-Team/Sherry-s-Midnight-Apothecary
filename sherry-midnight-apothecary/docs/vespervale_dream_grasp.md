@@ -4,11 +4,11 @@
 
 The **Dream Grasp Hands (幽眠攫手)** system is a core hazard and environmental adversary in the **Vespervale Inner Ward Corridor** (`res://day/levels/Vespervale/inner.tscn`).
 
-The mechanic employs an unfairness-free, 5-state predictive hunting loop powered by 24 hand animation frames (`dream_grasp_00.png` to `dream_grasp_23.png`), bed safe zones with lunar ward auras, escalating threat tiers, dual-character switch baiting, and dynamic multi-floor platform raycasting.
+The mechanic employs an unfairness-free, 5-state predictive hunting loop powered by 24 hand animation frames (`dream_grasp_00.png` to `dream_grasp_23.png`), bed safe zones with lunar ward auras, escalating threat tiers, dual-character switch baiting, **1st floor Y-axis locking**, **eerie breathing visual presence**, and **smooth lerp gliding movement**.
 
 ---
 
-## 1. 5-State Machine
+## 1. 5-State Machine & Movement
 
 ```
 [ LURK (潜伏) ] ── (outside bed / dream active) ──> [ TRACK (跟踪) ] (1.2~1.8s)
@@ -20,28 +20,29 @@ The mechanic employs an unfairness-free, 5-state predictive hunting loop powered
 [ RETRACT (回收) ] (0.6~0.8s) <── [ ERUPT (爆发) ] (0.35~0.5s)
 ```
 
-1. **Lurk (潜伏)**:
-   - When the active character is sheltered in a `DreamBedSafeZone` or during Reality Intrusion.
-   - Hands remain hidden; tracking shadows dissolve.
-2. **Track (跟踪)**:
-   - Active character leaves bed sanctuary in Dream State.
-   - A purple dream shadow (`TrackingShadow`) follows the player's ground position in real time for **1.2 ～ 1.8 seconds**.
-3. **Lock (锁定)**:
-   - The shadow **stops moving** and locks in place.
-   - Clear audio-visual telegraph:
+1. **Floor Locking (第一层地板 Y 轴锁定)**:
+   - Enemy Y position is permanently locked to the 1st floor ground surface (`ground_floor_y = 600.0`).
+   - Even when players jump or Luca moves along the upper corridor, the shadow and hands glide along and erupt strictly from the main lower floorboards.
+2. **Smooth Gliding Movement (平滑移动)**:
+   - Rather than instantly snapping to the player's X coordinate, the shadow smoothly interpolates towards the target with smooth lerp tracking (`smooth_follow_speed = 3.6`).
+3. **Breathing Visual Presence (呼吸式经常显示)**:
+   - A multi-layered visual pool (outer shadow, glowing inner core, translucent finger hints) continuously breathes with a smooth sinusoidal rhythm (`sin(phase)`).
+   - In **Lurk**, it breathes gently at low opacity (`alpha: 0.20 ~ 0.45`), keeping the ominous entity present.
+   - In **Track**, the breathing intensifies (`alpha: 0.55 ~ 0.90`, scaling dynamically).
+4. **Lock (锁定)**:
+   - The shadow **freezes completely** at its current ground position.
+   - Distinct audio-visual telegraph:
      - Expanding/contracting purple ground ripple ring.
      - Deep, ominous low bell chime from `DreamAudioSynth.play_lock_bell()`.
-   - Lasts **0.45 ～ 0.6 seconds**. Player can react, jump, sprint, or switch characters to evade.
-4. **Erupt (爆发)**:
+   - Lasts **0.45 ～ 0.6 seconds**, granting the player a clear window to dodge.
+5. **Erupt (爆发)**:
    - 24-frame animation plays at 24 FPS:
-     - Frames 0–7: Ground hint (HitBox disabled).
-     - Frames 8–13: Lock-in (HitBox disabled).
+     - Frames 0–13: Ground telegraph (HitBox disabled).
      - Frames 14–17: Hands surge upward (HitBox y-position ascends).
      - Frames 18–22: Full grasp (HitBox active, delivers single-tick damage).
      - Frame 23: Clench pause.
-   - Emits purple dream motes and dream mist.
-5. **Retract (回收)**:
-   - Lasts **0.6 ～ 0.8 seconds**. Hands fade and dissolve into purple mist, returning to Track or Lurk.
+6. **Retract (回收)**:
+   - Lasts **0.6 ～ 0.8 seconds**. Hands dissolve into purple mist, smoothly returning to Track or Lurk.
 
 ---
 
@@ -68,17 +69,3 @@ Continuously staying outside any bed safe zone escalates the hunting tier:
 | **Tier 3 (三级梦猎)** | > 16 秒 | Double-wave assault: First wave erupts, followed 0.55s later by a second rapid lock/burst at player's new position. |
 
 *Entering any bed safe zone instantly resets the timer to 0 and tier to 1.*
-
----
-
-## 4. Multi-Layer & Dual-Character Integration
-
-1. **Upper & Lower Platforms**:
-   - `DreamGraspManager` raycasts downward (`RayCast2D`) to detect whether the character is on the lower floor (y ≈ 600) or upper observation corridor (y ≈ 320), spawning hands flush with the appropriate surface.
-2. **Character Switching (C Key)**:
-   - Tracks the active character (`InnerPartyController.active_body()`).
-   - If switched during **Track**: tracking smoothly moves to the new character.
-   - If switched during **Lock**: hands remain locked at the original position, enabling high-skill bait-and-switch evasions.
-3. **Dream / Reality Shifts**:
-   - Only active during **Dream State**.
-   - During Reality Intrusion, all active hands and tracking shadows immediately dissipate.

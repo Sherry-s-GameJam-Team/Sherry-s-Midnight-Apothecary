@@ -35,6 +35,9 @@
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/eyrie_nest_seed_ball.tres" id="47_eyrie"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/wind_cutter_rye.tres" id="48_rye"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/egg_climbers_honey_pot.tres" id="49_honey"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/returning_tide_thorn_fern.tres" id="50_returning_tide"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tideplate_lotus.tres" id="51_tideplate"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tide_lantern_flower.tres" id="52_tide_lantern"]
 
 [node name="AlchemyRuntime" type="Control" unique_id=1797314839]
 layout_mode = 3
@@ -44,7 +47,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_runtime")
-ingredients = Array[ExtResource("2_1vxw6")]([ExtResource("18_herdsman"), ExtResource("19_stardust"), ExtResource("20_grail"), ExtResource("30_dew_flask"), ExtResource("31_old_mans_noose"), ExtResource("32_praise_star_maple"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey")])
+ingredients = Array[ExtResource("2_1vxw6")]([ExtResource("18_herdsman"), ExtResource("19_stardust"), ExtResource("20_grail"), ExtResource("30_dew_flask"), ExtResource("31_old_mans_noose"), ExtResource("32_praise_star_maple"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey"), ExtResource("50_returning_tide"), ExtResource("51_tideplate"), ExtResource("52_tide_lantern")])
 potions = Array[ExtResource("11_hti2p")]([ExtResource("20_red"), ExtResource("21_orange"), ExtResource("22_yellow"), ExtResource("23_green"), ExtResource("24_cyan"), ExtResource("25_blue"), ExtResource("26_purple")])
 special_potions = Array[ExtResource("11_hti2p")]([ExtResource("28_purification")])
 failed_potion = ExtResource("27_black")

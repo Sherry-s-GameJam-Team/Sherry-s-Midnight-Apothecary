@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece")
+id = &"tide_lantern_flower_piece_01"
+display_name = "潮灯花·部位01"
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(777, 721, 1680, 3129)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.69
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece")
+id = &"tide_lantern_flower_piece_02"
+display_name = "潮灯花·部位02"
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(955, 244, 1694, 3626)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.69
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece")
+id = &"tide_lantern_flower_piece_03"
+display_name = "潮灯花·部位03"
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(2199, 1166, 1538, 2726)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.69
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer")
+id = &"tide_lantern_flower_cyan_layer"
+display_name = "青色部位层"
+color_id = &"cyan"
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+spectrum_x = 0.69
+pieces = Array[ExtResource("3_piece")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient")
+id = &"tide_lantern_flower"
+display_name = "潮灯花"
+english_name = "Tide-Lantern Flower"
+description = "花冠像一盏含着海雾的灯，能为药汤提供明亮、灵动的青色尾韵。"
+lore = "潮灯花只在月光与潮声同时抵达礁洞时张开。旧时引航人会把干花挂在船舱里，祈求雾中仍能辨明归航。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer")]([SubResource("Layer_main")])
+base_value = 19
+spectrum_start = 0.675
+spectrum_end = 0.705
+base_quality = 1.1
+base_concentration = 1.08

@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece")
+id = &"tideplate_lotus_piece_01"
+display_name = "汐盘荷·部位01"
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(1231, 2109, 2189, 1651)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.65
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece")
+id = &"tideplate_lotus_piece_02"
+display_name = "汐盘荷·部位02"
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(424, 245, 3442, 3464)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.65
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece")
+id = &"tideplate_lotus_piece_03"
+display_name = "汐盘荷·部位03"
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(552, 1672, 1593, 1705)
+area_ratio = 0.333333
+color_id = &"cyan"
+spectrum_x = 0.65
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer")
+id = &"tideplate_lotus_cyan_layer"
+display_name = "青色部位层"
+color_id = &"cyan"
+display_color = Color(0.1882353, 0.7843137, 0.8078431, 1)
+spectrum_x = 0.65
+pieces = Array[ExtResource("3_piece")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient")
+id = &"tideplate_lotus"
+display_name = "汐盘荷"
+english_name = "Tideplate Lotus"
+description = "层叠叶盘能聚住潮汐露水，研磨后带来柔和、均匀的青色药性。"
+lore = "港湾浅滩的潮线每日留下细盐，汐盘荷会把盐分隔在最外层叶缘，只让清甜露水流向花心。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer")]([SubResource("Layer_main")])
+base_value = 20
+spectrum_start = 0.635
+spectrum_end = 0.665
+base_quality = 1.15
+base_concentration = 1.0

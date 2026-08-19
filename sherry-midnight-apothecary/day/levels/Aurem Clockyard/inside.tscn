@@ -30,10 +30,10 @@
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="35_presentation"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="36_camera"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="37_potions"]
-[ext_resource type="Texture2D" uid="uid://sxf7awdb11sl" path="res://day/levels/Aurem Clockyard/src/svg/ChatGPT Image 2026年8月19日 22_16_26.png" id="38_1dirr"]
+[ext_resource type="Texture2D" uid="uid://sxf7awdb11sl" path="res://day/levels/Aurem Clockyard/src/svg/ChatGPT Image 2026�?�?9�?22_16_26.png" id="38_1dirr"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="38_portal"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="39_console"]
-[ext_resource type="Texture2D" uid="uid://deydemrb3gshn" path="res://day/levels/Aurem Clockyard/src/svg/ChatGPT Image 2026年8月19日 22_03_43.png" id="39_v0xjy"]
+[ext_resource type="Texture2D" uid="uid://deydemrb3gshn" path="res://day/levels/Aurem Clockyard/src/svg/ChatGPT Image 2026�?�?9�?22_03_43.png" id="39_v0xjy"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="40_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="41_pause_menu"]
 [ext_resource type="Script" uid="uid://bdyo35unvrw75" path="res://day/levels/Aurem Clockyard/inside_systems/floor1_spring_chamber.gd" id="42_floor1"]
@@ -51,7 +51,8 @@
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/moving_platform.gd" id="57_moving_plat"]
 [ext_resource type="PackedScene" uid="uid://bxbq2jkxol38g" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_hour.tscn" id="58_hour_scene"]
 [ext_resource type="PackedScene" uid="uid://cd876ia8dt2d8" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_minute.tscn" id="59_min_scene"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/tower_elevator.gd" id="60_elevator"]
+[ext_resource type="Script" uid="uid://1papem0anamm" path="res://day/levels/Aurem Clockyard/inside_systems/tower_elevator.gd" id="60_elevator"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.tscn" id="61_helion_arena"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
 size = Vector2(498, 100)
@@ -84,7 +85,7 @@ radius = 40.0
 size = Vector2(280, 30)
 
 [sub_resource type="RectangleShape2D" id="Rect_portal"]
-size = Vector2(140, 200)
+size = Vector2(140, 209)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wpo60"]
 size = Vector2(185.43597, 20)
@@ -1002,7 +1003,7 @@ destination_level = &"aurem_clockyard"
 destination_entry_id = &"from_tower"
 fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
 interaction_hint_enabled = true
-interaction_hint_text = "按 E 穿过时律界门离开"
+interaction_hint_text = "�?E 穿过时律界门离开"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/floor 5/ExitPortal" unique_id=5028]
 position = Vector2(361, -191)
@@ -1012,10 +1013,7 @@ shape = SubResource("Rect_portal")
 position = Vector2(516, -100)
 collision_layer = 2
 collision_mask = 0
-sync_to_physics = true
 script = ExtResource("60_elevator")
-start_position = Vector2(516, -100)
-target_position = Vector2(516, -2050)
 
 [node name="Sprite2D" type="Sprite2D" parent="World/floor 5/TowerElevator" unique_id=5031]
 texture = ExtResource("19_plat_wide")
@@ -1047,7 +1045,11 @@ scale = Vector2(8.572928, 1.1848819)
 shape = SubResource("RectangleShape2D_wpo60")
 one_way_collision = true
 
+[node name="HelionBossArena" parent="World/Top" instance=ExtResource("61_helion_arena")]
+position = Vector2(516, -2077)
+
 [node name="ExitPortal" type="Area2D" parent="World/Top" unique_id=5036]
+visible = false
 position = Vector2(516, -2180)
 collision_layer = 0
 script = ExtResource("38_portal")
@@ -1055,9 +1057,10 @@ destination_level = &"aurem_clockyard"
 destination_entry_id = &"from_tower"
 fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
 interaction_hint_enabled = true
-interaction_hint_text = "按 E 穿过时律界门返回钟庭"
+interaction_hint_text = "�?E 穿过时律界门返回钟庭"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Top/ExitPortal" unique_id=5037]
+position = Vector2(202, 1057)
 shape = SubResource("Rect_portal")
 
 [node name="Portals" type="Node2D" parent="World" unique_id=901]
@@ -1070,7 +1073,7 @@ destination_level = &"aurem_clockyard"
 destination_entry_id = &"tower"
 fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
 interaction_hint_enabled = true
-interaction_hint_text = "按 E 离开钟塔"
+interaction_hint_text = "�?E 离开钟塔"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/EntrancePortal" unique_id=903]
 shape = SubResource("Rect_portal")

@@ -1,0 +1,83 @@
+[gd_resource type="Resource" script_class="HelionAnimationCues" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_animation_cues.gd" id="1_cues"]
+
+[resource]
+script = ExtResource("1_cues")
+cues = [{
+"animation": &"minute_sweep",
+"local_frame": 3,
+"cue_id": &"sweep_warning"
+}, {
+"animation": &"minute_sweep",
+"local_frame": 4,
+"cue_id": &"sweep_hitbox_on"
+}, {
+"animation": &"minute_sweep",
+"local_frame": 14,
+"cue_id": &"sweep_hitbox_off"
+}, {
+"animation": &"minute_sweep",
+"local_frame": 16,
+"cue_id": &"core_expose"
+}, {
+"animation": &"minute_sweep",
+"local_frame": 20,
+"cue_id": &"core_close"
+}, {
+"animation": &"rewind_cast",
+"local_frame": 9,
+"cue_id": &"rewind_fx_begin"
+}, {
+"animation": &"rewind_cast",
+"local_frame": 12,
+"cue_id": &"rewind_target_show"
+}, {
+"animation": &"rewind_cast",
+"local_frame": 28,
+"cue_id": &"rewind_commit"
+}, {
+"animation": &"rewind_cast",
+"local_frame": 29,
+"cue_id": &"core_expose"
+}, {
+"animation": &"rewind_cast",
+"local_frame": 35,
+"cue_id": &"core_close"
+}, {
+"animation": &"rewind_cast",
+"local_frame": 38,
+"cue_id": &"rewind_end"
+}, {
+"animation": &"phase3_transform",
+"local_frame": 7,
+"cue_id": &"clock_seals_begin"
+}, {
+"animation": &"phase3_transform",
+"local_frame": 20,
+"cue_id": &"phase3_arena_enable"
+}, {
+"animation": &"phase3_transform",
+"local_frame": 24,
+"cue_id": &"phase3_ready"
+}, {
+"animation": &"time_ring_burst",
+"local_frame": 2,
+"cue_id": &"ring_warning"
+}, {
+"animation": &"time_ring_burst",
+"local_frame": 4,
+"cue_id": &"ring_spawn"
+}, {
+"animation": &"time_ring_burst",
+"local_frame": 10,
+"cue_id": &"ring_peak"
+}, {
+"animation": &"time_ring_burst",
+"local_frame": 11,
+"cue_id": &"ring_damage_end"
+}, {
+"animation": &"time_ring_burst",
+"local_frame": 15,
+"cue_id": &"ring_finished"
+}]

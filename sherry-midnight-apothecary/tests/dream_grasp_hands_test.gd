@@ -10,6 +10,7 @@ static func run(test: TestSupport) -> void:
 	test_grasp_hand_unit_frames_and_hitbox(test)
 	test_grasp_manager_state_machine(test)
 	test_hunt_tier_escalation(test)
+	test_floor_locking_and_smooth_follow(test)
 
 
 static func test_bed_safe_zone_detection(test: TestSupport) -> void:
@@ -96,5 +97,23 @@ static func test_hunt_tier_escalation(test: TestSupport) -> void:
 	if mgr.hunt_time >= 16.0:
 		mgr._set_hunt_tier(3)
 	test.expect_equal(mgr.hunt_tier, 3, "Hunt tier escalates to 3 after 16 seconds outside bed.")
+
+	mgr.queue_free()
+
+
+static func test_floor_locking_and_smooth_follow(test: TestSupport) -> void:
+	var mgr := GRASP_MGR_SCENE.instantiate() as DreamGraspManager
+	test.expect_equal(mgr.ground_floor_y, 600.0, "Enemy Y is locked to 1st floor (600.0).")
+
+	mgr._current_x = 100.0
+	# Smooth follow moves towards target_x without instant snap
+	mgr._smooth_follow_target(300.0, 0.1)
+	test.expect(mgr._current_x > 100.0 and mgr._current_x < 300.0, "Tracking smoothly interpolates towards target X.")
+	test.expect_equal(mgr._tracking_position.y, 600.0, "Tracking position Y is locked to ground floor.")
+
+	# Breathing visual updates
+	mgr._update_breathing_visual(0.5)
+	if mgr.tracking_shadow != null:
+		test.expect(mgr.tracking_shadow.visible, "Tracking shadow is visible during breathing updates.")
 
 	mgr.queue_free()
