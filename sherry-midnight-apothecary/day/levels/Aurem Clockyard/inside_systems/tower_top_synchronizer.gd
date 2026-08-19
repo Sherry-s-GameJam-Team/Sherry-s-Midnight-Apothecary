@@ -1,13 +1,16 @@
 class_name TowerTopSynchronizer
 extends Node2D
 
-## Tower Top: Grand Synchronization Device (塔顶校时台)
-## Features 3 concentric rings (Outer: Spring, Middle: Gear, Inner: Pendulum).
-## When all three markers align at the top 12 o'clock notch, the grand restoration triggers!
+## Tower Top: Grand Synchronization Device (塔顶三环大校时台)
+## 单一统一交互终端：无论哪个齿轮环转动至 12 点钟时点击均判定为锁定；
+## 若按压时无任何未锁定环处于 12 点判定区，则全部解除锁定重置。
+## 圆环采用大小不一的 gear.png 齿轮。
 
 signal synchronization_completed
 
 @export var is_synchronized: bool = false
+
+const HIT_WINDOW_DEG: float = 30.0
 
 var _outer_angle: float = 80.0
 var _middle_angle: float = 190.0
@@ -26,26 +29,27 @@ var _inner_speed: float = 95.0
 @onready var middle_ring: Node2D = get_node_or_null("DialBase/MiddleRing")
 @onready var inner_ring: Node2D = get_node_or_null("DialBase/InnerRing")
 
-@onready var outer_lock_area: Area2D = get_node_or_null("Consoles/OuterLockConsole")
-@onready var middle_lock_area: Area2D = get_node_or_null("Consoles/MiddleLockConsole")
-@onready var inner_lock_area: Area2D = get_node_or_null("Consoles/InnerLockConsole")
+@onready var outer_gear_spr: Sprite2D = get_node_or_null("DialBase/OuterRing/GearSprite")
+@onready var middle_gear_spr: Sprite2D = get_node_or_null("DialBase/MiddleRing/GearSprite")
+@onready var inner_gear_spr: Sprite2D = get_node_or_null("DialBase/InnerRing/GearSprite")
 
+@onready var sync_console_area: Area2D = get_node_or_null("Consoles/SyncConsole")
 @onready var exit_portal: Node2D = get_node_or_null("ExitPortal")
 @onready var celebration_glow: Sprite2D = get_node_or_null("CelebrationGlow")
 
-var _active_console_id: String = ""
+var _player_at_console: bool = false
 
 
 func _ready() -> void:
-	if outer_lock_area != null:
-		outer_lock_area.body_entered.connect(func(b: Node2D) -> void: _on_console_entered(b, "outer"))
-		outer_lock_area.body_exited.connect(func(b: Node2D) -> void: _on_console_exited(b, "outer"))
-	if middle_lock_area != null:
-		middle_lock_area.body_entered.connect(func(b: Node2D) -> void: _on_console_entered(b, "middle"))
-		middle_lock_area.body_exited.connect(func(b: Node2D) -> void: _on_console_exited(b, "middle"))
-	if inner_lock_area != null:
-		inner_lock_area.body_entered.connect(func(b: Node2D) -> void: _on_console_entered(b, "inner"))
-		inner_lock_area.body_exited.connect(func(b: Node2D) -> void: _on_console_exited(b, "inner"))
+	if sync_console_area == null:
+		sync_console_area = get_node_or_null("SyncConsoleArea")
+	if sync_console_area == null:
+		# Fallback to middle console if single console node is placed there
+		sync_console_area = get_node_or_null("Consoles/MiddleLockConsole")
+
+	if sync_console_area != null:
+		sync_console_area.body_entered.connect(_on_console_entered)
+		sync_console_area.body_exited.connect(_on_console_exited)
 
 	if exit_portal != null:
 		exit_portal.visible = false
@@ -56,44 +60,73 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if is_synchronized:
 		return
-	if _active_console_id.length() > 0 and event.is_action_pressed("interact"):
-		toggle_ring_lock(_active_console_id)
+	if _player_at_console and event.is_action_pressed("interact"):
+		attempt_lock_at_12()
 		get_viewport().set_input_as_handled()
 
 
+## 核心判定：无论哪个齿轮环到达 12 点（0° 附近），点击即锁定；若落空则全部解锁重置
+func attempt_lock_at_12() -> void:
+	if is_synchronized:
+		return
+
+	var outer_hit := not _outer_locked and _angle_dist(_outer_angle, 0.0) <= HIT_WINDOW_DEG
+	var middle_hit := not _middle_locked and _angle_dist(_middle_angle, 0.0) <= HIT_WINDOW_DEG
+	var inner_hit := not _inner_locked and _angle_dist(_inner_angle, 0.0) <= HIT_WINDOW_DEG
+
+	if outer_hit or middle_hit or inner_hit:
+		if outer_hit:
+			_outer_locked = true
+			_outer_angle = 0.0
+		if middle_hit:
+			_middle_locked = true
+			_middle_angle = 0.0
+		if inner_hit:
+			_inner_locked = true
+			_inner_angle = 0.0
+
+		_play_clack_audio()
+		_update_gear_visuals()
+
+		var locked_count := (1 if _outer_locked else 0) + (1 if _middle_locked else 0) + (1 if _inner_locked else 0)
+		if _outer_locked and _middle_locked and _inner_locked:
+			_trigger_grand_synchronization()
+		else:
+			var top_hint := _find_top_hint()
+			if top_hint != null and top_hint.has_method("show_interaction_hint"):
+				top_hint.call("show_interaction_hint", "sync_console", "锁定成功！已锁定 (%d/3) 齿轮环" % locked_count)
+	else:
+		# 落空：全部解除锁定
+		_outer_locked = false
+		_middle_locked = false
+		_inner_locked = false
+		_play_miss_audio()
+		_flash_fail_visuals()
+
+		var top_hint := _find_top_hint()
+		if top_hint != null and top_hint.has_method("show_interaction_hint"):
+			top_hint.call("show_interaction_hint", "sync_console", "时机未准！所有齿轮环已重置释放")
+
+
 func toggle_ring_lock(ring_id: String) -> void:
-	if is_inside_tree():
-		var tree := get_tree()
-		if tree != null:
-			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
-			if audio != null and audio.has_method("play_gear_clack"):
-				audio.call("play_gear_clack")
-
-	match ring_id:
-		"outer":
-			_outer_locked = not _outer_locked
-		"middle":
-			_middle_locked = not _middle_locked
-		"inner":
-			_inner_locked = not _inner_locked
-
-	_check_alignment()
+	# 兼容接口
+	attempt_lock_at_12()
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
 	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id:
+	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+		# 冰药水直接三环归正并全部锁定
 		_outer_angle = 0.0
 		_middle_angle = 0.0
 		_inner_angle = 0.0
 		_outer_locked = true
 		_middle_locked = true
 		_inner_locked = true
-		_check_alignment()
-	elif "orange" in potion_id:
-		toggle_ring_lock("outer")
-	elif "red" in potion_id:
-		toggle_ring_lock("middle")
+		_update_gear_visuals()
+		_trigger_grand_synchronization()
+	elif "orange" in potion_id or "red" in potion_id:
+		attempt_lock_at_12()
 
 
 func _physics_process(delta: float) -> void:
@@ -115,17 +148,22 @@ func _physics_process(delta: float) -> void:
 		inner_ring.rotation_degrees = _inner_angle
 
 
-func _check_alignment() -> void:
-	if is_synchronized:
-		return
+func _update_gear_visuals() -> void:
+	if outer_gear_spr != null:
+		outer_gear_spr.modulate = Color(1.5, 1.3, 0.7) if _outer_locked else Color(1.1, 0.9, 0.6)
+	if middle_gear_spr != null:
+		middle_gear_spr.modulate = Color(1.5, 1.3, 0.7) if _middle_locked else Color(0.95, 0.8, 0.5)
+	if inner_gear_spr != null:
+		inner_gear_spr.modulate = Color(1.5, 1.3, 0.7) if _inner_locked else Color(1.2, 1.0, 0.6)
 
-	var outer_dist := _angle_dist(_outer_angle, 0.0)
-	var middle_dist := _angle_dist(_middle_angle, 0.0)
-	var inner_dist := _angle_dist(_inner_angle, 0.0)
 
-	if _outer_locked and _middle_locked and _inner_locked:
-		if outer_dist <= 25.0 and middle_dist <= 25.0 and inner_dist <= 25.0:
-			_trigger_grand_synchronization()
+func _flash_fail_visuals() -> void:
+	for spr in [outer_gear_spr, middle_gear_spr, inner_gear_spr]:
+		if spr != null:
+			var tween: Tween = create_tween()
+			if tween != null:
+				tween.tween_property(spr, "modulate", Color(1.5, 0.4, 0.4), 0.15)
+				tween.tween_property(spr, "modulate", Color(1.0, 0.9, 0.6), 0.25)
 
 
 func _angle_dist(a: float, b: float) -> float:
@@ -145,32 +183,38 @@ func _trigger_grand_synchronization() -> void:
 	if inner_ring != null:
 		inner_ring.rotation_degrees = 0.0
 
+	_update_gear_visuals()
+
+	var elevator_node: Node = get_node_or_null("TowerElevator")
+	if elevator_node == null:
+		elevator_node = get_node_or_null("../TowerElevator")
+	if elevator_node == null and get_parent() != null:
+		elevator_node = get_parent().get_node_or_null("TowerElevator")
+	if elevator_node != null and elevator_node.has_method("unlock_and_activate"):
+		elevator_node.call("unlock_and_activate")
+
+	synchronization_completed.emit()
+
 	if is_inside_tree():
 		var tree := get_tree()
 		if tree != null:
-			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
-			if audio != null and audio.has_method("play_gear_clack"):
-				audio.call("play_gear_clack")
+			_play_clack_audio()
 
-			var timer := tree.create_timer(1.0)
+			var timer := tree.create_timer(0.8)
 			timer.timeout.connect(func() -> void:
+				var audio: Node = tree.get_first_node_in_group("clocktower_audio")
 				if audio != null and audio.has_method("play_grand_synchronization_toll"):
 					audio.call("play_grand_synchronization_toll")
 
 				if celebration_glow != null:
 					celebration_glow.visible = true
-					var tween := create_tween()
+					var tween: Tween = create_tween()
 					if tween != null:
-						tween.tween_property(celebration_glow, "modulate:a", 1.0, 0.5)
-
-				if exit_portal != null:
-					exit_portal.visible = true
-
-				synchronization_completed.emit()
+						tween.tween_property(celebration_glow, "modulate:a", 1.0, 0.6)
 
 				var top_hint := _find_top_hint()
 				if top_hint != null and top_hint.has_method("show_interaction_hint"):
-					top_hint.call("show_interaction_hint", "tower_complete", "奥雷姆钟庭的时律已完全恢复！")
+					top_hint.call("show_interaction_hint", "tower_complete", "三环齿轮校准成功！前往第6层塔顶的升降电梯已启动！")
 					if tree != null:
 						tree.create_timer(4.0).timeout.connect(func() -> void:
 							var hint := _find_top_hint()
@@ -178,22 +222,37 @@ func _trigger_grand_synchronization() -> void:
 								hint.call("hide_interaction_hint", "tower_complete")
 						)
 			)
-	else:
-		synchronization_completed.emit()
 
 
-func _on_console_entered(body: Node2D, id: String) -> void:
+func _play_clack_audio() -> void:
+	if is_inside_tree():
+		var tree := get_tree()
+		if tree != null:
+			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
+			if audio != null and audio.has_method("play_gear_clack"):
+				audio.call("play_gear_clack")
+
+
+func _play_miss_audio() -> void:
+	if is_inside_tree():
+		var tree := get_tree()
+		if tree != null:
+			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
+			if audio != null and audio.has_method("play_gear_grind_warning"):
+				audio.call("play_gear_grind_warning")
+
+
+func _on_console_entered(body: Node2D) -> void:
 	if body.is_in_group("player") or body.name == "Player":
-		_active_console_id = id
-		var names := {"outer": "发条环", "middle": "齿轮环", "inner": "钟摆环"}
+		_player_at_console = true
 		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("show_interaction_hint"):
-			top_hint.call("show_interaction_hint", "sync_console", "按 E 锁定/释放 " + names.get(id, "") + "（对齐12点）")
+			top_hint.call("show_interaction_hint", "sync_console", "按 E 锁定12点齿轮环（未对准将重置全环）")
 
 
-func _on_console_exited(body: Node2D, id: String) -> void:
-	if (body.is_in_group("player") or body.name == "Player") and _active_console_id == id:
-		_active_console_id = ""
+func _on_console_exited(body: Node2D) -> void:
+	if body.is_in_group("player") or body.name == "Player":
+		_player_at_console = false
 		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
 			top_hint.call("hide_interaction_hint", "sync_console")
@@ -203,9 +262,11 @@ func _find_top_hint() -> TopHintUI:
 	var current: Node = self
 	while current != null:
 		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
-		if top_hint != null:
+		if top_hint != null and top_hint.is_node_ready():
 			return top_hint
 		current = current.get_parent()
 	if is_inside_tree() and get_tree() != null and get_tree().root != null:
-		return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+		var top_hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+		if top_hint != null and top_hint.is_node_ready():
+			return top_hint
 	return null

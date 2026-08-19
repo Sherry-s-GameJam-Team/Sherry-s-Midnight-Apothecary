@@ -154,17 +154,40 @@ static func run(test: TestSupport) -> void:
 		test.expect_equal(floor4.get("current_hour_hour"), 2, "Hour hand advanced to II.")
 		test.expect_equal(floor4.get("current_minute_hour"), 1, "Minute hand advanced +9 from IV to I.")
 
-	# Test Tower Top
-	var tower_top := level.get_node_or_null("World/TowerTop")
-	test.expect(tower_top != null, "Tower Top Synchronizer exists.")
-	if tower_top != null:
-		tower_top.call("receive_potion_hit", {"potion_id": "blue_potion"})
-		test.expect(bool(tower_top.get("is_synchronized")), "Tower Top synchronizes upon ring alignment.")
+	# Test Floor 5 & Tower Elevator
+	var floor5: Node = level.get_node_or_null("World/floor 5")
+	if floor5 == null:
+		floor5 = level.get_node_or_null("World/TowerTop")
+	test.expect(floor5 != null, "Floor 5 (Tower Synchronizer) exists.")
+	if floor5 != null:
+		# Test Single Console & Hit logic:
+		floor5.set("_outer_angle", 0.0)
+		floor5.set("_middle_angle", 180.0)
+		floor5.set("_inner_angle", 270.0)
+		floor5.call("attempt_lock_at_12")
+		test.expect(bool(floor5.get("_outer_locked")), "Outer ring locked on 12 o'clock hit.")
+		test.expect(not bool(floor5.get("_middle_locked")), "Middle ring untouched when not at 12 o'clock.")
 
-	# Test Portals & TopHintUI
+		# Test Miss-reset logic:
+		floor5.set("_middle_angle", 180.0)
+		floor5.set("_inner_angle", 270.0)
+		floor5.call("attempt_lock_at_12")
+		test.expect(not bool(floor5.get("_outer_locked")), "All rings reset/unlocked upon miss.")
+
+		# Test Potion Shortcut:
+		floor5.call("receive_potion_hit", {"potion_id": "blue_potion"})
+		test.expect(bool(floor5.get("is_synchronized")), "Floor 5 synchronizes upon ring alignment.")
+
+		# Test Elevator activation:
+		var elevator: ClocktowerElevator = floor5.get_node_or_null("TowerElevator") as ClocktowerElevator
+		test.expect(elevator != null and elevator.is_unlocked, "Elevator is deployed and unlocked upon Floor 5 completion.")
+
+	# Test Floor 6 Pinnacle & Portals
+	var floor6: Node = level.get_node_or_null("World/Top")
+	test.expect(floor6 != null, "Floor 6 (Top Pinnacle) exists.")
 	var entrance_portal := level.get_node_or_null("World/Portals/EntrancePortal")
-	var exit_portal := level.get_node_or_null("World/TowerTop/ExitPortal")
-	test.expect(entrance_portal != null and exit_portal != null, "Entrance and Exit portals are deployed.")
+	var exit_portal_top := level.get_node_or_null("World/Top/ExitPortal")
+	test.expect(entrance_portal != null and exit_portal_top != null, "Entrance and Floor 6 Exit portals are deployed.")
 
 	var top_hint := level.get_node_or_null("GlobalUI/TopHintUI")
 	test.expect(top_hint != null, "TopHintUI is instantiated under GlobalUI in inside scene.")

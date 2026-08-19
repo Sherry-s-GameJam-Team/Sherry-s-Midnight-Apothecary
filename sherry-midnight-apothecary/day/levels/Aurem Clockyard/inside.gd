@@ -13,6 +13,7 @@ var _checkpoints: Dictionary = {
 	3: Vector2(300, -2000),
 	4: Vector2(300, -3200),
 	5: Vector2(500, -4350),
+	6: Vector2(516, -6400),
 }
 
 var _is_respawning: bool = false
@@ -22,7 +23,8 @@ var _is_respawning: bool = false
 @onready var floor2: Node2D = get_node_or_null("World/Floor2_GearWell")
 @onready var floor3: Node2D = get_node_or_null("World/Floor3_PendulumHall")
 @onready var floor4: Node2D = get_node_or_null("World/Floor4_ClockHands")
-@onready var tower_top: Node2D = get_node_or_null("World/TowerTop")
+@onready var tower_top: Node2D = get_node_or_null("World/floor 5")
+@onready var floor6: Node2D = get_node_or_null("World/Top")
 
 @onready var calib_node_1: Area2D = get_node_or_null("World/Floor1_SpringChamber/CalibrationNode1")
 @onready var calib_node_2: Area2D = get_node_or_null("World/Floor2_GearWell/CalibrationNode2")
@@ -34,6 +36,9 @@ var _is_respawning: bool = false
 func _ready() -> void:
 	super._ready()
 	add_to_group("clocktower_inside")
+
+	if tower_top == null:
+		tower_top = get_node_or_null("World/TowerTop")
 
 	if calib_node_1 != null and calib_node_1.has_signal("fixed"):
 		calib_node_1.connect("fixed", _on_node_1_fixed)
@@ -74,8 +79,10 @@ func on_level_entered(entry_id: StringName) -> void:
 			current_floor_checkpoint = 3
 		"floor4":
 			current_floor_checkpoint = 4
-		"top":
+		"floor5", "top":
 			current_floor_checkpoint = 5
+		"floor6":
+			current_floor_checkpoint = 6
 		_:
 			current_floor_checkpoint = 1
 
@@ -102,6 +109,12 @@ func _on_node_3_fixed(_id: int) -> void:
 
 
 func _on_grand_synchronization() -> void:
+	current_floor_checkpoint = 5
+	objective_updated.emit("登上第六层：塔顶巅峰。", "三环齿轮校准完毕！搭乘机械升降梯前往塔顶巅峰。")
+
+
+func on_floor_6_reached() -> void:
+	current_floor_checkpoint = 6
 	is_tower_synchronized = true
 	clocktower_synchronized.emit()
 
@@ -109,7 +122,7 @@ func _on_grand_synchronization() -> void:
 	if data != null and data.tutorial_flags != null:
 		data.tutorial_flags["aurem_clockyard_tower_synchronized"] = true
 
-	objective_updated.emit("奥雷姆钟庭已重新同步！", "通过时律界门返回。")
+	objective_updated.emit("奥雷姆钟庭时律巅峰已到达！", "通过时律界门返回。")
 
 
 func request_fall_respawn(player_body: Node2D, floor_id: int, damage: int) -> void:

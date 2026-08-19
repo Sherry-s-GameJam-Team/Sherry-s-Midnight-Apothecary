@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://ovoyl7ej4l48"]
 
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside.gd" id="1_inside"]
+[ext_resource type="Script" uid="uid://dvbmxndr6gihb" path="res://day/levels/Aurem Clockyard/inside.gd" id="1_inside"]
 [ext_resource type="Script" uid="uid://b824pt5wh0kh6" path="res://day/levels/Aurem Clockyard/inside_systems/clocktower_audio.gd" id="2_audio"]
-[ext_resource type="Texture2D" uid="uid://b8aj3elethp7l" path="res://day/levels/Aurem Clockyard/towerBG.png" id="3_djmk2"]
+[ext_resource type="Texture2D" uid="uid://c5carm3g7e337" path="res://day/levels/Aurem Clockyard/src/BG_.png" id="3_hfoep"]
 [ext_resource type="Texture2D" uid="uid://dnf32b2m3a3ha" path="res://day/levels/Aurem Clockyard/src/architecture/column_clock_arch.png" id="5_col_arch"]
 [ext_resource type="Texture2D" uid="uid://dxgc5rjsxd0ms" path="res://day/levels/Aurem Clockyard/src/architecture/window_gothic_tall.png" id="6_win_tall"]
 [ext_resource type="Texture2D" uid="uid://ce4gx7n0octxe" path="res://day/levels/Aurem Clockyard/src/architecture/platform_arch_gate.png" id="7_arch_gate"]
@@ -22,14 +22,18 @@
 [ext_resource type="Texture2D" uid="uid://bx84jysu4fc7s" path="res://day/levels/Aurem Clockyard/src/mechanisms/hanging_crane.png" id="25_crane"]
 [ext_resource type="Texture2D" uid="uid://biiepfrn6my4f" path="res://day/levels/Aurem Clockyard/src/mechanisms/retro_clockbird.png" id="28_bird"]
 [ext_resource type="Texture2D" uid="uid://fwls47pg5mqr" path="res://day/levels/Aurem Clockyard/src/gear.png" id="29_tb65t"]
-[ext_resource type="Texture2D" uid="uid://y131myfb5gvc" path="res://day/levels/Aurem Clockyard/src/mechanisms/synchronizer_rings.png" id="32_sync"]
+[ext_resource type="Texture2D" uid="uid://bbbx38qv2as0r" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_hour.png" id="30_hour"]
+[ext_resource type="Texture2D" uid="uid://ccrjinde6ndvb" path="res://day/levels/Aurem Clockyard/src/platforms/stone_corner_right_tall.png" id="31_hfoep"]
+[ext_resource type="Texture2D" uid="uid://d2sws2lbtbp2a" path="res://day/levels/Aurem Clockyard/src/mechanisms/clock_hand_minute.png" id="31_minute"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="33_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="34_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="35_presentation"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="36_camera"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="37_potions"]
+[ext_resource type="Texture2D" uid="uid://sxf7awdb11sl" path="res://day/levels/Aurem Clockyard/src/svg/ChatGPT Image 2026年8月19日 22_16_26.png" id="38_1dirr"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="38_portal"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="39_console"]
+[ext_resource type="Texture2D" uid="uid://deydemrb3gshn" path="res://day/levels/Aurem Clockyard/src/svg/ChatGPT Image 2026年8月19日 22_03_43.png" id="39_v0xjy"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="40_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="41_pause_menu"]
 [ext_resource type="Script" uid="uid://bdyo35unvrw75" path="res://day/levels/Aurem Clockyard/inside_systems/floor1_spring_chamber.gd" id="42_floor1"]
@@ -45,14 +49,15 @@
 [ext_resource type="Script" uid="uid://cu1vlairf3fkd" path="res://day/levels/Aurem Clockyard/inside_systems/chaotic_gear.gd" id="55_chaotic_gear"]
 [ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="56_top_hint"]
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/moving_platform.gd" id="57_moving_plat"]
-[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_hour.tscn" id="58_hour_scene"]
-[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_minute.tscn" id="59_min_scene"]
+[ext_resource type="PackedScene" uid="uid://bxbq2jkxol38g" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_hour.tscn" id="58_hour_scene"]
+[ext_resource type="PackedScene" uid="uid://cd876ia8dt2d8" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_minute.tscn" id="59_min_scene"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/tower_elevator.gd" id="60_elevator"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
-size = Vector2(1600, 100)
+size = Vector2(498, 100)
 
 [sub_resource type="RectangleShape2D" id="Rect_barrier_vert"]
-size = Vector2(80, 6000)
+size = Vector2(80, 7398.625)
 
 [sub_resource type="RectangleShape2D" id="Rect_stone_short"]
 size = Vector2(140, 24)
@@ -81,6 +86,9 @@ size = Vector2(280, 30)
 [sub_resource type="RectangleShape2D" id="Rect_portal"]
 size = Vector2(140, 200)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpo60"]
+size = Vector2(185.43597, 20)
+
 [node name="Inside" type="Node2D" unique_id=1758081108]
 script = ExtResource("1_inside")
 debug_scene_id = "aurem_clockyard_inside"
@@ -92,9 +100,9 @@ script = ExtResource("2_audio")
 z_index = -50
 
 [node name="BG_Tile1" type="Sprite2D" parent="Background" unique_id=881484661]
-position = Vector2(515, -1730)
+position = Vector2(515, -3874.9998)
 scale = Vector2(2.2052102, 2.2052102)
-texture = ExtResource("3_djmk2")
+texture = ExtResource("3_hfoep")
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=1999559791]
 
@@ -111,6 +119,7 @@ position = Vector2(-280, -2400)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=805611434]
+position = Vector2(0, -347.625)
 shape = SubResource("Rect_barrier_vert")
 
 [node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=762105956]
@@ -118,6 +127,7 @@ position = Vector2(1250, -2400)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=56897074]
+position = Vector2(0, -351.6875)
 shape = SubResource("Rect_barrier_vert")
 
 [node name="World" type="Node2D" parent="." unique_id=730810469]
@@ -582,7 +592,7 @@ polygon = PackedVector2Array(-184, -90, -16, -88, -13, -73, 182, -73, 182, -58, 
 one_way_collision = true
 
 [node name="WindowGothic" type="Sprite2D" parent="World/Floor3_PendulumHall" unique_id=3005]
-position = Vector2(167.00002, -723)
+position = Vector2(163, -481)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("6_win_tall")
 
@@ -673,6 +683,7 @@ move_distance = 260.0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat1" unique_id=3033]
+position = Vector2(0, 34)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -689,6 +700,7 @@ move_phase = 1.5
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat2" unique_id=3036]
+position = Vector2(-5, 39)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -705,6 +717,7 @@ move_phase = 3.0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat3" unique_id=3039]
+position = Vector2(0, 35)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -721,6 +734,7 @@ move_phase = 0.8
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat4" unique_id=3042]
+position = Vector2(0, 33)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
@@ -735,11 +749,12 @@ move_phase = 2.2
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/MovingPlat5" unique_id=3045]
+position = Vector2(0, 32)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
 [node name="PlatformNode3" type="StaticBody2D" parent="World/Floor3_PendulumHall" unique_id=3019]
-position = Vector2(600, -1080)
+position = Vector2(947, -975)
 collision_layer = 2
 collision_mask = 0
 
@@ -747,11 +762,15 @@ collision_mask = 0
 texture = ExtResource("18_stone_arch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor3_PendulumHall/PlatformNode3" unique_id=3021]
+position = Vector2(-1, -49)
 shape = SubResource("Rect_plat_arch")
 one_way_collision = true
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor3_PendulumHall/PlatformNode3" unique_id=612031228]
+polygon = PackedVector2Array(-181, -86, -12, -87, -11, -68, 182, -70, 179, -52, -179, -48)
+
 [node name="CalibrationNode3" type="Area2D" parent="World/Floor3_PendulumHall" unique_id=3022]
-position = Vector2(600, -1140)
+position = Vector2(948, -1035)
 script = ExtResource("43_node")
 node_id = 3
 node_name_cn = "校时节点Ⅲ：擒纵机构"
@@ -776,21 +795,29 @@ position = Vector2(0, -3200)
 script = ExtResource("50_floor4")
 
 [node name="MaintenancePlat4" type="StaticBody2D" parent="World/Floor4_ClockHands" unique_id=4002]
-position = Vector2(300, 50)
+position = Vector2(520, 91)
 collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Floor4_ClockHands/MaintenancePlat4" unique_id=4003]
-texture = ExtResource("18_stone_arch")
+position = Vector2(-119, -98)
+texture = ExtResource("19_plat_wide")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/MaintenancePlat4" unique_id=4004]
-shape = SubResource("Rect_plat_arch")
-one_way_collision = true
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Floor4_ClockHands/MaintenancePlat4" unique_id=772319511]
+polygon = PackedVector2Array(-279, -83, -281, -60, 240, -57, 238, -77)
+
+[node name="StoneCornerRightTall" type="Sprite2D" parent="World/Floor4_ClockHands/MaintenancePlat4" unique_id=273062301]
+position = Vector2(-233, -16)
+texture = ExtResource("31_hfoep")
 
 [node name="ClockDialBg" type="Sprite2D" parent="World/Floor4_ClockHands" unique_id=4005]
 position = Vector2(510, -347)
 scale = Vector2(1.1, 1.1)
 texture = ExtResource("16_clock_grand")
+
+[node name="HangingPlatformLongChain" type="Sprite2D" parent="World/Floor4_ClockHands" unique_id=1936144406]
+position = Vector2(624, 43)
+texture = ExtResource("20_plat_chain")
 
 [node name="ClockCenter" type="Node2D" parent="World/Floor4_ClockHands" unique_id=4006]
 position = Vector2(510, -395)
@@ -800,7 +827,7 @@ position = Vector2(510, -395)
 [node name="MinuteHand" parent="World/Floor4_ClockHands/ClockCenter" unique_id=4010 instance=ExtResource("59_min_scene")]
 
 [node name="HandCrankArea" type="Area2D" parent="World/Floor4_ClockHands" unique_id=4013]
-position = Vector2(250, -50)
+position = Vector2(407, -8)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/HandCrankArea" unique_id=4015]
@@ -813,15 +840,15 @@ scale = Vector2(0.8536585, 0.85365856)
 texture = ExtResource("17_pedestal")
 
 [node name="HourCrankArea" type="Area2D" parent="World/Floor4_ClockHands" unique_id=4022]
-position = Vector2(370, -50)
+position = Vector2(658, -20)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/HourCrankArea" unique_id=4023]
-position = Vector2(-3, -37)
+position = Vector2(-6, -18)
 shape = SubResource("Rect_node_area")
 
 [node name="GearPedestal" type="Sprite2D" parent="World/Floor4_ClockHands/HourCrankArea" unique_id=4024]
-position = Vector2(-5, -45)
+position = Vector2(-12, -19)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("17_pedestal")
 
@@ -846,97 +873,128 @@ collision_mask = 0
 texture = ExtResource("19_plat_wide")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor4_ClockHands/SecretAlcovePlat" unique_id=4021]
+position = Vector2(2, 32)
 shape = SubResource("Rect_plat_wide")
 one_way_collision = true
 
-[node name="TowerTop" type="Node2D" parent="World" unique_id=5001]
+[node name="floor 5" type="Node2D" parent="World" unique_id=5001]
 position = Vector2(0, -4350)
 script = ExtResource("51_top")
 
-[node name="TopPlatform" type="StaticBody2D" parent="World/TowerTop" unique_id=5002]
+[node name="TopPlatform" type="StaticBody2D" parent="World/floor 5" unique_id=5002]
 position = Vector2(600, 50)
 collision_layer = 2
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="World/TowerTop/TopPlatform" unique_id=5003]
-scale = Vector2(1.8, 1)
+[node name="Sprite2D" type="Sprite2D" parent="World/floor 5/TopPlatform" unique_id=5003]
+position = Vector2(469, -142)
+scale = Vector2(1.1619289, 1.1008403)
 texture = ExtResource("18_stone_arch")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/TopPlatform" unique_id=5004]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/floor 5/TopPlatform" unique_id=5004]
+position = Vector2(126, 457)
 shape = SubResource("Rect_ground")
 one_way_collision = true
 
-[node name="ColArchL" type="Sprite2D" parent="World/TowerTop" unique_id=5005]
-position = Vector2(250, -160)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/floor 5/TopPlatform" unique_id=365052359]
+position = Vector2(54.00212, -6.1035156e-05)
+scale = Vector2(1.3114407, 1.0000002)
+polygon = PackedVector2Array(-706, 235, -116, 234, -151, 322, -702, 327)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="World/floor 5/TopPlatform" unique_id=136547094]
+position = Vector2(143, -2)
+polygon = PackedVector2Array(-469, -112, -304, -117, -305, -93, -468, -93)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="World/floor 5/TopPlatform" unique_id=225100366]
+position = Vector2(-117, 10)
+polygon = PackedVector2Array(185, 60, 183, 85, 341, 84, 340, 60)
+
+[node name="ColArchL" type="Sprite2D" parent="World/floor 5" unique_id=5005]
+z_index = 10
+position = Vector2(340, 108)
 texture = ExtResource("5_col_arch")
 
-[node name="ColArchR" type="Sprite2D" parent="World/TowerTop" unique_id=5006]
-position = Vector2(950, -160)
+[node name="ColArchR" type="Sprite2D" parent="World/floor 5" unique_id=5006]
+z_index = 10
+position = Vector2(740, 288)
 texture = ExtResource("5_col_arch")
 
-[node name="BannerL" type="Sprite2D" parent="World/TowerTop" unique_id=5007]
-position = Vector2(160, -200)
+[node name="BannerL" type="Sprite2D" parent="World/floor 5" unique_id=5007]
+position = Vector2(358, 43)
 texture = ExtResource("8_banner_vert")
 
-[node name="BannerR" type="Sprite2D" parent="World/TowerTop" unique_id=5008]
-position = Vector2(1040, -200)
+[node name="BannerR" type="Sprite2D" parent="World/floor 5" unique_id=5008]
+position = Vector2(755, 217)
 texture = ExtResource("8_banner_vert")
 
-[node name="DialBase" type="Sprite2D" parent="World/TowerTop" unique_id=5009]
-position = Vector2(600, -260)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("32_sync")
+[node name="DialBase" type="Sprite2D" parent="World/floor 5" unique_id=5009]
+position = Vector2(603, -287.00012)
+scale = Vector2(0.37503988, 0.37503988)
+texture = ExtResource("38_1dirr")
 
-[node name="OuterRing" type="Node2D" parent="World/TowerTop/DialBase" unique_id=5010]
+[node name="OuterRing" type="Node2D" parent="World/floor 5/DialBase" unique_id=5010]
 
-[node name="Marker" type="Sprite2D" parent="World/TowerTop/DialBase/OuterRing" unique_id=5011]
-position = Vector2(0, -150)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("11_gears")
+[node name="GearSprite" type="Sprite2D" parent="World/floor 5/DialBase/OuterRing" unique_id=5011]
+modulate = Color(1.1, 0.9, 0.6, 1)
+scale = Vector2(3.6, 3.6)
+texture = ExtResource("29_tb65t")
 
-[node name="MiddleRing" type="Node2D" parent="World/TowerTop/DialBase" unique_id=5012]
+[node name="Marker" type="Sprite2D" parent="World/floor 5/DialBase/OuterRing" unique_id=5018]
+position = Vector2(-5.332695, -175.98071)
+scale = Vector2(1.261978, 1.261978)
+texture = ExtResource("30_hour")
 
-[node name="Marker" type="Sprite2D" parent="World/TowerTop/DialBase/MiddleRing" unique_id=5013]
-position = Vector2(0, -105)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("11_gears")
+[node name="MiddleRing" type="Node2D" parent="World/floor 5/DialBase" unique_id=5012]
 
-[node name="InnerRing" type="Node2D" parent="World/TowerTop/DialBase" unique_id=5014]
+[node name="GearSprite" type="Sprite2D" parent="World/floor 5/DialBase/MiddleRing" unique_id=5013]
+modulate = Color(0.95, 0.8, 0.5, 1)
+scale = Vector2(2.4, 2.4)
+texture = ExtResource("29_tb65t")
 
-[node name="Marker" type="Sprite2D" parent="World/TowerTop/DialBase/InnerRing" unique_id=5015]
-position = Vector2(0, -60)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("15_pend_orb")
+[node name="Marker" type="Sprite2D" parent="World/floor 5/DialBase/MiddleRing" unique_id=5021]
+position = Vector2(-7.99909, -130.65268)
+scale = Vector2(0.90659016, 0.90659016)
+texture = ExtResource("31_minute")
 
-[node name="Consoles" type="Node2D" parent="World/TowerTop" unique_id=5016]
+[node name="InnerRing" type="Node2D" parent="World/floor 5/DialBase" unique_id=5014]
 
-[node name="OuterLockConsole" type="Area2D" parent="World/TowerTop/Consoles" unique_id=5017]
-position = Vector2(380, 0)
+[node name="GearSprite" type="Sprite2D" parent="World/floor 5/DialBase/InnerRing" unique_id=5015]
+modulate = Color(1.2, 1, 0.6, 1)
+scale = Vector2(1.44, 1.44)
+texture = ExtResource("29_tb65t")
+
+[node name="Marker" type="Sprite2D" parent="World/floor 5/DialBase/InnerRing" unique_id=5029]
+position = Vector2(-2.6663628, -93.32385)
+scale = Vector2(0.8053982, 0.8053982)
+texture = ExtResource("30_hour")
+
+[node name="Consoles" type="Node2D" parent="World/floor 5" unique_id=5016]
+position = Vector2(340, -87)
+
+[node name="SyncConsole" type="Area2D" parent="World/floor 5/Consoles" unique_id=5020]
+position = Vector2(8, -11)
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/Consoles/OuterLockConsole" unique_id=5019]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/floor 5/Consoles/SyncConsole" unique_id=5022]
+position = Vector2(3, -8)
 shape = SubResource("Rect_node_area")
 
-[node name="MiddleLockConsole" type="Area2D" parent="World/TowerTop/Consoles" unique_id=5020]
-position = Vector2(600, 0)
-collision_layer = 0
+[node name="GearPedestal" type="Sprite2D" parent="World/floor 5/Consoles/SyncConsole" unique_id=5024]
+position = Vector2(0, -20)
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("17_pedestal")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/Consoles/MiddleLockConsole" unique_id=5022]
-shape = SubResource("Rect_node_area")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/floor 5/Consoles/SyncConsole" unique_id=365722919]
+polygon = PackedVector2Array(510, -90, 704, -90, 707, -74, 864, -73, 866, -41, 666, -41, 665, -69, 511, -63)
 
-[node name="InnerLockConsole" type="Area2D" parent="World/TowerTop/Consoles" unique_id=5023]
-position = Vector2(820, 0)
-collision_layer = 0
+[node name="CelebrationGlow" type="Sprite2D" parent="World/floor 5" unique_id=5026]
+visible = false
+position = Vector2(604, -287.99997)
+scale = Vector2(0.3782695, 0.3782695)
+texture = ExtResource("39_v0xjy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/Consoles/InnerLockConsole" unique_id=5025]
-shape = SubResource("Rect_node_area")
-
-[node name="CelebrationGlow" type="Sprite2D" parent="World/TowerTop" unique_id=5026]
-position = Vector2(600, -260)
-scale = Vector2(1.2, 1.2)
-texture = ExtResource("32_sync")
-
-[node name="ExitPortal" type="Area2D" parent="World/TowerTop" unique_id=5027]
+[node name="ExitPortal" type="Area2D" parent="World/floor 5" unique_id=5027]
+visible = false
 position = Vector2(600, -100)
 collision_layer = 0
 script = ExtResource("38_portal")
@@ -946,7 +1004,60 @@ fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
 interaction_hint_enabled = true
 interaction_hint_text = "按 E 穿过时律界门离开"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/TowerTop/ExitPortal" unique_id=5028]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/floor 5/ExitPortal" unique_id=5028]
+position = Vector2(361, -191)
+shape = SubResource("Rect_portal")
+
+[node name="TowerElevator" type="AnimatableBody2D" parent="World/floor 5" unique_id=5030]
+position = Vector2(516, -100)
+collision_layer = 2
+collision_mask = 0
+sync_to_physics = true
+script = ExtResource("60_elevator")
+start_position = Vector2(516, -100)
+target_position = Vector2(516, -2050)
+
+[node name="Sprite2D" type="Sprite2D" parent="World/floor 5/TowerElevator" unique_id=5031]
+texture = ExtResource("19_plat_wide")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/floor 5/TowerElevator" unique_id=5032]
+shape = SubResource("Rect_plat_wide")
+one_way_collision = true
+
+[node name="RideArea" type="Area2D" parent="World/floor 5/TowerElevator" unique_id=5033]
+position = Vector2(0, -20)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/floor 5/TowerElevator/RideArea" unique_id=5034]
+shape = SubResource("Rect_node_area")
+
+[node name="Glow" type="Sprite2D" parent="World/floor 5/TowerElevator" unique_id=5035]
+position = Vector2(0, -15)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_gears")
+
+[node name="Top" type="Node2D" parent="World" unique_id=715713515]
+position = Vector2(0, -4350)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Top" unique_id=1906057405]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Top/StaticBody2D" unique_id=1208407947]
+position = Vector2(516.13544, -2077)
+scale = Vector2(8.572928, 1.1848819)
+shape = SubResource("RectangleShape2D_wpo60")
+one_way_collision = true
+
+[node name="ExitPortal" type="Area2D" parent="World/Top" unique_id=5036]
+position = Vector2(516, -2180)
+collision_layer = 0
+script = ExtResource("38_portal")
+destination_level = &"aurem_clockyard"
+destination_entry_id = &"from_tower"
+fallback_scene_path = "res://day/levels/Aurem Clockyard/aurem_clockyard.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 穿过时律界门返回钟庭"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Top/ExitPortal" unique_id=5037]
 shape = SubResource("Rect_portal")
 
 [node name="Portals" type="Node2D" parent="World" unique_id=901]
@@ -998,7 +1109,7 @@ script = ExtResource("33_player")
 position = Vector2(0, -100)
 process_callback = 0
 limit_left = -350
-limit_top = -5200
+limit_top = -8000
 limit_right = 1300
 limit_bottom = 650
 limit_smoothed = true

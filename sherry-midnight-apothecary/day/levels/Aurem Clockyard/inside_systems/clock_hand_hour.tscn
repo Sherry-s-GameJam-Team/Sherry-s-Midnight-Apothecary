@@ -8,13 +8,13 @@ size = Vector2(36, 293)
 [node name="HourHand" type="AnimatableBody2D" unique_id=417221508]
 collision_layer = 2
 collision_mask = 0
+sync_to_physics = true
 
 [node name="PivotMarker" type="Marker2D" parent="." unique_id=1692361022]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=474551918]
 position = Vector2(0, -146.5)
 shape = SubResource("RectangleShape2D_hour")
-one_way_collision = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=881791972]
 position = Vector2(0, -105.000015)
