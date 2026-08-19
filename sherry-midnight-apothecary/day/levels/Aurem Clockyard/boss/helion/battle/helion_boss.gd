@@ -1,12 +1,12 @@
-class_name HelionBoss
+﻿class_name HelionBoss
 extends Node2D
-## 十二刻守望者·赫利昂  /  Helion, Warden of the Twelve
+## 鍗佷簩鍒诲畧鏈涜€吢疯但鍒╂槀  /  Helion, Warden of the Twelve
 ##
 ## Main boss controller with dual state machine (Phase + AttackState),
 ## animation-cue-driven gameplay, and data-driven configuration.
 ## Does NOT: switch scenes, modify DayRuntime, control player, save game.
 
-# ─── Signals ───
+# 鈹€鈹€鈹€ Signals 鈹€鈹€鈹€
 signal health_changed(current_hp: int, max_hp: int)
 signal phase_changed(new_phase: int)
 signal core_exposed(is_exposed: bool)
@@ -14,7 +14,7 @@ signal boss_defeated(boss_id: StringName)
 signal boss_started
 signal attack_state_changed(new_state: int)
 
-# ─── Enums ───
+# 鈹€鈹€鈹€ Enums 鈹€鈹€鈹€
 enum Phase {
 	INTRO,
 	PHASE_1,
@@ -35,11 +35,11 @@ enum AttackState {
 	RECOVERY,
 }
 
-# ─── Config ───
+# 鈹€鈹€鈹€ Config 鈹€鈹€鈹€
 @export var config: HelionBossConfig
 @export var cues_resource: HelionAnimationCues
 
-# ─── State ───
+# 鈹€鈹€鈹€ State 鈹€鈹€鈹€
 var current_phase: Phase = Phase.INTRO
 var current_attack: AttackState = AttackState.IDLE
 var current_hp: int = 2000
@@ -53,7 +53,7 @@ var _final_sequence_started: bool = false
 var _purify_hit_received: bool = false
 var _hit_count_since_sweep: int = 0
 
-# ─── Node References ───
+# 鈹€鈹€鈹€ Node References 鈹€鈹€鈹€
 @onready var visual_root: Node2D = $VisualRoot
 @onready var sprite: AnimatedSprite2D = $VisualRoot/AnimatedSprite2D
 @onready var core_glow: CanvasItem = $VisualRoot/CoreGlow
@@ -118,10 +118,8 @@ func begin_battle() -> void:
 		rewind_recorder.call("start_recording")
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  PHASE STATE MACHINE
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  PHASE STATE MACHINE
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _set_phase(new_phase: Phase) -> void:
 	if current_phase == new_phase:
 		return
@@ -159,7 +157,7 @@ func _check_phase_transition() -> void:
 		Phase.PHASE_2:
 			if hp_ratio <= config.phase3_threshold:
 				_set_phase(Phase.PHASE_3_TRANSITION)
-		Phase.PHASE_3:
+		Phase.PHASE_3_TRANSITION, Phase.PHASE_3:
 			if not _final_sequence_started and hp_ratio <= config.final_sequence_threshold:
 				_begin_final_sequence()
 			if config.final_purify_required and current_hp <= 1:
@@ -243,10 +241,8 @@ func _enter_defeated() -> void:
 	boss_defeated.emit(&"helion")
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  ATTACK STATE MACHINE
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  ATTACK STATE MACHINE
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _set_attack_state(state: AttackState) -> void:
 	current_attack = state
 	attack_state_changed.emit(int(state))
@@ -377,10 +373,8 @@ func _get_idle_animation() -> StringName:
 			return HelionAnimationMap.IDLE
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  ANIMATION CUE DISPATCH
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  ANIMATION CUE DISPATCH
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _on_sprite_frame_changed() -> void:
 	if cues_resource == null or sprite == null:
 		return
@@ -393,7 +387,7 @@ func _on_sprite_frame_changed() -> void:
 
 func _dispatch_cue(cue_id: StringName) -> void:
 	match cue_id:
-		# ── Sweep ──
+		# 鈹€鈹€ Sweep 鈹€鈹€
 		&"sweep_warning":
 			if sweep_root != null and sweep_root.has_method("show_warning"):
 				sweep_root.call("show_warning")
@@ -411,7 +405,7 @@ func _dispatch_cue(cue_id: StringName) -> void:
 			if sweep_root != null and sweep_root.has_method("deactivate_hitbox"):
 				sweep_root.call("deactivate_hitbox")
 
-		# ── Core Exposure ──
+		# 鈹€鈹€ Core Exposure 鈹€鈹€
 		&"core_expose":
 			_set_core_exposed(true)
 
@@ -420,7 +414,7 @@ func _dispatch_cue(cue_id: StringName) -> void:
 			if current_attack == AttackState.SWEEP or current_attack == AttackState.REWIND:
 				_on_attack_finished()
 
-		# ── Rewind ──
+		# 鈹€鈹€ Rewind 鈹€鈹€
 		&"rewind_fx_begin":
 			if rewind_fx_root != null and rewind_fx_root.has_method("begin_distortion"):
 				rewind_fx_root.call("begin_distortion")
@@ -436,7 +430,7 @@ func _dispatch_cue(cue_id: StringName) -> void:
 			if rewind_fx_root != null and rewind_fx_root.has_method("end_distortion"):
 				rewind_fx_root.call("end_distortion")
 
-		# ── Phase 3 Transform ──
+		# 鈹€鈹€ Phase 3 Transform 鈹€鈹€
 		&"clock_seals_begin":
 			_emit_audio_cue(&"phase3_transform")
 
@@ -451,7 +445,7 @@ func _dispatch_cue(cue_id: StringName) -> void:
 			_play_animation(HelionAnimationMap.PHASE3_HOLD)
 			_schedule_next_attack()
 
-		# ── Ring Burst ──
+		# 鈹€鈹€ Ring Burst 鈹€鈹€
 		&"ring_warning":
 			_emit_audio_cue(&"time_ring_warning")
 
@@ -464,7 +458,7 @@ func _dispatch_cue(cue_id: StringName) -> void:
 				ring_fx_root.call("ring_peak")
 
 		&"ring_damage_end":
-			# Ring handles its own damage cutoff via time_ring_fx
+			pass  # Ring handles its own damage cutoff via time_ring_fx
 
 		&"ring_finished":
 			_set_core_exposed(true)
@@ -498,10 +492,8 @@ func _on_animation_finished() -> void:
 			_play_animation(HelionAnimationMap.PURIFIED_IDLE)
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  REWIND MECHANIC
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  REWIND MECHANIC
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _show_rewind_target() -> void:
 	if rewind_recorder == null or not rewind_recorder.has_method("get_position_at"):
 		return
@@ -540,10 +532,8 @@ func _apply_rewind_safety() -> void:
 	# If player has no invulnerability API, the 0.2s is short enough to be safe
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  RING BURST
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  RING BURST
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _spawn_time_ring() -> void:
 	if ring_fx_root == null or not ring_fx_root.has_method("spawn_ring"):
 		return
@@ -551,10 +541,8 @@ func _spawn_time_ring() -> void:
 	ring_fx_root.call("spawn_ring", global_position, dmg)
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  DAMAGE & POTION INTERFACE
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  DAMAGE & POTION INTERFACE
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func receive_potion_hit(hit: Dictionary) -> void:
 	if current_phase == Phase.DEFEATED:
 		return
@@ -579,14 +567,13 @@ func receive_potion_hit(hit: Dictionary) -> void:
 	var final_damage: int = maxi(1, roundi(base_damage * multiplier))
 
 	# Handle purification requirement
-	if current_phase == Phase.PURIFICATION_REQUIRED:
-		if is_purify:
-			_purify_hit_received = true
-			_set_phase(Phase.DEFEATED)
-			return
-		else:
-			# Non-purify hits in purification phase do minimal chip damage
-			final_damage = 1
+	if is_purify and (current_hp <= 1 or current_phase == Phase.PURIFICATION_REQUIRED):
+		_purify_hit_received = true
+		_set_phase(Phase.DEFEATED)
+		return
+	elif current_phase == Phase.PURIFICATION_REQUIRED:
+		# Non-purify hits in purification phase do minimal chip damage
+		final_damage = 1
 
 	# Apply damage
 	_apply_boss_damage(final_damage)
@@ -636,10 +623,8 @@ func _set_core_exposed(exposed: bool) -> void:
 		_emit_audio_cue(&"boss_break")
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  FLOOR SECTOR INTEGRATION (Phase 3)
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  FLOOR SECTOR INTEGRATION (Phase 3)
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _execute_floor_retract() -> void:
 	var floor_ctrl := _find_floor_controller()
 	if floor_ctrl == null:
@@ -657,10 +642,8 @@ func _execute_floor_retract() -> void:
 		floor_ctrl.call(method, warn_time, retract_time)
 
 
-# ═══════════════════════════════════════════════════════════════════
-#  UTILITY
-# ═══════════════════════════════════════════════════════════════════
-
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  UTILITY
+# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _play_animation(anim_name: StringName) -> void:
 	if sprite != null and sprite.sprite_frames != null:
 		if sprite.sprite_frames.has_animation(anim_name):
@@ -725,7 +708,7 @@ func _emit_audio_cue(cue_name: StringName) -> void:
 			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
 			if audio != null and audio.has_method(method_name):
 				audio.call(method_name)
-	# Silent if no audio found — no errors
+	# Silent if no audio found 鈥?no errors
 
 
 func _process(_delta: float) -> void:

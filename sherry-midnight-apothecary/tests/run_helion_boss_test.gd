@@ -6,8 +6,8 @@ func _init() -> void:
 
 	helion_test.run(test_support)
 
-	if test_support.failed_count > 0:
-		push_error("%d test assertion(s) failed." % test_support.failed_count)
+	if test_support.failures > 0:
+		push_error("%d test assertion(s) failed." % test_support.failures)
 		quit(1)
 	else:
 		print("ALL HELION BOSS TESTS PASSED!")

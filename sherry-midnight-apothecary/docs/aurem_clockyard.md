@@ -1,90 +1,70 @@
-# 奥伦钟庭 (Aurem Clockyard) 与巨钟塔爬塔关卡 (Inside)
+﻿# 濂ヤ鸡閽熷涵 (Aurem Clockyard) 涓庡法閽熷鐖鍏冲崱 (Inside)
 
-## 概述
-奥伦钟庭包含两个核心关卡场景：
-1. **外庭探索关卡** (`res://day/levels/Aurem Clockyard/aurem_clockyard.tscn`)：展现融合齿轮工坊、金穗农庄与奥伦巨钟塔外观的精密机械庭院。
-2. **巨钟塔内部爬塔关卡** (`res://day/levels/Aurem Clockyard/inside.tscn`)：约 6～8 分钟的四层纵向机械爬塔与塔顶收尾谜题，逐层修复三个校时节点并重同步主钟。
-
+## 姒傝堪
+濂ヤ鸡閽熷涵鍖呭惈涓や釜鏍稿績鍏冲崱鍦烘櫙锛?1. **澶栧涵鎺㈢储鍏冲崱** (`res://day/levels/Aurem Clockyard/aurem_clockyard.tscn`)锛氬睍鐜拌瀺鍚堥娇杞伐鍧娿€侀噾绌楀啘搴勪笌濂ヤ鸡宸ㄩ挓濉斿瑙傜殑绮惧瘑鏈烘搴櫌銆?2. **宸ㄩ挓濉斿唴閮ㄧ埇濉斿叧鍗?* (`res://day/levels/Aurem Clockyard/inside.tscn`)锛氱害 6锝? 鍒嗛挓鐨勫洓灞傜旱鍚戞満姊扮埇濉斾笌濉旈《鏀跺熬璋滈锛岄€愬眰淇涓変釜鏍℃椂鑺傜偣骞堕噸鍚屾涓婚挓銆?
 ---
 
-## 巨钟塔内部爬塔关卡 (inside.tscn)
+## 宸ㄩ挓濉斿唴閮ㄧ埇濉斿叧鍗?(inside.tscn)
 
-### 关卡目标与故事背景
-“机械之灾”导致中央巨钟塔失去统一时律：齿轮倒转、摆锤错拍、主发条能量过载、指针反噬。雪莉从塔底一路向上逐层修复三个校时节点，最终在塔顶三环校时台重新同步奥雷姆钟庭。
-
-### 楼层流程与核心机制
-| 楼层 | 区域 | 核心机制 | 修复节点 / 关卡目标 |
+### 鍏冲崱鐩爣涓庢晠浜嬭儗鏅?鈥滄満姊颁箣鐏锯€濆鑷翠腑澶法閽熷澶卞幓缁熶竴鏃跺緥锛氶娇杞€掕浆銆佹憜閿ら敊鎷嶃€佷富鍙戞潯鑳介噺杩囪浇銆佹寚閽堝弽鍣€傞洩鑾変粠濉斿簳涓€璺悜涓婇€愬眰淇涓変釜鏍℃椂鑺傜偣锛屾渶缁堝湪濉旈《涓夌幆鏍℃椂鍙伴噸鏂板悓姝ュゥ闆峰閽熷涵銆?
+### 妤煎眰娴佺▼涓庢牳蹇冩満鍒?| 妤煎眰 | 鍖哄煙 | 鏍稿績鏈哄埗 | 淇鑺傜偣 / 鍏冲崱鐩爣 |
 | :--- | :--- | :--- | :--- |
-| **第一层** (Y: 0 ~ -800) | **发条与工坊层** (Clockwork Chamber) | 吊链与卷扬机跳跃解密：利用低矮跳石、悬挂长链平台、升降卷扬机吊台、阶梯式梯架平台与滑移吊车横跨深壑，在规避机械蒸汽的同时逐级向上攀登 | **校时节点Ⅰ：主发条限位器** (稳定下层管线并平复吊机) |
-| **第二层** (Y: -900 ~ -2000) | **齿轮井** (Gear Well) | **无序齿轮躲避与减速窗口**：暴走无序飞舞的碰撞伤害齿轮（弹射弹跳、椭圆横扫、垂直突进）。主角需在跳台间灵活躲避，利用**冰药水**将其冻为安全踏板，或拉动**校准拉杆**获取 6 秒大幅减速安全期 | **校时节点Ⅱ：齿轮差速器** (彻底平复齿轮暴走) |
-| **第三层** (Y: -2000 ~ -3200) | **钟摆厅** (Pendulum Hall) | **移动跳跃平台与钟摆搭乘**：以 150px 精确垂直间距错落布置 5 组左右往复移动的悬浮跳台（支持冰药水急冻固定），配合中央巨型扫动摆锤与空中巡航的逆行钟鸟。**到达第三层后摄像机平滑上移 150px 提供前瞻视野，直到触发第四层** | **校时节点Ⅲ：擒纵机构** (恢复标准摆频) |
-| **第五层** (Y: -4200 ~ -5200) | **齿轮校时室** (Calibration Chamber) | **三齿轮环大校时谜题**：三组同心齿轮（贴图采用放大 3 倍的 `gear.png`）。通过单一交互机台锁定 12 点钟齿轮（落空则全环重置）。**校准完成后激活启动机械升降电梯 (`TowerElevator`)** | **启动通向第六层的升降梯** |
-| **第六层** (Y: -5200 ~ -6500) | **塔顶巅峰** (Tower Top Pinnacle) | **巨钟巅峰展望台**：搭乘机械升降梯直抵塔顶之巅。通关时律界门 (`ExitPortal`) 部署于此，返回奥伦钟庭外庭 | **钟庭全面恢复** (`aurem_clockyard_tower_synchronized`) |
+| **绗竴灞?* (Y: 0 ~ -800) | **鍙戞潯涓庡伐鍧婂眰** (Clockwork Chamber) | 鍚婇摼涓庡嵎鎵満璺宠穬瑙ｅ瘑锛氬埄鐢ㄤ綆鐭烦鐭炽€佹偓鎸傞暱閾惧钩鍙般€佸崌闄嶅嵎鎵満鍚婂彴銆侀樁姊紡姊灦骞冲彴涓庢粦绉诲悐杞︽í璺ㄦ繁澹戯紝鍦ㄨ閬挎満姊拌捀姹界殑鍚屾椂閫愮骇鍚戜笂鏀€鐧?| **鏍℃椂鑺傜偣鈪狅細涓诲彂鏉￠檺浣嶅櫒** (绋冲畾涓嬪眰绠＄嚎骞跺钩澶嶅悐鏈? |
+| **绗簩灞?* (Y: -900 ~ -2000) | **榻胯疆浜?* (Gear Well) | **鏃犲簭榻胯疆韬查伩涓庡噺閫熺獥鍙?*锛氭毚璧版棤搴忛鑸炵殑纰版挒浼ゅ榻胯疆锛堝脊灏勫脊璺炽€佹き鍦嗘í鎵€佸瀭鐩寸獊杩涳級銆備富瑙掗渶鍦ㄨ烦鍙伴棿鐏垫椿韬查伩锛屽埄鐢?*鍐拌嵂姘?*灏嗗叾鍐讳负瀹夊叏韪忔澘锛屾垨鎷夊姩**鏍″噯鎷夋潌**鑾峰彇 6 绉掑ぇ骞呭噺閫熷畨鍏ㄦ湡 | **鏍℃椂鑺傜偣鈪★細榻胯疆宸€熷櫒** (褰诲簳骞冲榻胯疆鏆磋蛋) |
+| **绗笁灞?* (Y: -2000 ~ -3200) | **閽熸憜鍘?* (Pendulum Hall) | **绉诲姩璺宠穬骞冲彴涓庨挓鎽嗘惌涔?*锛氫互 150px 绮剧‘鍨傜洿闂磋窛閿欒惤甯冪疆 5 缁勫乏鍙冲線澶嶇Щ鍔ㄧ殑鎮诞璺冲彴锛堟敮鎸佸啺鑽按鎬ュ喕鍥哄畾锛夛紝閰嶅悎涓ぎ宸ㄥ瀷鎵姩鎽嗛敜涓庣┖涓贰鑸殑閫嗚閽熼笩銆?*鍒拌揪绗笁灞傚悗鎽勫儚鏈哄钩婊戜笂绉?150px 鎻愪緵鍓嶇灮瑙嗛噹锛岀洿鍒拌Е鍙戠鍥涘眰** | **鏍℃椂鑺傜偣鈪細鎿掔旱鏈烘瀯** (鎭㈠鏍囧噯鎽嗛) |
+| **绗簲灞?* (Y: -4200 ~ -5200) | **榻胯疆鏍℃椂瀹?* (Calibration Chamber) | **涓夐娇杞幆澶ф牎鏃惰皽棰?*锛氫笁缁勫悓蹇冮娇杞紙璐村浘閲囩敤鏀惧ぇ 3 鍊嶇殑 `gear.png`锛夈€傞€氳繃鍗曚竴浜や簰鏈哄彴閿佸畾 12 鐐归挓榻胯疆锛堣惤绌哄垯鍏ㄧ幆閲嶇疆锛夈€?*鏍″噯瀹屾垚鍚庢縺娲诲惎鍔ㄦ満姊板崌闄嶇數姊?(`TowerElevator`)** | **鍚姩閫氬悜绗叚灞傜殑鍗囬檷姊?* |
+| **绗叚灞?* (Y: -5200 ~ -6500) | **濉旈《宸呭嘲** (Tower Top Pinnacle) | **宸ㄩ挓宸呭嘲灞曟湜鍙?*锛氭惌涔樻満姊板崌闄嶆鐩存姷濉旈《涔嬪穮銆傞€氬叧鏃跺緥鐣岄棬 (`ExitPortal`) 閮ㄧ讲浜庢锛岃繑鍥炲ゥ浼﹂挓搴搴?| **閽熷涵鍏ㄩ潰鎭㈠** (`aurem_clockyard_tower_synchronized`) |
 
-### 辅助系统与药水交互
-1. **纯粹纵向攀登体验**：
-   - 关卡采用纯粹的经典物理坠落机制（无自动黑屏传送/FallReset），玩家失误掉落会直接坠至下方平台或底层，保留高空跃迁的紧张感与技巧成就感。
-2. **雪莉药水能力交互 (`receive_potion_hit`)**：
-   - **冰药水 (Blue/Ice)**：冻结暴走无序齿轮、卷扬吊机与左右移动平台 4.5 秒，取消其伤害或固定其位置为安全立足点；直接冻结三环谜题至 12 点。
-   - **爆炸药水 (Red/Bomb)**：击退失控齿轮并使其短暂减速，破坏卡死锁具。
-   - **活化药水 (Orange/Speed)**：为停转机关与卷扬机注入魔力，快速推进手轮与指针。
-3. **钟庭机械敌人与环境危害**：
-   - **无序伤害齿轮 (`ChaoticHazardGear`)**：在第二层多轨道、多模式弹跳和横扫的失控伤害齿轮。
-   - **逆行时钟鸟 / 齿轮鸟 (`RetroClockbird`)**：基于 `res://day/levels/Aurem Clockyard/src/frames/` 24 帧序列动画与五段状态机 AI（巡航巡逻、红光锁定预警、贝塞尔俯冲突袭、黄铜齿轮弹幕轰炸、冰冻踩踏平台）。
-   - **左右移动跳跃平台 (`ClocktowerMovingPlatform`)**：第三层 150px 等间距交错横向巡航平台，支持药水互动。
-4. **声音合成器 (`ClocktowerAudio`)**：
-   - 程序化合成机械滴答声、蒸汽喷射声、齿轮卡合声、磨损预警声、钟鸣预警声及塔顶震撼的黄钟大吕回响 (`play_grand_synchronization_toll`)。
-
+### 杈呭姪绯荤粺涓庤嵂姘翠氦浜?1. **绾补绾靛悜鏀€鐧讳綋楠?*锛?   - 鍏冲崱閲囩敤绾补鐨勭粡鍏哥墿鐞嗗潬钀芥満鍒讹紙鏃犺嚜鍔ㄩ粦灞忎紶閫?FallReset锛夛紝鐜╁澶辫鎺夎惤浼氱洿鎺ュ潬鑷充笅鏂瑰钩鍙版垨搴曞眰锛屼繚鐣欓珮绌鸿穬杩佺殑绱у紶鎰熶笌鎶€宸ф垚灏辨劅銆?2. **闆帀鑽按鑳藉姏浜や簰 (`receive_potion_hit`)**锛?   - **鍐拌嵂姘?(Blue/Ice)**锛氬喕缁撴毚璧版棤搴忛娇杞€佸嵎鎵悐鏈轰笌宸﹀彸绉诲姩骞冲彴 4.5 绉掞紝鍙栨秷鍏朵激瀹虫垨鍥哄畾鍏朵綅缃负瀹夊叏绔嬭冻鐐癸紱鐩存帴鍐荤粨涓夌幆璋滈鑷?12 鐐广€?   - **鐖嗙偢鑽按 (Red/Bomb)**锛氬嚮閫€澶辨帶榻胯疆骞朵娇鍏剁煭鏆傚噺閫燂紝鐮村潖鍗℃閿佸叿銆?   - **娲诲寲鑽按 (Orange/Speed)**锛氫负鍋滆浆鏈哄叧涓庡嵎鎵満娉ㄥ叆榄斿姏锛屽揩閫熸帹杩涙墜杞笌鎸囬拡銆?3. **閽熷涵鏈烘鏁屼汉涓庣幆澧冨嵄瀹?*锛?   - **鏃犲簭浼ゅ榻胯疆 (`ChaoticHazardGear`)**锛氬湪绗簩灞傚杞ㄩ亾銆佸妯″紡寮硅烦鍜屾í鎵殑澶辨帶浼ゅ榻胯疆銆?   - **閫嗚鏃堕挓楦?/ 榻胯疆楦?(`RetroClockbird`)**锛氬熀浜?`res://day/levels/Aurem Clockyard/src/frames/` 24 甯у簭鍒楀姩鐢讳笌浜旀鐘舵€佹満 AI锛堝贰鑸贰閫汇€佺孩鍏夐攣瀹氶璀︺€佽礉濉炲皵淇啿绐佽銆侀粍閾滈娇杞脊骞曡桨鐐搞€佸啺鍐昏俯韪忓钩鍙帮級銆?   - **宸﹀彸绉诲姩璺宠穬骞冲彴 (`ClocktowerMovingPlatform`)**锛氱涓夊眰 150px 绛夐棿璺濅氦閿欐í鍚戝贰鑸钩鍙帮紝鏀寔鑽按浜掑姩銆?4. **澹伴煶鍚堟垚鍣?(`ClocktowerAudio`)**锛?   - 绋嬪簭鍖栧悎鎴愭満姊版淮绛斿０銆佽捀姹藉柗灏勫０銆侀娇杞崱鍚堝０銆佺（鎹熼璀﹀０銆侀挓楦ｉ璀﹀０鍙婂椤堕渿鎾肩殑榛勯挓澶у悤鍥炲搷 (`play_grand_synchronization_toll`)銆?
 ---
 
-## 场景结构与美术资源映射
-```text
+## 鍦烘櫙缁撴瀯涓庣編鏈祫婧愭槧灏?```text
 Inside (AuremClocktowerInsideLevel)
-├─ ClocktowerAudio (ClocktowerAudio 音频合成器)
-├─ Background (深色钟塔砖墙与哥特背板)
-├─ WorldBounds (左右屏障与上下世界边界)
-├─ World
-│  ├─ Floor1_SpringChamber (Clockwork Chamber)
-│  │  ├─ PressureGauge (Sprite2D)
-│  │  ├─ Platform1_LowStone + Platform2_Chain + Platform3_RightArch
-│  │  ├─ Platform4_LadderGantry + Platform5_HighBridge + PlatformNode1
-│  │  ├─ WinchLifts (WinchLift1, WinchLift2_Crane)
-│  │  ├─ Floor1Lever (Area2D 拉杆部件)
-│  │  ├─ HangingPlatform_Secret (ClocktowerHangingPlatform 悬吊升降台 -> 自身脚本硬编码位移至 (-97, -416))
-│  │  └─ CalibrationNode1 (CalibrationNode: 主发条限位器 -> 修复后联动激活悬吊升降台)
-│  ├─ Floor2_GearWell
-│  │  ├─ Plat2_LowRight + Plat2_MidLeft + Plat2_MidRight + Plat2_HighLeft (宽跳台)
-│  │  ├─ ChaoticGear1~4 (ChaoticHazardGear: 弹跳/横扫/垂直无序运动齿轮，触碰伤害)
-│  │  ├─ CalibrationLever (CalibrationLever: 6s 齿轮大幅减速拉杆)
-│  │  └─ CalibrationNode2 (CalibrationNode: 齿轮差速器 -> 修复后永久平息齿轮伤害与暴走)
-│  ├─ Floor3_PendulumHall
-│  │  ├─ MovingPlat1~5 (ClocktowerMovingPlatform: 150px 等垂直间距横向往复巡航跳台)
-│  │  ├─ TelegraphLight (BeatTelegraphLight: 节拍预兆灯)
-│  │  ├─ SwingingPendulum (SwingingPendulum: 巨型搭乘摆锤)
-│  │  ├─ ClockbirdEnemy (RetroClockbird: 逆行钟鸟)
-│  │  └─ CalibrationNode3 (CalibrationNode: 擒纵机构)
-│  ├─ Floor4_ClockHands (ClockHandsFloor)
-│  │  ├─ ClockDialBg (Sprite2D) + ClockCenter
-│  │  │  ├─ HourHand (AnimatableBody2D 时针跳台)
-│  │  │  └─ MinuteHand (AnimatableBody2D 分针跳台)
-│  │  └─ HandCrankArea (Area2D 手轮) + SecretGate3 (StaticBody2D Ⅲ号密室门)
-│  ├─ TowerTop (TowerTopSynchronizer)
-│  │  ├─ DialBase (三环大校时底盘)
-│  │  │  ├─ OuterRing + MiddleRing + InnerRing
-│  │  ├─ Consoles (OuterLockConsole, MiddleLockConsole, InnerLockConsole)
-│  │  ├─ CelebrationGlow (Sprite2D 胜利金辉)
-│  │  └─ ExitPortal (DoorPortal 离开界门)
-│  └─ Portals (EntrancePortal 底部出口)
-├─ EntryPoints (default, floor2, floor3, floor4, top)
-├─ Player (DayPlayerController + SherryCollision + SherryPresentation + PotionThrower + Camera2D)
-├─ DebugUI (DeveloperConsole)
-└─ PauseMenuLayer (PauseMenu)
+鈹溾攢 ClocktowerAudio (ClocktowerAudio 闊抽鍚堟垚鍣?
+鈹溾攢 Background (娣辫壊閽熷鐮栧涓庡摜鐗硅儗鏉?
+鈹溾攢 WorldBounds (宸﹀彸灞忛殰涓庝笂涓嬩笘鐣岃竟鐣?
+鈹溾攢 World
+鈹? 鈹溾攢 Floor1_SpringChamber (Clockwork Chamber)
+鈹? 鈹? 鈹溾攢 PressureGauge (Sprite2D)
+鈹? 鈹? 鈹溾攢 Platform1_LowStone + Platform2_Chain + Platform3_RightArch
+鈹? 鈹? 鈹溾攢 Platform4_LadderGantry + Platform5_HighBridge + PlatformNode1
+鈹? 鈹? 鈹溾攢 WinchLifts (WinchLift1, WinchLift2_Crane)
+鈹? 鈹? 鈹溾攢 Floor1Lever (Area2D 鎷夋潌閮ㄤ欢)
+鈹? 鈹? 鈹溾攢 HangingPlatform_Secret (ClocktowerHangingPlatform 鎮悐鍗囬檷鍙?-> 鑷韩鑴氭湰纭紪鐮佷綅绉昏嚦 (-97, -416))
+鈹? 鈹? 鈹斺攢 CalibrationNode1 (CalibrationNode: 涓诲彂鏉￠檺浣嶅櫒 -> 淇鍚庤仈鍔ㄦ縺娲绘偓鍚婂崌闄嶅彴)
+鈹? 鈹溾攢 Floor2_GearWell
+鈹? 鈹? 鈹溾攢 Plat2_LowRight + Plat2_MidLeft + Plat2_MidRight + Plat2_HighLeft (瀹借烦鍙?
+鈹? 鈹? 鈹溾攢 ChaoticGear1~4 (ChaoticHazardGear: 寮硅烦/妯壂/鍨傜洿鏃犲簭杩愬姩榻胯疆锛岃Е纰颁激瀹?
+鈹? 鈹? 鈹溾攢 CalibrationLever (CalibrationLever: 6s 榻胯疆澶у箙鍑忛€熸媺鏉?
+鈹? 鈹? 鈹斺攢 CalibrationNode2 (CalibrationNode: 榻胯疆宸€熷櫒 -> 淇鍚庢案涔呭钩鎭娇杞激瀹充笌鏆磋蛋)
+鈹? 鈹溾攢 Floor3_PendulumHall
+鈹? 鈹? 鈹溾攢 MovingPlat1~5 (ClocktowerMovingPlatform: 150px 绛夊瀭鐩撮棿璺濇í鍚戝線澶嶅贰鑸烦鍙?
+鈹? 鈹? 鈹溾攢 TelegraphLight (BeatTelegraphLight: 鑺傛媿棰勫厗鐏?
+鈹? 鈹? 鈹溾攢 SwingingPendulum (SwingingPendulum: 宸ㄥ瀷鎼箻鎽嗛敜)
+鈹? 鈹? 鈹溾攢 ClockbirdEnemy (RetroClockbird: 閫嗚閽熼笩)
+鈹? 鈹? 鈹斺攢 CalibrationNode3 (CalibrationNode: 鎿掔旱鏈烘瀯)
+鈹? 鈹溾攢 Floor4_ClockHands (ClockHandsFloor)
+鈹? 鈹? 鈹溾攢 ClockDialBg (Sprite2D) + ClockCenter
+鈹? 鈹? 鈹? 鈹溾攢 HourHand (AnimatableBody2D 鏃堕拡璺冲彴)
+鈹? 鈹? 鈹? 鈹斺攢 MinuteHand (AnimatableBody2D 鍒嗛拡璺冲彴)
+鈹? 鈹? 鈹斺攢 HandCrankArea (Area2D 鎵嬭疆) + SecretGate3 (StaticBody2D 鈪㈠彿瀵嗗闂?
+鈹? 鈹溾攢 TowerTop (TowerTopSynchronizer)
+鈹? 鈹? 鈹溾攢 DialBase (涓夌幆澶ф牎鏃跺簳鐩?
+鈹? 鈹? 鈹? 鈹溾攢 OuterRing + MiddleRing + InnerRing
+鈹? 鈹? 鈹溾攢 Consoles (OuterLockConsole, MiddleLockConsole, InnerLockConsole)
+鈹? 鈹? 鈹溾攢 CelebrationGlow (Sprite2D 鑳滃埄閲戣緣)
+鈹? 鈹? 鈹斺攢 ExitPortal (DoorPortal 绂诲紑鐣岄棬)
+鈹? 鈹斺攢 Portals (EntrancePortal 搴曢儴鍑哄彛)
+鈹溾攢 EntryPoints (default, floor2, floor3, floor4, top)
+鈹溾攢 Player (DayPlayerController + SherryCollision + SherryPresentation + PotionThrower + Camera2D)
+鈹溾攢 DebugUI (DeveloperConsole)
+鈹斺攢 PauseMenuLayer (PauseMenu)
 ```
 
 ---
 
-## 验证
-运行独立自动化测试：
+## 楠岃瘉
+杩愯鐙珛鑷姩鍖栨祴璇曪細
 ```powershell
 Godot_v4.7.1-stable_win64_console.exe --headless --path . --script res://tests/run_aurem_inside_test.gd
 ```

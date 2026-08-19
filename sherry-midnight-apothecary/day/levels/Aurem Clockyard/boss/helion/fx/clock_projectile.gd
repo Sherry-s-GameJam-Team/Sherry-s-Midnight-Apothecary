@@ -1,7 +1,7 @@
-extends Area2D
+﻿extends Area2D
 class_name HelionClockProjectile
 
-@export var gravity: float = 0.0
+@export var arc_arc_gravity: float = 0.0
 
 var velocity: Vector2 = Vector2.ZERO
 var _damage: int = 1
@@ -27,7 +27,7 @@ func launch(direction: Vector2, speed: float, damage: int):
 	rotation = direction.angle()
 
 func _physics_process(delta):
-	velocity.y += gravity * delta
+	velocity.y += arc_arc_gravity * delta
 	global_position += velocity * delta
 	if velocity.length_squared() > 0:
 		rotation = velocity.angle()

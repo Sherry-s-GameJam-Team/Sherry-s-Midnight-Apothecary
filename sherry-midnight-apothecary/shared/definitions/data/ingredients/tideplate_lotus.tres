@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://b2epv8grrsn71"]
 
-[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
-[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
-[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/preview/herb_slot_thumb.png" id="4_icon"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/preview/herb_preview.png" id="5_preview"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_01.png" id="6_piece_01"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_02.png" id="7_piece_02"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_03.png" id="8_piece_03"]
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" uid="uid://ddyeteijtdxwt" path="res://day/interactables/herb/herbs/tideplate_lotus/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://cku01o0663p2b" path="res://day/interactables/herb/herbs/tideplate_lotus/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://dl778nvbjoa14" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://cxqgdy30wvl4l" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://bark5xo4pv2no" path="res://day/interactables/herb/herbs/tideplate_lotus/pieces/cyan/piece_03.png" id="8_piece_03"]
 
 [sub_resource type="Resource" id="Piece_01"]
 script = ExtResource("3_piece")
@@ -69,4 +69,3 @@ base_value = 20
 spectrum_start = 0.635
 spectrum_end = 0.665
 base_quality = 1.15
-base_concentration = 1.0

@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://ch7oj8fcoqgct"]
 
-[ext_resource type="Script" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
-[ext_resource type="Script" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
-[ext_resource type="Script" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/preview/herb_slot_thumb.png" id="4_icon"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/preview/herb_preview.png" id="5_preview"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_01.png" id="6_piece_01"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_02.png" id="7_piece_02"]
-[ext_resource type="Texture2D" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_03.png" id="8_piece_03"]
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" uid="uid://cc84k8amlsedw" path="res://day/interactables/herb/herbs/tide_lantern_flower/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://1o5203smdgsc" path="res://day/interactables/herb/herbs/tide_lantern_flower/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://dpxqnish2ba5o" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://qjiu6uoi3gem" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://c0m8m3hskjre7" path="res://day/interactables/herb/herbs/tide_lantern_flower/pieces/cyan/piece_03.png" id="8_piece_03"]
 
 [sub_resource type="Resource" id="Piece_01"]
 script = ExtResource("3_piece")

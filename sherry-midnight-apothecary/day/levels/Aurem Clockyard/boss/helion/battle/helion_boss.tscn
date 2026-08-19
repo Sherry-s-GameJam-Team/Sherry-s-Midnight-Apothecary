@@ -1,14 +1,14 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene format=3 uid="uid://dmt27he25niyp"]
 
 [ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/boss/helion/godot/helion_animated_sprite.tscn" id="1_sprite"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss.gd" id="2_boss"]
+[ext_resource type="Script" uid="uid://cd3e4ensx0o6a" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss.gd" id="2_boss"]
 [ext_resource type="Resource" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss_config.tres" id="3_config"]
 [ext_resource type="Resource" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_animation_cues.tres" id="4_cues"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_hit_feedback.gd" id="5_hitfb"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/clock_hand_sweep.gd" id="6_sweep"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/fx/time_ring_fx.gd" id="7_ring"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/fx/rewind_afterimage_fx.gd" id="8_rewind_fx"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/player_rewind_recorder.gd" id="9_recorder"]
+[ext_resource type="Script" uid="uid://c71phlim35l0o" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_hit_feedback.gd" id="5_hitfb"]
+[ext_resource type="Script" uid="uid://djusdsmdkgwl0" path="res://day/levels/Aurem Clockyard/boss/helion/battle/clock_hand_sweep.gd" id="6_sweep"]
+[ext_resource type="Script" uid="uid://noalg70j3w7f" path="res://day/levels/Aurem Clockyard/boss/helion/fx/time_ring_fx.gd" id="7_ring"]
+[ext_resource type="Script" uid="uid://bfcieiytu8mj1" path="res://day/levels/Aurem Clockyard/boss/helion/fx/rewind_afterimage_fx.gd" id="8_rewind_fx"]
+[ext_resource type="Script" uid="uid://dfh7fiwcgowjy" path="res://day/levels/Aurem Clockyard/boss/helion/battle/player_rewind_recorder.gd" id="9_recorder"]
 
 [sub_resource type="RectangleShape2D" id="body_hurtbox_shape"]
 size = Vector2(180, 260)
@@ -16,66 +16,66 @@ size = Vector2(180, 260)
 [sub_resource type="CircleShape2D" id="core_hurtbox_shape"]
 radius = 45.0
 
-[node name="HelionBoss" type="Node2D"]
+[node name="HelionBoss" type="Node2D" unique_id=1823634196]
 script = ExtResource("2_boss")
 config = ExtResource("3_config")
 cues_resource = ExtResource("4_cues")
 
-[node name="VisualRoot" type="Node2D" parent="."]
+[node name="VisualRoot" type="Node2D" parent="." unique_id=1283032359]
 
-[node name="AnimatedSprite2D" parent="VisualRoot" instance=ExtResource("1_sprite")]
+[node name="AnimatedSprite2D" parent="VisualRoot" unique_id=1404377765 instance=ExtResource("1_sprite")]
 scale = Vector2(1.5, 1.5)
 
-[node name="CoreGlow" type="Sprite2D" parent="VisualRoot"]
+[node name="CoreGlow" type="Sprite2D" parent="VisualRoot" unique_id=1672801181]
 modulate = Color(1, 0.85, 0.3, 0.3)
 position = Vector2(0, -50)
 scale = Vector2(0.3, 0.3)
 
-[node name="HitFlash" type="Sprite2D" parent="VisualRoot"]
+[node name="HitFlash" type="Sprite2D" parent="VisualRoot" unique_id=27593704]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(0, -50)
 scale = Vector2(0.3, 0.3)
 
-[node name="Hurtboxes" type="Node2D" parent="."]
+[node name="Hurtboxes" type="Node2D" parent="." unique_id=809930713]
 
-[node name="BodyHurtbox" type="Area2D" parent="Hurtboxes"]
+[node name="BodyHurtbox" type="Area2D" parent="Hurtboxes" unique_id=1885125248]
 collision_layer = 0
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/BodyHurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/BodyHurtbox" unique_id=110481785]
 position = Vector2(0, -100)
 shape = SubResource("body_hurtbox_shape")
 
-[node name="CoreHurtbox" type="Area2D" parent="Hurtboxes"]
+[node name="CoreHurtbox" type="Area2D" parent="Hurtboxes" unique_id=922661250]
 collision_layer = 0
 collision_mask = 4
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/CoreHurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/CoreHurtbox" unique_id=1358669606]
 position = Vector2(0, -80)
 shape = SubResource("core_hurtbox_shape")
 
-[node name="AttackRoot" type="Node2D" parent="."]
+[node name="AttackRoot" type="Node2D" parent="." unique_id=678627637]
 
-[node name="SweepRoot" type="Node2D" parent="AttackRoot"]
+[node name="SweepRoot" type="Node2D" parent="AttackRoot" unique_id=710300337]
 script = ExtResource("6_sweep")
 
-[node name="ProjectileRoot" type="Node2D" parent="AttackRoot"]
+[node name="ProjectileRoot" type="Node2D" parent="AttackRoot" unique_id=410299931]
 
-[node name="RingFXRoot" type="Node2D" parent="AttackRoot"]
+[node name="RingFXRoot" type="Node2D" parent="AttackRoot" unique_id=2053598131]
 script = ExtResource("7_ring")
 
-[node name="RewindFXRoot" type="Node2D" parent="AttackRoot"]
+[node name="RewindFXRoot" type="Node2D" parent="AttackRoot" unique_id=1430761997]
 script = ExtResource("8_rewind_fx")
 
-[node name="RewindRecorder" type="Node" parent="."]
+[node name="RewindRecorder" type="Node" parent="." unique_id=1519565817]
 script = ExtResource("9_recorder")
 
-[node name="HitFeedback" type="Node" parent="."]
+[node name="HitFeedback" type="Node" parent="." unique_id=1527609109]
 script = ExtResource("5_hitfb")
 
-[node name="AttackTimer" type="Timer" parent="."]
+[node name="AttackTimer" type="Timer" parent="." unique_id=1613716019]
 one_shot = true
 
-[node name="AudioRoot" type="Node2D" parent="."]
+[node name="AudioRoot" type="Node2D" parent="." unique_id=1264795129]
