@@ -14,8 +14,8 @@ static func run(test: TestSupport) -> void:
 	tree.root.add_child(runtime)
 	runtime.configure(PlayerData.new(), 3)
 	test.expect(runtime.customer_slot is CanvasLayer, "Night business runs in screen space instead of through the world camera.")
-	test.expect(runtime.business_placeholder.player_data == runtime.player_data, "Business receives NightRuntime's shared PlayerData.")
-	test.expect(runtime.business_placeholder.night_result == runtime.current_night_result, "Business writes into NightRuntime's current NightResult.")
+	test.expect(runtime.shop_runtime.player_data == runtime.player_data, "Shop receives NightRuntime's shared PlayerData.")
+	test.expect(runtime.shop_runtime.night_result == runtime.current_night_result, "Shop writes into NightRuntime's current NightResult.")
 	test.expect(runtime.alchemy_slot is CanvasLayer, "Night alchemy runs in screen space instead of through the world camera.")
 
 	var home := runtime.get_node("ShopSlot/NightHome") as NightHome
@@ -63,12 +63,12 @@ static func run(test: TestSupport) -> void:
 
 	home.business_requested.emit()
 	test.expect(not runtime.shop_slot.visible, "Opening business hides the explorable shop.")
-	test.expect(runtime.customer_slot.visible, "Opening business shows the replaceable business scene.")
-	test.expect(runtime.business_placeholder.potion_shelf_panel != null, "Opening business refreshes its potion shelf from current night data.")
+	test.expect(runtime.customer_slot.visible, "Opening business shows the shop scene.")
+	test.expect(runtime.shop_runtime.potion_shelf_panel != null, "Opening business refreshes its potion shelf from current night data.")
 	test.expect(not player.is_physics_processing(), "Opening business pauses player movement.")
-	runtime.business_placeholder.request_return.emit()
+	runtime.shop_runtime.request_return.emit()
 	test.expect(runtime.shop_slot.visible, "Returning from business restores the shop.")
-	test.expect(not runtime.customer_slot.visible, "Returning from business hides the placeholder scene.")
+	test.expect(not runtime.customer_slot.visible, "Returning from business hides the shop scene.")
 	test.expect(player.is_physics_processing(), "Returning from business restores player movement.")
 
 	home.production_requested.emit()

@@ -25,7 +25,7 @@ static func run(test: TestSupport) -> void:
 		"res://night/night_runtime.tscn",
 		"res://night/levels/home/home.tscn",
 		"res://night/levels/home/bedroom.tscn",
-		"res://night/shop/business_placeholder.tscn",
+		"res://night/shop/shop_runtime.tscn",
 		"res://night/alchemy/alchemy_runtime.tscn",
 		"res://night/alchemy/brewing_panel.tscn",
 		"res://night/alchemy/production/production_panel.tscn",

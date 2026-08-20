@@ -1,4 +1,4 @@
-class_name BusinessPlaceholder
+class_name ShopRuntime
 extends Control
 
 signal request_return
@@ -127,7 +127,7 @@ func has_operated() -> bool:
 func _refresh() -> void:
 	if not is_node_ready():
 		return
-	night_label.text = "第 %02d 夜 · 营业白模" % day
+	night_label.text = "第 %02d 夜 · 营业" % day
 	progress_label.text = "已接待 %d · 等候 %d" % [completed_customer_count, _customer_queue.size()]
 	var wallet := player_data.money if player_data != null else 0
 	var debt := player_data.debt if player_data != null else 30000
