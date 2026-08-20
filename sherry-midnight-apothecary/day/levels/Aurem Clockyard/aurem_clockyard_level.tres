@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1_level_data")
 id = &"aurem_clockyard"
-display_name = "奥伦钟庭"
+display_name = "奥勒姆钟庭"
 disaster_name = "时律之灾"
 normal_description = "齿轮与钟摆再次有序回响，金穗农庄与巨钟塔恢复了精确的日夜时律。"
 corrupted_description = "巨型钟塔的齿轮锈蚀停摆，紊乱的时律侵蚀了金穗农庄与钟庭工坊。"
-scene_description = "探索奥伦钟庭，穿过金穗农庄与齿轮工坊，修复巨钟塔的时律中枢。"
+scene_description = "探索奥勒姆钟庭，穿过金穗农庄与齿轮工坊，修复巨钟塔的时律中枢。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"

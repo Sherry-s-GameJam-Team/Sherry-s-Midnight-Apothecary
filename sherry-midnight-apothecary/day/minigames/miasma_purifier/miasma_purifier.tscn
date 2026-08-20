@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://day/minigames/miasma_purifier/miasma_purifier.gd" id="1_main"]
 [ext_resource type="Script" path="res://day/minigames/miasma_purifier/miasma_root.gd" id="2_root"]
-[ext_resource type="Texture2D" path="res://day/minigames/miasma_purifier/assets/background/emerald_field_skybox.png" id="3_sky"]
-[ext_resource type="Texture2D" path="res://day/minigames/miasma_purifier/assets/platforms/rectangle.png" id="4_rectangle"]
-[ext_resource type="Texture2D" path="res://day/minigames/miasma_purifier/assets/platforms/disc.png" id="5_disc"]
-[ext_resource type="Texture2D" path="res://day/minigames/miasma_purifier/assets/platforms/trapezoid.png" id="6_trapezoid"]
-[ext_resource type="Texture2D" path="res://day/minigames/miasma_purifier/assets/platforms/triangle_long.png" id="7_triangle"]
+[ext_resource type="Texture2D" path="res://minigames/minigames/miasma_purifier/assets/background/emerald_field_skybox.png" id="3_sky"]
+[ext_resource type="Texture2D" path="res://minigames/minigames/miasma_purifier/assets/platforms/rectangle.png" id="4_rectangle"]
+[ext_resource type="Texture2D" path="res://minigames/minigames/miasma_purifier/assets/platforms/disc.png" id="5_disc"]
+[ext_resource type="Texture2D" path="res://minigames/minigames/miasma_purifier/assets/platforms/trapezoid.png" id="6_trapezoid"]
+[ext_resource type="Texture2D" path="res://minigames/minigames/miasma_purifier/assets/platforms/triangle_long.png" id="7_triangle"]
 
 [sub_resource type="CircleShape2D" id="RootShape"]
 radius = 52.0
