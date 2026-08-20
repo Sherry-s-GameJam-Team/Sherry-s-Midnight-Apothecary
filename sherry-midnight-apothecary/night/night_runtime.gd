@@ -18,7 +18,7 @@ var _story_event_runner: StoryEventRunner
 @onready var night_home: Node = $ShopSlot/NightHome
 @onready var night_bgm: AudioStreamPlayer = $InteriorNightBGM
 @onready var customer_slot: CanvasLayer = $CustomerSlot
-@onready var business_placeholder: Node = $CustomerSlot/BusinessPlaceholder
+@onready var shop_runtime: Node = $CustomerSlot/ShopRuntime
 @onready var alchemy_slot: CanvasLayer = $AlchemySlot
 @onready var alchemy_runtime: Node = $AlchemySlot/AlchemyRuntime
 @onready var developer_console: Node = $UI/DeveloperConsole
@@ -39,22 +39,22 @@ func get_player_data() -> PlayerData:
 
 func get_remaining_customer_count() -> int:
 	_resolve_scene_nodes()
-	if business_placeholder != null and business_placeholder.has_method("get_remaining_customer_count"):
-		return business_placeholder.get_remaining_customer_count()
+	if shop_runtime != null and shop_runtime.has_method("get_remaining_customer_count"):
+		return shop_runtime.get_remaining_customer_count()
 	return 0
 
 
 func get_completed_customer_count() -> int:
 	_resolve_scene_nodes()
-	if business_placeholder != null and business_placeholder.has_method("get_completed_customer_count"):
-		return business_placeholder.get_completed_customer_count()
+	if shop_runtime != null and shop_runtime.has_method("get_completed_customer_count"):
+		return shop_runtime.get_completed_customer_count()
 	return 0
 
 
 func has_operated() -> bool:
 	_resolve_scene_nodes()
-	if business_placeholder != null and business_placeholder.has_method("has_operated"):
-		return business_placeholder.has_operated()
+	if shop_runtime != null and shop_runtime.has_method("has_operated"):
+		return shop_runtime.has_operated()
 	return false
 
 
@@ -75,10 +75,10 @@ func configure(shared_player_data: PlayerData, current_day: int, shared_story_ev
 		return
 	alchemy_runtime = alchemy
 	alchemy_runtime.setup(player_data, current_night_result, day)
-	if business_placeholder == null:
-		push_error("NightRuntime is missing its BusinessPlaceholder scene.")
+	if shop_runtime == null:
+		push_error("NightRuntime is missing its ShopRuntime scene.")
 		return
-	business_placeholder.setup(player_data, current_night_result, day)
+	shop_runtime.setup(player_data, current_night_result, day)
 	var console := get_node_or_null("UI/DeveloperConsole")
 	if console == null:
 		push_error("NightRuntime is missing its DeveloperConsole scene.")
@@ -91,9 +91,9 @@ func configure(shared_player_data: PlayerData, current_day: int, shared_story_ev
 
 func open_business() -> void:
 	_resolve_scene_nodes()
-	if shop_slot == null or customer_slot == null or business_placeholder == null:
+	if shop_slot == null or customer_slot == null or shop_runtime == null:
 		return
-	business_placeholder.refresh_from_runtime()
+	shop_runtime.refresh_from_runtime()
 	_clear_interaction_hints()
 	_set_player_enabled(false)
 	shop_slot.hide()
@@ -232,7 +232,7 @@ func _resolve_scene_nodes() -> void:
 	shop_slot = get_node_or_null("ShopSlot") as Node2D
 	night_home = get_node_or_null("ShopSlot/NightHome")
 	customer_slot = get_node_or_null("CustomerSlot") as CanvasLayer
-	business_placeholder = get_node_or_null("CustomerSlot/BusinessPlaceholder")
+	shop_runtime = get_node_or_null("CustomerSlot/ShopRuntime")
 	alchemy_slot = get_node_or_null("AlchemySlot") as CanvasLayer
 	alchemy_runtime = get_node_or_null("AlchemySlot/AlchemyRuntime")
 	if alchemy_runtime != null and not alchemy_runtime.request_close.is_connected(_on_alchemy_request_close):

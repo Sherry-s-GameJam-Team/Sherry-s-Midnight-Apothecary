@@ -31,16 +31,16 @@ func on_level_entered(entry_id: StringName) -> void:
 	match String(entry_id):
 		"from_tower", "tower_inner":
 			_last_checkpoint_pos = Vector2(6700, 520)
-			objective_updated.emit("深入奥伦巨钟塔内部。", "检查巨型擒纵轮与时律中枢。")
+			objective_updated.emit("深入奥勒姆巨钟塔内部。", "检查巨型擒纵轮与时律中枢。")
 		"tower":
 			_last_checkpoint_pos = Vector2(4900, 520)
-			objective_updated.emit("抵达奥伦巨钟塔前庭。", "寻找进入时律核心的枢纽界门。")
+			objective_updated.emit("抵达奥勒姆巨钟塔前庭。", "寻找进入时律核心的枢纽界门。")
 		"farm":
 			_last_checkpoint_pos = Vector2(2000, 520)
 			objective_updated.emit("探索金穗农庄。", "清除侵蚀齿轮灌溉渠的锈蚀浊气。")
 		_:
 			_last_checkpoint_pos = Vector2(300, 520)
-			objective_updated.emit("踏入奥伦钟庭。", "沿着齿轮石道向东探索金穗农庄与巨钟塔。")
+			objective_updated.emit("踏入奥勒姆钟庭。", "沿着齿轮石道向东探索金穗农庄与巨钟塔。")
 
 
 func set_corrupted(corrupted: bool) -> void:

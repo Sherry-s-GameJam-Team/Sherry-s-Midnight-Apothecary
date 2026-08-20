@@ -2,16 +2,16 @@ extends RefCounted
 
 
 static func run(test: TestSupport) -> void:
-	var scene := load("res://night/shop/business_placeholder.tscn") as PackedScene
-	test.expect(scene != null, "The business shop whitebox loads.")
-	test.expect(FileAccess.get_file_as_string("res://night/shop/business_placeholder.gd").contains("func _unhandled_input"), "Business shop handles Escape before the global pause menu.")
+	var scene := load("res://night/shop/shop_runtime.tscn") as PackedScene
+	test.expect(scene != null, "The shop runtime loads.")
+	test.expect(FileAccess.get_file_as_string("res://night/shop/shop_runtime.gd").contains("func _unhandled_input"), "Shop runtime handles Escape before the global pause menu.")
 	var shelf_panel_scene := load("res://night/shop/ui/potion_shelf_panel.tscn") as PackedScene
 	var shelf_item_scene := load("res://night/shop/ui/potion_shelf_item.tscn") as PackedScene
 	test.expect(shelf_panel_scene != null, "The potion shelf is a standalone editable scene.")
 	test.expect(shelf_item_scene != null, "The potion presentation slot is a standalone editable scene.")
 	if scene == null:
 		return
-	var shop := scene.instantiate() as BusinessPlaceholder
+	var shop := scene.instantiate() as ShopRuntime
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(shop)
 
@@ -26,7 +26,7 @@ static func run(test: TestSupport) -> void:
 	var first_npc_id := str(first_customer.get("npc_id", ""))
 	var initial_queue_size := shop._customer_queue.size()
 	test.expect_equal(initial_queue_size, 8, "A high-reputation business night begins with eight queued customers.")
-	test.expect_float_close(float(first_customer.get("patience", 0.0)), BusinessPlaceholder.MAX_PATIENCE, 0.001, "The active customer starts with full patience.")
+	test.expect_float_close(float(first_customer.get("patience", 0.0)), ShopRuntime.MAX_PATIENCE, 0.001, "The active customer starts with full patience.")
 	test.expect(first_customer.get("portrait", null) != null, "The active customer has a configured portrait.")
 
 	# 1. First rejection: customer leaves immediately, patience -25%, reputation -2^1 = -2

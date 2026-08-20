@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://db51ad0xclw5a"]
 
-[ext_resource type="Script" uid="uid://hys27num01nb" path="res://night/shop/business_placeholder.gd" id="1"]
+[ext_resource type="Script" uid="uid://hys27num01nb" path="res://night/shop/shop_runtime.gd" id="1"]
 [ext_resource type="PackedScene" path="res://night/shop/ui/customer_request_card.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://d1r8nyft1gvmu" path="res://night/art/alchemy_background.png" id="2_0hdkn"]
 [ext_resource type="PackedScene" path="res://night/shop/ui/sale_feedback.tscn" id="3"]
@@ -24,7 +24,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="BusinessScreen" type="Control" unique_id=1188723563]
+[node name="ShopScreen" type="Control" unique_id=1188723563]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

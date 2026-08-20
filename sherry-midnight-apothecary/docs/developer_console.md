@@ -10,7 +10,7 @@
 
 - `scene` 或 `scene list`：列出所有可用场景/子场景的序号对照表。
 - `scene <序号>`：通过数字序号直接跳转（例如 `scene 1` 或 `scene 25`）。
-- `scene <场景ID>`：通过英文 ID 跳转（例如 `scene vespervale_garden` 或 `scene aurem_clockyard_inside`）。
+- `scene <场景ID>`：通过英文 ID 跳转（例如 `scene vespervale_garden`、`scene vespervale_inner` 或 `scene aurem_clockyard_inside`）。
 - `scene <别名/中文名>`：通过英文别名或中文名称/模糊关键词跳转（例如 `scene 暮息庭院`、`scene 钟塔内部`、`scene 水下暗道`、`scene 钟庭`、`scene 卧室`）。
 
 ### 全部场景与子场景序号对照表
@@ -35,6 +35,8 @@
 | **16** | `alkeon_boss` | 血叶猎王·阿尔凯昂 | `alkeon`, `boss 2`, 血叶猎王, 阿尔凯昂 | `res://day/levels/Crimson Vale/alkeon_boss_level.tres` |
 | **17** | `aurem_clockyard` | 奥勒姆钟庭 | `clockyard`, `aurem`, `clock`, 钟庭 | `res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres` |
 | **18** | `aurem_clockyard_inside` | 奥勒姆巨钟塔·内部 | `inside`, `clockyard_inside`, 钟塔内部, 发条室, 齿轮井, 钟摆厅 | `res://day/levels/Aurem Clockyard/inside.tscn` |
+
+Vespervale 的正式调试入口使用运行时注册表的末尾序号，当前为 `vespervale_garden`、`vespervale_inner`、`vespervale_runner`。序号可能随着新关卡注册变化，推荐使用 ID 或别名跳转。
 | **19** | `lake_cliff_underwater` | 镜湖·水下暗道 | `underwater_tunnel`, `lake_underwater`, 水下暗道, 水下通道 | `res://day/levels/lake/lake_cliff_underwater.tscn` |
 | **20** | `cliff` | 烁金断崖 | `shimmering_cliff`, `resonance_cliff`, 鸣晶断崖 | `res://day/levels/cliff/cliff.tscn` |
 | **21** | `lakebed` | 湖床遗迹原型 | `lakebed_proto`, 湖床原型 | `res://day/levels/lakebed/lakebed.tscn` |

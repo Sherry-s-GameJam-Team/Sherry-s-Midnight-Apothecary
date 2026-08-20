@@ -70,7 +70,7 @@ ForestInterior
 │  └─ LucaTopWalk (Y: -4650, 卢卡天梯终点连接 TopLanding)
 ├─ RespawnPoints (Bottom, LucaTopArrival)
 ├─ FallResetZone (坠落捕获，重置至底层起点)
-├─ ExitToCrown (Area2D, Y: -4720, 交互直连 res://day/levels/forest/crown/forest_crown.tscn)
+├─ ExitToCrown (Area2D, Y: -4720, 通过 DayRuntime 黑屏转场进入 forest_crown/from_interior)
 ├─ UI (HUD 提示条、水枪压力面板、阶段转场淡入淡出、Luca 灵体视野滤镜)
 ├─ DebugUI (DeveloperConsole, layer = 200)
 ├─ PauseMenuLayer (PauseMenu, layer = 200)

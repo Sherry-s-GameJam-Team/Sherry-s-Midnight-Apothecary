@@ -1,6 +1,6 @@
-# 商店白模部署说明
+# 商店运行时说明
 
-商店白模部署在 `night/shop/business_placeholder.tscn`，由 `night/night_runtime.tscn` 的 `CustomerSlot` 以 CanvasLayer 打开。白模来自 `Downloads/sherry_business_whitebox_godot4.6`，只迁移其三栏 UI 与交互结构；运行时仍使用本项目的 `PlayerData`、`NightResult` 和药水字典库存。
+商店运行时部署在 `night/shop/shop_runtime.tscn`，由 `night/night_runtime.tscn` 的 `CustomerSlot` 以 CanvasLayer 打开。运行时使用本项目的 `PlayerData`、`NightResult` 和药水字典库存。
 
 ## 页面布局
 
@@ -20,7 +20,7 @@
 
 旧测试曾按“固定 3 人队列、拒绝后回到队尾、耐心耗尽固定扣 10 声誉”断言，这些期望已废弃；自动化测试现在直接覆盖上述现行队列分级、立即离场和指数声誉惩罚规则。商店脚本使用 `REFUSAL_PATIENCE_LOSS` 与局部计算的指数惩罚，不依赖已移除的 `WALKOUT_REPUTATION_LOSS` 常量。
 
-本页是玩法白模，正式头像框、动效和经济平衡可在此结构上继续迭代。
+本页描述正式商店玩法的当前运行时结构；头像框、动效和经济参数仍可在此结构上继续迭代。
 
 ## 炼制后装瓶
 

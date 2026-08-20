@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cmtoq0elsb1ux" path="res://tests/dual_world_tree_tower/tree_tower_level.gd" id="1_level"]
 [ext_resource type="PackedScene" path="res://tests/dual_world_tree_tower/tree_tower_corrupted_world.tscn" id="2_corrupted"]
-[ext_resource type="Texture2D" uid="uid://cp2qojvu1u1tw" path="res://day/levels/forest/trunk/center.png" id="2_riukp"]
+[ext_resource type="Texture2D" uid="uid://cp2qojvu1u1tw" path="res://day/art/town/cs/center.png" id="2_riukp"]
 [ext_resource type="PackedScene" path="res://tests/dual_world_tree_tower/tree_tower_original_world.tscn" id="3_original"]
 [ext_resource type="PackedScene" path="res://tests/dual_world/sherry_dual_world_actor.tscn" id="4_sherry"]
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="5_luca"]
 [ext_resource type="Script" uid="uid://dcj30mraql5hc" path="res://day/systems/dual_world/dual_world_state.gd" id="6_state"]
 [ext_resource type="Script" uid="uid://bmajb4okiljf" path="res://day/systems/dual_world/dual_world_manager.gd" id="7_manager"]
 [ext_resource type="Script" uid="uid://c0pcg4e8ceet8" path="res://day/systems/dual_world/dual_protagonist_controller.gd" id="8_controller"]
-[ext_resource type="Texture2D" uid="uid://dyiu6eu4cg4o8" path="res://day/levels/forest/trunk/bottom_cover.png" id="10_5vr7w"]
+[ext_resource type="Texture2D" uid="uid://dyiu6eu4cg4o8" path="res://day/levels/forest/crown/ground.png" id="10_5vr7w"]
 
 [sub_resource type="RectangleShape2D" id="TreeWallShape"]
 size = Vector2(120, 3940)

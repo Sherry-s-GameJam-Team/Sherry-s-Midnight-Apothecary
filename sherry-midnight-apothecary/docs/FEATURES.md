@@ -24,7 +24,7 @@
 
 - [Forest level](../day/levels/forest/docs/FOREST_LEVEL.md): exterior waterwheel progression, tree-gate handoff to the standalone interior level, restoration flow, and Crown handoff.
 
-- [Forest interior level](../day/levels/forest/docs/FOREST_INTERIOR_LEVEL.md): standalone tree-interior dual-character level — control rooms, spray purification, lifts, sluice gate, and crown-exit placeholder.
+- [Forest interior level](../day/levels/forest/docs/FOREST_INTERIOR_LEVEL.md): standalone tree-interior dual-character level — control rooms, spray purification, lifts, sluice gate, and the completed Crown Boss handoff.
 
 - [Forest crown boss level](../day/levels/forest/docs/FOREST_CROWN_LEVEL.md): standalone Seraph boss encounter — 3-phase corruption mechanics, halo/core weakpoints, feather storm, procedural blood rain, and radial purification VFX.
 

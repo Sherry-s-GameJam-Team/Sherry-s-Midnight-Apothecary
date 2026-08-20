@@ -36,7 +36,7 @@ static func run(test: TestSupport) -> void:
 	var player := PlayerData.new()
 	var runtime := DAY_SCENE.instantiate() as DayRuntime
 	runtime.player_data = player
-	runtime.day = 1
+	runtime.day = 0
 	tree.root.add_child(runtime)
 	test.expect(bool(player.tutorial_flags.get(day_one_key, false)), "Automatically presenting Town persists its seen marker.")
 	test.expect(not runtime._play_scene_title_once(), "The same scene title is not automatically presented twice in one day.")

@@ -40,8 +40,9 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 4, "Day items are applied.")
 	test.expect(player.unlocked_levels.has(&"forest"), "Day level unlock is applied.")
 	test.expect(player.set_active_home_destination(&"grassland"), "Grassland is unlocked from the start.")
-	test.expect(not player.set_active_home_destination(&"forest"), "Locked levels cannot become the active Home destination.")
-	test.expect(player.unlock_level(&"forest"), "Travel anchors can unlock a new level.")
+	test.expect(not player.set_active_home_destination(&"golden_cliff"), "Locked levels cannot become the active Home destination.")
+	test.expect(player.unlock_level(&"golden_cliff"), "Travel anchors can unlock a new level.")
+	test.expect(not player.unlock_level(&"forest"), "Already unlocked levels are not duplicated.")
 	test.expect(player.set_active_home_destination(&"forest"), "Unlocked levels can become the active Home destination.")
 	test.expect_equal(player.active_home_destination_id, &"forest", "The active Home destination is retained.")
 

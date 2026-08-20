@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://q2mlpc4fa1do" path="res://night/alchemy/alchemy_runtime.tscn" id="2_alchemy"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="3_console"]
 [ext_resource type="PackedScene" uid="uid://ds4h4bago1jhh" path="res://night/levels/home/home.tscn" id="4_home"]
-[ext_resource type="PackedScene" uid="uid://db51ad0xclw5a" path="res://night/shop/business_placeholder.tscn" id="5_business"]
+[ext_resource type="PackedScene" uid="uid://db51ad0xclw5a" path="res://night/shop/shop_runtime.tscn" id="5_business"]
 [ext_resource type="AudioStream" uid="uid://cx8yq33f441xb" path="res://audio/bgm/Interior_night.wav" id="6_night_bgm"]
 [ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="7_looping_bgm"]
 
@@ -26,7 +26,7 @@ process_mode = 4
 layer = 210
 visible = false
 
-[node name="BusinessPlaceholder" parent="CustomerSlot" unique_id=1123142020 instance=ExtResource("5_business")]
+[node name="ShopRuntime" parent="CustomerSlot" unique_id=1123142020 instance=ExtResource("5_business")]
 
 [node name="AlchemySlot" type="CanvasLayer" parent="." unique_id=948075095]
 process_mode = 4
@@ -44,4 +44,4 @@ layer = 220
 [connection signal="bedroom_requested" from="ShopSlot/NightHome" to="." method="_on_bedroom_requested"]
 [connection signal="business_requested" from="ShopSlot/NightHome" to="." method="_on_business_requested"]
 [connection signal="production_requested" from="ShopSlot/NightHome" to="." method="_on_production_requested"]
-[connection signal="request_return" from="CustomerSlot/BusinessPlaceholder" to="." method="_on_business_request_return"]
+[connection signal="request_return" from="CustomerSlot/ShopRuntime" to="." method="_on_business_request_return"]

@@ -49,8 +49,8 @@ static func run(test: TestSupport) -> void:
 	test.expect(barrier_controller.is_barrier_open, "Barrier is marked open after confirming end of business.")
 
 	# 3. Test when business is in progress / operated
-	runtime.business_placeholder.completed_customer_count = 2
-	runtime.business_placeholder._customer_queue.pop_front()
+	runtime.shop_runtime.completed_customer_count = 2
+	runtime.shop_runtime._customer_queue.pop_front()
 	var updated_remaining := runtime.get_remaining_customer_count()
 
 	test.expect(runtime.has_operated(), "has_operated is true after serving customers.")
@@ -63,7 +63,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(barrier_controller.completed_customers, 2, "Barrier controller reflects completed customer count.")
 
 	# 4. Test when all customers are served
-	runtime.business_placeholder._customer_queue.clear()
+	runtime.shop_runtime._customer_queue.clear()
 	test.expect_equal(runtime.get_remaining_customer_count(), 0, "Queue is empty when all customers are served.")
 
 	barrier_controller.trigger_barrier_check()
