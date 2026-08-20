@@ -9,6 +9,7 @@ const HelionRewindRecorderScript = preload("res://day/levels/Aurem Clockyard/bos
 const HelionBossArenaScript = preload("res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.gd")
 const HelionClockFloorControllerScript = preload("res://day/levels/Aurem Clockyard/boss/helion/battle/clock_floor_controller.gd")
 const HelionBossHUDScript = preload("res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss_hud.gd")
+const HelionTriggerGearScript = preload("res://day/levels/Aurem Clockyard/boss/helion/battle/helion_trigger_gear.gd")
 
 
 func run(test: RefCounted) -> void:
@@ -92,7 +93,17 @@ func run(test: RefCounted) -> void:
 
 			boss.free()
 
-	# 5. Test Arena Scene
+	# 5. Test Trigger Gear
+	var gear: Area2D = HelionTriggerGearScript.new()
+	var gear_activated: Array[bool] = [false]
+	gear.connect("activated", func() -> void:
+		gear_activated[0] = true
+	)
+	gear.call("activate")
+	test.expect(gear_activated[0], "HelionTriggerGear emits activated signal when activated.")
+	gear.free()
+
+	# 6. Test Arena Scene
 	var arena_scene: PackedScene = load("res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.tscn") as PackedScene
 	test.expect(arena_scene != null, "HelionBossArena scene loads successfully.")
 	if arena_scene != null:
@@ -103,6 +114,8 @@ func run(test: RefCounted) -> void:
 			test.expect(clock_floor != null, "ClockFloor controller is present in Arena.")
 			var hud := arena.get_node_or_null("BossHUD")
 			test.expect(hud != null, "BossHUD is present in Arena.")
+			var trig_gear := arena.get_node_or_null("TriggerGear")
+			test.expect(trig_gear != null, "TriggerGear is present in Arena.")
 			arena.free()
 
 	print("Helion Boss Unit Tests completed successfully.")

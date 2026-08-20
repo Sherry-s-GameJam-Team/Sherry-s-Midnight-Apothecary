@@ -1,4 +1,4 @@
-@tool
+﻿@tool
 extends CharacterBody2D
 
 const WALK_JUMP_VELOCITY := -550.0
@@ -78,6 +78,7 @@ func _ready() -> void:
 		_apply_visual_scale()
 		set_physics_process(false)
 		return
+	add_to_group("player")
 	add_to_group("potion_friendly")
 	add_to_group("dialogue_lockable")
 	animation_player.animation_finished.connect(_on_animation_finished)

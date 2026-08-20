@@ -53,7 +53,7 @@
 [ext_resource type="PackedScene" uid="uid://bxbq2jkxol38g" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_hour.tscn" id="58_hour_scene"]
 [ext_resource type="PackedScene" uid="uid://cd876ia8dt2d8" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_minute.tscn" id="59_min_scene"]
 [ext_resource type="Script" uid="uid://1papem0anamm" path="res://day/levels/Aurem Clockyard/inside_systems/tower_elevator.gd" id="60_elevator"]
-[ext_resource type="PackedScene" uid="uid://ryfvw3p2a3ou" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.tscn" id="61_helion_arena"]
+[ext_resource type="PackedScene" uid="uid://bttgfjajae8dd" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.tscn" id="61_helion_arena"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
 size = Vector2(498, 100)
@@ -1037,7 +1037,7 @@ collision_layer = 0
 shape = SubResource("Rect_node_area")
 
 [node name="Glow" type="Sprite2D" parent="World/floor 5/TowerElevator" unique_id=5035]
-position = Vector2(0, -15)
+position = Vector2(-5, -23)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("11_gears")
 
@@ -1047,7 +1047,6 @@ position = Vector2(0, -4350)
 [node name="StaticBody2D" type="StaticBody2D" parent="World/Top" unique_id=1906057405]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Top/StaticBody2D" unique_id=1208407947]
-visible = false
 position = Vector2(516.13544, -2077)
 scale = Vector2(8.572928, 1.1848819)
 shape = SubResource("RectangleShape2D_wpo60")
@@ -1057,7 +1056,6 @@ one_way_collision = true
 position = Vector2(516, -2077)
 
 [node name="ExitPortal" type="Area2D" parent="World/Top" unique_id=5036]
-visible = false
 position = Vector2(516, -2180)
 collision_layer = 0
 script = ExtResource("38_portal")
@@ -1108,7 +1106,7 @@ position = Vector2(500, -4350)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=846311865]
 z_index = 10
-position = Vector2(403, -3341)
+position = Vector2(130, -6758)
 collision_mask = 3
 script = ExtResource("33_player")
 

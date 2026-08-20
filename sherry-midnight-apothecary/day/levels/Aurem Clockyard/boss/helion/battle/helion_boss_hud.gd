@@ -1,114 +1,38 @@
 class_name HelionBossHUD
 extends CanvasLayer
-## Boss health bar UI with clock-themed decorations.
-## Phase transitions shown via color shifts and chime sounds,
-## never with modern "PHASE 2" text overlays.
+## Boss health bar UI positioned at the top of the screen (referencing AlkeonBossHealthBar).
+## Only displayed after the trigger gear is activated.
+## Smooth HP bar, ghost damage bar, phase badges and status tips.
 
-@export var boss_name: String = "十二刻守望者·赫利昂"
+@export var boss_name: String = "十二刻守望者 · 赫利昂"
 @export var boss_subtitle: String = "奥雷姆中央守时圣像"
 
 var _boss: Node2D = null
-var _max_hp: int = 2000
-var _current_hp: int = 2000
-var _displayed_hp: float = 2000.0
-var _current_phase_color: Color = Color(0.8, 0.5, 0.2, 1.0)  # Phase 1: copper
+var _ghost_tween: Tween = null
+var _is_visible: bool = false
 
-# Phase decoration colors
-const PHASE_COLORS: Dictionary = {
-	1: Color(0.8, 0.5, 0.2, 1.0),   # Phase 1: copper
-	2: Color(0.3, 0.5, 0.9, 1.0),   # Phase 2: blue
-	3: Color(1.0, 0.85, 0.3, 1.0),  # Phase 3: gold
-}
+@onready var root_container: Control = get_node_or_null("%RootContainer")
+@onready var boss_title_label: Label = get_node_or_null("%BossTitle")
+@onready var subtitle_label: Label = get_node_or_null("%Subtitle")
+@onready var phase_badge_label: Label = get_node_or_null("%PhaseBadge")
+@onready var bar_bg: Panel = get_node_or_null("%BarBg")
+@onready var hp_bar_ghost: ProgressBar = get_node_or_null("%HpBarGhost")
+@onready var hp_bar: ProgressBar = get_node_or_null("%HpBar")
+@onready var hp_label: Label = get_node_or_null("%HpLabel")
+@onready var status_tip_label: Label = get_node_or_null("%StatusTip")
 
-# UI Node references
-var _name_label: Label = null
-var _subtitle_label: Label = null
-var _health_bar: ProgressBar = null
-var _bar_container: Control = null
-var _bg_panel: PanelContainer = null
+# Colors for phase transitions
+const COLOR_PHASE_1 := Color(0.85, 0.45, 0.15, 1.0)   # Copper / Bronze
+const COLOR_PHASE_2 := Color(0.25, 0.6, 0.95, 1.0)    # Blue
+const COLOR_PHASE_3 := Color(1.0, 0.85, 0.25, 1.0)    # Gold
+const COLOR_PURIFIED := Color(0.3, 1.0, 0.6, 1.0)     # Emerald
 
 
 func _ready() -> void:
-	layer = 100
-	_build_ui()
-
-
-func _build_ui() -> void:
-	# Root container at screen bottom-top area
-	_bar_container = Control.new()
-	_bar_container.name = "BarContainer"
-	_bar_container.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	_bar_container.offset_top = -120.0
-	_bar_container.offset_bottom = -20.0
-	_bar_container.offset_left = 100.0
-	_bar_container.offset_right = -100.0
-	add_child(_bar_container)
-
-	# Background panel
-	_bg_panel = PanelContainer.new()
-	_bg_panel.name = "BgPanel"
-	_bg_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_bg_panel.modulate = Color(0.1, 0.08, 0.06, 0.85)
-	_bar_container.add_child(_bg_panel)
-
-	var vbox := VBoxContainer.new()
-	vbox.set_anchors_preset(Control.PRESET_FULL_RECT)
-	vbox.add_theme_constant_override("separation", 2)
-	_bar_container.add_child(vbox)
-
-	# Boss name
-	_name_label = Label.new()
-	_name_label.name = "BossName"
-	_name_label.text = boss_name
-	_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_name_label.add_theme_font_size_override("font_size", 20)
-	_name_label.add_theme_color_override("font_color", _current_phase_color)
-	vbox.add_child(_name_label)
-
-	# Subtitle
-	_subtitle_label = Label.new()
-	_subtitle_label.name = "Subtitle"
-	_subtitle_label.text = boss_subtitle
-	_subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_subtitle_label.add_theme_font_size_override("font_size", 12)
-	_subtitle_label.add_theme_color_override("font_color", Color(0.7, 0.65, 0.55, 0.8))
-	vbox.add_child(_subtitle_label)
-
-	# Health bar
-	_health_bar = ProgressBar.new()
-	_health_bar.name = "HealthBar"
-	_health_bar.min_value = 0.0
-	_health_bar.max_value = 100.0
-	_health_bar.value = 100.0
-	_health_bar.show_percentage = false
-	_health_bar.custom_minimum_size = Vector2(0, 20)
-
-	# Style the health bar
-	var fill_style := StyleBoxFlat.new()
-	fill_style.bg_color = _current_phase_color
-	fill_style.corner_radius_top_left = 3
-	fill_style.corner_radius_top_right = 3
-	fill_style.corner_radius_bottom_left = 3
-	fill_style.corner_radius_bottom_right = 3
-	_health_bar.add_theme_stylebox_override("fill", fill_style)
-
-	var bg_style := StyleBoxFlat.new()
-	bg_style.bg_color = Color(0.15, 0.12, 0.1, 0.9)
-	bg_style.corner_radius_top_left = 3
-	bg_style.corner_radius_top_right = 3
-	bg_style.corner_radius_bottom_left = 3
-	bg_style.corner_radius_bottom_right = 3
-	bg_style.border_color = _current_phase_color * 0.6
-	bg_style.border_width_top = 1
-	bg_style.border_width_bottom = 1
-	bg_style.border_width_left = 1
-	bg_style.border_width_right = 1
-	_health_bar.add_theme_stylebox_override("background", bg_style)
-
-	vbox.add_child(_health_bar)
-
-	# Start hidden, show when boss connected
-	_bar_container.modulate.a = 0.0
+	layer = 20
+	if root_container != null:
+		root_container.modulate.a = 0.0
+		root_container.visible = false
 
 
 func connect_boss(boss: Node2D) -> void:
@@ -116,71 +40,144 @@ func connect_boss(boss: Node2D) -> void:
 	if _boss == null:
 		return
 
-	if _boss.has_signal("health_changed"):
-		_boss.connect("health_changed", _on_health_changed)
-	if _boss.has_signal("phase_changed"):
-		_boss.connect("phase_changed", _on_phase_changed)
-	if _boss.has_signal("boss_defeated"):
-		_boss.connect("boss_defeated", _on_boss_defeated)
+	if _boss.has_signal("health_changed") and not _boss.health_changed.is_connected(_on_health_changed):
+		_boss.health_changed.connect(_on_health_changed)
+	if _boss.has_signal("phase_changed") and not _boss.phase_changed.is_connected(_on_phase_changed):
+		_boss.phase_changed.connect(_on_phase_changed)
+	if _boss.has_signal("boss_defeated") and not _boss.boss_defeated.is_connected(_on_boss_defeated):
+		_boss.boss_defeated.connect(_on_boss_defeated)
 
-	var cfg: Resource = _boss.get("config") as Resource
-	if cfg != null:
-		_max_hp = cfg.get("max_hp") if cfg.get("max_hp") != null else 2000
-	_current_hp = _max_hp
-	_displayed_hp = float(_max_hp)
+	var max_hp: int = 2000
+	var curr_hp: int = 2000
+	if _boss.get("config") != null:
+		max_hp = _boss.get("config").get("max_hp")
+	if _boss.get("current_hp") != null:
+		curr_hp = int(_boss.get("current_hp"))
 
-	# Fade in
-	if _bar_container != null:
+	_update_display(float(curr_hp), float(max_hp))
+	_update_phase_badge(int(_boss.get("current_phase") if _boss.get("current_phase") != null else 1))
+
+
+func show_hud() -> void:
+	if _is_visible:
+		return
+	_is_visible = true
+
+	if root_container != null:
+		root_container.visible = true
 		var tween := create_tween()
 		if tween != null:
-			tween.tween_property(_bar_container, "modulate:a", 1.0, 0.8)
+			tween.tween_property(root_container, "modulate:a", 1.0, 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
-func _on_health_changed(current: int, max_hp: int) -> void:
-	_current_hp = current
-	_max_hp = max_hp
+func hide_hud(delay: float = 0.0, fade_duration: float = 1.5) -> void:
+	_is_visible = false
+	if root_container != null:
+		var tween := create_tween()
+		if tween != null:
+			if delay > 0.0:
+				tween.tween_interval(delay)
+			tween.tween_property(root_container, "modulate:a", 0.0, fade_duration)
+			tween.finished.connect(func() -> void:
+				if root_container != null:
+					root_container.visible = false
+			)
 
 
-func _on_phase_changed(new_phase: int) -> void:
-	var color: Color = PHASE_COLORS.get(new_phase, _current_phase_color)
-	_transition_phase_color(color)
+func _on_health_changed(curr: int, max_v: int) -> void:
+	if not _is_visible:
+		show_hud()
+	_update_display(float(curr), float(max_v))
 
 
-func _transition_phase_color(new_color: Color) -> void:
-	_current_phase_color = new_color
-	var tween := create_tween()
-	if tween == null:
-		return
-
-	# Animate name label color
-	if _name_label != null:
-		tween.tween_method(func(c: Color) -> void:
-			_name_label.add_theme_color_override("font_color", c)
-		, _name_label.get_theme_color("font_color"), new_color, 0.5)
-
-	# Animate health bar fill color
-	if _health_bar != null:
-		var fill: StyleBoxFlat = _health_bar.get_theme_stylebox("fill") as StyleBoxFlat
-		if fill != null:
-			tween.parallel().tween_property(fill, "bg_color", new_color, 0.5)
-		var bg: StyleBoxFlat = _health_bar.get_theme_stylebox("background") as StyleBoxFlat
-		if bg != null:
-			tween.parallel().tween_property(bg, "border_color", new_color * 0.6, 0.5)
+func _on_phase_changed(phase: int) -> void:
+	if not _is_visible:
+		show_hud()
+	_update_phase_badge(phase)
 
 
 func _on_boss_defeated(_boss_id: StringName) -> void:
-	# Fade out the HUD
-	if _bar_container != null:
-		var tween := create_tween()
-		if tween != null:
-			tween.tween_property(_bar_container, "modulate:a", 0.0, 2.0)
+	if phase_badge_label != null:
+		phase_badge_label.text = "【已净化 · 守时圣像】"
+		phase_badge_label.modulate = COLOR_PURIFIED
+	if status_tip_label != null:
+		status_tip_label.text = "【时律平息 · 守时圣像已复苏】"
+		status_tip_label.modulate = COLOR_PURIFIED
+	if hp_label != null:
+		hp_label.text = "已净化 100%"
+	if hp_bar != null:
+		_set_bar_color(COLOR_PURIFIED)
+
+	hide_hud(3.5, 1.5)
 
 
-func _process(delta: float) -> void:
-	if _health_bar == null or _max_hp <= 0:
+func _update_display(curr: float, max_v: float) -> void:
+	var ratio := clampf(curr / maxf(max_v, 1.0), 0.0, 1.0)
+	var pct := roundi(ratio * 100.0)
+
+	if hp_bar != null:
+		hp_bar.value = pct
+
+	if hp_label != null:
+		hp_label.text = "%d / %d (%d%%)" % [roundi(curr), roundi(max_v), pct]
+
+	# Smooth ghost bar animation
+	if hp_bar_ghost != null:
+		if _ghost_tween != null and _ghost_tween.is_valid():
+			_ghost_tween.kill()
+		_ghost_tween = create_tween()
+		if _ghost_tween != null:
+			_ghost_tween.tween_interval(0.3)
+			_ghost_tween.tween_property(hp_bar_ghost, "value", float(pct), 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+
+func _update_phase_badge(phase: int) -> void:
+	if phase_badge_label == null:
 		return
 
-	# Smooth HP display
-	var target: float = float(_current_hp)
-	_displayed_hp = move_toward(_displayed_hp, target, float(_max_hp) * 0.5 * delta)
-	_health_bar.value = (_displayed_hp / float(_max_hp)) * 100.0
+	# HelionBoss.Phase: 0: INTRO, 1: PHASE_1, 2: PHASE_2, 3: PHASE_3_TRANSITION, 4: PHASE_3, 5: PURIFICATION_REQUIRED, 6: DEFEATED
+	match phase:
+		0, 1:
+			phase_badge_label.text = "【阶段一 · 分针横扫】"
+			phase_badge_label.modulate = COLOR_PHASE_1
+			if status_tip_label != null:
+				status_tip_label.text = "【守时装甲保护中 · 留意分针横扫预警】"
+				status_tip_label.modulate = Color(0.9, 0.75, 0.65, 0.85)
+			_set_bar_color(COLOR_PHASE_1)
+		2:
+			phase_badge_label.text = "【阶段二 · 逆刻回拨】"
+			phase_badge_label.modulate = COLOR_PHASE_2
+			if status_tip_label != null:
+				status_tip_label.text = "【二秒逆刻运转中 · 留意时间残影位置】"
+				status_tip_label.modulate = Color(0.7, 0.85, 1.0, 0.85)
+			_set_bar_color(COLOR_PHASE_2)
+		3, 4:
+			phase_badge_label.text = "【阶段三 · 零时失序】"
+			phase_badge_label.modulate = COLOR_PHASE_3
+			if status_tip_label != null:
+				status_tip_label.text = "【十二刻地板交替失序 · 起跳跃过时间环】"
+				status_tip_label.modulate = Color(1.0, 0.9, 0.6, 0.9)
+			_set_bar_color(COLOR_PHASE_3)
+		5:
+			phase_badge_label.text = "【核心破防 · 需投掷净化药水】"
+			phase_badge_label.modulate = Color(1.0, 0.35, 0.35, 1.0)
+			if status_tip_label != null:
+				status_tip_label.text = "【圣像过载濒危 · 投掷净化药水完成复苏！】"
+				status_tip_label.modulate = Color(1.0, 0.4, 0.4, 1.0)
+		6:
+			phase_badge_label.text = "【已净化 · 守时圣像】"
+			phase_badge_label.modulate = COLOR_PURIFIED
+			if status_tip_label != null:
+				status_tip_label.text = "【时律平息 · 守时圣像已复苏】"
+				status_tip_label.modulate = COLOR_PURIFIED
+			_set_bar_color(COLOR_PURIFIED)
+
+
+func _set_bar_color(color: Color) -> void:
+	if hp_bar == null:
+		return
+	var fill := hp_bar.get_theme_stylebox("fill") as StyleBoxFlat
+	if fill != null:
+		var tween := create_tween()
+		if tween != null:
+			tween.tween_property(fill, "bg_color", color, 0.4)

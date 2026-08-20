@@ -1,7 +1,7 @@
 class_name HelionBossArena
 extends Node2D
 ## Arena controller for the Helion boss fight.
-## Manages entry trigger, clock bird spawning, purify supply point,
+## Manages trigger gear, clock bird spawning, purify supply point,
 ## and bridges boss signals to the level controller (inside.gd).
 ## Does NOT extend DayLevelEnvironment — that is the parent level's job.
 
@@ -10,7 +10,7 @@ signal boss_defeated(boss_id: StringName)
 
 @export var boss_path: NodePath = ^"HelionBoss"
 @export var clock_floor_path: NodePath = ^"ClockFloor"
-@export var entry_trigger_path: NodePath = ^"EntryTrigger"
+@export var trigger_gear_path: NodePath = ^"TriggerGear"
 @export var purify_supply_path: NodePath = ^"PurifySupplyPoint"
 @export var player_spawn_path: NodePath = ^"PlayerSpawn"
 @export var last_safe_marker_path: NodePath = ^"LastSafeMarker"
@@ -18,11 +18,12 @@ signal boss_defeated(boss_id: StringName)
 var is_battle_active: bool = false
 var _boss: Node2D = null
 var _clock_floor: Node2D = null
-var _entry_trigger: Area2D = null
+var _trigger_gear: Area2D = null
 var _purify_supply: Node2D = null
 var _player_spawn: Marker2D = null
 var _last_safe_marker: Marker2D = null
 var _arena_bounds_body: StaticBody2D = null
+var _hud: CanvasLayer = null
 
 # Clock bird tracking
 var _active_clock_birds: Array[Node] = []
@@ -36,15 +37,16 @@ var _clock_bird_timer: float = 0.0
 func _ready() -> void:
 	_boss = get_node_or_null(boss_path) as Node2D
 	_clock_floor = get_node_or_null(clock_floor_path) as Node2D
-	_entry_trigger = get_node_or_null(entry_trigger_path) as Area2D
+	_trigger_gear = get_node_or_null(trigger_gear_path) as Area2D
 	_purify_supply = get_node_or_null(purify_supply_path) as Node2D
 	_player_spawn = get_node_or_null(player_spawn_path) as Marker2D
 	_last_safe_marker = get_node_or_null(last_safe_marker_path) as Marker2D
 	_arena_bounds_body = get_node_or_null("ArenaBounds") as StaticBody2D
+	_hud = get_node_or_null("BossHUD") as CanvasLayer
 
-	# Connect entry trigger
-	if _entry_trigger != null:
-		_entry_trigger.body_entered.connect(_on_entry_trigger_body_entered)
+	# Connect trigger gear
+	if _trigger_gear != null and _trigger_gear.has_signal("activated"):
+		_trigger_gear.connect("activated", _on_trigger_gear_activated)
 
 	# Connect boss signals
 	if _boss != null:
@@ -54,6 +56,8 @@ func _ready() -> void:
 			_boss.connect("phase_changed", _on_boss_phase_changed)
 		if _boss.has_method("set_arena"):
 			_boss.call("set_arena", self)
+		if _hud != null and _hud.has_method("connect_boss"):
+			_hud.call("connect_boss", _boss)
 
 	# Set up rewind recorder fallback position
 	if _boss != null and _last_safe_marker != null:
@@ -68,10 +72,12 @@ func _ready() -> void:
 			(_purify_supply as Area2D).monitoring = false
 
 
-func _on_entry_trigger_body_entered(body: Node2D) -> void:
+func _on_trigger_gear_activated() -> void:
+	trigger_boss_battle()
+
+
+func trigger_boss_battle(player_node: Node2D = null) -> void:
 	if is_battle_active:
-		return
-	if not body.is_in_group("player"):
 		return
 
 	is_battle_active = true
@@ -80,17 +86,22 @@ func _on_entry_trigger_body_entered(body: Node2D) -> void:
 	if _arena_bounds_body != null:
 		_arena_bounds_body.set_collision_layer_value(1, true)
 
-	# Disable entry trigger
-	if _entry_trigger != null:
-		_entry_trigger.monitoring = false
+	# Find player for recorder if not provided
+	if player_node == null and is_inside_tree():
+		var tree := get_tree()
+		if tree != null:
+			player_node = tree.get_first_node_in_group("player") as Node2D
+			if player_node == null:
+				player_node = get_parent().get_node_or_null("../Player") as Node2D
 
-	# Find player for recorder
-	if _boss != null:
+	if _boss != null and player_node != null:
 		var recorder: Node = _boss.get_node_or_null("RewindRecorder")
 		if recorder != null:
-			recorder.set("player", body)
+			recorder.set("player", player_node)
 
 	# Start battle
+	if _hud != null and _hud.has_method("show_hud"):
+		_hud.call("show_hud")
 	if _boss != null and _boss.has_method("begin_battle"):
 		_boss.call("begin_battle")
 
@@ -174,7 +185,6 @@ func _process(delta: float) -> void:
 
 	# Spawn clock birds periodically in Phase 1 and 2
 	var boss_phase: int = _boss.get("current_phase") if _boss != null else 0
-	# Phase.PHASE_1 == 1, Phase.PHASE_2 == 2
 	if boss_phase in [1, 2]:
 		var max_birds: int = 2
 		if _boss.get("config") != null:
@@ -191,17 +201,14 @@ func _process(delta: float) -> void:
 
 
 func _spawn_clock_bird() -> void:
-	# Try to load the existing retro_clockbird scene
 	var bird_scene: PackedScene = load("res://day/levels/Aurem Clockyard/inside_systems/retro_clockbird.tscn") as PackedScene
 	if bird_scene == null:
-		# Try .gd directly for programmatic instantiation
 		return
 
 	var bird: Node2D = bird_scene.instantiate() as Node2D
 	if bird == null:
 		return
 
-	# Position at random side of arena
 	var side: float = -400.0 if randi() % 2 == 0 else 400.0
 	bird.global_position = global_position + Vector2(side, -300)
 	add_child(bird)

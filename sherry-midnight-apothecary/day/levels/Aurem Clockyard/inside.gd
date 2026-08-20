@@ -50,6 +50,10 @@ func _ready() -> void:
 	if tower_top != null and tower_top.has_signal("synchronization_completed"):
 		tower_top.connect("synchronization_completed", _on_grand_synchronization)
 
+	var elevator := get_node_or_null("World/floor 5/TowerElevator")
+	if elevator != null and elevator.has_signal("elevator_arrived"):
+		elevator.connect("elevator_arrived", _on_elevator_arrived)
+
 	if helion_arena != null:
 		if helion_arena.has_signal("boss_started"):
 			helion_arena.connect("boss_started", _on_helion_boss_started)
@@ -130,6 +134,11 @@ func on_floor_6_reached() -> void:
 		data.tutorial_flags["aurem_clockyard_tower_synchronized"] = true
 
 	objective_updated.emit("奥雷姆钟庭时律巅峰已到达！", "通过时律界门返回。")
+
+
+func _on_elevator_arrived(floor_index: int) -> void:
+	if floor_index == 6:
+		current_floor_checkpoint = 6
 
 
 func _on_helion_boss_started() -> void:
