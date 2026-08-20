@@ -21,7 +21,7 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 5. 树心门开启后写入 `forest_tree_gate_opened`，并通过 `request_checkpoint(&"forest_tree_gate_opened")` 暴露关键点接口。
 6. 树门开启后，玩家通过树门后的入口触发 `enter_interior()`：`forest.gd` 调用 `DayRuntime.switch_to_level(&"forest_interior", &"from_forest")` 切换到独立 Interior 关卡（不再在外部场景内驱动旧的内嵌树内阶段）。
 7. Interior 关卡内完成 Sherry / Luca 切换、控制室、水枪、升降根、闸门与直达梯流程，最后到达树冠出口。Interior 的玩法、节点契约与验收见 [FOREST_INTERIOR_LEVEL.md](FOREST_INTERIOR_LEVEL.md)。
-8. 未来的独立 `forest_crown` 关卡将从 Interior 的 `from_interior` 入口接入树冠 Boss；当前 Interior 的 `ExitToCrown` 仅作为结束占位，不会切换未安装的 Boss 场景。
+8. 独立 `forest_crown` 关卡从 Interior 的 `from_interior` 入口接入树冠 Boss；Interior 的 `ExitToCrown` 通过 DayRuntime 黑屏转场切换到正式 Boss 场景。
 
 ## Exterior
 
@@ -79,7 +79,7 @@ func begin_boss()
 func purify_boss()
 ```
 
-本阶段只保留接口、触发区、corrupted/normal 熾天使视觉和净化后环境恢复逻辑，不制作 Boss AI、伤害或击杀流程。`Crown` / `BossInterface` 仍保留在外部主场景中作为临时占位；玩家在现版本通过 Interior 关卡流程到达树冠出口，Boss 阶段由未来的独立 `forest_crown` 关卡接管。
+树冠 Boss 已作为独立 `forest_crown` 关卡运行，包含炽天使 Boss AI、伤害、净化流程、失败复位和完成后的返回森林路线。外部 `forest.tscn` 中保留的 `Crown` 节点只服务森林外部的历史视觉与入口兼容，不承担正式 Boss 流程。
 
 ## Normal revisit / gathering
 
