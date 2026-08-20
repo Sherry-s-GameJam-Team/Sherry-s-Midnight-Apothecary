@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://clon5us12ulrw"
+path="res://.godot/imported/day_one_bedroom_before_luca.dialogue-044e6c33aae067498f8ce18d3697cd25.tres"
+
+[deps]
+
+source_file="res://day/levels/home/day_one_bedroom_before_luca.dialogue"
+dest_files=["res://.godot/imported/day_one_bedroom_before_luca.dialogue-044e6c33aae067498f8ce18d3697cd25.tres"]
+
+[params]
+
+defaults=true

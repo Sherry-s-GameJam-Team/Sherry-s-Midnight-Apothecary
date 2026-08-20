@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://y2s1632xcryh"
+path="res://.godot/imported/day_one_enzuo_intro.dialogue-65d4df781a68f0c36175cd47eeb17743.tres"
+
+[deps]
+
+source_file="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue"
+dest_files=["res://.godot/imported/day_one_enzuo_intro.dialogue-65d4df781a68f0c36175cd47eeb17743.tres"]
+
+[params]
+
+defaults=true

@@ -23,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://7a726ryhg0wn" path="res://day/levels/home/npc/solder2.png" id="21_senior_knight"]
 [ext_resource type="Script" uid="uid://bqe86enjoel00" path="res://day/levels/home/home_day_one_intro.gd" id="22_day_one_intro"]
 [ext_resource type="Resource" uid="uid://dmuwoiut01uqi" path="res://day/levels/home/home_day_one_intro.dialogue" id="23_day_one_dialogue"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="24_luca"]
+[ext_resource type="Script" path="res://day/levels/home/home_day_one_luca_departure.gd" id="25_luca_departure"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_side_barrier"]
 size = Vector2(96, 1728)
@@ -142,6 +144,11 @@ trigger_marker_path = NodePath("../Cinematic/trid")
 young_knight_path = NodePath("../Cinematic/YoungKnight")
 senior_knight_path = NodePath("../Cinematic/SeniorKnight")
 fade_overlay_path = NodePath("../CinematicFade/FadeOverlay")
+
+[node name="DayOneLucaDeparture" type="Node" parent="." unique_id=1231674234]
+script = ExtResource("25_luca_departure")
+camera_director_path = NodePath("../HomeCameraDirector")
+luca_path = NodePath("../Cinematic/DayOneLuca")
 
 [node name="CinematicFade" type="CanvasLayer" parent="." unique_id=1760910053]
 layer = 90
@@ -273,6 +280,13 @@ z_index = 12
 position = Vector2(341.18347, 628.8)
 scale = Vector2(0.10366973, 0.10366973)
 texture = ExtResource("21_senior_knight")
+
+[node name="DayOneLuca" parent="Cinematic" unique_id=2085169273 instance=ExtResource("24_luca")]
+visible = false
+z_index = 12
+position = Vector2(341.18347, 628.8)
+process_mode = 4
+input_enabled = false
 
 [node name="trid" type="Marker2D" parent="Cinematic" unique_id=694698045]
 position = Vector2(63, 801)

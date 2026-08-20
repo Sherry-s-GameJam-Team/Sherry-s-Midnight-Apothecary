@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d4lshjmk87hsl"
+path="res://.godot/imported/day_one_home_luca.dialogue-1a376375ae2e8cdf94cc18e70080f645.tres"
+
+[deps]
+
+source_file="res://day/levels/home/day_one_home_luca.dialogue"
+dest_files=["res://.godot/imported/day_one_home_luca.dialogue-1a376375ae2e8cdf94cc18e70080f645.tres"]
+
+[params]
+
+defaults=true

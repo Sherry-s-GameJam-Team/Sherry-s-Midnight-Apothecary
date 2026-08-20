@@ -27,6 +27,12 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 
 视差层包括：FarCanopy、MidHangingLotus、Gameplay Ground。上方雨幕与王莲冠层来自现有美术；外部水车动画只使用源 MOV 中的清水画面。红水没有部署到外部水车，红水视觉只在 Interior 关卡的中央 `BloodStream` 中出现。
 
+### 第一天森林入场：恩佐救援线索
+
+`issue_save_enzuo/HangingFrameNpc` 是 23 帧、6 FPS 的正倒循环角色动态精灵。第一天、且 `save_enzuo_solved` 事件标记未设置时，`ForestDayOneEnzuoIntro` 在黑屏对话后淡显场景，让 Sherry 与 Luca 从左侧步入 `sherry` 与 `luca` 标记；角色揭示分两段将悬挂精灵从 `(385, -90)` 移至 `(385, -22)`，随后移至 `(385, 118)`。
+
+过场写入标准剧情完成标记 `story_event_completed:day_one_forest_enzuo_intro`，但会在当天保留悬挂角色。其他日期或 `save_enzuo_solved` 为真时，整个 `issue_save_enzuo` 节点隐藏。
+
 ### Lotus
 
 `lotus_platform.tscn` 为 `AnimatableBody2D`。首次踩踏或被任意药水直接命中都会下沉约 10 px 后回弹，并永久切换到带清水的莲花图；重复触发不会改变状态。水流 `WaterStreamArea` 向下延伸，与水车的 `WaterReceiver` 重叠后送水。

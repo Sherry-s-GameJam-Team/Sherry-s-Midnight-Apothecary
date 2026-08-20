@@ -1,0 +1,40 @@
+[gd_scene load_steps=25 format=3]
+
+[ext_resource type="Script" path="res://day/levels/forest/art/npc/hanging_frame/hanging_frame.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_000.png" id="2_000"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_001.png" id="3_001"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_002.png" id="4_002"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_003.png" id="5_003"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_004.png" id="6_004"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_005.png" id="7_005"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_006.png" id="8_006"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_007.png" id="9_007"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_008.png" id="10_008"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_009.png" id="11_009"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_010.png" id="12_010"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_011.png" id="13_011"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_012.png" id="14_012"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_013.png" id="15_013"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_014.png" id="16_014"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_015.png" id="17_015"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_016.png" id="18_016"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_017.png" id="19_017"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_018.png" id="20_018"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_019.png" id="21_019"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_020.png" id="22_020"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_021.png" id="23_021"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/npc/hanging_frame/frame_022.png" id="24_022"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hang"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("2_000")}, {"duration": 1.0, "texture": ExtResource("3_001")}, {"duration": 1.0, "texture": ExtResource("4_002")}, {"duration": 1.0, "texture": ExtResource("5_003")}, {"duration": 1.0, "texture": ExtResource("6_004")}, {"duration": 1.0, "texture": ExtResource("7_005")}, {"duration": 1.0, "texture": ExtResource("8_006")}, {"duration": 1.0, "texture": ExtResource("9_007")}, {"duration": 1.0, "texture": ExtResource("10_008")}, {"duration": 1.0, "texture": ExtResource("11_009")}, {"duration": 1.0, "texture": ExtResource("12_010")}, {"duration": 1.0, "texture": ExtResource("13_011")}, {"duration": 1.0, "texture": ExtResource("14_012")}, {"duration": 1.0, "texture": ExtResource("15_013")}, {"duration": 1.0, "texture": ExtResource("16_014")}, {"duration": 1.0, "texture": ExtResource("17_015")}, {"duration": 1.0, "texture": ExtResource("18_016")}, {"duration": 1.0, "texture": ExtResource("19_017")}, {"duration": 1.0, "texture": ExtResource("20_018")}, {"duration": 1.0, "texture": ExtResource("21_019")}, {"duration": 1.0, "texture": ExtResource("22_020")}, {"duration": 1.0, "texture": ExtResource("23_021")}, {"duration": 1.0, "texture": ExtResource("24_022")}],
+"loop": false,
+"name": &"hang",
+"speed": 6.0
+}]
+
+[node name="HangingFrame" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_hang")
+animation = &"hang"
+autoplay = "hang"
+script = ExtResource("1_script")
