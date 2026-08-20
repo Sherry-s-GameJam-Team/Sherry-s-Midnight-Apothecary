@@ -9,8 +9,10 @@ const NIGHT_BEDROOM_SCENE := preload("res://night/levels/home/bedroom.tscn")
 
 var player_data: PlayerData
 var day := 1
+var story_event_catalog: StoryEventCatalog
 var current_night_result := NightResult.new()
 var _standalone_player_data: PlayerData
+var _story_event_runner: StoryEventRunner
 
 @onready var shop_slot: Node2D = $ShopSlot
 @onready var night_home: Node = $ShopSlot/NightHome
@@ -56,9 +58,10 @@ func has_operated() -> bool:
 	return false
 
 
-func configure(shared_player_data: PlayerData, current_day: int) -> void:
+func configure(shared_player_data: PlayerData, current_day: int, shared_story_event_catalog: StoryEventCatalog = null) -> void:
 	player_data = shared_player_data
 	day = current_day
+	story_event_catalog = shared_story_event_catalog
 	current_night_result = NightResult.new()
 	_resolve_scene_nodes()
 	if night_home == null:
@@ -82,6 +85,8 @@ func configure(shared_player_data: PlayerData, current_day: int) -> void:
 		return
 	developer_console = console
 	developer_console.setup(self)
+	_setup_story_events()
+	call_deferred("_dispatch_initial_story_events")
 
 
 func open_business() -> void:
@@ -151,6 +156,8 @@ func switch_room(room_id: StringName, entry_id: StringName = &"default") -> bool
 	_place_room_player(room, entry_id)
 	room.propagate_call(&"on_level_entered", [entry_id], true)
 	_resolve_scene_nodes()
+	if _story_event_runner != null:
+		_story_event_runner.dispatch(StoryEventTriggerSpec.Type.LEVEL_ENTERED, room_id)
 	return true
 
 
@@ -158,6 +165,25 @@ func finish_night(result: NightResult = null) -> void:
 	var final_result := result if result != null else current_night_result
 	if final_result != null:
 		finished.emit(final_result)
+
+
+func dispatch_story_event_interaction(interaction_key: StringName) -> bool:
+	return _story_event_runner != null and _story_event_runner.dispatch(StoryEventTriggerSpec.Type.INTERACTION, &"", interaction_key)
+
+
+func _setup_story_events() -> void:
+	if story_event_catalog == null or _story_event_runner != null:
+		return
+	_story_event_runner = StoryEventRunner.new()
+	_story_event_runner.name = "StoryEventRunner"
+	add_child(_story_event_runner)
+	_story_event_runner.configure(story_event_catalog, get_player_data(), day, true)
+
+
+func _dispatch_initial_story_events() -> void:
+	if _story_event_runner != null:
+		_story_event_runner.dispatch(StoryEventTriggerSpec.Type.RUNTIME_ENTERED)
+		_story_event_runner.dispatch(StoryEventTriggerSpec.Type.LEVEL_ENTERED, &"home")
 
 
 func _on_business_requested() -> void:

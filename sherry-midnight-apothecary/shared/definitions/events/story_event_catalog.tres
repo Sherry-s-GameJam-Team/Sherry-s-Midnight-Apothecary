@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://shared/events/story_event_catalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="2_definition"]
+[ext_resource type="Resource" path="res://shared/definitions/events/example_market_arrival.tres" id="3_example"]
+[ext_resource type="Resource" path="res://shared/definitions/events/day_one_bedroom_luca_intro.tres" id="4_luca_intro"]
+[ext_resource type="Resource" path="res://shared/definitions/events/day_one_bedroom_luca_urgent.tres" id="5_bedroom_luca"]
+
+[resource]
+script = ExtResource("1_catalog")
+events = Array[ExtResource("2_definition")]([ExtResource("3_example"), ExtResource("4_luca_intro"), ExtResource("5_bedroom_luca")])

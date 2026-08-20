@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://xfd72cwxhaq5"
+path="res://.godot/imported/day_one_blood_fountain.dialogue-0774a4a026f55d9ea2f76d0fc2449b41.tres"
+
+[deps]
+
+source_file="res://day/levels/market/town/day_one_blood_fountain.dialogue"
+dest_files=["res://.godot/imported/day_one_blood_fountain.dialogue-0774a4a026f55d9ea2f76d0fc2449b41.tres"]
+
+[params]
+
+defaults=true

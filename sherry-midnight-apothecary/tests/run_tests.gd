@@ -36,6 +36,8 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/day_interactables_hint_test.gd"),
 	preload("res://tests/controlled_moving_platform_test.gd"),
 	preload("res://tests/dialogue_integration_test.gd"),
+	preload("res://tests/story_event_system_test.gd"),
+	preload("res://tests/town_fountain_event_test.gd"),
 	preload("res://tests/dual_world_structure_test.gd"),
 	preload("res://tests/crimson_aqueduct_test.gd"),
 	preload("res://tests/night_luca_interaction_test.gd"),
@@ -50,6 +52,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/vespervale_garden_level_test.gd"),
 	preload("res://tests/vespervale_inner_level_test.gd"),
 	preload("res://tests/vespervale_runner_level_test.gd"),
+	preload("res://tests/crownland_level_test.gd"),
 	preload("res://tests/dream_grasp_hands_test.gd"),
 ]
 

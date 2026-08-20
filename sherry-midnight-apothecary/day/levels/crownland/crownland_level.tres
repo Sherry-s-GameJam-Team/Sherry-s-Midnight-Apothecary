@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/crownland/crownland.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"crownland"
+display_name = "王畿"
+disaster_name = "王冠失序"
+normal_description = "白垩城墙与金顶尖塔守望着维塔利亚王都。"
+corrupted_description = "失色的王庭被荆棘花园吞没，王冠的余晖摇摇欲坠。"
+scene_description = "穿过王都街区、加冕广场与圣堂，前往王宫深处。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"

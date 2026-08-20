@@ -20,8 +20,13 @@
 [ext_resource type="Shader" uid="uid://inv8pyoxwwqx" path="res://shared/shaders/interaction_outline.gdshader" id="22_door_outline"]
 [ext_resource type="Texture2D" uid="uid://b7ylmgif1v6wx" path="res://day/levels/market/town/resources/fountain/fountain.png" id="23_qsket"]
 [ext_resource type="AudioStream" uid="uid://cyd2djlvtrk7a" path="res://audio/bgm/doraintown.wav" id="23_town_bgm"]
+[ext_resource type="Texture2D" uid="uid://ch6lohivbukh4" path="res://day/levels/market/town/art/people.png" id="24_57drt"]
 [ext_resource type="PackedScene" path="res://day/levels/market/town/resources/fountain/fountain_sprite.tscn" id="24_cq1f3"]
 [ext_resource type="Script" uid="uid://bvb3usq5qpcnm" path="res://audio/looping_bgm_player.gd" id="24_looping_bgm"]
+[ext_resource type="Script" uid="uid://bgm2i7e2kfbpe" path="res://day/levels/market/town/fountain_event_appearance.gd" id="25_fountain_event"]
+[ext_resource type="PackedScene" path="res://day/levels/market/town/resources/blood_fountain/blood_fountain_sprite.tscn" id="26_blood_fountain"]
+[ext_resource type="Script" path="res://day/levels/market/town/issue_day_one.gd" id="27_issue_day_one"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="28_luca"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_door_outline"]
 shader = ExtResource("22_door_outline")
@@ -182,6 +187,8 @@ texture = ExtResource("14_mhwfj")
 position = Vector2(5237, 531)
 scale = Vector2(0.16400146, 0.16400146)
 texture = ExtResource("23_qsket")
+script = ExtResource("25_fountain_event")
+blood_fountain_scene = ExtResource("26_blood_fountain")
 
 [node name="FountainSprite" parent="CS/Fountain" unique_id=1088006122 instance=ExtResource("24_cq1f3")]
 position = Vector2(12.1936035, 9.573547)
@@ -241,11 +248,11 @@ position = Vector2(0, 56)
 [node name="SherryPresentation" parent="Player" unique_id=2024104673 instance=ExtResource("19_sherry_presentation")]
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=880853876]
-process_callback = 0
 position = Vector2(112, -291)
+process_callback = 0
 limit_left = 0
 limit_top = 0
-limit_right = 4344
+limit_right = 7313
 limit_bottom = 724
 script = ExtResource("14_camera_bounds")
 left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
@@ -257,6 +264,31 @@ position = Vector2(-8, 13)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1547737807]
 libraries/ = SubResource("AnimationLibrary_clouds")
 autoplay = &"cloud_drift"
+
+[node name="issueDay1" type="Node2D" parent="." unique_id=1565926518]
+visible = false
+script = ExtResource("27_issue_day_one")
+player_path = NodePath("../Player")
+camera_path = NodePath("../Player/Camera2D")
+people_path = NodePath("People")
+sherry_position_path = NodePath("sherryposition")
+luca_position_path = NodePath("lucaposition")
+luca_path = NodePath("Luca")
+
+[node name="People" type="Sprite2D" parent="issueDay1" unique_id=2119656662]
+z_index = 10
+position = Vector2(5239, 595)
+scale = Vector2(0.4249174, 0.4249174)
+texture = ExtResource("24_57drt")
+
+[node name="sherryposition" type="Marker2D" parent="issueDay1" unique_id=1890287111]
+position = Vector2(5002, 651)
+
+[node name="lucaposition" type="Marker2D" parent="issueDay1" unique_id=895437711]
+position = Vector2(5451, 656)
+
+[node name="Luca" parent="issueDay1" unique_id=1549978013 instance=ExtResource("28_luca")]
+input_enabled = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=523084111]
 layer = 200

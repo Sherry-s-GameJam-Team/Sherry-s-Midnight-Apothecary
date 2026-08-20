@@ -40,6 +40,7 @@
 
 - [Night production herb inventory](production_processing.md): artwork-aligned 4 × 3 herb shelf with responsive slot spacing and paged navigation.
 - [Dialogue Character Portraits](dialogue_portrait.md): 3-slot (left, center, right) character portrait presentation, Dialogue Manager tag/command syntax integration, expression cross-fading, focus dimming, and entrance/reaction animations.
+- [Multi-day story events](story_events.md): Inspector-authored resources for day/night, level-entry, and interaction dialogue events with persistent conditions and rewards, including the day-one Town blood-fountain presentation toggle driven by the Luca intro event.
 - [Crimson Vale](crimson_vale.md): daytime Crimson Vale level — 3-layer parallax background, village buildings and maple resin props, Danxin Gate restoration state machine, player controller integration, and LevelData registration.
 - [Blood Leaf Swarm](blood_leaf_swarm.md): reusable delayed-tracking maple leaf swarm hazard, GPUParticles2D particle shader with 3D fluttering & swirling, and wind/explosion/purification potion interactions.
 - [Crimson Vale Challenge](crimson_vale_challenge.md): horizontal platforming gauntlet with broken cliff jumps, village rooftop leaps, Blood Leaf Swarm hazards, and ForegroundShelter stealth mask mechanics.
@@ -50,3 +51,4 @@
 - [Vespervale Dream Grasp Hands](vespervale_dream_grasp.md): 5-state predictive enemy mechanic (`LURK` -> `TRACK` -> `LOCK` -> `ERUPT` -> `RETRACT`), 24-frame animation, bed safe zones with ward auras, 3-tier hunting escalation, character-switch baiting, and upper/lower platform detection.
 - [Vespervale Runner](vespervale_runner.md): 2-minute dual-character parkour auto-runner — Sherry on lower track (Space key jump), Luca on upper track (W key jump), constant rightward camera scroll, phased obstacle track, finish line deceleration, and E-key exit portal.
 - [Developer Console](developer_console.md): in-game debug console with dynamic scene switching, numbered level indices (1-17), Chinese/English alias resolution, inventory/stat mutations, and boss test jump.
+- [Crownland](crownland.md): standalone 王畿 day level — normal/corrupted environment switching, three-layer parallax city presentation, standard Sherry player assembly, camera bounds, and LevelData registration.

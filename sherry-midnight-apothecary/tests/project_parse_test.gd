@@ -67,6 +67,10 @@ static func run(test: TestSupport) -> void:
 		"res://menu/shaders/menu_bird_trail.gdshader",
 		"res://day/levels/grassland/grassland_level.tres",
 		"res://day/levels/grassland/emerald_field_level.tres",
+		"res://shared/definitions/events/story_event_catalog.tres",
+		"res://shared/definitions/events/day_one_bedroom_luca_intro.tres",
+		"res://shared/definitions/events/day_one_bedroom_luca_urgent.tres",
+		"res://day/levels/home/day_one_bedroom_luca.dialogue",
 		"res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn",
 	]:
 		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

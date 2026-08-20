@@ -21,7 +21,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_hide_locked_hint()
 	var runtime := _find_day_runtime()
 	if runtime != null:
-		if runtime.switch_to_level("home", &"bedroomdoor"):
+		if bool(runtime.call("switch_to_level", "home", &"bedroomdoor")):
 			_place_player_at_home_bedroom_door(runtime.get("current_level_instance") as Node)
 	else:
 		var tree := get_tree()

@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="2_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_indoor_collision.tscn" id="3_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="4_presentation"]
-[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://day/systems/camera_bounds.gd" id="5_camera_bounds"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="5_camera_bounds"]
 [ext_resource type="Texture2D" uid="uid://d3ly4jh14ckgm" path="res://day/levels/home/art/sleep_to_wake/1.png" id="5_frame_01"]
 [ext_resource type="Script" uid="uid://chqxmatbytqmt" path="res://day/levels/home/bedroom_exit.gd" id="6_exit"]
 [ext_resource type="Texture2D" uid="uid://dbkqyllr5ruyq" path="res://day/levels/home/art/sleep_to_wake/2.png" id="6_frame_02"]
@@ -38,8 +38,10 @@
 [ext_resource type="Texture2D" uid="uid://cybdduca1dmjk" path="res://day/levels/home/art/sleep_to_wake/28.png" id="32_frame_28"]
 [ext_resource type="Texture2D" uid="uid://bwuoybb8dll1o" path="res://day/levels/home/art/sleep_to_wake/29.png" id="33_frame_29"]
 [ext_resource type="Texture2D" uid="uid://b1m250ykp276t" path="res://day/levels/home/stick.png" id="38_ss1qg"]
-[ext_resource type="Script" path="res://day/levels/home/bedroom_stick_interaction.gd" id="39_stick_script"]
-[ext_resource type="Resource" uid="uid://8pvjr6f6vny3" path="res://day/levels/home/bedroom_stick.dialogue" id="40_stick_dialogue"]
+[ext_resource type="Script" uid="uid://sgusm7wsbpm1" path="res://day/levels/home/bedroom_stick_interaction.gd" id="39_stick_script"]
+[ext_resource type="Resource" uid="uid://cfg1yj88r43eb" path="res://day/levels/home/bedroom_stick.dialogue" id="40_stick_dialogue"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="41_luca"]
+[ext_resource type="Script" uid="uid://b1pm8drpbvdmv" path="res://day/levels/home/bedroom_day_one_luca.gd" id="42_luca_visibility"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sleep_to_wake"]
 animations = [{
@@ -210,8 +212,8 @@ position = Vector2(3, 93)
 position = Vector2(0, 26)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=667768939]
-process_callback = 0
 position = Vector2(0, -174)
+process_callback = 0
 limit_top = 0
 limit_bottom = 724
 script = ExtResource("5_camera_bounds")
@@ -231,23 +233,22 @@ animation_path = NodePath("../SleepToWake")
 player_path = NodePath("../Player")
 player_visual_path = NodePath("../Player/SherryPresentation")
 spawn_point_path = NodePath("../EntryPoints/default")
+reveal_overlay_path = NodePath("../WakeReveal/FadeOverlay")
+auto_start = false
 one_shot_per_day = true
 daily_flag_id = &"sleep_to_wake"
 restore_player_control_on_complete = true
 force_player_visible_on_complete = true
-reveal_overlay_path = NodePath("../WakeReveal/FadeOverlay")
-reveal_fade_duration = 0.3
 
-[node name="WakeReveal" type="CanvasLayer" parent="."]
+[node name="WakeReveal" type="CanvasLayer" parent="." unique_id=186968327]
 layer = 40
 
-[node name="FadeOverlay" type="ColorRect" parent="WakeReveal"]
+[node name="FadeOverlay" type="ColorRect" parent="WakeReveal" unique_id=1692064918]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 color = Color(0, 0, 0, 1)
 
 [node name="Stick" type="Sprite2D" parent="." unique_id=278029094]
@@ -261,3 +262,11 @@ dialogue_resource = ExtResource("40_stick_dialogue")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Stick/InteractionArea" unique_id=2854938]
 position = Vector2(57, 57)
 shape = SubResource("RectangleShape2D_stick_interaction")
+
+[node name="DayOneLuca" type="Node2D" parent="." unique_id=2092619386]
+visible = false
+script = ExtResource("42_luca_visibility")
+
+[node name="Luca" parent="DayOneLuca" unique_id=715430241 instance=ExtResource("41_luca")]
+position = Vector2(1961, 672)
+input_enabled = false

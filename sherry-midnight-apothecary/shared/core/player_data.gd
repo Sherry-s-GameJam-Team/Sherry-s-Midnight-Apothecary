@@ -4,7 +4,7 @@ extends Resource
 signal health_changed(current_health: int, maximum_health: int)
 signal health_depleted
 
-const SAVE_VERSION := 9
+const SAVE_VERSION := 11
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
@@ -27,6 +27,11 @@ var unlocked_levels: Array[StringName] = [&"market", &"grassland"]
 var active_home_destination_id: StringName = &"market"
 var tutorial_flags: Dictionary = {}
 var customer_states: Dictionary = {}
+## Persistent narrative state owned by the resource-driven story event system.
+var event_flags: Dictionary = {}
+## The task card shown for the active day. It intentionally expires when the
+## caller asks for a different day rather than accumulating in the journal.
+var active_daily_task: Dictionary = {}
 
 
 func reset() -> void:
@@ -47,6 +52,8 @@ func reset() -> void:
 	active_home_destination_id = &"market"
 	tutorial_flags = {}
 	customer_states = {}
+	event_flags = {}
+	active_daily_task = {}
 	health_changed.emit(health, max_health)
 
 
@@ -118,6 +125,8 @@ func restore_from_save_data(data: Dictionary) -> void:
 	active_home_destination_id = restored.active_home_destination_id
 	tutorial_flags = restored.tutorial_flags.duplicate(true)
 	customer_states = restored.customer_states.duplicate(true)
+	event_flags = restored.event_flags.duplicate(true)
+	active_daily_task = restored.active_daily_task.duplicate(true)
 	health_changed.emit(health, max_health)
 
 
@@ -137,6 +146,48 @@ func set_active_home_destination(level_id: StringName) -> bool:
 		return false
 	active_home_destination_id = level_id
 	return true
+
+
+func has_event_flag(flag_id: StringName) -> bool:
+	return flag_id != &"" and bool(event_flags.get(str(flag_id), false))
+
+
+func set_event_flag(flag_id: StringName) -> bool:
+	if flag_id == &"" or has_event_flag(flag_id):
+		return false
+	event_flags[str(flag_id)] = true
+	return true
+
+
+func clear_event_flag(flag_id: StringName) -> bool:
+	if flag_id == &"" or not event_flags.has(str(flag_id)):
+		return false
+	event_flags.erase(str(flag_id))
+	return true
+
+
+func add_inventory_item(item_id: StringName, amount: int = 1) -> void:
+	if item_id == &"" or amount <= 0:
+		return
+	inventory[item_id] = int(inventory.get(item_id, 0)) + amount
+
+
+func set_active_daily_task(task_id: StringName, task_title: String, task_day: int) -> bool:
+	if task_id == &"" or task_day < 0:
+		return false
+	var normalized_title: String = task_title.strip_edges()
+	active_daily_task = {
+		"day": task_day,
+		"id": str(task_id),
+		"title": normalized_title,
+	}
+	return true
+
+
+func get_active_daily_task(current_day: int) -> Dictionary:
+	if int(active_daily_task.get("day", -1)) != current_day:
+		return {}
+	return active_daily_task.duplicate(true)
 
 
 func apply_night_result(result: NightResult) -> void:
@@ -182,6 +233,8 @@ func to_save_data() -> Dictionary:
 		"active_home_destination_id": str(active_home_destination_id),
 		"tutorial_flags": tutorial_flags.duplicate(),
 		"customer_states": customer_states.duplicate(true),
+		"event_flags": event_flags.duplicate(),
+		"active_daily_task": active_daily_task.duplicate(true),
 	}
 
 
@@ -210,6 +263,8 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.active_home_destination_id = saved_destination if result.has_unlocked_level(saved_destination) else result.unlocked_levels[0]
 	result.tutorial_flags = _bool_dictionary(data.get("tutorial_flags", {}))
 	result.customer_states = _customer_state_dictionary(data.get("customer_states", {}))
+	result.event_flags = _bool_dictionary(data.get("event_flags", {}))
+	result.active_daily_task = _daily_task_dictionary(data.get("active_daily_task", {}))
 	result._cleanup_potion_configuration()
 	return result
 
@@ -437,6 +492,21 @@ static func _customer_state_dictionary(value: Variant) -> Dictionary:
 			if value[key] is Dictionary:
 				result[str(key)] = (value[key] as Dictionary).duplicate(true)
 	return result
+
+
+static func _daily_task_dictionary(value: Variant) -> Dictionary:
+	if value is not Dictionary:
+		return {}
+	var source: Dictionary = value as Dictionary
+	var task_id: String = str(source.get("id", ""))
+	var task_day: int = int(source.get("day", -1))
+	if task_id.is_empty() or task_day < 0:
+		return {}
+	return {
+		"day": task_day,
+		"id": task_id,
+		"title": str(source.get("title", "")),
+	}
 
 
 static func _serialize_counts(value: Dictionary) -> Dictionary:

@@ -4,6 +4,7 @@ extends Node
 const SettingsServiceScript := preload("res://app/settings_service.gd")
 
 @export var start_automatically := false
+@export var story_event_catalog: StoryEventCatalog
 
 @onready var game_flow: GameFlow = $GameFlow
 @onready var settings_service: Node = $SettingsService
@@ -33,7 +34,7 @@ func _ready() -> void:
 	pause_menu.bind_player_data(player_data)
 	pause_menu.bind_settings(settings_service)
 	menu_controller.bind_settings(settings_service)
-	game_flow.configure(current_runtime_slot, player_data)
+	game_flow.configure(current_runtime_slot, player_data, story_event_catalog)
 	map_switch.destination_locked.connect(_on_map_switch_destination_locked)
 	game_flow.save_requested.connect(_on_save_requested)
 	game_flow.sleep_transition_requested.connect(_on_sleep_transition_requested)
@@ -59,7 +60,7 @@ func start_new_game(
 	player_data.reset()
 	top_hint_ui.bind_player_data(player_data)
 	pause_menu.bind_player_data(player_data)
-	game_flow.configure(current_runtime_slot, player_data)
+	game_flow.configure(current_runtime_slot, player_data, story_event_catalog)
 	game_flow.start_new_game(initial_day_level_id, defer_day_presentation, defer_day_title)
 
 
@@ -78,7 +79,7 @@ func load_game(
 	player_data = PlayerData.from_save_data(save_data.get("player", {}))
 	top_hint_ui.bind_player_data(player_data)
 	pause_menu.bind_player_data(player_data)
-	game_flow.configure(current_runtime_slot, player_data)
+	game_flow.configure(current_runtime_slot, player_data, story_event_catalog)
 	return game_flow.resume_game(
 		int(save_data.get("day", GameFlow.INITIAL_DAY)),
 		int(save_data.get("mode", GameFlow.Mode.DAY)) as GameFlow.Mode,

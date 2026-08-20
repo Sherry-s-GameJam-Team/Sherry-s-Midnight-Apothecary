@@ -4,6 +4,7 @@ extends Node
 signal finished(result: DayResult)
 signal travel_anchor_activated(level_id: StringName)
 signal player_died(source: StringName)
+signal story_event_completed(event_id: StringName)
 
 const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
@@ -31,6 +32,7 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/minigames/miasma_purifier/miasma_purifier_level.tres"),
 	preload("res://day/interactables/control_system/control_system_demo_level.tres"),
 	preload("res://day/levels/Vespervale/vespervale_garden_level.tres"),
+	preload("res://day/levels/crownland/crownland_level.tres"),
 ]
 
 # Home is available through its door, but does not consume a day in the normal
@@ -46,6 +48,7 @@ const MIASMA_RETURN_PENDING_FLAG := "grassland_miasma_completion_return_pending"
 
 var player_data: PlayerData
 var day := 1
+var story_event_catalog: StoryEventCatalog
 
 @onready var level_slot: Node = $LevelSlot
 @onready var gameplay_ui: CanvasLayer = $UI
@@ -63,6 +66,7 @@ var _defer_initial_title := false
 var _intro_locked := false
 var _level_transition_running := false
 var _death_requested := false
+var _story_event_runner: StoryEventRunner
 
 
 func get_player_data() -> PlayerData:
@@ -114,10 +118,12 @@ func configure(
 	current_day: int,
 	initial_level_id: StringName = &"",
 	defer_initial_presentation := false,
-	defer_initial_title := false
+	defer_initial_title := false,
+	shared_story_event_catalog: StoryEventCatalog = null
 ) -> void:
 	player_data = shared_player_data
 	day = current_day
+	story_event_catalog = shared_story_event_catalog
 	_initial_level_id = initial_level_id
 	_defer_initial_presentation = defer_initial_presentation
 	_defer_initial_title = defer_initial_title
@@ -128,7 +134,9 @@ func configure(
 func _ready() -> void:
 	developer_console.setup_day(self)
 	_bind_player_health_hud()
+	_setup_story_events()
 	_load_level()
+	call_deferred("_dispatch_initial_story_events")
 
 
 func _process(_delta: float) -> void:
@@ -170,6 +178,7 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		_sync_bgm_for_current_level()
 		_instantiate_current_level(entry_id)
 		_play_scene_title_once()
+		_dispatch_level_story_events()
 		return true
 	return false
 
@@ -217,6 +226,50 @@ func activate_travel_anchor(level_id: StringName) -> bool:
 		return false
 	travel_anchor_activated.emit(level_id)
 	return true
+
+
+func dispatch_story_event_interaction(interaction_key: StringName) -> bool:
+	return _story_event_runner != null and _story_event_runner.dispatch(StoryEventTriggerSpec.Type.INTERACTION, &"", interaction_key)
+
+
+func has_completed_story_event(event_id: StringName) -> bool:
+	return _story_event_runner != null and _story_event_runner.is_completed(event_id)
+
+
+func _setup_story_events() -> void:
+	if story_event_catalog == null or _story_event_runner != null:
+		return
+	_story_event_runner = StoryEventRunner.new()
+	_story_event_runner.name = "StoryEventRunner"
+	add_child(_story_event_runner)
+	_story_event_runner.configure(story_event_catalog, get_player_data(), day, false)
+	_story_event_runner.event_completed.connect(story_event_completed.emit)
+
+
+func _dispatch_initial_story_events() -> void:
+	if _story_event_runner == null:
+		return
+	# The bedroom's day-one Luca presentation owns its own blackout, walk-in,
+	# and dialogue request. Other days retain the normal sleep-to-wake sequence.
+	if current_level != null and current_level.id == &"bedroom" and current_level_instance != null:
+		var luca_opening := current_level_instance.get_node_or_null("DayOneLuca") as BedroomDayOneLuca
+		if luca_opening != null and luca_opening.is_opening_active():
+			await luca_opening.opening_completed
+			if not is_inside_tree() or _story_event_runner == null:
+				return
+		elif luca_opening == null or not luca_opening.is_day_one():
+			var wake_executor := current_level_instance.get_node_or_null("SleepToWakeExecutor") as AnimationPresentationExecutor
+			if wake_executor != null and not wake_executor.is_completed():
+				await wake_executor.completed
+				if not is_inside_tree() or _story_event_runner == null:
+					return
+	_story_event_runner.dispatch(StoryEventTriggerSpec.Type.RUNTIME_ENTERED)
+	_dispatch_level_story_events()
+
+
+func _dispatch_level_story_events() -> void:
+	if _story_event_runner != null and current_level != null:
+		_story_event_runner.dispatch(StoryEventTriggerSpec.Type.LEVEL_ENTERED, current_level.id)
 
 
 func _sync_bgm_for_current_level() -> void:

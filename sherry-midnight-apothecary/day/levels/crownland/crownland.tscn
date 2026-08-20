@@ -1,0 +1,201 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://day/levels/crownland/crownland.gd" id="1_level"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/skybox_normal.png" id="2_sky_normal"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/skybox_corrupted.png" id="3_sky_corrupted"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/MS.png" id="4_midground"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/town.png" id="5_town"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/square.png" id="6_square"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/church.png" id="7_church"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/royalroom.png" id="8_royal_room"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/pillar.png" id="9_pillar"]
+[ext_resource type="Texture2D" path="res://day/levels/crownland/garden_corrupted.png" id="10_garden_corrupted"]
+[ext_resource type="Script" path="res://shared/player/day_player_controller.gd" id="11_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="12_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="13_presentation"]
+[ext_resource type="Script" path="res://shared/player/camera_bounds.gd" id="14_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="15_potions"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="16_console"]
+[ext_resource type="Script" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="17_pause_host"]
+[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="18_pause_menu"]
+
+[sub_resource type="RectangleShape2D" id="Rect_ground"]
+size = Vector2(9000, 160)
+
+[sub_resource type="RectangleShape2D" id="Rect_barrier"]
+size = Vector2(128, 1600)
+
+[node name="Crownland" type="Node2D"]
+script = ExtResource("1_level")
+debug_scene_id = "crownland"
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="FS" type="Parallax2D" parent="Background"]
+z_index = -30
+scroll_scale = Vector2(0.12, 0)
+
+[node name="NormalSky" type="Sprite2D" parent="Background/FS"]
+texture = ExtResource("2_sky_normal")
+centered = false
+
+[node name="NormalSkyRepeat" type="Sprite2D" parent="Background/FS"]
+position = Vector2(2172, 0)
+texture = ExtResource("2_sky_normal")
+centered = false
+
+[node name="NormalSkyRepeat2" type="Sprite2D" parent="Background/FS"]
+position = Vector2(4344, 0)
+texture = ExtResource("2_sky_normal")
+centered = false
+
+[node name="NormalSkyRepeat3" type="Sprite2D" parent="Background/FS"]
+position = Vector2(6516, 0)
+texture = ExtResource("2_sky_normal")
+centered = false
+
+[node name="CorruptedSky" type="Node2D" parent="Background/FS"]
+visible = false
+
+[node name="Sprite" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+texture = ExtResource("3_sky_corrupted")
+centered = false
+
+[node name="Repeat" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+position = Vector2(2172, 0)
+texture = ExtResource("3_sky_corrupted")
+centered = false
+
+[node name="Repeat2" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+position = Vector2(4344, 0)
+texture = ExtResource("3_sky_corrupted")
+centered = false
+
+[node name="Repeat3" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+position = Vector2(6516, 0)
+texture = ExtResource("3_sky_corrupted")
+centered = false
+
+[node name="MS" type="Parallax2D" parent="Background"]
+z_index = -20
+scroll_scale = Vector2(0.42, 0)
+
+[node name="Castle" type="Sprite2D" parent="Background/MS"]
+position = Vector2(1180, 120)
+texture = ExtResource("4_midground")
+centered = false
+
+[node name="CS" type="Parallax2D" parent="Background"]
+z_index = -10
+
+[node name="City" type="Node2D" parent="Background/CS"]
+
+[node name="Town" type="Sprite2D" parent="Background/CS/City"]
+position = Vector2(-80, 120)
+texture = ExtResource("5_town")
+centered = false
+
+[node name="Square" type="Sprite2D" parent="Background/CS/City"]
+position = Vector2(2050, 120)
+texture = ExtResource("6_square")
+centered = false
+
+[node name="Church" type="Sprite2D" parent="Background/CS/City"]
+position = Vector2(4270, 120)
+texture = ExtResource("7_church")
+centered = false
+
+[node name="RoyalRoom" type="Sprite2D" parent="Background/CS/City"]
+position = Vector2(6025, 110)
+texture = ExtResource("8_royal_room")
+centered = false
+
+[node name="RoyalPillar" type="Sprite2D" parent="Background/CS/City"]
+position = Vector2(7840, -120)
+scale = Vector2(0.52, 0.52)
+texture = ExtResource("9_pillar")
+centered = false
+
+[node name="CorruptedGarden" type="Sprite2D" parent="Background/CS"]
+visible = false
+position = Vector2(0, 120)
+texture = ExtResource("10_garden_corrupted")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds"]
+position = Vector2(4300, 680)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground"]
+shape = SubResource("Rect_ground")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds"]
+position = Vector2(-64, 160)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier"]
+shape = SubResource("Rect_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds"]
+position = Vector2(8664, 160)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier"]
+shape = SubResource("Rect_barrier")
+
+[node name="EntryPoints" type="Node2D" parent="."]
+
+[node name="default" type="Marker2D" parent="EntryPoints"]
+position = Vector2(360, 560)
+
+[node name="from_town" type="Marker2D" parent="EntryPoints"]
+position = Vector2(360, 560)
+
+[node name="square" type="Marker2D" parent="EntryPoints"]
+position = Vector2(2900, 560)
+
+[node name="cathedral" type="Marker2D" parent="EntryPoints"]
+position = Vector2(5000, 560)
+
+[node name="palace" type="Marker2D" parent="EntryPoints"]
+position = Vector2(7200, 560)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+z_index = 10
+position = Vector2(360, 560)
+collision_mask = 3
+script = ExtResource("11_player")
+
+[node name="SherryCollision" parent="Player" instance=ExtResource("12_collision")]
+
+[node name="SherryPresentation" parent="Player" instance=ExtResource("13_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -110)
+limit_top = 0
+limit_bottom = 720
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("14_camera")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" instance=ExtResource("15_potions")]
+position = Vector2(48, 87)
+
+[node name="DebugUI" type="CanvasLayer" parent="."]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" instance=ExtResource("16_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="."]
+layer = 200
+script = ExtResource("17_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" instance=ExtResource("18_pause_menu")]

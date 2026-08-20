@@ -21,15 +21,17 @@ var current_day := INITIAL_DAY
 var current_mode := Mode.DAY
 var current_runtime: Node
 var player_data: PlayerData
+var story_event_catalog: StoryEventCatalog
 
 var _runtime_slot: Node
 var _switching := false
 var _day_start_snapshot: Dictionary = {}
 
 
-func configure(runtime_slot: Node, shared_player_data: PlayerData) -> void:
+func configure(runtime_slot: Node, shared_player_data: PlayerData, shared_story_event_catalog: StoryEventCatalog = null) -> void:
 	_runtime_slot = runtime_slot
 	player_data = shared_player_data
+	story_event_catalog = shared_story_event_catalog
 
 
 func start_new_game(
@@ -146,12 +148,13 @@ func _load_mode(
 				current_day,
 				initial_day_level_id,
 				defer_day_presentation,
-				defer_day_title
+				defer_day_title,
+				story_event_catalog
 			)
 			_runtime_slot.add_child(current_runtime)
 		else:
 			_runtime_slot.add_child(current_runtime)
-			current_runtime.configure(player_data, current_day)
+			current_runtime.configure(player_data, current_day, story_event_catalog)
 		if mode == Mode.DAY:
 			current_runtime.finished.connect(complete_day)
 			current_runtime.player_died.connect(_on_day_player_died)
