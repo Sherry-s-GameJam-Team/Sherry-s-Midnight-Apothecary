@@ -53,6 +53,7 @@ folder_colors={
 "res://day/levels/lake/": "teal",
 "res://day/levels/lakebed/": "teal",
 "res://day/levels/market/": "gray",
+"res://day/levels/market/sewer/": "purple",
 "res://night/": "purple"
 }
 

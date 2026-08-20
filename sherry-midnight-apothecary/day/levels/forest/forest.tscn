@@ -28,6 +28,9 @@
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/grail_lily/grail_lily_herb.tscn" id="37_grail_lily"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dew_flask_herb/dew_flask_herb_herb.tscn" id="38_dew_flask"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/old_mans_noose/old_mans_noose_herb.tscn" id="39_old_mans_noose"]
+[ext_resource type="PackedScene" path="res://day/levels/forest/art/npc/hanging_frame/hanging_frame.tscn" id="40_hanging_frame"]
+[ext_resource type="Script" path="res://day/levels/forest/forest_day_one_enzuo_intro.gd" id="41_enzuo_intro"]
+[ext_resource type="Resource" path="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue" id="42_enzuo_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
 size = Vector2(138, 167)
@@ -366,6 +369,29 @@ script = ExtResource("33_herb")
 script = ExtResource("31_boss_interface")
 forest_path = NodePath("..")
 
+[node name="issue_save_enzuo" type="Node2D" parent="." unique_id=387401203]
+visible = false
+script = ExtResource("41_enzuo_intro")
+dialogue_resource = ExtResource("42_enzuo_dialogue")
+player_path = NodePath("../Player")
+luca_path = NodePath("../Luca")
+camera_path = NodePath("../Player/Camera2D")
+sherry_position_path = NodePath("sherry")
+luca_position_path = NodePath("luca")
+hanging_npc_path = NodePath("HangingFrameNpc")
+fade_overlay_path = NodePath("../UI/ForestDayOneFade")
+
+[node name="HangingFrameNpc" parent="issue_save_enzuo" unique_id=1561847220 instance=ExtResource("40_hanging_frame")]
+z_index = 5
+position = Vector2(385, -90)
+scale = Vector2(0.28002366, 0.28002366)
+
+[node name="sherry" type="Marker2D" parent="issue_save_enzuo" unique_id=321336873]
+position = Vector2(208, 666)
+
+[node name="luca" type="Marker2D" parent="issue_save_enzuo" unique_id=541770498]
+position = Vector2(335, 686)
+
 [node name="Crown" parent="." unique_id=910945885 instance=ExtResource("34_crown")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2017781709]
@@ -405,3 +431,13 @@ visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "水压 100 / 100   CD 0.0s"
+
+[node name="ForestDayOneFade" type="ColorRect" parent="UI" unique_id=1408498061]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

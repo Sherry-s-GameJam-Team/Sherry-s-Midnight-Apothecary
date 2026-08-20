@@ -7,4 +7,4 @@
 - 角色活动在 `WorldBounds/Walkway` 的中间石质通路（y = 526）上；水层只作为通路前后的视觉危险，不承担移动碰撞。
 - 场景配置 Sherry、随行的 Luca、进入/离开标记，以及 HP、任务和地点 UI，供剧情系统后续接入。
 - `SewerLucaFollow` 通过 Luca 已有的外部移动接口驱动同伴跟随：相距 250px 后开始跟进、回到 140px 内才停留，间隔达到 620px 时提升至追赶速度。Luca 不接收玩家输入，也不与 Sherry 发生实体碰撞。
-- `CharacterReflections` 在 y = 516 的主角地平线下镜像 Sherry 与 Luca 的独立表现节点，并同步两人的当前动画。镜像 shader 以两张 water 铺图的 alpha 通道作联合蒙版，因此水贴图外（包括透明通路）绝不显示倒影；它不参与碰撞或输入。
+- `CharacterReflections` 负责 Sherry 的镜像表现。Luca 使用其场景实例下的 `LucaWaterReflection` 直接读取父节点当前动画帧并水线镜像，从而不依赖集中控制器的层级或可见性状态。Luca 倒影在镜像位置下移 10px，垂直高度为原先的 3 倍（压缩系数 0.6）；两者均使用相同的赤色波纹 shader 与 water alpha 蒙版，且不参与碰撞或输入。

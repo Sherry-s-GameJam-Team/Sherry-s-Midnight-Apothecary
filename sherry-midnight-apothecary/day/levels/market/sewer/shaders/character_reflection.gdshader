@@ -32,6 +32,8 @@ void fragment() {
 	float depth_fade = 1.0 - smoothstep(0.18, 1.0, UV.y);
 	float water_alpha = max(mask_alpha_at(first_water_origin), mask_alpha_at(second_water_origin));
 	reflection.rgb = mix(reflection.rgb, water_tint.rgb, 0.58);
-	reflection.a *= opacity * depth_fade * water_alpha;
+	// The alpha channel is a shape mask, not an opacity multiplier: its soft
+	// antialiased fringe should not make an otherwise valid reflection vanish.
+	reflection.a *= opacity * depth_fade * step(0.01, water_alpha);
 	COLOR = reflection;
 }

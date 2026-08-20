@@ -32,10 +32,19 @@ func _run() -> void:
 		"EntryPoints/default", "Player", "Luca", "Exterior", "Crown",
 		"WorldBounds", "BossInterface", "ForestController/LucaWorldController",
 		"ForestController/PartyController", "Exterior/ArvisTreeGate",
-		"Exterior/InteriorEntrance", "UI"
+		"Exterior/InteriorEntrance", "issue_save_enzuo/HangingFrameNpc",
+		"issue_save_enzuo/sherry", "issue_save_enzuo/luca", "UI/ForestDayOneFade", "UI"
 	]:
 		_check(forest.get_node_or_null(path) != null, "Missing required node: %s" % path)
 	_check(forest.get_node_or_null("Interior") == null, "Interior must not be embedded in the exterior scene anymore")
+	var hanging_npc := forest.get_node("issue_save_enzuo/HangingFrameNpc") as AnimatedSprite2D
+	_check(hanging_npc != null and hanging_npc.sprite_frames.get_frame_count(&"hang") == 23, "Hanging NPC animation is not configured")
+	var enzuo_intro := forest.get_node("issue_save_enzuo") as ForestDayOneEnzuoIntro
+	_check(enzuo_intro != null, "Forest Enzuo intro presentation is missing")
+	var unsolved_data := PlayerData.new()
+	_check(ForestDayOneEnzuoIntro.should_show(1, unsolved_data), "Enzuo presentation should be visible on day one before it is solved")
+	unsolved_data.set_event_flag(&"save_enzuo_solved")
+	_check(not ForestDayOneEnzuoIntro.should_show(1, unsolved_data), "save_enzuo_solved should hide the Enzuo presentation")
 
 	var switch_events := InputMap.action_get_events(&"switch_character")
 	_check(switch_events.any(func(event): return event is InputEventKey and (event as InputEventKey).physical_keycode == KEY_C), "C is not mapped to switch_character")

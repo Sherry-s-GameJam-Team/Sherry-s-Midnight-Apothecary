@@ -10,9 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="8_luca"]
 [ext_resource type="PackedScene" path="res://day/ui/player_health_hud.tscn" id="9_health_hud"]
 [ext_resource type="Script" uid="uid://cje8seq8weca7" path="res://day/levels/market/sewer/sewer_luca_follow.gd" id="10_luca_follow"]
-[ext_resource type="Shader" path="res://day/levels/market/sewer/shaders/character_reflection.gdshader" id="11_reflection_shader"]
-[ext_resource type="Script" path="res://day/levels/market/sewer/sewer_character_reflections.gd" id="12_reflection_controller"]
-[ext_resource type="SpriteFrames" uid="uid://qk777aldy5l6" path="res://characters/luca/luca_sprite_frames.tres" id="13_luca_frames"]
+[ext_resource type="Shader" uid="uid://wnfy5dx5amro" path="res://day/levels/market/sewer/shaders/character_reflection.gdshader" id="11_reflection_shader"]
+[ext_resource type="Script" uid="uid://bitv5ju3x2dg" path="res://day/levels/market/sewer/sewer_character_reflections.gd" id="12_reflection_controller"]
+[ext_resource type="Script" path="res://day/levels/market/sewer/sewer_luca_water_reflection.gd" id="13_luca_water_reflection"]
 
 [sub_resource type="ShaderMaterial" id="SewerWaterMaterial"]
 shader = ExtResource("4_water_shader")
@@ -20,6 +20,15 @@ shader_parameter/ripple_strength = 0.008
 shader_parameter/ripple_speed = 0.75
 shader_parameter/reflection_strength = 0.38
 shader_parameter/reflection_tint = Color(0.85, 0.2, 0.18, 1)
+
+[sub_resource type="RectangleShape2D" id="WalkwayShape"]
+size = Vector2(4314, 40)
+
+[sub_resource type="RectangleShape2D" id="LeftBarrierShape"]
+size = Vector2(40, 724)
+
+[sub_resource type="RectangleShape2D" id="RightBarrierShape"]
+size = Vector2(40, 724)
 
 [sub_resource type="ShaderMaterial" id="CharacterReflectionMaterial"]
 shader = ExtResource("11_reflection_shader")
@@ -32,15 +41,6 @@ shader_parameter/water_mask_size = Vector2(4314, 724)
 shader_parameter/first_water_origin = Vector2(0, 0)
 shader_parameter/second_water_origin = Vector2(2162, -2)
 
-[sub_resource type="RectangleShape2D" id="WalkwayShape"]
-size = Vector2(4314, 40)
-
-[sub_resource type="RectangleShape2D" id="LeftBarrierShape"]
-size = Vector2(40, 724)
-
-[sub_resource type="RectangleShape2D" id="RightBarrierShape"]
-size = Vector2(40, 724)
-
 [node name="Sewer" type="Node2D" unique_id=1267047350]
 texture_filter = 1
 
@@ -48,8 +48,15 @@ texture_filter = 1
 z_index = 1
 
 [node name="Water" type="Sprite2D" parent="Environment" unique_id=1352382077]
+z_index = 2
+material = SubResource("SewerWaterMaterial")
+texture = ExtResource("3_water")
+centered = false
+
+[node name="Water2" type="Sprite2D" parent="Environment" unique_id=1732686238]
 z_index = 3
 material = SubResource("SewerWaterMaterial")
+position = Vector2(2162, -2)
 texture = ExtResource("3_water")
 centered = false
 
@@ -61,13 +68,6 @@ centered = false
 [node name="RightArchitecture" type="Sprite2D" parent="Environment" unique_id=1299864348]
 z_index = 2
 texture = ExtResource("2_right")
-centered = false
-
-[node name="Water2" type="Sprite2D" parent="Environment" unique_id=1732686238]
-z_index = 3
-material = SubResource("SewerWaterMaterial")
-position = Vector2(2162, -2)
-texture = ExtResource("3_water")
 centered = false
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=1269419435]
@@ -127,32 +127,36 @@ position = Vector2(550, 490)
 collision_layer = 0
 input_enabled = false
 
+[node name="LucaWaterReflection" type="Node2D" parent="Luca"]
+z_index = 6
+z_as_relative = false
+script = ExtResource("13_luca_water_reflection")
+waterline_y = 516.0
+vertical_compression = 0.6
+vertical_offset = 10.0
+horizontal_scale = 1.0
+
+[node name="LucaVisual" type="Sprite2D" parent="Luca/LucaWaterReflection"]
+material = SubResource("CharacterReflectionMaterial")
+position = Vector2(17, -45)
+scale = Vector2(0.143791, 0.124742)
+
 [node name="LucaFollow" type="Node" parent="." unique_id=765915132]
 script = ExtResource("10_luca_follow")
 player_path = NodePath("../Player")
 luca_path = NodePath("../Luca")
 
-[node name="CharacterReflections" type="Node2D" parent="."]
+[node name="CharacterReflections" type="Node2D" parent="." unique_id=2098777021]
 z_index = 6
 script = ExtResource("12_reflection_controller")
 player_path = NodePath("../Player")
 luca_path = NodePath("../Luca")
 sherry_reflection_path = NodePath("Sherry")
 luca_reflection_path = NodePath("Luca")
-waterline_y = 516.0
+reflection_material = SubResource("CharacterReflectionMaterial")
 
-[node name="Sherry" parent="CharacterReflections" instance=ExtResource("7_sherry_presentation")]
+[node name="Sherry" parent="CharacterReflections" unique_id=1562791710 instance=ExtResource("7_sherry_presentation")]
 
-[node name="SherryVisual" parent="CharacterReflections/Sherry/SherrySprite" index="0"]
-material = SubResource("CharacterReflectionMaterial")
-
-[node name="Luca" type="Node2D" parent="CharacterReflections"]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterReflections/Luca"]
-material = SubResource("CharacterReflectionMaterial")
-position = Vector2(17, -45)
-scale = Vector2(0.143791, 0.124742)
-sprite_frames = ExtResource("13_luca_frames")
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=2054667412]
 layer = 10
