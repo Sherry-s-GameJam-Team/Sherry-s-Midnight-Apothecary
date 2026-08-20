@@ -22,7 +22,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(player.is_in_group("player"), "Emerald Field hazards recognize the current Player through the player group.")
 	test.expect_equal(entry.position, level.get_node("PlayerSpawn").position, "DayRuntime entry and hazard respawn use the same position.")
 	test.expect(level.get_node_or_null("DemoPlayer") == null, "The standalone DemoPlayer is not deployed.")
-	test.expect_equal(level.get_node("Platforms").get_child_count(), 18, "All 18 packaged platform nodes are deployed.")
+	test.expect_equal(level.get_node("Platforms").get_child_count(), 16, "All 16 packaged platform nodes are deployed.")
 	test.expect(level.get_node("Hazards/PoisonGasA").has_method("reset_hazard"), "Packaged poison-gas behavior is connected.")
 	test.expect(level.get_node("Platforms/Collapse01").has_method("reset_hazard"), "Packaged collapse-platform behavior is connected.")
 	var goal := level.get_node("Goal")

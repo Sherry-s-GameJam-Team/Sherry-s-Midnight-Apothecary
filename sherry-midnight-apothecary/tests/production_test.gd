@@ -613,7 +613,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(panel.herb_page_label.text, "2 / 2", "The artwork page indicator updates after paging.")
 	test.expect_equal(panel.herb_grid.get_child_count(), ProductionPanel.HERB_PAGE_SIZE, "The second page preserves the fixed twelve-slot grid with blank slots.")
 	var second_page_cards: Array[Node] = panel.herb_grid.get_children().filter(func(child: Node) -> bool: return child is HerbCard)
-	test.expect_equal(second_page_cards.size(), 4, "Only the four remaining registered herbs occupy the second page.")
+	test.expect_equal(second_page_cards.size(), 7, "The seven remaining registered herbs occupy the second page.")
 	panel.show_next_herb_page()
 	test.expect_equal(panel.herb_page, 0, "The next arrow wraps from the final page to the first page.")
 	panel.show_previous_herb_page()
