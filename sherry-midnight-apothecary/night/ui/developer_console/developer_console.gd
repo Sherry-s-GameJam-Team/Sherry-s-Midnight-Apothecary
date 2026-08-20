@@ -227,6 +227,7 @@ const SCENE_ALIASES: Dictionary = {
 	"庭院": "vespervale_garden",
 
 	"vespervale_inner": "vespervale_inner",
+	"vespervale_ward": "vespervale_inner",
 	"inner": "vespervale_inner",
 	"病栋": "vespervale_inner",
 	"回廊": "vespervale_inner",
@@ -234,6 +235,7 @@ const SCENE_ALIASES: Dictionary = {
 	"梦疗院": "vespervale_inner",
 
 	"vespervale_runner": "vespervale_runner",
+	"vespervale_run": "vespervale_runner",
 	"runner": "vespervale_runner",
 	"parkour": "vespervale_runner",
 	"跑酷": "vespervale_runner",
