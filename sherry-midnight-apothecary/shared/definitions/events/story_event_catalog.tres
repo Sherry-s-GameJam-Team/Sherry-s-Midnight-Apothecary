@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=7 format=3]
+[gd_resource type="Resource" load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://shared/events/story_event_catalog.gd" id="1_catalog"]
 [ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="2_definition"]
@@ -6,7 +6,9 @@
 [ext_resource type="Resource" path="res://shared/definitions/events/day_one_bedroom_luca_intro.tres" id="4_luca_intro"]
 [ext_resource type="Resource" path="res://shared/definitions/events/day_one_bedroom_luca_urgent.tres" id="5_bedroom_luca"]
 [ext_resource type="Resource" path="res://shared/definitions/events/day_one_forest_enzuo_intro.tres" id="6_forest_enzuo"]
+[ext_resource type="Resource" path="res://shared/definitions/events/day_one_home_luca_departure.tres" id="7_home_luca"]
+[ext_resource type="Resource" path="res://shared/definitions/events/day_one_forest_enzuo_rescued.tres" id="8_enzuo_rescue"]
 
 [resource]
 script = ExtResource("1_catalog")
-events = Array[ExtResource("2_definition")]([ExtResource("3_example"), ExtResource("4_luca_intro"), ExtResource("5_bedroom_luca"), ExtResource("6_forest_enzuo")])
+events = Array[ExtResource("2_definition")]([ExtResource("3_example"), ExtResource("4_luca_intro"), ExtResource("5_bedroom_luca"), ExtResource("6_forest_enzuo"), ExtResource("8_enzuo_rescue"), ExtResource("7_home_luca")])

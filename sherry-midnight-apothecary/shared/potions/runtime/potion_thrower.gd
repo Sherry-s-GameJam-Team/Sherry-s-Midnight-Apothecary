@@ -26,6 +26,8 @@ var _pending_velocity := Vector2.ZERO
 var _reservation: PotionDoseReservation
 var _original_time_scale := 1.0
 var _active_projectile: PotionProjectile
+var _mechanism_mode := false
+var _mechanism_potion_id: StringName = &"purification_potion"
 
 
 func _ready() -> void:
@@ -45,7 +47,7 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if get_tree().has_meta("day_modal_input_locked") or inventory_service == null or throw_tuning == null:
+	if get_tree().has_meta("day_modal_input_locked") or (inventory_service == null and not _mechanism_mode) or throw_tuning == null:
 		return
 	if _should_block_for_console(event):
 		return
@@ -59,12 +61,12 @@ func _input(event: InputEvent) -> void:
 		var vp := get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
-	elif not _aiming and not hotbar.is_detail_open():
+	elif not _mechanism_mode and not _aiming and hotbar != null and not hotbar.is_detail_open():
 		_handle_slot_input(event)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if get_tree().has_meta("day_modal_input_locked") or inventory_service == null or throw_tuning == null:
+	if get_tree().has_meta("day_modal_input_locked") or (inventory_service == null and not _mechanism_mode) or throw_tuning == null:
 		return
 	if _should_block_for_console(event):
 		return
@@ -77,9 +79,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func on_cast_release() -> void:
 	_casting = false
-	if _reservation == null or not _reservation.active:
+	if not _mechanism_mode and (_reservation == null or not _reservation.active):
 		return
-	var potion_id := _reservation.potion_id
+	var potion_id := _mechanism_potion_id if _mechanism_mode else _reservation.potion_id
 	var potion: PotionData = _definition_by_id.get(potion_id)
 	if potion == null or potion_id == &"black_potion":
 		_abort_cast()
@@ -91,8 +93,7 @@ func on_cast_release() -> void:
 		return
 	container.add_child(projectile)
 	projectile.global_position = aim_origin.global_position
-	projectile.configure(_pending_velocity, {}, potion, throw_tuning, effect_tuning)
-	var payload := inventory_service.commit_reservation(_reservation)
+	var payload := {"mechanism": true} if _mechanism_mode else inventory_service.commit_reservation(_reservation)
 	_reservation = null
 	if payload.is_empty():
 		projectile.queue_free()
@@ -106,7 +107,8 @@ func on_cast_release() -> void:
 	Engine.time_scale = throw_tuning.flight_time_scale
 	magic_circle.hide_circle()
 	camera_director.follow(projectile, throw_tuning)
-	hotbar.close_detail()
+	if hotbar != null:
+		hotbar.close_detail()
 
 
 func on_cast_animation_finished() -> void:
@@ -117,7 +119,8 @@ func on_cast_animation_finished() -> void:
 
 func cancel_aim() -> void:
 	if _reservation != null:
-		inventory_service.cancel_reservation(_reservation)
+		if inventory_service != null:
+			inventory_service.cancel_reservation(_reservation)
 		_reservation = null
 	_aiming = false
 	_casting = false
@@ -127,6 +130,8 @@ func cancel_aim() -> void:
 
 
 func selected_potion_id() -> StringName:
+	if _mechanism_mode:
+		return _mechanism_potion_id
 	if inventory_service == null or inventory_service.player_data == null:
 		return &""
 	var player_data := inventory_service.player_data
@@ -140,7 +145,7 @@ func camera_director_is_active() -> bool:
 
 
 func _begin_aim() -> bool:
-	if hotbar.is_detail_open():
+	if hotbar != null and hotbar.is_detail_open():
 		return false
 	var player := get_parent()
 	if not player.has_method("can_start_potion_aim") or not bool(player.call("can_start_potion_aim", true)):
@@ -148,9 +153,10 @@ func _begin_aim() -> bool:
 	var potion_id := selected_potion_id()
 	if potion_id == &"" or potion_id == &"black_potion" or not _definition_by_id.has(potion_id):
 		return false
-	_reservation = inventory_service.reserve_dose(potion_id, throw_tuning.dose_per_throw)
-	if _reservation == null:
-		return false
+	if not _mechanism_mode:
+		_reservation = inventory_service.reserve_dose(potion_id, throw_tuning.dose_per_throw)
+		if _reservation == null:
+			return false
 	if camera_director != null and camera_director._active:
 		camera_director.stop_follow()
 	_casting = false
@@ -161,7 +167,7 @@ func _begin_aim() -> bool:
 	_drag_start_mouse = get_global_mouse_position()
 	_update_origin()
 	var potion: PotionData = _definition_by_id[potion_id]
-	var next := inventory_service.get_next_instance(potion_id)
+	var next := inventory_service.get_next_instance(potion_id) if inventory_service != null else {}
 	magic_circle.show_circle(PotionColorResolver.resolve(potion, next))
 	return true
 
@@ -269,7 +275,8 @@ func _exit_tree() -> void:
 func _abort_cast() -> void:
 	_casting = false
 	if _reservation != null:
-		inventory_service.cancel_reservation(_reservation)
+		if inventory_service != null:
+			inventory_service.cancel_reservation(_reservation)
 		_reservation = null
 	magic_circle.hide_circle()
 	_restore_time()
@@ -286,6 +293,27 @@ func _show_throw_tutorial_once() -> void:
 	var top_hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 	if top_hint != null:
 		top_hint.push_hint(tutorial_hint_id)
+
+
+## Enables a scoped, inventory-free throw for environmental mechanisms.  Callers
+## must always disable it when their mechanism closes or leaves the scene.
+func set_mechanism_mode(enabled: bool, potion_id: StringName = &"purification_potion") -> void:
+	if _mechanism_mode == enabled and (not enabled or _mechanism_potion_id == potion_id):
+		return
+	if _aiming:
+		cancel_aim()
+	_mechanism_mode = enabled
+	_mechanism_potion_id = potion_id
+	if not enabled and _active_projectile != null and is_instance_valid(_active_projectile):
+		_active_projectile.queue_free()
+		_active_projectile = null
+		if camera_director != null:
+			camera_director.stop_follow()
+		_restore_time()
+
+
+func is_mechanism_mode() -> bool:
+	return _mechanism_mode
 
 
 func _init_definitions() -> void:

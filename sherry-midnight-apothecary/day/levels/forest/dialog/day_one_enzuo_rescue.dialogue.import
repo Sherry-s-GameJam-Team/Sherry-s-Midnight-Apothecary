@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dh6ysp3y2yxot"
+path="res://.godot/imported/day_one_enzuo_rescue.dialogue-a299adc25c81c69746df2b9e5cb68e19.tres"
+
+[deps]
+
+source_file="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue"
+dest_files=["res://.godot/imported/day_one_enzuo_rescue.dialogue-a299adc25c81c69746df2b9e5cb68e19.tres"]
+
+[params]
+
+defaults=true

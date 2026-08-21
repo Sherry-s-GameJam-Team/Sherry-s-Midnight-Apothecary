@@ -198,7 +198,6 @@ script = ExtResource("6_exit")
 shape = SubResource("RectangleShape2D_exit")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1953653742]
-visible = false
 z_index = 10
 position = Vector2(720, 505)
 script = ExtResource("2_player")
@@ -264,9 +263,9 @@ position = Vector2(57, 57)
 shape = SubResource("RectangleShape2D_stick_interaction")
 
 [node name="DayOneLuca" type="Node2D" parent="." unique_id=2092619386]
-visible = false
 script = ExtResource("42_luca_visibility")
 
 [node name="Luca" parent="DayOneLuca" unique_id=715430241 instance=ExtResource("41_luca")]
 position = Vector2(1961, 672)
+scale = Vector2(1.8062818, 1.8062818)
 input_enabled = false

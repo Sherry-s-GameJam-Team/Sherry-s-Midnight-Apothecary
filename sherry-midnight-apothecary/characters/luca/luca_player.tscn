@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ctghfk6t71vq8"]
 
 [ext_resource type="Script" uid="uid://3138hiqvmc4v" path="res://characters/luca/luca_player.gd" id="1_script"]
-[ext_resource type="SpriteFrames" path="res://characters/luca/luca_sprite_frames.tres" id="2_frames"]
+[ext_resource type="SpriteFrames" uid="uid://qk777aldy5l6" path="res://characters/luca/luca_sprite_frames.tres" id="2_frames"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_luca"]
 size = Vector2(72, 70)
@@ -21,3 +21,4 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=356218506]
 position = Vector2(0, -35)
 shape = SubResource("RectangleShape2D_luca")
+one_way_collision = true

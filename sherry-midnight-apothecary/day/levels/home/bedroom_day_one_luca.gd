@@ -12,6 +12,8 @@ const EVENT_ID: StringName = &"day_one_bedroom_luca_urgent"
 const INTERACTION_KEY: StringName = &"day_one_luca_urgent"
 
 @export var approach_x := 1040.0
+@export var departure_x := 2070.0
+@export_range(80.0, 800.0, 10.0, "suffix:px/s") var cinematic_walk_speed := 300.0
 @export_range(0.0, 2.0, 0.05) var reveal_duration := 0.55
 
 var _opening_active := false
@@ -113,7 +115,30 @@ func _request_dialogue() -> void:
 
 func _on_story_event_completed(event_id: StringName) -> void:
 	if event_id == EVENT_ID:
+		_play_luca_departure()
+
+
+func _play_luca_departure() -> void:
+	if _luca == null:
 		_finish_opening()
+		return
+	var sprite := _luca.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+	if sprite != null:
+		# Luca's source frames face left, so walking out through the right door
+		# uses the horizontally flipped run cycle.
+		sprite.flip_h = true
+		sprite.play(LucaPlayer.RUN_LOOP_ANIMATION)
+	var duration := absf(departure_x - _luca.position.x) / cinematic_walk_speed
+	var tween := create_tween().set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property(_luca, "position:x", departure_x, duration)
+	tween.tween_callback(_finish_luca_departure)
+
+
+func _finish_luca_departure() -> void:
+	if _luca != null:
+		_luca.stop_moving()
+		_luca.visible = false
+	_finish_opening()
 
 
 func _finish_opening() -> void:

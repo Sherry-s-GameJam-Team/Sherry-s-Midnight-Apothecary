@@ -23,4 +23,6 @@
 
 Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次隐藏。它在镜头固定于 `People` 人群、雪莉从左侧屏外走到 `sherryposition`、Luca 位于 `lucaposition` 后才开始对话。Town 场景的 `CS/Fountain` 在第 1 天使用 `resources/blood_fountain/frames/` 中的血色喷泉；`Fountain.blood_fountain_enabled` 是保留在 Inspector 中的总开关，关闭它会维持普通喷泉且不清除事件或存档标记。
 
+`day_one_forest_enzuo_rescued.tres` 是常霁云林的第一日救援收束事件。它要求 `story_event_completed:day_one_forest_enzuo_intro` 已设置而 `save_enzuo_solved` 尚未设置；森林本地的藤蔓机关演出结束后显式派发该 interaction，并由事件动作设置 `save_enzuo_solved`。这会使 `issue_save_enzuo` 在后续进入时隐藏，且不授予物品、不修改库存，也不推进水车或树门主线。
+
 `day_one_bedroom_luca_urgent.tres` 是卧室内的第一日 Luca 事件。第 1 天进入 Bedroom 时，`DayOneLuca` 演出节点会取代 `SleepToWake`：黑屏渐显出完整卧室，Luca 从右侧走到床前，再自动派发 `day_one_luca_urgent` 并播放对话。此节点没有 E 键交互范围，也不会拦截卧室出口；对话完成后记录事件完成标记并设置当天“调查流明街广场的红色喷泉”任务。该天后续进入直接显示卧室；其余日期仍使用通常的起床演出。

@@ -266,7 +266,6 @@ libraries/ = SubResource("AnimationLibrary_clouds")
 autoplay = &"cloud_drift"
 
 [node name="issueDay1" type="Node2D" parent="." unique_id=1565926518]
-visible = false
 script = ExtResource("27_issue_day_one")
 player_path = NodePath("../Player")
 camera_path = NodePath("../Player/Camera2D")
@@ -276,9 +275,9 @@ luca_position_path = NodePath("lucaposition")
 luca_path = NodePath("Luca")
 
 [node name="People" type="Sprite2D" parent="issueDay1" unique_id=2119656662]
-z_index = 10
-position = Vector2(5239, 595)
-scale = Vector2(0.4249174, 0.4249174)
+z_index = 20
+position = Vector2(5228, 548.0625)
+scale = Vector2(0.69555175, 0.5281903)
 texture = ExtResource("24_57drt")
 
 [node name="sherryposition" type="Marker2D" parent="issueDay1" unique_id=1890287111]
@@ -288,6 +287,7 @@ position = Vector2(5002, 651)
 position = Vector2(5451, 656)
 
 [node name="Luca" parent="issueDay1" unique_id=1549978013 instance=ExtResource("28_luca")]
+position = Vector2(5495, 611)
 input_enabled = false
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=523084111]

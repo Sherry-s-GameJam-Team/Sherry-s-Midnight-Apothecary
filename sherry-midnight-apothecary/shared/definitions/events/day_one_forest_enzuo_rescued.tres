@@ -1,0 +1,40 @@
+[gd_resource type="Resource" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="1_definition"]
+[ext_resource type="Script" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
+[ext_resource type="Script" path="res://shared/events/story_event_condition.gd" id="3_condition"]
+[ext_resource type="Script" path="res://shared/events/story_event_action.gd" id="4_action"]
+
+[sub_resource type="Resource" id="Trigger"]
+script = ExtResource("2_trigger")
+type = 2
+runtime_mode = 1
+interaction_key = &"day_one_forest_enzuo_rescued"
+
+[sub_resource type="Resource" id="FirstDay"]
+script = ExtResource("3_condition")
+minimum_day = 1
+maximum_day = 1
+
+[sub_resource type="Resource" id="IntroCompleted"]
+script = ExtResource("3_condition")
+type = 1
+key = &"story_event_completed:day_one_forest_enzuo_intro"
+
+[sub_resource type="Resource" id="EnzuoUnsolved"]
+script = ExtResource("3_condition")
+type = 2
+key = &"save_enzuo_solved"
+
+[sub_resource type="Resource" id="SaveEnzuo"]
+script = ExtResource("4_action")
+type = 0
+key = &"save_enzuo_solved"
+
+[resource]
+script = ExtResource("1_definition")
+id = &"day_one_forest_enzuo_rescued"
+priority = 101
+trigger = SubResource("Trigger")
+conditions = Array[ExtResource("3_condition")]([SubResource("FirstDay"), SubResource("IntroCompleted"), SubResource("EnzuoUnsolved")])
+actions = Array[ExtResource("4_action")]([SubResource("SaveEnzuo")])

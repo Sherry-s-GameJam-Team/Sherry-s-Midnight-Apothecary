@@ -33,6 +33,10 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 
 过场写入标准剧情完成标记 `story_event_completed:day_one_forest_enzuo_intro`，但会在当天保留悬挂角色。其他日期或 `save_enzuo_solved` 为真时，整个 `issue_save_enzuo` 节点隐藏。
 
+初见结束后，靠近该区域会由 HintUI 显示“按 E 开始救援”。`ForestEnzuoRescueController` 启动三轮 `2 → 3 → 2` 的副藤切割：按住既有投掷键可进入原有子弹时间与抛物线预览，机关药水不读取或扣除背包库存。每次飞行都以连续轨迹段、略宽于瓶身的容差切开当前轮全部经过的副藤；预览触及副藤会令其白闪，触及恩佐身体、头部或主承重藤保护区则整条线转红。
+
+命中恩佐或主藤会显示“雪莉：糟了！”，快速黑场并只重置当前轮，已经完成的轮次不会撤销。完成每轮后恩佐依次左摆、下降重布姿态；最后两根副藤解除后主藤自行放松，将他送至巨叶。收束事件 `day_one_forest_enzuo_rescued` 设置 `save_enzuo_solved` 并隐藏整个节点，不改变水车、树门、库存或正式生命值。
+
 ### Lotus
 
 `lotus_platform.tscn` 为 `AnimatableBody2D`。首次踩踏或被任意药水直接命中都会下沉约 10 px 后回弹，并永久切换到带清水的莲花图；重复触发不会改变状态。水流 `WaterStreamArea` 向下延伸，与水车的 `WaterReceiver` 重叠后送水。
@@ -95,3 +99,4 @@ func purify_boss()
 
 - 外部场景烟雾测试：`day/levels/forest/tests/forest/forest_smoke_test.gd`（验证 Exterior 节点、莲花/水车/污泥机制、角色切换与树门交接；输出 `FOREST_SMOKE_TEST: PASS`）。
 - Interior 关卡烟雾测试：`tests/forest_interior_smoke_test.gd`（来自 Interior 关卡包，输出 `FOREST_INTERIOR_SMOKE_TEST: PASS`）。
+- 恩佐救援规则测试：`tests/forest_enzuo_rescue_test.gd`（验证第一天/初见/存档门槛、三轮 2/3/2 配置及连续轨迹切藤几何）。

@@ -30,7 +30,7 @@ var _sherry_position: Marker2D
 var _luca_position: Marker2D
 var _hanging_npc: AnimatedSprite2D
 var _fade_overlay: ColorRect
-var _runtime: DayRuntime
+var _runtime: Node
 var _player_physics_was_enabled := true
 var _luca_physics_was_enabled := true
 var _camera_top_level_was_enabled := false
@@ -146,10 +146,10 @@ func _play_dialogue(title: StringName) -> void:
 
 
 func _request_completion() -> void:
-	if _runtime == null or not _runtime.dispatch_story_event_interaction(INTERACTION_KEY):
+	if _runtime == null or not bool(_runtime.call("dispatch_story_event_interaction", INTERACTION_KEY)):
 		_cleanup()
 		return
-	_runtime.story_event_completed.connect(_on_story_event_completed, CONNECT_ONE_SHOT)
+	_runtime.connect(&"story_event_completed", _on_story_event_completed, CONNECT_ONE_SHOT)
 
 
 func _on_story_event_completed(event_id: StringName) -> void:
@@ -202,15 +202,15 @@ func _play_luca_animation(animation_name: StringName, face_right: bool) -> void:
 
 
 func _has_completed_intro() -> bool:
-	return _runtime != null and _runtime.has_completed_story_event(EVENT_ID)
+	return _runtime != null and bool(_runtime.call("has_completed_story_event", EVENT_ID))
 
 
 func _current_day() -> int:
-	return _runtime.day if _runtime != null else -1
+	return int(_runtime.get("day")) if _runtime != null else -1
 
 
 func _player_data() -> PlayerData:
-	return _runtime.get_player_data() if _runtime != null else null
+	return _runtime.call("get_player_data") as PlayerData if _runtime != null else null
 
 
 func _resolve_nodes() -> void:
@@ -223,7 +223,7 @@ func _resolve_nodes() -> void:
 	_fade_overlay = get_node_or_null(fade_overlay_path) as ColorRect
 	var current: Node = get_parent()
 	while current != null:
-		if current is DayRuntime:
+		if current.has_method("get_player_data") and current.has_method("switch_to_level"):
 			_runtime = current
 			break
 		current = current.get_parent()

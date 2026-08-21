@@ -23,14 +23,16 @@
 [ext_resource type="Script" uid="uid://d4bulfbo3pqws" path="res://day/levels/forest/boss/forest_boss_interface.gd" id="31_boss_interface"]
 [ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="33_herb"]
 [ext_resource type="PackedScene" uid="uid://c0hm5cchinakn" path="res://day/levels/forest/crown.tscn" id="34_crown"]
-[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="35_herb_spawn_point"]
+[ext_resource type="Script" uid="uid://j48yuwrhnne5" path="res://day/interactables/herb/herb_spawn_point.gd" id="35_herb_spawn_point"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/stardust_puffy_lion/stardust_puffy_lion_herb.tscn" id="36_stardust"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/grail_lily/grail_lily_herb.tscn" id="37_grail_lily"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dew_flask_herb/dew_flask_herb_herb.tscn" id="38_dew_flask"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/old_mans_noose/old_mans_noose_herb.tscn" id="39_old_mans_noose"]
 [ext_resource type="PackedScene" path="res://day/levels/forest/art/npc/hanging_frame/hanging_frame.tscn" id="40_hanging_frame"]
 [ext_resource type="Script" path="res://day/levels/forest/forest_day_one_enzuo_intro.gd" id="41_enzuo_intro"]
-[ext_resource type="Resource" path="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue" id="42_enzuo_dialogue"]
+[ext_resource type="Resource" uid="uid://y2s1632xcryh" path="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue" id="42_enzuo_dialogue"]
+[ext_resource type="Script" path="res://day/levels/forest/forest_enzuo_rescue_controller.gd" id="43_enzuo_rescue"]
+[ext_resource type="Resource" path="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue" id="44_enzuo_rescue_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
 size = Vector2(138, 167)
@@ -392,6 +394,14 @@ position = Vector2(208, 666)
 [node name="luca" type="Marker2D" parent="issue_save_enzuo" unique_id=541770498]
 position = Vector2(335, 686)
 
+[node name="ForestEnzuoRescueController" type="Node2D" parent="issue_save_enzuo"]
+script = ExtResource("43_enzuo_rescue")
+release_dialogue = ExtResource("44_enzuo_rescue_dialogue")
+player_path = NodePath("../../Player")
+thrower_path = NodePath("../../Player/PotionThrower")
+hanging_npc_path = NodePath("../HangingFrameNpc")
+fade_overlay_path = NodePath("../../UI/ForestDayOneFade")
+
 [node name="Crown" parent="." unique_id=910945885 instance=ExtResource("34_crown")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2017781709]
@@ -414,6 +424,7 @@ offset_right = 420.0
 offset_bottom = 150.0
 
 [node name="VBox" type="VBoxContainer" parent="UI/Margin" unique_id=1554205761]
+visible = false
 layout_mode = 2
 
 [node name="WaterwheelCounter" type="Label" parent="UI/Margin/VBox" unique_id=1717819155]

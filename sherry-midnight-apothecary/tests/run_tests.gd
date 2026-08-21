@@ -37,6 +37,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/controlled_moving_platform_test.gd"),
 	preload("res://tests/dialogue_integration_test.gd"),
 	preload("res://tests/story_event_system_test.gd"),
+	preload("res://tests/forest_enzuo_rescue_test.gd"),
 	preload("res://tests/town_fountain_event_test.gd"),
 	preload("res://tests/dual_world_structure_test.gd"),
 	preload("res://tests/crimson_aqueduct_test.gd"),

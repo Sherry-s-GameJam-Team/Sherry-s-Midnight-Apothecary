@@ -1,6 +1,11 @@
 class_name PotionTrajectoryPreview
 extends Node2D
 
+signal preview_updated(points: PackedVector2Array)
+
+const NORMAL_COLOR := Color(0.75, 0.92, 1.0, 0.88)
+const DANGER_COLOR := Color(1.0, 0.34, 0.32, 0.94)
+
 var _line: Line2D
 var _impact: Polygon2D
 
@@ -9,7 +14,7 @@ func _ready() -> void:
 	top_level = true
 	_line = Line2D.new()
 	_line.width = 4.0
-	_line.default_color = Color(0.75, 0.92, 1.0, 0.88)
+	_line.default_color = NORMAL_COLOR
 	_line.antialiased = true
 	add_child(_line)
 	_impact = Polygon2D.new()
@@ -57,9 +62,16 @@ func update_preview(origin: Vector2, initial_velocity: Vector2, tuning: PotionTh
 	_impact.visible = did_hit
 	_impact.position = hit_point
 	visible = true
+	preview_updated.emit(points)
+
+
+func set_dangerous(dangerous: bool) -> void:
+	if _line != null:
+		_line.default_color = DANGER_COLOR if dangerous else NORMAL_COLOR
 
 
 func hide_preview() -> void:
 	visible = false
+	set_dangerous(false)
 	if _line != null:
 		_line.clear_points()

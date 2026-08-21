@@ -20,6 +20,7 @@ static func run(test: TestSupport) -> void:
 		"res://day/systems/animation_presentation/animation_presentation_executor.tscn",
 		"res://day/levels/grassland/grass.tscn",
 		"res://day/levels/grassland/level.tscn",
+		"res://day/levels/forest/forest.tscn",
 		"res://day/art/raintree/raintree.tscn",
 		"res://day/art/lake/lake.tscn",
 		"res://night/night_runtime.tscn",
@@ -70,6 +71,8 @@ static func run(test: TestSupport) -> void:
 		"res://shared/definitions/events/story_event_catalog.tres",
 		"res://shared/definitions/events/day_one_bedroom_luca_intro.tres",
 		"res://shared/definitions/events/day_one_bedroom_luca_urgent.tres",
+		"res://shared/definitions/events/day_one_forest_enzuo_rescued.tres",
+		"res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue",
 		"res://day/levels/home/day_one_bedroom_luca.dialogue",
 		"res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn",
 	]:

@@ -2,30 +2,41 @@ class_name HomeDayOneLucaDeparture
 extends Node
 
 ## Starts the second half of the day-one Luca scene once Sherry crosses from
-## the bedroom side into Home's main room.
+## the bedroom side through BedroomEntrance into Home's main room.
 
 const BEDROOM_EVENT_ID: StringName = &"day_one_bedroom_luca_urgent"
 const EVENT_ID: StringName = &"day_one_home_luca_departure"
 const INTERACTION_KEY: StringName = &"day_one_home_luca_departure"
 
-@export_node_path("HomeCameraDirector") var camera_director_path: NodePath
+@export_node_path("CharacterBody2D") var player_path: NodePath
+@export_node_path("Area2D") var bedroom_entrance_path: NodePath
 @export_node_path("CanvasItem") var luca_path: NodePath
 
-var _camera_director: HomeCameraDirector
+var _player: CharacterBody2D
+var _bedroom_entrance: Area2D
 var _luca: CanvasItem
 var _requested := false
 
 
 func _ready() -> void:
-	_camera_director = get_node_or_null(camera_director_path) as HomeCameraDirector
+	_player = get_node_or_null(player_path) as CharacterBody2D
+	_bedroom_entrance = get_node_or_null(bedroom_entrance_path) as Area2D
 	_luca = get_node_or_null(luca_path) as CanvasItem
 	if _luca != null:
 		_luca.visible = false
-	if _camera_director != null:
-		_camera_director.main_room_crossed.connect(_on_main_room_crossed)
+	set_process(_player != null and _bedroom_entrance != null)
 
 
-func _on_main_room_crossed() -> void:
+func _process(_delta: float) -> void:
+	if _player == null or _bedroom_entrance == null:
+		return
+	# HomeCameraDirector disables the Area2D after the player exits Bedroom, so
+	# the controller detects the same spatial crossing directly from the player.
+	if _player.global_position.x >= _bedroom_entrance.global_position.x:
+		_request_departure_dialogue()
+
+
+func _request_departure_dialogue() -> void:
 	if _requested or not _can_play():
 		return
 	var runtime := _find_day_runtime()
@@ -34,6 +45,7 @@ func _on_main_room_crossed() -> void:
 	_requested = bool(runtime.call("dispatch_story_event_interaction", INTERACTION_KEY))
 	if not _requested:
 		return
+	set_process(false)
 	if _luca != null:
 		_luca.visible = true
 	runtime.connect(&"story_event_completed", _on_story_event_completed, CONNECT_ONE_SHOT)

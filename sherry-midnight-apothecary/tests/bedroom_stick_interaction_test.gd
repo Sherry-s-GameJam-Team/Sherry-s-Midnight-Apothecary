@@ -25,6 +25,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(exit != null and exit.locked_hint_text == "床头柜上贴着某张便签，先读读看吧", "The locked exit displays the requested note reminder.")
 	test.expect(luca != null and not luca.input_enabled and luca.process_mode != Node.PROCESS_MODE_DISABLED, "Bedroom places an input-disabled Luca actor that can still run its walk animation for the day-one event.")
 	test.expect(luca_opening != null and luca_opening.approach_x < luca.position.x, "Day-one Luca walks from the room entrance toward the bed before dialogue.")
+	test.expect(luca_opening != null and luca_opening.departure_x > luca_opening.approach_x, "Day-one Luca's departure target is to the right of the bed.")
 	test.expect(bedroom.get_node_or_null("DayOneLuca/InteractionArea") == null, "Day-one Luca has no E-key interaction zone.")
 	test.expect(BedroomDayOneLuca.should_show(1), "Bedroom Luca is visible on day one.")
 	test.expect(not BedroomDayOneLuca.should_show(0), "Bedroom Luca is hidden on day zero.")
