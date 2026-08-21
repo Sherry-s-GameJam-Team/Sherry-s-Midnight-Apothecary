@@ -15,7 +15,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(issue != null and issue.fountain_path == NodePath("../CS/Fountain"), "Town issueDay1 aligns its cinematic camera to the fountain frame.")
 	test.expect(issue != null and is_equal_approx(issue.cinematic_camera_x_offset, 300.0), "Town issueDay1 offsets its camera 300 pixels right of the fountain frame.")
 	var people := town.get_node_or_null("issueDay1/People") as Sprite2D
-	test.expect(people != null and is_equal_approx(people.position.x, 5528.0), "Town's cinematic crowd is moved 300 pixels right with the camera framing.")
+	test.expect(people != null and is_equal_approx(people.position.x, 5537.0), "Town's cinematic crowd is centered in front of the shifted camera.")
 	test.expect(issue != null and issue.get_node_or_null("sherryposition") is Marker2D and issue.get_node_or_null("lucaposition") is Marker2D, "Town issueDay1 owns Sherry and Luca staging markers.")
 	test.expect(issue != null and issue.get_node_or_null("Luca") is LucaPlayer, "Town issueDay1 supplies the staged Luca actor.")
 	if fountain != null:

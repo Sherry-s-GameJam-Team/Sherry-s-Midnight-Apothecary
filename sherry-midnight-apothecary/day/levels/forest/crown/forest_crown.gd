@@ -6,6 +6,7 @@ const CROWN_COMPLETED_FLAG := "forest_crown_completed"
 const BOSS_PURIFIED_FLAG := "forest_boss_purified"
 const FOREST_LEVEL_ID := &"forest"
 const FOREST_ENTRY_ID := &"from_crown"
+const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 
 @export var fall_damage := 10
 
@@ -19,6 +20,9 @@ const FOREST_ENTRY_ID := &"from_crown"
 @onready var boss_hint_label: Label = $UI/BossHint/Label
 @onready var boss_hint_panel: PanelContainer = $UI/BossHint
 @onready var fade_rect: ColorRect = $UI/FadeRect
+@onready var task_complete_ui: TaskCompleteUI = $TaskCompleteUI
+
+@export var post_purification_dialogue: DialogueResource
 
 var _respawning := false
 var _player_in_portal := false
@@ -90,7 +94,31 @@ func _on_boss_purified_completed() -> void:
 	_set_flag(FOREST_COMPLETED_FLAG, true)
 	_set_flag(CROWN_COMPLETED_FLAG, true)
 	_set_flag(BOSS_PURIFIED_FLAG, true)
+	await _play_post_purification_sequence()
 	_apply_restored_state()
+
+
+func _play_post_purification_sequence() -> void:
+	if task_complete_ui != null:
+		task_complete_ui.present(
+			"常霁云林·血泉异变",
+			"阿尔维斯母树的血泉已净化。",
+			"主线任务已完成"
+		)
+		await task_complete_ui.dismissed
+	if post_purification_dialogue == null:
+		return
+	var dialogue_manager := get_node_or_null("/root/DialogueManager") as Node
+	if dialogue_manager == null or not dialogue_manager.has_method("show_dialogue_balloon_scene"):
+		push_error("ForestCrown requires the DialogueManager autoload for the post-boss dialogue.")
+		return
+	var balloon := dialogue_manager.show_dialogue_balloon_scene(
+		BALLOON_SCENE,
+		post_purification_dialogue,
+		&"start"
+	) as Node
+	if balloon != null:
+		await balloon.tree_exited
 
 
 func _apply_restored_state() -> void:

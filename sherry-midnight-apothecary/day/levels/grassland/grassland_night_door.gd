@@ -16,7 +16,7 @@ func _ready() -> void:
 	_sleeping_hound = get_parent().get_node_or_null("SleepingHoundNPC") as SleepingHoundNPC
 	if _sleeping_hound != null and not _sleeping_hound.dialogue_completed.is_connected(_on_hound_dialogue_completed):
 		_sleeping_hound.dialogue_completed.connect(_on_hound_dialogue_completed)
-	if _task_completed():
+	if _should_offer_night_transition():
 		interaction_hint_text = "按[E]结束探索"
 
 
@@ -25,7 +25,7 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_show_interaction_hint()
 		return
-	if not _task_completed():
+	if not _should_offer_night_transition():
 		super(event)
 		return
 	if get_tree().has_meta("day_modal_input_locked") or not _player_is_inside or not _is_interact_event(event):
@@ -80,6 +80,23 @@ func _task_completed() -> bool:
 	return data != null and bool(data.tutorial_flags.get(LUCA_TASK_COMPLETED_FLAG, false))
 
 
+func _should_offer_night_transition() -> bool:
+	var runtime := _find_day_runtime()
+	var data := runtime.call("get_player_data") as PlayerData if runtime != null and runtime.has_method("get_player_data") else null
+	return should_offer_night_transition(_current_day(), data)
+
+
+static func should_offer_night_transition(current_day: int, player_data: PlayerData) -> bool:
+	return current_day == GameFlow.INITIAL_DAY \
+		and player_data != null \
+		and bool(player_data.tutorial_flags.get(LUCA_TASK_COMPLETED_FLAG, false))
+
+
+func _current_day() -> int:
+	var runtime := _find_day_runtime()
+	return int(runtime.get("day")) if runtime != null else GameFlow.INITIAL_DAY
+
+
 func is_locked_for_hound_dialogue() -> bool:
 	return _requires_hound_dialogue()
 
@@ -107,5 +124,5 @@ func _show_interaction_hint() -> void:
 		if top_hint != null:
 			top_hint.show_interaction_hint(_hint_id(), "先按[E]与沉睡的魔犬交谈")
 		return
-	interaction_hint_text = "按[E]结束探索" if _task_completed() else "按[E]返回药水铺"
+	interaction_hint_text = "按[E]结束探索" if _should_offer_night_transition() else "按[E]返回药水铺"
 	super()

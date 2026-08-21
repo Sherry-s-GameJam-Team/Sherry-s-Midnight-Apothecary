@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://be4732eojua51"
+path="res://.godot/imported/forest_crown_purification.dialogue-1597de51b8e37771846cc62eeaf9bd80.tres"
+
+[deps]
+
+source_file="res://day/levels/forest/dialog/forest_crown_purification.dialogue"
+dest_files=["res://.godot/imported/forest_crown_purification.dialogue-1597de51b8e37771846cc62eeaf9bd80.tres"]
+
+[params]
+
+defaults=true

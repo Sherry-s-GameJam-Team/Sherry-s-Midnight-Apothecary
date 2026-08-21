@@ -99,6 +99,8 @@ ForestCrown
   - 天空背景转为晴朗金绿，雨滴停止。
   - 右侧高台开启 `ExitPortal`传送门（按 E 返回树下）。
   - 自动设置教程与探索完成标记：`forest_completed = true`、`forest_crown_completed = true`。
+  - 演出结束后先显示“常霁云林·血泉异变”任务完成 UI；玩家关闭该 UI 后，播放炽天使苏醒对白 `forest_crown_purification.dialogue` 的 `start` 段。
+  - 对白中的镜头/环境叙述使用注释；任务更新、快速旅行解锁等系统通知通过 `TopHintUI` 的 `show_hint(...)` 指令显示。
 
 ## 数据与全局集成
 

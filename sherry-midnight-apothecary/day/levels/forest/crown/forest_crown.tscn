@@ -20,6 +20,8 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="19_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="20_pause_menu"]
+[ext_resource type="Resource" path="res://day/levels/forest/dialog/forest_crown_purification.dialogue" id="21_post_boss_dialogue"]
+[ext_resource type="PackedScene" uid="uid://cti4npw3yn4nr" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="22_task_complete"]
 
 [sub_resource type="Shader" id="Shader_gloomy_mood"]
 code = "shader_type canvas_item;
@@ -90,6 +92,7 @@ shader_parameter/width = 0.04
 script = ExtResource("1_level")
 debug_scene_id = "forest_crown"
 start_corrupted = true
+post_purification_dialogue = ExtResource("21_post_boss_dialogue")
 
 [node name="Background" type="Node2D" parent="." unique_id=802263332]
 z_index = -30
@@ -498,6 +501,8 @@ lightning_overlay_path = NodePath("../Background/LightningOverlay")
 background_sprite_path = NodePath("../Background/CrownBackground")
 
 [node name="CrownController" type="Node" parent="." unique_id=1900463949]
+
+[node name="TaskCompleteUI" parent="." unique_id=1696654741 instance=ExtResource("22_task_complete")]
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=2139284620]
 layer = 200

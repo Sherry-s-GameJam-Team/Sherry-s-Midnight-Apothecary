@@ -17,11 +17,17 @@
 [ext_resource type="Script" uid="uid://d0rkitafb2xkc" path="res://day/levels/market/sewer/sewer_hydraulic_gate_whitebox.gd" id="15_hydraulic_gate"]
 [ext_resource type="Texture2D" uid="uid://covrhp0lgvnqv" path="res://day/levels/market/sewer/gate.png" id="16_gate_closed"]
 [ext_resource type="Texture2D" uid="uid://wsgf0krps0qv" path="res://day/levels/market/sewer/gate_open.png" id="17_gate_open"]
-[ext_resource type="Texture2D" path="res://day/levels/market/sewer/valve.png" id="18_valve_body"]
-[ext_resource type="Texture2D" path="res://day/levels/market/sewer/red_wheel.png" id="19_red_wheel"]
-[ext_resource type="Texture2D" path="res://day/levels/market/sewer/blue_wheel.png" id="20_blue_wheel"]
-[ext_resource type="Texture2D" path="res://day/levels/market/sewer/yellow_wheel.png" id="21_yellow_wheel"]
-[ext_resource type="Texture2D" path="res://day/levels/market/sewer/CENTRAL PRESSURE GAUGE& INDICATOR MODULE.png" id="22_pressure_gauge"]
+[ext_resource type="Texture2D" uid="uid://by4ppyvx1qvni" path="res://day/levels/market/sewer/valve.png" id="18_valve_body"]
+[ext_resource type="Texture2D" uid="uid://dvu3bog2nr5m0" path="res://day/levels/market/sewer/red_wheel.png" id="19_red_wheel"]
+[ext_resource type="Texture2D" uid="uid://ck4gdxoa4d114" path="res://day/levels/market/sewer/blue_wheel.png" id="20_blue_wheel"]
+[ext_resource type="Texture2D" uid="uid://cklap1xvijpjw" path="res://day/levels/market/sewer/yellow_wheel.png" id="21_yellow_wheel"]
+[ext_resource type="Texture2D" uid="uid://cdtrm3hf2djkp" path="res://day/levels/market/sewer/CENTRAL PRESSURE GAUGE& INDICATOR MODULE.png" id="22_pressure_gauge"]
+[ext_resource type="Texture2D" uid="uid://04vmrg0twlxx" path="res://day/levels/market/sewer/hint.png" id="23_b3wc5"]
+[ext_resource type="Script" uid="uid://63p0brav2d83" path="res://day/levels/market/sewer/sewer_hydraulic_interactable.gd" id="23_hydraulic_interactable"]
+[ext_resource type="Texture2D" uid="uid://bu680wfysp3dg" path="res://day/levels/market/sewer/up.png" id="24_direction_up"]
+[ext_resource type="Texture2D" uid="uid://b12m57se6bihd" path="res://day/levels/market/sewer/down.png" id="25_direction_down"]
+[ext_resource type="Texture2D" uid="uid://cwteik43qve40" path="res://day/levels/market/sewer/pointer.png" id="26_gauge_pointer"]
+[ext_resource type="Texture2D" uid="uid://f0ulx8p3gbnm" path="res://day/levels/market/sewer/panel.png" id="27_ntxie"]
 
 [sub_resource type="ShaderMaterial" id="SewerWaterMaterial"]
 shader = ExtResource("4_water_shader")
@@ -49,6 +55,12 @@ shader_parameter/water_mask = ExtResource("3_water")
 shader_parameter/water_mask_size = Vector2(4314, 724)
 shader_parameter/first_water_origin = Vector2(0, 0)
 shader_parameter/second_water_origin = Vector2(2162, -2)
+
+[sub_resource type="RectangleShape2D" id="ValveInteractionShape"]
+size = Vector2(608.1544, 1777.9407)
+
+[sub_resource type="RectangleShape2D" id="DirectionInteractionShape"]
+size = Vector2(246.64355, 750.2857)
 
 [sub_resource type="RectangleShape2D" id="HydraulicGateShape"]
 size = Vector2(70, 406.88968)
@@ -109,7 +121,7 @@ shape = SubResource("RightBarrierShape")
 position = Vector2(410, 490)
 
 [node name="from_market" type="Marker2D" parent="EntryPoints" unique_id=2057438269]
-position = Vector2(410, 490)
+position = Vector2(362, 214)
 
 [node name="to_forest" type="Marker2D" parent="EntryPoints" unique_id=820200932]
 position = Vector2(3900, 490)
@@ -170,51 +182,218 @@ reflection_material = SubResource("CharacterReflectionMaterial")
 
 [node name="HydraulicGatePuzzle" type="Node2D" parent="." unique_id=1718170201]
 z_index = 7
+position = Vector2(-136, -13)
 script = ExtResource("14_hydraulic_puzzle")
 player_path = NodePath("../Player")
 gate_path = NodePath("WhiteboxMainGate")
+direction_up_texture = ExtResource("24_direction_up")
+direction_down_texture = ExtResource("25_direction_down")
 
 [node name="PipeArt" type="Node2D" parent="HydraulicGatePuzzle" unique_id=1718170206]
 z_index = 6
 z_as_relative = false
+position = Vector2(80, -150)
 
 [node name="RedValveBody" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170207]
-position = Vector2(2350, 425)
-scale = Vector2(0.17, 0.17)
+position = Vector2(2429.04, 421.00003)
+scale = Vector2(0.21138124, 0.17)
 texture = ExtResource("18_valve_body")
+script = ExtResource("23_hydraulic_interactable")
+puzzle_path = NodePath("../..")
+hint_panel_path = NodePath("../RedValveHint")
+rotate_on_interact = true
+rotate_target_path = NodePath("../RedWheel")
+
+[node name="InteractionArea" type="Area2D" parent="HydraulicGatePuzzle/PipeArt/RedValveBody" unique_id=1718170229]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HydraulicGatePuzzle/PipeArt/RedValveBody/InteractionArea" unique_id=1718170230]
+position = Vector2(10.580078, 451.47034)
+scale = Vector2(0.9999997, 0.99999976)
+shape = SubResource("ValveInteractionShape")
 
 [node name="RedWheel" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170208]
-position = Vector2(2350, 425)
+position = Vector2(2430, 431)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("19_red_wheel")
 
 [node name="BlueValveBody" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170209]
-position = Vector2(2700, 425)
+position = Vector2(2665, 422.00003)
 scale = Vector2(0.17, 0.17)
 texture = ExtResource("18_valve_body")
+script = ExtResource("23_hydraulic_interactable")
+puzzle_path = NodePath("../..")
+valve = 1
+hint_panel_path = NodePath("../BlueValveHint")
+rotate_on_interact = true
+rotate_target_path = NodePath("../BlueWheel")
+
+[node name="InteractionArea" type="Area2D" parent="HydraulicGatePuzzle/PipeArt/BlueValveBody" unique_id=1718170231]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HydraulicGatePuzzle/PipeArt/BlueValveBody/InteractionArea" unique_id=1718170232]
+position = Vector2(23.529411, 447.05862)
+shape = SubResource("ValveInteractionShape")
 
 [node name="BlueWheel" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170210]
-position = Vector2(2700, 425)
+position = Vector2(2667, 433)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("20_blue_wheel")
 
 [node name="YellowValveBody" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170211]
-position = Vector2(3050, 425)
+position = Vector2(2866.9998, 423.00003)
 scale = Vector2(0.17, 0.17)
 texture = ExtResource("18_valve_body")
+script = ExtResource("23_hydraulic_interactable")
+puzzle_path = NodePath("../..")
+valve = 2
+hint_panel_path = NodePath("../YellowValveHint")
+rotate_on_interact = true
+rotate_target_path = NodePath("../YellowWheel")
+
+[node name="InteractionArea" type="Area2D" parent="HydraulicGatePuzzle/PipeArt/YellowValveBody" unique_id=1718170233]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HydraulicGatePuzzle/PipeArt/YellowValveBody/InteractionArea" unique_id=1718170234]
+position = Vector2(29.414063, 463.97046)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("ValveInteractionShape")
 
 [node name="YellowWheel" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170212]
-position = Vector2(3050, 425)
+position = Vector2(2870, 433)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("21_yellow_wheel")
 
 [node name="CentralPressureGauge" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170213]
-position = Vector2(3500, 455)
-scale = Vector2(0.25, 0.25)
+position = Vector2(3132, 433)
+scale = Vector2(0.22444752, 0.2244475)
 texture = ExtResource("22_pressure_gauge")
 
+[node name="GaugePointer" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1718170214]
+texture = ExtResource("26_gauge_pointer")
+offset = Vector2(61, -35)
+region_enabled = true
+region_rect = Rect2(620, 300, 330, 370)
+
+[node name="PressureReadout" type="Label" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1718170215]
+visible = false
+offset_left = -824.2461
+offset_top = -343.06458
+offset_right = -479.2461
+offset_bottom = -243.06458
+theme_override_colors/font_color = Color(0.95, 0.9, 0.76, 1)
+theme_override_font_sizes/font_size = 72
+text = "0.0 巴"
+horizontal_alignment = 1
+
+[node name="FlowIndicator" type="Label" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1718170216]
+offset_left = -891.07715
+offset_top = 258.4124
+offset_right = -401.07718
+offset_bottom = 348.4124
+theme_override_colors/font_color = Color(1, 0.25, 0.2, 1)
+theme_override_font_sizes/font_size = 56
+text = "● 导流锁定"
+horizontal_alignment = 1
+
+[node name="0" type="Marker2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=229016578]
+position = Vector2(-191.58154, 160.39384)
+
+[node name="2" type="Marker2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1089155921]
+position = Vector2(-258.41232, -13.366165)
+
+[node name="4" type="Marker2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1931571323]
+position = Vector2(-115.840004, -213.85847)
+
+[node name="6" type="Marker2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=64941766]
+position = Vector2(115.84, -204.94771)
+
+[node name="8" type="Marker2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1380243025]
+position = Vector2(249.50156, -13.366165)
+
+[node name="10" type="Marker2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=1854405706]
+position = Vector2(182.67068, 182.67078)
+
+[node name="Hint" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt/CentralPressureGauge" unique_id=176455529]
+position = Vector2(-6072.689, 13.366116)
+scale = Vector2(0.80891836, 0.8089183)
+texture = ExtResource("23_b3wc5")
+
+[node name="DirectionValve" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170217]
+position = Vector2(2986, 431)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("24_direction_up")
+script = ExtResource("23_hydraulic_interactable")
+puzzle_path = NodePath("../..")
+valve = 3
+hint_panel_path = NodePath("../DirectionValveHint")
+
+[node name="InteractionArea" type="Area2D" parent="HydraulicGatePuzzle/PipeArt/DirectionValve" unique_id=1718170237]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HydraulicGatePuzzle/PipeArt/DirectionValve/InteractionArea" unique_id=1718170238]
+position = Vector2(0, 257.14285)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("DirectionInteractionShape")
+
+[node name="RedValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170218]
+visible = false
+offset_left = 2335.0
+offset_top = 550.0
+offset_right = 2527.0
+offset_bottom = 578.0
+
+[node name="Label" type="Label" parent="HydraulicGatePuzzle/PipeArt/RedValveHint" unique_id=1718170224]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0.45, 1)
+theme_override_font_sizes/font_size = 17
+text = "[E] 红阀：注水 +4 巴"
+horizontal_alignment = 1
+
+[node name="BlueValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170219]
+visible = false
+offset_left = 2575.0
+offset_top = 548.0
+offset_right = 2767.0
+offset_bottom = 576.0
+
+[node name="Label" type="Label" parent="HydraulicGatePuzzle/PipeArt/BlueValveHint" unique_id=1718170225]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.7, 1, 1)
+theme_override_font_sizes/font_size = 17
+text = "[E] 蓝阀：蒸汽 +3 巴"
+horizontal_alignment = 1
+
+[node name="YellowValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170220]
+visible = false
+offset_left = 2779.0
+offset_top = 550.0
+offset_right = 2971.0
+offset_bottom = 578.0
+
+[node name="Label" type="Label" parent="HydraulicGatePuzzle/PipeArt/YellowValveHint" unique_id=1718170226]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.36, 1)
+theme_override_font_sizes/font_size = 17
+text = "[E] 黄阀：回流 -1 巴"
+horizontal_alignment = 1
+
+[node name="DirectionValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170221]
+visible = false
+offset_left = 2883.0
+offset_top = 323.0
+offset_right = 3083.0
+offset_bottom = 351.0
+
+[node name="Label" type="Label" parent="HydraulicGatePuzzle/PipeArt/DirectionValveHint" unique_id=1718170227]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 1, 0.55, 1)
+theme_override_font_sizes/font_size = 17
+text = "[E] 绿阀：上下换向"
+horizontal_alignment = 1
+
 [node name="WhiteboxMainGate" type="Node2D" parent="HydraulicGatePuzzle" unique_id=1718170202]
-position = Vector2(3967.0002, 327.00003)
+position = Vector2(3967, 327.00003)
 scale = Vector2(1.2398654, 1.3454676)
 script = ExtResource("15_hydraulic_gate")
 closed_texture = ExtResource("16_gate_closed")
@@ -267,3 +446,9 @@ theme_override_colors/font_color = Color(0.91, 0.85, 0.74, 1)
 theme_override_font_sizes/font_size = 22
 text = "流明街旧引水渠"
 horizontal_alignment = 2
+
+[node name="Panel" type="Sprite2D" parent="." unique_id=573571037]
+z_index = 3
+position = Vector2(2154, 281)
+scale = Vector2(0.7016129, 0.6751412)
+texture = ExtResource("27_ntxie")

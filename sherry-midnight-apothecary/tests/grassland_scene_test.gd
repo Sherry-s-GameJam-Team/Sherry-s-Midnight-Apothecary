@@ -51,6 +51,10 @@ static func run(test: TestSupport) -> void:
 	test.expect(sleeping_hound.is_available_this_day() and sleeping_hound.visible, "The sleeping hound is visible for the standalone day-zero scene.")
 	test.expect(home_door != null and home_door.is_locked_for_hound_dialogue(), "Day-zero HomeDoor requires the sleeping-hound dialogue first.")
 	test.expect(sleeping_hound_tutorial != null, "Grassland installs the sleeping hound purification tutorial controller.")
+	var luca_task_data := PlayerData.new()
+	luca_task_data.tutorial_flags[GrasslandNightDoor.LUCA_TASK_COMPLETED_FLAG] = true
+	test.expect(GrasslandNightDoor.should_offer_night_transition(0, luca_task_data), "Only the completed Luca task on day zero offers the night transition.")
+	test.expect(not GrasslandNightDoor.should_offer_night_transition(1, luca_task_data), "Later days return to Home normally even when the day-zero Luca task remains completed.")
 	var console := grass.get_node_or_null("DebugUI/DeveloperConsole")
 	test.expect(console != null, "Standalone Grassland installs its developer console at runtime.")
 	if console != null:

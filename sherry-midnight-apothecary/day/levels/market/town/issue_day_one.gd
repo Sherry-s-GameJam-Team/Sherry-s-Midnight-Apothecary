@@ -98,8 +98,11 @@ func _focus_fountain_camera() -> void:
 	_camera_top_level_was_enabled = _camera.top_level
 	_camera.top_level = true
 	# The blood-fountain frame is the scene's visual anchor. Preserve the normal
-	# vertical framing while aligning the cinematic camera's X axis to it.
-	_camera.global_position = Vector2(_fountain.global_position.x + cinematic_camera_x_offset, _camera.global_position.y)
+	# vertical framing while aligning the cinematic camera's X axis to it. Lay
+	# the crowd directly across that camera center as the foreground tableau.
+	var framing_x := _fountain.global_position.x + cinematic_camera_x_offset
+	_camera.global_position = Vector2(framing_x, _camera.global_position.y)
+	_people.global_position.x = framing_x
 	_camera.force_update_scroll()
 
 
