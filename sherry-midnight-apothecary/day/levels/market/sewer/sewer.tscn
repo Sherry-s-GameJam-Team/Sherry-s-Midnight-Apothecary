@@ -12,7 +12,16 @@
 [ext_resource type="Script" uid="uid://cje8seq8weca7" path="res://day/levels/market/sewer/sewer_luca_follow.gd" id="10_luca_follow"]
 [ext_resource type="Shader" uid="uid://wnfy5dx5amro" path="res://day/levels/market/sewer/shaders/character_reflection.gdshader" id="11_reflection_shader"]
 [ext_resource type="Script" uid="uid://bitv5ju3x2dg" path="res://day/levels/market/sewer/sewer_character_reflections.gd" id="12_reflection_controller"]
-[ext_resource type="Script" path="res://day/levels/market/sewer/sewer_luca_water_reflection.gd" id="13_luca_water_reflection"]
+[ext_resource type="Script" uid="uid://cr3j2nsx2oaw2" path="res://day/levels/market/sewer/sewer_luca_water_reflection.gd" id="13_luca_water_reflection"]
+[ext_resource type="Script" uid="uid://bmd8o3uxos56g" path="res://day/levels/market/sewer/sewer_hydraulic_gate_puzzle.gd" id="14_hydraulic_puzzle"]
+[ext_resource type="Script" uid="uid://d0rkitafb2xkc" path="res://day/levels/market/sewer/sewer_hydraulic_gate_whitebox.gd" id="15_hydraulic_gate"]
+[ext_resource type="Texture2D" uid="uid://covrhp0lgvnqv" path="res://day/levels/market/sewer/gate.png" id="16_gate_closed"]
+[ext_resource type="Texture2D" uid="uid://wsgf0krps0qv" path="res://day/levels/market/sewer/gate_open.png" id="17_gate_open"]
+[ext_resource type="Texture2D" path="res://day/levels/market/sewer/valve.png" id="18_valve_body"]
+[ext_resource type="Texture2D" path="res://day/levels/market/sewer/red_wheel.png" id="19_red_wheel"]
+[ext_resource type="Texture2D" path="res://day/levels/market/sewer/blue_wheel.png" id="20_blue_wheel"]
+[ext_resource type="Texture2D" path="res://day/levels/market/sewer/yellow_wheel.png" id="21_yellow_wheel"]
+[ext_resource type="Texture2D" path="res://day/levels/market/sewer/CENTRAL PRESSURE GAUGE& INDICATOR MODULE.png" id="22_pressure_gauge"]
 
 [sub_resource type="ShaderMaterial" id="SewerWaterMaterial"]
 shader = ExtResource("4_water_shader")
@@ -40,6 +49,9 @@ shader_parameter/water_mask = ExtResource("3_water")
 shader_parameter/water_mask_size = Vector2(4314, 724)
 shader_parameter/first_water_origin = Vector2(0, 0)
 shader_parameter/second_water_origin = Vector2(2162, -2)
+
+[sub_resource type="RectangleShape2D" id="HydraulicGateShape"]
+size = Vector2(70, 406.88968)
 
 [node name="Sewer" type="Node2D" unique_id=1267047350]
 texture_filter = 1
@@ -104,7 +116,7 @@ position = Vector2(3900, 490)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1980711926]
 z_index = 10
-position = Vector2(370, 409)
+position = Vector2(371, 377)
 script = ExtResource("5_player")
 character_scale = 0.5
 
@@ -127,16 +139,15 @@ position = Vector2(550, 490)
 collision_layer = 0
 input_enabled = false
 
-[node name="LucaWaterReflection" type="Node2D" parent="Luca"]
+[node name="LucaWaterReflection" type="Node2D" parent="Luca" unique_id=571386605]
 z_index = 6
 z_as_relative = false
 script = ExtResource("13_luca_water_reflection")
-waterline_y = 516.0
 vertical_compression = 0.6
 vertical_offset = 10.0
 horizontal_scale = 1.0
 
-[node name="LucaVisual" type="Sprite2D" parent="Luca/LucaWaterReflection"]
+[node name="LucaVisual" type="Sprite2D" parent="Luca/LucaWaterReflection" unique_id=994536727]
 material = SubResource("CharacterReflectionMaterial")
 position = Vector2(17, -45)
 scale = Vector2(0.143791, 0.124742)
@@ -157,6 +168,70 @@ reflection_material = SubResource("CharacterReflectionMaterial")
 
 [node name="Sherry" parent="CharacterReflections" unique_id=1562791710 instance=ExtResource("7_sherry_presentation")]
 
+[node name="HydraulicGatePuzzle" type="Node2D" parent="." unique_id=1718170201]
+z_index = 7
+script = ExtResource("14_hydraulic_puzzle")
+player_path = NodePath("../Player")
+gate_path = NodePath("WhiteboxMainGate")
+
+[node name="PipeArt" type="Node2D" parent="HydraulicGatePuzzle" unique_id=1718170206]
+z_index = 6
+z_as_relative = false
+
+[node name="RedValveBody" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170207]
+position = Vector2(2350, 425)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("18_valve_body")
+
+[node name="RedWheel" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170208]
+position = Vector2(2350, 425)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("19_red_wheel")
+
+[node name="BlueValveBody" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170209]
+position = Vector2(2700, 425)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("18_valve_body")
+
+[node name="BlueWheel" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170210]
+position = Vector2(2700, 425)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("20_blue_wheel")
+
+[node name="YellowValveBody" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170211]
+position = Vector2(3050, 425)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("18_valve_body")
+
+[node name="YellowWheel" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170212]
+position = Vector2(3050, 425)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("21_yellow_wheel")
+
+[node name="CentralPressureGauge" type="Sprite2D" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170213]
+position = Vector2(3500, 455)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("22_pressure_gauge")
+
+[node name="WhiteboxMainGate" type="Node2D" parent="HydraulicGatePuzzle" unique_id=1718170202]
+position = Vector2(3967.0002, 327.00003)
+scale = Vector2(1.2398654, 1.3454676)
+script = ExtResource("15_hydraulic_gate")
+closed_texture = ExtResource("16_gate_closed")
+open_texture = ExtResource("17_gate_open")
+
+[node name="GateSprite" type="Sprite2D" parent="HydraulicGatePuzzle/WhiteboxMainGate" unique_id=1718170205]
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("16_gate_closed")
+
+[node name="GateCollision" type="StaticBody2D" parent="HydraulicGatePuzzle/WhiteboxMainGate" unique_id=1718170203]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HydraulicGatePuzzle/WhiteboxMainGate/GateCollision" unique_id=1718170204]
+position = Vector2(0, -28.44484)
+shape = SubResource("HydraulicGateShape")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HydraulicGatePuzzle/WhiteboxMainGate/GateCollision" unique_id=1012933329]
+polygon = PackedVector2Array(-133.0791, 160.53896, -76.62134, 96.62065, 81.46045, 97.36391, 133.07886, 160.53896)
 
 [node name="Interface" type="CanvasLayer" parent="." unique_id=2054667412]
 layer = 10

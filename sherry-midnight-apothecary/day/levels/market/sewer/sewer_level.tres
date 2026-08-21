@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/market/sewer/sewer.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"sewer"
+display_name = "流明街下水道"
+disaster_name = "血色喷泉的源头"
+normal_description = "阴湿的地下水道中，红色水流仍在回响。"
+corrupted_description = "异变的污水在石壁间蔓延。"
+scene_description = "追查血色喷泉的地下源头"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"from_market"

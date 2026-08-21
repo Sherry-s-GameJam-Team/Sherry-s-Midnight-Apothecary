@@ -266,17 +266,19 @@ libraries/ = SubResource("AnimationLibrary_clouds")
 autoplay = &"cloud_drift"
 
 [node name="issueDay1" type="Node2D" parent="." unique_id=1565926518]
+visible = false
 script = ExtResource("27_issue_day_one")
 player_path = NodePath("../Player")
 camera_path = NodePath("../Player/Camera2D")
 people_path = NodePath("People")
+fountain_path = NodePath("../CS/Fountain")
 sherry_position_path = NodePath("sherryposition")
 luca_position_path = NodePath("lucaposition")
 luca_path = NodePath("Luca")
 
 [node name="People" type="Sprite2D" parent="issueDay1" unique_id=2119656662]
 z_index = 20
-position = Vector2(5228, 548.0625)
+position = Vector2(5528, 548.0625)
 scale = Vector2(0.69555175, 0.5281903)
 texture = ExtResource("24_57drt")
 

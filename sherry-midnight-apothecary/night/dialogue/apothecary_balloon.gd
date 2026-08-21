@@ -537,8 +537,7 @@ func apply_dialogue_line() -> void:
 		next(dialogue_line.next_id)
 	elif _is_fast_forward_active():
 		await get_tree().create_timer(0.2).timeout
-		if is_instance_valid(dialogue_line) and dialogue_line.id == current_line_id and _is_fast_forward_active():
-			next(dialogue_line.next_id)
+		_complete_fast_forward_wait(current_line_id)
 	elif dialogue_line.time != "":
 		var wait_time := dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		await get_tree().create_timer(wait_time).timeout
@@ -780,11 +779,25 @@ func _on_fast_pressed() -> void:
 func _trigger_fast_advance() -> void:
 	if not is_waiting_for_input or not is_instance_valid(dialogue_line) or not responses_menu.get_menu_items().is_empty():
 		return
+	var current_line_id := dialogue_line.id
 	is_waiting_for_input = false
 	dialogue_label.skip_typing()
 	await get_tree().create_timer(0.2).timeout
-	if is_instance_valid(dialogue_line) and _is_fast_forward_active():
+	_complete_fast_forward_wait(current_line_id)
+
+
+func _complete_fast_forward_wait(current_line_id: String) -> void:
+	if not is_instance_valid(dialogue_line) or dialogue_line.id != current_line_id:
+		return
+	if _is_fast_forward_active():
 		next(dialogue_line.next_id)
+		return
+
+	# Fast mode can be released while its page-delay timer is running. Restore
+	# the normal input state instead of leaving this line without a progression path.
+	is_waiting_for_input = true
+	balloon.focus_mode = Control.FOCUS_ALL
+	balloon.grab_focus()
 
 
 func _on_auto_pressed() -> void:

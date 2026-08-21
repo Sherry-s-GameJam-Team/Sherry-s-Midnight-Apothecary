@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c0hm5cchinakn"]
 
 [ext_resource type="Texture2D" uid="uid://dkioiavewfxmu" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_bg_corrupted.png" id="1_g468k"]
-[ext_resource type="Texture2D" uid="uid://cssytyb1gfo5x" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_fg_platform.png" id="2_g02jd"]
+[ext_resource type="Texture2D" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_fg_platform.png" id="2_g468k"]
 [ext_resource type="Texture2D" uid="uid://cmbaqq8i4maem" path="res://day/levels/forest/art/environments/forest/crown/forest_boss_seraph_corrupted.png" id="3_ec2b4"]
 [ext_resource type="Texture2D" uid="uid://sklejebipj84" path="res://day/levels/forest/art/environments/forest/crown/forest_boss_seraph_normal.png" id="4_yorqk"]
 [ext_resource type="Script" uid="uid://dawtn4jock4wu" path="res://day/levels/forest/boss/forest_boss_trigger.gd" id="5_w7our"]
@@ -30,7 +30,7 @@ centered = false
 z_index = 2
 position = Vector2(9893, 634.00006)
 scale = Vector2(0.52261406, 0.38120085)
-texture = ExtResource("2_g02jd")
+texture = ExtResource("2_g468k")
 
 [node name="CrownGround" type="StaticBody2D" parent="." unique_id=1372144625]
 position = Vector2(10300, 680)

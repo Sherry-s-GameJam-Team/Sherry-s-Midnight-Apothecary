@@ -2,6 +2,8 @@
 
 - [Persistent settings](settings.md): audio categories, display modes, text and dialogue accessibility, reduced motion, and pause behavior.
 
+- [Sewer level](sewer_level.md): blood-water aqueduct presentation, character reflections, and the local hydraulic main-gate puzzle.
+
 - [Grassland](grassland.md): daytime grassland scene, purification tutorial, and shared completion UI.
 
 - [Shimmering Cliff](cliff.md): resonance-wave warnings, procedural avalanche zones, unified hazard feedback, and default-entry respawn protection.

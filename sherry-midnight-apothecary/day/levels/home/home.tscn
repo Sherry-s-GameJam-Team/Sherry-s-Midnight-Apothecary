@@ -284,6 +284,7 @@ texture = ExtResource("21_senior_knight")
 
 [node name="DayOneLuca" parent="Cinematic" unique_id=2085169273 instance=ExtResource("24_luca")]
 process_mode = 4
+visible = false
 z_index = 12
 position = Vector2(747, 804)
 scale = Vector2(1.5601252, 1.4440747)

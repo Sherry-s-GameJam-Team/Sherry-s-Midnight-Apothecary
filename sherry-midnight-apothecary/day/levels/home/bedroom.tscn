@@ -199,7 +199,7 @@ shape = SubResource("RectangleShape2D_exit")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1953653742]
 z_index = 10
-position = Vector2(720, 505)
+position = Vector2(720, 506)
 script = ExtResource("2_player")
 character_scale = 0.8
 initial_facing_right = true

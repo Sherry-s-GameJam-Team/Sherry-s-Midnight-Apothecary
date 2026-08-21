@@ -10,15 +10,18 @@ const INTERACTION_KEY: StringName = &"issue_day_one_fountain"
 @export_node_path("CharacterBody2D") var player_path: NodePath
 @export_node_path("Camera2D") var camera_path: NodePath
 @export_node_path("Sprite2D") var people_path: NodePath
+@export_node_path("Sprite2D") var fountain_path: NodePath
 @export_node_path("Marker2D") var sherry_position_path: NodePath
 @export_node_path("Marker2D") var luca_position_path: NodePath
 @export_node_path("LucaPlayer") var luca_path: NodePath
 @export_range(40.0, 400.0, 5.0, "suffix:px/s") var entrance_walk_speed := 220.0
 @export_range(16.0, 200.0, 1.0, "suffix:px") var offscreen_margin := 72.0
+@export var cinematic_camera_x_offset := 300.0
 
 var _player: CharacterBody2D
 var _camera: Camera2D
 var _people: Sprite2D
+var _fountain: Sprite2D
 var _sherry_position: Marker2D
 var _luca_position: Marker2D
 var _luca: LucaPlayer
@@ -27,6 +30,7 @@ var _player_physics_was_enabled := true
 var _camera_top_level_was_enabled := false
 var _modal_lock_was_set := false
 var _running := false
+var _transition_requested := false
 
 
 func _ready() -> void:
@@ -42,7 +46,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if _running and _player_data().has_event_flag(_completion_flag()):
-		_finish()
+		_begin_sewer_transition()
 
 
 func _exit_tree() -> void:
@@ -67,7 +71,7 @@ func _start_if_needed() -> void:
 	_luca.stop_moving()
 	_modal_lock_was_set = get_tree().has_meta("day_modal_input_locked")
 	get_tree().set_meta("day_modal_input_locked", true)
-	_focus_people_camera()
+	_focus_fountain_camera()
 	await _walk_sherry_in()
 	if not _running or not is_inside_tree():
 		return
@@ -90,13 +94,28 @@ func _walk_sherry_in() -> void:
 		_play_sherry_animation(&"idle_right")
 
 
-func _focus_people_camera() -> void:
+func _focus_fountain_camera() -> void:
 	_camera_top_level_was_enabled = _camera.top_level
 	_camera.top_level = true
-	# Preserve the normal vertical framing, which keeps Town's authored artwork
-	# covering the viewport while centering the crowd horizontally.
-	_camera.global_position = Vector2(_people.global_position.x, _camera.global_position.y)
+	# The blood-fountain frame is the scene's visual anchor. Preserve the normal
+	# vertical framing while aligning the cinematic camera's X axis to it.
+	_camera.global_position = Vector2(_fountain.global_position.x + cinematic_camera_x_offset, _camera.global_position.y)
 	_camera.force_update_scroll()
+
+
+func _begin_sewer_transition() -> void:
+	if _transition_requested:
+		return
+	_transition_requested = true
+	_running = false
+	set_process(false)
+	visible = false
+	if _runtime == null or not _runtime.has_method("transition_to_level_with_blackout"):
+		_restore_player_and_camera()
+		return
+	var transitioned: bool = await _runtime.transition_to_level_with_blackout("sewer", &"from_market", true)
+	if not transitioned:
+		_restore_player_and_camera()
 
 
 func _finish() -> void:
@@ -143,6 +162,7 @@ func _resolve_nodes() -> void:
 	_player = get_node_or_null(player_path) as CharacterBody2D
 	_camera = get_node_or_null(camera_path) as Camera2D
 	_people = get_node_or_null(people_path) as Sprite2D
+	_fountain = get_node_or_null(fountain_path) as Sprite2D
 	_sherry_position = get_node_or_null(sherry_position_path) as Marker2D
 	_luca_position = get_node_or_null(luca_position_path) as Marker2D
 	_luca = get_node_or_null(luca_path) as LucaPlayer
@@ -155,4 +175,4 @@ func _resolve_nodes() -> void:
 
 
 func _nodes_are_valid() -> bool:
-	return _player != null and _camera != null and _people != null and _sherry_position != null and _luca_position != null and _luca != null and _runtime != null
+	return _player != null and _camera != null and _people != null and _fountain != null and _sherry_position != null and _luca_position != null and _luca != null and _runtime != null

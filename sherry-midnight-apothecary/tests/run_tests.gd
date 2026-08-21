@@ -39,6 +39,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/story_event_system_test.gd"),
 	preload("res://tests/forest_enzuo_rescue_test.gd"),
 	preload("res://tests/town_fountain_event_test.gd"),
+	preload("res://tests/sewer_hydraulic_gate_test.gd"),
 	preload("res://tests/dual_world_structure_test.gd"),
 	preload("res://tests/crimson_aqueduct_test.gd"),
 	preload("res://tests/night_luca_interaction_test.gd"),

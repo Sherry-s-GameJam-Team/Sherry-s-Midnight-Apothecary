@@ -8,6 +8,7 @@ signal story_event_completed(event_id: StringName)
 
 const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/market/town/town_level.tres"),
+	preload("res://day/levels/market/sewer/sewer_level.tres"),
 	preload("res://day/levels/home/home_level.tres"),
 	preload("res://day/levels/home/bedroom_level.tres"),
 	preload("res://day/levels/forest/forest_level.tres"),

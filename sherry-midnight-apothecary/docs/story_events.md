@@ -21,7 +21,7 @@
 
 `day_one_bedroom_luca_intro.tres` 定义第一日的 `day_one_blood_fountain` 事件：Town 的 `issueDay1` 表演节点在雪莉入场后显式派发 `issue_day_one_fountain`，播放血色泉流对话，并设置喷泉事件、旧检修井交互解锁标记和当天“调查喷泉后的旧检修井”任务。`PlayerData.get_active_daily_task(day)` 只会返回匹配该日期的任务，因此任务贴图不会出现在后续日期的当前任务中。
 
-Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次隐藏。它在镜头固定于 `People` 人群、雪莉从左侧屏外走到 `sherryposition`、Luca 位于 `lucaposition` 后才开始对话。Town 场景的 `CS/Fountain` 在第 1 天使用 `resources/blood_fountain/frames/` 中的血色喷泉；`Fountain.blood_fountain_enabled` 是保留在 Inspector 中的总开关，关闭它会维持普通喷泉且不清除事件或存档标记。
+Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次隐藏。它在镜头 X 轴对齐 `CS/Fountain` 的血色喷泉画面、雪莉从左侧屏外走到 `sherryposition`、Luca 位于 `lucaposition` 后才开始对话。对话正常完成后，运行时使用黑场渐隐转场进入 `market/sewer` 的 `sewer.tscn`。Town 场景的 `CS/Fountain` 在第 1 天使用 `resources/blood_fountain/frames/` 中的血色喷泉；`Fountain.blood_fountain_enabled` 是保留在 Inspector 中的总开关，关闭它会维持普通喷泉且不清除事件或存档标记。
 
 `day_one_forest_enzuo_rescued.tres` 是常霁云林的第一日救援收束事件。它要求 `story_event_completed:day_one_forest_enzuo_intro` 已设置而 `save_enzuo_solved` 尚未设置；森林本地的藤蔓机关演出结束后显式派发该 interaction，并由事件动作设置 `save_enzuo_solved`。这会使 `issue_save_enzuo` 在后续进入时隐藏，且不授予物品、不修改库存，也不推进水车或树门主线。
 

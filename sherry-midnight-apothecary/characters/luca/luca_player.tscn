@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" uid="uid://qk777aldy5l6" path="res://characters/luca/luca_sprite_frames.tres" id="2_frames"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_luca"]
-size = Vector2(72, 70)
+size = Vector2(72, 4.75)
 
 [node name="LucaPlayer" type="CharacterBody2D" unique_id=1344781600]
 z_index = 10
@@ -19,6 +19,6 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=356218506]
-position = Vector2(0, -35)
+position = Vector2(0, 2.625)
 shape = SubResource("RectangleShape2D_luca")
 one_way_collision = true

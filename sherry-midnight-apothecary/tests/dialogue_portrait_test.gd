@@ -152,6 +152,10 @@ static func run(test: TestSupport) -> void:
 	test.expect(not balloon.fast_mode, "Fast button toggles fast_mode off.")
 	balloon._ctrl_fast_active = true
 	test.expect(balloon._is_fast_forward_active(), "_is_fast_forward_active true when Ctrl is active.")
+	balloon._ctrl_fast_active = false
+	balloon.is_waiting_for_input = false
+	balloon._complete_fast_forward_wait(balloon.dialogue_line.id)
+	test.expect(balloon.is_waiting_for_input, "Releasing fast forward during its delay restores manual progression.")
 
 	balloon.clear_portraits()
 	balloon.free()

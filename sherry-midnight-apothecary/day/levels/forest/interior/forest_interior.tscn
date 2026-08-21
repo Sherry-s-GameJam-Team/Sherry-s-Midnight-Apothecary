@@ -111,6 +111,8 @@ start_corrupted = true
 
 [node name="Background" type="Node2D" parent="." unique_id=366872509]
 z_index = -20
+position = Vector2(-76, 1949.0001)
+scale = Vector2(1.0458632, 1.3427308)
 
 [node name="CorruptedBackground" type="Parallax2D" parent="Background" unique_id=552706082]
 z_index = -25
