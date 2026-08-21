@@ -8,6 +8,7 @@ const PROJECTILE_SCENE := preload("res://shared/potions/runtime/potion_projectil
 @export var throw_tuning: PotionThrowTuning
 @export var effect_tuning: PotionEffectTuning
 @export var tutorial_hint_id := "tutorial_throw_potion"
+@export_multiline var tutorial_hint_text := "按住鼠标左键瞄准，松开即可投掷药水。"
 @export var default_definitions: Array[PotionData] = []
 @export var potion_definitions: Array[PotionData] = []
 
@@ -288,11 +289,17 @@ func _should_block_for_console(event: InputEvent) -> bool:
 
 
 func _show_throw_tutorial_once() -> void:
-	if tutorial_hint_id.is_empty():
+	if tutorial_hint_id.is_empty() or tutorial_hint_text.is_empty():
+		return
+	var player_data: PlayerData = inventory_service.player_data if inventory_service != null else null
+	if player_data != null and bool(player_data.tutorial_flags.get(tutorial_hint_id, false)):
 		return
 	var top_hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 	if top_hint != null:
-		top_hint.push_hint(tutorial_hint_id)
+		# The stable tutorial key is persistence metadata, not player-facing text.
+		top_hint.push_text(tutorial_hint_text, tutorial_hint_id)
+		if player_data != null:
+			player_data.tutorial_flags[tutorial_hint_id] = true
 
 
 ## Enables a scoped, inventory-free throw for environmental mechanisms.  Callers

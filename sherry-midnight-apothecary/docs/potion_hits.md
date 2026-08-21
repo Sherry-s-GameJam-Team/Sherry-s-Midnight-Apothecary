@@ -2,6 +2,8 @@
 
 Every thrown bottle is a `PotionProjectile` (`res://shared/potions/runtime/potion_projectile.gd`). When its `CharacterBody2D` collides with a physics body in `PotionThrowTuning.projectile_collision_mask`, it breaks at the contact point and walks from the collided node up through its parents to find `receive_potion_hit(hit: Dictionary)`.
 
+首次进入药水瞄准时，顶部 HintUI 显示“按住鼠标左键瞄准，松开即可投掷药水。”；`tutorial_throw_potion` 仅作为存档去重键，不会显示给玩家。
+
 An enemy can put its collision shape on its root body, or on a child physics body below that root. The receiver method may live on either node or any ancestor.
 
 ```gdscript
