@@ -2,6 +2,7 @@ extends RefCounted
 
 const PUZZLE_SCRIPT := preload("res://day/levels/market/sewer/sewer_hydraulic_gate_puzzle.gd")
 const SEWER_SCENE := preload("res://day/levels/market/sewer/sewer.tscn")
+const FOREST_SCENE := preload("res://day/levels/forest/forest.tscn")
 
 
 func run(test: TestSupport) -> void:
@@ -46,3 +47,10 @@ func run(test: TestSupport) -> void:
 	test.expect_equal(pressure_gauge.texture.resource_path, "res://day/levels/market/sewer/CENTRAL PRESSURE GAUGE& INDICATOR MODULE.png", "The pressure gauge uses the scene art module.")
 	test.expect(sewer.get_node_or_null("HydraulicGatePuzzle/PipeArt/DirectionValve") is SewerHydraulicInteractable, "The editor-visible direction sprite owns its interaction script.")
 	test.expect(sewer.get_node_or_null("HydraulicGatePuzzle/PipeArt/CentralPressureGauge/GaugePointer") is Sprite2D, "The gauge uses the supplied pointer sprite.")
+	var forest_portal := sewer.get_node_or_null("WorldBounds/ForestExitPortal") as DoorPortal
+	test.expect(forest_portal != null, "Touching the sewer's right boundary uses an explicit forest exit portal.")
+	test.expect_equal(forest_portal.destination_level, &"forest", "The sewer exit transitions through DayRuntime to the forest level.")
+	test.expect_equal(forest_portal.destination_entry_id, &"from_sewer", "The sewer exit supplies the forest arrival entry point.")
+	test.expect(forest_portal.trigger_on_touch, "The forest exit triggers on contact rather than requiring another key press.")
+	var forest := FOREST_SCENE.instantiate()
+	test.expect(forest.get_node_or_null("EntryPoints/from_sewer") is Marker2D, "Forest has an entry marker for the sewer handoff and its day-one intro.")

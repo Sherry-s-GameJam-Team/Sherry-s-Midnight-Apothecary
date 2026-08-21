@@ -16,3 +16,4 @@
 - `CentralPressureGauge` 的 `0`、`2`、`4`、`6`、`8`、`10` 个 `Marker2D` 节点是指针刻度锚点。压力指针按相邻锚点分段插值，确保 0、4、6、8 巴分别指向对应刻度；`pointer_art_angle` 可在 `HydraulicGatePuzzle` Inspector 微调源图初始朝向。
 - 正解依次为红、蓝、黄、黄、蓝、黄，使压力稳定在 7 巴；再把绿阀拨到“下 / 顺流”。中央指示灯转绿且卡榫解除后，`WhiteboxMainGate` 自动从 `gate.png` 切换为 `gate_open.png` 并向上移动 250px；其 `StaticBody2D` 碰撞体随之移开，开放通往森林出口的通路。场景还直接标出锈蚀守则、检修涂鸦与积水刻痕三条环境线索。
 - 最终判定以实际状态为准：压力为 7 巴、绿阀为顺流、红阀恰好 1 次、蓝阀恰好 2 次、黄阀恰好 3 次。红阀在蓝阀之前、蓝阀在黄阀之前的前置限制和超过安全上限的自动重置仍然有效；不再因为交互帧中的冗余历史记录阻断正确完成。
+- `WorldBounds/ForestExitPortal` 是右边界前的可编辑接触判定箱。主闸打开后，Sherry 接触该区域会经 `DayRuntime` 进入 `res://day/levels/forest/forest.tscn` 的 `from_sewer` 入口；第 1 天且恩佐尚未获救时，森林场景会自动启动 `forest_day_one_enzuo_intro` 剧情事件。

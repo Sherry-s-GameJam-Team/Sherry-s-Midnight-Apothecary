@@ -68,6 +68,9 @@ position = Vector2(420, 560)
 [node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=1056930953]
 position = Vector2(420, 560)
 
+[node name="from_sewer" type="Marker2D" parent="EntryPoints" unique_id=1242310516]
+position = Vector2(420, 560)
+
 [node name="restored_return" type="Marker2D" parent="EntryPoints" unique_id=2112366671]
 position = Vector2(5887, 563)
 
