@@ -1,15 +1,13 @@
-[gd_resource type="Resource" load_steps=9 format=3]
+[gd_resource type="Resource" script_class="StoryEventDefinition" format=3 uid="uid://dyygkced1eytl"]
 
-[ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="1_definition"]
-[ext_resource type="Script" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
-[ext_resource type="Script" path="res://shared/events/story_event_condition.gd" id="3_condition"]
-[ext_resource type="Script" path="res://shared/events/story_event_action.gd" id="4_action"]
+[ext_resource type="Script" uid="uid://rvroaswg3m6d" path="res://shared/events/story_event_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dffkqmt2sr5wc" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
+[ext_resource type="Script" uid="uid://ck8qo5xjtqg71" path="res://shared/events/story_event_condition.gd" id="3_condition"]
+[ext_resource type="Script" uid="uid://c4fo4feo2piu8" path="res://shared/events/story_event_action.gd" id="4_action"]
 
-[sub_resource type="Resource" id="Trigger"]
-script = ExtResource("2_trigger")
-type = 2
-runtime_mode = 1
-interaction_key = &"day_one_forest_enzuo_rescued"
+[sub_resource type="Resource" id="SaveEnzuo"]
+script = ExtResource("4_action")
+key = &"save_enzuo_solved"
 
 [sub_resource type="Resource" id="FirstDay"]
 script = ExtResource("3_condition")
@@ -26,10 +24,11 @@ script = ExtResource("3_condition")
 type = 2
 key = &"save_enzuo_solved"
 
-[sub_resource type="Resource" id="SaveEnzuo"]
-script = ExtResource("4_action")
-type = 0
-key = &"save_enzuo_solved"
+[sub_resource type="Resource" id="Trigger"]
+script = ExtResource("2_trigger")
+type = 2
+runtime_mode = 1
+interaction_key = &"day_one_forest_enzuo_rescued"
 
 [resource]
 script = ExtResource("1_definition")

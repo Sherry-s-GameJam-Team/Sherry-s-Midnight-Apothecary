@@ -14,8 +14,10 @@ static func run(test: TestSupport) -> void:
 	var hint_ui := hint_scene.instantiate() as TopHintUI
 	tree.root.add_child(hint_ui)
 	tree.root.add_child(village)
-	var mew_npc := village.get_node_or_null("CS/Mew") as MewNPC
-	test.expect(mew_npc != null, "Village scene contains MewNPC at CS/Mew.")
+	var issues := village.get_node_or_null("issues") as VillageDayTwoIssue
+	test.expect(issues != null, "Village scene contains the day-two issues controller.")
+	var mew_npc := village.get_node_or_null("issues/issue_Mews") as MewNPC
+	test.expect(mew_npc != null, "Village scene contains MewNPC at issues/issue_Mews.")
 	if mew_npc == null:
 		village.free()
 		return
@@ -25,6 +27,8 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(mew_npc.animation_name, &"fishing", "MewNPC targets the fishing animation.")
 	test.expect(mew_npc.get_node_or_null("FishingLoop") is AnimatedSprite2D, "MewNPC contains the FishingLoop AnimatedSprite2D child.")
 	test.expect(mew_npc.get_node_or_null("CollisionShape2D") is CollisionShape2D, "MewNPC contains a CollisionShape2D for player interaction.")
+	test.expect(village.get_node_or_null("issues/down") is Marker2D, "Village issues contain the down crossing marker.")
+	test.expect(village.get_node_or_null("issues/Sprite2D/IdleLoop") is AnimatedSprite2D, "Village issues contain the gated IdleLoop sprite.")
 
 	# Test 2: Ping-pong animation frame progression logic
 	var sprite := mew_npc.get_node("FishingLoop") as AnimatedSprite2D
@@ -89,3 +93,13 @@ static func run(test: TestSupport) -> void:
 	test.expect(dialogue_source.contains("asked_father"), "mew.dialogue tracks asked_father.")
 	test.expect(dialogue_source.contains("asked_potion"), "mew.dialogue tracks asked_potion.")
 	test.expect(dialogue_source.contains("=> END"), "mew.dialogue terminates properly with END.")
+
+	# Test 5: day-two down event uses the Mew dialogue and delivery prerequisite.
+	var event := load("res://shared/definitions/events/village_day_two_down.tres") as StoryEventDefinition
+	test.expect(event != null, "Village day-two down story event loads.")
+	if event != null:
+		test.expect_equal(event.trigger.interaction_key, &"village_day_two_down", "Village down event uses the expected interaction key.")
+		test.expect_equal(event.dialogue_resource.resource_path, "res://characters/mew/mew.dialogue", "Village down event reuses Mew's dialogue resource.")
+		test.expect_equal(event.dialogue_title, &"question_menu", "Village down event enters Mew's follow-up dialogue title.")
+		var day_condition: StoryEventCondition = event.conditions[0] as StoryEventCondition
+		test.expect(day_condition != null and day_condition.minimum_day == 2 and day_condition.maximum_day == 2, "Village day-two event is restricted to internal day two.")

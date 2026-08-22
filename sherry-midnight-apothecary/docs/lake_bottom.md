@@ -8,22 +8,15 @@
 - **Level Root**:
   - `LakeLevel` (`res://day/levels/lake_bottom/lake.tscn`) extending `DayLevelEnvironment`.
   - `GateChamberLevel` (`res://day/levels/lake_bottom/gate_chamber.tscn`) extending `DayLevelEnvironment`, representing the interior chamber of the old gate maintenance station (`arit_bg_gate_chamber_01.png`).
-- **Player Character**: Standard `Player` (`CharacterBody2D`) equipped with `day_player_controller.gd`, `sherry_outdoor_collision.tscn`, `sherry_presentation.tscn`, `potion_player_system.tscn`, and bounded `Camera2D`.
+- **Player Character**: Standard `Player` (`CharacterBody2D`) equipped with `day_player_controller.gd`, `sherry_outdoor_collision.tscn`, `sherry_presentation.tscn`, and bounded `Camera2D`.
 - **UI & Global Systems**:
   - `DeveloperConsole` for debug workflows.
   - `PauseMenuHost` handling `B` key (backpack) and `ESC` (pause/settings).
-  - Objective HUD and Springburst/Cyan potion charge indicator.
+- Objective HUD for the three-lock gate puzzle.
 
 ## Mechanics & Gameplay Flow
-1. **Investigation & Potion Acquisition**:
-   - Approaching `MaintenanceStation` on the lakebed displays an interaction prompt `按[E]进入旧旅门维护站` (`ChamberEntrance`), smoothly transitioning the player into the interior chamber scene (`gate_chamber.tscn`).
-   - In the interior chamber, the central glowing portal (`CentralGateDoor`) links directly back to the lakebed's maintenance station marker (`maintenance`).
-   - Discovering Dashiyu triggers `DashiyuFound`, granting cyan potions directly into the player's inventory/hotbar via `PlayerData`.
-2. **Ancient Valve Puzzle**: Three ancient spring valves (`SpringValve`) must be activated via interact (`E`) to restore power to the Purification Lance.
-3. **Player Potion Throwing (Baiting)**:
-   - Instead of static `E`-key interaction prompts, the player directly aims and throws cyan/water potions using the core `PotionThrower` mechanism (left-click drag & release).
-   - Direct projectile collisions and splash effects on `TideEye` or the bait target zones (`receive_potion_hit` / `apply_potion_effect`) trigger water splashing FX and lure `TideEye` out to expose its core.
-4. **Purification Lance**: Player operates the powered lance turret (`E` to interact, `←`/`→` to aim, `E` to fire beam) to strike the exposed `TideEye` core.
-5. **Restoration**: After 3 successful purification hits, `TideEye` is defeated, the sunken gate (`GateRestored`) is restored, and the level completes.
-
-
+1. **Ancient Three-Lock Puzzle**: The three ancient spring valves (`Valve01`–`Valve03`) are activated with `E`. Each activated valve visibly turns and lights up.
+2. **Maintenance Portal**: `LakeLevel` counts the three activated valves. Activating the last valve emits `lake_gate_unlocked`, activates `MaintenancePortal` using `arit_gate_maintenance_station_ext_01.png`, and updates the objective HUD. The player can then press `E` to enter `gate_chamber.tscn` at `from_lake`; its central gate returns to `lake.tscn` at `maintenance`.
+3. **Day-two Dashiyu task**: `Dashiyu` is present only on day 2 and only until the `lake_bottom_dashiyu_dialogue_completed` event flag is set. Pressing `E` plays `dashiyu.dialogue`; its two dialogue events shake the player camera. On completion, Dashiyu disappears, three `cyan_potion` attack potions are added and equipped, TopHintUI announces the reward, and `DayRuntime.transition_to_level_with_blackout()` moves the player to lake entry `tide_eye_arena`.
+4. **Boss-only supports**: `lake.tscn` keeps the lowercase `boss` container hidden outside the `tide_eye_arena` entry. During that entry only, it shows the Dashiyu sprite and activates `BoxGenerator`. The generator creates up to four dynamic, player-pushable `RigidBody2D` boxes using `box.png`; leaving the boss phase hides the support nodes and clears spawned boxes.
+5. **Terrain Route**: The lakebed's parallax background, cliffs, ruins, ground art, floor collision, and descent-step collision remain as the exploration route.

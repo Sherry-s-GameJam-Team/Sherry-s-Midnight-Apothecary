@@ -10,7 +10,7 @@ if intro_completed or (asked_mayor and asked_village and asked_father and asked_
 雪莉 #right(thinking): 请问，是你托人订的[color=#00c39c]涌水药水[/color]吗？
 	我一路过来，好像没见到其他村民。
 
-炉边烤鱼的少女 #left(happy, bounce): 嗯嗯，是咱要的！总算送到啦，谢谢喵！
+炉边烤鱼的少女 #left(wink, bounce): 嗯嗯，是咱要的！总算送到啦，谢谢喵！
 
 雪莉 #right(default): 呼……还好颜色没有调错。
 
@@ -20,17 +20,17 @@ if intro_completed or (asked_mayor and asked_village and asked_father and asked_
 
 炉边烤鱼的少女 #left(default): 啊，对了，还没报名字。
 
-喵斯 #left(happy, nod): 咱叫卡琳娜·喵斯。
+喵斯 #left(wink, nod): 咱叫卡琳娜·喵斯。
 	现在是涟汀村的大司鱼。
 
 雪莉 #right(thinking): 大司鱼？
 
 喵斯 #left(default): 嘛，就是管出船、看鱼汛、祭湖、分渔场，还有替全村跟外头谈生意的人喵。
 
-喵斯 #left(default): 本来这些都是爸爸的活。
+喵斯 #left(exp2_default): 本来这些都是爸爸的活。
 	可他打鱼出去以后一直没回来……
 
-喵斯 #left(thinking): 偏偏王城那边催鱼又催得紧。
+喵斯 #left(avert): 偏偏王城那边催鱼又催得紧。
 	咱现在可是临时顶着大司鱼的名号，可不能先掉链子。
 
 雪莉 #right(thinking): ……
@@ -54,7 +54,7 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 	喵斯 #left(default): “大司鱼”是涟汀村世代传下来的职位。
 		按你们人类那些麻烦称呼嘛……
 
-	喵斯 #left(happy, bounce): 大概就是村长、渔头、祭司，再加一点点王女？
+	喵斯 #left(wink, bounce): 大概就是村长、渔头、祭司，再加一点点王女？
 
 	雪莉 #right(thinking): 最后那个完全不是一回事吧。
 
@@ -63,7 +63,7 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 
 	雪莉 #right(thinking): 那村里其他人呢？
 
-	喵斯 #left(thinking): 能投亲的投亲，能搬走的搬走。
+	喵斯 #left(avert): 能投亲的投亲，能搬走的搬走。
 	没有湖，渔村就只是盖在悬崖上的一堆房子嘛。
 
 	=> question_loop
@@ -71,15 +71,15 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 - 村子怎么了？ [if not asked_village]
 	set asked_village = true
 
-	喵斯 #left(thinking): 一言难尽喵……
+	喵斯 #left(avert): 一言难尽喵……
 
-	喵斯 #left(default): 阿里特之泪原本一直贴着村子下面。
+	喵斯 #left(exp2_default): 阿里特之泪原本一直贴着村子下面。
 		以前从码头放条小船下去，半刻钟就能到鱼群最多的地方。
 
-	喵斯 #left(thinking): 后来湖心先是出现怪漩涡。
+	喵斯 #left(avert): 后来湖心先是出现怪漩涡。
 		水一天比一天少，岸线一天比一天远。
 
-	喵斯 #left(thinking): 到最后……
+	喵斯 #left(avert): 到最后……
 
 	喵斯 #left(default): 你刚才看到下面那片灰扑扑的谷底了吧？
 
@@ -89,7 +89,7 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 
 	雪莉 #right(thinking): ……那么深？
 
-	喵斯 #left(thinking): 所以码头现在才会挂在悬崖上喵。
+	喵斯 #left(avert): 所以码头现在才会挂在悬崖上喵。
 
 	喵斯 #left(default): 没鱼、没船、没客商。
 		大家总不能抱着空渔网过日子，只好一个个走了。
@@ -105,40 +105,40 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 - 你爸爸怎么失踪的？ [if not asked_father]
 	set asked_father = true
 
-	喵斯 #left(thinking): 湖水刚开始下降的时候，鱼群全往湖心跑。
+	喵斯 #left(avert): 湖水刚开始下降的时候，鱼群全往湖心跑。
 
 	喵斯 #left(default): 爸爸说那不正常，带着大船出去看看。
 
-	喵斯 #left(thinking): 结果那天湖心突然冒出一个特别大的漩涡。
+	喵斯 #left(avert): 结果那天湖心突然冒出一个特别大的漩涡。
 
-	喵斯 #left(thinking): 岸上的人只看到船被拽进去，连帆都没剩下。
+	喵斯 #left(avert): 岸上的人只看到船被拽进去，连帆都没剩下。
 
 	雪莉 #right(thinking): 没有人下去找过吗？
 
 	喵斯 #left(default): 找过呀。
 
-	喵斯 #left(thinking): 可那时候水还深得吓人，下面又一直有吸力。
+	喵斯 #left(avert): 可那时候水还深得吓人，下面又一直有吸力。
 		后来湖越来越浅，村里的人也越来越少……
 
-	喵斯 #left(thinking): 最后就剩咱了。
+	喵斯 #left(avert): 最后就剩咱了。
 
 	雪莉 #right(thinking): ……
 
-	喵斯 #left(happy, bounce): 不许摆那种脸喵。
+	喵斯 #left(wink, bounce): 不许摆那种脸喵。
 
 	喵斯 #left(default): 没见到人，也没见到尸体。
 		那就说明爸爸还没死。
 
-	喵斯 #left(happy, bounce): 大司鱼可没那么容易让鱼给吃了。
+	喵斯 #left(wink, bounce): 大司鱼可没那么容易让鱼给吃了。
 
 	=> question_loop
 
 - 你要涌水药水做什么？ [if not asked_potion]
 	set asked_potion = true
 
-	喵斯 #left(happy, bounce): 哦！这个才是正事喵！
+	喵斯 #left(wink, bounce): 哦！这个才是正事喵！
 
-	喵斯 #left(default): 你看村子下面那几条石槽没有？
+	喵斯 #left(exp2_default): 你看村子下面那几条石槽没有？
 
 	雪莉 #right(thinking): 那些埋在崖壁里的？
 
@@ -147,7 +147,7 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 	喵斯 #left(default): 湖水还高的时候，暗渠会把水引进船坞，
 		靠水轮和绞盘把大船送下去。
 
-	喵斯 #left(thinking): 现在湖干了，里面一点水都没有，整套东西也动不了。
+	喵斯 #left(avert): 现在湖干了，里面一点水都没有，整套东西也动不了。
 
 	喵斯 #left(default): 所以咱想把这些[color=#00c39c]涌水药水[/color]全倒进去。
 
@@ -155,29 +155,29 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 
 	雪莉 #right(thinking): 你是想用药水制造的水流，强行把整个船坞重新开起来？
 
-	喵斯 #left(happy, bounce): 对呀！
+	喵斯 #left(wink, bounce): 对呀！
 
 	喵斯 #left(default): 水轮一转，大船就能放下去。
 		咱就坐船下湖底找爸爸。
 
 	雪莉 #right(thinking): 你是太阳神吗？这个高度掉下去船不散架了？
 
-	喵斯 #left(thinking): ……
+	喵斯 #left(avert): ……
 
-	喵斯 #left(thinking): 可是不下去的话……
+	喵斯 #left(avert): 可是不下去的话……
 
-	喵斯 #left(thinking): 爸爸怎么办？
+	喵斯 #left(avert): 爸爸怎么办？
 
 	雪莉 #right(default): 我下去。
 
-	喵斯 #left(default, bounce): ……哈？
+	喵斯 #left(dumb, bounce): ……哈？
 
 	雪莉 #right(default): 我看到旧码头旁边还有纤绳和绞盘。
 
 	雪莉 #right(default): 不用启动整套船坞。
 		只要把绳索固定好，我一个人沿崖壁下去就行。
 
-	喵斯 #left(thinking): 那下面可是以前的湖底喵。
+	喵斯 #left(avert): 那下面可是以前的湖底喵。
 
 	雪莉 #right(default): 我知道。
 
@@ -186,15 +186,15 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 	雪莉 #right(thinking): 而且这些涌水药水先别全用掉。
 		如果下面的异变真的和水有关，它们说不定还有别的用途。
 
-	喵斯 #left(thinking): ……
+	喵斯 #left(avert): ……
 
-	喵斯 #left(default): 人类都这么爱管闲事的吗？
+	喵斯 #left(exp2_default): 人类都这么爱管闲事的吗？
 
 	雪莉 #right(default): 我只是负责把药送到以后，顺便阻止顾客拿药去做危险的事情。
 
-	喵斯 #left(thinking): 这根本不叫“顺便”喵……
+	喵斯 #left(avert): 这根本不叫“顺便”喵……
 
-	喵斯 #left(thinking): ……
+	喵斯 #left(avert): ……
 
 	喵斯 #left(default): 好吧。
 
@@ -205,23 +205,23 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 
 	雪莉 #right(thinking): 什么？
 
-	喵斯 #left(thinking): 如果见到爸爸……
+	喵斯 #left(avert): 如果见到爸爸……
 
 	喵斯 #left(default): 告诉他——
 
-	喵斯 #left(happy, bounce): 咱一个人把村子守得好好的。
+	喵斯 #left(wink, bounce): 咱一个人把村子守得好好的。
 
 	喵斯 #left(default): 王城的订单也没丢。
 
-	喵斯 #left(thinking): 还有……
+	喵斯 #left(avert): 还有……
 
-	喵斯 #left(happy, bounce): 叫他赶紧给咱滚回来！
+	喵斯 #left(wink, bounce): 叫他赶紧给咱滚回来！
 
 	雪莉 #right(default): 嗯。
 
 	雪莉 #right(default): 我会原话转告的。
 
-	喵斯 #left(happy, bounce): 那就说好了喵。
+	喵斯 #left(wink, bounce): 那就说好了喵。
 		回来之后咱会给你一个大大的好评！
 
 	=> question_loop
@@ -231,7 +231,7 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 
 喵斯 #left(default): 还有什么事吗？
 - 我现在要干什么？
-	喵斯 #left(happy, bounce): 你是金鱼吗？？这么快就忘掉了？？
+	喵斯 #left(dumb, bounce): 你是金鱼吗？？这么快就忘掉了？？
 		快让我啃你一口尝尝味道！
 	雪莉 #right(thinking, shake): 不要啊啊！
 	喵斯 #left(default): 骗你的，咱只吃湖鱼喵。麻烦你去村子尽头的码头那里套上纤绳，咱给你放下去。
@@ -242,13 +242,13 @@ if asked_mayor and asked_village and asked_father and asked_potion:
 		喵斯 #left(default): “大司鱼”是涟汀村世代传下来的职位喵。
 		=> question_menu
 	- 村子怎么了？
-		喵斯 #left(thinking): 阿里特之泪以前全是水，现在水干了，大家只好一个个走了喵。
+		喵斯 #left(avert): 阿里特之泪以前全是水，现在水干了，大家只好一个个走了喵。
 		=> question_menu
 	- 你爸爸怎么失踪的？
 		喵斯 #left(default): 他去探查湖心大漩涡，被拽进去了……但他肯定还活着喵！
 		=> question_menu
 	- 涌水药水和纤绳机？
-		喵斯 #left(happy, bounce): 纤绳机已经给你准备好啦，去西边码头就能下去湖底喵。
+		喵斯 #left(wink, bounce): 纤绳机已经给你准备好啦，去西边码头就能下去湖底喵。
 		=> question_menu
 
 - 暂时没什么了

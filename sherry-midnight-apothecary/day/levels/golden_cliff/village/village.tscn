@@ -5,24 +5,71 @@
 [ext_resource type="Texture2D" uid="uid://bmpdtdcdpigjt" path="res://day/levels/golden_cliff/village/art/大司鱼观潮台.png" id="3_platform"]
 [ext_resource type="Texture2D" uid="uid://x1g7jftaq0y8" path="res://day/levels/golden_cliff/village/art/倒悬船坞.png" id="4_dock"]
 [ext_resource type="Texture2D" uid="uid://c4meyolvn40mg" path="res://day/levels/golden_cliff/village/art/cover.png" id="4_q4gjk"]
+[ext_resource type="Texture2D" uid="uid://ds0sgwr0dysta" path="res://characters/mew/frames/idle_000.png" id="5_dnqqh"]
 [ext_resource type="Texture2D" uid="uid://cj2wsv6mf7fql" path="res://day/levels/golden_cliff/village/art/空崖码头.png" id="5_pier"]
+[ext_resource type="Texture2D" uid="uid://daevcil25kxa1" path="res://characters/mew/frames/idle_001.png" id="6_7468i"]
 [ext_resource type="Texture2D" uid="uid://bf2g5uq6n6myl" path="res://day/levels/golden_cliff/village/art/cover1.png" id="6_mkyy4"]
 [ext_resource type="Texture2D" uid="uid://b4hav5v1crmm" path="res://day/levels/golden_cliff/village/art/cover2.png" id="6_uf5qm"]
 [ext_resource type="Texture2D" uid="uid://do6d47csfhsrd" path="res://day/levels/golden_cliff/village/art/涟汀村近景.png" id="6_village"]
+[ext_resource type="Texture2D" uid="uid://wd5et8sbc8mk" path="res://characters/mew/frames/idle_002.png" id="7_lkqaj"]
 [ext_resource type="Texture2D" uid="uid://bkh6ro4oq6qo0" path="res://day/levels/golden_cliff/village/art/湖祭石阶.png" id="7_stairs"]
+[ext_resource type="Texture2D" uid="uid://s2yqs7y573a8" path="res://characters/mew/frames/idle_003.png" id="8_5gljw"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="8_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="9_collision"]
+[ext_resource type="Texture2D" uid="uid://chownq373p1j1" path="res://characters/mew/frames/idle_004.png" id="9_pbjlp"]
+[ext_resource type="Texture2D" uid="uid://cv1gxx3a1j6km" path="res://characters/mew/frames/idle_005.png" id="10_3s0yn"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="10_presentation"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="11_camera"]
+[ext_resource type="Texture2D" uid="uid://bcsbun1jbqk3v" path="res://characters/mew/frames/idle_006.png" id="11_iyupv"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="12_potions"]
+[ext_resource type="Texture2D" uid="uid://nuoqj5ty0xlw" path="res://characters/mew/frames/idle_007.png" id="12_y05ag"]
+[ext_resource type="Texture2D" uid="uid://cekdnfm05aie3" path="res://characters/mew/frames/idle_008.png" id="13_aiewt"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="13_portal"]
+[ext_resource type="Texture2D" uid="uid://dcu482mhevyro" path="res://characters/mew/frames/idle_009.png" id="14_11v4v"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="14_console"]
-[ext_resource type="Texture2D" uid="uid://b0op5lj11ncbn" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_02.png" id="14_portal_vis"]
+[ext_resource type="Texture2D" uid="uid://cski3xqwlmu7e" path="res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_01.png" id="14_portal_vis"]
+[ext_resource type="Texture2D" uid="uid://get1n20obdo5" path="res://characters/mew/frames/idle_010.png" id="15_imkog"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="15_pause_host"]
+[ext_resource type="Texture2D" uid="uid://yii8piealre8" path="res://characters/mew/frames/idle_011.png" id="16_nt3nm"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="16_pause_menu"]
+[ext_resource type="Texture2D" uid="uid://bw5ubgl1bls2" path="res://characters/mew/frames/idle_012.png" id="17_vojfr"]
 [ext_resource type="Texture2D" uid="uid://ycvegjm3gji6" path="res://characters/mew/fishing.png" id="18_hltob"]
+[ext_resource type="Texture2D" uid="uid://iremq7ulxiap" path="res://characters/mew/frames/idle_013.png" id="18_wb0a0"]
+[ext_resource type="Texture2D" uid="uid://b74qh4vtanv05" path="res://characters/mew/frames/idle_014.png" id="19_bds6e"]
 [ext_resource type="Script" uid="uid://d2nbli6p03dlx" path="res://characters/mew/mew_npc.gd" id="19_mew_npc"]
 [ext_resource type="Resource" uid="uid://b2mchd1h471oq" path="res://characters/mew/mew.dialogue" id="20_mew_dialogue"]
+[ext_resource type="Script" path="res://day/levels/golden_cliff/village/village_day_two_issue.gd" id="50_day_two_issue"]
+[ext_resource type="Texture2D" uid="uid://cmxf3ofgbbkwc" path="res://characters/mew/frames/idle_015.png" id="20_ucgdt"]
+[ext_resource type="Texture2D" uid="uid://7hw86dn12wg0" path="res://characters/mew/frames/idle_016.png" id="21_m3sex"]
+[ext_resource type="Texture2D" uid="uid://b47w4d6ct3x4y" path="res://characters/mew/frames/idle_017.png" id="22_stmde"]
+[ext_resource type="Texture2D" uid="uid://bv4upheso5gk1" path="res://characters/mew/frames/idle_018.png" id="23_24ybi"]
+[ext_resource type="Texture2D" uid="uid://b7w5f2k8nx2r8" path="res://day/levels/golden_cliff/art/cliff_yellow_plat_flat_01.png" id="24_c75w3"]
+[ext_resource type="Texture2D" uid="uid://bh7ajo5008b8f" path="res://characters/mew/frames/idle_019.png" id="24_tvcg5"]
+[ext_resource type="Texture2D" uid="uid://ckqceihxlemel" path="res://characters/mew/frames/idle_020.png" id="25_iytpi"]
+[ext_resource type="Texture2D" uid="uid://bqg6gdrdle58m" path="res://characters/mew/frames/idle_021.png" id="26_hj8s0"]
+[ext_resource type="Texture2D" uid="uid://keyssr8rtrj7" path="res://characters/mew/frames/idle_022.png" id="27_08efw"]
+[ext_resource type="Texture2D" uid="uid://dvilfi4lkekx" path="res://characters/mew/frames/idle_023.png" id="28_p143g"]
+[ext_resource type="Texture2D" uid="uid://cm3xs4vk2hhlt" path="res://characters/mew/frames/idle_024.png" id="29_6i0k8"]
+[ext_resource type="Texture2D" uid="uid://1jp6kjvbq3lp" path="res://characters/mew/frames/idle_025.png" id="30_oojsp"]
+[ext_resource type="Texture2D" uid="uid://d1sr4e6r00ond" path="res://characters/mew/frames/idle_026.png" id="31_bpgvt"]
+[ext_resource type="Texture2D" uid="uid://c0wqh812sm4kn" path="res://characters/mew/frames/idle_027.png" id="32_ex2ru"]
+[ext_resource type="Texture2D" uid="uid://ll2woetwwkb4" path="res://characters/mew/frames/idle_028.png" id="33_5gdfi"]
+[ext_resource type="Texture2D" uid="uid://dxtwocn6l5l5p" path="res://characters/mew/frames/idle_029.png" id="34_ktwb2"]
+[ext_resource type="Texture2D" uid="uid://cg8moy50gsc3t" path="res://characters/mew/frames/idle_030.png" id="35_dsagd"]
+[ext_resource type="Texture2D" uid="uid://dabv20glmqeeh" path="res://characters/mew/frames/idle_031.png" id="36_xeas7"]
+[ext_resource type="Texture2D" uid="uid://5hvde0f83sbj" path="res://characters/mew/frames/idle_032.png" id="37_5xgd0"]
+[ext_resource type="Texture2D" uid="uid://bi21dr7wykkx3" path="res://characters/mew/frames/idle_033.png" id="38_xmnti"]
+[ext_resource type="Texture2D" uid="uid://y6feqcjhfhk" path="res://characters/mew/frames/idle_034.png" id="39_hdgqk"]
+[ext_resource type="Texture2D" uid="uid://c3bscwrtupgcn" path="res://characters/mew/frames/idle_035.png" id="40_ug3na"]
+[ext_resource type="Texture2D" uid="uid://dwhpr3a78y6l1" path="res://characters/mew/frames/idle_036.png" id="41_uw40m"]
+[ext_resource type="Texture2D" uid="uid://c3ndfnsjdaxbr" path="res://characters/mew/frames/idle_037.png" id="42_xa3kc"]
+[ext_resource type="Texture2D" uid="uid://buihlpoh8eud" path="res://characters/mew/frames/idle_038.png" id="43_rj4da"]
+[ext_resource type="Texture2D" uid="uid://iu8piibduich" path="res://characters/mew/frames/idle_039.png" id="44_wj2de"]
+[ext_resource type="Texture2D" uid="uid://vnxtcv6muex7" path="res://characters/mew/frames/idle_040.png" id="45_h4upo"]
+[ext_resource type="Texture2D" uid="uid://b55drqftjg1tq" path="res://characters/mew/frames/idle_041.png" id="46_4s504"]
+[ext_resource type="Texture2D" uid="uid://bv8dq0qlh5xim" path="res://characters/mew/frames/idle_042.png" id="47_w81g6"]
+[ext_resource type="Texture2D" uid="uid://blfyercnpwu6" path="res://day/art/lake/idle_sprite/frames/idle_043.png" id="48_okbfw"]
+[ext_resource type="Texture2D" uid="uid://46cfp4qvm5hk" path="res://day/art/lake/idle_sprite/frames/idle_044.png" id="49_1u4s5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fish_0"]
 atlas = ExtResource("18_hltob")
@@ -315,6 +362,149 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mew_interaction"]
 size = Vector2(1451.3568, 800)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_l2gsy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_dnqqh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7468i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_lkqaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5gljw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pbjlp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3s0yn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_iyupv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_y05ag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_aiewt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_11v4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_imkog")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_nt3nm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_vojfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_wb0a0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_bds6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ucgdt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_m3sex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_stmde")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_24ybi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_tvcg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_iytpi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_hj8s0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_08efw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_p143g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_6i0k8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_oojsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_bpgvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_ex2ru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_5gdfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_ktwb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_dsagd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_xeas7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_5xgd0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_xmnti")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_hdgqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_ug3na")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_uw40m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_xa3kc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_rj4da")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_wj2de")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_h4upo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_4s504")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_w81g6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_okbfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_1u4s5")
+}],
+"loop": true,
+"name": &"idle_loop",
+"speed": 12.0
+}]
+
 [sub_resource type="RectangleShape2D" id="Rect_barrier"]
 size = Vector2(128, 3000)
 
@@ -324,6 +514,42 @@ size = Vector2(200, 320)
 [node name="Village" type="Node2D" unique_id=1965816465]
 script = ExtResource("1_environment")
 debug_scene_id = "golden_cliff_village"
+
+[node name="issues" type="Node2D" parent="." unique_id=744196671]
+script = ExtResource("50_day_two_issue")
+
+[node name="issue_Mews" type="Area2D" parent="issues" unique_id=361027674]
+position = Vector2(-681, -415)
+rotation = -3.1415925
+scale = Vector2(0.21337947, -0.21402825)
+script = ExtResource("19_mew_npc")
+dialogue_resource = ExtResource("20_mew_dialogue")
+interaction_hint_text = "按[E]与喵呜交谈"
+
+[node name="FishingLoop" type="AnimatedSprite2D" parent="issues/issue_Mews" unique_id=361027675]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_npax6")
+animation = &"fishing"
+frame = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="issues/issue_Mews" unique_id=361027676]
+position = Vector2(-431.8838, -60.739624)
+scale = Vector2(0.99999994, 1)
+shape = SubResource("RectangleShape2D_mew_interaction")
+
+[node name="Sprite2D" type="Sprite2D" parent="issues" unique_id=481123786]
+
+[node name="IdleLoop" type="AnimatedSprite2D" parent="issues/Sprite2D" unique_id=1622501900]
+texture_filter = 1
+position = Vector2(6773, -272)
+scale = Vector2(0.3561632, 0.31562138)
+sprite_frames = SubResource("SpriteFrames_l2gsy")
+animation = &"idle_loop"
+autoplay = "idle_loop"
+frame_progress = 0.7346741
+
+[node name="down" type="Marker2D" parent="issues" unique_id=1915977869]
+position = Vector2(6816, -162)
 
 [node name="FS" type="Parallax2D" parent="." unique_id=101000001]
 z_index = -30
@@ -407,32 +633,13 @@ scale = Vector2(0.95, 1.128453)
 texture = ExtResource("5_pier")
 centered = false
 
-[node name="Mew" type="Area2D" parent="CS" unique_id=361027674]
-position = Vector2(-1149, -452)
-rotation = 3.1415927
-scale = Vector2(0.21337947, -0.21402825)
-script = ExtResource("19_mew_npc")
-dialogue_resource = ExtResource("20_mew_dialogue")
-interaction_hint_text = "按[E]与喵呜交谈"
-
-[node name="FishingLoop" type="AnimatedSprite2D" parent="CS/Mew" unique_id=361027675]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_npax6")
-animation = &"fishing"
-frame = 25
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/Mew" unique_id=361027676]
-position = Vector2(-431.8838, -60.739624)
-scale = Vector2(0.99999994, 1)
-shape = SubResource("RectangleShape2D_mew_interaction")
-
 [node name="WorldBounds" type="Node2D" parent="CS" unique_id=104000001]
 
 [node name="Ground" type="StaticBody2D" parent="CS/WorldBounds" unique_id=104000002]
 position = Vector2(0, 660)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=1627018295]
-polygon = PackedVector2Array(1039, -319, 1042, -189, 1230, -183, 1238, 20, 942, 11, 549, -14, 68, -14, 5, -28, 1, -61, -223, -75, -241, -399, -100, -408, -110, -446, -671.23535, -473.88986, -785, -479, -1055, -457, -1050, -449, -779, -467, -764, 86, 1836, 44, 1414, -314)
+polygon = PackedVector2Array(1039, -319, 1042, -189, 1230, -183, 1238, 20, 942, 11, 549, -14, -1506, -23, -1529, 58, 1836, 44, 1414, -314)
 
 [node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=2108545383]
 polygon = PackedVector2Array(350, -803, 450, -823, 810, -812, 804, -787, 453, -794, 357, -779)
@@ -442,7 +649,7 @@ position = Vector2(11, -88)
 polygon = PackedVector2Array(1097, -704, 1162, -714, 1327, -704, 1327, -657, 1173, -657, 1080, -650, 861, -652, 781, -679, 794, -715, 868, -675, 983, -663, 1055, -680)
 
 [node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=367797070]
-polygon = PackedVector2Array(-427, -863, -209, -571, -209, -451, -271, -363, -264, -8, -1122, -9, -1121, -1398, -997, -1397, -992, -974, -787, -982)
+polygon = PackedVector2Array(-427, -863, -209, -571, -209, -451, -271, -363, -272, -290, -1101, -296, -1121, -1398, -997, -1397, -992, -974, -787, -982)
 
 [node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="CS/WorldBounds/Ground" unique_id=121609593]
 polygon = PackedVector2Array(2689, -34, 3142, -250, 3259, -262, 3326, -292, 3371, -316, 3675, -491, 3736, -548, 3826, -594, 3906, -606, 3986, -667, 4309, -823, 4343, -852, 6642, -855, 6643, -798, 4364, -785, 2832, 57)
@@ -504,10 +711,11 @@ position = Vector2(3500, 580)
 [node name="ExitPortal" type="Area2D" parent="." unique_id=106000001]
 position = Vector2(354, 543)
 script = ExtResource("13_portal")
-destination_level = &"home"
-fallback_scene_path = "res://day/levels/home/home.tscn"
+destination_level = &"golden_cliff"
+destination_entry_id = &"from_village"
+fallback_scene_path = "res://day/levels/golden_cliff/golden_cliff.tscn"
 interaction_hint_enabled = true
-interaction_hint_text = "返回药水铺"
+interaction_hint_text = "前往烁金横崖"
 
 [node name="Visual" type="Sprite2D" parent="ExitPortal" unique_id=106000003]
 position = Vector2(0, 40)
@@ -550,3 +758,8 @@ layer = 200
 script = ExtResource("15_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=109000002 instance=ExtResource("16_pause_menu")]
+
+[node name="CliffYellowPlatFlat01" type="Sprite2D" parent="." unique_id=2122077294]
+position = Vector2(-284.24994, 782.0833)
+scale = Vector2(0.7516114, 0.7516115)
+texture = ExtResource("24_c75w3")

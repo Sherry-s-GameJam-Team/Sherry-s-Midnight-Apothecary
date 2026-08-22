@@ -19,15 +19,20 @@ enum FloatState {
 @export var stable_horizontal_speed: float = 0.3
 
 @export var phase: float = 0.0
+@export_range(1.0, 4.0, 0.1) var turbulent_motion_multiplier: float = 2.4
 
 var _current_bob_amplitude: float = 18.0
 var _current_bob_speed: float = 1.8
 var _current_rot_amplitude: float = 0.035
 var _current_horizontal_amplitude: float = 14.0
 var _current_horizontal_speed: float = 0.8
+var _current_height_offset := 0.0
+var _current_turbulence_multiplier := 1.0
 
 var _origin := Vector2.ZERO
 var _transition_tween: Tween
+var _height_tween: Tween
+var _turbulence_tween: Tween
 
 func _ready() -> void:
 	_origin = position
@@ -67,11 +72,26 @@ func set_stable(is_stable: bool) -> void:
 	_transition_tween.tween_property(self, "_current_horizontal_amplitude", target_hor_amp, 1.4)
 	_transition_tween.tween_property(self, "_current_horizontal_speed", target_hor_spd, 1.4)
 
+func set_balance_height_offset(offset: float, duration := 0.45) -> void:
+	if _height_tween != null and _height_tween.is_valid():
+		_height_tween.kill()
+	_height_tween = create_tween()
+	_height_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_height_tween.tween_property(self, "_current_height_offset", offset, duration)
+
+func set_turbulent(enabled: bool, duration := 0.25) -> void:
+	var target_multiplier := turbulent_motion_multiplier if enabled else 1.0
+	if _turbulence_tween != null and _turbulence_tween.is_valid():
+		_turbulence_tween.kill()
+	_turbulence_tween = create_tween()
+	_turbulence_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_turbulence_tween.tween_property(self, "_current_turbulence_multiplier", target_multiplier, duration)
+
 func _physics_process(_delta: float) -> void:
 	var t := Time.get_ticks_msec() * 0.001
-	var hor_offset := sin(t * _current_horizontal_speed + phase) * _current_horizontal_amplitude
-	var ver_offset := sin(t * _current_bob_speed + phase) * _current_bob_amplitude
-	var rot_offset := cos(t * _current_bob_speed * 0.85 + phase) * _current_rot_amplitude
+	var hor_offset := sin(t * _current_horizontal_speed + phase) * _current_horizontal_amplitude * _current_turbulence_multiplier
+	var ver_offset := sin(t * _current_bob_speed + phase) * _current_bob_amplitude * _current_turbulence_multiplier
+	var rot_offset := cos(t * _current_bob_speed * 0.85 + phase) * _current_rot_amplitude * _current_turbulence_multiplier
 	
-	position = _origin + Vector2(hor_offset, ver_offset)
+	position = _origin + Vector2(hor_offset, ver_offset + _current_height_offset)
 	rotation = rot_offset

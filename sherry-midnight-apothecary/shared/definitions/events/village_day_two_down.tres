@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="StoryEventDefinition" format=3]
+
+[ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="1_definition"]
+[ext_resource type="Script" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
+[ext_resource type="Script" path="res://shared/events/story_event_condition.gd" id="3_condition"]
+[ext_resource type="Resource" path="res://characters/mew/mew.dialogue" id="4_dialogue"]
+
+[sub_resource type="Resource" id="DayTwo"]
+script = ExtResource("3_condition")
+minimum_day = 2
+maximum_day = 2
+
+[sub_resource type="Resource" id="OrderDelivered"]
+script = ExtResource("3_condition")
+type = 1
+key = &"mew_order_delivered"
+
+[sub_resource type="Resource" id="Trigger"]
+script = ExtResource("2_trigger")
+type = 2
+runtime_mode = 1
+interaction_key = &"village_day_two_down"
+
+[resource]
+script = ExtResource("1_definition")
+id = &"village_day_two_down"
+priority = 80
+trigger = SubResource("Trigger")
+conditions = Array[ExtResource("3_condition")]([SubResource("DayTwo"), SubResource("OrderDelivered")])
+dialogue_resource = ExtResource("4_dialogue")
+dialogue_title = &"question_menu"

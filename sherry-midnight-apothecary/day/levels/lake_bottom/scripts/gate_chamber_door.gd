@@ -6,8 +6,10 @@ extends Area2D
 @export_file("*.tscn") var fallback_scene_path: String = "res://day/levels/lake_bottom/lake.tscn"
 @export var prompt_text: String = "E 返回阿里特之泪湖床"
 @export var player_group: StringName = &"player"
+@export var requires_activation := false
 
 var _player_near := false
+var _portal_active := true
 
 @onready var prompt: Label = get_node_or_null("Prompt")
 @onready var glow: PointLight2D = get_node_or_null("Glow")
@@ -15,12 +17,26 @@ var _player_near := false
 func _ready() -> void:
 	body_entered.connect(_on_enter)
 	body_exited.connect(_on_exit)
+	_portal_active = not requires_activation
 	if prompt:
-		prompt.visible = false
 		prompt.text = prompt_text
+	_set_portal_active(_portal_active)
+
+func set_portal_active(value: bool) -> void:
+	_set_portal_active(value)
+
+func _set_portal_active(value: bool) -> void:
+	_portal_active = value
+	visible = value
+	monitoring = value
+	monitorable = value
+	if prompt:
+		prompt.visible = value and _player_near
+	if glow:
+		glow.energy = 0.6 if value else 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _player_near:
+	if not _portal_active or not _player_near:
 		return
 	if event.is_action_pressed(&"interact") or (event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_E):
 		var vp := get_viewport()
@@ -38,9 +54,9 @@ func _travel() -> void:
 func _on_enter(body: Node) -> void:
 	if body.is_in_group(player_group) or body is CharacterBody2D:
 		_player_near = true
-		if prompt:
+		if _portal_active and prompt:
 			prompt.visible = true
-		if glow:
+		if _portal_active and glow:
 			create_tween().tween_property(glow, "energy", 1.8, 0.3)
 
 func _on_exit(body: Node) -> void:

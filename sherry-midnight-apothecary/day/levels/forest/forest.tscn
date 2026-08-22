@@ -29,10 +29,10 @@
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dew_flask_herb/dew_flask_herb_herb.tscn" id="38_dew_flask"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/old_mans_noose/old_mans_noose_herb.tscn" id="39_old_mans_noose"]
 [ext_resource type="PackedScene" path="res://day/levels/forest/art/npc/hanging_frame/hanging_frame.tscn" id="40_hanging_frame"]
-[ext_resource type="Script" path="res://day/levels/forest/forest_day_one_enzuo_intro.gd" id="41_enzuo_intro"]
+[ext_resource type="Script" uid="uid://d0vjwiqr5jcbr" path="res://day/levels/forest/forest_day_one_enzuo_intro.gd" id="41_enzuo_intro"]
 [ext_resource type="Resource" uid="uid://y2s1632xcryh" path="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue" id="42_enzuo_dialogue"]
-[ext_resource type="Script" path="res://day/levels/forest/forest_enzuo_rescue_controller.gd" id="43_enzuo_rescue"]
-[ext_resource type="Resource" path="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue" id="44_enzuo_rescue_dialogue"]
+[ext_resource type="Script" uid="uid://ctla20lgv7pq2" path="res://day/levels/forest/forest_enzuo_rescue_controller.gd" id="43_enzuo_rescue"]
+[ext_resource type="Resource" uid="uid://dh6ysp3y2yxot" path="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue" id="44_enzuo_rescue_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
 size = Vector2(138, 167)
@@ -375,7 +375,6 @@ script = ExtResource("31_boss_interface")
 forest_path = NodePath("..")
 
 [node name="issue_save_enzuo" type="Node2D" parent="." unique_id=387401203]
-visible = false
 script = ExtResource("41_enzuo_intro")
 dialogue_resource = ExtResource("42_enzuo_dialogue")
 player_path = NodePath("../Player")
@@ -392,12 +391,12 @@ position = Vector2(385, -90)
 scale = Vector2(0.28002366, 0.28002366)
 
 [node name="sherry" type="Marker2D" parent="issue_save_enzuo" unique_id=321336873]
-position = Vector2(208, 666)
+position = Vector2(166, 602)
 
 [node name="luca" type="Marker2D" parent="issue_save_enzuo" unique_id=541770498]
-position = Vector2(335, 686)
+position = Vector2(411, 605)
 
-[node name="ForestEnzuoRescueController" type="Node2D" parent="issue_save_enzuo"]
+[node name="ForestEnzuoRescueController" type="Node2D" parent="issue_save_enzuo" unique_id=1776719220]
 script = ExtResource("43_enzuo_rescue")
 release_dialogue = ExtResource("44_enzuo_rescue_dialogue")
 player_path = NodePath("../../Player")

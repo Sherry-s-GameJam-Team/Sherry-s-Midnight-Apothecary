@@ -30,7 +30,7 @@ The global `PauseMenu` (`res://night/ui/pause_menu/pause_menu.tscn`) is embedded
 
 - id: `golden_cliff`, display name `烁金横崖`
 - disaster: `断衡之灾` (corrupted by default, `start_corrupted = true`)
-- default entry: `EntryPoints/default`; extra entries: `from_home`, `from_south`, `from_lake`
+- default entry: `EntryPoints/default`; extra entries: `from_home`, `from_south`, `from_village`, `from_lake`
 - entrance portal: `Gameplay/EntrancePortal` via `DoorPortal` (`destination_level = &"home"`, `destination_entry_id = &"from_cliff"`, linked to Map Switch Anchor 3 / `golden_cliff`)
 - exit portal: `Gameplay/ExitPortal` via `DoorPortal` (`destination_level = &"home"`, unlocked after 3 balance mechanisms are stabilized)
 - map anchor linkage: `res://day/interactables/map_switch/data/map.tscn` Anchor03 (`destination_id = &"golden_cliff"`)
@@ -39,6 +39,10 @@ The global `PauseMenu` (`res://night/ui/pause_menu/pause_menu.tscn`) is embedded
 ## Balance Mechanisms & Dual-Pan Weight System（衡石机关二次配置）
 
 The balance stones operate as physical dual-pan weighing scales with beam tilt dynamics, visual stone stacking, indicator needle-to-notch alignment, and environmental linkages:
+
+All six fixed sections under `Gameplay/StaticPlatforms` (`StartGround`, `GroundA`, `SlopeA`, `GroundB`, `GroundC`, and `EndGround`) also drift horizontally by 5px on staggered, low-speed sine waves. Their collision surfaces move with the visual floor; floating boulders and collapsible platforms retain their separate motion behavior.
+
+`BreakA` retains its original `Body/CollisionShape2D` and `Sensor/CollisionShape2D` hierarchy, but has no behavior or position-driving script. It begins at `(4509, -500)`, above the camera's upper boundary. `BalanceC` has one slot on each pan (`max_weight = 1`) and resolves at left `1` / right `0`. While empty and unsolved, its beam is visually tilted +18° (left high, right low) to communicate the missing left weight; the visual tilt does not add a hidden weight. BalanceC's direct `weight_changed` connection reveals BreakA immediately when that `1:0` state is reached; its `stabilized` connection remains as an idempotent fallback. The entire node, including its collision boxes, moves to the editable `LevelController.break_a_resolved_position` target, currently `(4509, 743)`.
 
 ### Structure & Hit Detection
 - `BalanceMechanism` (`balance_mechanism.gd`)
@@ -63,11 +67,14 @@ The balance stones operate as physical dual-pan weighing scales with beam tilt d
 
 ### Three Distinct Balance Configurations & Terrain Linkages
 1. **`west_balance`** (`target_left_weight = 2`, `target_right_weight = 2`):
-   - Educational symmetry puzzle (both sides equal weight).
-   - **Linkage**: Western floating boulders (`BoulderA`, `BoulderB`) transition from `FloatState.UNSTABLE` (amplitude 18px, wobble rotation ±2°, high speed) to `FloatState.STABLE` (amplitude 3px, rotation 0°, low speed), forming a stable crossing path.
+   - The scale starts at `left = 0`, `right = 2`, so its left side is raised by two weights. The player restores it by adding two weights to the left pan.
+   - **Linkage**: Western floating boulders (`BoulderA`, `BoulderB`) follow the scale in real time. While the two pans differ, A rises 750px, B sinks 500px, and both use 2.4× motion amplitude/rotation. Equal but unresolved weights return them to their normal unstable height; the final `2:2` calibration changes both to `FloatState.STABLE` (amplitude 3px, rotation 0°, low speed), forming a stable crossing path.
+   - **Approach linkage**: `StartGround` continuously follows the western balance's right-minus-left weight difference. The initial `0:2` state leaves the scale's left side high and right side low, so the platform starts at a clockwise +39°; it moves to +19.5° after the first left weight (`1:2`) and reaches 0° at `2:2`. Resetting or overshooting updates its signed incline in the same way, including its collision surface.
+   - The beam, pan, hit-area, and procedural-weight anchors are corrected for the transparent margins in the source textures so the weights sit on the visible pan surfaces.
+   - **HintUI guidance**: Entering a balance stone's reset area shows a persistent `TopHintUI` prompt with the remaining left/right weights and its target. The text refreshes after each bottle hit or reset, and hides on exit or stabilization.
 2. **`middle_balance`** (`target_left_weight = 1`, `target_right_weight = 3`):
    - Asymmetrical balance puzzle (right pan naturally heavier, requiring pointer to match target notch).
-   - **Linkage**: A tilted sandstone bridge (`SlopeA`) smoothly tweens its rotation to horizontal level (0.0°), bridging the chasm.
+   - **Linkage**: The tilted sandstone bridge (`SlopeA`) and GroundB's initial clockwise 30° incline both smoothly tween to horizontal level (0.0°), bridging the chasm.
 3. **`east_balance`** (`target_left_weight = 3`, `target_right_weight = 2`):
    - Complex asymmetrical calibration puzzle (left pan heavier).
    - **Linkage**: Eastern floating boulders (`BoulderC`, `BoulderD`, `ExitPlatform`) transition to stable state and lower to reachable jumping height before the exit portal.
@@ -93,10 +100,11 @@ The balance stones operate as physical dual-pan weighing scales with beam tilt d
   - **CS (`z_index = -5`, `scroll_scale = (0.9, 0.9)`)**: `涟汀村近景.png` (近景前景村落平台与民居) + `湖祭石阶.png` (近景石阶台阶) + `大司鱼观潮台.png` (近景巨型观潮台构筑) + `WorldBounds` 物理碰撞体（`Ground` 实地位于 Collision Layer 1，`OneWayPlatforms` 单向平台位于 Collision Layer 2，支持 S 键下穿）。
 - **Core Integration**:
   - `Player`: `DayPlayerController` + `SherryCollision` + `SherryPresentation` + `PotionThrower` + `Camera2D` (跟踪界限设置为 `limit_left = -1118`, `limit_top = -1389`, `limit_right = 8550`, `limit_bottom = 803`，完整覆盖所有 Ground 碰撞多边形范围)。
-  - `Mew`: `MewNPC` (`res://characters/mew/mew_npc.gd`) 钓鱼喵呜交互节点。具备正反循环往复循环播放（Ping-Pong Loop，帧数 0..39..0 无缝循环），并集成 `Area2D` 靠近感应与按 `E` 触发 `res://characters/mew/mew.dialogue` 对话功能。玩家进入感应范围时，提示文字通过共享 `TopHintUI`/HintUI 的 `show_interaction_hint()` 显示；离开范围、开始对话或卸载场景时使用同一 hint id 清除，不创建跟随世界坐标的独立 Label。对话流支持 4 项分支问询追踪（村长、村子、父亲失踪、涌水药水与纤绳机），全部问询完成后平滑进入常驻 `question_menu`。
+  - `Mew`: `MewNPC` (`res://characters/mew/mew_npc.gd`) 钓鱼喵呜交互节点。具备正反循环往复循环播放（Ping-Pong Loop，帧数 0..39..0 无缝循环），并集成 `Area2D` 靠近感应与按 `E` 触发 `res://characters/mew/mew.dialogue` 对话功能。玩家进入感应范围时，提示文字通过共享 `TopHintUI`/HintUI 的 `show_interaction_hint()` 显示；离开范围、开始对话或卸载场景时使用同一 hint id 清除，不创建跟随世界坐标的独立 Label。对话流支持 4 项分支问询追踪（村长、村子、父亲失踪、涌水药水与纤绳机），全部问询完成后平滑进入常驻 `question_menu`。对话中喵斯/炉边烤鱼的少女固定使用左侧槽位，雪莉固定使用右侧槽位；喵斯会按台词在 `default`、`avert`、`dumb`、`wink` 与 `exp2_default` 差分之间切换。该角色和 `issues` 仅在第 2 天出现；玩家从左向右穿过 `issues/down` 时，未完成订单对话会显示“请先交付订单给顾客”，完成后会显示 `IdleLoop` 并由 `village_day_two_down` 事件进入该对话资源的 `question_menu`。
   - `DebugUI`: Layer 200 `DeveloperConsole`.
   - `PauseMenuLayer`: Layer 200 `PauseMenu` with `pause_menu_host.gd`.
-  - `WorldBounds` & `EntryPoints`: `default`, `from_cliff`, `from_lake`, and `ExitPortal` (`DoorPortal` to `home`)。
+  - `WorldBounds` & `EntryPoints`: `default`, `from_cliff`, `from_lake`, and `ExitPortal` (`DoorPortal` to `golden_cliff` at `from_village`; fallback scene: `golden_cliff.tscn`). Its inactive visual uses `cliff_yellow_gate_wayportal_01.png`.
+  - The left-side village exit and `Gameplay/VillagePortal` form a reciprocal route: the village portal arrives at `GoldenCliff/EntryPoints/from_village`, and the Golden Cliff portal returns to `Village/EntryPoints/from_cliff`. Both use `DoorPortal`, which calls `DayRuntime.transition_to_level_with_blackout()` for the close-range black fade transition.
 
 ## Validation
 

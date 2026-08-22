@@ -63,6 +63,11 @@ static func run(test: TestSupport) -> void:
 	test.expect(flow.current_runtime is DayRuntime, "Sleeping creates the next DayRuntime.")
 	test.expect_equal((flow.current_runtime as DayRuntime).current_level.id, &"bedroom", "Sleeping forces the next day to start in bedroom.")
 	test.expect_equal(player.money, 27, "The sleep transition applies its NightResult exactly once.")
+	test.expect(flow.debug_set_day(7), "The debug day setter reloads the active runtime.")
+	test.expect_equal(flow.current_day, 7, "The debug day setter updates the current day.")
+	test.expect(flow.current_runtime is DayRuntime, "Setting the day keeps the active day runtime mode.")
+	test.expect_equal((flow.current_runtime as DayRuntime).day, 7, "The rebuilt DayRuntime receives the requested day.")
+	test.expect(not flow.debug_set_day(GameFlow.FINAL_DAY + 1), "The debug day setter rejects days outside the supported range.")
 
 	test.expect(flow.resume_game(30, GameFlow.Mode.NIGHT), "A day-30 night can be resumed.")
 	test.expect(flow.complete_night_to_bedroom(NightResult.new()), "Day 30 sleep completes.")

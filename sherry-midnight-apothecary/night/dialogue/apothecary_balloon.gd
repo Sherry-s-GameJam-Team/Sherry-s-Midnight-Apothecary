@@ -70,9 +70,9 @@ var _is_transitioning := false
 var _is_closing := false
 var _dialogue_targets_locked := false
 
-
 func _ready() -> void:
 	balloon.hide()
+	_configure_portrait_ui_layout()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 	if responses_menu.next_action.is_empty():
 		responses_menu.next_action = next_action
@@ -81,6 +81,40 @@ func _ready() -> void:
 	if auto_start:
 		assert(is_instance_valid(dialogue_resource), DMConstants.get_error_message(DMConstants.ERR_MISSING_RESOURCE_FOR_AUTOSTART))
 		start()
+
+
+func _configure_portrait_ui_layout() -> void:
+	if portrait_layer == null:
+		return
+	portrait_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	if not portrait_layer.resized.is_connected(_layout_portrait_slots):
+		portrait_layer.resized.connect(_layout_portrait_slots)
+	call_deferred("_layout_portrait_slots")
+
+
+func _layout_portrait_slots() -> void:
+	if portrait_layer == null or portrait_layer.size.x <= 0.0 or portrait_layer.size.y <= 0.0:
+		return
+	for slot_name in ["left", "center", "right"]:
+		var slot := get_slot(slot_name)
+		if slot == null:
+			continue
+		var normalized_bounds: Rect2 = _get_portrait_slot_bounds(slot_name)
+		var pixel_rect := Rect2(
+			portrait_layer.size * normalized_bounds.position,
+			portrait_layer.size * normalized_bounds.size
+		)
+		slot.set_dialogue_layout_rect(pixel_rect)
+
+
+func _get_portrait_slot_bounds(slot_name: String) -> Rect2:
+	match slot_name:
+		"left":
+			return Rect2(0.04, 0.14, 0.38, 0.74)
+		"right":
+			return Rect2(0.58, 0.14, 0.38, 0.74)
+		_:
+			return Rect2(0.31, 0.10, 0.38, 0.78)
 
 
 func _exit_tree() -> void:
@@ -301,7 +335,12 @@ func _process_portrait_syntax(line: DialogueLine) -> void:
 	if line.text.contains("[portrait"):
 		_parse_inline_portrait_bbcode(line.text, clean_speaker)
 
-	# 4. Update active speaking focus
+	# 4. Guarantee the two primary speakers stay in their authored sides even
+	# when a dialogue resource used legacy inline #left/#right syntax that was
+	# normalised by Dialogue Manager before this balloon received the line.
+	_ensure_primary_speaker_slot(clean_speaker)
+
+	# 5. Update active speaking focus
 	_update_portrait_focus(clean_speaker)
 
 
@@ -419,6 +458,30 @@ func _parse_inline_portrait_bbcode(text: String, speaker: String) -> void:
 
 		if not char_name.is_empty():
 			show_portrait(char_name, expr_name, slot_name, anim_name)
+
+
+func _ensure_primary_speaker_slot(speaker: String) -> void:
+	var normalized_speaker := speaker.strip_edges().to_lower()
+	if normalized_speaker not in ["sherry", "雪莉", "mew", "喵呜", "喵斯", "mews", "卡琳娜", "卡琳娜·喵斯", "炉边烤鱼的少女"]:
+		return
+
+	var target_slot_name := DialoguePortraitDatabase.get_default_slot_for_character(speaker)
+	var target_slot := get_slot(target_slot_name)
+	if target_slot == null:
+		return
+
+	var expression := "default"
+	for slot in [left_slot, center_slot, right_slot]:
+		if not is_instance_valid(slot) or not slot.is_active:
+			continue
+		if slot.current_character.strip_edges().to_lower() != normalized_speaker:
+			continue
+		expression = slot.current_expression
+		if slot != target_slot:
+			slot.clear_instant()
+
+	if not target_slot.is_active or target_slot.current_character.strip_edges().to_lower() != normalized_speaker:
+		target_slot.show_portrait(speaker, expression, "fade_in")
 
 
 func _update_portrait_focus(speaking_character: String) -> void:

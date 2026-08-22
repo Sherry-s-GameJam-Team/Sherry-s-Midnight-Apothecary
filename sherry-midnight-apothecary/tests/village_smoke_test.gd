@@ -86,6 +86,31 @@ func _initialize() -> void:
 		push_error("village_smoke_test: Camera limits not set to (-1118, -1389) -> (8550, 803). Found: (%d, %d, %d, %d)" % [camera.limit_left, camera.limit_top, camera.limit_right, camera.limit_bottom])
 		quit(1)
 		return
+
+	# Verify the village exit is the shared DoorPortal route matching Magic Map
+	# Anchor03, which is authored as the Golden Cliff destination.
+	var exit_portal := inst.get_node_or_null("ExitPortal") as DoorPortal
+	if exit_portal == null:
+		push_error("village_smoke_test: Missing ExitPortal DoorPortal")
+		quit(1)
+		return
+	if exit_portal.destination_level != &"golden_cliff" or exit_portal.destination_entry_id != &"from_village":
+		push_error("village_smoke_test: ExitPortal must route to the Golden Cliff from_village entry point")
+		quit(1)
+		return
+	var interaction_scene := load("res://day/interactables/map_switch/map_switch_interaction.tscn") as PackedScene
+	var interaction := interaction_scene.instantiate() if interaction_scene != null else null
+	var anchor03 := interaction.get_node_or_null("MapViewport/MagicMapCanvas/Map/AnchorPoints/Anchor03") as MapSwitchAnchor if interaction != null else null
+	if anchor03 == null or anchor03.destination_id != exit_portal.destination_level:
+		push_error("village_smoke_test: ExitPortal destination must match MapSwitchInteraction Anchor03")
+		quit(1)
+		return
+	interaction.free()
+	var exit_portal_visual := exit_portal.get_node_or_null("Visual") as Sprite2D
+	if exit_portal_visual == null or exit_portal_visual.texture == null or exit_portal_visual.texture.resource_path != "res://day/levels/golden_cliff/art/cliff_yellow_gate_wayportal_01.png":
+		push_error("village_smoke_test: ExitPortal must use the inactive wayportal texture")
+		quit(1)
+		return
 	
 	# Verify DeveloperConsole
 	var debug_ui := inst.get_node_or_null("DebugUI") as CanvasLayer

@@ -7,6 +7,7 @@ extends Area2D
 ## and E-key interactive dialogue triggering.
 
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
+const ORDER_DELIVERED_FLAG: StringName = &"mew_order_delivered"
 
 signal dialogue_started
 signal dialogue_finished
@@ -146,6 +147,9 @@ func _finish_dialogue() -> void:
 		return
 	_dialogue_open = false
 	_balloon = null
+	var player_data := _find_player_data()
+	if player_data != null:
+		player_data.set_event_flag(ORDER_DELIVERED_FLAG)
 	if not _modal_lock_was_set and is_inside_tree() and get_tree() != null:
 		get_tree().remove_meta("day_modal_input_locked")
 	dialogue_finished.emit()

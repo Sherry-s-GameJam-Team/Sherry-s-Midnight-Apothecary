@@ -7,47 +7,37 @@
 [ext_resource type="Texture2D" uid="uid://bq2o2riwx71wv" path="res://day/levels/lake_bottom/art/arit_prop_waterline_cliff_01.png" id="5_cliff"]
 [ext_resource type="Texture2D" uid="uid://b7vlu5jax7bby" path="res://day/levels/lake_bottom/art/arit_plat_lakebed_flat_01.png" id="6_flat"]
 [ext_resource type="Texture2D" uid="uid://dokjij16v052q" path="res://day/levels/lake_bottom/art/arit_plat_lakebed_slope_01.png" id="7_slope"]
-[ext_resource type="Texture2D" uid="uid://d1bcu0f5x6giw" path="res://day/levels/lake_bottom/art/arit_prop_boat_dashiyu_wreck_01.png" id="8_boat"]
-[ext_resource type="Texture2D" uid="uid://cr0x04o5k464x" path="res://day/levels/lake_bottom/art/arit_prop_fish_skeleton_large_01.png" id="9_fish"]
 [ext_resource type="Texture2D" uid="uid://bgb42vnomwvjn" path="res://day/levels/lake_bottom/art/arit_prop_submerged_ruins_01.png" id="10_ruins"]
 [ext_resource type="Texture2D" uid="uid://dypl5d2o6enbo" path="res://day/levels/lake_bottom/art/arit_gate_maintenance_station_ext_01.png" id="11_station"]
-[ext_resource type="Texture2D" uid="uid://dm55nd0k7v67k" path="res://day/levels/lake_bottom/art/arit_bg_gate_chamber_01.png" id="12_chamber"]
-[ext_resource type="Texture2D" uid="uid://d4i2m7b4dcjl1" path="res://day/levels/lake_bottom/art/arit_gate_sunken_broken_01.png" id="13_gate_broken"]
-[ext_resource type="Texture2D" uid="uid://d3a2eucaissvw" path="res://day/levels/lake_bottom/art/arit_gate_sunken_restored_01.png" id="14_gate_restored"]
+[ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="12_dashiyu"]
+[ext_resource type="Texture2D" path="res://day/levels/lake_bottom/box.png" id="13_box"]
 [ext_resource type="Texture2D" uid="uid://dhgdilk1iygdv" path="res://day/levels/lake_bottom/art/arit_mech_spring_valve_01.png" id="15_valve"]
 [ext_resource type="Texture2D" uid="uid://dguwpx373ih1e" path="res://day/levels/lake_bottom/art/wheel.png" id="15_wheel"]
-[ext_resource type="Texture2D" uid="uid://ekxrie1m1igh" path="res://day/levels/lake_bottom/art/arit_mech_purification_lance_01.png" id="16_lance"]
-[ext_resource type="Script" uid="uid://dtyccshyokgkb" path="res://day/levels/lake_bottom/scripts/event_trigger.gd" id="17_trigger"]
 [ext_resource type="Script" uid="uid://dma2d3v7ls2l1" path="res://day/levels/lake_bottom/scripts/spring_valve.gd" id="18_valve_script"]
-[ext_resource type="Script" uid="uid://dkdaqc0gdsej3" path="res://day/levels/lake_bottom/scripts/springburst_throw_point.gd" id="19_throw"]
-[ext_resource type="Script" uid="uid://da0nrxyvj4qhy" path="res://day/levels/lake_bottom/scripts/tide_eye.gd" id="20_eye"]
-[ext_resource type="Script" uid="uid://mvay5o50vac6" path="res://day/levels/lake_bottom/scripts/purification_lance.gd" id="21_lance_script"]
 [ext_resource type="Script" uid="uid://bui3bq8yvkjj7" path="res://day/levels/lake_bottom/scripts/ambient_lake_fx.gd" id="22_fx"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="23_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="24_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="25_presentation"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="26_potions"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="27_console"]
-[ext_resource type="Script" path="res://day/levels/lake_bottom/scripts/gate_chamber_door.gd" id="28_door"]
+[ext_resource type="Script" uid="uid://ddd6b12hipig7" path="res://day/levels/lake_bottom/scripts/gate_chamber_door.gd" id="28_door"]
+[ext_resource type="Script" path="res://day/levels/lake_bottom/scripts/boss_box_spawner.gd" id="30_box_spawner"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="29_pause_menu"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(9600, 90)
 
 [sub_resource type="RectangleShape2D" id="SlopeStepShape"]
-size = Vector2(580, 42)
+size = Vector2(1266, 42)
 
-[sub_resource type="RectangleShape2D" id="TriggerShape"]
-size = Vector2(388, 109)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5pqwh"]
+size = Vector2(279, 1162)
 
 [sub_resource type="RectangleShape2D" id="ValveShape"]
 size = Vector2(220, 260)
 
-[sub_resource type="CircleShape2D" id="EyeShape"]
-radius = 430.0
-
-[sub_resource type="RectangleShape2D" id="LanceInteractShape"]
-size = Vector2(330, 310)
+[sub_resource type="RectangleShape2D" id="PortalShape"]
+size = Vector2(320, 300)
 
 [node name="Lake" type="Node2D" unique_id=2118471385]
 script = ExtResource("1_lake")
@@ -63,6 +53,8 @@ script = ExtResource("23_player")
 
 [node name="SherryPresentation" parent="Player" unique_id=285167296 instance=ExtResource("25_presentation")]
 
+[node name="PotionThrower" parent="Player" unique_id=1111505702 instance=ExtResource("26_potions")]
+
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=703608565]
 process_callback = 0
 limit_left = 0
@@ -72,24 +64,19 @@ limit_bottom = 1080
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
-[node name="PotionThrower" parent="Player" unique_id=1111505702 instance=ExtResource("26_potions")]
-
 [node name="EntryPoints" type="Node2D" parent="." unique_id=1620726355]
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=2048444464]
-position = Vector2(360, 600)
+position = Vector2(620, 712)
 
 [node name="from_village" type="Marker2D" parent="EntryPoints" unique_id=969027244]
-position = Vector2(360, 600)
+position = Vector2(629, 569)
 
 [node name="maintenance" type="Marker2D" parent="EntryPoints" unique_id=2020782775]
 position = Vector2(5520, 650)
 
-[node name="boss" type="Marker2D" parent="EntryPoints" unique_id=640009762]
+[node name="tide_eye_arena" type="Marker2D" parent="EntryPoints" unique_id=640009762]
 position = Vector2(7460, 660)
-
-[node name="from_gate" type="Marker2D" parent="EntryPoints" unique_id=271242601]
-position = Vector2(9080, 650)
 
 [node name="Background" type="Node2D" parent="." unique_id=1630105901]
 
@@ -125,6 +112,24 @@ texture = ExtResource("4_lakebed")
 z_index = 3
 script = ExtResource("22_fx")
 
+[node name="boss" type="Node2D" parent="." unique_id=1943154631]
+visible = false
+
+[node name="boxgenerate" type="Marker2D" parent="boss" unique_id=1336344998]
+position = Vector2(6102, 599)
+
+[node name="Dashiyu" type="Sprite2D" parent="boss" unique_id=910027275]
+position = Vector2(7050, 808)
+scale = Vector2(0.1637475, 0.15820341)
+texture = ExtResource("12_dashiyu")
+
+[node name="BoxGenerator" type="Node2D" parent="boss" unique_id=1336344999]
+script = ExtResource("30_box_spawner")
+box_texture = ExtResource("13_box")
+spawn_marker_path = NodePath("../boxgenerate")
+maximum_boxes = 4
+spawn_interval = 5.0
+
 [node name="WorldArt" type="Node2D" parent="." unique_id=658106208]
 
 [node name="WaterlineCliff" type="Sprite2D" parent="WorldArt" unique_id=621872248]
@@ -144,11 +149,11 @@ texture = ExtResource("7_slope")
 flip_h = true
 
 [node name="GroundA" type="Sprite2D" parent="WorldArt" unique_id=2042994340]
-position = Vector2(3311, 1078)
+position = Vector2(3307, 972)
 texture = ExtResource("6_flat")
 
 [node name="GroundB" type="Sprite2D" parent="WorldArt" unique_id=2106927588]
-position = Vector2(5267, 1002)
+position = Vector2(5280, 1066)
 texture = ExtResource("6_flat")
 
 [node name="GroundC" type="Sprite2D" parent="WorldArt" unique_id=420447332]
@@ -156,35 +161,13 @@ position = Vector2(7322, 991)
 texture = ExtResource("6_flat")
 
 [node name="GroundD" type="Sprite2D" parent="WorldArt" unique_id=2073383758]
-position = Vector2(8780, 720)
+position = Vector2(9233, 1009)
 texture = ExtResource("6_flat")
-
-[node name="FishSkeleton" type="Sprite2D" parent="WorldArt" unique_id=1082970974]
-modulate = Color(0.92, 1, 1, 0.92)
-position = Vector2(4347, 606.00006)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("9_fish")
 
 [node name="SubmergedRuins" type="Sprite2D" parent="WorldArt" unique_id=2122408009]
 position = Vector2(3254.0002, 797)
 scale = Vector2(0.5635615, 0.5003315)
 texture = ExtResource("10_ruins")
-
-[node name="DashiyuBoat" type="Sprite2D" parent="WorldArt" unique_id=1526397316]
-position = Vector2(4678, 748)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_boat")
-
-[node name="MaintenanceStation" type="Sprite2D" parent="WorldArt" unique_id=1665378185]
-position = Vector2(5700, 570)
-scale = Vector2(0.72, 0.72)
-texture = ExtResource("11_station")
-
-[node name="ChamberBackdrop" type="Sprite2D" parent="WorldArt" unique_id=876863092]
-modulate = Color(1, 1, 1, 0.92)
-position = Vector2(6802.9995, 707)
-scale = Vector2(0.58, 0.58)
-texture = ExtResource("12_chamber")
 
 [node name="Physics" type="Node2D" parent="." unique_id=1023988994]
 
@@ -204,18 +187,19 @@ texture = ExtResource("6_flat")
 position = Vector2(636, 688)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/DescentStep1" unique_id=1586466942]
-position = Vector2(-79, 303)
+position = Vector2(328, 348)
 shape = SubResource("SlopeStepShape")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Physics/DescentStep1" unique_id=2061390918]
-polygon = PackedVector2Array(3607, 275, 3611, 380, 7471, 380, 7683, 256)
+position = Vector2(-1, 15)
+polygon = PackedVector2Array(3653, 328, 3703, 231, 1654, 248, 1694, 461, 7474, 384, 9565, 375, 10615, 606, 10742, 564, 9622, 127, 9489, 153, 9529, 275)
 
 [node name="DescentStep2" type="StaticBody2D" parent="Physics" unique_id=1783333820]
 position = Vector2(1180, 755)
-collision_layer = 3
+collision_layer = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Physics/DescentStep2" unique_id=739540171]
-polygon = PackedVector2Array(-288, 208, 592, -49, 654, -2, -245, 256, -349, 215)
+polygon = PackedVector2Array(592, -49, 654, -2, -242, 265, -395, 265)
 one_way_collision = true
 
 [node name="DescentStep3" type="StaticBody2D" parent="Physics" unique_id=496855451]
@@ -226,51 +210,15 @@ position = Vector2(3.0517578e-05, 40.4791)
 scale = Vector2(1, 0.8739754)
 polygon = PackedVector2Array(-351, -14.278564, -245, -19.999573, 604, 212, 561, 248)
 
-[node name="StoryZones" type="Node2D" parent="." unique_id=5292618]
+[node name="StaticBody2D" type="StaticBody2D" parent="Physics" unique_id=328484047]
 
-[node name="LakebedArrival" type="Area2D" parent="StoryZones" unique_id=670883247]
-position = Vector2(2150, 610)
-script = ExtResource("17_trigger")
-event_id = &"lakebed_arrival"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Physics/StaticBody2D" unique_id=1359111354]
+position = Vector2(129.5, 571)
+shape = SubResource("RectangleShape2D_5pqwh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StoryZones/LakebedArrival" unique_id=127669953]
-position = Vector2(95, 221.5)
-shape = SubResource("TriggerShape")
-
-[node name="DashiyuFound" type="Area2D" parent="StoryZones" unique_id=1151300372]
-position = Vector2(5900, 610)
-script = ExtResource("17_trigger")
-event_id = &"dashiyu_found"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StoryZones/DashiyuFound" unique_id=926735264]
-shape = SubResource("TriggerShape")
-
-[node name="DashiyuSpawn" type="Marker2D" parent="StoryZones/DashiyuFound" unique_id=441247998]
-position = Vector2(100, 100)
-
-[node name="ChamberEntrance" type="Area2D" parent="StoryZones" unique_id=1849182371]
-position = Vector2(5700, 670)
-script = ExtResource("28_door")
-destination_level = &"gate_chamber"
-destination_entry_id = &"from_lake"
-fallback_scene_path = "res://day/levels/lake_bottom/gate_chamber.tscn"
-prompt_text = "E 进入旧旅门维护站"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StoryZones/ChamberEntrance" unique_id=1849182372]
-shape = SubResource("TriggerShape")
-
-[node name="Prompt" type="Label" parent="StoryZones/ChamberEntrance" unique_id=1849182373]
-offset_left = -120.0
-offset_top = -140.0
-offset_right = 120.0
-offset_bottom = -105.0
-text = "E 进入旧旅门维护站"
-horizontal_alignment = 1
-
-[node name="Glow" type="PointLight2D" parent="StoryZones/ChamberEntrance" unique_id=1849182374]
-color = Color(0.3, 0.9, 1, 1)
-energy = 0.5
-texture_scale = 2.5
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Physics/StaticBody2D" unique_id=1028973771]
+position = Vector2(10764, 487)
+shape = SubResource("RectangleShape2D_5pqwh")
 
 [node name="ValvePuzzle" type="Node2D" parent="." unique_id=1403542485]
 
@@ -280,14 +228,17 @@ script = ExtResource("18_valve_script")
 valve_id = &"north_spring"
 
 [node name="Base" type="Sprite2D" parent="ValvePuzzle/Valve01" unique_id=1720831037]
+position = Vector2(-143, 233.99998)
 scale = Vector2(0.24, 0.24)
 texture = ExtResource("15_valve")
 
 [node name="Sprite" type="Sprite2D" parent="ValvePuzzle/Valve01" unique_id=1720831038]
+position = Vector2(-141.99998, 235.99998)
 scale = Vector2(0.24, 0.24)
 texture = ExtResource("15_wheel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ValvePuzzle/Valve01" unique_id=31809857]
+position = Vector2(-136, 273)
 shape = SubResource("ValveShape")
 
 [node name="Prompt" type="Label" parent="ValvePuzzle/Valve01" unique_id=272014866]
@@ -318,7 +269,7 @@ scale = Vector2(0.24, 0.24)
 texture = ExtResource("15_wheel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ValvePuzzle/Valve02" unique_id=580530630]
-position = Vector2(51, 138)
+position = Vector2(42, 180)
 shape = SubResource("ValveShape")
 
 [node name="Prompt" type="Label" parent="ValvePuzzle/Valve02" unique_id=237481622]
@@ -334,7 +285,7 @@ energy = 0.0
 texture_scale = 2.5
 
 [node name="Valve03" type="Area2D" parent="ValvePuzzle" unique_id=1391297136]
-position = Vector2(6900, 675)
+position = Vector2(6263, 657)
 script = ExtResource("18_valve_script")
 valve_id = &"cliff_spring"
 
@@ -349,7 +300,7 @@ scale = Vector2(0.24, 0.24)
 texture = ExtResource("15_wheel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ValvePuzzle/Valve03" unique_id=964383079]
-position = Vector2(-6, 152)
+position = Vector2(-11, 197)
 shape = SubResource("ValveShape")
 
 [node name="Prompt" type="Label" parent="ValvePuzzle/Valve03" unique_id=1952433087]
@@ -364,105 +315,42 @@ horizontal_alignment = 1
 energy = 0.0
 texture_scale = 2.5
 
-[node name="BossArena" type="Node2D" parent="." unique_id=705014829]
-
-[node name="TideEye" type="Node2D" parent="BossArena" unique_id=991884341]
-position = Vector2(8260, 700)
-script = ExtResource("20_eye")
-
-[node name="SuctionArea" type="Area2D" parent="BossArena/TideEye" unique_id=1623837655]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArena/TideEye/SuctionArea" unique_id=772388742]
-shape = SubResource("EyeShape")
-
-[node name="ThrowPointA" type="Area2D" parent="BossArena" unique_id=737291860]
-position = Vector2(7600, 690)
-script = ExtResource("19_throw")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArena/ThrowPointA" unique_id=1332599627]
-shape = SubResource("ValveShape")
-
-[node name="WaterTarget" type="Marker2D" parent="BossArena/ThrowPointA" unique_id=1738357953]
-position = Vector2(460, 10)
-
-[node name="WaterSplash" type="Node2D" parent="BossArena/ThrowPointA" unique_id=425394541]
-position = Vector2(460, 10)
-
-[node name="Column" type="Polygon2D" parent="BossArena/ThrowPointA/WaterSplash" unique_id=1721872755]
-color = Color(0.22, 0.92, 1, 0.62)
-polygon = PackedVector2Array(-28, 0, 28, 0, 48, -190, -48, -190)
-
-[node name="ThrowPointB" type="Area2D" parent="BossArena" unique_id=1859689580]
-position = Vector2(8520, 690)
-script = ExtResource("19_throw")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArena/ThrowPointB" unique_id=468780908]
-shape = SubResource("ValveShape")
-
-[node name="WaterTarget" type="Marker2D" parent="BossArena/ThrowPointB" unique_id=1151163627]
-position = Vector2(-280, 10)
-
-[node name="WaterSplash" type="Node2D" parent="BossArena/ThrowPointB" unique_id=1923693968]
-position = Vector2(-280, 10)
-
-[node name="Column" type="Polygon2D" parent="BossArena/ThrowPointB/WaterSplash" unique_id=336068989]
-color = Color(0.22, 0.92, 1, 0.62)
-polygon = PackedVector2Array(-28, 0, 28, 0, 48, -190, -48, -190)
-
-[node name="PurificationLance" type="Node2D" parent="BossArena" unique_id=1453543523]
-position = Vector2(7280, 660)
-script = ExtResource("21_lance_script")
-
-[node name="BaseArt" type="Sprite2D" parent="BossArena/PurificationLance" unique_id=126629145]
-scale = Vector2(0.34, 0.34)
-texture = ExtResource("16_lance")
-
-[node name="Barrel" type="Node2D" parent="BossArena/PurificationLance" unique_id=1131537466]
-rotation = -0.1
-
-[node name="Muzzle" type="Marker2D" parent="BossArena/PurificationLance/Barrel" unique_id=132340607]
-position = Vector2(260, -70)
-
-[node name="Beam" type="Line2D" parent="BossArena/PurificationLance" unique_id=1855611812]
-width = 14.0
-default_color = Color(0.48, 1, 1, 0.92)
-
-[node name="InteractionArea" type="Area2D" parent="BossArena/PurificationLance" unique_id=1999877375]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BossArena/PurificationLance/InteractionArea" unique_id=2033164120]
-shape = SubResource("LanceInteractShape")
-
-[node name="Prompt" type="Label" parent="BossArena/PurificationLance/InteractionArea" unique_id=1124284961]
-offset_left = -120.0
-offset_top = -170.0
-offset_right = 120.0
-offset_bottom = -135.0
-text = "净化枪尚未供能"
-horizontal_alignment = 1
-
-[node name="Status" type="Label" parent="BossArena/PurificationLance" unique_id=877508434]
-offset_left = -110.0
-offset_top = 95.0
-offset_right = 110.0
-offset_bottom = 130.0
-text = "净化枪：离线"
-horizontal_alignment = 1
+[node name="AritPlatLakebedSlope01" type="Sprite2D" parent="ValvePuzzle" unique_id=596324375]
+position = Vector2(10746, 1064)
+scale = Vector2(-0.86456764, 1.179585)
+texture = ExtResource("7_slope")
 
 [node name="GateZone" type="Node2D" parent="." unique_id=204897423]
 
-[node name="GateBroken" type="Sprite2D" parent="GateZone" unique_id=733295747]
-position = Vector2(9300, 615)
-scale = Vector2(0.43, 0.43)
-texture = ExtResource("13_gate_broken")
+[node name="MaintenancePortal" type="Area2D" parent="GateZone" unique_id=1849182371]
+position = Vector2(5700, 670)
+script = ExtResource("28_door")
+destination_level = &"gate_chamber"
+destination_entry_id = &"from_lake"
+fallback_scene_path = "res://day/levels/lake_bottom/gate_chamber.tscn"
+prompt_text = "E 进入旧旅门维护站"
+requires_activation = true
 
-[node name="GateRestored" type="Sprite2D" parent="GateZone" unique_id=1070993351]
-visible = false
-position = Vector2(9300, 615)
-scale = Vector2(0.43, 0.43)
-texture = ExtResource("14_gate_restored")
+[node name="StationArt" type="Sprite2D" parent="GateZone/MaintenancePortal" unique_id=1665378185]
+position = Vector2(0, -100)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("11_station")
 
-[node name="ExitMarker" type="Marker2D" parent="GateZone" unique_id=604513315]
-position = Vector2(9350, 700)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GateZone/MaintenancePortal" unique_id=1849182372]
+shape = SubResource("PortalShape")
+
+[node name="Prompt" type="Label" parent="GateZone/MaintenancePortal" unique_id=1849182373]
+offset_left = -150.0
+offset_top = -205.0
+offset_right = 150.0
+offset_bottom = -170.0
+text = "E 进入旧旅门维护站"
+horizontal_alignment = 1
+
+[node name="Glow" type="PointLight2D" parent="GateZone/MaintenancePortal" unique_id=1849182374]
+color = Color(0.3, 0.9, 1, 1)
+energy = 0.6
+texture_scale = 2.5
 
 [node name="LocalHUD" type="CanvasLayer" parent="." unique_id=802497891]
 layer = 40
@@ -483,10 +371,6 @@ text = "阿里特之泪"
 [node name="Hint" type="Label" parent="LocalHUD/Panel/VBox" unique_id=1701704416]
 layout_mode = 2
 text = "沿旧水位痕迹前进。"
-
-[node name="Charges" type="Label" parent="LocalHUD/Panel/VBox" unique_id=888631962]
-layout_mode = 2
-text = "涌水药水 × 0"
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1867458414]
 

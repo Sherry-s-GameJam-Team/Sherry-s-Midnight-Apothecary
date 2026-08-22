@@ -5,6 +5,10 @@
 
 ## 在编辑器中配置
 
+### 天数约定
+
+剧情中的“第 N 天”一律对应内部天数 `N`；例如第二天必须配置 `minimum_day = 2` 且 `maximum_day = 2`。内部天数 0 为开场/教程槽位，不计入剧情天数。
+
 1. 创建 `StoryEventDefinition` 资源，并给出稳定且不重复的 `id` 与优先级。
 2. 创建 `StoryEventTriggerSpec`：选择日/夜运行时进入、关卡进入或交互；关卡与交互类型分别填写 `level_id` 或 `interaction_key`。日夜限制设在触发器上，天数范围设在条件中。夜间房间可使用 `home` 或 `bedroom` 作为关卡 ID。
 3. 添加 `StoryEventCondition` 子资源。所有条件必须同时成立；可判定天数、事件标记、剧情物品、库存、解锁地点、金钱与声誉。
@@ -26,3 +30,5 @@ Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次�
 `day_one_forest_enzuo_rescued.tres` 是常霁云林的第一日救援收束事件。它要求 `story_event_completed:day_one_forest_enzuo_intro` 已设置而 `save_enzuo_solved` 尚未设置；森林本地的藤蔓机关演出结束后显式派发该 interaction，并由事件动作设置 `save_enzuo_solved`。这会使 `issue_save_enzuo` 在后续进入时隐藏，且不授予物品、不修改库存，也不推进水车或树门主线。
 
 `day_one_bedroom_luca_urgent.tres` 是卧室内的第一日 Luca 事件。第 1 天进入 Bedroom 时，`DayOneLuca` 演出节点会取代 `SleepToWake`：黑屏渐显出完整卧室，Luca 从右侧走到床前，再自动派发 `day_one_luca_urgent` 并播放对话。此节点没有 E 键交互范围，也不会拦截卧室出口；对话完成后记录事件完成标记并设置当天“调查流明街广场的红色喷泉”任务。该天后续进入直接显示卧室；其余日期仍使用通常的起床演出。
+
+`village_day_two_down.tres` 是涟汀村的第二日交互事件。它要求 `mew_order_delivered` 已由喵斯订单对话写入，并只在内部第 2 天接收 `village_day_two_down` 交互；`issues` 本地控制器只会在该日显示，并在玩家自左向右越过 `issues/down` 时派发事件。未完成订单时，它只通过共享 `TopHintUI` 显示“请先交付订单给顾客”。事件播放 `res://characters/mew/mew.dialogue` 的 `question_menu` 标题，并在派发后显示 `IdleLoop`。

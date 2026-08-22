@@ -5,6 +5,20 @@ extends RefCounted
 ## Automatically maps NPC identities, main characters, and custom registered portraits.
 
 const NPC_BASE_PATH := "res://characters/npcs/"
+const MEW_EXPRESSION_PATHS := {
+	"default": "res://characters/mew/exp/exp_default.png",
+	"avert": "res://characters/mew/exp/exp_avert.png",
+	"dumb": "res://characters/mew/exp/exp_dumb.png",
+	"wink": "res://characters/mew/exp/exp_wink.png",
+	"exp2_default": "res://characters/mew/exp/exp2_default.png",
+}
+
+# Narrative-friendly aliases used by the current Mew dialogue.  They keep the
+# dialogue files readable while still resolving to one of the five source poses.
+const MEW_EXPRESSION_ALIASES := {
+	"happy": "wink",
+	"thinking": "avert",
+}
 
 const NPC_DEFINITIONS: Array[Dictionary] = [
 	{"id": "01_young_villager", "name": "年轻村民", "folder": "01_young_villager"},
@@ -124,15 +138,22 @@ static func _resolve_npc_texture(character_name: String, _expression: String) ->
 	return null
 
 
-static func _resolve_main_character_texture(character_name: String, _expression: String) -> Texture2D:
+static func _resolve_main_character_texture(character_name: String, expression: String) -> Texture2D:
 	var c := character_name.to_lower()
 	if c in ["mew", "喵呜", "喵斯", "mews", "卡琳娜", "卡琳娜·喵斯", "炉边烤鱼的少女"]:
-		var mew_tex := _load_texture("res://characters/mew/mew_stand.png")
+		var expression_key: String = expression.to_lower()
+		if MEW_EXPRESSION_ALIASES.has(expression_key):
+			expression_key = str(MEW_EXPRESSION_ALIASES[expression_key])
+		var mew_path := str(MEW_EXPRESSION_PATHS.get(expression_key, MEW_EXPRESSION_PATHS["default"]))
+		var mew_tex := _load_texture(mew_path)
 		if mew_tex != null:
 			return mew_tex
-		return _load_texture("res://characters/mew/frames/idle_000.png")
+		return _load_texture("res://characters/mew/mew_stand.png")
 	elif c in ["sherry", "雪莉"]:
-		var stand := _load_texture("res://characters/sherry/sherry_stand.png")
+		var stand := _load_texture("res://characters/sherry/stand.png")
+		if stand != null:
+			return stand
+		stand = _load_texture("res://characters/sherry/sherry_stand.png")
 		if stand != null:
 			return stand
 		return _load_texture("res://characters/sherry/frames/01_idle/idle_001.png")

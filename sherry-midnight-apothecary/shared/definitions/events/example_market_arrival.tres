@@ -1,26 +1,10 @@
-[gd_resource type="Resource" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="StoryEventDefinition" format=3 uid="uid://q5l714ptj0nq"]
 
-[ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="1_definition"]
-[ext_resource type="Script" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
-[ext_resource type="Script" path="res://shared/events/story_event_condition.gd" id="3_condition"]
-[ext_resource type="Script" path="res://shared/events/story_event_action.gd" id="4_action"]
-[ext_resource type="Resource" path="res://night/dialogue/test.dialogue" id="5_dialogue"]
-
-[sub_resource type="Resource" id="Trigger"]
-script = ExtResource("2_trigger")
-type = 1
-runtime_mode = 1
-level_id = &"market"
-
-[sub_resource type="Resource" id="DayZero"]
-script = ExtResource("3_condition")
-minimum_day = 0
-maximum_day = 0
-
-[sub_resource type="Resource" id="NotShown"]
-script = ExtResource("3_condition")
-type = 2
-key = &"example_market_arrival_shown"
+[ext_resource type="Script" uid="uid://rvroaswg3m6d" path="res://shared/events/story_event_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dffkqmt2sr5wc" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
+[ext_resource type="Script" uid="uid://ck8qo5xjtqg71" path="res://shared/events/story_event_condition.gd" id="3_condition"]
+[ext_resource type="Script" uid="uid://c4fo4feo2piu8" path="res://shared/events/story_event_action.gd" id="4_action"]
+[ext_resource type="Resource" uid="uid://bdkdg0nk8d388" path="res://night/dialogue/test.dialogue" id="5_dialogue"]
 
 [sub_resource type="Resource" id="ShownFlag"]
 script = ExtResource("4_action")
@@ -30,7 +14,21 @@ key = &"example_market_arrival_shown"
 script = ExtResource("4_action")
 type = 3
 key = &"herdsmans_loaf_bush"
-amount = 1
+
+[sub_resource type="Resource" id="DayZero"]
+script = ExtResource("3_condition")
+maximum_day = 0
+
+[sub_resource type="Resource" id="NotShown"]
+script = ExtResource("3_condition")
+type = 2
+key = &"example_market_arrival_shown"
+
+[sub_resource type="Resource" id="Trigger"]
+script = ExtResource("2_trigger")
+type = 1
+runtime_mode = 1
+level_id = &"market"
 
 [resource]
 script = ExtResource("1_definition")

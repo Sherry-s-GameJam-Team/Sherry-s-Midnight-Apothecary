@@ -19,6 +19,9 @@ signal balance_reset()
 @export var max_weight: int = 4
 
 @export var max_tilt_angle: float = 18.0
+# Optional visual-only tilt for an unsolved, empty scale. This lets a puzzle
+# communicate which side needs weight without changing its actual weights.
+@export_range(-45.0, 45.0, 0.5) var empty_balance_display_tilt: float = 0.0
 
 var is_stabilized: bool = false
 
@@ -44,6 +47,15 @@ var _rng := RandomNumberGenerator.new()
 # Stone visual containers
 var _left_stone_container: Node2D
 var _right_stone_container: Node2D
+
+# The pan textures contain asymmetric transparent margins. These offsets align
+# their visible plates with the beam ends and keep the procedural weights on
+# the actual plate surface rather than in the empty canvas area.
+const BEAM_PIVOT_OFFSET := Vector2(0, -35)
+const LEFT_PAN_TEXTURE_OFFSET := Vector2(20, 75)
+const RIGHT_PAN_TEXTURE_OFFSET := Vector2(30, 75)
+const PAN_WEIGHT_OFFSET := Vector2(0, 235)
+const PAN_HIT_AREA_OFFSET := Vector2(0, 215)
 
 func _ready() -> void:
 	_base_visual_position = visual.position if visual != null else position
@@ -72,7 +84,7 @@ func _setup_subnodes_if_needed() -> void:
 	if beam_pivot == null and visual != null:
 		beam_pivot = Node2D.new()
 		beam_pivot.name = "BeamPivot"
-		beam_pivot.position = Vector2(0, -35)
+		beam_pivot.position = BEAM_PIVOT_OFFSET
 		visual.add_child(beam_pivot)
 		
 		if beam != null and beam.get_parent() != beam_pivot:
@@ -80,10 +92,10 @@ func _setup_subnodes_if_needed() -> void:
 			beam.position = Vector2.ZERO
 		if left_pan != null and left_pan.get_parent() != beam_pivot:
 			left_pan.reparent(beam_pivot)
-			left_pan.position = Vector2(-230, 75)
+			left_pan.position = LEFT_PAN_TEXTURE_OFFSET
 		if right_pan != null and right_pan.get_parent() != beam_pivot:
 			right_pan.reparent(beam_pivot)
-			right_pan.position = Vector2(230, 75)
+			right_pan.position = RIGHT_PAN_TEXTURE_OFFSET
 
 	# Stone visual containers under pans
 	if left_pan != null:
@@ -92,7 +104,7 @@ func _setup_subnodes_if_needed() -> void:
 		else:
 			_left_stone_container = Node2D.new()
 			_left_stone_container.name = "StoneContainer"
-			_left_stone_container.position = Vector2(0, 75)
+			_left_stone_container.position = PAN_WEIGHT_OFFSET
 			left_pan.add_child(_left_stone_container)
 
 	if right_pan != null:
@@ -101,7 +113,7 @@ func _setup_subnodes_if_needed() -> void:
 		else:
 			_right_stone_container = Node2D.new()
 			_right_stone_container.name = "StoneContainer"
-			_right_stone_container.position = Vector2(0, 75)
+			_right_stone_container.position = PAN_WEIGHT_OFFSET
 			right_pan.add_child(_right_stone_container)
 
 func _setup_hit_areas() -> void:
@@ -115,7 +127,7 @@ func _setup_hit_areas() -> void:
 		var shape := CircleShape2D.new()
 		shape.radius = 110.0
 		col.shape = shape
-		col.position = Vector2(0, 60)
+		col.position = PAN_HIT_AREA_OFFSET
 		left_hit_area.add_child(col)
 		left_pan.add_child(left_hit_area)
 		left_hit_area.set_meta("side", &"left")
@@ -132,7 +144,7 @@ func _setup_hit_areas() -> void:
 		var shape := CircleShape2D.new()
 		shape.radius = 110.0
 		col.shape = shape
-		col.position = Vector2(0, 60)
+		col.position = PAN_HIT_AREA_OFFSET
 		right_hit_area.add_child(col)
 		right_pan.add_child(right_hit_area)
 		right_hit_area.set_meta("side", &"right")
@@ -253,6 +265,7 @@ func _update_target_indicator_angle() -> void:
 func _on_reset_area_body_entered(body: Node2D) -> void:
 	if body.name == "Player" or body is CharacterBody2D:
 		_player_in_reset_area = true
+		_show_balance_hint()
 		if not is_stabilized and reset_hint != null:
 			reset_hint.visible = true
 			var tween := reset_hint.create_tween()
@@ -261,6 +274,7 @@ func _on_reset_area_body_entered(body: Node2D) -> void:
 func _on_reset_area_body_exited(body: Node2D) -> void:
 	if body.name == "Player" or body is CharacterBody2D:
 		_player_in_reset_area = false
+		_hide_balance_hint()
 		if reset_hint != null:
 			var tween := reset_hint.create_tween()
 			tween.tween_property(reset_hint, "modulate:a", 0.0, 0.2)
@@ -308,6 +322,7 @@ func add_weight(side: StringName, impact_point: Vector2 = Vector2.ZERO) -> void:
 	
 	_play_hit_feedback(side, impact_point)
 	_refresh_balance(true)
+	_show_balance_hint()
 	_check_solution()
 
 func reset_balance() -> void:
@@ -318,6 +333,7 @@ func reset_balance() -> void:
 	right_weight = initial_right_weight
 	
 	_refresh_balance(true)
+	_show_balance_hint()
 	_spawn_ring(global_position + Vector2(0, 20), Color(0.8, 0.7, 0.4, 0.7), 60.0)
 	_spawn_fragments(global_position + Vector2(0, 20), 5)
 	balance_reset.emit()
@@ -327,6 +343,8 @@ func _refresh_balance(animated: bool = true) -> void:
 	var max_w := float(max_weight) if max_weight > 0 else 1.0
 	var normalized := clampf(diff / max_w, -1.0, 1.0)
 	var target_rotation := deg_to_rad(normalized * max_tilt_angle)
+	if not is_stabilized and left_weight == initial_left_weight and right_weight == initial_right_weight:
+		target_rotation = deg_to_rad(empty_balance_display_tilt)
 	
 	if animated and beam_pivot != null:
 		if _tilt_tween != null and _tilt_tween.is_valid():
@@ -449,6 +467,7 @@ func _stabilize() -> void:
 	if is_stabilized:
 		return
 	is_stabilized = true
+	_hide_balance_hint()
 	
 	if reset_hint != null:
 		reset_hint.visible = false
@@ -486,6 +505,47 @@ func _stabilize() -> void:
 		_spawn_fragments(global_position + Vector2(0, -10), 10)
 	
 	stabilized.emit(mechanism_id)
+
+func _show_balance_hint() -> void:
+	if not _player_in_reset_area or is_stabilized:
+		return
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.show_interaction_hint(_balance_hint_id(), _balance_hint_text())
+
+func _hide_balance_hint() -> void:
+	var top_hint := _find_top_hint()
+	if top_hint != null:
+		top_hint.hide_interaction_hint(_balance_hint_id())
+
+func _balance_hint_text() -> String:
+	var left_remaining := target_left_weight - left_weight
+	var right_remaining := target_right_weight - right_weight
+	if left_remaining < 0 or right_remaining < 0:
+		return "衡石失衡：按 [E] 重置后重新配平"
+	if left_remaining == 0 and right_remaining == 0:
+		return "衡石已配平，正在稳定……"
+	var steps: Array[String] = []
+	if left_remaining > 0:
+		steps.append("左盘 +%d" % left_remaining)
+	if right_remaining > 0:
+		steps.append("右盘 +%d" % right_remaining)
+	return "衡石校准：%s（目标 左%d / 右%d）" % ["、".join(steps), target_left_weight, target_right_weight]
+
+func _balance_hint_id() -> String:
+	return "golden_cliff_balance_%s" % mechanism_id
+
+func _find_top_hint() -> TopHintUI:
+	var current: Node = self
+	while current != null:
+		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
+		if top_hint != null:
+			return top_hint
+		current = current.get_parent()
+	return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+
+func _exit_tree() -> void:
+	_hide_balance_hint()
 
 func _spawn_ring(world_position: Vector2, color: Color, radius: float) -> void:
 	var ring := Line2D.new()

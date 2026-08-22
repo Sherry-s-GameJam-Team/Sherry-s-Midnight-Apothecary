@@ -12,6 +12,11 @@ const POTION_IDS_BY_NUMBER: Array[StringName] = [
 	&"purification_potion",
 ]
 
+# Keep this script independent from the GameFlow class so a standalone day
+# scene can load while DayRuntime is still compiling its registered levels.
+const MINIMUM_DAY := 0
+const MAXIMUM_DAY := 30
+
 var night_runtime: Node
 var day_runtime: Node
 var day_scene: Node
@@ -491,6 +496,10 @@ func _set_command(parts: PackedStringArray, additive: bool) -> String:
 	if parts.size() != 3 or not parts[2].is_valid_float():
 		return "错误：用法 %s <money|debt|health|max_health|day|temp|inventory.ID> <数值>" % parts[0]
 	var path := parts[1].to_lower()
+	if path == "day":
+		if additive or not parts[2].is_valid_int():
+			return "错误：用法 set day <0-30>。"
+		return _set_day(int(parts[2]))
 	var number := float(parts[2])
 	if path == "temp":
 		var alchemy := _alchemy()
@@ -523,6 +532,20 @@ func _set_command(parts: PackedStringArray, additive: bool) -> String:
 		_refresh_alchemy()
 		return "inventory.%s = %d" % [ingredient_id, new_count]
 	return "错误：不能设置参数 %s。" % path
+
+
+func _set_day(day: int) -> String:
+	if day < MINIMUM_DAY or day > MAXIMUM_DAY:
+		return "错误：天数必须在 0-30 之间。"
+	var app_root: Node = get_node_or_null("/root/AppRoot")
+	if app_root == null:
+		return "错误：设置天数需要通过 AppRoot 的 GameFlow 运行。"
+	var flow: Node = app_root.get("game_flow") as Node
+	if flow == null or not flow.has_method("debug_set_day"):
+		return "错误：设置天数需要通过 AppRoot 的 GameFlow 运行。"
+	if not flow.debug_set_day(day):
+		return "错误：无法设置天数。"
+	return "day = %d" % day
 
 
 func _inventory_command(parts: PackedStringArray, direction: int) -> String:
@@ -869,7 +892,7 @@ func _help_text() -> String:
   to corrupted - 切换环境为异变态
 
 Other commands:
-  day, night, status, get, set, add, give, take, potion, boss, temp, clear, close"""
+  day, night, status, get, set day <0-30>, set, add, give, take, potion, boss, temp, clear, close"""
 
 
 func _player() -> PlayerData:

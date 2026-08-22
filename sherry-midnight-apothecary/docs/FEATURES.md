@@ -34,7 +34,7 @@
 
 - [Night home & Luca interaction](night_home.md): nighttime apothecary interior, Luca intro dialogue sequence, herb rewards, hintUI feedback, alchemy guidance, and bedroom barrier business check with remaining customer confirmation.
 
-- [Lake bottom](lake_bottom.md): exposed lakebed day level — three spring valves, Tide Eye boss purification, standard Sherry player controller, embedded developer console & pause menu, and LevelData registration.
+- [Lake bottom](lake_bottom.md): exposed lakebed day level — three spring valves activate a two-way maintenance-station portal, with the existing terrain route, standard Sherry player controller, embedded developer console & pause menu, and LevelData registration.
 
 - [Potion Spectrum Codex](spectrum_codex.md): interactive, data-driven codex UI featuring vertical spectrum zoom/pan LOD view, cross-table primary x secondary function matrix view, and unlock progress tracking.
 

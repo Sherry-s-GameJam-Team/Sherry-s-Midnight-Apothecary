@@ -1,6 +1,7 @@
 extends Node
 
 @export_range(1, 8, 1) var required_balance_count: int = 3
+@export var break_a_resolved_position := Vector2(4509, 743)
 
 @onready var level_root: Node = get_parent()
 @onready var mechanisms: Node = get_parent().get_node_or_null("Gameplay/BalanceMechanisms") if get_parent() != null else null
@@ -19,17 +20,25 @@ var balance_states: Dictionary = {
 }
 
 var _disaster_cleared := false
+var _break_a_revealed := false
 var _rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	_rng.randomize()
 	_ensure_references()
 	_connect_mechanisms()
+	# BalanceMechanism initializes its exported starting weights in _ready().
+	# This controller is an earlier sibling, so synchronize after all scene
+	# children have finished their own initialization.
+	call_deferred("_sync_initial_west_balance_state")
 	if level_root != null and level_root.has_signal("environment_state_changed"):
 		if not level_root.environment_state_changed.is_connected(_on_environment_state_changed):
 			level_root.environment_state_changed.connect(_on_environment_state_changed)
 	
 	_set_portal_active(false)
+	# DoorPortal initializes after this sibling in the scene tree and enables its
+	# own monitoring, so lock the exit once more after all child _ready calls.
+	call_deferred("_set_portal_active", false)
 	_apply_environment_state()
 
 func _ensure_references() -> void:
@@ -60,6 +69,59 @@ func _connect_mechanisms() -> void:
 			if mechanism.has_signal("stabilized"):
 				if not mechanism.stabilized.is_connected(_on_mechanism_stabilized):
 					mechanism.stabilized.connect(_on_mechanism_stabilized)
+			if mechanism.has_signal("weight_changed"):
+				var weight_changed_callback := _on_mechanism_weight_changed.bind(mechanism)
+				if not mechanism.weight_changed.is_connected(weight_changed_callback):
+					mechanism.weight_changed.connect(weight_changed_callback)
+			if mechanism.has_signal("balance_reset"):
+				var reset_callback := _on_mechanism_balance_reset.bind(mechanism)
+				if not mechanism.balance_reset.is_connected(reset_callback):
+					mechanism.balance_reset.connect(reset_callback)
+
+func _sync_initial_west_balance_state() -> void:
+	_ensure_references()
+	if mechanisms == null:
+		return
+	var west_balance := mechanisms.get_node_or_null("BalanceA")
+	if west_balance != null:
+		_sync_west_balance_boulders(west_balance)
+
+func _on_mechanism_weight_changed(_side: StringName, _new_weight: int, mechanism: Node) -> void:
+	if mechanism.get("mechanism_id") == &"west_balance":
+		_sync_west_balance_boulders(mechanism)
+
+func _on_mechanism_balance_reset(mechanism: Node) -> void:
+	if mechanism.get("mechanism_id") == &"west_balance":
+		_sync_west_balance_boulders(mechanism)
+
+func _sync_west_balance_boulders(mechanism: Node) -> void:
+	var is_stabilized := bool(mechanism.get("is_stabilized"))
+	var is_imbalanced := int(mechanism.get("left_weight")) != int(mechanism.get("right_weight"))
+	if floating_boulders != null:
+		for node_name in [&"BoulderA", &"BoulderB"]:
+			var boulder := floating_boulders.get_node_or_null(NodePath(node_name))
+			if boulder == null:
+				continue
+			if boulder.has_method("set_stable"):
+				boulder.call("set_stable", is_stabilized)
+			if boulder.has_method("set_turbulent"):
+				boulder.call("set_turbulent", is_imbalanced and not is_stabilized)
+			if boulder.has_method("set_balance_height_offset"):
+				var height_offset := -750.0 if node_name == &"BoulderA" and is_imbalanced else (500.0 if is_imbalanced else 0.0)
+				boulder.call("set_balance_height_offset", height_offset)
+	_sync_west_balance_start_ground(mechanism, is_stabilized)
+
+func _sync_west_balance_start_ground(mechanism: Node, is_stabilized: bool) -> void:
+	if static_platforms == null:
+		return
+	var start_ground := static_platforms.get_node_or_null("StartGround") as StaticBody2D
+	if start_ground == null:
+		return
+	var weight_difference := int(mechanism.get("right_weight")) - int(mechanism.get("left_weight"))
+	var target_rotation := 0.0 if is_stabilized else deg_to_rad(clampf(float(weight_difference) * 19.5, -39.0, 39.0))
+	var ground_tween := start_ground.create_tween()
+	ground_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	ground_tween.tween_property(start_ground, "rotation", target_rotation, 0.45)
 
 func _on_mechanism_stabilized(mechanism_id: StringName) -> void:
 	balance_states[mechanism_id] = true
@@ -74,30 +136,53 @@ func _on_mechanism_stabilized(mechanism_id: StringName) -> void:
 	if all_stabilized and not _disaster_cleared:
 		_resolve_disaster()
 
+func _on_balance_c_stabilized(_mechanism_id: StringName) -> void:
+	_reveal_break_a()
+
+func _on_balance_c_weight_changed(_side: StringName, _new_weight: int) -> void:
+	if level_root == null:
+		return
+	var balance_c := level_root.get_node_or_null("Gameplay/BalanceMechanisms/BalanceC")
+	if balance_c != null and balance_c.left_weight == balance_c.target_left_weight and balance_c.right_weight == balance_c.target_right_weight:
+		_reveal_break_a()
+
+func _reveal_break_a() -> void:
+	if _break_a_revealed or level_root == null:
+		return
+	var break_a := level_root.get_node_or_null("Gameplay/Breakables/BreakA") as Node2D
+	if break_a == null:
+		return
+	_break_a_revealed = true
+	var break_a_tween := break_a.create_tween()
+	break_a_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	break_a_tween.tween_property(break_a, "position", break_a_resolved_position, 1.0)
+
 func _apply_mechanism_terrain_effect(mechanism_id: StringName) -> void:
 	_ensure_references()
 	match mechanism_id:
 		&"west_balance":
-			# Stabilize western floating boulders A and B
-			if floating_boulders != null:
-				for node_name in ["BoulderA", "BoulderB"]:
-					if floating_boulders.has_node(node_name):
-						var boulder: Node = floating_boulders.get_node(node_name)
-						if boulder.has_method("set_stable"):
-							boulder.call("set_stable", true)
+			# The western scale settles the A/B crossing and its tilted approach.
+			if mechanisms != null:
+				var west_balance := mechanisms.get_node_or_null("BalanceA")
+				if west_balance != null:
+					_sync_west_balance_boulders(west_balance)
 		
 		&"middle_balance":
-			# Restore tilted stone bridge / slope to horizontal
-			if static_platforms != null and static_platforms.has_node("SlopeA"):
-				var slope: StaticBody2D = static_platforms.get_node("SlopeA") as StaticBody2D
-				if slope != null:
-					var bridge_tween := slope.create_tween()
-					if bridge_tween != null:
+			# Restore the middle bridge and its sloped landing to horizontal.
+			if static_platforms != null:
+				for platform_name in [&"SlopeA", &"GroundB"]:
+					var platform := static_platforms.get_node_or_null(NodePath(platform_name)) as StaticBody2D
+					if platform != null:
+						var bridge_tween := platform.create_tween()
 						bridge_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-						bridge_tween.tween_property(slope, "rotation", 0.0, 1.2)
+						bridge_tween.tween_property(platform, "rotation", 0.0, 1.2)
 		
 		&"east_balance":
-			# Lower the eastern floating platform towards reachable height
+			# Fallback for programmatic stabilization; the scene also directly
+			# connects BalanceC's stabilized signal to _on_balance_c_stabilized().
+			_reveal_break_a()
+
+			# Lower the eastern floating platform towards reachable height.
 			if floating_boulders != null:
 				for node_name in ["BoulderC", "BoulderD"]:
 					if floating_boulders.has_node(node_name):

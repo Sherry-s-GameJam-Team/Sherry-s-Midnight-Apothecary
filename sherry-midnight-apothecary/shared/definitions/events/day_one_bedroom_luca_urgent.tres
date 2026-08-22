@@ -1,16 +1,20 @@
-[gd_resource type="Resource" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="StoryEventDefinition" format=3 uid="uid://h61evy34lhis"]
 
-[ext_resource type="Script" path="res://shared/events/story_event_definition.gd" id="1_definition"]
-[ext_resource type="Script" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
-[ext_resource type="Script" path="res://shared/events/story_event_condition.gd" id="3_condition"]
-[ext_resource type="Script" path="res://shared/events/story_event_action.gd" id="4_action"]
-[ext_resource type="Resource" path="res://day/levels/home/day_one_bedroom_luca.dialogue" id="5_dialogue"]
+[ext_resource type="Script" uid="uid://rvroaswg3m6d" path="res://shared/events/story_event_definition.gd" id="1_definition"]
+[ext_resource type="Script" uid="uid://dffkqmt2sr5wc" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
+[ext_resource type="Script" uid="uid://ck8qo5xjtqg71" path="res://shared/events/story_event_condition.gd" id="3_condition"]
+[ext_resource type="Script" uid="uid://c4fo4feo2piu8" path="res://shared/events/story_event_action.gd" id="4_action"]
+[ext_resource type="Resource" uid="uid://3sr2hhqx5830" path="res://day/levels/home/day_one_bedroom_luca.dialogue" id="5_dialogue"]
 
-[sub_resource type="Resource" id="Trigger"]
-script = ExtResource("2_trigger")
-type = 2
-runtime_mode = 1
-interaction_key = &"day_one_luca_urgent"
+[sub_resource type="Resource" id="ShownFlag"]
+script = ExtResource("4_action")
+key = &"day_one_bedroom_luca_urgent_seen"
+
+[sub_resource type="Resource" id="DailyTask"]
+script = ExtResource("4_action")
+type = 5
+key = &"lumen_street_red_fountain"
+task_title = "调查流明街广场的红色喷泉"
 
 [sub_resource type="Resource" id="FirstDay"]
 script = ExtResource("3_condition")
@@ -22,15 +26,11 @@ script = ExtResource("3_condition")
 type = 2
 key = &"day_one_bedroom_luca_urgent_seen"
 
-[sub_resource type="Resource" id="ShownFlag"]
-script = ExtResource("4_action")
-key = &"day_one_bedroom_luca_urgent_seen"
-
-[sub_resource type="Resource" id="DailyTask"]
-script = ExtResource("4_action")
-type = 5
-key = &"lumen_street_red_fountain"
-task_title = "调查流明街广场的红色喷泉"
+[sub_resource type="Resource" id="Trigger"]
+script = ExtResource("2_trigger")
+type = 2
+runtime_mode = 1
+interaction_key = &"day_one_luca_urgent"
 
 [resource]
 script = ExtResource("1_definition")

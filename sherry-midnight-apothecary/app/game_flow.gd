@@ -92,6 +92,22 @@ func debug_switch_mode(mode: Mode) -> bool:
 	return _load_mode(mode, initial_day_level_id)
 
 
+func debug_set_day(day: int) -> bool:
+	if _switching or current_mode == Mode.ENDING or day < INITIAL_DAY or day > FINAL_DAY:
+		return false
+	var initial_day_level_id: StringName = &""
+	if current_mode == Mode.DAY and current_runtime is DayRuntime:
+		var day_runtime: DayRuntime = current_runtime as DayRuntime
+		if day_runtime.current_level != null:
+			initial_day_level_id = day_runtime.current_level.id
+	var previous_day: int = current_day
+	current_day = day
+	if _load_mode(current_mode, initial_day_level_id, false, false, true):
+		return true
+	current_day = previous_day
+	return false
+
+
 func _complete_night(result: NightResult, next_day_level_id: StringName) -> bool:
 	if current_mode != Mode.NIGHT or _switching or result == null:
 		return false

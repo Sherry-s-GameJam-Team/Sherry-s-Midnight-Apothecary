@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cfo2gt2nxbjqq"
+path="res://.godot/imported/dashiyu.dialogue-7e6304012dcc553c9f3944de05d0af66.tres"
+
+[deps]
+
+source_file="res://day/levels/lake_bottom/dashiyu.dialogue"
+dest_files=["res://.godot/imported/dashiyu.dialogue-7e6304012dcc553c9f3944de05d0af66.tres"]
+
+[params]
+
+defaults=true

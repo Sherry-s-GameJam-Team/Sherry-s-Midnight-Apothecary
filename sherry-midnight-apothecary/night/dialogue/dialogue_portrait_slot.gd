@@ -29,9 +29,39 @@ var _base_offset: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_apply_slot_layout()
 	_setup_children()
 	modulate.a = 0.0
 	visible = false
+
+
+## Keep the three slots in distinct screen regions even if a scene override
+## loses their authored anchors.  Texture children then fill only their slot.
+func _apply_slot_layout() -> void:
+	var bounds := Rect2(0.31, 0.10, 0.38, 0.78)
+	match slot_id:
+		SlotId.LEFT:
+			bounds = Rect2(0.04, 0.14, 0.38, 0.74)
+		SlotId.RIGHT:
+			bounds = Rect2(0.58, 0.14, 0.38, 0.74)
+	anchor_left = bounds.position.x
+	anchor_top = bounds.position.y
+	anchor_right = bounds.end.x
+	anchor_bottom = bounds.end.y
+	offset_left = 0.0
+	offset_top = 0.0
+	offset_right = 0.0
+	offset_bottom = 0.0
+	_base_offset = Vector2.ZERO
+
+
+## Applies the pixel rect supplied by the dialogue UI after its final layout.
+## This avoids a parent UI relayout collapsing all three anchored slots to x=0.
+func set_dialogue_layout_rect(layout_rect: Rect2) -> void:
+	set_anchors_preset(Control.PRESET_TOP_LEFT)
+	position = layout_rect.position
+	size = layout_rect.size
+	_base_offset = layout_rect.position
 
 
 func _setup_children() -> void:
@@ -42,6 +72,8 @@ func _setup_children() -> void:
 		_main_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		_main_rect.anchor_right = 1.0
 		_main_rect.anchor_bottom = 1.0
+		_main_rect.offset_right = 0.0
+		_main_rect.offset_bottom = 0.0
 		_main_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(_main_rect)
 
@@ -52,6 +84,8 @@ func _setup_children() -> void:
 		_crossfade_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		_crossfade_rect.anchor_right = 1.0
 		_crossfade_rect.anchor_bottom = 1.0
+		_crossfade_rect.offset_right = 0.0
+		_crossfade_rect.offset_bottom = 0.0
 		_crossfade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_crossfade_rect.modulate.a = 0.0
 		add_child(_crossfade_rect)

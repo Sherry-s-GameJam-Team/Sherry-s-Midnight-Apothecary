@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="25_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="26_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="27_pause_menu"]
+[ext_resource type="Script" uid="uid://8u7fba53vuv3" path="res://day/levels/golden_cliff/ground_sway.gd" id="28_ground_sway"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ground"]
 
@@ -36,11 +37,8 @@ size = Vector2(128, 2600)
 [sub_resource type="RectangleShape2D" id="Rect_floor_long"]
 size = Vector2(1520, 110)
 
-[sub_resource type="ConvexPolygonShape2D" id="Slope_collision"]
-points = PackedVector2Array(-360, 135, 360, -125, 360, 135)
-
 [sub_resource type="RectangleShape2D" id="Rect_floor_medium"]
-size = Vector2(1120, 110)
+size = Vector2(1287.5, 110)
 
 [sub_resource type="RectangleShape2D" id="Rect_boulder"]
 size = Vector2(300, 70)
@@ -121,16 +119,19 @@ shape = SubResource("Rect_barrier")
 [node name="EntryPoints" type="Node2D" parent="." unique_id=341253836]
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=518491963]
-position = Vector2(320, 550)
+position = Vector2(169, 149)
 
 [node name="from_south" type="Marker2D" parent="EntryPoints" unique_id=1725717940]
-position = Vector2(320, 550)
+position = Vector2(165, 156)
 
 [node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=1725717941]
 position = Vector2(320, 550)
 
+[node name="from_village" type="Marker2D" parent="EntryPoints" unique_id=1725717942]
+position = Vector2(11817, 862)
+
 [node name="from_lake" type="Marker2D" parent="EntryPoints" unique_id=269602947]
-position = Vector2(11600, 520)
+position = Vector2(11849, 821)
 
 [node name="RespawnPoints" type="Node2D" parent="." unique_id=913209557]
 
@@ -151,7 +152,7 @@ position = Vector2(10850, 500)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1408356051]
 z_index = 2
-position = Vector2(352, 784)
+position = Vector2(184, 273)
 script = ExtResource("2_player")
 
 [node name="SherryCollision" parent="Player" unique_id=1901793950 instance=ExtResource("4_collision")]
@@ -179,7 +180,9 @@ script = ExtResource("8_controller")
 position = Vector2(26, 144)
 
 [node name="StartGround" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=1846974743]
-position = Vector2(820, 790)
+position = Vector2(513.00006, 476)
+rotation = 0.6806784
+script = ExtResource("28_ground_sway")
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/StartGround" unique_id=298529069]
 position = Vector2(0, 155)
@@ -192,6 +195,8 @@ shape = SubResource("Rect_floor_long")
 
 [node name="GroundA" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=184557861]
 position = Vector2(3260, 790)
+script = ExtResource("28_ground_sway")
+sway_phase = 0.9
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/GroundA" unique_id=2085038019]
 position = Vector2(0, 155)
@@ -203,19 +208,23 @@ position = Vector2(5, 137)
 shape = SubResource("Rect_floor_long")
 
 [node name="SlopeA" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=805342479]
-position = Vector2(4730, 735)
+position = Vector2(5209, 759)
+script = ExtResource("28_ground_sway")
+sway_phase = 1.8
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/SlopeA" unique_id=466801956]
 position = Vector2(142, -98)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("18_slope")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/SlopeA" unique_id=1761052098]
-position = Vector2(92, -110)
-shape = SubResource("Slope_collision")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Gameplay/StaticPlatforms/SlopeA" unique_id=37169560]
+polygon = PackedVector2Array(-226, -22, -144, -29, 423, -218, 508, -220, -144, 4, -231, 8)
 
 [node name="GroundB" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=541301846]
-position = Vector2(5900, 700)
+position = Vector2(6285, 769)
+rotation = 0.5235988
+script = ExtResource("28_ground_sway")
+sway_phase = 2.7
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/GroundB" unique_id=1998492023]
 position = Vector2(0, 130)
@@ -223,11 +232,13 @@ scale = Vector2(0.62, 0.62)
 texture = ExtResource("16_flat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/StaticPlatforms/GroundB" unique_id=1861800452]
-position = Vector2(-1, 115)
+position = Vector2(15.75, 115)
 shape = SubResource("Rect_floor_medium")
 
 [node name="GroundC" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=1107326391]
 position = Vector2(8420, 790)
+script = ExtResource("28_ground_sway")
+sway_phase = 3.6
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/GroundC" unique_id=128236830]
 position = Vector2(0, 155)
@@ -240,6 +251,8 @@ shape = SubResource("Rect_floor_long")
 
 [node name="EndGround" type="StaticBody2D" parent="Gameplay/StaticPlatforms" unique_id=1506254687]
 position = Vector2(11150, 790)
+script = ExtResource("28_ground_sway")
+sway_phase = 4.5
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/StaticPlatforms/EndGround" unique_id=1650259064]
 position = Vector2(0, 155)
@@ -257,12 +270,12 @@ position = Vector2(1879, 713)
 script = ExtResource("10_float")
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderA" unique_id=1747644189]
-position = Vector2(0, 95)
+position = Vector2(-13, 172)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("17_boulder")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderA" unique_id=1746784241]
-position = Vector2(-2, 84)
+position = Vector2(-18, 155)
 shape = SubResource("Rect_boulder")
 
 [node name="BoulderB" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=1117612407]
@@ -271,12 +284,12 @@ script = ExtResource("10_float")
 phase = 1.7
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/FloatingBoulders/BoulderB" unique_id=558666821]
-position = Vector2(0, 82)
+position = Vector2(0, 236)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("17_boulder")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderB" unique_id=538446489]
-position = Vector2(-6, 80)
+position = Vector2(-9, 226)
 shape = SubResource("Rect_boulder")
 
 [node name="BoulderC" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=679803448]
@@ -290,7 +303,7 @@ scale = Vector2(0.24, 0.24)
 texture = ExtResource("17_boulder")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderC" unique_id=2095161309]
-position = Vector2(1, 73)
+position = Vector2(4, 79)
 shape = SubResource("Rect_boulder")
 
 [node name="BoulderD" type="AnimatableBody2D" parent="Gameplay/FloatingBoulders" unique_id=1029277167]
@@ -304,14 +317,14 @@ scale = Vector2(0.22, 0.22)
 texture = ExtResource("17_boulder")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/FloatingBoulders/BoulderD" unique_id=665704966]
-position = Vector2(5, 66)
+position = Vector2(-4, 82)
 shape = SubResource("Rect_boulder")
 
 [node name="Breakables" type="Node2D" parent="Gameplay" unique_id=1077642613]
 
 [node name="BreakA" type="Node2D" parent="Gameplay/Breakables" unique_id=593472430]
-position = Vector2(4050, 700)
-script = ExtResource("11_break")
+z_index = 4
+position = Vector2(4509, -500)
 
 [node name="Visual" type="Sprite2D" parent="Gameplay/Breakables/BreakA" unique_id=1863074091]
 position = Vector2(0, 90)
@@ -328,7 +341,7 @@ shape = SubResource("Rect_breakable")
 position = Vector2(0, -45)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/Breakables/BreakA/Sensor" unique_id=1814126423]
-position = Vector2(6, 89)
+position = Vector2(3, 169)
 shape = SubResource("Rect_break_sensor")
 
 [node name="BreakB" type="Node2D" parent="Gameplay/Breakables" unique_id=716039333]
@@ -358,12 +371,9 @@ shape = SubResource("Rect_break_sensor")
 position = Vector2(219, -6)
 
 [node name="BalanceA" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=123373794]
-position = Vector2(3060, 470)
+position = Vector2(641, 646)
 script = ExtResource("9_balance")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=968536402]
-position = Vector2(1, 36)
-shape = SubResource("Rect_balance")
+initial_right_weight = 2
 
 [node name="Visual" type="Node2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=1233267032]
 scale = Vector2(0.32, 0.32)
@@ -373,13 +383,19 @@ position = Vector2(0, 3.125)
 texture = ExtResource("19_balance_base")
 
 [node name="Beam" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1301729396]
+position = Vector2(0, 15.625)
 texture = ExtResource("20_balance_beam")
 
 [node name="LeftPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1522000416]
 texture = ExtResource("21_balance_left")
 
-[node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA/Visual" unique_id=1153638553]
+[node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=1153638553]
+scale = Vector2(0.32, 0.32)
 texture = ExtResource("22_balance_right")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Gameplay/BalanceMechanisms/BalanceA" unique_id=1681915708]
+polygon = PackedVector2Array(-17, -61, -21, 77, -82, 94, -85, 113, -9, 153, 81, 107, 84, 92, 37, 88, 23, -63)
+one_way_collision = true
 
 [node name="BalanceB" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=36538932]
 position = Vector2(5830, 390)
@@ -396,22 +412,29 @@ shape = SubResource("Rect_balance")
 scale = Vector2(0.32, 0.32)
 
 [node name="Base" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=1772717503]
+position = Vector2(-9.375, 221.875)
 texture = ExtResource("19_balance_base")
 
 [node name="Beam" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=455695286]
+position = Vector2(-12.5, 225)
 texture = ExtResource("20_balance_beam")
 
 [node name="LeftPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=278091172]
+position = Vector2(0, 215.625)
 texture = ExtResource("21_balance_left")
 
 [node name="RightPan" type="Sprite2D" parent="Gameplay/BalanceMechanisms/BalanceB/Visual" unique_id=1767337149]
+position = Vector2(-46.875, 218.75)
 texture = ExtResource("22_balance_right")
 
 [node name="BalanceC" type="StaticBody2D" parent="Gameplay/BalanceMechanisms" unique_id=1438202893]
-position = Vector2(8500, 470)
+position = Vector2(4358, 695)
 script = ExtResource("9_balance")
 mechanism_id = &"east_balance"
-target_left_weight = 3
+target_left_weight = 1
+target_right_weight = 0
+max_weight = 1
+empty_balance_display_tilt = 18.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/BalanceMechanisms/BalanceC" unique_id=361604465]
 position = Vector2(0, 70)
@@ -433,6 +456,7 @@ texture = ExtResource("21_balance_left")
 texture = ExtResource("22_balance_right")
 
 [node name="EntrancePortal" type="Area2D" parent="Gameplay" unique_id=1947716458]
+visible = false
 position = Vector2(320, 680)
 script = ExtResource("7_door_portal")
 destination_level = &"home"
@@ -452,6 +476,7 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("24_portal_repaired")
 
 [node name="ExitPortal" type="Area2D" parent="Gameplay" unique_id=1947716457]
+visible = false
 position = Vector2(11370, 520)
 monitoring = false
 monitorable = false
@@ -463,7 +488,7 @@ interaction_hint_enabled = true
 interaction_hint_text = "返回药典屋"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gameplay/ExitPortal" unique_id=1386626617]
-position = Vector2(-18, 132)
+position = Vector2(-19, 126)
 shape = SubResource("Rect_portal")
 disabled = true
 
@@ -473,7 +498,7 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("23_portal_broken")
 
 [node name="PortalRepaired" type="Sprite2D" parent="Gameplay/ExitPortal" unique_id=1579314045]
-position = Vector2(0, 80)
+position = Vector2(-15.999999, 156)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("24_portal_repaired")
 
@@ -497,3 +522,6 @@ layer = 200
 script = ExtResource("26_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=2139284604 instance=ExtResource("27_pause_menu")]
+
+[connection signal="stabilized" from="Gameplay/BalanceMechanisms/BalanceC" to="LevelController" method="_on_balance_c_stabilized"]
+[connection signal="weight_changed" from="Gameplay/BalanceMechanisms/BalanceC" to="LevelController" method="_on_balance_c_weight_changed"]

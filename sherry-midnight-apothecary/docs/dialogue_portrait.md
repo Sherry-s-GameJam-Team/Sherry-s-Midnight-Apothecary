@@ -62,6 +62,10 @@ do clear_portraits()
 - **中央注册表**：`res://night/dialogue/portrait_database.gd`（`DialoguePortraitDatabase`）。
 - **内置 NPC 映射**：已完整覆盖 `01_young_villager` 至 `18_hooded_stranger` 共 18 位村民/NPC 的正面半身立绘，支持直接使用中文身份名称（如 `年轻村民`、`采药妇`、`铁匠`、`女学者`、`修女` 等）或英文文件夹名索引。
 - **平滑表情切换（Cross-Fade）**：同一插槽切换不同表情时，插槽内部的双缓冲渲染机制会自动执行 0.2s 交叉淡入淡出，彻底消除切图瞬间的闪烁感。
+- **喵斯差分**：`喵斯`、`喵呜`、`卡琳娜·喵斯` 与 `炉边烤鱼的少女` 均使用 `res://characters/mew/exp/` 中的五张差分：`default`、`avert`、`dumb`、`wink`、`exp2_default`。对话中的 `happy` 与 `thinking` 分别是 `wink` 与 `avert` 的可读别名。
+- **雪莉立绘**：`雪莉`/`Sherry` 的对话立绘使用 `res://characters/sherry/stand.png`；仅在该资源不可用时回退至旧立绘和待机帧。
+- **槽位布局保障**：`PortraitLayer` 完成 UI 布局后，会按自身实际像素尺寸计算左（4%–42%）、中（31%–69%）、右（58%–96%）三个槽位的矩形；窗口或 UI 尺寸变化时会重新计算。双缓冲贴图填满各自槽位，因此布局刷新不会把所有立绘压到左侧。
+- **主角位置兜底**：当 Dialogue Manager 传入的行未保留旧式 `#left/#right` 标记时，喵斯系列名称仍会回到左槽位，雪莉仍会回到右槽位；有效的标准 `portrait` 标签仍可控制其他角色和中间槽位。
 
 ## 对话交互与控制功能
 

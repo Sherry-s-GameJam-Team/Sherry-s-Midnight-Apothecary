@@ -16,6 +16,17 @@ static func run(test: TestSupport) -> void:
 
 	var mew_tex := DialoguePortraitDatabase.get_portrait_texture("喵呜", "default")
 	test.expect(mew_tex != null, "Database resolves texture for '喵呜'.")
+	var sherry_tex := DialoguePortraitDatabase.get_portrait_texture("雪莉", "default")
+	test.expect(sherry_tex != null, "Database resolves Sherry's dialogue portrait.")
+	for expression in ["default", "avert", "dumb", "wink", "exp2_default"]:
+		test.expect(
+			DialoguePortraitDatabase.get_portrait_texture("喵斯", expression) != null,
+			"Database resolves Mew expression '%s'." % expression
+		)
+	test.expect(
+		DialoguePortraitDatabase.get_portrait_texture("喵斯", "happy") == DialoguePortraitDatabase.get_portrait_texture("喵斯", "wink"),
+		"Mew's happy alias resolves to the wink expression."
+	)
 
 	# Test slot normalization
 	test.expect_equal(DialoguePortraitDatabase.normalize_slot("left"), "left", "Normalize 'left'")
@@ -61,6 +72,8 @@ static func run(test: TestSupport) -> void:
 	test.expect(balloon.get_slot("left") != null, "Balloon contains LeftSlot.")
 	test.expect(balloon.get_slot("center") != null, "Balloon contains CenterSlot.")
 	test.expect(balloon.get_slot("right") != null, "Balloon contains RightSlot.")
+	test.expect(balloon.get_slot("left").anchor_left < balloon.get_slot("center").anchor_left, "Left slot remains left of center.")
+	test.expect(balloon.get_slot("center").anchor_left < balloon.get_slot("right").anchor_left, "Center slot remains left of right.")
 
 	# Test direct portrait commands
 	balloon.show_portrait("年轻村民", "default", "left", "slide_in")
@@ -101,6 +114,15 @@ static func run(test: TestSupport) -> void:
 	balloon._process_portrait_syntax(dummy_line)
 	test.expect(balloon.get_slot("left").is_active, "Inline BBCode '[portrait=...]' activates LeftSlot.")
 	test.expect_equal(balloon.get_slot("left").current_character, "修女", "LeftSlot displays '修女'.")
+
+	# Primary speakers retain their default sides even when a line reaches the
+	# balloon without a usable portrait tag.
+	balloon.clear_portraits()
+	dummy_line.character = "雪莉"
+	dummy_line.text = "我会从右边显示。"
+	dummy_line.tags = PackedStringArray()
+	balloon._process_portrait_syntax(dummy_line)
+	test.expect(balloon.get_slot("right").is_active, "Untagged Sherry line defaults to RightSlot.")
 
 	# Test 5: Embedded #tag in character name (e.g. "炉边烤鱼的少女 #left(happy, bounce)")
 	balloon.clear_portraits()

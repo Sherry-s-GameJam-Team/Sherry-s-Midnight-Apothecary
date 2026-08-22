@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="7_potions"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="9_pause_menu"]
+[ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="10_5hk1q"]
+[ext_resource type="Script" path="res://day/levels/lake_bottom/scripts/dashiyu_npc.gd" id="11_dashiyu_script"]
+[ext_resource type="Resource" path="res://day/levels/lake_bottom/dashiyu.dialogue" id="12_dashiyu_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(3258, 139)
@@ -21,6 +24,9 @@ size = Vector2(736, 24)
 
 [sub_resource type="RectangleShape2D" id="DoorShape"]
 size = Vector2(240, 280)
+
+[sub_resource type="RectangleShape2D" id="DashiyuInteractionShape"]
+size = Vector2(280, 260)
 
 [node name="GateChamber" type="Node2D" unique_id=889107057]
 script = ExtResource("1_chamber")
@@ -136,7 +142,7 @@ text = "旧旅门维护站内部"
 
 [node name="Hint" type="Label" parent="LocalHUD/Panel/VBox" unique_id=1913912896]
 layout_mode = 2
-text = "调查室内的古老中继机关与大司鱼的痕迹。"
+text = "通过中央门返回阿里特之泪湖床。"
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1978112066]
 
@@ -145,3 +151,24 @@ text = "调查室内的古老中继机关与大司鱼的痕迹。"
 [node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2047182196]
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=2129750951 instance=ExtResource("9_pause_menu")]
+
+[node name="Dashiyu" type="Area2D" parent="." unique_id=910027275]
+position = Vector2(980, 811)
+script = ExtResource("11_dashiyu_script")
+dialogue_resource = ExtResource("12_dashiyu_dialogue")
+player_path = NodePath("../Player")
+
+[node name="Sprite" type="Sprite2D" parent="Dashiyu" unique_id=910027276]
+scale = Vector2(0.1637475, 0.15820341)
+texture = ExtResource("10_5hk1q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dashiyu" unique_id=910027277]
+shape = SubResource("DashiyuInteractionShape")
+
+[node name="Prompt" type="Label" parent="Dashiyu" unique_id=910027278]
+offset_left = -150.0
+offset_top = -190.0
+offset_right = 150.0
+offset_bottom = -155.0
+text = "E 与大司鱼交谈"
+horizontal_alignment = 1
