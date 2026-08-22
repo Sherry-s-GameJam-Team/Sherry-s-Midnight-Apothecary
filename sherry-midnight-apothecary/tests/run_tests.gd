@@ -57,6 +57,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/vespervale_runner_level_test.gd"),
 	preload("res://tests/crownland_level_test.gd"),
 	preload("res://tests/dream_grasp_hands_test.gd"),
+	preload("res://tests/lake_bottom_boss_test.gd"),
 ]
 
 

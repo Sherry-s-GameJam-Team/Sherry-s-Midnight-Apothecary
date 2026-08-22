@@ -59,7 +59,7 @@ description = "涟汀村靠近阿里特之泪的下层崖台，过去承担渔�
 [node name="Anchor04" type="Node2D" parent="AnchorPoints" unique_id=155104425]
 position = Vector2(613, 372)
 script = ExtResource("2_anchor")
-destination_id = &"潜息门"
+destination_id = &"gate_chamber"
 display_name = "潜息门"
 subtitle = "沉默于泪水中的鱼形装置"
 danger = "中等"

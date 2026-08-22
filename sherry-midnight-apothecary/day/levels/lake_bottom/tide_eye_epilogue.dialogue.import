@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://e03ui76iwmkq"
+path="res://.godot/imported/tide_eye_epilogue.dialogue-37378137fa546dc8294b90998b8de000.tres"
+
+[deps]
+
+source_file="res://day/levels/lake_bottom/tide_eye_epilogue.dialogue"
+dest_files=["res://.godot/imported/tide_eye_epilogue.dialogue-37378137fa546dc8294b90998b8de000.tres"]
+
+[params]
+
+defaults=true

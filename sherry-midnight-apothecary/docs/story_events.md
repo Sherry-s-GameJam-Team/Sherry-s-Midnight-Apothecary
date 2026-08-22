@@ -31,4 +31,4 @@ Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次�
 
 `day_one_bedroom_luca_urgent.tres` 是卧室内的第一日 Luca 事件。第 1 天进入 Bedroom 时，`DayOneLuca` 演出节点会取代 `SleepToWake`：黑屏渐显出完整卧室，Luca 从右侧走到床前，再自动派发 `day_one_luca_urgent` 并播放对话。此节点没有 E 键交互范围，也不会拦截卧室出口；对话完成后记录事件完成标记并设置当天“调查流明街广场的红色喷泉”任务。该天后续进入直接显示卧室；其余日期仍使用通常的起床演出。
 
-`village_day_two_down.tres` 是涟汀村的第二日交互事件。它要求 `mew_order_delivered` 已由喵斯订单对话写入，并只在内部第 2 天接收 `village_day_two_down` 交互；`issues` 本地控制器只会在该日显示，并在玩家自左向右越过 `issues/down` 时派发事件。未完成订单时，它只通过共享 `TopHintUI` 显示“请先交付订单给顾客”。事件播放 `res://characters/mew/mew.dialogue` 的 `question_menu` 标题，并在派发后显示 `IdleLoop`。
+`village_day_two_down.tres` 是涟汀村的第二日交互事件。它要求 `mew_order_delivered` 已由喵斯订单对话写入，以及库存中至少有 5 个 `village_rope_spool`；`issues` 本地控制器只会在该日显示，并在玩家自左向右越过 `issues/down` 时派发事件。`issues/rope` 下的 6 个贴图可在靠近时高光并按 E 收集，且每盘只会被持久收集一次。未完成订单时，它优先通过共享 `TopHintUI` 显示“请先交付订单给顾客”；订单已完成但纤绳不足时显示“目前还差 N 盘纤绳”。事件播放 `res://characters/mew/mew.dialogue` 的 `question_menu` 标题，并在派发后显示 `IdleLoop`。

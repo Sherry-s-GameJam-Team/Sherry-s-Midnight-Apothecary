@@ -60,6 +60,9 @@ position = Vector2(1629, 850)
 [node name="from_lake" type="Marker2D" parent="EntryPoints" unique_id=1711804768]
 position = Vector2(1629, 850)
 
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=1711804769]
+position = Vector2(1629, 850)
+
 [node name="Background" type="Node2D" parent="." unique_id=2063218780]
 
 [node name="ChamberArt" type="Sprite2D" parent="Background" unique_id=1863948271]
@@ -107,6 +110,10 @@ one_way_collision = true
 [node name="CentralGateDoor" type="Area2D" parent="." unique_id=2071066190]
 position = Vector2(1629, 800)
 script = ExtResource("3_door")
+destination_level = &"home"
+destination_entry_id = &"default"
+fallback_scene_path = "res://day/levels/home/home.tscn"
+prompt_text = "E 返回药典屋"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CentralGateDoor" unique_id=915248733]
 shape = SubResource("DoorShape")
@@ -116,7 +123,7 @@ offset_left = -140.0
 offset_top = -180.0
 offset_right = 140.0
 offset_bottom = -145.0
-text = "E 返回阿里特之泪湖床"
+text = "E 返回药典屋"
 horizontal_alignment = 1
 
 [node name="Glow" type="PointLight2D" parent="CentralGateDoor" unique_id=1237811959]
@@ -142,7 +149,7 @@ text = "旧旅门维护站内部"
 
 [node name="Hint" type="Label" parent="LocalHUD/Panel/VBox" unique_id=1913912896]
 layout_mode = 2
-text = "通过中央门返回阿里特之泪湖床。"
+text = "通过中央门返回药典屋。"
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1978112066]
 

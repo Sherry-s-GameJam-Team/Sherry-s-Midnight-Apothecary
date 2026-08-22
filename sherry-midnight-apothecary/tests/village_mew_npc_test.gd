@@ -29,6 +29,14 @@ static func run(test: TestSupport) -> void:
 	test.expect(mew_npc.get_node_or_null("CollisionShape2D") is CollisionShape2D, "MewNPC contains a CollisionShape2D for player interaction.")
 	test.expect(village.get_node_or_null("issues/down") is Marker2D, "Village issues contain the down crossing marker.")
 	test.expect(village.get_node_or_null("issues/Sprite2D/IdleLoop") is AnimatedSprite2D, "Village issues contain the gated IdleLoop sprite.")
+	var rope_root := village.get_node_or_null("issues/rope") as Node2D
+	test.expect(rope_root != null, "Village issues contain the rope collection root.")
+	if rope_root != null:
+		var rope_count := 0
+		for child in rope_root.get_children():
+			if child is Sprite2D:
+				rope_count += 1
+		test.expect_equal(rope_count, 6, "Village contains six collectible rope sprites.")
 
 	# Test 2: Ping-pong animation frame progression logic
 	var sprite := mew_npc.get_node("FishingLoop") as AnimatedSprite2D
@@ -103,3 +111,6 @@ static func run(test: TestSupport) -> void:
 		test.expect_equal(event.dialogue_title, &"question_menu", "Village down event enters Mew's follow-up dialogue title.")
 		var day_condition: StoryEventCondition = event.conditions[0] as StoryEventCondition
 		test.expect(day_condition != null and day_condition.minimum_day == 2 and day_condition.maximum_day == 2, "Village day-two event is restricted to internal day two.")
+		test.expect_equal(event.conditions.size(), 3, "Village down event requires day, order delivery, and ropes.")
+		test.expect_equal(event.conditions[2].key, &"village_rope_spool", "Village down event requires collected rope spools.")
+		test.expect_equal(event.conditions[2].amount, 5, "Village down event requires five rope spools.")

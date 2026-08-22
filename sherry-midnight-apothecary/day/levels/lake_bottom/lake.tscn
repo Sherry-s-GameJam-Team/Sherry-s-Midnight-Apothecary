@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bgb42vnomwvjn" path="res://day/levels/lake_bottom/art/arit_prop_submerged_ruins_01.png" id="10_ruins"]
 [ext_resource type="Texture2D" uid="uid://dypl5d2o6enbo" path="res://day/levels/lake_bottom/art/arit_gate_maintenance_station_ext_01.png" id="11_station"]
 [ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="12_dashiyu"]
-[ext_resource type="Texture2D" path="res://day/levels/lake_bottom/box.png" id="13_box"]
+[ext_resource type="Texture2D" uid="uid://crxud2st3vioq" path="res://day/levels/lake_bottom/box.png" id="13_box"]
 [ext_resource type="Texture2D" uid="uid://dhgdilk1iygdv" path="res://day/levels/lake_bottom/art/arit_mech_spring_valve_01.png" id="15_valve"]
 [ext_resource type="Texture2D" uid="uid://dguwpx373ih1e" path="res://day/levels/lake_bottom/art/wheel.png" id="15_wheel"]
 [ext_resource type="Script" uid="uid://dma2d3v7ls2l1" path="res://day/levels/lake_bottom/scripts/spring_valve.gd" id="18_valve_script"]
@@ -21,8 +21,15 @@
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="26_potions"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="27_console"]
 [ext_resource type="Script" uid="uid://ddd6b12hipig7" path="res://day/levels/lake_bottom/scripts/gate_chamber_door.gd" id="28_door"]
-[ext_resource type="Script" path="res://day/levels/lake_bottom/scripts/boss_box_spawner.gd" id="30_box_spawner"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="29_pause_menu"]
+[ext_resource type="Script" uid="uid://dl7nsgx1b82gm" path="res://day/levels/lake_bottom/scripts/boss_box_spawner.gd" id="30_box_spawner"]
+[ext_resource type="Script" uid="uid://nrp1qcfywh24" path="res://day/levels/lake_bottom/scripts/tide_eye.gd" id="31_tide_eye"]
+[ext_resource type="Script" uid="uid://b1l7sd83q2diq" path="res://day/levels/lake_bottom/scripts/lake_boss_epilogue.gd" id="33_epilogue"]
+[ext_resource type="Resource" uid="uid://e03ui76iwmkq" path="res://day/levels/lake_bottom/tide_eye_epilogue.dialogue" id="34_epilogue_dialogue"]
+[ext_resource type="Texture2D" uid="uid://d1bcu0f5x6giw" path="res://day/levels/lake_bottom/art/arit_prop_boat_dashiyu_wreck_01.png" id="35_boat"]
+
+[sub_resource type="CircleShape2D" id="TideEyeSuctionShape"]
+radius = 430.0
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(9600, 90)
@@ -61,8 +68,7 @@ limit_left = 0
 limit_top = 0
 limit_right = 9600
 limit_bottom = 1080
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
+position_smoothing_enabled = false
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=1620726355]
 
@@ -99,7 +105,7 @@ position = Vector2(1089, 726)
 texture = ExtResource("3_basin")
 
 [node name="MidLakebed" type="Parallax2D" parent="Background" unique_id=1834238371]
-scroll_scale = Vector2(0.46, 0.2)
+scroll_scale = Vector2(1, 1)
 repeat_size = Vector2(2172, 0)
 repeat_times = 7
 
@@ -113,22 +119,49 @@ z_index = 3
 script = ExtResource("22_fx")
 
 [node name="boss" type="Node2D" parent="." unique_id=1943154631]
-visible = false
 
 [node name="boxgenerate" type="Marker2D" parent="boss" unique_id=1336344998]
 position = Vector2(6102, 599)
 
 [node name="Dashiyu" type="Sprite2D" parent="boss" unique_id=910027275]
-position = Vector2(7050, 808)
-scale = Vector2(0.1637475, 0.15820341)
+z_index = 2
+position = Vector2(5966, 577.99994)
+scale = Vector2(-0.13830554, 0.15728824)
 texture = ExtResource("12_dashiyu")
 
 [node name="BoxGenerator" type="Node2D" parent="boss" unique_id=1336344999]
 script = ExtResource("30_box_spawner")
 box_texture = ExtResource("13_box")
 spawn_marker_path = NodePath("../boxgenerate")
-maximum_boxes = 4
-spawn_interval = 5.0
+
+[node name="TideEye" type="Node2D" parent="boss" unique_id=1336345000]
+z_index = 14
+position = Vector2(7460, 700)
+script = ExtResource("31_tide_eye")
+
+[node name="SuctionArea" type="Area2D" parent="boss/TideEye" unique_id=1336345001]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boss/TideEye/SuctionArea" unique_id=1336345002]
+shape = SubResource("TideEyeSuctionShape")
+
+[node name="Epilogue" type="Node2D" parent="boss" unique_id=1336345005]
+z_index = 30
+script = ExtResource("33_epilogue")
+dialogue_resource = ExtResource("34_epilogue_dialogue")
+player_path = NodePath("../../Player")
+
+[node name="Boat" type="Node2D" parent="boss/Epilogue" unique_id=1336345006]
+position = Vector2(7200, 790)
+
+[node name="Hull" type="Sprite2D" parent="boss/Epilogue/Boat" unique_id=1336345007]
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("35_boat")
+
+[node name="DashiyuRider" type="Sprite2D" parent="boss/Epilogue/Boat" unique_id=1336345008]
+position = Vector2(48, -72)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("12_dashiyu")
 
 [node name="WorldArt" type="Node2D" parent="." unique_id=658106208]
 
@@ -331,11 +364,6 @@ fallback_scene_path = "res://day/levels/lake_bottom/gate_chamber.tscn"
 prompt_text = "E 进入旧旅门维护站"
 requires_activation = true
 
-[node name="StationArt" type="Sprite2D" parent="GateZone/MaintenancePortal" unique_id=1665378185]
-position = Vector2(0, -100)
-scale = Vector2(0.72, 0.72)
-texture = ExtResource("11_station")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateZone/MaintenancePortal" unique_id=1849182372]
 shape = SubResource("PortalShape")
 
@@ -351,6 +379,11 @@ horizontal_alignment = 1
 color = Color(0.3, 0.9, 1, 1)
 energy = 0.6
 texture_scale = 2.5
+
+[node name="StationArt" type="Sprite2D" parent="GateZone" unique_id=1665378185]
+position = Vector2(5700, 570)
+scale = Vector2(0.72, 0.72)
+texture = ExtResource("11_station")
 
 [node name="LocalHUD" type="CanvasLayer" parent="." unique_id=802497891]
 layer = 40

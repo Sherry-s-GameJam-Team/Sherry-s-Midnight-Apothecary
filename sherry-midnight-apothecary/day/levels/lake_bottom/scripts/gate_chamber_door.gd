@@ -1,10 +1,10 @@
 class_name GateChamberDoor
 extends Area2D
 
-@export var destination_level: StringName = &"lake_bottom"
-@export var destination_entry_id: StringName = &"maintenance"
-@export_file("*.tscn") var fallback_scene_path: String = "res://day/levels/lake_bottom/lake.tscn"
-@export var prompt_text: String = "E 返回阿里特之泪湖床"
+@export var destination_level: StringName = &"home"
+@export var destination_entry_id: StringName = &"default"
+@export_file("*.tscn") var fallback_scene_path: String = "res://day/levels/home/home.tscn"
+@export var prompt_text: String = "E 返回药典屋"
 @export var player_group: StringName = &"player"
 @export var requires_activation := false
 

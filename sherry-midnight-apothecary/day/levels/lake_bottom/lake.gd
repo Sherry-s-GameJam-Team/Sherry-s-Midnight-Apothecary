@@ -8,20 +8,33 @@ signal level_completed(exit_id: StringName)
 
 var activated_valves := 0
 var gate_unlocked := false
+var boss_defeated := false
+var boss_phase_active := false
 
 @onready var objective_label: Label = get_node_or_null("LocalHUD/Panel/VBox/Objective")
 @onready var hint_label: Label = get_node_or_null("LocalHUD/Panel/VBox/Hint")
 @onready var maintenance_portal: Node = get_node_or_null("GateZone/MaintenancePortal")
 @onready var boss: CanvasItem = get_node_or_null("boss") as CanvasItem
 @onready var box_generator: Node = get_node_or_null("boss/BoxGenerator")
+@onready var tide_eye: TideEye = get_node_or_null("boss/TideEye") as TideEye
+@onready var epilogue: LakeBossEpilogue = get_node_or_null("boss/Epilogue") as LakeBossEpilogue
 
 
 func _ready() -> void:
 	super._ready()
+	var runtime := _find_day_runtime()
+	if runtime != null and runtime.get_player_data().has_event_flag(&"lake_bottom_tide_eye_defeated"):
+		boss_defeated = true
 	if get_node_or_null("LocalHUD"):
 		$LocalHUD.visible = local_hud_enabled
 	if maintenance_portal and maintenance_portal.has_method("set_portal_active"):
 		maintenance_portal.set_portal_active(false)
+	if tide_eye != null:
+		tide_eye.hit_landed.connect(_on_tide_eye_hit_landed)
+		tide_eye.defeated.connect(on_tide_eye_defeated)
+	var potion_thrower := get_node_or_null("Player/PotionThrower")
+	if potion_thrower != null and potion_thrower.has_signal("projectile_spawned"):
+		potion_thrower.connect(&"projectile_spawned", _on_boss_projectile_spawned)
 	_set_boss_phase_visible(false)
 	_set_objective("解除沉泪门的三重封印。", "启动散布在湖床上的三座古代泉脉阀。")
 
@@ -30,7 +43,7 @@ func _ready() -> void:
 func on_level_entered(entry_id: StringName) -> void:
 	if entry_id == &"tide_eye_arena":
 		_set_boss_phase_visible(true)
-		_set_objective("引出噬潮眼。", "投掷涌水药水，利用水脉决定它张口的位置。")
+		_set_objective("引出噬潮眼。", "投掷涌水药水定点引洞；推入焖鱼箱或投净化药水伤害它，别被吞入。")
 		return
 	_set_boss_phase_visible(false)
 	if gate_unlocked:
@@ -54,6 +67,9 @@ func _unlock_gate() -> void:
 	if gate_unlocked:
 		return
 	gate_unlocked = true
+	for valve in $ValvePuzzle.get_children():
+		if valve.has_method("set_interaction_enabled"):
+			valve.set_interaction_enabled(false)
 	if maintenance_portal and maintenance_portal.has_method("set_portal_active"):
 		maintenance_portal.set_portal_active(true)
 	_set_objective("维护站传送门已激活。", "前往沉泪门旁，按 E 进入旧旅门维护站。")
@@ -78,13 +94,65 @@ func _set_hint(text: String) -> void:
 
 
 func _set_boss_phase_visible(active: bool) -> void:
+	if boss_defeated:
+		return
+	boss_phase_active = active
 	if boss:
 		boss.visible = active
+	if tide_eye:
+		if active:
+			tide_eye.activate()
+		else:
+			tide_eye.deactivate()
 	if box_generator:
 		if active and box_generator.has_method("activate"):
 			box_generator.activate()
 		elif not active and box_generator.has_method("deactivate"):
 			box_generator.deactivate()
+
+
+func _on_tide_eye_hit_landed(hit_count: int) -> void:
+	_set_objective("噬潮眼受创 %d / 3。" % hit_count, "再次投涌水药水引它张口；焖鱼箱或净化药水都能造成伤害。")
+
+
+func on_tide_eye_defeated() -> void:
+	if boss_defeated:
+		return
+	boss_defeated = true
+	boss_phase_active = false
+	if box_generator and box_generator.has_method("deactivate"):
+		box_generator.deactivate()
+	var runtime := _find_day_runtime()
+	if runtime != null:
+		var player_data: PlayerData = runtime.get_player_data() as PlayerData
+		if player_data != null:
+			player_data.set_event_flag(&"lake_bottom_tide_eye_defeated")
+		runtime.activate_travel_anchor(&"gate_chamber")
+	_set_objective("湖水正在回涌。", "和大司鱼一起离开湖底。")
+	if epilogue != null:
+		epilogue.play()
+
+
+func _on_boss_projectile_spawned(projectile: PotionProjectile) -> void:
+	projectile.broken.connect(_on_boss_potion_broken.bind(projectile), CONNECT_ONE_SHOT)
+
+
+func _on_boss_potion_broken(impact_point: Vector2, impact_normal: Vector2, projectile: PotionProjectile) -> void:
+	if not boss_phase_active or tide_eye == null or projectile.potion == null:
+		return
+	# A floor collision has an upward-facing normal. This intentionally ignores
+	# bottles that strike a target or pass through the arena before landing.
+	if projectile.potion.id == &"cyan_potion" and impact_normal.y < -0.55:
+		tide_eye.bait_with_water(impact_point)
+
+
+func _find_day_runtime() -> Node:
+	var current: Node = self
+	while current != null:
+		if current.has_method("get_player_data") and current.has_method("activate_travel_anchor"):
+			return current
+		current = current.get_parent()
+	return null
 
 
 func _emit_world_event(event_id: StringName, payload: Dictionary = {}) -> void:

@@ -38,7 +38,6 @@
 [ext_resource type="Texture2D" uid="uid://b74qh4vtanv05" path="res://characters/mew/frames/idle_014.png" id="19_bds6e"]
 [ext_resource type="Script" uid="uid://d2nbli6p03dlx" path="res://characters/mew/mew_npc.gd" id="19_mew_npc"]
 [ext_resource type="Resource" uid="uid://b2mchd1h471oq" path="res://characters/mew/mew.dialogue" id="20_mew_dialogue"]
-[ext_resource type="Script" path="res://day/levels/golden_cliff/village/village_day_two_issue.gd" id="50_day_two_issue"]
 [ext_resource type="Texture2D" uid="uid://cmxf3ofgbbkwc" path="res://characters/mew/frames/idle_015.png" id="20_ucgdt"]
 [ext_resource type="Texture2D" uid="uid://7hw86dn12wg0" path="res://characters/mew/frames/idle_016.png" id="21_m3sex"]
 [ext_resource type="Texture2D" uid="uid://b47w4d6ct3x4y" path="res://characters/mew/frames/idle_017.png" id="22_stmde"]
@@ -70,6 +69,8 @@
 [ext_resource type="Texture2D" uid="uid://bv8dq0qlh5xim" path="res://characters/mew/frames/idle_042.png" id="47_w81g6"]
 [ext_resource type="Texture2D" uid="uid://blfyercnpwu6" path="res://day/art/lake/idle_sprite/frames/idle_043.png" id="48_okbfw"]
 [ext_resource type="Texture2D" uid="uid://46cfp4qvm5hk" path="res://day/art/lake/idle_sprite/frames/idle_044.png" id="49_1u4s5"]
+[ext_resource type="Script" uid="uid://c4qtcxqqwpcme" path="res://day/levels/golden_cliff/village/village_day_two_issue.gd" id="50_day_two_issue"]
+[ext_resource type="Texture2D" uid="uid://c0tvr70uhx473" path="res://day/levels/golden_cliff/ChatGPT Image 2026年8月22日 18_07_38.png" id="51_lkqaj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fish_0"]
 atlas = ExtResource("18_hltob")
@@ -530,7 +531,7 @@ interaction_hint_text = "按[E]与喵呜交谈"
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_npax6")
 animation = &"fishing"
-frame = 17
+frame = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="issues/issue_Mews" unique_id=361027676]
 position = Vector2(-431.8838, -60.739624)
@@ -550,6 +551,51 @@ frame_progress = 0.7346741
 
 [node name="down" type="Marker2D" parent="issues" unique_id=1915977869]
 position = Vector2(6816, -162)
+
+[node name="rope" type="Node2D" parent="issues" unique_id=858082738]
+
+[node name="R1" type="Sprite2D" parent="issues/rope" unique_id=1921106099]
+position = Vector2(1633, -260)
+scale = Vector2(0.2967836, 0.20106047)
+texture = ExtResource("51_lkqaj")
+region_enabled = true
+region_rect = Rect2(199.30304, 24.906342, 131.81409, 1046.1433)
+
+[node name="R2" type="Sprite2D" parent="issues/rope" unique_id=314262999]
+position = Vector2(1245, -229)
+scale = Vector2(0.2967836, 0.20106047)
+texture = ExtResource("51_lkqaj")
+region_enabled = true
+region_rect = Rect2(16.807129, 18.882706, 106.706604, 1033.5896)
+
+[node name="R3" type="Sprite2D" parent="issues/rope" unique_id=1523450318]
+position = Vector2(343.99997, -194)
+scale = Vector2(0.2967836, 0.20106047)
+texture = ExtResource("51_lkqaj")
+region_enabled = true
+region_rect = Rect2(323.98584, 22.670685, 384.21985, 264.38895)
+
+[node name="R4" type="Sprite2D" parent="issues/rope" unique_id=2024870772]
+position = Vector2(754, 610)
+scale = Vector2(0.2591924, 0.20425981)
+texture = ExtResource("51_lkqaj")
+region_enabled = true
+region_rect = Rect2(1205.2045, 5.8540897, 242.08276, 318.16592)
+
+[node name="R5" type="Sprite2D" parent="issues/rope" unique_id=1620236513]
+position = Vector2(1344.9999, 320)
+scale = Vector2(0.2967836, 0.20106047)
+texture = ExtResource("51_lkqaj")
+region_enabled = true
+region_rect = Rect2(885.2886, 422.76978, 283.58264, 114.124756)
+
+[node name="R6" type="Sprite2D" parent="issues/rope" unique_id=266188129]
+z_index = 23
+position = Vector2(2235, 549)
+scale = Vector2(0.2967836, 0.20106047)
+texture = ExtResource("51_lkqaj")
+region_enabled = true
+region_rect = Rect2(711.8961, 19.928717, 179.83301, 217.8745)
 
 [node name="FS" type="Parallax2D" parent="." unique_id=101000001]
 z_index = -30

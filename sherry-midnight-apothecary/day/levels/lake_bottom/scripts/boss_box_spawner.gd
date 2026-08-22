@@ -48,11 +48,15 @@ func _spawn_box() -> void:
 	var box := RigidBody2D.new()
 	box.name = "PushBox"
 	box.global_position = spawn_marker.global_position
-	box.mass = 8.0
+	# A CharacterBody2D can now reliably shove the crate while it remains heavy
+	# enough to be drawn into the Tide Eye instead of bouncing away.
+	box.mass = 1.5
 	box.gravity_scale = 1.0
 	box.lock_rotation = true
-	box.linear_damp = 1.6
+	box.linear_damp = 0.7
 	box.angular_damp = 8.0
+	box.collision_layer = 1
+	box.collision_mask = 1
 	box.z_index = 12
 	box.add_to_group("lake_boss_push_boxes")
 

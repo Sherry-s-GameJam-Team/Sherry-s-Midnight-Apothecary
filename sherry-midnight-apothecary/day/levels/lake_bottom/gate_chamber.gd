@@ -15,10 +15,10 @@ func _ready() -> void:
 	if get_node_or_null("LocalHUD"):
 		$LocalHUD.visible = local_hud_enabled
 	_register_day_two_task()
-	_set_objective("旧旅门维护站内部", "通过中央门返回阿里特之泪湖床。")
+	_set_objective("旧旅门维护站内部", "通过中央门返回药典屋。")
 
 func on_level_entered(_entry_id: StringName) -> void:
-	_set_objective("旧旅门维护站内部", "通过中央门返回阿里特之泪湖床。")
+	_set_objective("旧旅门维护站内部", "通过中央门返回药典屋。")
 
 
 func on_dashiyu_dialogue_completed() -> void:

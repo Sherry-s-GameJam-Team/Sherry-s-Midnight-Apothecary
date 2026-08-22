@@ -15,6 +15,12 @@ script = ExtResource("3_condition")
 type = 1
 key = &"mew_order_delivered"
 
+[sub_resource type="Resource" id="FiveRopesCollected"]
+script = ExtResource("3_condition")
+type = 4
+key = &"village_rope_spool"
+amount = 5
+
 [sub_resource type="Resource" id="Trigger"]
 script = ExtResource("2_trigger")
 type = 2
@@ -26,6 +32,6 @@ script = ExtResource("1_definition")
 id = &"village_day_two_down"
 priority = 80
 trigger = SubResource("Trigger")
-conditions = Array[ExtResource("3_condition")]([SubResource("DayTwo"), SubResource("OrderDelivered")])
+conditions = Array[ExtResource("3_condition")]([SubResource("DayTwo"), SubResource("OrderDelivered"), SubResource("FiveRopesCollected")])
 dialogue_resource = ExtResource("4_dialogue")
 dialogue_title = &"question_menu"
