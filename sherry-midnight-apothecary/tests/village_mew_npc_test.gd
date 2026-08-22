@@ -28,9 +28,9 @@ static func run(test: TestSupport) -> void:
 	test.expect(mew_npc.get_node_or_null("FishingLoop") is AnimatedSprite2D, "MewNPC contains the FishingLoop AnimatedSprite2D child.")
 	test.expect(mew_npc.get_node_or_null("CollisionShape2D") is CollisionShape2D, "MewNPC contains a CollisionShape2D for player interaction.")
 	test.expect(village.get_node_or_null("issues/down") is Marker2D, "Village issues contain the down crossing marker.")
-	test.expect(village.get_node_or_null("issues/Sprite2D/IdleLoop") is AnimatedSprite2D, "Village issues contain the gated IdleLoop sprite.")
-	var rope_root := village.get_node_or_null("issues/rope") as Node2D
-	test.expect(rope_root != null, "Village issues contain the rope collection root.")
+	test.expect(village.get_node_or_null("CS/saved/IdleLoop") is AnimatedSprite2D, "Village saved foreground contains the gated IdleLoop sprite.")
+	var rope_root := village.get_node_or_null("CS/rope") as Node2D
+	test.expect(rope_root != null, "Village foreground contains the rope collection root.")
 	if rope_root != null:
 		var rope_count := 0
 		for child in rope_root.get_children():

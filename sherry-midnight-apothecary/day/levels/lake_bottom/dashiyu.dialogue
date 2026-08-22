@@ -1,6 +1,6 @@
 ~ start
 
-大司鱼: 谁？！
+大司鱼 #portrait(char=大司鱼,slot=center,expr=default,anim=slide_in): 谁？！
 雪莉: 等等！我不是怪物！
 大司鱼: ……
 大司鱼: 人？

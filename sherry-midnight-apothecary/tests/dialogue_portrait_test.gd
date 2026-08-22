@@ -18,6 +18,13 @@ static func run(test: TestSupport) -> void:
 	test.expect(mew_tex != null, "Database resolves texture for '喵呜'.")
 	var sherry_tex := DialoguePortraitDatabase.get_portrait_texture("雪莉", "default")
 	test.expect(sherry_tex != null, "Database resolves Sherry's dialogue portrait.")
+	var dashiyu_tex := DialoguePortraitDatabase.get_portrait_texture("大司鱼", "default")
+	test.expect(dashiyu_tex != null, "Database resolves Dashiyu's lake-return dialogue portrait.")
+	test.expect_equal(
+		dashiyu_tex.resource_path,
+		"res://day/levels/lake_bottom/dasiyu_stand.png",
+		"Dashiyu's portrait uses the authored lake-bottom stand texture."
+	)
 	for expression in ["default", "avert", "dumb", "wink", "exp2_default"]:
 		test.expect(
 			DialoguePortraitDatabase.get_portrait_texture("喵斯", expression) != null,
@@ -50,6 +57,10 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(slot.modulate.r, slot.unfocused_modulate.r, "Unfocused slot dims modulate.")
 	slot.set_focused(true, false)
 	test.expect_equal(slot.modulate.r, slot.focused_modulate.r, "Focused slot restores modulate.")
+	slot.show_portrait("大司鱼", "default", "fade_in")
+	slot.set_focused(true, false)
+	test.expect(slot.scale.x > 1.0, "Focused Dashiyu portrait grows beyond its base size.")
+	test.expect(slot.modulate.r > slot.focused_modulate.r, "Focused Dashiyu portrait receives a visible highlight.")
 
 	slot.clear_instant()
 	test.expect(not slot.is_active, "Slot clears instantly.")

@@ -14,10 +14,12 @@ var boss_phase_active := false
 @onready var objective_label: Label = get_node_or_null("LocalHUD/Panel/VBox/Objective")
 @onready var hint_label: Label = get_node_or_null("LocalHUD/Panel/VBox/Hint")
 @onready var maintenance_portal: Node = get_node_or_null("GateZone/MaintenancePortal")
-@onready var boss: CanvasItem = get_node_or_null("boss") as CanvasItem
 @onready var box_generator: Node = get_node_or_null("boss/BoxGenerator")
+@onready var dashiyu_boss_sprite: CanvasItem = get_node_or_null("boss/Dashiyu") as CanvasItem
 @onready var tide_eye: TideEye = get_node_or_null("boss/TideEye") as TideEye
 @onready var epilogue: LakeBossEpilogue = get_node_or_null("boss/Epilogue") as LakeBossEpilogue
+@onready var local_health_hud: PlayerHealthHUD = get_node_or_null("LocalHealthHUD/PlayerHealthHUD") as PlayerHealthHUD
+@onready var task_complete_ui: TaskCompleteUI = get_node_or_null("TaskCompleteUI") as TaskCompleteUI
 
 
 func _ready() -> void:
@@ -27,6 +29,7 @@ func _ready() -> void:
 		boss_defeated = true
 	if get_node_or_null("LocalHUD"):
 		$LocalHUD.visible = local_hud_enabled
+	_setup_health_hud(runtime)
 	if maintenance_portal and maintenance_portal.has_method("set_portal_active"):
 		maintenance_portal.set_portal_active(false)
 	if tide_eye != null:
@@ -94,11 +97,13 @@ func _set_hint(text: String) -> void:
 
 
 func _set_boss_phase_visible(active: bool) -> void:
+	if dashiyu_boss_sprite:
+		dashiyu_boss_sprite.visible = active and not boss_defeated
 	if boss_defeated:
 		return
 	boss_phase_active = active
-	if boss:
-		boss.visible = active
+	# Static boss-support art keeps the visibility and Transform authored in the
+	# editor. Runtime state only enables the procedural eye and its gameplay.
 	if tide_eye:
 		if active:
 			tide_eye.activate()
@@ -106,6 +111,10 @@ func _set_boss_phase_visible(active: bool) -> void:
 			tide_eye.deactivate()
 	if box_generator:
 		if active and box_generator.has_method("activate"):
+			# Start every arena entry with a fresh box set; no dynamic box survives
+			# from a previous encounter in the same runtime.
+			if box_generator.has_method("deactivate"):
+				box_generator.deactivate()
 			box_generator.activate()
 		elif not active and box_generator.has_method("deactivate"):
 			box_generator.deactivate()
@@ -120,6 +129,8 @@ func on_tide_eye_defeated() -> void:
 		return
 	boss_defeated = true
 	boss_phase_active = false
+	if dashiyu_boss_sprite:
+		dashiyu_boss_sprite.visible = false
 	if box_generator and box_generator.has_method("deactivate"):
 		box_generator.deactivate()
 	var runtime := _find_day_runtime()
@@ -129,6 +140,13 @@ func on_tide_eye_defeated() -> void:
 			player_data.set_event_flag(&"lake_bottom_tide_eye_defeated")
 		runtime.activate_travel_anchor(&"gate_chamber")
 	_set_objective("湖水正在回涌。", "和大司鱼一起离开湖底。")
+	if task_complete_ui != null:
+		task_complete_ui.present(
+			"任务完成：平息噬潮眼",
+			"阿里特之泪的湖水正在回到湖床，大司鱼终于能回家了。",
+			"按任意确认键继续"
+		)
+		await task_complete_ui.dismissed
 	if epilogue != null:
 		epilogue.play()
 
@@ -144,6 +162,23 @@ func _on_boss_potion_broken(impact_point: Vector2, impact_normal: Vector2, proje
 	# bottles that strike a target or pass through the arena before landing.
 	if projectile.potion.id == &"cyan_potion" and impact_normal.y < -0.55:
 		tide_eye.bait_with_water(impact_point)
+
+
+func _setup_health_hud(runtime: Node) -> void:
+	# Lake Bottom owns a reliable scene-local health display. It binds to the
+	# same PlayerData as DayRuntime, while the generic HUD stays hidden here so
+	# another runtime UI state cannot suppress or duplicate the bar.
+	if runtime != null:
+		runtime.set_health_hud_visible(false)
+	if local_health_hud != null:
+		local_health_hud.bind_player_data(get_player_data())
+		local_health_hud.visible = true
+
+
+func _exit_tree() -> void:
+	var runtime := _find_day_runtime()
+	if runtime != null:
+		runtime.set_health_hud_visible(true)
 
 
 func _find_day_runtime() -> Node:

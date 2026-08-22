@@ -15,9 +15,9 @@ const ROPE_PICKUP_RANGE := 180.0
 const ROPE_HINT := "按[E]收集纤绳"
 
 @onready var mew: MewNPC = $issue_Mews
-@onready var idle_loop: AnimatedSprite2D = $Sprite2D/IdleLoop
+@onready var idle_loop: AnimatedSprite2D = get_node_or_null("../CS/saved/IdleLoop") as AnimatedSprite2D
 @onready var down_marker: Marker2D = $down
-@onready var rope_root: Node2D = $rope
+@onready var rope_root: Node2D = get_node_or_null("../CS/rope") as Node2D
 
 var _runtime: DayRuntime
 var _player: CharacterBody2D
@@ -39,7 +39,7 @@ func _ready() -> void:
 		return
 
 	visible = true
-	idle_loop.visible = _has_completed_event()
+	_set_idle_loop_visible(_has_completed_event())
 	_setup_ropes()
 	if _player != null:
 		_previous_player_x = _player.global_position.x
@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 
 func _on_crossed_down_from_left() -> void:
 	if _has_completed_event():
-		idle_loop.visible = true
+		_set_idle_loop_visible(true)
 		_hide_delivery_hint()
 		return
 	if not _has_delivered_order():
@@ -78,7 +78,7 @@ func _on_crossed_down_from_left() -> void:
 	_hide_rope_hint()
 	_hide_delivery_hint()
 	if _runtime != null and _runtime.dispatch_story_event_interaction(INTERACTION_KEY):
-		idle_loop.visible = true
+		_set_idle_loop_visible(true)
 
 
 func _has_delivered_order() -> bool:
@@ -92,12 +92,20 @@ func _has_completed_event() -> bool:
 
 
 func _setup_ropes() -> void:
+	if rope_root == null:
+		push_warning("VillageDayTwoIssue could not resolve CS/rope; rope collection is unavailable in this scene instance.")
+		return
 	for child in rope_root.get_children():
 		var rope := child as Sprite2D
 		if rope == null:
 			continue
 		_rope_sprites.append(rope)
 		rope.visible = not _is_rope_collected(rope)
+
+
+func _set_idle_loop_visible(visible: bool) -> void:
+	if idle_loop != null:
+		idle_loop.visible = visible
 
 
 func _process_rope_interaction(event: InputEvent) -> void:

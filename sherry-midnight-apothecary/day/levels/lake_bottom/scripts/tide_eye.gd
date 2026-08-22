@@ -8,6 +8,7 @@ signal defeated
 @export var hits_required := 3
 @export var suction_radius := 430.0
 @export var swallow_radius := 74.0
+@export var box_swallow_radius := 180.0
 @export var suction_strength := 1500.0
 @export var exposed_seconds := 4.2
 @export var telegraph_seconds := 1.1
@@ -105,7 +106,8 @@ func _physics_process(delta: float) -> void:
 				_swallow_player(body as CharacterBody2D)
 		elif body is RigidBody2D:
 			(body as RigidBody2D).apply_central_force(force)
-			if exposed and distance <= swallow_radius and body.is_in_group("lake_boss_push_boxes"):
+			if exposed and distance <= box_swallow_radius and body.is_in_group("lake_boss_push_boxes"):
+				body.queue_free()
 				_damage_if_exposed()
 
 func _process(delta: float) -> void:

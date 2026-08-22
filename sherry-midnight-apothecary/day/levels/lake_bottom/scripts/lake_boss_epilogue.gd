@@ -8,12 +8,17 @@ const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 
 var _playing := false
 var _water_level := 0.0
+var _boat_start_position := Vector2.ZERO
+var _dialogue_done := false
+
+signal dialogue_finished
 
 @onready var boat: Node2D = $Boat
 @onready var player: CharacterBody2D = get_node_or_null(player_path) as CharacterBody2D
 
 
 func _ready() -> void:
+	_boat_start_position = boat.position
 	boat.visible = false
 	queue_redraw()
 
@@ -26,24 +31,28 @@ func play() -> void:
 	if player != null:
 		player.set_physics_process(false)
 		player.velocity = Vector2.ZERO
+		# Keep the camera at the dock while Sherry boards. The boat can then rise
+		# out through the top of the frame instead of the camera tracking it.
+		player.hide()
 	var water_tween := create_tween()
-	water_tween.tween_method(_set_water_level, 0.0, 1.0, 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	water_tween.tween_method(_set_water_level, 0.0, 1.0, 6.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	_shake_camera()
-	await water_tween.finished
-	var voyage := create_tween()
-	voyage.tween_property(boat, "position:x", boat.position.x + 2500.0, 6.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	# Let the water enter from below for a moment before speech starts; the
+	# dialogue then plays while the boat is carried upward and out of view.
+	await get_tree().create_timer(0.9).timeout
 	_start_dialogue()
-
-
-func _process(_delta: float) -> void:
-	if _playing and player != null and boat.visible:
-		player.global_position = boat.global_position + Vector2(-38.0, -66.0)
+	await water_tween.finished
+	if not _dialogue_done:
+		await dialogue_finished
+	_finish()
 
 
 func _draw() -> void:
 	if _water_level <= 0.0:
 		return
-	var top := lerpf(1120.0, 370.0, _water_level)
+	# The surface starts below the active camera and rises through the scene;
+	# it is never an immediate full-screen color overlay.
+	var top := lerpf(1180.0, 470.0, _water_level)
 	draw_rect(Rect2(-500.0, top, 10800.0, 1300.0), Color(0.05, 0.70, 0.82, 0.58))
 	for index in range(7):
 		var y := top + 30.0 + index * 94.0
@@ -52,6 +61,12 @@ func _draw() -> void:
 
 func _set_water_level(value: float) -> void:
 	_water_level = value
+	if boat != null:
+		# The editor-authored boat position is the departure point. Water carries
+		# it upward only after the surface has entered the lower edge of the view.
+		# It then drifts toward the open lake and beyond the top of the frame.
+		var boat_lift := clampf((value - 0.12) / 0.88, 0.0, 1.0)
+		boat.position = _boat_start_position + Vector2(360.0 * boat_lift, -1080.0 * boat_lift)
 	queue_redraw()
 
 
@@ -70,24 +85,34 @@ func _shake_camera() -> void:
 
 func _start_dialogue() -> void:
 	if dialogue_resource == null:
-		_finish()
+		_dialogue_done = true
+		dialogue_finished.emit()
 		return
 	var dialogue_manager := get_node_or_null("/root/DialogueManager")
 	if dialogue_manager == null:
-		_finish()
+		_dialogue_done = true
+		dialogue_finished.emit()
 		return
 	get_tree().set_meta("day_modal_input_locked", true)
 	var balloon := dialogue_manager.show_dialogue_balloon_scene(BALLOON_SCENE, dialogue_resource, &"start") as Node
 	if balloon != null:
-		balloon.tree_exited.connect(_finish, CONNECT_ONE_SHOT)
+		balloon.tree_exited.connect(_on_dialogue_finished, CONNECT_ONE_SHOT)
 	else:
-		_finish()
+		_dialogue_done = true
+		dialogue_finished.emit()
+
+
+func _on_dialogue_finished() -> void:
+	if _dialogue_done:
+		return
+	_dialogue_done = true
+	dialogue_finished.emit()
 
 
 func _finish() -> void:
 	var runtime := _find_day_runtime()
 	if runtime != null:
-		runtime.transition_to_level_with_blackout("golden_cliff_village", &"from_lake", true)
+		runtime.transition_to_level_with_blackout("golden_cliff_village", &"from_bottom", true)
 
 
 func _find_day_runtime() -> Node:

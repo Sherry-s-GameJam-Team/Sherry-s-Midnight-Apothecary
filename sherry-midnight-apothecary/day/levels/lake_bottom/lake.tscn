@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bq2o2riwx71wv" path="res://day/levels/lake_bottom/art/arit_prop_waterline_cliff_01.png" id="5_cliff"]
 [ext_resource type="Texture2D" uid="uid://b7vlu5jax7bby" path="res://day/levels/lake_bottom/art/arit_plat_lakebed_flat_01.png" id="6_flat"]
 [ext_resource type="Texture2D" uid="uid://dokjij16v052q" path="res://day/levels/lake_bottom/art/arit_plat_lakebed_slope_01.png" id="7_slope"]
+[ext_resource type="Texture2D" uid="uid://cr0x04o5k464x" path="res://day/levels/lake_bottom/art/arit_prop_fish_skeleton_large_01.png" id="9_83vpt"]
 [ext_resource type="Texture2D" uid="uid://bgb42vnomwvjn" path="res://day/levels/lake_bottom/art/arit_prop_submerged_ruins_01.png" id="10_ruins"]
 [ext_resource type="Texture2D" uid="uid://dypl5d2o6enbo" path="res://day/levels/lake_bottom/art/arit_gate_maintenance_station_ext_01.png" id="11_station"]
 [ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="12_dashiyu"]
@@ -27,6 +28,8 @@
 [ext_resource type="Script" uid="uid://b1l7sd83q2diq" path="res://day/levels/lake_bottom/scripts/lake_boss_epilogue.gd" id="33_epilogue"]
 [ext_resource type="Resource" uid="uid://e03ui76iwmkq" path="res://day/levels/lake_bottom/tide_eye_epilogue.dialogue" id="34_epilogue_dialogue"]
 [ext_resource type="Texture2D" uid="uid://d1bcu0f5x6giw" path="res://day/levels/lake_bottom/art/arit_prop_boat_dashiyu_wreck_01.png" id="35_boat"]
+[ext_resource type="PackedScene" path="res://day/ui/player_health_hud.tscn" id="36_health_hud"]
+[ext_resource type="PackedScene" uid="uid://cti4npw3yn4nr" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="37_task_complete"]
 
 [sub_resource type="CircleShape2D" id="TideEyeSuctionShape"]
 radius = 430.0
@@ -44,7 +47,7 @@ size = Vector2(279, 1162)
 size = Vector2(220, 260)
 
 [sub_resource type="RectangleShape2D" id="PortalShape"]
-size = Vector2(320, 300)
+size = Vector2(359, 498)
 
 [node name="Lake" type="Node2D" unique_id=2118471385]
 script = ExtResource("1_lake")
@@ -68,7 +71,6 @@ limit_left = 0
 limit_top = 0
 limit_right = 9600
 limit_bottom = 1080
-position_smoothing_enabled = false
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=1620726355]
 
@@ -88,24 +90,16 @@ position = Vector2(7460, 660)
 
 [node name="Sky" type="Parallax2D" parent="Background" unique_id=1592058336]
 scroll_scale = Vector2(0.08, 0.03)
+scroll_offset = Vector2(-2153, 416)
 repeat_size = Vector2(2172, 0)
 repeat_times = 7
 
 [node name="Sprite" type="Sprite2D" parent="Background/Sky" unique_id=810930620]
-position = Vector2(1081, 252)
+position = Vector2(1320, -52)
 texture = ExtResource("2_sky")
 
-[node name="FarBasin" type="Parallax2D" parent="Background" unique_id=840119051]
-scroll_scale = Vector2(0.22, 0.1)
-repeat_size = Vector2(2172, 0)
-repeat_times = 7
-
-[node name="Sprite" type="Sprite2D" parent="Background/FarBasin" unique_id=1923200351]
-position = Vector2(1089, 726)
-texture = ExtResource("3_basin")
-
 [node name="MidLakebed" type="Parallax2D" parent="Background" unique_id=1834238371]
-scroll_scale = Vector2(1, 1)
+scroll_offset = Vector2(-1871, 169)
 repeat_size = Vector2(2172, 0)
 repeat_times = 7
 
@@ -113,6 +107,20 @@ repeat_times = 7
 modulate = Color(0.9, 0.98, 1, 0.92)
 position = Vector2(1084, 475)
 texture = ExtResource("4_lakebed")
+
+[node name="FarBasin" type="Parallax2D" parent="Background" unique_id=840119051]
+scroll_scale = Vector2(0.22, 0.1)
+scroll_offset = Vector2(-2032, 193)
+repeat_size = Vector2(2172, 0)
+repeat_times = 7
+
+[node name="Sprite" type="Sprite2D" parent="Background/FarBasin" unique_id=1923200351]
+position = Vector2(1089, 726)
+texture = ExtResource("3_basin")
+
+[node name="AritPropFishSkeletonLarge01" type="Sprite2D" parent="Background" unique_id=1926597036]
+position = Vector2(4734, 899)
+texture = ExtResource("9_83vpt")
 
 [node name="AmbientFX" type="Node2D" parent="." unique_id=852798924]
 z_index = 3
@@ -241,7 +249,7 @@ position = Vector2(1680, 810)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Physics/DescentStep3" unique_id=256724072]
 position = Vector2(3.0517578e-05, 40.4791)
 scale = Vector2(1, 0.8739754)
-polygon = PackedVector2Array(-351, -14.278564, -245, -19.999573, 604, 212, 561, 248)
+polygon = PackedVector2Array(-342, -5.125, -245, -19.999573, 604, 212, 561, 248)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Physics" unique_id=328484047]
 
@@ -287,7 +295,7 @@ energy = 0.0
 texture_scale = 2.5
 
 [node name="Valve02" type="Area2D" parent="ValvePuzzle" unique_id=684852677]
-position = Vector2(5120, 675)
+position = Vector2(5012, 736)
 script = ExtResource("18_valve_script")
 valve_id = &"lakeheart_spring"
 
@@ -318,7 +326,7 @@ energy = 0.0
 texture_scale = 2.5
 
 [node name="Valve03" type="Area2D" parent="ValvePuzzle" unique_id=1391297136]
-position = Vector2(6263, 657)
+position = Vector2(6366, 721)
 script = ExtResource("18_valve_script")
 valve_id = &"cliff_spring"
 
@@ -365,6 +373,7 @@ prompt_text = "E 进入旧旅门维护站"
 requires_activation = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GateZone/MaintenancePortal" unique_id=1849182372]
+position = Vector2(19.5, 99)
 shape = SubResource("PortalShape")
 
 [node name="Prompt" type="Label" parent="GateZone/MaintenancePortal" unique_id=1849182373]
@@ -381,7 +390,7 @@ energy = 0.6
 texture_scale = 2.5
 
 [node name="StationArt" type="Sprite2D" parent="GateZone" unique_id=1665378185]
-position = Vector2(5700, 570)
+position = Vector2(5723, 642)
 scale = Vector2(0.72, 0.72)
 texture = ExtResource("11_station")
 
@@ -404,6 +413,13 @@ text = "阿里特之泪"
 [node name="Hint" type="Label" parent="LocalHUD/Panel/VBox" unique_id=1701704416]
 layout_mode = 2
 text = "沿旧水位痕迹前进。"
+
+[node name="LocalHealthHUD" type="CanvasLayer" parent="." unique_id=802497892]
+layer = 41
+
+[node name="PlayerHealthHUD" parent="LocalHealthHUD" unique_id=802497893 instance=ExtResource("36_health_hud")]
+
+[node name="TaskCompleteUI" parent="." unique_id=802497894 instance=ExtResource("37_task_complete")]
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1867458414]
 

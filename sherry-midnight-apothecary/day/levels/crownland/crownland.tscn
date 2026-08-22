@@ -1,181 +1,183 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene format=3 uid="uid://cit3jcwyd16uy"]
 
-[ext_resource type="Script" path="res://day/levels/crownland/crownland.gd" id="1_level"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/skybox_normal.png" id="2_sky_normal"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/skybox_corrupted.png" id="3_sky_corrupted"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/MS.png" id="4_midground"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/town.png" id="5_town"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/square.png" id="6_square"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/church.png" id="7_church"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/royalroom.png" id="8_royal_room"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/pillar.png" id="9_pillar"]
-[ext_resource type="Texture2D" path="res://day/levels/crownland/garden_corrupted.png" id="10_garden_corrupted"]
-[ext_resource type="Script" path="res://shared/player/day_player_controller.gd" id="11_player"]
+[ext_resource type="Script" uid="uid://c4e8dcf0pneb0" path="res://day/levels/crownland/crownland.gd" id="1_level"]
+[ext_resource type="Texture2D" uid="uid://b415qxn8p1uh8" path="res://day/levels/crownland/skybox_normal.png" id="2_sky_normal"]
+[ext_resource type="Texture2D" uid="uid://cins1qpdq411b" path="res://day/levels/crownland/skybox_corrupted.png" id="3_sky_corrupted"]
+[ext_resource type="Texture2D" uid="uid://bt755u56a86h2" path="res://day/levels/crownland/MS.png" id="4_midground"]
+[ext_resource type="Texture2D" uid="uid://cx4m34ao3h7rs" path="res://day/levels/crownland/town.png" id="5_town"]
+[ext_resource type="Texture2D" uid="uid://1iuoen0oisdf" path="res://day/levels/crownland/square.png" id="6_square"]
+[ext_resource type="Texture2D" uid="uid://fs3r2p3vi44c" path="res://day/levels/crownland/church.png" id="7_church"]
+[ext_resource type="Texture2D" uid="uid://cf63fk1qbd0q5" path="res://day/levels/crownland/royalroom.png" id="8_royal_room"]
+[ext_resource type="Texture2D" uid="uid://bq21prpw2t2ub" path="res://day/levels/crownland/pillar.png" id="9_pillar"]
+[ext_resource type="Texture2D" uid="uid://3msnxpuybfsa" path="res://day/levels/crownland/garden_corrupted.png" id="10_garden_corrupted"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="11_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="12_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="13_presentation"]
-[ext_resource type="Script" path="res://shared/player/camera_bounds.gd" id="14_camera"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="14_camera"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="15_potions"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="16_console"]
-[ext_resource type="Script" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="17_pause_host"]
-[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="18_pause_menu"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="17_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="18_pause_menu"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
-size = Vector2(9000, 160)
+size = Vector2(4360, 160)
 
 [sub_resource type="RectangleShape2D" id="Rect_barrier"]
 size = Vector2(128, 1600)
 
-[node name="Crownland" type="Node2D"]
+[node name="Crownland" type="Node2D" unique_id=1388659649]
 script = ExtResource("1_level")
 debug_scene_id = "crownland"
 
-[node name="Background" type="Node2D" parent="."]
+[node name="Background" type="Node2D" parent="." unique_id=1872102438]
+position = Vector2(0, -60)
 
-[node name="FS" type="Parallax2D" parent="Background"]
+[node name="FS" type="Parallax2D" parent="Background" unique_id=1628383488]
 z_index = -30
 scroll_scale = Vector2(0.12, 0)
 
-[node name="NormalSky" type="Sprite2D" parent="Background/FS"]
+[node name="NormalSky" type="Sprite2D" parent="Background/FS" unique_id=2025524247]
+position = Vector2(-22, 0)
 texture = ExtResource("2_sky_normal")
 centered = false
 
-[node name="NormalSkyRepeat" type="Sprite2D" parent="Background/FS"]
-position = Vector2(2172, 0)
+[node name="NormalSkyRepeat" type="Sprite2D" parent="Background/FS" unique_id=1648832623]
+position = Vector2(2150, 0)
 texture = ExtResource("2_sky_normal")
 centered = false
 
-[node name="NormalSkyRepeat2" type="Sprite2D" parent="Background/FS"]
-position = Vector2(4344, 0)
+[node name="NormalSkyRepeat2" type="Sprite2D" parent="Background/FS" unique_id=227989088]
+position = Vector2(4290, -1)
 texture = ExtResource("2_sky_normal")
 centered = false
 
-[node name="NormalSkyRepeat3" type="Sprite2D" parent="Background/FS"]
+[node name="NormalSkyRepeat3" type="Sprite2D" parent="Background/FS" unique_id=437013748]
 position = Vector2(6516, 0)
 texture = ExtResource("2_sky_normal")
 centered = false
 
-[node name="CorruptedSky" type="Node2D" parent="Background/FS"]
-visible = false
+[node name="CorruptedSky" type="Node2D" parent="Background/FS" unique_id=720213564]
 
-[node name="Sprite" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+[node name="Sprite" type="Sprite2D" parent="Background/FS/CorruptedSky" unique_id=841243089]
 texture = ExtResource("3_sky_corrupted")
 centered = false
 
-[node name="Repeat" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+[node name="Repeat" type="Sprite2D" parent="Background/FS/CorruptedSky" unique_id=946188070]
 position = Vector2(2172, 0)
 texture = ExtResource("3_sky_corrupted")
 centered = false
 
-[node name="Repeat2" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+[node name="Repeat2" type="Sprite2D" parent="Background/FS/CorruptedSky" unique_id=2085580292]
 position = Vector2(4344, 0)
 texture = ExtResource("3_sky_corrupted")
 centered = false
 
-[node name="Repeat3" type="Sprite2D" parent="Background/FS/CorruptedSky"]
+[node name="Repeat3" type="Sprite2D" parent="Background/FS/CorruptedSky" unique_id=357718764]
 position = Vector2(6516, 0)
 texture = ExtResource("3_sky_corrupted")
 centered = false
 
-[node name="MS" type="Parallax2D" parent="Background"]
+[node name="MS" type="Parallax2D" parent="Background" unique_id=1174858075]
 z_index = -20
 scroll_scale = Vector2(0.42, 0)
 
-[node name="Castle" type="Sprite2D" parent="Background/MS"]
-position = Vector2(1180, 120)
+[node name="Castle" type="Sprite2D" parent="Background/MS" unique_id=381798814]
+position = Vector2(-69, -218.00006)
+scale = Vector2(1.5612339, 1.4668509)
 texture = ExtResource("4_midground")
 centered = false
 
-[node name="CS" type="Parallax2D" parent="Background"]
+[node name="CS" type="Parallax2D" parent="Background" unique_id=805418947]
 z_index = -10
 
-[node name="City" type="Node2D" parent="Background/CS"]
+[node name="City" type="Node2D" parent="Background/CS" unique_id=208034377]
 
-[node name="Town" type="Sprite2D" parent="Background/CS/City"]
+[node name="Town" type="Sprite2D" parent="Background/CS/City" unique_id=2045061146]
 position = Vector2(-80, 120)
 texture = ExtResource("5_town")
 centered = false
 
-[node name="Square" type="Sprite2D" parent="Background/CS/City"]
-position = Vector2(2050, 120)
+[node name="Square" type="Sprite2D" parent="Background/CS/City" unique_id=151732658]
+position = Vector2(2078, 179)
 texture = ExtResource("6_square")
 centered = false
 
-[node name="Church" type="Sprite2D" parent="Background/CS/City"]
-position = Vector2(4270, 120)
+[node name="Church" type="Sprite2D" parent="Background/CS/City" unique_id=1063579994]
+z_index = -1
+position = Vector2(2574, -136)
 texture = ExtResource("7_church")
 centered = false
 
-[node name="RoyalRoom" type="Sprite2D" parent="Background/CS/City"]
+[node name="RoyalRoom" type="Sprite2D" parent="Background/CS/City" unique_id=1284817767]
 position = Vector2(6025, 110)
 texture = ExtResource("8_royal_room")
 centered = false
 
-[node name="RoyalPillar" type="Sprite2D" parent="Background/CS/City"]
+[node name="RoyalPillar" type="Sprite2D" parent="Background/CS/City" unique_id=2046877725]
 position = Vector2(7840, -120)
 scale = Vector2(0.52, 0.52)
 texture = ExtResource("9_pillar")
 centered = false
 
-[node name="CorruptedGarden" type="Sprite2D" parent="Background/CS"]
+[node name="CorruptedGarden" type="Sprite2D" parent="Background/CS" unique_id=362224947]
 visible = false
 position = Vector2(0, 120)
 texture = ExtResource("10_garden_corrupted")
 centered = false
 
-[node name="WorldBounds" type="Node2D" parent="."]
+[node name="WorldBounds" type="Node2D" parent="." unique_id=1206780994]
 
-[node name="Ground" type="StaticBody2D" parent="WorldBounds"]
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=769357343]
 position = Vector2(4300, 680)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=918521609]
+position = Vector2(-2189, 102)
 shape = SubResource("Rect_ground")
 
-[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds"]
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1143578669]
 position = Vector2(-64, 160)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=1652587344]
 shape = SubResource("Rect_barrier")
 
-[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds"]
-position = Vector2(8664, 160)
-collision_layer = 1
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1409489795]
+position = Vector2(4287, 381)
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1777118789]
+position = Vector2(-35, -43)
 shape = SubResource("Rect_barrier")
 
-[node name="EntryPoints" type="Node2D" parent="."]
+[node name="EntryPoints" type="Node2D" parent="." unique_id=970240621]
 
-[node name="default" type="Marker2D" parent="EntryPoints"]
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1809526136]
 position = Vector2(360, 560)
 
-[node name="from_town" type="Marker2D" parent="EntryPoints"]
+[node name="from_town" type="Marker2D" parent="EntryPoints" unique_id=1352652808]
 position = Vector2(360, 560)
 
-[node name="square" type="Marker2D" parent="EntryPoints"]
+[node name="square" type="Marker2D" parent="EntryPoints" unique_id=1232232332]
 position = Vector2(2900, 560)
 
-[node name="cathedral" type="Marker2D" parent="EntryPoints"]
+[node name="cathedral" type="Marker2D" parent="EntryPoints" unique_id=1209166521]
 position = Vector2(5000, 560)
 
-[node name="palace" type="Marker2D" parent="EntryPoints"]
+[node name="palace" type="Marker2D" parent="EntryPoints" unique_id=1161099360]
 position = Vector2(7200, 560)
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=339001426]
 z_index = 10
 position = Vector2(360, 560)
 collision_mask = 3
 script = ExtResource("11_player")
 
-[node name="SherryCollision" parent="Player" instance=ExtResource("12_collision")]
+[node name="SherryCollision" parent="Player" unique_id=1577790673 instance=ExtResource("12_collision")]
 
-[node name="SherryPresentation" parent="Player" instance=ExtResource("13_presentation")]
+[node name="SherryPresentation" parent="Player" unique_id=2001846095 instance=ExtResource("13_presentation")]
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1705957661]
 position = Vector2(0, -110)
 limit_top = 0
 limit_bottom = 720
@@ -186,16 +188,16 @@ script = ExtResource("14_camera")
 left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
-[node name="PotionThrower" parent="Player" instance=ExtResource("15_potions")]
+[node name="PotionThrower" parent="Player" unique_id=155084128 instance=ExtResource("15_potions")]
 position = Vector2(48, 87)
 
-[node name="DebugUI" type="CanvasLayer" parent="."]
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=647180140]
 layer = 200
 
-[node name="DeveloperConsole" parent="DebugUI" instance=ExtResource("16_console")]
+[node name="DeveloperConsole" parent="DebugUI" unique_id=2058320686 instance=ExtResource("16_console")]
 
-[node name="PauseMenuLayer" type="CanvasLayer" parent="."]
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=165609621]
 layer = 200
 script = ExtResource("17_pause_host")
 
-[node name="PauseMenu" parent="PauseMenuLayer" instance=ExtResource("18_pause_menu")]
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=2134606602 instance=ExtResource("18_pause_menu")]

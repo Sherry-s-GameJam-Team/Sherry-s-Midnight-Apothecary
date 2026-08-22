@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dcse75b0ceqn2"
+path="res://.godot/imported/village_lake_return.dialogue-ee4c32e242dd0ed21d823d456be0b39f.tres"
+
+[deps]
+
+source_file="res://day/levels/golden_cliff/village/village_lake_return.dialogue"
+dest_files=["res://.godot/imported/village_lake_return.dialogue-ee4c32e242dd0ed21d823d456be0b39f.tres"]
+
+[params]
+
+defaults=true

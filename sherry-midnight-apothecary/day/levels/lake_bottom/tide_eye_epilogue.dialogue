@@ -1,6 +1,6 @@
 ~ start
 
-大司鱼: 水回来了……
+大司鱼 #portrait(char=大司鱼,slot=center,expr=default,anim=slide_in): 水回来了……
 雪莉: 先坐稳，船要被水推走了。
 大司鱼: 喵斯还在等我。
 雪莉: 那就一起回涟汀村。

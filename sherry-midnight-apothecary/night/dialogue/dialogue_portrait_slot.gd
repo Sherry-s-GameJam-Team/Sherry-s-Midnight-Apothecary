@@ -156,6 +156,12 @@ func set_focused(focused: bool, animated: bool = true) -> void:
 		return
 	var target_modulate := focused_modulate if focused else unfocused_modulate
 	var target_scale := Vector2.ONE if focused else Vector2(0.97, 0.97)
+	# Dashiyu is the large, center-stage return-dialogue portrait. Give his
+	# spoken lines an unmistakable scale and warm highlight rather than the
+	# subtle default focus recovery used by ordinary NPC portraits.
+	if focused and _is_dashiyu_portrait():
+		target_modulate = Color(1.18, 1.10, 0.84, 1.0)
+		target_scale = Vector2(1.08, 1.08)
 
 	if _focus_tween and _focus_tween.is_valid():
 		_focus_tween.kill()
@@ -171,6 +177,11 @@ func set_focused(focused: bool, animated: bool = true) -> void:
 		modulate.g = target_modulate.g
 		modulate.b = target_modulate.b
 		scale = target_scale
+
+
+func _is_dashiyu_portrait() -> bool:
+	var character_id := current_character.strip_edges().to_lower()
+	return character_id in ["dashiyu", "大司鱼"]
 
 
 func _crossfade_to(new_texture: Texture2D) -> void:
