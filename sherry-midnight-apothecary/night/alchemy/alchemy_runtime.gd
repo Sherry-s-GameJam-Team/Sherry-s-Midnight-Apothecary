@@ -80,6 +80,8 @@ var _ingredient_by_id: Dictionary = {}
 @onready var to_production_arrow: Button = $StageRoot/HorizontalStage/BrewingPanel/ArtBoard/ToProductionArrow
 @onready var back_to_brewing_arrow: Button = $StageRoot/HorizontalStage/ProductionPanel/BackToBrewingArrow
 @onready var bottling_panel: BottlingPanel = %BottlingPanel
+@onready var spectrum_codex_panel: SpectrumCodexPanel = %SpectrumCodexPanel
+
 
 
 func _ready() -> void:
@@ -646,6 +648,10 @@ func _commit_brew_instance(instance: PotionInstanceData, potion: PotionData) -> 
 	cauldron_ingredients.clear()
 	cauldron_powders.clear()
 	processing_ingredient = null
+	var is_special_brew := false
+	if not active_prediction.is_empty():
+		is_special_brew = bool(active_prediction.get("special_brew", false))
+	_unlock_codex_for_brew(instance, is_special_brew)
 	active_prediction.clear()
 	last_brewed_instance = instance_data.duplicate(true)
 	batch_committed.emit(instance_data)
@@ -911,3 +917,45 @@ func _quality_name(value: float) -> String:
 	if value < 1.3:
 		return "卓越"
 	return "完美"
+
+
+func _unlock_codex_for_brew(instance: PotionInstanceData, is_special_brew: bool) -> void:
+	if spectrum_codex_panel == null or spectrum_codex_panel.catalog == null or spectrum_codex_panel.unlock_state == null:
+		return
+
+	var catalog := spectrum_codex_panel.catalog
+	var unlock_state := spectrum_codex_panel.unlock_state
+	var mixed_x := instance.mixed_x
+
+	# 1. Find the band
+	var active_band: PotionSpectrumBand = null
+	for band in catalog.bands:
+		if band != null and mixed_x >= band.spectrum_min and mixed_x <= band.spectrum_max:
+			active_band = band
+			break
+	if active_band == null:
+		return
+
+	# 2. Find the closest function under this band
+	var closest_func: PotionFunctionDefinition = null
+	var min_dist := INF
+	for func_def in catalog.functions:
+		if func_def != null and func_def.band_id == active_band.id:
+			var dist := absf(mixed_x - func_def.spectrum_position)
+			if dist < min_dist:
+				min_dist = dist
+				closest_func = func_def
+
+	if closest_func == null:
+		return
+
+	# Unlock the function
+	unlock_state.unlock_function(closest_func.id)
+
+	# 3. Find and unlock the recipe
+	for recipe in catalog.recipes:
+		if recipe != null and recipe.function_id == closest_func.id:
+			if recipe.is_special == is_special_brew:
+				unlock_state.unlock_recipe(recipe.id)
+				unlock_state.unlock_matrix_cell(Vector2i(recipe.matrix_row, recipe.matrix_col))
+

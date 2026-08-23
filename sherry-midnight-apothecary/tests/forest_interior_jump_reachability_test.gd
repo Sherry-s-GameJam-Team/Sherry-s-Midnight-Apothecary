@@ -2,9 +2,8 @@ extends SceneTree
 
 const SCENE_PATH := "res://day/levels/forest/interior/forest_interior.tscn"
 
-# Luca Physics: gravity 1400, jump_velocity 550 => max jump height = 550^2 / (2 * 1400) = 108 px
-const LUCA_MAX_JUMP_HEIGHT := 108.0
-const LUCA_SAFE_STEP_HEIGHT := 90.0
+# Sherry Physics: walking jump 159px, running jump 213px => safe step spacing <= 100px
+const SHERRY_SAFE_STEP_HEIGHT := 100.0
 
 var failures: Array[String] = []
 
@@ -22,21 +21,12 @@ func _run() -> void:
 	await process_frame
 
 	var reality := level.get_node_or_null("RealityWorld")
-	var luca_world := level.get_node_or_null("LucaWorldOnly")
-	if reality == null or luca_world == null:
-		_fail("RealityWorld or LucaWorldOnly missing")
+	if reality == null:
+		_fail("RealityWorld missing")
 		_finish()
 		return
 
-	# 1. Test Luca Right-Side Continuous Step Route (Y: 600 down to -4650, Steps 1 to 67)
-	var luca_step_names: Array[String] = []
-	for i in range(1, 68):
-		luca_step_names.append("LucaStep%d" % i)
-	luca_step_names.append("LucaTopWalk")
-
-	_verify_sequence(luca_world, luca_step_names, "Luca Right-Side Step Route")
-
-	# 2. Test Reality World Sequences for Sherry
+	# 1. Test Reality World Sequences for Sherry
 	var stage2_seq := ["RightB", "StepB1", "StepB2", "StepB3", "StepB4", "MudStageRight", "MudShortcut", "MudStageLeft", "StepB5", "StepB6", "StepB7", "StepB8", "StepB9", "MidLanding"]
 	_verify_sequence(reality, stage2_seq, "Stage 2 Staircase")
 
@@ -65,8 +55,8 @@ func _verify_sequence(parent: Node, node_names: Array, section_name: String) -> 
 			continue
 		if prev_node != null:
 			var dy := absf(node.position.y - prev_node.position.y)
-			if dy > LUCA_SAFE_STEP_HEIGHT:
-				_fail("%s: Step from %s to %s dy (%.1f) exceeds safe step height (%.1f)" % [section_name, prev_node.name, node.name, dy, LUCA_SAFE_STEP_HEIGHT])
+			if dy > SHERRY_SAFE_STEP_HEIGHT:
+				_fail("%s: Step from %s to %s dy (%.1f) exceeds safe step height (%.1f)" % [section_name, prev_node.name, node.name, dy, SHERRY_SAFE_STEP_HEIGHT])
 		prev_node = node
 
 func _fail(msg: String) -> void:
@@ -82,3 +72,4 @@ func _finish() -> void:
 		for f in failures:
 			print("  - ", f)
 		quit(1)
+

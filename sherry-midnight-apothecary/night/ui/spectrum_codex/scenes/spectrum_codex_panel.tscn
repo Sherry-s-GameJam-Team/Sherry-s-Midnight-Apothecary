@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/spectrum_codex_panel.gd" id="2_script"]
 [ext_resource type="PackedScene" path="res://night/ui/spectrum_codex/scenes/spectrum_vertical_view.tscn" id="3_vert"]
 [ext_resource type="PackedScene" path="res://night/ui/spectrum_codex/scenes/spectrum_matrix_view.tscn" id="4_mat"]
+[ext_resource type="Texture2D" path="res://night/ui/spectrum_codex/art/handle.svg" id="5_handle"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.16, 0.12, 0.07, 0.85)
@@ -68,6 +69,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [node name="SpectrumCodexPanel" type="Control"]
+z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,3 +240,20 @@ text = "相关药方:"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 4
+
+[node name="PullHandle" type="TextureButton" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 24)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_right = 32.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("5_handle")

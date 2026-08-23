@@ -48,12 +48,12 @@ func use_valve(valve: int) -> void:
 			_use_pressure_valve(Valve.RED, 4)
 		Valve.BLUE:
 			if red_uses == 0:
-				_set_status("管道剧烈敲击：必须先开启红色主供水阀。")
+				_set_status_with_hint("必须先开启红色主供水阀。")
 				return
 			_use_pressure_valve(Valve.BLUE, 3)
 		Valve.YELLOW:
 			if blue_uses == 0:
-				_set_status("管路结霜卡死：必须先以蒸汽升温。")
+				_set_status_with_hint("必须先以蒸汽升温。")
 				return
 			_use_pressure_valve(Valve.YELLOW, -1)
 		Valve.GREEN:
@@ -73,7 +73,10 @@ func _use_pressure_valve(valve: int, amount: int) -> void:
 	if pressure > MAX_SAFE_PRESSURE:
 		_reset_overpressure()
 		return
-	_set_status("压力已到安全边缘，继续加压将触发泄压。" if pressure == MAX_SAFE_PRESSURE else "液压状态已更新。")
+	if pressure == MAX_SAFE_PRESSURE:
+		_set_status_with_hint("压力已到安全边缘，继续加压将触发泄压。")
+	else:
+		_set_status("液压状态已更新。")
 	pressure_changed.emit(pressure)
 	_evaluate_unlock()
 
@@ -82,10 +85,10 @@ func _evaluate_unlock() -> void:
 	if is_unlocked or pressure != TARGET_PRESSURE or not flow_down:
 		return
 	if red_uses != 1 or blue_uses != 2 or yellow_uses != 3:
-		_set_status("压力正确，但配比不符：需要一注水、两注汽、三回流。")
+		_set_status_with_hint("压力正确，但配比不符：需要一注水、两注汽、三回流。")
 		return
 	is_unlocked = true
-	_set_status("导流指示灯转绿。液压卡榫解除，主闸门自动开启。")
+	_set_status_with_hint("导流指示灯转绿。液压卡榫解除，主闸门自动开启。")
 	unlocked.emit()
 	_open_main_gate()
 
@@ -109,7 +112,7 @@ func _reset_overpressure() -> void:
 	flow_down = false
 	is_unlocked = false
 	_operation_history.clear()
-	_set_status("安全阀喷出高温蒸汽！系统已泄压并重置。")
+	_set_status_with_hint("安全阀喷出高温蒸汽！系统已泄压并重置。")
 	pressure_changed.emit(pressure)
 
 
@@ -123,6 +126,12 @@ func _apply_steam_damage() -> void:
 
 
 func _set_status(message: String) -> void:
+	_status = message
+	status_changed.emit(message)
+	_update_presentation()
+
+
+func _set_status_with_hint(message: String) -> void:
 	_status = message
 	status_changed.emit(message)
 	_show_status_hint(message)

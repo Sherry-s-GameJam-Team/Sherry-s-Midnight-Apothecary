@@ -22,23 +22,23 @@ func _run() -> void:
 		"Player",
 		"Player/Camera2D",
 		"Player/PotionThrower",
-		"Luca",
 		"RealityWorld/RootLiftA",
 		"RealityWorld/RotatingRoot",
 		"RealityWorld/SluiceGate",
 		"RealityWorld/RootLiftB",
 		"RealityWorld/FinalGate",
 		"RealityWorld/LiftAConsoleReality",
-		"LucaWorldOnly/LiftAConsole",
-		"LucaWorldOnly/SprayDevice",
-		"ForestController/LucaWorldController",
-		"ForestController/PartyController",
+		"RealityWorld/LiftAConsole",
+		"RealityWorld/SprayDevice",
+		"RealityWorld/RotateConsole",
+		"RealityWorld/SluiceConsole",
+		"RealityWorld/LiftBConsole",
+		"RealityWorld/FinalGateConsole",
+		"RealityWorld/UpperControlRoom/DirectLift",
 		"ExitToCrown",
 	]:
 		if level.get_node_or_null(path) == null:
 			_fail("Missing required node: %s" % path)
-	if not InputMap.has_action(&"switch_character"):
-		_fail("switch_character action was not created")
 	if level.has_method("set_corrupted"):
 		level.call("set_corrupted", false)
 		await process_frame

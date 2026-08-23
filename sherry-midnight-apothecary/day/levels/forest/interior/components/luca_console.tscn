@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" path="res://day/levels/forest/interior/art/forest_control_root_wheel.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="Shape_area"]
-size = Vector2(190, 190)
+size = Vector2(260, 240)
 
 [node name="LucaConsole" type="Area2D"]
 collision_layer = 0
-collision_mask = 1
+collision_mask = 3
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

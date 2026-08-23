@@ -19,34 +19,18 @@ func _run() -> void:
 	await process_frame
 
 	var player: Node2D = level.player
-	var luca: Node2D = level.luca
-	var party: ForestPartyController = level.party as ForestPartyController
-	var camera: Camera2D = party.camera
-	var spray: ForestSprayDevice = level.get_node_or_null("LucaWorldOnly/SprayDevice") as ForestSprayDevice
+	var camera: Camera2D = player.get_node_or_null("Camera2D") as Camera2D
+	var spray: ForestSprayDevice = level.get_node_or_null("RealityWorld/SprayDevice") as ForestSprayDevice
 	var mud_a: ForestInteriorCorruptedMud = level.get_node_or_null("RealityWorld/SprayMudA") as ForestInteriorCorruptedMud
 	var mud_b: ForestInteriorCorruptedMud = level.get_node_or_null("RealityWorld/SprayMudB") as ForestInteriorCorruptedMud
 
-	if party == null or camera == null or spray == null or mud_a == null or mud_b == null:
+	if player == null or camera == null or spray == null or mud_a == null or mud_b == null:
 		_fail("Missing essential nodes in level")
 		_finish()
 		return
 
-	# 1. Test Party Controller switching behavior
-	party.set_active_character(&"luca")
-	if party.active_character != &"luca":
-		_fail("Failed to set active character to luca")
-	if camera.get_parent() != luca:
-		_fail("Camera was not reparented to Luca when switching to Luca")
-
-	party.enable_switching(false)
-	if party.active_character != &"luca":
-		_fail("enable_switching(false) incorrectly reset active character away from Luca!")
-	if camera.get_parent() != luca:
-		_fail("Camera was moved away from Luca when party switching was disabled")
-	party.enable_switching(true)
-
-	# 2. Test SprayDevice interaction, camera transition, and W/S aim
-	spray.position = luca.position
+	# 1. Test SprayDevice interaction with Sherry, camera transition, and W/S aim
+	spray.position = player.position
 	spray._luca_inside = true
 	spray._begin_control()
 	await process_frame
@@ -55,8 +39,6 @@ func _run() -> void:
 		_fail("Spray device did not enter controlling state")
 	if camera.get_parent() != spray.camera_focus:
 		_fail("Camera was not focused on SprayDevice CameraFocus! Parent is: %s" % str(camera.get_parent()))
-	if party.switching_enabled:
-		_fail("Party switching should be disabled while controlling spray")
 
 	# Test Aim pitch with W/S
 	var initial_rot := spray.pivot.rotation_degrees
@@ -83,12 +65,10 @@ func _run() -> void:
 	await process_frame
 	if spray._controlling:
 		_fail("Spray device failed to end controlling state")
-	if camera.get_parent() != luca:
-		_fail("Camera did not return to Luca after exiting spray control! Parent is: %s" % str(camera.get_parent()))
-	if not party.switching_enabled:
-		_fail("Party switching was not re-enabled after exiting spray control")
+	if camera.get_parent() != player:
+		_fail("Camera did not return to Player after exiting spray control! Parent is: %s" % str(camera.get_parent()))
 
-	# 3. Test Mud Cleansing and Collision Removal
+	# 2. Test Mud Cleansing and Collision Removal
 	if mud_a.collision_layer == 0:
 		_fail("MudA collision_layer should initially be active")
 	mud_a.receive_water_jet(1.0)
@@ -108,7 +88,7 @@ func _run() -> void:
 	if not mud_b.collision.disabled:
 		_fail("MudB CollisionShape2D was not disabled after potion purify")
 
-	# 4. Test Background Parallax Setup
+	# 3. Test Background Parallax Setup
 	var bg_corrupt: Parallax2D = level.get_node_or_null("Background/CorruptedBackground") as Parallax2D
 	var bg_normal: Parallax2D = level.get_node_or_null("Background/NormalBackground") as Parallax2D
 	var blood_stream: Parallax2D = level.get_node_or_null("Background/CentralStream/BloodStream") as Parallax2D
@@ -117,10 +97,17 @@ func _run() -> void:
 	if bg_corrupt == null or bg_normal == null or blood_stream == null or clear_stream == null:
 		_fail("Background parallax nodes are missing or not Parallax2D")
 	else:
-		if bg_corrupt.repeat_size.y <= 0.0 or bg_corrupt.repeat_times < 3:
-			_fail("CorruptedBackground vertical repeat is not properly configured for full camera bounds")
-		if blood_stream.repeat_size.y <= 0.0 or blood_stream.repeat_times < 3:
-			_fail("BloodStream vertical repeat is not properly configured for full camera bounds")
+		var sprite_corrupt := bg_corrupt.get_node_or_null("Sprite2D") as Sprite2D
+		var sprite_normal := bg_normal.get_node_or_null("Sprite2D") as Sprite2D
+		if sprite_corrupt == null or sprite_corrupt.texture == null:
+			_fail("CorruptedBackground is missing Sprite2D texture")
+		if sprite_normal == null or sprite_normal.texture == null:
+			_fail("NormalBackground is missing Sprite2D texture")
+		if bg_corrupt.visible != true or blood_stream.visible != true:
+			_fail("Corrupted environment state does not show corrupted background and blood stream")
+		level.set_corrupted(false)
+		if bg_normal.visible != true or clear_stream.visible != true:
+			_fail("Purified environment state does not show normal background and clear stream")
 
 	level.queue_free()
 	await process_frame
@@ -139,3 +126,4 @@ func _finish() -> void:
 		for f in failures:
 			print("  - ", f)
 		quit(1)
+

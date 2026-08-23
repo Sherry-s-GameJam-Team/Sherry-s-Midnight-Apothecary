@@ -19,7 +19,7 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 3. 莲花首次踩踏后永久进入放水状态；水流使用 `Area2D` 与 `ForestWaterReceiver` 的真实空间重叠判定，不在 Lotus 脚本里硬编码水车编号。
 4. 四座水车全部启动后，阿尔维斯母树树心门进入可交互状态；玩家靠近门并按 E，才会播放 24 帧、6 FPS、约 4 秒的开门动画和同步音效。
 5. 树心门开启后写入 `forest_tree_gate_opened`，并通过 `request_checkpoint(&"forest_tree_gate_opened")` 暴露关键点接口。
-6. 树门开启后，玩家通过树门后的入口触发 `enter_interior()`：`forest.gd` 调用 `DayRuntime.switch_to_level(&"forest_interior", &"from_forest")` 切换到独立 Interior 关卡（不再在外部场景内驱动旧的内嵌树内阶段）。
+6. 树门开启后，玩家进入树门后的 `InteriorEntrance` 范围会看到“按[E]进入树内”提示；仅按 E 才调用 `enter_interior()`。`forest.gd` 随后通过 `DayRuntime.switch_to_level(&"forest_interior", &"from_forest")` 切换到独立 Interior 关卡（不再在外部场景内驱动旧的内嵌树内阶段）。
 7. Interior 关卡内完成 Sherry / Luca 切换、控制室、水枪、升降根、闸门与直达梯流程，最后到达树冠出口。Interior 的玩法、节点契约与验收见 [FOREST_INTERIOR_LEVEL.md](FOREST_INTERIOR_LEVEL.md)。
 8. 独立 `forest_crown` 关卡从 Interior 的 `from_interior` 入口接入树冠 Boss；Interior 的 `ExitToCrown` 通过 DayRuntime 黑屏转场切换到正式 Boss 场景。
 
@@ -33,9 +33,9 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 
 过场写入标准剧情完成标记 `story_event_completed:day_one_forest_enzuo_intro`，但会在当天保留悬挂角色。其他日期或 `save_enzuo_solved` 为真时，整个 `issue_save_enzuo` 节点隐藏。
 
-初见结束后，靠近该区域会由 HintUI 显示“按 E 开始救援”。`ForestEnzuoRescueController` 启动三轮 `2 → 3 → 2` 的副藤切割：按住既有投掷键可进入原有子弹时间与抛物线预览，机关药水不读取或扣除背包库存。每次飞行都以连续轨迹段、略宽于瓶身的容差切开当前轮全部经过的副藤；预览触及副藤会令其白闪，触及恩佐身体、头部或主承重藤保护区则整条线转红。
+初见对话结束后不再有药水投掷或副藤切割环节，玩家立即恢复操作并直接开始四座水车的主线解密。恩佐会一直被母树藤蔓保护，直到树冠 Boss 被净化。
 
-命中恩佐或主藤会显示“雪莉：糟了！”，快速黑场并只重置当前轮，已经完成的轮次不会撤销。完成每轮后恩佐依次左摆、下降重布姿态；最后两根副藤解除后主藤自行放松，将他送至巨叶。收束事件 `day_one_forest_enzuo_rescued` 设置 `save_enzuo_solved` 并隐藏整个节点，不改变水车、树门、库存或正式生命值。
+Boss 完成后，玩家由树冠出口返回森林的 `from_crown` 入口时，藤蔓会自然松开恩佐；卢卡背起少年并播放收束对话。演出结束以黑场调用 `DayRuntime.finish_day()`，直接切入夜晚场景；此时写入 `save_enzuo_solved` 与 `story_event_completed:day_one_forest_enzuo_rescued`，避免重复播放。
 
 ### Lotus
 
@@ -99,4 +99,4 @@ func purify_boss()
 
 - 外部场景烟雾测试：`day/levels/forest/tests/forest/forest_smoke_test.gd`（验证 Exterior 节点、莲花/水车/污泥机制、角色切换与树门交接；输出 `FOREST_SMOKE_TEST: PASS`）。
 - Interior 关卡烟雾测试：`tests/forest_interior_smoke_test.gd`（来自 Interior 关卡包，输出 `FOREST_INTERIOR_SMOKE_TEST: PASS`）。
-- 恩佐救援规则测试：`tests/forest_enzuo_rescue_test.gd`（验证第一天/初见/存档门槛、三轮 2/3/2 配置及连续轨迹切藤几何）。
+- 恩佐救援规则测试：`tests/forest_enzuo_rescue_test.gd`（验证仅在第一天、初见完成且 Boss 净化后触发收束，并保证完成后不重播）。

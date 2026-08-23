@@ -18,6 +18,13 @@ static func run(test: TestSupport) -> void:
 	test.expect(mew_tex != null, "Database resolves texture for '喵呜'.")
 	var sherry_tex := DialoguePortraitDatabase.get_portrait_texture("雪莉", "default")
 	test.expect(sherry_tex != null, "Database resolves Sherry's dialogue portrait.")
+	var luca_tex := DialoguePortraitDatabase.get_portrait_texture("卢卡", "default")
+	test.expect(luca_tex != null, "Database resolves Luca's dialogue portrait.")
+	test.expect_equal(
+		luca_tex.resource_path,
+		"res://characters/luca/stand.png",
+		"Luca's dialogue portrait uses the authored stand texture."
+	)
 	var dashiyu_tex := DialoguePortraitDatabase.get_portrait_texture("大司鱼", "default")
 	test.expect(dashiyu_tex != null, "Database resolves Dashiyu's lake-return dialogue portrait.")
 	test.expect_equal(
@@ -134,6 +141,14 @@ static func run(test: TestSupport) -> void:
 	dummy_line.tags = PackedStringArray()
 	balloon._process_portrait_syntax(dummy_line)
 	test.expect(balloon.get_slot("right").is_active, "Untagged Sherry line defaults to RightSlot.")
+
+	balloon.clear_portraits()
+	dummy_line.character = "卢卡"
+	dummy_line.text = "吾在看水。"
+	dummy_line.tags = PackedStringArray()
+	balloon._process_portrait_syntax(dummy_line)
+	test.expect(balloon.get_slot("left").is_active, "Untagged Luca line defaults to LeftSlot.")
+	test.expect_equal(balloon.get_slot("left").current_character, "卢卡", "LeftSlot displays '卢卡'.")
 
 	# Test 5: Embedded #tag in character name (e.g. "炉边烤鱼的少女 #left(happy, bounce)")
 	balloon.clear_portraits()

@@ -11,6 +11,7 @@ const RESCUE_EVENT: StringName = &"day_one_forest_enzuo_rescued"
 const RESCUE_INTERACTION: StringName = &"day_one_forest_enzuo_rescued"
 const SOLVED_FLAG: StringName = &"save_enzuo_solved"
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
+const ROOT_SLOPE_TEXTURE := preload("res://day/levels/forest/interior/art/root_slope.png")
 
 @export var release_dialogue: DialogueResource
 @export_node_path("CharacterBody2D") var player_path: NodePath
@@ -18,6 +19,7 @@ const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 @export_node_path("Node2D") var hanging_npc_path: NodePath
 @export_node_path("ColorRect") var fade_overlay_path: NodePath
 @export var interaction_radius := 190.0
+@export var interaction_anchor_offset := Vector2(300.0, 600.0)
 @export var cut_radius := 20.0
 
 var _player: CharacterBody2D
@@ -64,7 +66,7 @@ func _process(_delta: float) -> void:
 	visible = true
 	if _running or _resolving or _player == null:
 		return
-	if _player.global_position.distance_to(global_position + Vector2(300.0, 380.0)) <= interaction_radius:
+	if _player.global_position.distance_to(global_position + interaction_anchor_offset) <= interaction_radius:
 		_show_interaction_hint()
 	else:
 		_hide_interaction_hint()
@@ -75,7 +77,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if not event.is_action_pressed("interact"):
 		return
-	if _player.global_position.distance_to(global_position + Vector2(300.0, 380.0)) > interaction_radius:
+	if _player.global_position.distance_to(global_position + interaction_anchor_offset) > interaction_radius:
 		return
 	_start_rescue()
 	get_viewport().set_input_as_handled()
@@ -138,7 +140,7 @@ func _start_rescue() -> void:
 	_thrower.set_mechanism_mode(true)
 	_hint = get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 	if _hint != null:
-		_hint.push_text("机关药水不会消耗库存。让轨迹避开恩佐和主藤。", _mechanism_hint_id, false)
+		_hint.push_text("机关药水不会消耗库存。让轨迹避开男孩和主藤。", _mechanism_hint_id, false)
 
 
 func _on_projectile_spawned(projectile: PotionProjectile) -> void:
@@ -160,7 +162,9 @@ func _on_preview_updated(points: PackedVector2Array) -> void:
 	var dangerous := false
 	for vine in _vines:
 		if int(vine.round) == _round and not bool(vine.cut):
-			vine.line.default_color = Color(0.87, 1.0, 1.0, 1.0) if _path_hits_vine(points, vine) else Color(0.42, 0.82, 0.39, 1.0)
+			var line := vine.get("line") as Line2D
+			if is_instance_valid(line):
+				line.default_color = Color(0.87, 1.0, 1.0, 1.0) if _path_hits_vine(points, vine) else Color(0.42, 0.82, 0.39, 1.0)
 	for index in range(1, points.size()):
 		if _segment_hits_danger(points[index - 1], points[index]):
 			dangerous = true
@@ -186,11 +190,22 @@ func _segment_hits_danger(from: Vector2, to: Vector2) -> bool:
 
 func _cut_vine(vine: Dictionary) -> void:
 	vine.cut = true
-	var line: Line2D = vine.line
-	if line != null:
+	var line := vine.get("line") as Line2D
+	var root_visual := vine.get("root_visual") as Sprite2D
+	if is_instance_valid(line):
 		var tween := create_tween()
 		tween.tween_property(line, "modulate:a", 0.0, 0.18)
-		tween.tween_callback(line.queue_free)
+		tween.tween_callback(func() -> void:
+			if is_instance_valid(line):
+				line.visible = false
+		)
+	if is_instance_valid(root_visual):
+		var visual_tween := create_tween()
+		visual_tween.tween_property(root_visual, "modulate:a", 0.0, 0.18)
+		visual_tween.tween_callback(func() -> void:
+			if is_instance_valid(root_visual):
+				root_visual.visible = false
+		)
 
 
 func _round_is_complete() -> bool:
@@ -237,9 +252,14 @@ func _fail_round() -> void:
 	for vine in _vines:
 		if int(vine.round) == _round:
 			vine.cut = false
-			if vine.line != null:
-				vine.line.modulate.a = 1.0
-				vine.line.visible = true
+			var line := vine.get("line") as Line2D
+			if is_instance_valid(line):
+				line.modulate.a = 1.0
+				line.visible = true
+			var root_visual := vine.get("root_visual") as Sprite2D
+			if is_instance_valid(root_visual):
+				root_visual.modulate.a = 1.0
+				root_visual.visible = true
 	await _fade(0.0, 0.24)
 	get_tree().remove_meta("day_modal_input_locked")
 	_resolving = false
@@ -253,12 +273,10 @@ func _finish_rescue() -> void:
 		_hint.hide_interaction_hint(_mechanism_hint_id)
 	if _thrower != null:
 		_thrower.set_mechanism_mode(false)
-	if _main_vine_line != null:
-		var glow := create_tween()
-		glow.tween_property(_main_vine_line, "default_color", Color(0.52, 1.0, 0.46, 1.0), 0.28)
-		await glow.finished
+	if is_instance_valid(_main_vine_line):
+		_main_vine_line.default_color = Color(0.52, 1.0, 0.46, 1.0)
 	await _animate_hanging(Vector2(385.0, 430.0), 1.2)
-	if _main_vine_line != null:
+	if is_instance_valid(_main_vine_line):
 		_main_vine_line.visible = false
 	if _landing_leaf != null:
 		_landing_leaf.visible = true
@@ -322,15 +340,20 @@ func _stop_active_projectile() -> void:
 
 func _set_round_visibility() -> void:
 	for vine in _vines:
-		if vine.line != null:
-			vine.line.visible = int(vine.round) == _round and not bool(vine.cut)
+		var is_visible := int(vine.round) == _round and not bool(vine.cut)
+		var line := vine.get("line") as Line2D
+		if is_instance_valid(line):
+			line.visible = is_visible
+		var root_visual := vine.get("root_visual") as Sprite2D
+		if is_instance_valid(root_visual):
+			root_visual.visible = is_visible
 
 
 func _show_interaction_hint() -> void:
 	if _hint == null:
 		_hint = get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 	if _hint != null:
-		_hint.show_interaction_hint(_hint_id, "按 E 开始救援")
+		_hint.show_interaction_hint(_hint_id, "按[E]救助男孩")
 
 
 func _hide_interaction_hint() -> void:
@@ -389,7 +412,8 @@ func _build_vines() -> void:
 		[1, Vector2(285, 166), Vector2(348, 204)], [1, Vector2(470, 245), Vector2(414, 266)], [1, Vector2(462, 323), Vector2(412, 294)],
 		[2, Vector2(294, 310), Vector2(355, 282)], [2, Vector2(445, 98), Vector2(404, 158)],
 	]
-	for definition in definitions:
+	for definition_index in range(definitions.size()):
+		var definition: Array = definitions[definition_index]
 		var line := Line2D.new()
 		line.width = 10.0
 		line.default_color = Color(0.42, 0.82, 0.39, 1.0)
@@ -397,4 +421,13 @@ func _build_vines() -> void:
 		line.add_point(definition[2])
 		line.z_index = 6
 		add_child(line)
-		_vines.append({"round": int(definition[0]), "a": global_position + definition[1], "b": global_position + definition[2], "cut": false, "line": line})
+		var root_visual: Sprite2D = null
+		if definition_index < 2:
+			root_visual = Sprite2D.new()
+			root_visual.texture = ROOT_SLOPE_TEXTURE
+			root_visual.position = (definition[1] + definition[2]) * 0.5
+			root_visual.rotation = (definition[2] - definition[1]).angle()
+			root_visual.scale = Vector2(0.16, 0.16)
+			root_visual.z_index = 7
+			add_child(root_visual)
+		_vines.append({"round": int(definition[0]), "a": global_position + definition[1], "b": global_position + definition[2], "cut": false, "line": line, "root_visual": root_visual})

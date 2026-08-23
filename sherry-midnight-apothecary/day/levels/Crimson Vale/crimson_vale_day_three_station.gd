@@ -72,7 +72,7 @@ func _open_dialogue() -> void:
 func _on_dialogue_event(event_name: StringName, payload: Variant) -> void:
 	match event_name:
 		&"crimson_station_intro_reward":
-		_complete_intro()
+			_complete_intro()
 		&"crimson_station_buy_wind_potion":
 			_buy_wind_potions(maxi(int(payload), 1))
 		&"crimson_station_gate_restored_followup":

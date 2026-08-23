@@ -10,8 +10,8 @@
 - `CharacterReflections` 负责 Sherry 的镜像表现。Luca 使用其场景实例下的 `LucaWaterReflection` 直接读取父节点当前动画帧并水线镜像，从而不依赖集中控制器的层级或可见性状态。Luca 倒影在镜像位置下移 10px，垂直高度为原先的 3 倍（压缩系数 0.6）；两者均使用相同的赤色波纹 shader 与 water alpha 蒙版，且不参与碰撞或输入。
 - `HydraulicGatePuzzle` 是关卡内局部的液压主闸谜题，位于通路后段。红、蓝、黄手轮、绿色换向阀精灵与中央压力表精灵各自绑定 `SewerHydraulicInteractable`，靠近后按 `E` 操作；因此位置、缩放、贴图和文本均可直接在编辑器中调整。红阀标注“注水”并 `+4`、蓝阀标注“蒸汽”并 `+3`、黄阀标注“回流”并 `-1`。压力从 0 巴开始；高于 8 巴会触发蒸汽泄压、造成 1 点伤害并重置。蓝阀必须在红阀之后，黄阀必须在蓝阀之后；不再提供手动重置按钮。
 - 红、蓝、黄副阀分别由 `valve.png` 搭配同目录的 `red_wheel.png`、`blue_wheel.png`、`yellow_wheel.png` 呈现。绿色换向阀根据状态切换 `up.png` / `down.png`；中央压力表使用 `CENTRAL PRESSURE GAUGE& INDICATOR MODULE.png`，其子精灵使用 `pointer.png`，读数和导流状态由可编辑的 `Label` 节点显示。控制器不再绘制圆圈、白模或文字。
-- 阀门操作、顺序错误、超压、解锁和开门的状态文本不再放置在关卡底部；`HydraulicGatePuzzle` 会使用全局 `TopHintUI` 的 `push_text()` 在顶部播报，并在 3 秒后自动淡出。
-- Hint UI 不显示具体“巴”数值；压力数值仅保留在仪表盘内。播报内容为液压流程状态、顺序错误、安全边缘警告、超压泄压和解锁结果。
+- 阀门正常转动时不弹出 `TopHintUI` 提示，仅在临界状态（安全边缘警告、超压泄压重置）和顺序/配比错误（蓝阀未在红阀之后、黄阀未在蓝阀之后、压力正确但配比不符）以及解锁成功时使用 `push_text()` 播报。
+- 接近阀门时的 `PanelContainer` 提示仅显示"[E] 转动"，不再暴露各阀门的巴数加减值；压力数值仅保留在仪表盘内。
 - 每个可交互精灵的 `SewerHydraulicInteractable` 读取其子节点 `InteractionArea`（`Area2D + CollisionShape2D`）的实体检测结果：玩家进入对应阀体或绿阀的可编辑判定箱才显示关联的 `PanelContainer` 文字框，也只有此时 `E` 有效。红、蓝、黄手轮成功操作后各自播放 0.42 秒的一整圈转动；绿阀不旋转，以保留其上下状态表现。
 - `CentralPressureGauge` 的 `0`、`2`、`4`、`6`、`8`、`10` 个 `Marker2D` 节点是指针刻度锚点。压力指针按相邻锚点分段插值，确保 0、4、6、8 巴分别指向对应刻度；`pointer_art_angle` 可在 `HydraulicGatePuzzle` Inspector 微调源图初始朝向。
 - 正解依次为红、蓝、黄、黄、蓝、黄，使压力稳定在 7 巴；再把绿阀拨到“下 / 顺流”。中央指示灯转绿且卡榫解除后，`WhiteboxMainGate` 自动从 `gate.png` 切换为 `gate_open.png` 并向上移动 250px；其 `StaticBody2D` 碰撞体随之移开，开放通往森林出口的通路。场景还直接标出锈蚀守则、检修涂鸦与积水刻痕三条环境线索。

@@ -31,6 +31,17 @@ func _process(_delta: float) -> void:
 	prompt.text = "[E] 乘直达升降梯" if _unlocked else "直达升降梯尚未恢复"
 
 
+func _input(event: InputEvent) -> void:
+	if not _unlocked or not _luca_inside:
+		return
+	var is_e: bool = event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and not event.echo and (event.physical_keycode == KEY_E or event.keycode == KEY_E))
+	if is_e:
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_perform_transport()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not _unlocked or not _luca_inside:
 		return
@@ -39,26 +50,48 @@ func _unhandled_input(event: InputEvent) -> void:
 		var vp := get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
-		var level := _get_level()
-		if level == null:
-			return
-		var destination: Marker2D = null
-		if level.has_node(destination_path):
-			destination = level.get_node_or_null(destination_path) as Marker2D
-		elif has_node(destination_path):
-			destination = get_node_or_null(destination_path) as Marker2D
-		else:
-			destination = level.get_node_or_null("RespawnPoints/LucaTopArrival") as Marker2D
-		
-		var active_body: CharacterBody2D = null
-		if level.is_luca_active():
-			active_body = level.get_node_or_null("Luca") as CharacterBody2D
-		else:
-			active_body = level.get_node_or_null("Player") as CharacterBody2D
-		
-		if destination != null and active_body != null:
-			active_body.velocity = Vector2.ZERO
-			active_body.global_position = destination.global_position
+		_perform_transport()
+
+
+func _perform_transport() -> void:
+	var level := _get_level()
+	if level == null:
+		return
+	
+	var fade_rect: ColorRect = null
+	if level.has_node("UI/FadeRect"):
+		fade_rect = level.get_node("UI/FadeRect") as ColorRect
+	
+	if fade_rect != null:
+		var tw := create_tween()
+		tw.tween_property(fade_rect, "modulate:a", 1.0, 0.35)
+		await tw.finished
+	
+	var destination: Marker2D = null
+	if level.has_node(destination_path):
+		destination = level.get_node_or_null(destination_path) as Marker2D
+	elif has_node(destination_path):
+		destination = get_node_or_null(destination_path) as Marker2D
+	else:
+		destination = level.get_node_or_null("RespawnPoints/LucaTopArrival") as Marker2D
+		if destination == null:
+			destination = level.get_node_or_null("RespawnPoints/TopArrival") as Marker2D
+	
+	var active_body: CharacterBody2D = null
+	if level.has_method("is_luca_active") and bool(level.call("is_luca_active")):
+		active_body = level.get_node_or_null("Luca") as CharacterBody2D
+	else:
+		active_body = level.get_node_or_null("Player") as CharacterBody2D
+		if active_body == null:
+			active_body = get_tree().get_first_node_in_group("player") as CharacterBody2D
+	
+	if destination != null and active_body != null:
+		active_body.velocity = Vector2.ZERO
+		active_body.global_position = destination.global_position
+	
+	if fade_rect != null:
+		var tw_in := create_tween()
+		tw_in.tween_property(fade_rect, "modulate:a", 0.0, 0.35)
 
 
 func _on_body_entered(body: Node2D) -> void:

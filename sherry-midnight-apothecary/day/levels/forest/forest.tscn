@@ -31,7 +31,6 @@
 [ext_resource type="PackedScene" path="res://day/levels/forest/art/npc/hanging_frame/hanging_frame.tscn" id="40_hanging_frame"]
 [ext_resource type="Script" uid="uid://d0vjwiqr5jcbr" path="res://day/levels/forest/forest_day_one_enzuo_intro.gd" id="41_enzuo_intro"]
 [ext_resource type="Resource" uid="uid://y2s1632xcryh" path="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue" id="42_enzuo_dialogue"]
-[ext_resource type="Script" uid="uid://ctla20lgv7pq2" path="res://day/levels/forest/forest_enzuo_rescue_controller.gd" id="43_enzuo_rescue"]
 [ext_resource type="Resource" uid="uid://dh6ysp3y2yxot" path="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue" id="44_enzuo_rescue_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
@@ -74,6 +73,9 @@ position = Vector2(420, 560)
 [node name="restored_return" type="Marker2D" parent="EntryPoints" unique_id=2112366671]
 position = Vector2(5887, 563)
 
+[node name="from_crown" type="Marker2D" parent="EntryPoints" unique_id=671509743]
+position = Vector2(300, 590)
+
 [node name="Player" type="CharacterBody2D" parent="." unique_id=244414513 groups=["forest_character", "player"]]
 z_index = 10
 position = Vector2(218, 577)
@@ -100,7 +102,7 @@ visible = false
 position = Vector2(7180, 380)
 
 [node name="LucaDialogueNpc" type="Node2D" parent="." unique_id=1826486977]
-position = Vector2(5835, 590)
+position = Vector2(510, 358)
 
 [node name="LucaVisual" type="AnimatedSprite2D" parent="LucaDialogueNpc" unique_id=1797148628]
 z_index = 3
@@ -143,7 +145,7 @@ luca_world_controller_path = NodePath("../LucaWorldController")
 position = Vector2(-40, 360)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/ExteriorLeftBarrier" unique_id=1564122626]
-position = Vector2(-340, 8)
+position = Vector2(-476, 9)
 shape = SubResource("ExteriorSideShape")
 
 [node name="ExteriorRightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1041141081]
@@ -331,11 +333,12 @@ position = Vector2(3154, 626)
 position = Vector2(4539, 622)
 
 [node name="ArvisTreeGate" parent="Exterior" unique_id=1611753189 instance=ExtResource("19_gate")]
-position = Vector2(6065.0005, 346)
-scale = Vector2(2.61, 2.61)
+position = Vector2(364, 393)
+scale = Vector2(2.7206423, 2.9079738)
 
 [node name="InteriorEntrance" type="Area2D" parent="Exterior" unique_id=1952695788]
-position = Vector2(6280, 500)
+position = Vector2(578.9995, 547)
+scale = Vector2(1.0423918, 1.1141663)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exterior/InteriorEntrance" unique_id=1694475243]
@@ -377,6 +380,7 @@ forest_path = NodePath("..")
 [node name="issue_save_enzuo" type="Node2D" parent="." unique_id=387401203]
 script = ExtResource("41_enzuo_intro")
 dialogue_resource = ExtResource("42_enzuo_dialogue")
+post_boss_dialogue = ExtResource("44_enzuo_rescue_dialogue")
 player_path = NodePath("../Player")
 luca_path = NodePath("../Luca")
 camera_path = NodePath("../Player/Camera2D")
@@ -394,15 +398,8 @@ scale = Vector2(0.28002366, 0.28002366)
 position = Vector2(166, 602)
 
 [node name="luca" type="Marker2D" parent="issue_save_enzuo" unique_id=541770498]
+visible = false
 position = Vector2(411, 605)
-
-[node name="ForestEnzuoRescueController" type="Node2D" parent="issue_save_enzuo" unique_id=1776719220]
-script = ExtResource("43_enzuo_rescue")
-release_dialogue = ExtResource("44_enzuo_rescue_dialogue")
-player_path = NodePath("../../Player")
-thrower_path = NodePath("../../Player/PotionThrower")
-hanging_npc_path = NodePath("../HangingFrameNpc")
-fade_overlay_path = NodePath("../../UI/ForestDayOneFade")
 
 [node name="Crown" parent="." unique_id=910945885 instance=ExtResource("34_crown")]
 

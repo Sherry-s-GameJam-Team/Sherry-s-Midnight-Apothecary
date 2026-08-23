@@ -10,8 +10,8 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="8_console"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="9_pause_menu"]
 [ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="10_5hk1q"]
-[ext_resource type="Script" path="res://day/levels/lake_bottom/scripts/dashiyu_npc.gd" id="11_dashiyu_script"]
-[ext_resource type="Resource" path="res://day/levels/lake_bottom/dashiyu.dialogue" id="12_dashiyu_dialogue"]
+[ext_resource type="Script" uid="uid://cc4bm87achx81" path="res://day/levels/lake_bottom/scripts/dashiyu_npc.gd" id="11_dashiyu_script"]
+[ext_resource type="Resource" uid="uid://cfo2gt2nxbjqq" path="res://day/levels/lake_bottom/dashiyu.dialogue" id="12_dashiyu_dialogue"]
 
 [sub_resource type="RectangleShape2D" id="FloorShape"]
 size = Vector2(3258, 139)
@@ -110,10 +110,6 @@ one_way_collision = true
 [node name="CentralGateDoor" type="Area2D" parent="." unique_id=2071066190]
 position = Vector2(1629, 800)
 script = ExtResource("3_door")
-destination_level = &"home"
-destination_entry_id = &"default"
-fallback_scene_path = "res://day/levels/home/home.tscn"
-prompt_text = "E 返回药典屋"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CentralGateDoor" unique_id=915248733]
 shape = SubResource("DoorShape")
@@ -123,7 +119,7 @@ offset_left = -140.0
 offset_top = -180.0
 offset_right = 140.0
 offset_bottom = -145.0
-text = "E 返回药典屋"
+text = "[E] 返回"
 horizontal_alignment = 1
 
 [node name="Glow" type="PointLight2D" parent="CentralGateDoor" unique_id=1237811959]

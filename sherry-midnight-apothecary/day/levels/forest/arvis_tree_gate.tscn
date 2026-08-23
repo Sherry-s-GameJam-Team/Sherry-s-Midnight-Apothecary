@@ -148,6 +148,7 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=1254329421]
 position = Vector2(113.5, 5)
 shape = SubResource("GateInteractionShape")
+one_way_collision = true
 
 [node name="OpenSFX" type="AudioStreamPlayer2D" parent="." unique_id=1141251892]
 stream = ExtResource("3")

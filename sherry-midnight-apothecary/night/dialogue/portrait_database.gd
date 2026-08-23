@@ -165,7 +165,7 @@ static func _resolve_main_character_texture(character_name: String, expression: 
 			return stand
 		return _load_texture("res://characters/sherry/frames/01_idle/idle_001.png")
 	elif c in ["luca", "卢卡"]:
-		return _load_texture("res://characters/luca/luca_stand.png")
+		return _load_texture("res://characters/luca/stand.png")
 	elif c in ["dashiyu", "大司鱼"]:
 		return _load_texture("res://day/levels/lake_bottom/dasiyu_stand.png")
 	elif c in ["rosaline fanen", "罗莎琳·凡恩", "罗莎琳"]:

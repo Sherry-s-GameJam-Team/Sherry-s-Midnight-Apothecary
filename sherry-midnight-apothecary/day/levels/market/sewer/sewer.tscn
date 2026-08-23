@@ -362,7 +362,7 @@ offset_bottom = 578.0
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.5, 0.45, 1)
 theme_override_font_sizes/font_size = 17
-text = "[E] 红阀：注水 +4 巴"
+text = "[E] 转动"
 horizontal_alignment = 1
 
 [node name="BlueValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170219]
@@ -376,7 +376,7 @@ offset_bottom = 576.0
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.7, 1, 1)
 theme_override_font_sizes/font_size = 17
-text = "[E] 蓝阀：蒸汽 +3 巴"
+text = "[E] 转动"
 horizontal_alignment = 1
 
 [node name="YellowValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170220]
@@ -390,7 +390,7 @@ offset_bottom = 578.0
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.36, 1)
 theme_override_font_sizes/font_size = 17
-text = "[E] 黄阀：回流 -1 巴"
+text = "[E] 转动"
 horizontal_alignment = 1
 
 [node name="DirectionValveHint" type="PanelContainer" parent="HydraulicGatePuzzle/PipeArt" unique_id=1718170221]
@@ -404,7 +404,7 @@ offset_bottom = 351.0
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 1, 0.55, 1)
 theme_override_font_sizes/font_size = 17
-text = "[E] 绿阀：上下换向"
+text = "[E] 转动"
 horizontal_alignment = 1
 
 [node name="BG" type="Sprite2D" parent="HydraulicGatePuzzle" unique_id=602297847]

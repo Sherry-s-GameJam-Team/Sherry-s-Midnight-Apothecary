@@ -24,6 +24,8 @@ var boss_purified := false
 var _wheel_ids: Dictionary = {}
 var _interior_controls: Dictionary = {}
 var _respawning := false
+var _interior_player_in_range := false
+var _interior_hint: TopHintUI
 
 @onready var player: CharacterBody2D = $Player
 @onready var luca: CharacterBody2D = $Luca
@@ -65,6 +67,19 @@ func on_level_entered(entry_id: StringName) -> void:
 func _process(_delta: float) -> void:
 	if phase >= ForestPhase.INTERIOR and phase < ForestPhase.RESTORED:
 		_update_pressure_ui()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not _interior_player_in_range or not tree_gate_opened or get_tree().has_meta("day_modal_input_locked"):
+		return
+	if not event.is_action_pressed("interact"):
+		return
+	get_viewport().set_input_as_handled()
+	enter_interior(player)
+
+
+func _exit_tree() -> void:
+	_hide_interior_hint()
 
 func set_corrupted(corrupted: bool) -> void:
 	if _is_corrupted == corrupted:
@@ -158,6 +173,7 @@ func request_respawn(body: Node2D, reason: StringName, damage: int) -> void:
 func enter_interior(body: Node2D) -> void:
 	if not tree_gate_opened or body != player:
 		return
+	_hide_interior_hint()
 	# The interior is now a standalone level registered in DayRuntime.LEVELS
 	# (res://day/levels/forest/interior/forest_interior_level.tres). Hand off to
 	# it instead of driving the old embedded interior phase in place.
@@ -190,7 +206,8 @@ func _open_tree_gate() -> void:
 	request_checkpoint(&"forest_tree_gate_opened")
 	var interior_entrance := get_node_or_null("Exterior/InteriorEntrance") as Area2D
 	if interior_entrance != null and interior_entrance.overlaps_body(player):
-		enter_interior(player)
+		_interior_player_in_range = true
+		_show_interior_hint()
 
 func _connect_runtime_nodes() -> void:
 	for wheel: Node in $Exterior/Waterwheels.get_children():
@@ -199,7 +216,8 @@ func _connect_runtime_nodes() -> void:
 	gate.open_requested.connect(_open_tree_gate)
 	var interior_entrance := get_node_or_null("Exterior/InteriorEntrance") as Area2D
 	if interior_entrance != null:
-		interior_entrance.body_entered.connect(enter_interior)
+		interior_entrance.body_entered.connect(_on_interior_entrance_body_entered)
+		interior_entrance.body_exited.connect(_on_interior_entrance_body_exited)
 	var crown_entrance := get_node_or_null("Interior/CrownEntrance") as Area2D
 	if crown_entrance != null:
 		crown_entrance.body_entered.connect(enter_crown)
@@ -214,6 +232,39 @@ func _connect_runtime_nodes() -> void:
 	if final_switch != null and final_switch.has_signal("activated"):
 		final_switch.activated.connect(func(_id): open_final_passage())
 	$BossInterface.boss_started.connect(_on_boss_started)
+
+
+func _on_interior_entrance_body_entered(body: Node2D) -> void:
+	if body != player:
+		return
+	_interior_player_in_range = true
+	if tree_gate_opened:
+		_show_interior_hint()
+
+
+func _on_interior_entrance_body_exited(body: Node2D) -> void:
+	if body != player:
+		return
+	_interior_player_in_range = false
+	_hide_interior_hint()
+
+
+func _show_interior_hint() -> void:
+	if not tree_gate_opened or not _interior_player_in_range:
+		return
+	if _interior_hint == null:
+		_interior_hint = get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+	if _interior_hint != null:
+		_interior_hint.show_interaction_hint(_interior_hint_id(), "按[E]进入树内")
+
+
+func _hide_interior_hint() -> void:
+	if is_instance_valid(_interior_hint):
+		_interior_hint.hide_interaction_hint(_interior_hint_id())
+
+
+func _interior_hint_id() -> String:
+	return "forest_interior_entrance_%s" % get_instance_id()
 
 func _on_control_switch_activated(control_id: StringName) -> void:
 	activate_interior_control(control_id)

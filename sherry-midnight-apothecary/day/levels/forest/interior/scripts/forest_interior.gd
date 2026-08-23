@@ -12,19 +12,16 @@ const CROWN_ENTRY_ID := &"from_interior"
 @export var fade_in_time := 0.24
 
 @onready var player: CharacterBody2D = $Player
-@onready var luca: CharacterBody2D = $Luca
-@onready var party: Node = $ForestController/PartyController
-@onready var luca_world_controller: Node = $ForestController/LucaWorldController
 @onready var fade_rect: ColorRect = $UI/FadeRect
 @onready var pressure_panel: Control = $UI/SprayPanel
 @onready var pressure_bar: ProgressBar = $UI/SprayPanel/Margin/VBox/PressureBar
 @onready var pressure_label: Label = $UI/SprayPanel/Margin/VBox/PressureLabel
-@onready var corrupted_background: CanvasItem = $Background/CorruptedBackground
-@onready var normal_background: CanvasItem = $Background/NormalBackground
-@onready var blood_stream: CanvasItem = $Background/CentralStream/BloodStream
-@onready var clear_stream: CanvasItem = $Background/CentralStream/ClearStream
-@onready var direct_lift: Node = $LucaWorldOnly/UpperControlRoom/DirectLift
-@onready var final_gate: Node = $RealityWorld/FinalGate
+@onready var corrupted_background: CanvasItem = get_node_or_null("Background/CorruptedBackground")
+@onready var normal_background: CanvasItem = get_node_or_null("Background/NormalBackground")
+@onready var blood_stream: CanvasItem = get_node_or_null("Background/CentralStream/BloodStream")
+@onready var clear_stream: CanvasItem = get_node_or_null("Background/CentralStream/ClearStream")
+@onready var direct_lift: Node = get_node_or_null("RealityWorld/UpperControlRoom/DirectLift")
+@onready var final_gate: Node = get_node_or_null("RealityWorld/FinalGate")
 
 var _respawning := false
 var _activated_consoles: Dictionary = {}
@@ -36,20 +33,16 @@ var _lift_power_nodes := {
 var _respawn_positions: Dictionary = {}
 
 
-func _enter_tree() -> void:
-	_ensure_switch_character_input()
-
-
 func _ready() -> void:
 	super()
-	fade_rect.modulate.a = 0.0
-	pressure_panel.visible = false
-	_respawn_positions[&"Player"] = $RespawnPoints/Bottom.global_position
-	_respawn_positions[&"Luca"] = $RespawnPoints/Bottom.global_position + Vector2(90.0, 0.0)
-	if party != null and party.has_method("enable_switching"):
-		party.call("enable_switching", true)
-	if luca_world_controller != null and luca_world_controller.has_method("set_luca_view"):
-		luca_world_controller.call("set_luca_view", false)
+	add_to_group("forest_interior_level")
+	if fade_rect != null:
+		fade_rect.modulate.a = 0.0
+	if pressure_panel != null:
+		pressure_panel.visible = false
+	var bottom_marker := get_node_or_null("RespawnPoints/Bottom") as Marker2D
+	var bottom_pos := bottom_marker.global_position if bottom_marker != null else Vector2(450.0, 620.0)
+	_respawn_positions[&"Player"] = bottom_pos
 	_apply_environment_state(start_corrupted, true)
 	_restore_persistent_progress()
 	_activate_travel_anchor()
@@ -61,18 +54,6 @@ func _activate_travel_anchor() -> void:
 		runtime.call("activate_travel_anchor", &"forest_interior")
 	elif get_player_data() != null:
 		get_player_data().unlock_level(&"forest_interior")
-
-
-func _ensure_switch_character_input() -> void:
-	var action := &"switch_character"
-	if not InputMap.has_action(action):
-		InputMap.add_action(action)
-	for event in InputMap.action_get_events(action):
-		if event is InputEventKey and (event.physical_keycode == KEY_C or event.keycode == KEY_C):
-			return
-	var key := InputEventKey.new()
-	key.physical_keycode = KEY_C
-	InputMap.action_add_event(action, key)
 
 
 func set_corrupted(corrupted: bool) -> void:
@@ -87,10 +68,14 @@ func _apply_environment_state(corrupted: bool, force := false) -> void:
 	if not force and _is_corrupted == corrupted:
 		return
 	_is_corrupted = corrupted
-	corrupted_background.visible = corrupted
-	normal_background.visible = not corrupted
-	blood_stream.visible = corrupted
-	clear_stream.visible = not corrupted
+	if corrupted_background != null:
+		corrupted_background.visible = corrupted
+	if normal_background != null:
+		normal_background.visible = not corrupted
+	if blood_stream != null:
+		blood_stream.visible = corrupted
+	if clear_stream != null:
+		clear_stream.visible = not corrupted
 	for mud in get_tree().get_nodes_in_group("forest_mud"):
 		if is_ancestor_of(mud) and mud.has_method("set_environment_corrupted"):
 			mud.call("set_environment_corrupted", corrupted)
@@ -101,22 +86,23 @@ func _apply_environment_state(corrupted: bool, force := false) -> void:
 
 
 func is_luca_active() -> bool:
-	if party != null and "active_character" in party:
-		return party.active_character == &"luca"
-	return luca != null and luca.get_node_or_null("Camera2D") != null
+	return false
 
 
-func set_party_switching(enabled: bool) -> void:
-	if party != null and party.has_method("enable_switching"):
-		party.call("enable_switching", enabled)
+func set_party_switching(_enabled: bool) -> void:
+	pass
 
 
 func activate_luca_console(action_id: StringName) -> bool:
+	return activate_console(action_id)
+
+
+func activate_console(action_id: StringName) -> bool:
 	match action_id:
 		&"root_lift_a":
 			return _call_node("RealityWorld/RootLiftA", "toggle_state")
-		&"rotate_beam":
-			return _call_node("RealityWorld/RotatingRoot", "set_horizontal")
+		&"rotate_beam", &"rotate_beam_toggle":
+			return _call_node("RealityWorld/RotatingRoot", "toggle_state")
 		&"sluice":
 			return _call_node("RealityWorld/SluiceGate", "open_gate")
 		&"root_lift_b":
@@ -128,12 +114,14 @@ func activate_luca_console(action_id: StringName) -> bool:
 			return true
 		&"final_gate":
 			_activated_consoles[action_id] = true
+			if final_gate == null:
+				final_gate = get_node_or_null("RealityWorld/FinalGate")
 			if final_gate != null and final_gate.has_method("open_gate"):
 				final_gate.call("open_gate")
 			_set_flag(FINAL_GATE_FLAG, true)
 			return true
 		_:
-			push_warning("ForestInterior: unknown Luca console action: %s" % action_id)
+			push_warning("ForestInterior: unknown console action: %s" % action_id)
 	return false
 
 
@@ -154,6 +142,8 @@ func _refresh_direct_lift() -> void:
 	var unlocked := true
 	for key in _lift_power_nodes:
 		unlocked = unlocked and bool(_lift_power_nodes[key])
+	if direct_lift == null:
+		direct_lift = get_node_or_null("RealityWorld/UpperControlRoom/DirectLift")
 	if direct_lift != null and direct_lift.has_method("set_unlocked"):
 		direct_lift.call("set_unlocked", unlocked)
 	if unlocked:
@@ -161,10 +151,14 @@ func _refresh_direct_lift() -> void:
 
 
 func update_spray_ui(pressure: float, maximum: float, controlling: bool) -> void:
+	if pressure_panel == null:
+		return
 	pressure_panel.visible = controlling
-	pressure_bar.max_value = maximum
-	pressure_bar.value = pressure
-	pressure_label.text = "水压  %d / %d" % [roundi(pressure), roundi(maximum)]
+	if pressure_bar != null:
+		pressure_bar.max_value = maximum
+		pressure_bar.value = pressure
+	if pressure_label != null:
+		pressure_label.text = "水压  %d / %d" % [roundi(pressure), roundi(maximum)]
 
 
 func register_respawn(body: Node2D, marker: Marker2D) -> void:
@@ -181,26 +175,28 @@ func request_respawn(body: Node2D, reason: String = "fall", damage: int = -1) ->
 	if runtime != null and amount > 0 and runtime.call("apply_player_damage", amount, StringName(reason)):
 		return
 	_respawning = true
-	set_party_switching(false)
 	_set_character_control(body, false)
 	if body is CharacterBody2D:
 		body.velocity = Vector2.ZERO
-	var tween := create_tween()
-	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween.tween_property(fade_rect, "modulate:a", 1.0, fade_out_time)
-	await tween.finished
+	if fade_rect != null:
+		var tween := create_tween()
+		tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		tween.tween_property(fade_rect, "modulate:a", 1.0, fade_out_time)
+		await tween.finished
 	var key := StringName(body.name)
-	var target: Vector2 = _respawn_positions.get(key, $RespawnPoints/Bottom.global_position)
+	var bottom_marker := get_node_or_null("RespawnPoints/Bottom") as Marker2D
+	var default_pos := bottom_marker.global_position if bottom_marker != null else Vector2(450.0, 620.0)
+	var target: Vector2 = _respawn_positions.get(key, default_pos)
 	body.global_position = target
 	if body is CharacterBody2D:
 		body.velocity = Vector2.ZERO
 	await get_tree().create_timer(0.05).timeout
-	var tween_in := create_tween()
-	tween_in.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-	tween_in.tween_property(fade_rect, "modulate:a", 0.0, fade_in_time)
-	await tween_in.finished
+	if fade_rect != null:
+		var tween_in := create_tween()
+		tween_in.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		tween_in.tween_property(fade_rect, "modulate:a", 0.0, fade_in_time)
+		await tween_in.finished
 	_set_character_control(body, true)
-	set_party_switching(true)
 	_respawning = false
 
 
@@ -216,6 +212,10 @@ func _set_character_control(body: Node, enabled: bool) -> void:
 
 func request_exit_to_crown() -> void:
 	_set_flag(COMPLETED_FLAG, true)
+	if fade_rect != null:
+		var tw := create_tween()
+		tw.tween_property(fade_rect, "modulate:a", 1.0, 0.35)
+		await tw.finished
 	var runtime := _get_day_runtime()
 	if runtime != null:
 		if runtime.has_method("transition_to_level_with_blackout"):
@@ -234,6 +234,8 @@ func _restore_persistent_progress() -> void:
 		_refresh_direct_lift()
 	if _get_flag(FINAL_GATE_FLAG):
 		_activated_consoles[&"final_gate"] = true
+		if final_gate == null:
+			final_gate = get_node_or_null("RealityWorld/FinalGate")
 		if final_gate != null and final_gate.has_method("open_gate"):
 			final_gate.call("open_gate", true)
 	if _get_flag(COMPLETED_FLAG):
@@ -257,6 +259,8 @@ func _apply_solved_traversal_state() -> void:
 		_lift_power_nodes[key] = true
 		_activated_consoles[key] = true
 	_refresh_direct_lift()
+	if final_gate == null:
+		final_gate = get_node_or_null("RealityWorld/FinalGate")
 	if final_gate != null and final_gate.has_method("open_gate"):
 		final_gate.call("open_gate", true)
 

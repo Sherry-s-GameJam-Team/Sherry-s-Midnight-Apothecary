@@ -6,16 +6,12 @@
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="4_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="5_presentation"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="6_potions"]
-[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="7_luca"]
-[ext_resource type="Script" uid="uid://x3x7m62dkn7y" path="res://day/levels/forest/shared/forest_party_controller.gd" id="8_party"]
-[ext_resource type="Script" uid="uid://dcctxewoonf07" path="res://day/levels/forest/interior/scripts/luca_world_controller.gd" id="9_luca_world"]
 [ext_resource type="Script" uid="uid://b8ef5f8xfs6p7" path="res://day/levels/forest/interior/scripts/root_lift.gd" id="10_lift"]
 [ext_resource type="Script" uid="uid://mnhdrnf0qun" path="res://day/levels/forest/interior/scripts/rotating_root.gd" id="11_rotate"]
 [ext_resource type="Script" uid="uid://dpqou2ap7twh4" path="res://day/levels/forest/interior/scripts/sluice_gate.gd" id="12_sluice"]
 [ext_resource type="Script" uid="uid://cejy8ye85t3sd" path="res://day/levels/forest/interior/scripts/fall_reset_zone.gd" id="13_fall"]
 [ext_resource type="Script" uid="uid://up8v5qcuo1r" path="res://day/levels/forest/interior/scripts/crown_exit.gd" id="15_exit"]
 [ext_resource type="Script" uid="uid://bkxoguumtkcjh" path="res://day/levels/forest/interior/scripts/direct_lift.gd" id="16_direct_lift"]
-[ext_resource type="Texture2D" uid="uid://bwe73htyv23rm" path="res://day/levels/forest/interior/art/forest_arvis_tree_gate_closed.png" id="17_bg_corrupt"]
 [ext_resource type="Texture2D" uid="uid://cx7pdj3kfued3" path="res://day/levels/forest/interior/art/forest_interior_bg_normal.png" id="18_bg_normal"]
 [ext_resource type="Texture2D" uid="uid://cfneh405i4dl5" path="res://day/levels/forest/interior/art/forest_interior_blood_stream.png" id="19_blood"]
 [ext_resource type="Texture2D" uid="uid://dlf4dva2cto60" path="res://day/levels/forest/interior/art/forest_interior_clear_stream.png" id="20_clear"]
@@ -78,13 +74,13 @@ size = Vector2(560, 70)
 size = Vector2(380, 40)
 
 [sub_resource type="RectangleShape2D" id="RectShort"]
-size = Vector2(158.5, 36)
+size = Vector2(156.8125, 36)
 
 [sub_resource type="RectangleShape2D" id="RectMed"]
 size = Vector2(460, 40)
 
 [sub_resource type="RectangleShape2D" id="RectLift"]
-size = Vector2(480, 70)
+size = Vector2(539, 70)
 
 [sub_resource type="RectangleShape2D" id="RectBeam"]
 size = Vector2(510, 55)
@@ -92,11 +88,8 @@ size = Vector2(510, 55)
 [sub_resource type="RectangleShape2D" id="RectGate"]
 size = Vector2(140, 193)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0nfn1"]
-size = Vector2(145, 20)
-
 [sub_resource type="RectangleShape2D" id="RectDirectLift"]
-size = Vector2(260, 320)
+size = Vector2(117, 165)
 
 [sub_resource type="RectangleShape2D" id="RectFall"]
 size = Vector2(1900, 280)
@@ -111,30 +104,25 @@ start_corrupted = true
 
 [node name="Background" type="Node2D" parent="." unique_id=366872509]
 z_index = -20
-position = Vector2(-76, 1949.0001)
-scale = Vector2(1.0458632, 1.3427308)
 
 [node name="CorruptedBackground" type="Parallax2D" parent="Background" unique_id=552706082]
 z_index = -25
-scroll_scale = Vector2(0.25, 0.4)
-repeat_size = Vector2(0, 3210)
-repeat_times = 5
+scroll_scale = Vector2(0.2, 0.35)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/CorruptedBackground" unique_id=382846958]
-position = Vector2(900, -2200)
-scale = Vector2(1.92, 1.92)
-texture = ExtResource("17_bg_corrupt")
+modulate = Color(0.85, 0.65, 0.78, 1)
+position = Vector2(900, -1526.9001)
+scale = Vector2(2.1, 3.2752392)
+texture = ExtResource("18_bg_normal")
 
 [node name="NormalBackground" type="Parallax2D" parent="Background" unique_id=1381099432]
 visible = false
 z_index = -25
-scroll_scale = Vector2(0.25, 0.4)
-repeat_size = Vector2(0, 3210)
-repeat_times = 5
+scroll_scale = Vector2(0.2, 0.35)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/NormalBackground" unique_id=1015848346]
-position = Vector2(900, -2200)
-scale = Vector2(1.92, 1.92)
+position = Vector2(900, -2300)
+scale = Vector2(2.1, 4.2)
 texture = ExtResource("18_bg_normal")
 
 [node name="CentralStream" type="Node2D" parent="Background" unique_id=1283635577]
@@ -142,27 +130,23 @@ z_index = 1
 
 [node name="BloodStream" type="Parallax2D" parent="Background/CentralStream" unique_id=1255166470]
 z_index = -15
-scroll_scale = Vector2(0.35, 0.55)
-repeat_size = Vector2(0, 2172)
-repeat_times = 5
+scroll_scale = Vector2(0.3, 0.45)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/CentralStream/BloodStream" unique_id=342928526]
 material = SubResource("Material_stream")
-position = Vector2(900, -2200)
-scale = Vector2(0.45, -1)
+position = Vector2(900, -2300)
+scale = Vector2(1.2, -3.2)
 texture = ExtResource("19_blood")
 
 [node name="ClearStream" type="Parallax2D" parent="Background/CentralStream" unique_id=569493778]
 visible = false
 z_index = -15
-scroll_scale = Vector2(0.35, 0.55)
-repeat_size = Vector2(0, 2172)
-repeat_times = 5
+scroll_scale = Vector2(0.3, 0.45)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/CentralStream/ClearStream" unique_id=699915053]
 material = SubResource("Material_stream")
-position = Vector2(900, -2200)
-scale = Vector2(0.45, -1)
+position = Vector2(900, -2300)
+scale = Vector2(1.2, 3.2)
 texture = ExtResource("20_clear")
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=789785031]
@@ -189,7 +173,7 @@ collision_mask = 0
 shape = SubResource("RectBarrierH")
 
 [node name="TopBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1195996386]
-position = Vector2(900, -5550)
+position = Vector2(876, -5043)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/TopBarrier" unique_id=1038636316]
@@ -239,11 +223,14 @@ position = Vector2(118, 621)
 position = Vector2(445, 618)
 
 [node name="from_crown" type="Marker2D" parent="EntryPoints" unique_id=1222117193]
-position = Vector2(900, -4726)
+position = Vector2(445, 618)
+
+[node name="down" type="Marker2D" parent="EntryPoints" unique_id=1986359373]
+position = Vector2(445, 618)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=339529846 groups=["player"]]
 z_index = 20
-position = Vector2(821, -5017)
+position = Vector2(275, 565)
 collision_mask = 3
 script = ExtResource("2_player")
 
@@ -266,11 +253,6 @@ right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=138859185 instance=ExtResource("6_potions")]
 position = Vector2(9, -2)
-
-[node name="Luca" parent="." unique_id=190311239 groups=["forest_luca_runtime"] instance=ExtResource("7_luca")]
-z_index = 20
-position = Vector2(610, 638)
-collision_mask = 7
 
 [node name="RealityWorld" type="Node2D" parent="." unique_id=1215221510]
 
@@ -317,11 +299,12 @@ collision_layer = 3
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="RealityWorld/LeftB" unique_id=1057425976]
+position = Vector2(-2.9999998, -34.999996)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("21_root_long")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/LeftB" unique_id=178036833]
-position = Vector2(2, 8)
+position = Vector2(7, -27)
 shape = SubResource("RectLong")
 one_way_collision = true
 
@@ -520,6 +503,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepS2" unique_id=880319173]
+position = Vector2(-12.8125, -63)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -589,6 +573,9 @@ position = Vector2(-135, 28)
 shape = SubResource("RectMed")
 one_way_collision = true
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RealityWorld/SprayRight" unique_id=1935951861]
+polygon = PackedVector2Array(-172, 6, -73, -48, 84, -45, 169, 22, -176, 9)
+
 [node name="StepT1" type="StaticBody2D" parent="RealityWorld" unique_id=451125993]
 position = Vector2(1460, -2160)
 collision_layer = 3
@@ -628,6 +615,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepT3" unique_id=849280071]
+position = Vector2(16, 0)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -641,7 +629,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepT4" unique_id=818649766]
-position = Vector2(-12, -65)
+position = Vector2(-10.40625, -65)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -668,6 +656,7 @@ scale = Vector2(0.42, 0.42)
 texture = ExtResource("21_root_long")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/ComboLeft" unique_id=1246666822]
+position = Vector2(-4, 12)
 shape = SubResource("RectLong")
 one_way_collision = true
 
@@ -681,6 +670,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/ComboMid" unique_id=1831291034]
+position = Vector2(4, -8)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -708,6 +698,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC_Aqueduct" unique_id=46831322]
+position = Vector2(-5, -57)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -721,6 +712,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC1" unique_id=291767576]
+position = Vector2(12, -7)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -730,10 +722,12 @@ collision_layer = 3
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="RealityWorld/StepC2" unique_id=1170695193]
+position = Vector2(18, 1)
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC2" unique_id=1924313028]
+position = Vector2(5, -62)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -760,6 +754,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC4" unique_id=366746984]
+position = Vector2(14, -53)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -786,6 +781,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC6" unique_id=1172732177]
+position = Vector2(10, -55)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -799,6 +795,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC7" unique_id=773685260]
+position = Vector2(14, -12)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -812,6 +809,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC8" unique_id=748620740]
+position = Vector2(16, -61)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -825,6 +823,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC9" unique_id=164025764]
+position = Vector2(14, -8)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -838,6 +837,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC10" unique_id=246455367]
+position = Vector2(8, -48)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -851,6 +851,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC11" unique_id=1427839164]
+position = Vector2(10, -12)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -864,6 +865,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepC12" unique_id=556717863]
+position = Vector2(-10, -58)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -888,6 +890,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/SherryUpper1" unique_id=1466653179]
+position = Vector2(-3, -53)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -914,6 +917,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown2" unique_id=424957464]
+position = Vector2(-1, -56)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -927,6 +931,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown3" unique_id=2075623829]
+position = Vector2(19, -9)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -940,6 +945,7 @@ scale = Vector2(0.78, 0.78)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/SherryUpper2" unique_id=1608390837]
+position = Vector2(10, -12)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -953,6 +959,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown4" unique_id=1325109776]
+position = Vector2(-4, -59)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -966,20 +973,21 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown5" unique_id=1152133611]
+position = Vector2(6, -4)
 shape = SubResource("RectShort")
 one_way_collision = true
 
 [node name="SherryUpper3" type="StaticBody2D" parent="RealityWorld" unique_id=640615585]
 position = Vector2(1050, -4360)
-collision_layer = 3
+collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="RealityWorld/SherryUpper3" unique_id=866864470]
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("23_root_slope")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/SherryUpper3" unique_id=1737727349]
-shape = SubResource("RectMed")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RealityWorld/SherryUpper3" unique_id=1162575468]
+polygon = PackedVector2Array(-118, 39, -15, 4, 29, -33, 74, -51, 98, -83, 148, -86, 146, -72, 105, -66, 92, -40, 39, -19, 18, 4, -116, 60)
 one_way_collision = true
 
 [node name="StepCrown6" type="StaticBody2D" parent="RealityWorld" unique_id=59357254]
@@ -992,6 +1000,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown6" unique_id=1519019452]
+position = Vector2(6, -9)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -1005,6 +1014,7 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("25_root_ledge")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown7" unique_id=1833791311]
+position = Vector2(-24, -64)
 shape = SubResource("RectShort")
 one_way_collision = true
 
@@ -1018,11 +1028,13 @@ scale = Vector2(0.65, 0.65)
 texture = ExtResource("27_root_step")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/StepCrown8" unique_id=219801301]
+position = Vector2(3, -3)
 shape = SubResource("RectShort")
 one_way_collision = true
 
 [node name="TopLanding" type="StaticBody2D" parent="RealityWorld" unique_id=174473339]
 position = Vector2(900, -4650)
+collision_layer = 2
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="RealityWorld/TopLanding" unique_id=1537564578]
@@ -1031,6 +1043,7 @@ texture = ExtResource("21_root_long")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/TopLanding" unique_id=1464267997]
 shape = SubResource("RectLong")
+one_way_collision = true
 
 [node name="RootLiftA" type="AnimatableBody2D" parent="RealityWorld" unique_id=22732713]
 position = Vector2(1050, 680)
@@ -1038,21 +1051,21 @@ collision_layer = 3
 collision_mask = 0
 script = ExtResource("10_lift")
 travel = Vector2(0, -960)
+travel_time = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="RealityWorld/RootLiftA" unique_id=772290214]
 scale = Vector2(0.4, 0.36)
 texture = ExtResource("32_lift_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/RootLiftA" unique_id=771945115]
-position = Vector2(9, -51)
+position = Vector2(17.5, -50)
 shape = SubResource("RectLift")
 one_way_collision = true
 
 [node name="LiftAConsoleReality" parent="RealityWorld" unique_id=733508499 instance=ExtResource("37_console")]
 position = Vector2(1269, -375)
 action_id = &"root_lift_a"
-operator_name = &"Player"
-prompt_text = "[E] 操作升降根 (Sherry)"
+prompt_text = "[E] 操作升降根"
 
 [node name="RotatingRoot" type="AnimatableBody2D" parent="RealityWorld" unique_id=1622309332]
 position = Vector2(950, -580)
@@ -1075,15 +1088,16 @@ position = Vector2(850, -990)
 scale = Vector2(1, 0.9)
 
 [node name="SprayMudA" parent="RealityWorld" unique_id=549449576 instance=ExtResource("39_mud")]
-position = Vector2(750, -1950)
+position = Vector2(689.99994, -2035)
 rotation = -0.15
 scale = Vector2(0.85, 1.2)
 
 [node name="SprayMudB" parent="RealityWorld" unique_id=1376507602 instance=ExtResource("39_mud")]
-position = Vector2(1136.0001, -2120)
+position = Vector2(630, -2132)
 scale = Vector2(0.9, 1)
 
 [node name="SluiceGate" type="AnimatableBody2D" parent="RealityWorld" unique_id=1273336605]
+visible = false
 z_index = 1
 position = Vector2(1350, -2950)
 collision_mask = 0
@@ -1097,17 +1111,19 @@ texture = ExtResource("36_gate_tex")
 shape = SubResource("RectGate")
 
 [node name="RootLiftB" type="AnimatableBody2D" parent="RealityWorld" unique_id=431551985]
-position = Vector2(1380, -3050)
+position = Vector2(1307, -3009)
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("10_lift")
 travel = Vector2(0, -630)
 
 [node name="Sprite2D" type="Sprite2D" parent="RealityWorld/RootLiftB" unique_id=1295650023]
+position = Vector2(-318.99997, 163.99998)
 scale = Vector2(0.34, 0.34)
 texture = ExtResource("32_lift_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/RootLiftB" unique_id=856910549]
+position = Vector2(-305, 113)
 shape = SubResource("RectLift")
 one_way_collision = true
 
@@ -1126,88 +1142,88 @@ position = Vector2(0, 13.5)
 shape = SubResource("RectGate")
 one_way_collision = true
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="RealityWorld/FinalGate" unique_id=1131948918]
-position = Vector2(-2, 124)
-shape = SubResource("RectangleShape2D_0nfn1")
-
-[node name="LucaWorldOnly" type="Node2D" parent="." unique_id=570495938]
-z_index = 5
-
-[node name="LiftAConsole" parent="LucaWorldOnly" unique_id=1064165888 instance=ExtResource("37_console")]
-position = Vector2(701, 578)
+[node name="LiftAConsole" parent="RealityWorld" unique_id=1064165888 instance=ExtResource("37_console")]
+position = Vector2(1424, 635)
 action_id = &"root_lift_a"
-prompt_text = "[E] 操作升降根 (Luca)"
+prompt_text = "[E] 操作升降根"
 
-[node name="RotateConsole" parent="LucaWorldOnly" unique_id=1261008992 instance=ExtResource("37_console")]
-position = Vector2(1298, -675)
+[node name="RotateConsole" parent="RealityWorld" unique_id=1261008992 instance=ExtResource("37_console")]
+position = Vector2(395, -485)
 action_id = &"rotate_beam"
-prompt_text = "[E] 旋转根梁 (Luca)"
+prompt_text = "[E] 旋转根梁"
 
-[node name="SprayDevice" parent="LucaWorldOnly" unique_id=1888963313 instance=ExtResource("38_spray")]
-position = Vector2(1267, -1807)
-scale = Vector2(-1, -1)
+[node name="SprayDevice" parent="RealityWorld" unique_id=1888963313 instance=ExtResource("38_spray")]
+position = Vector2(115, -2003)
 
-[node name="SluiceConsole" parent="LucaWorldOnly" unique_id=726003003 instance=ExtResource("37_console")]
-position = Vector2(1314, -2561)
+[node name="SluiceConsole" parent="RealityWorld" unique_id=726003003 instance=ExtResource("37_console")]
+position = Vector2(700, -2600)
 action_id = &"sluice"
-prompt_text = "[E] 开启水闸 (Luca)"
+prompt_text = "[E] 开启水闸"
 
-[node name="LiftBConsole" parent="LucaWorldOnly" unique_id=1805578991 instance=ExtResource("37_console")]
-position = Vector2(1480, -3080)
-action_id = &"root_lift_b"
-prompt_text = "[E] 升降根平台 (Luca)"
-
-[node name="FinalGateConsole" parent="LucaWorldOnly" unique_id=28082042 instance=ExtResource("37_console")]
-position = Vector2(311, -3935)
-action_id = &"final_gate"
-prompt_text = "[E] 开启最终根门 (Luca)"
-
-[node name="UpperControlRoom" type="Node2D" parent="LucaWorldOnly" unique_id=460059552]
+[node name="LiftBConsole" parent="RealityWorld" unique_id=1805578991 instance=ExtResource("37_console")]
 visible = false
+position = Vector2(732, -3830)
+action_id = &"root_lift_b"
+prompt_text = "[E] 升降根平台"
+
+[node name="FinalGateConsole" parent="RealityWorld" unique_id=28082042 instance=ExtResource("37_console")]
+position = Vector2(706, -4744)
+action_id = &"final_gate"
+prompt_text = "[E] 开启最终根门"
+
+[node name="UpperControlRoom" type="Node2D" parent="RealityWorld" unique_id=460059552]
 position = Vector2(900, -3680)
 
-[node name="Artwork" type="Sprite2D" parent="LucaWorldOnly/UpperControlRoom" unique_id=750478465]
-modulate = Color(0.75, 1, 0.92, 0.72)
+[node name="Artwork" type="Sprite2D" parent="RealityWorld/UpperControlRoom" unique_id=750478465]
+visible = false
+modulate = Color(0.85, 1, 0.95, 0.85)
+z_index = -1
 position = Vector2(0, -140)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("34_control_room")
 
-[node name="ControlDeck" type="StaticBody2D" parent="LucaWorldOnly/UpperControlRoom" unique_id=1660357740]
-collision_layer = 4
+[node name="ControlDeck" type="StaticBody2D" parent="RealityWorld/UpperControlRoom" unique_id=1660357740]
+collision_layer = 3
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/UpperControlRoom/ControlDeck" unique_id=1696917050]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/UpperControlRoom/ControlDeck" unique_id=1696917050]
 shape = SubResource("RectLong")
 
-[node name="LiftRootPower" parent="LucaWorldOnly/UpperControlRoom" unique_id=67867559 instance=ExtResource("37_console")]
-position = Vector2(-280, -70)
+[node name="LiftRootPower" parent="RealityWorld/UpperControlRoom" unique_id=67867559 instance=ExtResource("37_console")]
+visible = false
+position = Vector2(4, -155)
 action_id = &"lift_root"
 prompt_text = "[E] 根系动力回路"
 
-[node name="LiftWaterPower" parent="LucaWorldOnly/UpperControlRoom" unique_id=1015647789 instance=ExtResource("37_console")]
-position = Vector2(0, -70)
+[node name="LiftWaterPower" parent="RealityWorld/UpperControlRoom" unique_id=1015647789 instance=ExtResource("37_console")]
+visible = false
+position = Vector2(256, -267)
 action_id = &"lift_water"
 prompt_text = "[E] 水压动力回路"
 
-[node name="LiftCrownPower" parent="LucaWorldOnly/UpperControlRoom" unique_id=602273957 instance=ExtResource("37_console")]
-position = Vector2(280, -70)
+[node name="LiftCrownPower" parent="RealityWorld/UpperControlRoom" unique_id=602273957 instance=ExtResource("37_console")]
+visible = false
+position = Vector2(221, -111)
 action_id = &"lift_crown"
 prompt_text = "[E] 树冠动力回路"
 
-[node name="DirectLift" type="Area2D" parent="LucaWorldOnly/UpperControlRoom" unique_id=1827013028]
-position = Vector2(450, -70)
-collision_layer = 0
+[node name="DirectLift" type="Area2D" parent="RealityWorld/UpperControlRoom" unique_id=1827013028]
+position = Vector2(616, 4229)
+collision_layer = 2
 script = ExtResource("16_direct_lift")
-destination_path = NodePath("RespawnPoints/LucaTopArrival")
+destination_path = NodePath("../../TopLanding")
 
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/UpperControlRoom/DirectLift" unique_id=500027526]
+[node name="Sprite2D" type="Sprite2D" parent="RealityWorld/UpperControlRoom/DirectLift" unique_id=500027526]
+position = Vector2(117.00001, 92.00001)
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("35_direct_lift_tex")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/UpperControlRoom/DirectLift" unique_id=1087555320]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RealityWorld/UpperControlRoom/DirectLift" unique_id=1087555320]
+position = Vector2(118, 60)
 shape = SubResource("RectDirectLift")
+one_way_collision = true
 
-[node name="Prompt" type="Label" parent="LucaWorldOnly/UpperControlRoom/DirectLift" unique_id=1300992231]
+[node name="Prompt" type="Label" parent="RealityWorld/UpperControlRoom/DirectLift" unique_id=1300992231]
 offset_left = -105.0
 offset_top = -205.0
 offset_right = 105.0
@@ -1216,1006 +1232,32 @@ text = "直达升降梯尚未恢复"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="LucaTopWalk" type="StaticBody2D" parent="LucaWorldOnly" unique_id=618967466]
-position = Vector2(900, -4650)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaTopWalk" unique_id=1167299492]
-modulate = Color(0.75, 1, 0.92, 0.72)
-scale = Vector2(0.9, 0.9)
-texture = ExtResource("28_bridge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaTopWalk" unique_id=1886816931]
-shape = SubResource("RectLong")
-one_way_collision = true
-
-[node name="LucaStep1" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1772458361]
-position = Vector2(1480, 600)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep1" unique_id=1440764539]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep1" unique_id=1977160927]
-position = Vector2(-3, -11)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep2" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1415031847]
-position = Vector2(1620, 520)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep2" unique_id=349648169]
-modulate = Color(0.75, 1, 0.92, 0.85)
-position = Vector2(-7.662462, -21.179192)
-scale = Vector2(0.5078257, 0.5078257)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep2" unique_id=1924235651]
-position = Vector2(4, -59)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep3" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1826795726]
-position = Vector2(1480, 440)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep3" unique_id=1516878711]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep3" unique_id=1976002204]
-position = Vector2(0, -7)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep4" type="StaticBody2D" parent="LucaWorldOnly" unique_id=633435071]
-position = Vector2(1620, 360)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep4" unique_id=397114253]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep4" unique_id=2084321411]
-position = Vector2(5, -55)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep5" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1542850119]
-position = Vector2(1480, 280)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep5" unique_id=220103876]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep5" unique_id=243670865]
-position = Vector2(11, -10)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep6" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1347806727]
-position = Vector2(1620, 200)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep6" unique_id=866928697]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep6" unique_id=236510351]
-position = Vector2(14, -9)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep7" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1883039624]
-position = Vector2(1480, 120)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep7" unique_id=592273309]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep7" unique_id=644989346]
-position = Vector2(9.75, -57)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep8" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1039045756]
-position = Vector2(1620, 40)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep8" unique_id=481520207]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep8" unique_id=1745042345]
-position = Vector2(30, 4)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep9" type="StaticBody2D" parent="LucaWorldOnly" unique_id=863366671]
-position = Vector2(1480, -40)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep9" unique_id=1506230217]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep9" unique_id=238550061]
-position = Vector2(-1, -56)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep10" type="StaticBody2D" parent="LucaWorldOnly" unique_id=2035046646]
-position = Vector2(1620, -120)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep10" unique_id=351538401]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep10" unique_id=721059432]
-position = Vector2(27, -1)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep11" type="StaticBody2D" parent="LucaWorldOnly" unique_id=182056011]
-position = Vector2(1480, -200)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep11" unique_id=718439563]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep11" unique_id=816292221]
-position = Vector2(9, -53)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep12" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1247643704]
-position = Vector2(1620, -280)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep12" unique_id=1134758278]
-modulate = Color(0.75, 1, 0.92, 0.85)
-position = Vector2(88, 38)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep12" unique_id=937332538]
-position = Vector2(33, 27)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep13" type="StaticBody2D" parent="LucaWorldOnly" unique_id=242247087]
-position = Vector2(1480, -360)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep13" unique_id=154787573]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep13" unique_id=1925736348]
-position = Vector2(5, -55)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep14" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1293714980]
-position = Vector2(1620, -440)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep14" unique_id=1036295818]
-modulate = Color(0.75, 1, 0.92, 0.85)
-position = Vector2(19, 25)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep14" unique_id=492277982]
-position = Vector2(10, 24)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep15" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1288502214]
-position = Vector2(1480, -520)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep15" unique_id=720790591]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep15" unique_id=17341989]
-position = Vector2(3, -57)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep16" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1151077129]
-position = Vector2(1620, -600)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep16" unique_id=1883597740]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep16" unique_id=108155292]
-position = Vector2(29, -13)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep17" type="StaticBody2D" parent="LucaWorldOnly" unique_id=717465125]
-position = Vector2(1480, -680)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep17" unique_id=1499905887]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep17" unique_id=1153877653]
-position = Vector2(2, -54)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep18" type="StaticBody2D" parent="LucaWorldOnly" unique_id=474797638]
-position = Vector2(1620, -760)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep18" unique_id=1054842742]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep18" unique_id=1099088563]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep19" type="StaticBody2D" parent="LucaWorldOnly" unique_id=315101588]
-position = Vector2(1480, -840)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep19" unique_id=1069836264]
-modulate = Color(0.75, 1, 0.92, 0.85)
-position = Vector2(-305, 32)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep19" unique_id=1071362521]
-position = Vector2(-305, -27)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep20" type="StaticBody2D" parent="LucaWorldOnly" unique_id=996491918]
-position = Vector2(1620, -920)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep20" unique_id=815608845]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep20" unique_id=1837276164]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep21" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1237274911]
-position = Vector2(1480, -1000)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep21" unique_id=2056396437]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep21" unique_id=22469998]
-position = Vector2(0, -56)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep22" type="StaticBody2D" parent="LucaWorldOnly" unique_id=210530517]
-position = Vector2(1620, -1080)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep22" unique_id=1095123631]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep22" unique_id=17510481]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep23" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1376720282]
-position = Vector2(1480, -1160)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep23" unique_id=2021074669]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep23" unique_id=1239678314]
-position = Vector2(5, -56)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep24" type="StaticBody2D" parent="LucaWorldOnly" unique_id=473908450]
-position = Vector2(1620, -1240)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep24" unique_id=1432630740]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep24" unique_id=640323621]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep25" type="StaticBody2D" parent="LucaWorldOnly" unique_id=10834233]
-position = Vector2(1480, -1320)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep25" unique_id=877142061]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep25" unique_id=1512731527]
-position = Vector2(-3, -52)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep26" type="StaticBody2D" parent="LucaWorldOnly" unique_id=328142949]
-position = Vector2(1620, -1400)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep26" unique_id=970896971]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep26" unique_id=1531364803]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep27" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1686147040]
-position = Vector2(1480, -1480)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep27" unique_id=1959006290]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep27" unique_id=123974009]
-position = Vector2(7, -55)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep28" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1776381764]
-position = Vector2(1620, -1560)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep28" unique_id=891659073]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep28" unique_id=862467966]
-position = Vector2(24, -8)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep29" type="StaticBody2D" parent="LucaWorldOnly" unique_id=259697721]
-position = Vector2(1480, -1640)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep29" unique_id=569950090]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep29" unique_id=978897805]
-position = Vector2(-2, -56)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep30" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1647700266]
-position = Vector2(1620, -1720)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep30" unique_id=492828349]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep30" unique_id=2122098246]
-position = Vector2(34, -6)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep31" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1669515558]
-position = Vector2(1480, -1800)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep31" unique_id=2147197786]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep31" unique_id=1587172656]
-position = Vector2(-4, -64)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep32" type="StaticBody2D" parent="LucaWorldOnly" unique_id=100928353]
-position = Vector2(1620, -1880)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep32" unique_id=1888717741]
-modulate = Color(0.75, 1, 0.92, 0.85)
-position = Vector2(44, 57)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep32" unique_id=1524028406]
-position = Vector2(76, 49)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep33" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1442996857]
-position = Vector2(1480, -1960)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep33" unique_id=849136597]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep33" unique_id=1505772514]
-position = Vector2(-4, -56)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep34" type="StaticBody2D" parent="LucaWorldOnly" unique_id=180616591]
-position = Vector2(1620, -2040)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep34" unique_id=1682392691]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep34" unique_id=783413374]
-position = Vector2(41, -4)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep35" type="StaticBody2D" parent="LucaWorldOnly" unique_id=941635397]
-position = Vector2(1480, -2120)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep35" unique_id=2002347420]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep35" unique_id=688429188]
-position = Vector2(-171, 2)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep36" type="StaticBody2D" parent="LucaWorldOnly" unique_id=735328511]
-position = Vector2(1620, -2200)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep36" unique_id=1140022755]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep36" unique_id=1705658578]
-position = Vector2(48, -9)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep37" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1534864360]
-position = Vector2(1480, -2280)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep37" unique_id=1416557130]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep37" unique_id=894994089]
-position = Vector2(-13, -61)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep38" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1972303906]
-position = Vector2(1620, -2360)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep38" unique_id=729508870]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep38" unique_id=1339606225]
-position = Vector2(48, -4)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep39" type="StaticBody2D" parent="LucaWorldOnly" unique_id=812956362]
-position = Vector2(1480, -2440)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep39" unique_id=361901093]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep39" unique_id=217664852]
-position = Vector2(5, -62)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep40" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1600533086]
-position = Vector2(1620, -2520)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep40" unique_id=1855379462]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep40" unique_id=544022916]
-position = Vector2(46, -9)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep41" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1426149348]
-position = Vector2(1480, -2600)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep41" unique_id=1844066876]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep41" unique_id=2075794353]
-position = Vector2(-4, -53)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep42" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1966254739]
-position = Vector2(1620, -2680)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep42" unique_id=1305361251]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep42" unique_id=1555702822]
-position = Vector2(38, -10)
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep43" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1764325626]
-position = Vector2(1480, -2760)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep43" unique_id=2008345155]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep43" unique_id=1190612626]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep44" type="StaticBody2D" parent="LucaWorldOnly" unique_id=865974562]
-position = Vector2(1620, -2840)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep44" unique_id=1977074606]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep44" unique_id=1304075788]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep45" type="StaticBody2D" parent="LucaWorldOnly" unique_id=2138239535]
-position = Vector2(1480, -2920)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep45" unique_id=286580055]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep45" unique_id=1996071992]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep46" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1897606777]
-position = Vector2(1620, -3000)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep46" unique_id=90832642]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep46" unique_id=1634649931]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep47" type="StaticBody2D" parent="LucaWorldOnly" unique_id=28322213]
-position = Vector2(1480, -3080)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep47" unique_id=667274216]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep47" unique_id=700960155]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep48" type="StaticBody2D" parent="LucaWorldOnly" unique_id=483558873]
-position = Vector2(1620, -3160)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep48" unique_id=583568431]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep48" unique_id=1810786234]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep49" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1658700610]
-position = Vector2(1480, -3240)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep49" unique_id=345799525]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep49" unique_id=600346861]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep50" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1781831187]
-position = Vector2(1620, -3320)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep50" unique_id=1311824002]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep50" unique_id=433033197]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep51" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1942321148]
-position = Vector2(1480, -3400)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep51" unique_id=642127076]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep51" unique_id=428775773]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep52" type="StaticBody2D" parent="LucaWorldOnly" unique_id=180116682]
-position = Vector2(1620, -3480)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep52" unique_id=756550760]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep52" unique_id=1646289689]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep53" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1589632686]
-position = Vector2(1480, -3560)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep53" unique_id=690745308]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep53" unique_id=2033723884]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep54" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1915917632]
-position = Vector2(1620, -3640)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep54" unique_id=1352609441]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep54" unique_id=33528516]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep55" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1878114910]
-position = Vector2(1480, -3720)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep55" unique_id=1951816716]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep55" unique_id=809647584]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep56" type="StaticBody2D" parent="LucaWorldOnly" unique_id=960051138]
-position = Vector2(1620, -3800)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep56" unique_id=738248382]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep56" unique_id=195542554]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep57" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1489137640]
-position = Vector2(1480, -3880)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep57" unique_id=1973055576]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep57" unique_id=1750211909]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep58" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1092162338]
-position = Vector2(1620, -3960)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep58" unique_id=2104830224]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep58" unique_id=1030605364]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep59" type="StaticBody2D" parent="LucaWorldOnly" unique_id=712812888]
-position = Vector2(1480, -4040)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep59" unique_id=1826753849]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep59" unique_id=1511743656]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep60" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1751102240]
-position = Vector2(1620, -4120)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep60" unique_id=11380187]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep60" unique_id=1223839671]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep61" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1674195736]
-position = Vector2(1480, -4200)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep61" unique_id=2105841001]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep61" unique_id=678666242]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep62" type="StaticBody2D" parent="LucaWorldOnly" unique_id=383791158]
-position = Vector2(1620, -4280)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep62" unique_id=446232836]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep62" unique_id=1150246864]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep63" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1728806053]
-position = Vector2(1480, -4360)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep63" unique_id=1617219153]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep63" unique_id=1406057588]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep64" type="StaticBody2D" parent="LucaWorldOnly" unique_id=499831583]
-position = Vector2(1620, -4440)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep64" unique_id=1814820230]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep64" unique_id=627716954]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep65" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1181137276]
-position = Vector2(1480, -4520)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep65" unique_id=1591521798]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep65" unique_id=889503394]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep66" type="StaticBody2D" parent="LucaWorldOnly" unique_id=7146658]
-position = Vector2(1320, -4590)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep66" unique_id=2047781989]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("27_root_step")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep66" unique_id=1431242784]
-shape = SubResource("RectShort")
-one_way_collision = true
-
-[node name="LucaStep67" type="StaticBody2D" parent="LucaWorldOnly" unique_id=1455899680]
-position = Vector2(1120, -4640)
-collision_layer = 4
-collision_mask = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="LucaWorldOnly/LucaStep67" unique_id=2144001001]
-modulate = Color(0.75, 1, 0.92, 0.85)
-scale = Vector2(0.65, 0.65)
-texture = ExtResource("25_root_ledge")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LucaWorldOnly/LucaStep67" unique_id=1782265819]
-shape = SubResource("RectShort")
-one_way_collision = true
+[node name="down" type="Marker2D" parent="RealityWorld/UpperControlRoom/DirectLift" unique_id=1986359372]
+position = Vector2(-452, 4305)
+
+[node name="WalkwayStoneLong" type="Sprite2D" parent="." unique_id=613534567]
+position = Vector2(1539.0001, 742.00006)
+rotation = -3.1415925
+scale = Vector2(1.1920154, -0.7585747)
+texture = ExtResource("29_stone")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="WalkwayStoneLong" unique_id=1162269298]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WalkwayStoneLong/StaticBody2D" unique_id=1368221967]
+position = Vector2(69.630005, -246.51495)
+rotation = -3.1415925
+scale = Vector2(0.83891535, -1.3182617)
+polygon = PackedVector2Array(-111, 138, -93, 160, 261, 163, 258, 132)
 
 [node name="RespawnPoints" type="Node2D" parent="." unique_id=54518506]
 
 [node name="Bottom" type="Marker2D" parent="RespawnPoints" unique_id=238812148]
-position = Vector2(320, 610)
+position = Vector2(445, 618)
 
 [node name="LucaTopArrival" type="Marker2D" parent="RespawnPoints" unique_id=1023021810]
+position = Vector2(900, -4650)
+
+[node name="TopArrival" type="Marker2D" parent="RespawnPoints" unique_id=1023021811]
 position = Vector2(900, -4650)
 
 [node name="FallResetZone" type="Area2D" parent="." unique_id=2085561485]
@@ -2232,6 +1274,7 @@ collision_layer = 3
 script = ExtResource("15_exit")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToCrown" unique_id=1593782687]
+position = Vector2(3, -27)
 shape = SubResource("RectExit")
 one_way_collision = true
 
@@ -2265,17 +1308,7 @@ theme_override_constants/margin_bottom = 8
 
 [node name="Label" type="Label" parent="UI/HintPanel/Margin" unique_id=547040790]
 layout_mode = 2
-text = "C: 切换主角 (Sherry/Luca)  双人协作攀登  靠近机关按 E  水枪：W/S 瞄准"
-
-[node name="LucaOverlay" type="ColorRect" parent="UI" unique_id=1189132417]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.35, 0.85, 0.72, 0.08)
+text = "靠近机关按 [E] 操作  水枪：[W]/[S] 瞄准  投掷净化药水溶解污泥"
 
 [node name="SprayPanel" type="PanelContainer" parent="UI" unique_id=1249105656]
 visible = false
@@ -2318,20 +1351,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
-
-[node name="ForestController" type="Node" parent="." unique_id=1598728384]
-
-[node name="LucaWorldController" type="Node" parent="ForestController" unique_id=1448792560]
-script = ExtResource("9_luca_world")
-luca_world_path = NodePath("../../LucaWorldOnly")
-overlay_path = NodePath("../../UI/LucaOverlay")
-
-[node name="PartyController" type="Node" parent="ForestController" unique_id=473928122]
-script = ExtResource("8_party")
-sherry_path = NodePath("../../Player")
-luca_path = NodePath("../../Luca")
-camera_path = NodePath("../../Player/Camera2D")
-luca_world_controller_path = NodePath("../LucaWorldController")
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=1353654577]
 layer = 200

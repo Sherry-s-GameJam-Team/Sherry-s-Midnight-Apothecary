@@ -8,6 +8,15 @@ signal request_close()
 
 @export var catalog: PotionSpectrumCatalog = null
 @export var unlock_state: PotionSpectrumUnlockState = null
+@export var is_pulldown_mode := true
+
+var _is_dragging := false
+var _drag_start_y := 0.0
+var _panel_start_y := 0.0
+var _is_open := false
+var _slide_tween: Tween
+var _drag_total_offset := 0.0
+
 
 const DEFAULT_CATALOG_PATH := "res://night/ui/spectrum_codex/resources/default_potion_spectrum_catalog.tres"
 const DEFAULT_UNLOCK_STATE_PATH := "res://night/ui/spectrum_codex/resources/default_potion_spectrum_unlock_state.tres"
@@ -25,6 +34,7 @@ var current_view_mode: ViewMode = ViewMode.VERTICAL
 
 @onready var vertical_view: SpectrumVerticalView = %SpectrumVerticalView
 @onready var matrix_view: SpectrumMatrixView = %SpectrumMatrixView
+@onready var pull_handle: TextureButton = get_node_or_null("PullHandle")
 
 # Detail panel elements
 @onready var detail_title: Label = %DetailTitle
@@ -49,6 +59,16 @@ func _ready() -> void:
 	refresh_view()
 	_update_view_mode_ui()
 	_show_default_detail()
+
+	if is_pulldown_mode:
+		if pull_handle:
+			pull_handle.gui_input.connect(_on_handle_gui_input)
+		resized.connect(_on_resized)
+		call_deferred("_on_resized")
+		_is_open = false
+	else:
+		if pull_handle:
+			pull_handle.visible = false
 
 
 func _setup_signals() -> void:
@@ -174,6 +194,8 @@ func _update_view_mode_ui() -> void:
 
 
 func _on_close_pressed() -> void:
+	if is_pulldown_mode:
+		slide_closed()
 	request_close.emit()
 
 
@@ -381,3 +403,123 @@ func _show_related_recipes_list(recipes: Array[PotionRecipeDefinition]) -> void:
 				_on_recipe_selected(r)
 			)
 			detail_recipes_list.add_child(btn)
+
+
+func _on_resized() -> void:
+	if not is_pulldown_mode:
+		return
+	var limit: float = size.y if size.y > 0.0 else 720.0
+	if not _is_open and not _is_dragging:
+		_set_y_pos(-limit)
+		var backdrop_node := get_node_or_null("Backdrop")
+		var margin_node := get_node_or_null("Margin")
+		if backdrop_node: backdrop_node.visible = false
+		if margin_node: margin_node.visible = false
+
+
+func _set_y_pos(y: float) -> void:
+	position.y = y
+
+
+func _on_handle_gui_input(event: InputEvent) -> void:
+	if not is_pulldown_mode:
+		return
+
+	if event is InputEventMouseButton:
+		var mb := event as InputEventMouseButton
+		if mb.button_index == MOUSE_BUTTON_LEFT:
+			if mb.pressed:
+				_is_dragging = true
+				_drag_start_y = mb.global_position.y
+				_panel_start_y = position.y
+				_drag_total_offset = 0.0
+				if _slide_tween:
+					_slide_tween.kill()
+				# Make sure background and margins are visible when starting drag
+				var backdrop_node := get_node_or_null("Backdrop")
+				var margin_node := get_node_or_null("Margin")
+				if backdrop_node: backdrop_node.visible = true
+				if margin_node: margin_node.visible = true
+			else:
+				if _is_dragging:
+					_is_dragging = false
+					var drag_dist: float = mb.global_position.y - _drag_start_y
+					var limit: float = size.y if size.y > 0.0 else 720.0
+					var threshold: float = limit * 0.20
+
+					if absf(drag_dist) < 5.0:
+						_toggle_panel()
+					else:
+						var current_y: float = position.y
+						if _is_open:
+							if current_y < -threshold:
+								slide_closed()
+							else:
+								slide_open()
+						else:
+							if current_y > -limit + threshold:
+								slide_open()
+							else:
+								slide_closed()
+			accept_event()
+
+	elif event is InputEventMouseMotion:
+		var mm := event as InputEventMouseMotion
+		if _is_dragging:
+			var mouse_y: float = mm.global_position.y
+			var delta: float = mouse_y - _drag_start_y
+			_drag_total_offset = delta
+			var limit: float = size.y if size.y > 0.0 else 720.0
+			var new_y: float = clampf(_panel_start_y + delta, -limit, 0.0)
+			_set_y_pos(new_y)
+			accept_event()
+
+
+func _on_handle_pressed() -> void:
+	pass # Toggling is handled inside gui_input to prevent conflict with dragging
+
+
+func _toggle_panel() -> void:
+	if _is_open:
+		slide_closed()
+	else:
+		slide_open()
+
+
+func slide_open() -> void:
+	_is_open = true
+	var backdrop_node := get_node_or_null("Backdrop")
+	var margin_node := get_node_or_null("Margin")
+	if backdrop_node: backdrop_node.visible = true
+	if margin_node: margin_node.visible = true
+
+	if _slide_tween:
+		_slide_tween.kill()
+	_slide_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_slide_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_slide_tween.tween_property(self, "position:y", 0.0, 0.4)
+
+
+func slide_closed() -> void:
+	_is_open = false
+	var limit: float = size.y if size.y > 0.0 else 720.0
+
+	if _slide_tween:
+		_slide_tween.kill()
+	_slide_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_slide_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_slide_tween.tween_property(self, "position:y", -limit, 0.4)
+	_slide_tween.tween_callback(func():
+		if not _is_open:
+			var backdrop_node := get_node_or_null("Backdrop")
+			var margin_node := get_node_or_null("Margin")
+			if backdrop_node: backdrop_node.visible = false
+			if margin_node: margin_node.visible = false
+	)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if is_pulldown_mode and _is_open:
+		if event.is_action_pressed("ui_cancel"):
+			slide_closed()
+			get_viewport().set_input_as_handled()

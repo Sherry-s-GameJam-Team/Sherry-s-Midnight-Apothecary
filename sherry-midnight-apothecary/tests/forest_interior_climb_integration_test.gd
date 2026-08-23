@@ -19,45 +19,27 @@ func _run() -> void:
 	await process_frame
 
 	var player := level.player
-	var luca := level.luca
-	var party: ForestPartyController = level.party as ForestPartyController
-	var camera: Camera2D = party.camera
+	var camera: Camera2D = player.get_node_or_null("Camera2D") as Camera2D
 	var lift_a: ForestRootLift = level.get_node_or_null("RealityWorld/RootLiftA") as ForestRootLift
 	var lift_b: ForestRootLift = level.get_node_or_null("RealityWorld/RootLiftB") as ForestRootLift
 	var rotating_root: ForestRotatingRoot = level.get_node_or_null("RealityWorld/RotatingRoot") as ForestRotatingRoot
 	var sluice_gate: ForestSluiceGate = level.get_node_or_null("RealityWorld/SluiceGate") as ForestSluiceGate
 	var final_gate: ForestSluiceGate = level.get_node_or_null("RealityWorld/FinalGate") as ForestSluiceGate
-	var direct_lift: ForestDirectLift = level.get_node_or_null("LucaWorldOnly/UpperControlRoom/DirectLift") as ForestDirectLift
+	var direct_lift: ForestDirectLift = level.get_node_or_null("RealityWorld/UpperControlRoom/DirectLift") as ForestDirectLift
 	var exit_to_crown: Area2D = level.get_node_or_null("ExitToCrown") as Area2D
 
-	if party == null or camera == null or lift_a == null or lift_b == null or rotating_root == null or sluice_gate == null or final_gate == null or direct_lift == null or exit_to_crown == null:
+	if player == null or camera == null or lift_a == null or lift_b == null or rotating_root == null or sluice_gate == null or final_gate == null or direct_lift == null or exit_to_crown == null:
 		_fail("Essential tower climbing nodes are missing")
 		_finish()
 		return
 
-	# 1. Test Spawning and Character Switching
+	# 1. Test Spawning
 	if not level.is_inside_tree():
 		_fail("Level failed to enter scene tree")
-	if party.active_character != &"sherry":
-		_fail("Default active character should be sherry")
-	
-	party.set_active_character(&"luca")
-	await process_frame
-	if not level.is_luca_active():
-		_fail("is_luca_active() should be true when active character is Luca")
-	if camera.get_parent() != luca:
-		_fail("Camera should follow Luca when switched")
 
-	party.set_active_character(&"sherry")
-	await process_frame
-	if level.is_luca_active():
-		_fail("is_luca_active() should be false when active character is Sherry")
-	if camera.get_parent() != player:
-		_fail("Camera should follow Sherry when switched")
-
-	# 2. Stage 1: RootLiftA operation by Luca and Sherry
+	# 2. Stage 1: RootLiftA operation
 	var initial_lift_a_y := lift_a.position.y
-	level.activate_luca_console(&"root_lift_a")
+	level.activate_console(&"root_lift_a")
 	lift_a.set_high(true, true) # Test instant/target
 	if lift_a.position.y >= initial_lift_a_y:
 		_fail("RootLiftA did not ascend when toggled high (initial: %f, after: %f)" % [initial_lift_a_y, lift_a.position.y])
@@ -65,7 +47,7 @@ func _run() -> void:
 	# 3. Stage 2: RotatingRoot operation
 	if rotating_root.rotation_degrees != 90.0:
 		_fail("RotatingRoot should initially be vertical (90 deg)")
-	level.activate_luca_console(&"rotate_beam")
+	level.activate_console(&"rotate_beam")
 	rotating_root.set_horizontal(true)
 	if rotating_root.rotation_degrees != 0.0:
 		_fail("RotatingRoot did not rotate to horizontal bridge (0 deg)")
@@ -80,29 +62,29 @@ func _run() -> void:
 
 	# 5. Stage 4: SluiceGate & RootLiftB operation
 	var sluice_closed_y := sluice_gate.position.y
-	level.activate_luca_console(&"sluice")
+	level.activate_console(&"sluice")
 	sluice_gate.open_gate(true)
 	if sluice_gate.position.y >= sluice_closed_y:
 		_fail("SluiceGate did not open upwards")
 
 	var lift_b_low_y := lift_b.position.y
-	level.activate_luca_console(&"root_lift_b")
+	level.activate_console(&"root_lift_b")
 	lift_b.set_high(true, true)
 	if lift_b.position.y >= lift_b_low_y:
 		_fail("RootLiftB did not ascend when toggled high")
 
 	# 6. Stage 5: Power nodes & DirectLift unlock
-	level.activate_luca_console(&"lift_root")
-	level.activate_luca_console(&"lift_water")
+	level.activate_console(&"lift_root")
+	level.activate_console(&"lift_water")
 	if direct_lift._unlocked:
 		_fail("DirectLift should not unlock before all 3 power nodes are active")
-	level.activate_luca_console(&"lift_crown")
+	level.activate_console(&"lift_crown")
 	if not direct_lift._unlocked:
 		_fail("DirectLift did not unlock after all 3 power nodes were activated")
 
 	# Final Gate opening
 	var final_gate_closed_y := final_gate.position.y
-	level.activate_luca_console(&"final_gate")
+	level.activate_console(&"final_gate")
 	final_gate.open_gate(true)
 	if final_gate.position.y >= final_gate_closed_y:
 		_fail("FinalGate did not open upwards")
@@ -139,3 +121,4 @@ func _finish() -> void:
 		for f in failures:
 			print("  - ", f)
 		quit(1)
+

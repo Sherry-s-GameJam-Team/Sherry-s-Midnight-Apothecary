@@ -32,6 +32,12 @@
    - Displays real-time details when selecting any Band, Function Branch, Recipe Node, or Matrix Cell.
    - Respects fog-of-war / unlock masks (locked elements display masked names "？？？", lock icons, and hints without spoiling hidden recipes).
 
+4. **Pull-down Handle Integration (下拉把手无缝衔接)**:
+   - Built into the `AlchemyRuntime` screen for seamless, non-intrusive access.
+   - A gold-framed SVG handle sits at the top-center of the screen.
+   - Supports interactive dragging and click-toggling to slide the panel up/down.
+   - Restricts focus and keyboard input (`ESC` / `ui_cancel`) when open, sliding closed safely instead of exiting the entire alchemy screen.
+
 ## Public API
 
 `SpectrumCodexPanel` provides decoupled external integration endpoints:

@@ -41,27 +41,62 @@ func _exit_tree() -> void:
 		_end_control()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	var is_e: bool = event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and not event.echo and (event.physical_keycode == KEY_E or event.keycode == KEY_E))
-	if is_e:
+func _input(event: InputEvent) -> void:
+	if not _is_interact_event(event):
+		return
+	_sync_presence()
+	if _controlling:
 		var vp := get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
-		if _controlling:
-			_end_control()
-		elif _luca_inside and _is_luca_active():
-			_begin_control()
+		_end_control()
+	elif _luca_inside:
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_begin_control()
 
 
-func _process(delta: float) -> void:
+func _unhandled_input(event: InputEvent) -> void:
+	if not _is_interact_event(event):
+		return
+	_sync_presence()
+	if _controlling:
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_end_control()
+	elif _luca_inside:
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_begin_control()
+
+
+func _is_interact_event(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	if InputMap.has_action(&"interact") and event.is_action_pressed(&"interact"):
+		return true
+	if event is InputEventKey and event.pressed:
+		var key_event := event as InputEventKey
+		return key_event.keycode == KEY_E or key_event.physical_keycode == KEY_E
+	return false
+
+
+func _sync_presence() -> void:
 	var inside := false
 	for body in interaction_area.get_overlapping_bodies():
-		if body.name == "Luca" or body.is_in_group("forest_luca_runtime"):
+		if body != null and (body.name == "Player" or body.is_in_group("player") or body is CharacterBody2D or body.name == "Luca"):
 			inside = true
 			break
 	_luca_inside = inside
 
-	prompt.visible = _luca_inside and _is_luca_active() and not _controlling
+
+func _process(delta: float) -> void:
+	_sync_presence()
+
+	prompt.visible = _luca_inside and not _controlling
 	prompt.text = "[E] 操作水枪"
 	if _controlling:
 		_update_aim(delta)
@@ -156,9 +191,14 @@ func _begin_control() -> void:
 	if _controlling:
 		return
 	_controlling = true
-	var level := _get_level()
-	if level != null:
-		level.set_party_switching(false)
+	var player := _get_player()
+	if player != null:
+		if player.has_method("set_control_enabled"):
+			player.call("set_control_enabled", false)
+		elif player.has_method("set_dialogue_locked"):
+			player.call("set_dialogue_locked", true)
+		if player is CharacterBody2D:
+			player.velocity = Vector2.ZERO
 	var luca := _get_luca()
 	if luca != null and luca.has_method("set_control_enabled"):
 		luca.call("set_control_enabled", false)
@@ -171,12 +211,15 @@ func _end_control() -> void:
 	_controlling = false
 	_set_spray_visual(false)
 	_focus_camera_on_spray(false)
-	var level := _get_level()
-	if level != null:
-		level.set_party_switching(true)
-		var luca := _get_luca()
-		if luca != null and luca.has_method("set_control_enabled"):
-			luca.call("set_control_enabled", true)
+	var player := _get_player()
+	if player != null:
+		if player.has_method("set_control_enabled"):
+			player.call("set_control_enabled", true)
+		elif player.has_method("set_dialogue_locked"):
+			player.call("set_dialogue_locked", false)
+	var luca := _get_luca()
+	if luca != null and luca.has_method("set_control_enabled"):
+		luca.call("set_control_enabled", true)
 
 
 func _focus_camera_on_spray(enable: bool) -> void:
@@ -189,21 +232,34 @@ func _focus_camera_on_spray(enable: bool) -> void:
 		cam.reparent(focus_node, true)
 		cam.position = Vector2.ZERO
 	else:
-		var luca := _get_luca()
-		var target: Node2D = _original_camera_parent if is_instance_valid(_original_camera_parent) else luca
+		var target: Node2D = _original_camera_parent if is_instance_valid(_original_camera_parent) else _get_player()
+		if target == null:
+			target = _get_luca()
 		if target != null:
 			cam.reparent(target, true)
 			cam.position = Vector2.ZERO
 
 
 func _get_camera() -> Camera2D:
-	var level := _get_level()
-	if level != null and level.party != null and "camera" in level.party:
-		return level.party.camera as Camera2D
+	var player := _get_player()
+	if player != null:
+		var cam := player.get_node_or_null("Camera2D") as Camera2D
+		if cam != null:
+			return cam
 	var player_cam := get_tree().get_first_node_in_group("camera") as Camera2D
 	if player_cam != null:
 		return player_cam
 	return get_viewport().get_camera_2d()
+
+
+func _get_player() -> Node2D:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player != null:
+		return player
+	var level := _get_level()
+	if level != null:
+		return level.get_node_or_null("Player") as Node2D
+	return null
 
 
 func _get_luca() -> Node2D:
@@ -223,21 +279,18 @@ func _update_ui() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.name == "Luca" or body.is_in_group("forest_luca_runtime"):
+	if body.name == "Player" or body.is_in_group("player") or body.name == "Luca" or body.is_in_group("forest_luca_runtime"):
 		_luca_inside = true
 
 
 func _on_body_exited(body: Node2D) -> void:
-	if body.name == "Luca" or body.is_in_group("forest_luca_runtime"):
+	if body.name == "Player" or body.is_in_group("player") or body.name == "Luca" or body.is_in_group("forest_luca_runtime"):
 		_luca_inside = false
 		if _controlling:
 			_end_control()
 
 
 func _is_luca_active() -> bool:
-	var level := _get_level()
-	if level != null and level.has_method("is_luca_active"):
-		return bool(level.call("is_luca_active"))
 	return true
 
 

@@ -29,7 +29,7 @@ func _run() -> void:
 	add_child(forest)
 	await get_tree().process_frame
 	for path in [
-		"EntryPoints/default", "Player", "Luca", "Exterior", "Crown",
+		"EntryPoints/default", "EntryPoints/from_crown", "Player", "Luca", "Exterior", "Crown",
 		"WorldBounds", "BossInterface", "ForestController/LucaWorldController",
 		"ForestController/PartyController", "Exterior/ArvisTreeGate",
 		"Exterior/InteriorEntrance", "issue_save_enzuo/HangingFrameNpc",
@@ -37,10 +37,14 @@ func _run() -> void:
 	]:
 		_check(forest.get_node_or_null(path) != null, "Missing required node: %s" % path)
 	_check(forest.get_node_or_null("Interior") == null, "Interior must not be embedded in the exterior scene anymore")
+	var interior_entrance := forest.get_node_or_null("Exterior/InteriorEntrance") as Area2D
+	_check(interior_entrance != null and interior_entrance.body_entered.is_connected(forest._on_interior_entrance_body_entered), "Interior entrance tracks proximity for E-key interaction instead of directly entering on touch")
 	var hanging_npc := forest.get_node("issue_save_enzuo/HangingFrameNpc") as AnimatedSprite2D
 	_check(hanging_npc != null and hanging_npc.sprite_frames.get_frame_count(&"hang") == 23, "Hanging NPC animation is not configured")
 	var enzuo_intro := forest.get_node("issue_save_enzuo") as ForestDayOneEnzuoIntro
 	_check(enzuo_intro != null, "Forest Enzuo intro presentation is missing")
+	_check(enzuo_intro.post_boss_dialogue != null, "Forest Enzuo post-Boss return dialogue is missing")
+	_check(forest.get_node_or_null("issue_save_enzuo/ForestEnzuoRescueController") == null, "Enzuo no longer starts a potion-throwing side-vine minigame")
 	var unsolved_data := PlayerData.new()
 	_check(ForestDayOneEnzuoIntro.should_show(1, unsolved_data), "Enzuo presentation should be visible on day one before it is solved")
 	unsolved_data.set_event_flag(&"save_enzuo_solved")
@@ -82,6 +86,8 @@ func _run() -> void:
 	# Tree-gate handoff: with no DayRuntime in the tree, enter_interior must
 	# safely no-op instead of erroring or moving the player.
 	forest.tree_gate_opened = true
+	forest._on_interior_entrance_body_entered(forest.player)
+	_check(forest._interior_player_in_range, "Interior entrance marks the player in range without changing scenes on touch")
 	var before: Vector2 = forest.player.global_position
 	forest.enter_interior(forest.player)
 	await get_tree().physics_frame
