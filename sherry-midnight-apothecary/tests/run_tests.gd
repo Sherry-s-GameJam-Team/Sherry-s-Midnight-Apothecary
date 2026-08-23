@@ -43,6 +43,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/sewer_hydraulic_gate_test.gd"),
 	preload("res://tests/dual_world_structure_test.gd"),
 	preload("res://tests/crimson_aqueduct_test.gd"),
+	preload("res://tests/crimson_vale_level_test.gd"),
 	preload("res://tests/night_luca_interaction_test.gd"),
 	preload("res://tests/spectrum_codex_test.gd"),
 	preload("res://tests/night_bedroom_barrier_test.gd"),
@@ -56,6 +57,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/vespervale_inner_level_test.gd"),
 	preload("res://tests/vespervale_runner_level_test.gd"),
 	preload("res://tests/crownland_level_test.gd"),
+	preload("res://tests/crownland_boss_level_test.gd"),
 	preload("res://tests/dream_grasp_hands_test.gd"),
 	preload("res://tests/lake_bottom_boss_test.gd"),
 ]

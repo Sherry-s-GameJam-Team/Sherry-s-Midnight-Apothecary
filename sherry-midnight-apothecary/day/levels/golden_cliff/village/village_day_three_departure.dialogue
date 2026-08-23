@@ -1,0 +1,10 @@
+~ start
+
+大司鱼 #portrait(char=大司鱼,slot=center,expr=default,anim=slide_in): 准备好去[color=red]绯红峡谷[/color]了吗
+
+- 是
+	do emit_dialogue_event("depart_for_crimson_vale")
+	=> END
+
+- 还没准备好……
+	=> END

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://di4f3x3j3j6wc"
+path="res://.godot/imported/crimson_vale_day_three_station.dialogue-db76cab6909c42698297093344497fde.tres"
+
+[deps]
+
+source_file="res://day/levels/Crimson Vale/crimson_vale_day_three_station.dialogue"
+dest_files=["res://.godot/imported/crimson_vale_day_three_station.dialogue-db76cab6909c42698297093344497fde.tres"]
+
+[params]
+
+defaults=true

@@ -19,6 +19,7 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/grassland/emerald_field_level.tres"),
 	preload("res://day/levels/golden_cliff/golden_cliff_level.tres"),
 	preload("res://day/levels/golden_cliff/village/village_level.tres"),
+	preload("res://day/levels/golden_cliff/village/village_red_voyage_level.tres"),
 	preload("res://day/levels/lake_bottom/lake_bottom_level.tres"),
 	preload("res://day/levels/lake_bottom/gate_chamber_level.tres"),
 	preload("res://day/levels/Crimson Vale/crimson_vale_level.tres"),

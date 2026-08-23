@@ -58,4 +58,22 @@ static func run(test: TestSupport) -> void:
 		if lake_return != null and lake_return.dialogue_resource != null:
 			var dialogue_source := lake_return.dialogue_resource.resource_path
 			test.expect(dialogue_source.ends_with("village_lake_return.dialogue"), "Village return controller uses the dock reunion dialogue resource.")
+		var departure := village.get_node_or_null("day3/to Red") as VillageDayThreeDeparture
+		test.expect(departure != null and departure.dialogue_resource != null, "Village Day 3 has the E-key Crimson Vale departure interaction.")
 		village.free()
+
+	var voyage_scene := load("res://day/levels/golden_cliff/village/village_red_voyage.tscn") as PackedScene
+	test.expect(voyage_scene != null, "Standalone five-second village-to-Red voyage scene loads.")
+	if voyage_scene != null:
+		var voyage := voyage_scene.instantiate()
+		test.expect(voyage is VillageRedVoyage, "Voyage scene is driven by the village red-voyage controller.")
+		test.expect(voyage.get_node_or_null("BoatGroup/SherryRider") is Sprite2D and voyage.get_node_or_null("BoatGroup/DashiyuRider") is Sprite2D, "Voyage keeps editable Sherry and Dashiyu rider sprites.")
+		voyage.free()
+
+	var crimson_scene := load("res://day/levels/Crimson Vale/crimson_vale.tscn") as PackedScene
+	test.expect(crimson_scene != null, "Crimson Vale scene loads for village-voyage arrival.")
+	if crimson_scene != null:
+		var crimson := crimson_scene.instantiate() as CrimsonValeLevel
+		test.expect(crimson != null and crimson.village_arrival_dialogue != null, "Crimson Vale has the Danfeng Station arrival dialogue.")
+		test.expect(crimson.get_node_or_null("EntryPoints/from_village") is Marker2D, "Crimson Vale keeps the from_village arrival marker.")
+		crimson.free()

@@ -25,6 +25,10 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="24_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="25_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="26_pause_menu"]
+[ext_resource type="Resource" uid="uid://bo1q0cps0brlw" path="res://day/levels/Crimson Vale/crimson_vale_arrival.dialogue" id="27_village_arrival_dialogue"]
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/crimson_vale_day_three_station.gd" id="28_day_three_station"]
+[ext_resource type="Resource" path="res://day/levels/Crimson Vale/crimson_vale_day_three_station.dialogue" id="29_day_three_station_dialogue"]
+[ext_resource type="Texture2D" path="res://characters/Fanen/chibi.png" id="30_fanen_chibi"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(4164, 190)
@@ -56,8 +60,12 @@ size = Vector2(3600, 140)
 [sub_resource type="RectangleShape2D" id="Rect_barrier"]
 size = Vector2(128, 2000)
 
+[sub_resource type="RectangleShape2D" id="Rect_day_three_station"]
+size = Vector2(260, 260)
+
 [node name="CrimsonVale" type="Node2D" unique_id=1486140644]
 script = ExtResource("1_env")
+village_arrival_dialogue = ExtResource("27_village_arrival_dialogue")
 debug_scene_id = "crimson_vale"
 
 [node name="Background" type="Node2D" parent="." unique_id=1099995543]
@@ -225,8 +233,9 @@ position = Vector2(-500, 440)
 script = ExtResource("23_portal")
 destination_level = &"home"
 fallback_scene_path = "res://day/levels/home/home.tscn"
-interaction_hint_enabled = true
-interaction_hint_text = "穿过丹心门"
+interaction_hint_enabled = false
+monitoring = false
+monitorable = false
 
 [node name="Visual" type="Sprite2D" parent="World/DanxinGate/GatePortal" unique_id=1200715905]
 
@@ -337,13 +346,18 @@ position = Vector2(6379, 233)
 detection_radius = 650.0
 
 [node name="BloodLeafSwarm2" parent="World/Swarms" unique_id=1847192865 instance=ExtResource("15_swarm")]
-position = Vector2(8411, 317)
+position = Vector2(4976, 263)
 detection_radius = 600.0
 attack_duration = 4.5
 
 [node name="BloodLeafSwarm3" parent="World/Swarms" unique_id=1847192866 instance=ExtResource("15_swarm")]
 position = Vector2(9735, 202)
 detection_radius = 680.0
+
+[node name="BloodLeafSwarm4" parent="World/Swarms" unique_id=591125817 instance=ExtResource("15_swarm")]
+position = Vector2(9415, 192)
+detection_radius = 600.0
+attack_duration = 4.5
 
 [node name="MapleTree" type="Sprite2D" parent="World/Swarms" unique_id=356257735]
 position = Vector2(9721, 324)
@@ -363,10 +377,10 @@ position = Vector2(-150, 300)
 shape = SubResource("Rect_barrier")
 
 [node name="RightBarrier" type="StaticBody2D" parent="World" unique_id=795816470]
-position = Vector2(6550, 300)
+position = Vector2(10830, 421)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/RightBarrier" unique_id=950848111]
-position = Vector2(0, 0)
+position = Vector2(-13, 24)
 shape = SubResource("Rect_barrier")
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=249566877]
@@ -378,19 +392,19 @@ position = Vector2(6250, 520)
 position = Vector2(1860, 250)
 
 [node name="from_village" type="Marker2D" parent="EntryPoints" unique_id=943454819]
-position = Vector2(4328, 520)
+position = Vector2(550, 693)
 
 [node name="gate" type="Marker2D" parent="EntryPoints" unique_id=606563004]
 position = Vector2(1700, 520)
 
 [node name="from_challenge" type="Marker2D" parent="EntryPoints" unique_id=1847192880]
-position = Vector2(6380, 520)
+position = Vector2(10550, 516)
 
 [node name="level_completed" type="Marker2D" parent="EntryPoints" unique_id=1259381351]
-position = Vector2(6250, 520)
+position = Vector2(10630, 449)
 
 [node name="ExitPortal" type="Area2D" parent="." unique_id=1115641034]
-position = Vector2(6393, 591)
+position = Vector2(10822, 478)
 script = ExtResource("23_portal")
 destination_level = &"home"
 fallback_scene_path = "res://day/levels/home/home.tscn"
@@ -403,7 +417,7 @@ interaction_hint_text = "返回药水铺"
 shape = SubResource("Rect_portal")
 
 [node name="ToChallengePortal" type="Area2D" parent="." unique_id=1847192890]
-position = Vector2(6500, 520)
+position = Vector2(10752, 496)
 script = ExtResource("23_portal")
 destination_level = &"crimson_vale_challenge"
 destination_entry_id = &"from_vale"
@@ -416,6 +430,20 @@ trigger_on_touch = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToChallengePortal" unique_id=1847192892]
 shape = SubResource("Rect_portal")
+
+[node name="Day3issue" type="Node2D" parent="." unique_id=1548397957]
+
+[node name="RosalineFanen" type="Area2D" parent="Day3issue" unique_id=1548397958]
+position = Vector2(846, 605)
+script = ExtResource("28_day_three_station")
+dialogue_resource = ExtResource("29_day_three_station_dialogue")
+
+[node name="Visual" type="Sprite2D" parent="Day3issue/RosalineFanen" unique_id=1548397959]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("30_fanen_chibi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Day3issue/RosalineFanen" unique_id=1548397960]
+shape = SubResource("Rect_day_three_station")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1086386805]
 z_index = 10

@@ -58,10 +58,11 @@ CrimsonVale (CrimsonValeLevel)
 ## 关卡机制
 1. **状态切换**:
    - 侵蚀状态 (`set_corrupted(true)`): 丹心门显示破损态 (`GateBroken`)，界门传送未激活。
-   - 修复净化状态 (`set_gate_repaired(true)`): 丹心门切换为修复态 (`GateRestored`)，激活界门传送门，写入存档标记 `crimson_vale_gate_restored`。
+   - 修复净化状态 (`set_gate_repaired(true)`): 丹心门切换为修复态 (`GateRestored`)，写入存档标记 `crimson_vale_gate_restored`。House 附近的旧 `GatePortal` 保持禁用：不显示 HintUI、不响应 E 键、不会传送；它仅保留为可编辑的界门视觉锚点。
 2. **村落互动**:
    - 走近风铃 (`WindChime`) 会触发轻柔摆动动画。
    - 晒枫脂架 (`MapleRack`) 位于村落中心供交互与草药/枫脂采集。
+   - **第 3 天丹枫驿站长**：`Day3issue/RosalineFanen` 使用编辑器布置的罗莎琳·凡恩贴图与交互范围；仅 `DayRuntime.day == 3` 显示。进入范围会通过共享 `TopHintUI` 显示“按[E]与罗莎琳·凡恩交谈”，E 键开启 `crimson_vale_day_three_station.dialogue`。初次交谈会给出 1 瓶御风药水（记录为 `wind_potion` 背包物品）并更新“前往枫林深处／寻找并净化丹心门”目标；后续菜单涵盖血叶、丹心门、风场使用方式、丹枫驿背景和按 25 曜/瓶购买御风药水。丹心门修复后会播放一次门铃收束对话。
 
 ## 验证
 运行独立测试：

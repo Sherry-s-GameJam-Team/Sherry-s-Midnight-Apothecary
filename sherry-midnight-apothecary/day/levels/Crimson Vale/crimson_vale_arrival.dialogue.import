@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bo1q0cps0brlw"
+path="res://.godot/imported/crimson_vale_arrival.dialogue-ff9699cf6a52eb5811ab0b1e5908920c.tres"
+
+[deps]
+
+source_file="res://day/levels/Crimson Vale/crimson_vale_arrival.dialogue"
+dest_files=["res://.godot/imported/crimson_vale_arrival.dialogue-ff9699cf6a52eb5811ab0b1e5908920c.tres"]
+
+[params]
+
+defaults=true

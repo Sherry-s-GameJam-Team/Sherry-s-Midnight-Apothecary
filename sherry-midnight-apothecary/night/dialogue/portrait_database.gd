@@ -20,6 +20,13 @@ const MEW_EXPRESSION_ALIASES := {
 	"thinking": "avert",
 }
 
+const FANEN_EXPRESSION_PATHS := {
+	"normal": "res://characters/Fanen/stand_normal.png",
+	"question": "res://characters/Fanen/stand_question.png",
+	"smile": "res://characters/Fanen/stand_smile.png",
+	"astonish": "res://characters/Fanen/stand_astolish.png",
+}
+
 const NPC_DEFINITIONS: Array[Dictionary] = [
 	{"id": "01_young_villager", "name": "年轻村民", "folder": "01_young_villager"},
 	{"id": "02_herbalist", "name": "采药妇", "folder": "02_herbalist"},
@@ -161,6 +168,9 @@ static func _resolve_main_character_texture(character_name: String, expression: 
 		return _load_texture("res://characters/luca/luca_stand.png")
 	elif c in ["dashiyu", "大司鱼"]:
 		return _load_texture("res://day/levels/lake_bottom/dasiyu_stand.png")
+	elif c in ["rosaline fanen", "罗莎琳·凡恩", "罗莎琳"]:
+		var fanen_path := str(FANEN_EXPRESSION_PATHS.get(expression.to_lower(), FANEN_EXPRESSION_PATHS["normal"]))
+		return _load_texture(fanen_path)
 	return null
 
 

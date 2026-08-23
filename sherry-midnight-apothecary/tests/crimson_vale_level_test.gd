@@ -54,6 +54,18 @@ static func run(test: TestSupport) -> void:
 	var chime: Node = level.get_node_or_null("World/Village/WindChime")
 	test.expect(house != null and shop != null and rack != null and chime != null, "Village buildings and props are deployed.")
 
+	var station := level.get_node_or_null("Day3issue/RosalineFanen") as CrimsonValeDayThreeStation
+	test.expect(station != null, "Day3issue contains the Rosaline Fanen E-key station interaction.")
+	if station != null:
+		test.expect(station.dialogue_resource != null, "Rosaline Fanen station interaction has its dialogue resource assigned.")
+		test.expect_equal(station.interaction_hint_text, "按[E]与罗莎琳·凡恩交谈", "The stationmaster has the expected E-key prompt.")
+		var station_dialogue := FileAccess.get_file_as_string("res://day/levels/Crimson Vale/crimson_vale_day_three_station.dialogue")
+		for title in ["~ start", "~ station_menu", "~ blood_leaf", "~ crimson_gate", "~ wind_potion_help", "~ wind_potion_shop", "~ after_gate_restored"]:
+			test.expect(station_dialogue.contains(title), "Station dialogue contains %s." % title)
+		test.expect(station_dialogue.contains("御风药水"), "Station dialogue explains and sells Wind Potions.")
+		test.expect(station_dialogue.contains("crimson_station_intro_reward"), "Station dialogue grants the initial Wind Potion through its gameplay event.")
+		test.expect(station_dialogue.contains("crimson_station_buy_wind_potion"), "Station dialogue routes purchases through its gameplay event.")
+
 	# One-way drop-through platform configuration testing
 	var floor_node: StaticBody2D = level.get_node_or_null("World/floor") as StaticBody2D
 	var ground_node: StaticBody2D = level.get_node_or_null("World/Ground") as StaticBody2D
@@ -73,5 +85,7 @@ static func run(test: TestSupport) -> void:
 	level.call("set_gate_repaired", true)
 	test.expect(gate_restored.visible, "Restored gate is visible after repair.")
 	test.expect(not gate_broken.visible, "Broken gate is hidden after repair.")
+	var gate_portal := level.get_node_or_null("World/DanxinGate/GatePortal") as DoorPortal
+	test.expect(gate_portal != null and not gate_portal.interaction_hint_enabled and not gate_portal.monitoring, "House-adjacent Danxin Gate portal stays disabled without an E-key HintUI prompt.")
 
 	level.free()

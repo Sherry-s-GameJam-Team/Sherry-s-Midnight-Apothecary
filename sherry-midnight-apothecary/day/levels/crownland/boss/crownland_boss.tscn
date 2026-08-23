@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://bcyj5abmjosob"]
+
+[ext_resource type="Script" uid="uid://vp0jaratmjp8" path="res://day/levels/crownland/boss/crownland_boss.gd" id="1_boss"]
+[ext_resource type="Resource" path="res://day/levels/crownland/boss/crownland_boss_config.tres" id="2_config"]
+
+[sub_resource type="SpriteFrames" id="boss_frames"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"dying",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"hurt",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"phase1_idle",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"phase2_idle",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"phase3_enter",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"phase3_idle",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"purified",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"transition",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="shield_shape"]
+radius = 100.0
+
+[sub_resource type="RectangleShape2D" id="hurtbox_shape"]
+size = Vector2(160, 240)
+
+[node name="CrownlandBoss" type="Node2D" unique_id=1730090031]
+script = ExtResource("1_boss")
+config = ExtResource("2_config")
+
+[node name="VisualRoot" type="Node2D" parent="." unique_id=828326451]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=593891547]
+sprite_frames = SubResource("boss_frames")
+animation = &"phase1_idle"
+
+[node name="ShieldVisual" type="Node2D" parent="." unique_id=508964890]
+modulate = Color(0.6, 0.3, 0.8, 0)
+
+[node name="ShieldShape" type="CollisionShape2D" parent="ShieldVisual" unique_id=1586360025]
+shape = SubResource("shield_shape")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1394450108]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=842194344]
+position = Vector2(0, -120)
+shape = SubResource("hurtbox_shape")
+
+[node name="AttackOrigin" type="Marker2D" parent="." unique_id=1352605487]
+position = Vector2(0, -200)
+
+[node name="LeftAttackOrigin" type="Marker2D" parent="." unique_id=492815209]
+position = Vector2(-250, -150)
+
+[node name="RightAttackOrigin" type="Marker2D" parent="." unique_id=329818447]
+position = Vector2(250, -150)

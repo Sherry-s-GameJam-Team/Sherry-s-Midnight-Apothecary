@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bmed64i2dqxss"
+path="res://.godot/imported/village_day_three_departure.dialogue-d1f3c650418171e9f6ed01b2ac16b77b.tres"
+
+[deps]
+
+source_file="res://day/levels/golden_cliff/village/village_day_three_departure.dialogue"
+dest_files=["res://.godot/imported/village_day_three_departure.dialogue-d1f3c650418171e9f6ed01b2ac16b77b.tres"]
+
+[params]
+
+defaults=true

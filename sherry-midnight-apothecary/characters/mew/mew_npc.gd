@@ -52,7 +52,8 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	_hint_ui = _find_top_hint()
-	monitoring = true
+	monitoring = interaction_enabled
+	monitorable = interaction_enabled
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -88,6 +89,18 @@ func _input(event: InputEvent) -> void:
 		return
 	get_viewport().set_input_as_handled()
 	_start_dialogue()
+
+
+func set_interaction_enabled(enabled: bool) -> void:
+	interaction_enabled = enabled
+	monitoring = enabled
+	monitorable = enabled
+	set_process(enabled)
+	set_process_input(enabled)
+	if not enabled:
+		_player_inside = false
+		_player = null
+		_hide_interaction_hint()
 
 
 func _exit_tree() -> void:

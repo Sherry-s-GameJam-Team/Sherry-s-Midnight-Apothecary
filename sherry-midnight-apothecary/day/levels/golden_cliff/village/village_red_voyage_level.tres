@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/golden_cliff/village/village_red_voyage.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"village_red_voyage"
+display_name = "横渡阿里特之泪"
+scene_description = "大司鱼驾船横渡重新涨起的阿里特之泪。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = false

@@ -75,149 +75,9 @@
 [ext_resource type="Script" uid="uid://dyratdrjpny0t" path="res://day/levels/golden_cliff/village/village_lake_return.gd" id="52_lake_return"]
 [ext_resource type="Resource" uid="uid://dcse75b0ceqn2" path="res://day/levels/golden_cliff/village/village_lake_return.dialogue" id="53_lake_return_dialogue"]
 [ext_resource type="Script" uid="uid://du4hd4mgqiiy2" path="res://day/levels/golden_cliff/village/village_boat_bob.gd" id="54_boat_bob"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_l2gsy"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_dnqqh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_7468i")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_lkqaj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_5gljw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_pbjlp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_3s0yn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_iyupv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_y05ag")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_aiewt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_11v4v")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_imkog")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_nt3nm")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_vojfr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_wb0a0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_bds6e")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_ucgdt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_m3sex")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_stmde")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_24ybi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_tvcg5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_iytpi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_hj8s0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_08efw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_p143g")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_6i0k8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_oojsp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_bpgvt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_ex2ru")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_5gdfi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34_ktwb2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("35_dsagd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("36_xeas7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("37_5xgd0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("38_xmnti")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39_hdgqk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40_ug3na")
-}, {
-"duration": 1.0,
-"texture": ExtResource("41_uw40m")
-}, {
-"duration": 1.0,
-"texture": ExtResource("42_xa3kc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("43_rj4da")
-}, {
-"duration": 1.0,
-"texture": ExtResource("44_wj2de")
-}, {
-"duration": 1.0,
-"texture": ExtResource("45_h4upo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("46_4s504")
-}, {
-"duration": 1.0,
-"texture": ExtResource("47_w81g6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("48_okbfw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("49_1u4s5")
-}],
-"loop": true,
-"name": &"idle_loop",
-"speed": 12.0
-}]
+[ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="76_y05ag"]
+[ext_resource type="Script" uid="uid://cis6qswaieg04" path="res://day/levels/golden_cliff/village/village_day_three_departure.gd" id="77_day_three_departure"]
+[ext_resource type="Resource" uid="uid://bmed64i2dqxss" path="res://day/levels/golden_cliff/village/village_day_three_departure.dialogue" id="78_day_three_departure_dialogue"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fish_0"]
 atlas = ExtResource("18_hltob")
@@ -510,11 +370,157 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mew_interaction"]
 size = Vector2(1451.3568, 800)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_l2gsy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_dnqqh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7468i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_lkqaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5gljw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pbjlp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_3s0yn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_iyupv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_y05ag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_aiewt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_11v4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_imkog")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_nt3nm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_vojfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_wb0a0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_bds6e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ucgdt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_m3sex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_stmde")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_24ybi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_tvcg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_iytpi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_hj8s0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_08efw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_p143g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_6i0k8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_oojsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_bpgvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_ex2ru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_5gdfi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_ktwb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_dsagd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_xeas7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_5xgd0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_xmnti")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_hdgqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_ug3na")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_uw40m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_xa3kc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_rj4da")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_wj2de")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_h4upo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_4s504")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_w81g6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_okbfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_1u4s5")
+}],
+"loop": true,
+"name": &"idle_loop",
+"speed": 12.0
+}]
+
 [sub_resource type="RectangleShape2D" id="Rect_barrier"]
 size = Vector2(128, 3000)
 
 [sub_resource type="RectangleShape2D" id="Rect_portal"]
 size = Vector2(200, 320)
+
+[sub_resource type="RectangleShape2D" id="Rect_day_three_departure"]
+size = Vector2(360, 280)
 
 [node name="Village" type="Node2D" unique_id=1965816465]
 script = ExtResource("1_environment")
@@ -529,13 +535,12 @@ rotation = -3.1415925
 scale = Vector2(0.21337947, -0.21402825)
 script = ExtResource("19_mew_npc")
 dialogue_resource = ExtResource("20_mew_dialogue")
-interaction_hint_text = "按[E]与喵呜交谈"
 
 [node name="FishingLoop" type="AnimatedSprite2D" parent="issues/issue_Mews" unique_id=361027675]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_npax6")
 animation = &"fishing"
-frame = 33
+frame = 31
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="issues/issue_Mews" unique_id=361027676]
 position = Vector2(-431.8838, -60.739624)
@@ -781,7 +786,7 @@ script = ExtResource("52_lake_return")
 dialogue_resource = ExtResource("53_lake_return_dialogue")
 
 [node name="ExitPortal" type="Area2D" parent="." unique_id=106000001]
-position = Vector2(354, 543)
+position = Vector2(629, 603)
 script = ExtResource("13_portal")
 destination_level = &"golden_cliff"
 destination_entry_id = &"from_village"
@@ -818,6 +823,7 @@ left_barrier_path = NodePath("../../CS/WorldBounds/LeftBarrier/CollisionShape2D"
 right_barrier_path = NodePath("../../CS/WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=107000005 instance=ExtResource("12_potions")]
+position = Vector2(-8, -10)
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=108000001]
 layer = 200
@@ -835,3 +841,25 @@ script = ExtResource("15_pause_host")
 position = Vector2(-284.24994, 782.0833)
 scale = Vector2(0.7516114, 0.7516115)
 texture = ExtResource("24_c75w3")
+
+[node name="day3" type="Node2D" parent="." unique_id=1688275966]
+
+[node name="to Red" type="Area2D" parent="day3" unique_id=6591464]
+position = Vector2(3011, 559)
+script = ExtResource("77_day_three_departure")
+dialogue_resource = ExtResource("78_day_three_departure_dialogue")
+
+[node name="Visual" type="Sprite2D" parent="day3/to Red" unique_id=6591465]
+scale = Vector2(0.14338408, 0.15967175)
+texture = ExtResource("76_y05ag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="day3/to Red" unique_id=6591466]
+shape = SubResource("Rect_day_three_departure")
+
+[node name="Prompt" type="Label" parent="day3/to Red" unique_id=6591467]
+offset_left = -150.0
+offset_top = -178.0
+offset_right = 150.0
+offset_bottom = -143.0
+text = "E 前往绯红峡谷"
+horizontal_alignment = 1

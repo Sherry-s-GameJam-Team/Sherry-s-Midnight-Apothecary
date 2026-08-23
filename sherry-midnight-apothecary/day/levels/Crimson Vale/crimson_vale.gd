@@ -1,6 +1,9 @@
 class_name CrimsonValeLevel
 extends DayLevelEnvironment
 
+const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
+const VILLAGE_ARRIVAL_FLAG: StringName = &"crimson_vale_village_arrival_played"
+
 signal objective_updated(text: String, hint: String)
 signal gate_restored
 signal challenge_completed
@@ -8,6 +11,11 @@ signal secret_found
 
 @export var is_gate_repaired := false
 @export var fall_damage: int = 1
+@export var village_arrival_dialogue: DialogueResource
+## The House-adjacent Danxin Gate is currently scenery only. Keep this switch
+## explicit so restoring its visuals cannot accidentally restore the old E-key
+## portal and its HintUI prompt.
+@export var gate_portal_interaction_enabled := false
 
 @onready var danxin_gate_broken: Sprite2D = get_node_or_null("World/DanxinGate/GateBroken")
 @onready var danxin_gate_restored: Sprite2D = get_node_or_null("World/DanxinGate/GateRestored")
@@ -37,8 +45,32 @@ func on_level_entered(entry_id: StringName) -> void:
 			objective_updated.emit("探索赤染之谷尽头的丹心门。", "检查古老界门的流转状况。")
 		"from_village":
 			objective_updated.emit("穿行于赤染村落。", "收集散落的枫脂与草药。")
+			call_deferred("_play_village_arrival_dialogue")
 		_:
 			objective_updated.emit("踏入赤染之谷。", "沿着枫红溪谷向东探索血叶断崖。")
+
+
+func _play_village_arrival_dialogue() -> void:
+	var player_data := get_player_data()
+	if village_arrival_dialogue == null or (player_data != null and player_data.has_event_flag(VILLAGE_ARRIVAL_FLAG)):
+		return
+	var dialogue_manager := get_node_or_null("/root/DialogueManager")
+	if dialogue_manager == null:
+		push_error("CrimsonValeLevel requires the DialogueManager autoload for the village arrival dialogue.")
+		return
+	get_tree().set_meta("day_modal_input_locked", true)
+	var balloon := dialogue_manager.show_dialogue_balloon_scene(BALLOON_SCENE, village_arrival_dialogue, &"start") as Node
+	if balloon != null:
+		balloon.tree_exited.connect(_finish_village_arrival_dialogue.bind(player_data), CONNECT_ONE_SHOT)
+	else:
+		_finish_village_arrival_dialogue(player_data)
+
+
+func _finish_village_arrival_dialogue(player_data: PlayerData) -> void:
+	if player_data != null:
+		player_data.set_event_flag(VILLAGE_ARRIVAL_FLAG)
+	if is_inside_tree():
+		get_tree().remove_meta("day_modal_input_locked")
 
 
 func set_corrupted(corrupted: bool) -> void:
@@ -68,7 +100,8 @@ func _update_gate_visuals() -> void:
 	if restored != null:
 		restored.visible = show_restored
 	if portal != null:
-		portal.monitoring = show_restored
+		portal.monitoring = show_restored and gate_portal_interaction_enabled
+		portal.monitorable = show_restored and gate_portal_interaction_enabled
 		portal.visible = show_restored
 
 

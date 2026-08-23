@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://qrkvces1qtjv"]
+
+[ext_resource type="Script" uid="uid://ctqgmaudcr8qp" path="res://day/levels/crownland/crownland_boss_level.gd" id="1_level"]
+[ext_resource type="PackedScene" uid="uid://cln5tvm0bck10" path="res://day/levels/crownland/boss/crownland_boss_arena.tscn" id="2_arena"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="4_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="5_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="6_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="7_potions"]
+[ext_resource type="Texture2D" uid="uid://cf63fk1qbd0q5" path="res://day/levels/crownland/royalroom.png" id="8_backdrop"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="9_console"]
+[ext_resource type="Script" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="10_pause_host"]
+[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="11_pause_menu"]
+
+[sub_resource type="RectangleShape2D" id="ground_shape"]
+size = Vector2(1320, 80)
+
+[sub_resource type="RectangleShape2D" id="wall_shape"]
+size = Vector2(40, 1000)
+
+[sub_resource type="RectangleShape2D" id="trigger_shape"]
+size = Vector2(180, 320)
+
+[sub_resource type="StyleBoxFlat" id="status_panel_style"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.06, 0.025, 0.11, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.67, 0.45, 0.16, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CrownlandBossLevel" type="Node2D" unique_id=999769422]
+script = ExtResource("1_level")
+debug_scene_id = "crownland_boss"
+
+[node name="Backdrop" type="CanvasLayer" parent="." unique_id=1551124293]
+layer = -20
+
+[node name="RoyalChamber" type="TextureRect" parent="Backdrop" unique_id=321734971]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_backdrop")
+expand_mode = 1
+stretch_mode = 6
+flip_h = true
+
+[node name="DarkVeil" type="ColorRect" parent="Backdrop" unique_id=717758555]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.13, 0.04, 0.18, 0.48)
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=987439279]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=1500117381]
+position = Vector2(0, 660)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=2059211832]
+shape = SubResource("ground_shape")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1948971841]
+position = Vector2(-640, 200)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=188585867]
+shape = SubResource("wall_shape")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1576856864]
+position = Vector2(640, 200)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=1288494472]
+shape = SubResource("wall_shape")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=1983007111]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=1517923074]
+position = Vector2(-470, 570)
+
+[node name="from_palace" type="Marker2D" parent="EntryPoints" unique_id=502835095]
+position = Vector2(-470, 570)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1836802672]
+z_index = 10
+position = Vector2(-470, 570)
+collision_mask = 3
+script = ExtResource("3_player")
+
+[node name="SherryCollision" parent="Player" unique_id=1264093365 instance=ExtResource("4_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=514179817 instance=ExtResource("5_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1705920414]
+position = Vector2(0, -180)
+limit_top = -860
+limit_bottom = 720
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("6_camera")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=721019083 instance=ExtResource("7_potions")]
+position = Vector2(48, 87)
+
+[node name="CrownlandBossArena" parent="." unique_id=228487956 instance=ExtResource("2_arena")]
+position = Vector2(0, 620)
+
+[node name="BossTrigger" type="Area2D" parent="." unique_id=219848504]
+position = Vector2(-190, 470)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossTrigger" unique_id=585372103]
+shape = SubResource("trigger_shape")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1971747524]
+layer = 10
+
+[node name="Title" type="Label" parent="UI" unique_id=760195911]
+offset_left = 32.0
+offset_top = 28.0
+offset_right = 500.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.8, 0.45, 1)
+theme_override_font_sizes/font_size = 24
+text = "王畿 · 王座之间"
+
+[node name="StatusPanel" type="PanelContainer" parent="UI" unique_id=1974550482]
+offset_left = 32.0
+offset_top = 72.0
+offset_right = 590.0
+offset_bottom = 126.0
+theme_override_styles/panel = SubResource("status_panel_style")
+
+[node name="Status" type="Label" parent="UI/StatusPanel" unique_id=1772752415]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.92, 1, 1)
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 2
+
+[node name="DebugUI" type="CanvasLayer" parent="."]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" instance=ExtResource("9_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="."]
+layer = 200
+script = ExtResource("10_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" instance=ExtResource("11_pause_menu")]

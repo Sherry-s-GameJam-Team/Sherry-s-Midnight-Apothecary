@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://cln5tvm0bck10"]
+
+[ext_resource type="Script" uid="uid://bjwk5v710by5" path="res://day/levels/crownland/boss/crownland_boss_arena.gd" id="1_arena"]
+[ext_resource type="PackedScene" uid="uid://bcyj5abmjosob" path="res://day/levels/crownland/boss/crownland_boss.tscn" id="2_boss"]
+[ext_resource type="Script" uid="uid://doinv4r4aoo5v" path="res://day/levels/crownland/boss/crownland_battle_director.gd" id="3_director"]
+[ext_resource type="Script" uid="uid://br7yjhm2xyoux" path="res://day/levels/crownland/boss/crownland_magic_pillar.gd" id="4_pillar"]
+[ext_resource type="PackedScene" path="res://day/levels/crownland/boss/crownland_boss_hud.tscn" id="5_hud"]
+[ext_resource type="Script" uid="uid://cwmp8gwmbqg8" path="res://day/levels/crownland/boss/crownland_asset_loader.gd" id="6_loader"]
+
+[sub_resource type="RectangleShape2D" id="floor_shape"]
+size = Vector2(1200, 30)
+
+[sub_resource type="RectangleShape2D" id="left_wall_shape"]
+size = Vector2(30, 900)
+
+[sub_resource type="RectangleShape2D" id="right_wall_shape"]
+size = Vector2(30, 900)
+
+[sub_resource type="RectangleShape2D" id="ceiling_shape"]
+size = Vector2(1260, 30)
+
+[sub_resource type="RectangleShape2D" id="pillar_hurtbox_shape"]
+size = Vector2(44, 130)
+
+[node name="CrownlandBossArena" type="Node2D" unique_id=217320501]
+script = ExtResource("1_arena")
+
+[node name="BossArena" type="StaticBody2D" parent="." unique_id=600644866]
+collision_layer = 0
+
+[node name="ArenaFloor" type="CollisionShape2D" parent="BossArena" unique_id=1865951180]
+shape = SubResource("floor_shape")
+
+[node name="ArenaLeft" type="CollisionShape2D" parent="BossArena" unique_id=770128739]
+position = Vector2(-615, -450)
+shape = SubResource("left_wall_shape")
+
+[node name="ArenaRight" type="CollisionShape2D" parent="BossArena" unique_id=587246891]
+position = Vector2(615, -450)
+shape = SubResource("right_wall_shape")
+
+[node name="ArenaCeiling" type="CollisionShape2D" parent="BossArena" unique_id=1321093447]
+position = Vector2(0, -900)
+shape = SubResource("ceiling_shape")
+
+[node name="CameraBounds" type="Node2D" parent="." unique_id=1951808958]
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1883550325]
+position = Vector2(-400, -50)
+
+[node name="Boss" parent="." unique_id=1028035270 instance=ExtResource("2_boss")]
+position = Vector2(0, -350)
+
+[node name="Pillars" type="Node2D" parent="." unique_id=244887027]
+
+[node name="PillarLeft" type="Node2D" parent="Pillars" unique_id=527865947]
+position = Vector2(-480, -15)
+script = ExtResource("4_pillar")
+
+[node name="Hurtbox" type="Area2D" parent="Pillars/PillarLeft"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pillars/PillarLeft/Hurtbox"]
+position = Vector2(0, -65)
+shape = SubResource("pillar_hurtbox_shape")
+
+[node name="PillarMidLeft" type="Node2D" parent="Pillars" unique_id=637751610]
+position = Vector2(-160, -15)
+script = ExtResource("4_pillar")
+pillar_id = &"pillar_mid_left"
+
+[node name="Hurtbox" type="Area2D" parent="Pillars/PillarMidLeft"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pillars/PillarMidLeft/Hurtbox"]
+position = Vector2(0, -65)
+shape = SubResource("pillar_hurtbox_shape")
+
+[node name="PillarMidRight" type="Node2D" parent="Pillars" unique_id=1493479560]
+position = Vector2(160, -15)
+script = ExtResource("4_pillar")
+pillar_id = &"pillar_mid_right"
+
+[node name="Hurtbox" type="Area2D" parent="Pillars/PillarMidRight"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pillars/PillarMidRight/Hurtbox"]
+position = Vector2(0, -65)
+shape = SubResource("pillar_hurtbox_shape")
+
+[node name="PillarRight" type="Node2D" parent="Pillars" unique_id=1870460957]
+position = Vector2(480, -15)
+script = ExtResource("4_pillar")
+pillar_id = &"pillar_right"
+
+[node name="Hurtbox" type="Area2D" parent="Pillars/PillarRight"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pillars/PillarRight/Hurtbox"]
+position = Vector2(0, -65)
+shape = SubResource("pillar_hurtbox_shape")
+
+[node name="ProjectileRoot" type="Node2D" parent="." unique_id=1359069353]
+
+[node name="WarningRoot" type="Node2D" parent="." unique_id=1494731598]
+
+[node name="VFXRoot" type="Node2D" parent="." unique_id=434489862]
+
+[node name="BattleDirector" type="Node" parent="." unique_id=1169187138]
+script = ExtResource("3_director")
+
+[node name="BossHealthBar" parent="." unique_id=1416084848 instance=ExtResource("5_hud")]
+
+[node name="AssetLoader" type="Node" parent="." unique_id=2009928634]
+script = ExtResource("6_loader")
+
+[node name="EndFlashLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="EndFlash" type="ColorRect" parent="EndFlashLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)

@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dukyrhh54al4k"]
+
+[ext_resource type="Script" uid="uid://fwjjukpyrhj8" path="res://day/levels/golden_cliff/village/village_red_voyage.gd" id="1_voyage"]
+[ext_resource type="Texture2D" uid="uid://jk1m7pr18h0p" path="res://day/levels/golden_cliff/village/art/background.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://brk6qtr26biku" path="res://day/levels/golden_cliff/village/art/boat.png" id="3_boat"]
+[ext_resource type="Texture2D" uid="uid://hxmtn00p7vjn" path="res://characters/sherry/frames/01_idle/idle_001.png" id="5_4jit1"]
+[ext_resource type="Script" uid="uid://du4hd4mgqiiy2" path="res://day/levels/golden_cliff/village/village_boat_bob.gd" id="6_boat_bob"]
+[ext_resource type="Texture2D" uid="uid://ct86iq0h1eikb" path="res://day/levels/lake_bottom/dashiyu.png" id="6_e11d2"]
+
+[node name="VillageRedVoyage" type="Node2D" unique_id=1451579577]
+script = ExtResource("1_voyage")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=264070738]
+position = Vector2(640, 360)
+
+[node name="FarScenery" type="Node2D" parent="." unique_id=1870497732]
+
+[node name="VillageBackgroundA" type="Sprite2D" parent="FarScenery" unique_id=1287929508]
+position = Vector2(-5.999996, 53.00003)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("2_background")
+centered = false
+
+[node name="VillageBackgroundB" type="Sprite2D" parent="FarScenery" unique_id=1444885589]
+position = Vector2(9, 7)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("2_background")
+centered = false
+
+[node name="MidScenery" type="Node2D" parent="." unique_id=1498190264]
+
+[node name="VillageSilhouetteA" type="Sprite2D" parent="MidScenery" unique_id=193437213]
+modulate = Color(0.7, 0.86, 0.9, 0.7)
+position = Vector2(-5.0000076, 4)
+scale = Vector2(1.45, 1.25)
+texture = ExtResource("2_background")
+centered = false
+
+[node name="BoatGroup" type="Node2D" parent="." unique_id=1497522369]
+position = Vector2(650, 480)
+
+[node name="Boat" type="Sprite2D" parent="BoatGroup" unique_id=409345304]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_boat")
+script = ExtResource("6_boat_bob")
+vertical_amplitude = 7.0
+roll_degrees = 1.6
+swell_cycles_per_second = 0.36
+
+[node name="SherryRider" type="Sprite2D" parent="BoatGroup" unique_id=1497848207]
+position = Vector2(-340.99997, -42.00001)
+scale = Vector2(0.5575036, 0.62440807)
+texture = ExtResource("5_4jit1")
+
+[node name="DashiyuRider" type="Sprite2D" parent="BoatGroup" unique_id=1786257151]
+position = Vector2(241.99997, -68)
+scale = Vector2(-0.15819792, 0.18)
+texture = ExtResource("6_e11d2")
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=1733425328]
+layer = 100
+visible = false
+
+[node name="Fade" type="ColorRect" parent="FadeLayer" unique_id=895514897]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

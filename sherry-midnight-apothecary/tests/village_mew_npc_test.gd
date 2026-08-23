@@ -23,6 +23,7 @@ static func run(test: TestSupport) -> void:
 		return
 
 	test.expect(mew_npc.dialogue_resource != null, "MewNPC has a dialogue resource assigned.")
+	test.expect_equal(mew_npc.interaction_hint_text, "按[E]与喵斯交谈", "Village Mew prompt uses the name 喵斯.")
 	test.expect(mew_npc.ping_pong, "MewNPC has ping_pong enabled by default.")
 	test.expect_equal(mew_npc.animation_name, &"fishing", "MewNPC targets the fishing animation.")
 	test.expect(mew_npc.get_node_or_null("FishingLoop") is AnimatedSprite2D, "MewNPC contains the FishingLoop AnimatedSprite2D child.")

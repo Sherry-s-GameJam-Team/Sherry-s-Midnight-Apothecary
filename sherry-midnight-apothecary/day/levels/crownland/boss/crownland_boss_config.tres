@@ -1,0 +1,67 @@
+; CrownlandBossConfig default values
+; Edit in the Godot Inspector — no code changes needed for rebalancing.
+[gd_resource type="Resource" script_class="CrownlandBossConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://day/levels/crownland/boss/crownland_boss_config.gd" id="1_config"]
+
+[resource]
+script = ExtResource("1_config")
+max_hp = 100
+phase3_start_hp = 100
+phase1_required_cycles = 4
+attack_interval_min = 1.8
+attack_interval_max = 2.8
+recovery_window_min = 0.8
+recovery_window_max = 1.2
+pillar_window_duration = 1.8
+arrow_damage = 9
+pillar_hazard_damage = 12
+needle_damage = 9
+sword_damage = 10
+sword_qi_damage = 9
+small_orb_damage = 8
+medium_orb_damage = 10
+large_orb_damage = 12
+explosion_damage = 15
+arrow_warn_time = 0.8
+pillar_warn_time = 1.0
+needle_warn_time = 0.7
+sword_hover_time = 0.6
+orb_tracking_small = 0.0
+orb_tracking_medium = 0.8
+orb_tracking_large = 1.2
+orb_dash_delay = 0.15
+explosion_blast_radius = 90.0
+arrow_count_min = 7
+arrow_count_max = 11
+arrow_speed = 280.0
+arrow_second_wave_rotation = 12.0
+pillar_count_min = 3
+pillar_count_max = 5
+pillar_rise_time = 0.18
+pillar_linger_time = 0.4
+needle_count_min = 3
+needle_count_max = 5
+needle_speed = 900.0
+needle_linger_time = 0.25
+sword_speed = 700.0
+sword_qi_delay = 0.2
+sword_qi_speed = 420.0
+small_orb_speed = 380.0
+medium_orb_speed_track = 160.0
+medium_orb_speed_dash = 340.0
+large_orb_speed_track = 90.0
+large_orb_speed_dash = 260.0
+pillar_hp = 3
+pillar_purify_bonus_damage = 1
+resist_tier = PackedFloat32Array(1, 0.8, 0.6, 0.4)
+resist_reset_time = 5.0
+hit_recoil_min_px = 6.0
+hit_recoil_max_px = 12.0
+hit_flash_duration = 0.08
+hit_recoil_return_time = 0.06
+shield_ripple_duration = 0.4
+holy_water_tags = ["holy", "sacred", "圣水", "purify", "pure"]
+bullet_time_scale = 0.3
+bullet_time_duration = 1.5
+

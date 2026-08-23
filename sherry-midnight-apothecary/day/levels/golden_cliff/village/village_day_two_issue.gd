@@ -32,10 +32,13 @@ func _ready() -> void:
 	_player = get_tree().get_first_node_in_group("dialogue_lockable") as CharacterBody2D
 	if _player == null:
 		_player = get_tree().root.find_child("Player", true, false) as CharacterBody2D
-	if _runtime == null or _runtime.day != REQUIRED_DAY:
+	if _runtime == null:
 		visible = false
 		set_process(false)
 		set_process_input(false)
+		return
+	if _runtime.day != REQUIRED_DAY:
+		_deactivate_for_later_day()
 		return
 
 	visible = true
@@ -49,6 +52,16 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	_hide_delivery_hint()
+
+
+func _deactivate_for_later_day() -> void:
+	visible = false
+	set_process(false)
+	set_process_input(false)
+	_hide_delivery_hint()
+	_hide_rope_hint()
+	if mew != null:
+		mew.set_interaction_enabled(false)
 
 
 func _process(_delta: float) -> void:

@@ -54,3 +54,4 @@
 - [Vespervale Runner](vespervale_runner.md): 2-minute dual-character parkour auto-runner — Sherry on lower track (Space key jump), Luca on upper track (W key jump), constant rightward camera scroll, phased obstacle track, finish line deceleration, and E-key exit portal.
 - [Developer Console](developer_console.md): in-game debug console with dynamic scene switching, numbered level indices (1-17), Chinese/English alias resolution, inventory/stat mutations, and boss test jump.
 - [Crownland](crownland.md): standalone 王畿 day level — normal/corrupted environment switching, three-layer parallax city presentation, standard Sherry player assembly, camera bounds, and LevelData registration.
+- [Crownland Boss](crownland_boss.md): three-phase King encounter, black-pillar shield mechanic, purification finale, and automatic boss-art injection.

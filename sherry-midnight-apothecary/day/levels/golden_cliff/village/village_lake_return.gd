@@ -21,7 +21,7 @@ var _modal_lock_was_set := false
 
 
 func _ready() -> void:
-	_set_saved_presentation_visible(_has_defeated_tide_eye())
+	_set_saved_presentation_visible(_has_defeated_tide_eye() or _is_day_three())
 
 
 func on_level_entered(entry_id: StringName) -> void:
@@ -84,6 +84,15 @@ func _has_defeated_tide_eye() -> bool:
 func _has_completed_return() -> bool:
 	var player_data := _get_player_data()
 	return player_data != null and player_data.has_event_flag(RETURN_COMPLETED_FLAG)
+
+
+func _is_day_three() -> bool:
+	var current: Node = get_parent()
+	while current != null:
+		if current is DayRuntime:
+			return current.day == 3
+		current = current.get_parent()
+	return false
 
 
 func _get_player_data() -> PlayerData:

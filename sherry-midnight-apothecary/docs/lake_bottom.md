@@ -26,3 +26,5 @@
 8. **Village return foreground**: The returned dock boat and collectable rope sprites share Village's `CS` foreground Parallax2D layer, so their editor positions keep the same camera offset as each other. `saved/Boat` retains its editor-authored transform and adds only a gentle script-driven lake swell (vertical bob plus slight roll).
 
 9. **Dashiyu dialogue focus**: `dasiyu_stand.png` is registered with the shared dialogue portrait database. Whenever 大司鱼 is the current speaker, his center portrait grows to 108% and receives a warm highlight; when another speaker takes focus, it returns to the normal dimmed state.
+
+10. **Day-three handoff**: On day 3, the recovered dock boat remains available in 涟汀村 while the previous day-two issues and rope sprites are hidden. Choosing the `to Red` departure prompt starts the standalone five-second village-to-Danfeng Station voyage before entering `crimson_vale/from_village`.
