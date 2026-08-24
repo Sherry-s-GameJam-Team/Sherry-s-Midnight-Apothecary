@@ -10,6 +10,8 @@ var potency_match := 0
 var forbidden_penalty := 0
 var special_potion_bonus := 0
 var total_score := 0
+var maximum_score := 0
+var normalized_score := 0.0
 var outcome := Outcome.FAILED
 var tags: Array[StringName] = []
 

@@ -7,11 +7,12 @@
 script = ExtResource("1")
 id = &"red_potion"
 numeric_id = 1
-display_name = "赤红攻击药水"
+display_name = "赤红脉冲药水"
 color_name = "红"
 color_family = &"red"
 display_color = Color(0.86, 0.16, 0.18, 1)
 main_effect_id = &"attack"
+combat_effect_ids = Array[StringName]([&"attack"])
 effect_tags = Array[StringName]([&"circulation", &"pressure", &"impact", &"blood_resist"])
 legacy_aliases = Array[StringName]([&"attack"])
 spectrum_center_x = 0.05

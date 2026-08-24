@@ -1,5 +1,10 @@
 [gd_scene format=3 uid="uid://c44ilp2eve2ii"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dusk_water_opuntia/dusk_water_opuntia_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/vesper_blue_thicket/vesper_blue_thicket_herb.tscn" id="herb_1"]
+
 [ext_resource type="Script" uid="uid://b6mwfyrjvxyme" path="res://day/levels/Vespervale/garden.gd" id="1_env"]
 [ext_resource type="Texture2D" uid="uid://cwiqjfnyv0axl" path="res://day/levels/Vespervale/skybox.png" id="3_skybox"]
 [ext_resource type="Texture2D" uid="uid://c5x5frfgwpia3" path="res://day/levels/Vespervale/village.png" id="4_village"]
@@ -21,7 +26,8 @@
 [ext_resource type="Script" uid="uid://bk1skhp3msjp6" path="res://day/levels/Vespervale/vespervale_day_five_intro.gd" id="21_day_five_intro"]
 [ext_resource type="Texture2D" uid="uid://b7okyqonqqy62" path="res://characters/Serena/stand.png" id="21_uhsjn"]
 [ext_resource type="Resource" uid="uid://c6kchle2udkc5" path="res://day/levels/Vespervale/vespervale_day_five_intro.dialogue" id="22_day_five_dialogue"]
-[ext_resource type="Texture2D" uid="uid://caamnn2f8wss4" path="res://characters/luca/stand.png" id="23_luca_stand"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="23_luca_scene"]
+[ext_resource type="Script" path="res://day/levels/Vespervale/vespervale_luca_follow.gd" id="24_luca_follow"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(7500, 160)
@@ -154,6 +160,7 @@ interaction_hint_enabled = true
 interaction_hint_text = "按 E 进入梦疗院病栋"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ChurchPortal" unique_id=1946061749]
+position = Vector2(-710, 93)
 shape = SubResource("Rect_portal")
 
 [node name="NPCs" type="Node2D" parent="World" unique_id=2041798612]
@@ -285,13 +292,34 @@ position = Vector2(1251, 584)
 scale = Vector2(0.04275699, 0.04275699)
 texture = ExtResource("21_uhsjn")
 
-[node name="LucaProxy" type="Sprite2D" parent="IssueDay5" unique_id=761554477]
-z_index = 9
-scale = Vector2(0.046, 0.046)
-texture = ExtResource("23_luca_stand")
-
 [node name="walkstart" type="Marker2D" parent="IssueDay5" unique_id=173091173]
 position = Vector2(40, 634)
 
 [node name="walkend" type="Marker2D" parent="IssueDay5" unique_id=548882092]
 position = Vector2(843, 634)
+
+[node name="Luca" parent="." unique_id=2062853554 instance=ExtResource("23_luca_scene")]
+z_index = 9
+position = Vector2(1010, 634)
+collision_layer = 0
+input_enabled = false
+
+[node name="LucaFollow" type="Node" parent="." unique_id=1478344426]
+script = ExtResource("24_luca_follow")
+player_path = NodePath("../Player")
+luca_path = NodePath("../Luca")
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1050, 580)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="P02" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(2450, 580)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_1")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

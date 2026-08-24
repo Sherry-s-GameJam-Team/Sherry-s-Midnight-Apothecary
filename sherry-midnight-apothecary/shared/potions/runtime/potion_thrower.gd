@@ -165,6 +165,8 @@ func _begin_aim() -> bool:
 	var potion_id := selected_potion_id()
 	if potion_id == &"" or potion_id == &"black_potion" or not _definition_by_id.has(potion_id):
 		return false
+	if not _mechanism_mode and not inventory_service.player_data.is_potion_throwable_unlocked(potion_id):
+		return false
 	if not _mechanism_mode:
 		_reservation = inventory_service.reserve_dose(potion_id, throw_tuning.dose_per_throw)
 		if _reservation == null:

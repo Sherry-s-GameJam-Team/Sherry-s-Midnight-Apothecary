@@ -13,7 +13,7 @@ static func run(test: TestSupport) -> void:
 	runtime.setup(player, result, 3)
 	var yellow_storm := load("res://shared/definitions/data/potions/yellow_potion.tres") as PotionData
 	var purification := load("res://shared/definitions/data/potions/purification_potion.tres") as PotionData
-	test.expect_equal(yellow_storm.display_name, "雷击与星陨之药", "The former yellow purification potion is now the lightning and meteor potion.")
+	test.expect_equal(yellow_storm.display_name, "炽黄缓冲药水", "Yellow uses the lore-correct buffer potion name.")
 	test.expect_equal(yellow_storm.main_effect_id, &"lightning_meteor", "The yellow spectrum potion uses the storm combat effect.")
 	test.expect_equal(purification.main_effect_id, &"purify", "Purification is owned by the dedicated dew potion.")
 	test.expect(purification.effect_ranges.is_empty(), "The dedicated purification potion cannot be reached through the ordinary spectrum.")
@@ -47,6 +47,9 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), null, "A batch does not spend its ingredient before bottling confirmation.")
 	test.expect_equal(result.produced_potions.get(&"green_potion", []).size(), 0, "A completed brew waits for bottling before entering production.")
 	runtime._on_bottling_confirmed(&"moon", "试验药")
+	test.expect(player.is_potion_recipe_unlocked(&"recipe_green_regrowth_tonic"), "Bottling green unlocks its exact codex recipe.")
+	test.expect(player.is_potion_throwable_unlocked(&"green_potion"), "Bottling green registers it for the throw loadout.")
+	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "Recipe registration does not auto-equip the new potion.")
 	test.expect_equal(result.spent_ingredients.get(&"herdsmans_loaf_bush"), 1, "Bottling commits one ingredient exactly once.")
 	test.expect_equal(result.produced_potions[&"green_potion"].size(), 1, "Confirmed bottling appends a dynamic potion instance.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["bottle_style_id"], "moon", "Bottling stores the selected bottle style.")

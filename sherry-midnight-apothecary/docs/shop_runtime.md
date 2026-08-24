@@ -12,7 +12,11 @@
 
 ## 数据边界
 
-营业页读取 `PlayerData.potions`，将成交实例 UID 与收入写入共享 `NightResult.sold_potions` / `earned_money`，并由 `PotionMatchService` 将现有药水战斗效果映射为七类治疗功效。顾客事件定义于 `night/shop/customer_event_catalog.gd`，按照表格的主/副需求、Trait、禁忌、强度与特殊药水分析，不再按 `potion_id` 判定。`CustomerFeedbackResolver` 保证每次交付都显示顾客对白，同时把声誉变化写入 `NightResult`；关系、最近治疗、累计拒绝次数和回访日写入 `PlayerData.customer_states` 随存档保存。拒绝造成的声誉变化写入本夜 `NightResult.reputation_delta`，入睡后与收入统一结算。
+营业页读取 `PlayerData.potions`，将成交实例 UID 与收入写入共享 `NightResult.sold_potions` / `earned_money`，并由 `PotionMatchService` 将现有药水战斗效果映射为七类治疗功效。顾客事件定义于 `night/shop/customer_event_catalog.gd`，按照表格的主/副需求、效果禁忌、强度与特殊药水分析，不再按 `potion_id` 判定。`CustomerFeedbackResolver` 保证每次交付都显示顾客对白，同时把声誉变化写入 `NightResult`；关系、病例阶段、病情分支、最近治疗、累计拒绝次数和回访日写入 `PlayerData.customer_states` 随存档保存。拒绝造成的声誉变化写入本夜 `NightResult.reputation_delta`，入睡后与收入统一结算。
+
+正式药理轴统一为循环、活化、镇痛、再生、稳定、净化、镇静。主效果与副效果构成有方向的 7×7 组合；纯色无副效果视为对应对角格。匹配分数按当前病例可取得的总分归一化，副效果保留倍率会直接影响副效得分，焦糊或命中效果禁忌必定为危险结果。当前不会把炼药尚不能生成的 Trait 当作订单硬条件。
+
+八名固定顾客各自保存病例阶段与病情分支。完美/特殊治疗两天后复诊，满意治疗一天后进入下一阶段，勉强治疗一天后维持阶段，失败或危险治疗一天后以恶化状态复诊；婉拒保留原诊断并延后两天。教程夜至第七夜的基础人数上限依次为 2、3、4、5、6、7、8、8，并继续与声誉档位取较小值。第八夜后，完成固定诊疗链的 NPC 进入完整 49 格病例池。
 
 ## 运行流程
 

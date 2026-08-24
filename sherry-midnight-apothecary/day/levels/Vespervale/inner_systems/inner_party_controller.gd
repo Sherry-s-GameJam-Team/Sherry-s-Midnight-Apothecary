@@ -33,6 +33,11 @@ func enable_switching(enabled: bool) -> void:
 	switching_enabled = enabled
 
 
+func restore_sherry_control() -> void:
+	active_character = &"sherry"
+	_update_character_states()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not switching_enabled:
 		return

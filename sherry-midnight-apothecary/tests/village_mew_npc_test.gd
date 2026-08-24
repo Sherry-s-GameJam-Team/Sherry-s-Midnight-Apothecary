@@ -16,8 +16,10 @@ static func run(test: TestSupport) -> void:
 	tree.root.add_child(village)
 	var issues := village.get_node_or_null("issues") as VillageDayTwoIssue
 	test.expect(issues != null, "Village scene contains the day-two issues controller.")
-	var mew_npc := village.get_node_or_null("issues/issue_Mews") as MewNPC
-	test.expect(mew_npc != null, "Village scene contains MewNPC at issues/issue_Mews.")
+	var mew_npc := village.get_node_or_null("CS/issue_Mews") as MewNPC
+	if mew_npc == null:
+		mew_npc = village.get_node_or_null("issues/issue_Mews") as MewNPC
+	test.expect(mew_npc != null, "Village scene contains MewNPC at CS/issue_Mews or issues/issue_Mews.")
 	if mew_npc == null:
 		village.free()
 		return

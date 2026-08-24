@@ -14,4 +14,4 @@ scene_description = "乘坐断崖升降梯探索镜湖水下暗道与湖底通�
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
 show_title_card = false
-native_ingredient_ids = Array[StringName]([])
+native_ingredient_ids = Array[StringName]([&"chalice_ice_spire"])

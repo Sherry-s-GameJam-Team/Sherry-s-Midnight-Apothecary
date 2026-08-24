@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://bglomh4gqvrv3"]
 
 [ext_resource type="Script" uid="uid://de1mlhjs1vefg" path="res://day/levels/Vespervale/nurse.gd" id="1_nurse_script"]
-[ext_resource type="SpriteFrames" uid="uid://df6m2p9r7x8lh" path="res://day/levels/Vespervale/src/nurse_sprite_frames.tres" id="2_nurse_frames"]
-[ext_resource type="Texture2D" uid="uid://csvsakcf3h66" path="res://day/levels/Vespervale/src/light.png" id="3_light_tex"]
+[ext_resource type="SpriteFrames" path="res://day/levels/Vespervale/src/nurse_sprite_frames.tres" id="2_nurse_frames"]
 
 [sub_resource type="CapsuleShape2D" id="Capsule_nurse_body"]
 radius = 24.0
@@ -57,7 +56,7 @@ shape = SubResource("Circle_lantern_spot")
 [node name="LanternLightVisual" type="Sprite2D" parent="LanternPivot" unique_id=2000606]
 z_index = 25
 z_as_relative = false
-position = Vector2(-20, -32)
+position = Vector2(-73, -24)
 scale = Vector2(1.18, 1.18)
 texture = SubResource("GradientTexture2D_feather")
 

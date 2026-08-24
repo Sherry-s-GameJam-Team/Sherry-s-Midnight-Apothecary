@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://p0md47du7iuv"
+path="res://.godot/imported/vespervale_inner_entry.dialogue-795cb0715cfd326f6571db35c3a71f34.tres"
+
+[deps]
+
+source_file="res://day/levels/Vespervale/vespervale_inner_entry.dialogue"
+dest_files=["res://.godot/imported/vespervale_inner_entry.dialogue-795cb0715cfd326f6571db35c3a71f34.tres"]
+
+[params]
+
+defaults=true

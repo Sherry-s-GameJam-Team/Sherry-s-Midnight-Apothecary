@@ -6,7 +6,11 @@ static func resolve(event: Dictionary, match: PotionMatchResult) -> CustomerFeed
 	result.outcome = match.outcome
 	result.tags = match.tags.duplicate()
 	result.schedule_revisit = true
-	result.revisit_after_days = int(event.get("revisit_days", 0))
+	match match.outcome:
+		PotionMatchResult.Outcome.PERFECT, PotionMatchResult.Outcome.SPECIAL:
+			result.revisit_after_days = 2
+		PotionMatchResult.Outcome.SATISFIED, PotionMatchResult.Outcome.ACCEPTABLE, PotionMatchResult.Outcome.FAILED, PotionMatchResult.Outcome.DANGEROUS:
+			result.revisit_after_days = 1
 	result.revisit_text = str(event.get("revisit_note", ""))
 	result.next_requirement_note = str(event.get("revisit_note", ""))
 	var lines: Array = event.get("feedback_lines", [])

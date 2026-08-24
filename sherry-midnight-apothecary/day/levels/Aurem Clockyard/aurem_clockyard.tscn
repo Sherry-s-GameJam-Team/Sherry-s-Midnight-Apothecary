@@ -1,5 +1,11 @@
 [gd_scene format=3 uid="uid://be4g67p41tq0c"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/sun_etched_flower/sun_etched_flower_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/hanging_lantern_bell_cap/hanging_lantern_bell_cap_herb.tscn" id="herb_1"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/morning_wheel_crystal_crown/morning_wheel_crystal_crown_herb.tscn" id="herb_2"]
+
 [ext_resource type="Script" uid="uid://60rhnadsymuk" path="res://day/levels/Aurem Clockyard/aurem_clockyard.gd" id="1_env"]
 [ext_resource type="Texture2D" uid="uid://tqgl81dmbnmb" path="res://day/levels/Aurem Clockyard/FS.png" id="2_fs"]
 [ext_resource type="Texture2D" uid="uid://bo4ri7g12bjqk" path="res://day/levels/Aurem Clockyard/MS.png" id="3_ms"]
@@ -455,3 +461,23 @@ layer = 200
 script = ExtResource("17_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=1830075791 instance=ExtResource("18_pause_menu")]
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(850, 560)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="P02" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1900, 560)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_1")
+
+[node name="P03" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(3050, 560)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_2")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

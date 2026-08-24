@@ -30,6 +30,7 @@ var current_state: PatrolState = PatrolState.SPAWN
 var current_step_index: int = 0
 var _inspect_timer: float = 0.0
 var _curtain_nodes: Dictionary = {} # int -> Node2D
+var _extra_hiding_nodes: Array[Node2D] = []
 var _curtain_1_pos: Vector2 = Vector2(175, 300)
 var _is_resetting_player: bool = false
 var _lantern_base_x: float = 85.0
@@ -57,6 +58,7 @@ func _ready() -> void:
 
 func _discover_curtains() -> void:
 	_curtain_nodes.clear()
+	_extra_hiding_nodes.clear()
 	var root := get_tree().current_scene
 	if root == null:
 		return
@@ -71,6 +73,13 @@ func _discover_curtains() -> void:
 			_curtain_nodes[i] = curtain
 			if i == 1:
 				_curtain_1_pos = curtain.global_position
+
+	# Search for Cabinet2 (upper floor shelter)
+	var cabinet2 := root.get_node_or_null("World/Props/Cabinet2") as Node2D
+	if cabinet2 == null:
+		cabinet2 = root.find_child("Cabinet2", true, false) as Node2D
+	if cabinet2 != null:
+		_extra_hiding_nodes.append(cabinet2)
 
 	if _curtain_nodes.has(1):
 		_curtain_1_pos = _curtain_nodes[1].global_position
@@ -228,6 +237,14 @@ func is_luca_hidden(luca_body: Node2D) -> bool:
 			if dist <= hide_detection_radius:
 				# Luca is hidden behind this curtain
 				return true
+
+	for spot in _extra_hiding_nodes:
+		if is_instance_valid(spot):
+			var dist := absf(luca_x - spot.global_position.x)
+			if dist <= hide_detection_radius:
+				# Luca is hidden behind this prop (e.g. Cabinet2)
+				return true
+
 	return false
 
 

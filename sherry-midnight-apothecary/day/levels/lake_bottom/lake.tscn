@@ -1,5 +1,11 @@
 [gd_scene format=3 uid="uid://c6o3maynfixkb"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/returning_tide_thorn_fern/returning_tide_thorn_fern_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/tideplate_lotus/tideplate_lotus_herb.tscn" id="herb_1"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/tide_lantern_flower/tide_lantern_flower_herb.tscn" id="herb_2"]
+
 [ext_resource type="Script" uid="uid://r4hpo7tgptip" path="res://day/levels/lake_bottom/lake.gd" id="1_lake"]
 [ext_resource type="Texture2D" uid="uid://44h0ct512yql" path="res://day/levels/lake_bottom/art/arit_bg_sky_01.png" id="2_sky"]
 [ext_resource type="Texture2D" uid="uid://dd3awqistat6f" path="res://day/levels/lake_bottom/art/arit_bg_basin_far_01.png" id="3_basin"]
@@ -428,3 +434,23 @@ layer = 41
 [node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=82604872]
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=42431069 instance=ExtResource("29_pause_menu")]
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(850, 680)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="P02" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1550, 680)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_1")
+
+[node name="P03" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(2250, 680)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_2")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

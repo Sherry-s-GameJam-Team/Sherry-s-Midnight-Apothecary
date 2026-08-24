@@ -34,7 +34,7 @@
 
 - [Golden cliff](golden_cliff.md): standalone `烁金横崖` day level — balance-stone calibration, floating/debris hazards, portal repair, embedded standalone DeveloperConsole, embedded PauseMenu (B-key backpack, ESC menu), and `LEVELS` registration for the global SceneTitleCard.
 
-- [Night home & Luca interaction](night_home.md): nighttime apothecary interior, Luca intro dialogue sequence, herb rewards, hintUI feedback, alchemy guidance, and bedroom barrier business check with remaining customer confirmation.
+- [Night home & Luca interaction](night_home.md): nighttime apothecary interior, Luca intro dialogue sequence, herb rewards, hintUI feedback, Day 0 alchemy tutorial guide UI (with codex inspection, magnet dragging tips, bellows mouse/space controls, and bottling steps), and bedroom barrier business check with remaining customer confirmation.
 
 - [Lake bottom](lake_bottom.md): exposed lakebed day level — three spring valves, the script-rendered Tide Eye boss encounter, lake-return ending, and the post-boss 潜息门 anchor route through the maintenance station.
 

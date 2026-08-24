@@ -14,4 +14,4 @@ scene_description = "探索赤染之谷，穿过枫脂干燥坊与村落，修�
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
 show_title_card = true
-native_ingredient_ids = Array[StringName]([])
+native_ingredient_ids = Array[StringName]([&"maple_heart_dark_vein", &"maple_marrow_star_crystal", &"waystation_lantern_fruit"])

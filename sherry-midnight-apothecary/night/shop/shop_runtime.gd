@@ -67,7 +67,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func setup(shared_player_data: PlayerData, shared_night_result: NightResult, current_day: int) -> void:
 	player_data = shared_player_data
 	night_result = shared_night_result
-	day = maxi(current_day, 1)
+	day = maxi(current_day, 0)
 	completed_customer_count = 0
 	selected_potion_id = &""
 	selected_uid = ""
@@ -80,14 +80,24 @@ func setup(shared_player_data: PlayerData, shared_night_result: NightResult, cur
 func _build_customer_queue() -> Array[Dictionary]:
 	var reputation := player_data.store_reputation if player_data != null else 100
 	var available: Array[Dictionary] = []
-	for customer: Dictionary in CustomerEventCatalog.eligible_for_day(day, player_data.tutorial_flags if player_data != null else {}):
+	for customer: Dictionary in CustomerEventCatalog.eligible_for_day(day, player_data.tutorial_flags if player_data != null else {}, player_data.customer_states if player_data != null else {}):
 		var npc_id := str(customer.get("npc_id", customer.get("event_id", "customer")))
 		var customer_state: Dictionary = player_data.customer_states.get(npc_id, {}) if player_data != null else {}
 		if bool(customer_state.get("permanently_lost", false)) or float(customer_state.get("patience", MAX_PATIENCE)) <= 0.0:
 			continue
 		if reputation >= 70 or float(customer.get("modifier", 1.0)) <= 1.05:
 			available.append(customer)
-	var target_count := 8 if reputation >= 70 else 2 if reputation >= 40 else 1
+	available.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var a_due := bool(a.get("is_due_followup", false))
+		var b_due := bool(b.get("is_due_followup", false))
+		if a_due != b_due:
+			return a_due
+		var a_key := ("%d:%s" % [day, str(a.get("npc_id", ""))]).hash()
+		var b_key := ("%d:%s" % [day, str(b.get("npc_id", ""))]).hash()
+		return a_key < b_key
+	)
+	var reputation_cap := 8 if reputation >= 70 else 2 if reputation >= 40 else 1
+	var target_count := mini(CustomerEventCatalog.customer_cap_for_day(day), reputation_cap)
 	var queue: Array[Dictionary] = []
 	for index in range(mini(target_count, available.size())):
 		var customer := available[index].duplicate()
@@ -127,7 +137,7 @@ func has_operated() -> bool:
 func _refresh() -> void:
 	if not is_node_ready():
 		return
-	night_label.text = "第 %02d 夜 · 营业" % day
+	night_label.text = "教程夜 · 营业" if day == 0 else "第 %02d 夜 · 营业" % day
 	progress_label.text = "已接待 %d · 等候 %d" % [completed_customer_count, _customer_queue.size()]
 	var wallet := player_data.money if player_data != null else 0
 	var debt := player_data.debt if player_data != null else 30000
@@ -205,7 +215,7 @@ func _on_potion_hovered(potion: PotionData, instance: Dictionary, price: int) ->
 		float(instance.get("quality", 1.0)) * 100.0,
 		clampf(float(instance.get("remaining_dose", 1.0)), 0.0, 1.0) * 100.0,
 		price,
-		PotionEffectText.describe(potion.main_effect_id),
+		PotionEffectText.describe_potion(potion),
 		"\n副作用：%s × %.2f" % [PotionEffectText.describe(secondary), float(instance.get("secondary_effect_multiplier", 0.0))] if secondary != &"" else "",
 	]
 	potion_tooltip.show()
@@ -254,7 +264,7 @@ func _on_sell_pressed() -> void:
 	session_earnings += value
 
 	var patience_recovered := 0.0
-	if match.outcome == PotionMatchResult.Outcome.PERFECT or match.outcome == PotionMatchResult.Outcome.SPECIAL or match.total_score >= 80:
+	if match.outcome == PotionMatchResult.Outcome.PERFECT or match.outcome == PotionMatchResult.Outcome.SPECIAL:
 		var current_patience := float(customer.get("patience", MAX_PATIENCE))
 		var new_patience := minf(current_patience + PATIENCE_RECOVERY_ON_PERFECT, MAX_PATIENCE)
 		patience_recovered = new_patience - current_patience
@@ -306,6 +316,9 @@ func _execute_reject(customer: Dictionary) -> void:
 	var remaining_patience := maxf(float(customer.get("patience", MAX_PATIENCE)) - REFUSAL_PATIENCE_LOSS, 0.0)
 	customer["patience"] = remaining_patience
 	state["patience"] = remaining_patience
+	state["next_visit_day"] = day + 2
+	state["case_stage"] = int(customer.get("case_stage", state.get("case_stage", 0)))
+	state["case_branch"] = str(customer.get("case_branch", state.get("case_branch", "normal")))
 
 	var reputation_penalty := int(pow(2.0, refusal_count))
 	if night_result != null:
@@ -361,6 +374,17 @@ func _record_customer_result(customer: Dictionary, instance: Dictionary, match: 
 		"score": match.total_score,
 	}
 	state["last_feedback"] = result.immediate_text
+	var current_stage := int(customer.get("case_stage", state.get("case_stage", 0)))
+	match match.outcome:
+		PotionMatchResult.Outcome.PERFECT, PotionMatchResult.Outcome.SPECIAL, PotionMatchResult.Outcome.SATISFIED:
+			state["case_stage"] = current_stage + 1
+			state["case_branch"] = "normal"
+		PotionMatchResult.Outcome.ACCEPTABLE:
+			state["case_stage"] = current_stage
+			state["case_branch"] = "normal"
+		PotionMatchResult.Outcome.FAILED, PotionMatchResult.Outcome.DANGEROUS:
+			state["case_stage"] = current_stage
+			state["case_branch"] = "worsened"
 	player_data.customer_states[npc_id] = state
 	if match.outcome == PotionMatchResult.Outcome.PERFECT or match.outcome == PotionMatchResult.Outcome.SPECIAL:
 		player_data.tutorial_flags[str(customer.get("success_flag", ""))] = true

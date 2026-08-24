@@ -19,6 +19,7 @@ static func run(test: TestSupport) -> void:
 			"potency": 1.0,
 		}],
 	}
+	player.unlock_throwable_potion(&"red_potion")
 	test.expect(player.equip_potion(0, &"red_potion"), "Test potion equips into the first slot.")
 	var service := PotionInventoryService.new(player)
 	service.setup(player)

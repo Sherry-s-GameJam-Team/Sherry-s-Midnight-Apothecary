@@ -26,6 +26,7 @@ const TEST_SCRIPTS: Array[Script] = [
 	preload("res://tests/night_sleep_interaction_test.gd"),
 	preload("res://tests/save_service_test.gd"),
 	preload("res://tests/alchemy_test.gd"),
+	preload("res://tests/alchemy_tutorial_guide_test.gd"),
 	preload("res://tests/alchemy_background_pan_test.gd"),
 	preload("res://tests/bellows_control_test.gd"),
 	preload("res://tests/heat_controller_test.gd"),

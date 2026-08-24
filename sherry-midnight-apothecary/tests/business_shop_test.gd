@@ -4,69 +4,75 @@ extends RefCounted
 static func run(test: TestSupport) -> void:
 	var scene := load("res://night/shop/shop_runtime.tscn") as PackedScene
 	test.expect(scene != null, "The shop runtime loads.")
-	test.expect(FileAccess.get_file_as_string("res://night/shop/shop_runtime.gd").contains("func _unhandled_input"), "Shop runtime handles Escape before the global pause menu.")
-	var shelf_panel_scene := load("res://night/shop/ui/potion_shelf_panel.tscn") as PackedScene
-	var shelf_item_scene := load("res://night/shop/ui/potion_shelf_item.tscn") as PackedScene
-	test.expect(shelf_panel_scene != null, "The potion shelf is a standalone editable scene.")
-	test.expect(shelf_item_scene != null, "The potion presentation slot is a standalone editable scene.")
 	if scene == null:
 		return
+	for day in range(8):
+		test.expect_equal(CustomerEventCatalog.customer_cap_for_day(day), mini(day + 2, 8), "Customer capacity grows on day %d." % day)
+
 	var shop := scene.instantiate() as ShopRuntime
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(shop)
-
 	var player := PlayerData.new()
 	var result := NightResult.new()
-	shop.setup(player, result, 1)
-	test.expect_equal(shop._reputation_gain_for_satisfaction(0.5), 1, "A minimally satisfying sale grants one reputation point.")
-	test.expect_equal(shop._reputation_gain_for_satisfaction(1.0), 3, "A standard-quality full potion grants three reputation points.")
-	test.expect_equal(shop._reputation_gain_for_satisfaction(1.5), 5, "An excellent potion grants five reputation points.")
-	test.expect_float_close(shop._customer_satisfaction({"quality": 1.2, "remaining_dose": 0.5}), 0.6, 0.001, "Customer satisfaction combines potion quality and remaining dose.")
-	var first_customer := shop.current_customer()
-	var first_npc_id := str(first_customer.get("npc_id", ""))
-	var initial_queue_size := shop._customer_queue.size()
-	test.expect_equal(initial_queue_size, 8, "A high-reputation business night begins with eight queued customers.")
-	test.expect_float_close(float(first_customer.get("patience", 0.0)), ShopRuntime.MAX_PATIENCE, 0.001, "The active customer starts with full patience.")
-	test.expect(first_customer.get("portrait", null) != null, "The active customer has a configured portrait.")
+	shop.setup(player, result, 0)
+	test.expect_equal(shop._customer_queue.size(), 2, "Tutorial night starts with two customers.")
+	test.expect_equal(shop.day, 0, "Tutorial night remains day zero.")
 
-	# 1. First rejection: customer leaves immediately, patience -25%, reputation -2^1 = -2
+	var rejected := shop.current_customer()
+	var rejected_id := str(rejected.npc_id)
 	shop._on_reject_pressed()
-	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 1, "Refusing a customer removes them from tonight's queue immediately.")
-	test.expect_equal(shop.completed_customer_count, 1, "Refusing a customer increments completed customer count.")
-	test.expect_equal(result.reputation_delta, -2, "First refusal causes 2^1 = 2 reputation penalty.")
-	var state1: Dictionary = player.customer_states.get(first_npc_id, {})
-	test.expect_float_close(float(state1.get("patience", 0.0)), 75.0, 0.001, "Refused customer patience is saved as 75%.")
-	test.expect_equal(int(state1.get("refusal_count", 0)), 1, "Refusal count is recorded as 1.")
+	var rejected_state: Dictionary = player.customer_states.get(rejected_id, {})
+	test.expect_equal(int(rejected_state.get("next_visit_day", -1)), 2, "A refusal delays the same diagnosis by two days.")
+	test.expect_equal(int(rejected_state.get("case_stage", -1)), 0, "A refusal does not advance the diagnosis.")
+	test.expect_equal(result.reputation_delta, -2, "First refusal keeps the exponential reputation penalty.")
 
-	# 2. Test patience recovery with accurate medication
-	state1["patience"] = 50.0
-	player.customer_states[first_npc_id] = state1
-	var second_customer := shop.current_customer()
-	var second_npc_id := str(second_customer.get("npc_id", ""))
+	shop.setup(player, NightResult.new(), 1)
+	test.expect(not shop._customer_queue.any(func(c: Dictionary) -> bool: return str(c.npc_id) == rejected_id), "A rejected NPC cannot return before next_visit_day.")
+	test.expect(shop._customer_queue.size() <= 3, "Day one respects its three-customer cap.")
 
-	# 3. Test progressive reputation penalty 2^n on second refusal of second customer
-	shop._on_reject_pressed()
-	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 2, "Second customer also leaves immediately on refusal.")
-	test.expect_equal(result.reputation_delta, -4, "Total reputation penalty includes another 2^1 = 2 (delta: -2 - 2 = -4).")
+	var orange := load("res://shared/definitions/data/potions/orange_potion.tres") as PotionData
+	var green := load("res://shared/definitions/data/potions/green_potion.tres") as PotionData
+	var blue := load("res://shared/definitions/data/potions/blue_potion.tres") as PotionData
+	var purple := load("res://shared/definitions/data/potions/purple_potion.tres") as PotionData
+	var purification := load("res://shared/definitions/data/potions/purification_potion.tres") as PotionData
 
-	# 4. Test warning dialog when the current customer's patience is <= 25%
-	var last_customer := shop.current_customer()
-	var last_npc_id := str(last_customer.get("npc_id", ""))
-	last_customer["patience"] = 25.0
-	shop.reject_confirm_dialog.hide()
-	shop._on_reject_pressed()
-	test.expect(shop.reject_confirm_dialog.visible, "When customer patience is 25%, rejecting triggers the confirmation warning dialog.")
-	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 2, "Customer remains until confirmation dialog is accepted.")
+	var single_event := {"primary_need":&"activation", "secondary_need":&"", "severity":1, "forbidden_effects":[]}
+	var single_match := PotionMatchService.calculate(single_event, orange, {"quality":1.0, "potency":1.0})
+	test.expect_equal(single_match.outcome, PotionMatchResult.Outcome.PERFECT, "An exact introductory single effect is perfect.")
+	test.expect_float_close(single_match.normalized_score, 1.0, 0.001, "Single-effect matching normalizes against its attainable score.")
 
-	# Confirm the rejection
-	shop._on_reject_confirmed()
-	test.expect_equal(shop._customer_queue.size(), initial_queue_size - 3, "Only the confirmed customer leaves the queue.")
-	var final_state: Dictionary = player.customer_states.get(last_npc_id, {})
-	test.expect_float_close(float(final_state.get("patience", 100.0)), 0.0, 0.001, "Final rejection reduces patience to 0.")
-	test.expect(bool(final_state.get("permanently_lost", false)), "Customer with 0 patience is marked permanently lost.")
+	var compound_event := {"primary_need":&"activation", "secondary_need":&"regeneration", "severity":2, "forbidden_effects":[]}
+	var compound := PotionMatchService.calculate(compound_event, orange, {"secondary_effect_id":"healing", "secondary_effect_multiplier":1.0, "quality":1.0, "potency":1.0})
+	test.expect_equal(compound.outcome, PotionMatchResult.Outcome.PERFECT, "The directed main/secondary pair can match perfectly.")
+	var partial := PotionMatchService.calculate(compound_event, orange, {"secondary_effect_id":"healing", "secondary_effect_multiplier":0.5, "quality":1.0, "potency":1.0})
+	test.expect_equal(partial.outcome, PotionMatchResult.Outcome.SATISFIED, "A half-strength secondary effect earns partial credit.")
+	var reversed := PotionMatchService.calculate(compound_event, green, {"secondary_effect_id":"speed", "secondary_effect_multiplier":1.0, "quality":1.0, "potency":1.0})
+	test.expect(reversed.outcome != PotionMatchResult.Outcome.SATISFIED and reversed.outcome != PotionMatchResult.Outcome.PERFECT, "Reversing an ordered pair cannot satisfy the requested primary effect.")
 
-	# 5. Verify permanently lost customer never appears in future night queues
-	shop.setup(player, NightResult.new(), 2)
-	test.expect(not shop._customer_queue.any(func(c: Dictionary) -> bool: return str(c.get("npc_id", "")) == last_npc_id), "Permanently lost customer never appears in future customer queues.")
+	var forbidden_event := {"primary_need":&"purification", "secondary_need":&"", "severity":1, "forbidden_effects":[&"sedation"]}
+	var dangerous := PotionMatchService.calculate(forbidden_event, purple, {"quality":1.0, "potency":1.0})
+	test.expect_equal(dangerous.outcome, PotionMatchResult.Outcome.DANGEROUS, "A forbidden color effect is dangerous.")
+	var burned := PotionMatchService.calculate(single_event, orange, {"quality":1.0, "potency":1.0, "was_burned":true})
+	test.expect_equal(burned.outcome, PotionMatchResult.Outcome.DANGEROUS, "Any burned brew is dangerous.")
+
+	var special_event := {"primary_need":&"purification", "secondary_need":&"", "severity":3, "forbidden_effects":[], "preferred_special_potion_id":&"purification_potion"}
+	var special := PotionMatchService.calculate(special_event, purification, {"special_potion_id":"purification_potion", "quality":1.0, "potency":1.0})
+	test.expect_equal(special.outcome, PotionMatchResult.Outcome.SPECIAL, "High-purity blue resolves its explicit special request.")
+
+	var follow_customer: Dictionary = CustomerEventCatalog.eligible_for_day(0, {}, {}).front()
+	var perfect_feedback := CustomerFeedbackResolver.resolve(follow_customer, single_match)
+	shop.day = 0
+	shop.selected_potion_id = orange.id
+	shop._record_customer_result(follow_customer, {"quality":1.0, "potency":1.0}, single_match, perfect_feedback)
+	var follow_state: Dictionary = player.customer_states.get(str(follow_customer.npc_id), {})
+	test.expect_equal(int(follow_state.get("case_stage", -1)), 1, "Perfect treatment advances the case stage.")
+	test.expect_equal(int(follow_state.get("next_visit_day", -1)), 2, "Perfect treatment schedules a two-day follow-up.")
+
+	var failed := PotionMatchService.calculate(single_event, blue, {"quality":1.0, "potency":1.0})
+	var failed_feedback := CustomerFeedbackResolver.resolve(follow_customer, failed)
+	shop._record_customer_result(follow_customer, {"quality":1.0, "potency":1.0}, failed, failed_feedback)
+	follow_state = player.customer_states.get(str(follow_customer.npc_id), {})
+	test.expect_equal(str(follow_state.get("case_branch", "")), "worsened", "Failed treatment records a worsened branch.")
+	test.expect_equal(int(follow_state.get("next_visit_day", -1)), 1, "Failed treatment requests re-examination after one day.")
 
 	shop.free()

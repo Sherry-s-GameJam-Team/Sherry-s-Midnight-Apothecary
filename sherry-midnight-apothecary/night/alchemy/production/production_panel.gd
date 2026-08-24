@@ -296,6 +296,11 @@ func _on_herb_dropped(ingredient_id: StringName) -> void:
 	if packing or alchemy_runtime == null:
 		status_label.text = "正在装粉，暂时不能加入新药材。"
 		return
+	if alchemy_runtime != null and alchemy_runtime.tutorial_guide != null and alchemy_runtime.tutorial_guide.is_active:
+		if ingredient_id != &"dew_flask_herb":
+			status_label.text = "当前需制作湛蓝净化药水，请选择【露水水囊草】。"
+			alchemy_runtime.tutorial_guide.show_wrong_herb_warning()
+			return
 	var data: IngredientData = alchemy_runtime.ingredient_by_id(ingredient_id)
 	if data == null or not alchemy_runtime.reserve_production_ingredient(ingredient_id):
 		status_label.text = "该药材当前没有可用库存。"

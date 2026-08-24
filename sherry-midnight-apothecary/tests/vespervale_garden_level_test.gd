@@ -89,7 +89,6 @@ static func run(test: TestSupport) -> void:
 		test.expect(day_five_intro.has_node("walkstart"), "Day-five presentation has a left-side walk start marker.")
 		test.expect(day_five_intro.has_node("walkend"), "Day-five presentation keeps the authored walkend marker.")
 		test.expect(day_five_intro.has_node("SerenaIllusion"), "Day-five presentation has Serena's world illusion.")
-		test.expect(day_five_intro.has_node("LucaProxy"), "Day-five presentation has Luca's interruption proxy.")
 		test.expect(day_five_intro.dialogue_resource != null, "Day-five presentation has its dialogue resource.")
 		test.expect(day_five_intro.serena_portrait != null, "Day-five presentation has Serena's portrait.")
 		if day_five_intro.serena_portrait != null:
@@ -100,10 +99,38 @@ static func run(test: TestSupport) -> void:
 	var completed_data := PlayerData.new()
 	completed_data.set_event_flag(VespervaleDayFiveIntro.COMPLETE_FLAG)
 	test.expect(not VespervaleDayFiveIntro.should_present(5, completed_data), "The completed first-path presentation does not replay.")
+	test.expect(VespervaleDayFiveIntro.should_follow(5, completed_data), "Luca follows Sherry after the day-five event completes.")
+	test.expect(not VespervaleDayFiveIntro.should_follow(4, completed_data), "Day-five garden follow state is not enabled on another day.")
+
+	var luca := level.get_node_or_null("Luca") as LucaPlayer
+	test.expect(luca != null, "Garden contains the frame-animated Luca character.")
+	if luca != null:
+		var luca_sprite := luca.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		test.expect(luca_sprite != null and luca_sprite.sprite_frames != null, "Garden Luca uses the shared SpriteFrames presentation.")
+		if luca_sprite != null and luca_sprite.sprite_frames != null:
+			test.expect(luca_sprite.sprite_frames.has_animation(&"idle"), "Garden Luca has the frame-based idle animation.")
+			test.expect(luca_sprite.sprite_frames.has_animation(&"run_loop"), "Garden Luca has the frame-based run animation.")
+	var luca_follow := level.get_node_or_null("LucaFollow") as VespervaleLucaFollow
+	test.expect(luca_follow != null, "Garden has a sewer-style Luca follow controller.")
+	if luca_follow != null:
+		test.expect_equal(luca_follow.player_path, NodePath("../Player"), "Luca follow targets Sherry.")
+		test.expect_equal(luca_follow.luca_path, NodePath("../Luca"), "Luca follow drives the frame-animated Luca node.")
 
 	var dialogue_source := FileAccess.get_file_as_string("res://day/levels/Vespervale/vespervale_day_five_intro.dialogue")
 	test.expect(dialogue_source.contains("~ start") and dialogue_source.contains("~ bridge"), "Day-five dialogue has staged start and bridge titles.")
 	test.expect(dialogue_source.contains("你没有必要看见吾") and dialogue_source.contains("主线任务：未醒之谷"), "Day-five dialogue contains the illusion reveal and task update.")
 	test.expect(dialogue_source.contains("vespervale_luca_pull") and dialogue_source.contains("vespervale_serena_dissolve"), "Day-five dialogue drives Luca's rescue and Serena's dissolve.")
+
+	var scene_tree := Engine.get_main_loop() as SceneTree
+	if scene_tree != null:
+		scene_tree.root.add_child(level)
+		day_five_intro._play_luca_pull()
+		test.expect(luca.visible, "The rescue beat reveals the frame-animated Luca character.")
+		day_five_intro._finish_event()
+		test.expect(luca_follow.is_follow_enabled(), "Finishing the story hands Luca over to the follow controller.")
+		player.global_position = Vector2(900.0, 500.0)
+		luca.global_position = Vector2(300.0, 500.0)
+		luca_follow._physics_process(1.0 / 60.0)
+		test.expect(float(luca.get("_external_direction")) > 0.0, "Luca runs toward Sherry when she moves beyond the follow distance.")
 
 	level.free()

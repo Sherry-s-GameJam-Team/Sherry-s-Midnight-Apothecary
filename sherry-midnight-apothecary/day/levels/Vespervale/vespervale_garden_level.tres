@@ -13,3 +13,4 @@ corrupted_description = "迷梦毒雾笼罩着暮息庭院，沉眠的居民陷�
 scene_description = "探索暮息庭院与静语礼堂，唤醒沉睡的旅人并驱散梦魇迷雾。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"dusk_water_opuntia", &"vesper_blue_thicket"])

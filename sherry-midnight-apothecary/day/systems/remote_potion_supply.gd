@@ -2,7 +2,6 @@ class_name RemotePotionSupply
 extends Node
 
 const UNLOCK_FLAG: StringName = &"enzo_remote_supply_unlocked"
-const TRACKED_POTIONS_KEY := "enzo_remote_supply_tracked_potions"
 const MAX_BOTTLES_PER_TYPE := 4
 const ELIGIBLE_POTION_IDS: Array[StringName] = [
 	&"red_potion",
@@ -31,7 +30,6 @@ func _ready() -> void:
 func setup(shared_player_data: PlayerData) -> void:
 	player_data = shared_player_data
 	_elapsed_supply_time = 0.0
-	_remember_owned_potions()
 	if is_node_ready():
 		set_process(player_data != null)
 
@@ -53,7 +51,6 @@ func _process(delta: float) -> void:
 func advance_supply_time(delta: float) -> StringName:
 	if player_data == null:
 		return &""
-	_remember_owned_potions()
 	if not player_data.has_event_flag(UNLOCK_FLAG) or not level_scope_active:
 		_elapsed_supply_time = 0.0
 		return &""
@@ -111,40 +108,19 @@ func _current_throw_instance_index(potion_id: StringName, instances: Array) -> i
 func _unique_equipped_ids() -> Array[StringName]:
 	var result: Array[StringName] = []
 	for potion_id: StringName in player_data.equipped_potion_ids:
-		if ELIGIBLE_POTION_IDS.has(potion_id) and not result.has(potion_id):
+		if ELIGIBLE_POTION_IDS.has(potion_id) and player_data.is_potion_throwable_unlocked(potion_id) and not result.has(potion_id):
 			result.append(potion_id)
 	return result
-
-
-func _remember_owned_potions() -> void:
-	if player_data == null:
-		return
-	var tracked := _tracked_ids()
-	for potion_key: Variant in player_data.potions:
-		var potion_id := StringName(str(potion_key))
-		if ELIGIBLE_POTION_IDS.has(potion_id) and not tracked.has(potion_id):
-			tracked.append(potion_id)
-	for potion_id: StringName in player_data.equipped_potion_ids:
-		if ELIGIBLE_POTION_IDS.has(potion_id) and not tracked.has(potion_id):
-			tracked.append(potion_id)
-	tracked.sort()
-	var stored_ids: Array[String] = []
-	for potion_id: StringName in tracked:
-		stored_ids.append(str(potion_id))
-	player_data.tutorial_flags[TRACKED_POTIONS_KEY] = stored_ids
 
 
 func _tracked_ids() -> Array[StringName]:
 	var result: Array[StringName] = []
 	if player_data == null:
 		return result
-	var stored: Variant = player_data.tutorial_flags.get(TRACKED_POTIONS_KEY, [])
-	if stored is not Array:
-		return result
-	for value: Variant in stored:
-		var potion_id := StringName(str(value))
+	for potion_id: StringName in player_data.throwable_potion_ids:
 		if ELIGIBLE_POTION_IDS.has(potion_id) and not result.has(potion_id):
 			result.append(potion_id)
+	result.sort()
 	return result
 
 

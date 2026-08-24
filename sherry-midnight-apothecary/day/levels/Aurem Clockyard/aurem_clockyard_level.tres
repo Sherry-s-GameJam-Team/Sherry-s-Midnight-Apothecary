@@ -13,3 +13,4 @@ corrupted_description = "巨型钟塔的齿轮锈蚀停摆，紊乱的时律侵�
 scene_description = "探索奥勒姆钟庭，穿过金穗农庄与齿轮工坊，修复巨钟塔的时律中枢。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"sun_etched_flower", &"hanging_lantern_bell_cap", &"morning_wheel_crystal_crown"])

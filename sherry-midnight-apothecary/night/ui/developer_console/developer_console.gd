@@ -256,14 +256,6 @@ const FALLBACK_INGREDIENT_PATHS: Array[String] = [
 	"res://shared/definitions/data/ingredients/dew_flask_herb.tres",
 	"res://shared/definitions/data/ingredients/old_mans_noose.tres",
 	"res://shared/definitions/data/ingredients/praise_star_maple.tres",
-	"res://shared/definitions/data/ingredients/amber_root.tres",
-	"res://shared/definitions/data/ingredients/blue_bell.tres",
-	"res://shared/definitions/data/ingredients/mist_leaf.tres",
-	"res://shared/definitions/data/ingredients/moon_mint.tres",
-	"res://shared/definitions/data/ingredients/red_berry.tres",
-	"res://shared/definitions/data/ingredients/star_lavender.tres",
-	"res://shared/definitions/data/ingredients/sun_daisy.tres",
-	"res://shared/definitions/data/ingredients/violet_thistle.tres",
 ]
 
 @onready var output: RichTextLabel = %Output
@@ -606,6 +598,10 @@ func _potion_command(parts: PackedStringArray) -> String:
 	var potion_id := _resolve_potion_id(parts[1])
 	if potion_id == &"":
 		return "错误：药水序号必须在 1–%d 之间。" % POTION_IDS_BY_NUMBER.size()
+	var recipe_id: StringName = PlayerData.BASE_RECIPE_BY_POTION.get(potion_id, &"")
+	if recipe_id != &"":
+		player.unlock_potion_recipe(recipe_id)
+		player.unlock_throwable_potion(potion_id)
 	var instances: Array = player.potions.get(potion_id, [])
 	for _index in count:
 		instances.append({

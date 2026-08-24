@@ -100,7 +100,7 @@ func refresh() -> void:
 
 
 func select_potion(potion_id: StringName) -> void:
-	if player_data == null or potion_id == &"" or potion_id == &"black_potion":
+	if player_data == null or potion_id == &"" or potion_id == &"black_potion" or not player_data.is_potion_throwable_unlocked(potion_id):
 		return
 	if not player_data.potions.has(potion_id):
 		return
@@ -209,8 +209,9 @@ func _refresh_potions() -> void:
 		if potion != null:
 			var visual: Dictionary = instances[0] if not instances.is_empty() else {}
 			button.icon = PotionSvgRenderer.get_bottle_texture(PotionColorResolver.resolve(potion, visual), 60, minf(total_dose, 1.0), float(visual.get("potency", 1.0)))
-		button.disabled = potion_id == &"black_potion"
-		button.tooltip_text = "失败药水不可装填" if button.disabled else "选择后点击右页档位进行装填"
+		var throwable_unlocked := player_data.is_potion_throwable_unlocked(potion_id)
+		button.disabled = potion_id == &"black_potion" or not throwable_unlocked
+		button.tooltip_text = "失败药水不可装填" if potion_id == &"black_potion" else ("选择后点击右页档位进行装填" if throwable_unlocked else "配方尚未登记，无法装填")
 		button.pressed.connect(select_potion.bind(potion_id))
 		button.set_pressed_no_signal(potion_id == selected_potion_id)
 		potion_entries.add_child(button)

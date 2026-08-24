@@ -18,7 +18,7 @@ static func run(test: TestSupport) -> void:
 		if tide_eye is TideEye:
 			test.expect_equal((tide_eye as TideEye).hits_required, 3, "Tide Eye requires exactly three effective hits.")
 			test.expect_equal((tide_eye as TideEye).exposed_seconds, 4.2, "Each exposed Tide Eye window lasts 4.2 seconds.")
-			var source := (tide_eye as TideEye).get_script().source_code
+			var source: String = str((tide_eye as TideEye).get_script().source_code)
 			test.expect("func _draw" in source, "Tide Eye visual is drawn by GDScript.")
 			test.expect(not ("Shader" in source or "SpriteFrames" in source or "Texture2D" in source), "Tide Eye script does not depend on boss textures, frames, or shaders.")
 		var epilogue_script := load("res://day/levels/lake_bottom/scripts/lake_boss_epilogue.gd") as GDScript
@@ -40,11 +40,14 @@ static func run(test: TestSupport) -> void:
 	SpringburstPotionProgression.grant_story_bottles(progression_data, 4)
 	test.expect_equal(int(progression_data.story_items.get(&"springburst_potion_commission", 0)), 4, "Commission bottles begin in the story-item inventory.")
 	test.expect(not progression_data.potions.has(&"cyan_potion"), "Commission bottles are not throwable before the boss victory.")
+	test.expect(progression_data.is_potion_recipe_unlocked(&"recipe_cyan_springburst") and not progression_data.is_potion_throwable_unlocked(&"cyan_potion"), "Springburst is recorded in the codex before its combat use is unlocked.")
 	var unlocked_count := SpringburstPotionProgression.unlock_throwable_after_boss(progression_data)
 	test.expect_equal(unlocked_count, 4, "Boss victory converts all four commission bottles.")
 	test.expect(progression_data.has_event_flag(&"enzo_remote_supply_unlocked"), "Boss reward keeps the remote-supply flag populated for compatible saves.")
 	test.expect(not progression_data.story_items.has(&"springburst_potion_commission"), "Converted bottles leave the story-item inventory.")
 	test.expect_equal(progression_data.potion_count(&"cyan_potion"), 4, "Converted Springburst bottles become throwable potion instances.")
+	test.expect(progression_data.is_potion_throwable_unlocked(&"cyan_potion"), "Boss victory registers Springburst for throwing.")
+	test.expect_equal(progression_data.equipped_potion_ids, [&"", &"", &""], "Boss registration does not auto-equip Springburst.")
 	var legacy_data := PlayerData.new()
 	legacy_data.add_brewed_potion({"potion_id": "cyan_potion", "instance_uid": "legacy-cyan", "remaining_dose": 1.0})
 	legacy_data.equip_potion(0, &"cyan_potion")

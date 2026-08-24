@@ -17,9 +17,20 @@ The source folder is the authoritative color ID. Plants are distributed within t
 
 Each part retains its position on the original 4096×4096 canvas. The stored texture is trimmed to its alpha boundary, while `HerbPieceData.source_rect` reconstructs its original placement on `HerbAssemblyView`. Missing whole-plant previews are composited from the supplied parts without repainting or rescaling them.
 
+## Alchemy roles
+
+The plant library supports two deliberately separate alchemy roles:
+
+- **Chromatic processing:** detachable `HerbPieceData` parts contribute their weighted `spectrum_x`. The mixed result is evaluated against the seven-band potion spectrum, which determines the color-driven base effect.
+- **Special-plant recipes:** named plants can additionally be used by an explicit special recipe or potion definition. This layer is intentionally independent of `color_id`, so a plant's unique recipe role does not overwrite the effect produced by its extracted color parts.
+
+The eight legacy inventory-only definitions (`amber_root`, `blue_bell`, `mist_leaf`, `moon_mint`, `red_berry`, `star_lavender`, `sun_daisy`, and `violet_thistle`) were removed because they had neither production-piece data nor a runtime alchemy registration.
+
 ## Runtime registration
 
 `night/alchemy/alchemy_runtime.tscn` explicitly lists all nineteen colored-library ingredients. `night/ui/pause_menu/pause_inventory_page.tscn` lists the same definitions for material inspection. Runtime quantities remain in the shared `PlayerData.inventory` dictionary and use the ingredient resource ID as the key.
+
+All nineteen colored-library plants and the six initial plants have reusable `*_herb.tscn` field scenes. Story-level `LevelData.native_ingredient_ids` mirrors the explicitly authored spawn points, allowing shop progression and tests to verify that each requested color has an available daytime source.
 
 Useful console examples:
 

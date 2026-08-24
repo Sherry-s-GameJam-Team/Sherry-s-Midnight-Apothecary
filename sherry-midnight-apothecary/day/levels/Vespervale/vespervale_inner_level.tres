@@ -13,3 +13,4 @@ corrupted_description = "虚妄的梦境与病栋现实交错重叠，紫铃藤�
 scene_description = "洞察梦境切换的前兆，在上下两层回廊间规避机关与弹幕，激活梦髓节点。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"stagnant_breeze_bell_vine", &"slumber_marrow_geode"])

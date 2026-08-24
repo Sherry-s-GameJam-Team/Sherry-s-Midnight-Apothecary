@@ -1,5 +1,12 @@
 [gd_scene format=3 uid="uid://bdlo71kdnfix7"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/drop_cliff_whistle_leaf/drop_cliff_whistle_leaf_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/eyrie_nest_seed_ball/eyrie_nest_seed_ball_herb.tscn" id="herb_1"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/wind_cutter_rye/wind_cutter_rye_herb.tscn" id="herb_2"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/egg_climbers_honey_pot/egg_climbers_honey_pot_herb.tscn" id="herb_3"]
+
 [ext_resource type="Script" uid="uid://48sbjpdlo032" path="res://day/systems/day_level_environment.gd" id="1_environment"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="2_player"]
 [ext_resource type="Texture2D" uid="uid://cc0qtg8w2rr0i" path="res://day/levels/golden_cliff/art/skybox.png" id="2_qlso4"]
@@ -518,6 +525,31 @@ layer = 200
 script = ExtResource("26_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=2139284604 instance=ExtResource("27_pause_menu")]
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(520, 520)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="P02" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1050, 500)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_1")
+
+[node name="P03" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1750, 480)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_2")
+
+[node name="P04" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(2350, 500)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_3")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")
 
 [connection signal="stabilized" from="Gameplay/BalanceMechanisms/BalanceC" to="LevelController" method="_on_balance_c_stabilized"]
 [connection signal="weight_changed" from="Gameplay/BalanceMechanisms/BalanceC" to="LevelController" method="_on_balance_c_weight_changed"]

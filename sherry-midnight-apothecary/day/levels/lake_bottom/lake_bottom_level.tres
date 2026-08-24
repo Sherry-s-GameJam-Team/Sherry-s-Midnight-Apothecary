@@ -13,3 +13,4 @@ corrupted_description = "三重泉脉封印令沉泪门紧闭，湖床深处的�
 scene_description = "探索裸露湖床，启动三座古代泉脉阀，解除沉泪门的三重封印。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"returning_tide_thorn_fern", &"tideplate_lotus", &"tide_lantern_flower"])

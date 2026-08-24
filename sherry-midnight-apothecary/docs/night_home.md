@@ -30,6 +30,25 @@ On internal Day 0 night, Luca is present in the shop (`night/levels/home/luca_ni
 5. **Subsequent Interactions**:
    - Interacting with Luca after completing the intro triggers repeat dialogue (`~ repeat`).
 
+## Day 0 Alchemy Tutorial Guide (炼药新手引导)
+
+When entering `AlchemyRuntime` on Day 0 before completing the tutorial (`day0_alchemy_tutorial_completed`), the `AlchemyTutorialGuide` overlay activates:
+
+1. **Step 1 (Open Codex)**: Animated gold arrow points upward to `PullHandle` at the top with instructions: *“点击上方光谱把手，查阅【湛蓝净化药水】配方与光谱波段特性”*.
+2. **Step 2 (Inspect Spectrum)**: When codex slides down, prompts that blue band ($0.71 \sim 0.86$) governs purification & dispel, instructing player to press `[ESC]` or click close after reading.
+3. **Step 3 (To Production)**: Arrow points to `ToProductionArrow` (top-right yellow arrow) to switch to the processing station.
+4. **Step 4 (Take Herb & Dragging)**: Points to `dew_flask_herb` on `HerbGrid` to drag onto `ProcessBoard`, noting: *“按住鼠标左键长按可多零件范围吸附”*. If player picks another herb, it is rejected with a warning to choose `露水水囊草`.
+5. **Step 5 (Separate Herb)**: Points to `SeparateButton` to separate the plant into foliage and the blue water drop.
+6. **Step 6 (Grind Zone Drag)**: Points from the blue water droplet to the right-side `研磨区` (Grind Zone).
+7. **Step 7 (Grind Powder)**: Points to `GrindButton` to crush the component into blue powder.
+8. **Step 8 (Discard Leaves to Waste)**: Points to remaining green foliage pieces with trajectory towards the left discard bin (`waste_zone`), instructing: *“装粉前需保持案板整洁，请将除了水珠以外的多余绿叶部位拖入左侧弃置箱”*.
+9. **Step 9 (Pack Powder)**: Points to `PackPowderButton` to pack the powder into the unified powder shelf.
+10. **Step 10 (Back to Brewing)**: Points to `BackToBrewingArrow` (top-left) to slide back to the cauldron screen.
+11. **Step 11 (Feed Cauldron)**: Points from `UnifiedPowderShelf` to `CauldronDropZone` with trajectory line.
+12. **Step 12 (Start Brew)**: Points to `BrewButton` to commence heating.
+13. **Step 13 (Bellows & Heat Control)**: Points to `BellowsControl`, clarifying: *“抽拉风箱提升温度并推进蒸馏（点击鼠标左键 或 按【空格键】）”*.
+14. **Step 14 (Confirm Bottling)**: Points to `BottlingPanel` confirm button. Upon confirmation, records `day0_alchemy_tutorial_completed` into `PlayerData.tutorial_flags` and deactivates the guide.
+
 ## Night Bedroom Barrier Check (Ending Night Business)
 
 When the player approaches the left bedroom barrier (`BedroomEntrance`) at night and triggers it (`按[E]进入卧室区域`):

@@ -7,6 +7,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(player.debt, 30000, "New players visibly begin with 30000曜 of debt.")
 	test.expect(player.potions.is_empty(), "New players start without any potions.")
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &""], "New players start with three empty potion slots.")
+	test.expect(player.throwable_potion_ids.is_empty(), "New players have no registered combat potion recipes.")
 	var health_updates: Array[Vector2i] = []
 	var depleted_events: Array[bool] = []
 	player.health_changed.connect(func(current: int, maximum: int) -> void: health_updates.append(Vector2i(current, maximum)))
@@ -93,10 +94,15 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(migrated_empty.equipped_potion_ids, [&"", &"", &""], "Saves without a loadout migrate to empty slots.")
 	var legacy_bottle := PlayerData.from_save_data({"potions": {"green_potion": [{"instance_uid": "legacy"}]}})
 	test.expect_equal(legacy_bottle.potions[&"green_potion"][0]["bottle_style_id"], "health", "Legacy potions receive the default bottle style.")
+	test.expect(legacy_bottle.is_potion_recipe_unlocked(&"recipe_green_regrowth_tonic") and legacy_bottle.is_potion_throwable_unlocked(&"green_potion"), "Legacy owned potions migrate to codex and throw registration.")
 	var migrated_equipped := PlayerData.from_save_data({"equipped_potion_ids": ["red_potion", "", ""]})
 	test.expect_equal(migrated_equipped.equipped_potion_ids[0], &"red_potion", "Explicit saved loadouts are preserved.")
 	migrated_equipped.move_equip_potion(2, &"red_potion")
 	test.expect_equal(migrated_equipped.equipped_potion_ids, [&"", &"", &"red_potion"], "Equipped potion types move without duplication.")
+	var brewed_registration := PlayerData.new()
+	brewed_registration.add_brewed_potion({"potion_id": "blue_potion", "instance_uid": "new-blue"})
+	test.expect(brewed_registration.is_potion_recipe_unlocked(&"recipe_blue_cleanse") and brewed_registration.is_potion_throwable_unlocked(&"blue_potion"), "Normal brewed inventory entry registers its recipe and throw use.")
+	test.expect_equal(brewed_registration.equipped_potion_ids, [&"", &"", &""], "Registration never auto-equips a brewed potion.")
 	player.remove_story_item(&"sealed_letter")
 	test.expect(not player.story_items.has(&"sealed_letter"), "Story items are erased when their count reaches zero.")
 	player.tutorial_flags["potion_throw_controls_shown"] = true

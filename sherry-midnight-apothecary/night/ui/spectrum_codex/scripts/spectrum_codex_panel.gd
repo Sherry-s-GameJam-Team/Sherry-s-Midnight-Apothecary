@@ -314,9 +314,11 @@ func _on_matrix_cell_selected(row: int, col: int, recipes: Array[PotionRecipeDef
 
 	var row_name: String = catalog.matrix_row_labels[row] if (catalog and row < catalog.matrix_row_labels.size()) else "行%d" % row
 	var col_name: String = catalog.matrix_col_labels[col] if (catalog and col < catalog.matrix_col_labels.size()) else "列%d" % col
+	var combination: PotionEffectCombination = catalog.get_effect_combination_at(row, col) if catalog != null else null
+	var cell_unlocked: bool = unlock_state != null and unlock_state.is_matrix_cell_unlocked(Vector2i(row, col))
 
 	if detail_title:
-		detail_title.text = "%s × %s" % [row_name, col_name]
+		detail_title.text = combination.display_name if combination != null and cell_unlocked else "%s × %s" % [row_name, col_name]
 		detail_title.remove_theme_color_override("font_color")
 	if detail_type_badge:
 		detail_type_badge.text = "交叉矩阵组合"
@@ -327,9 +329,9 @@ func _on_matrix_cell_selected(row: int, col: int, recipes: Array[PotionRecipeDef
 			unlocked_count += 1
 
 	if detail_status_badge:
-		if recipes.is_empty():
-			detail_status_badge.text = "无配方"
-			detail_status_badge.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		if combination != null and recipes.is_empty():
+			detail_status_badge.text = "已发现" if cell_unlocked else "未知组合"
+			detail_status_badge.add_theme_color_override("font_color", Color(0.72, 0.22, 0.12) if cell_unlocked else Color(0.5, 0.5, 0.5))
 		elif unlocked_count == recipes.size():
 			detail_status_badge.text = "全部掌握 (%d/%d)" % [unlocked_count, recipes.size()]
 			detail_status_badge.add_theme_color_override("font_color", Color(0.72, 0.22, 0.12))
@@ -341,7 +343,9 @@ func _on_matrix_cell_selected(row: int, col: int, recipes: Array[PotionRecipeDef
 			detail_status_badge.add_theme_color_override("font_color", Color(0.65, 0.35, 0.2))
 
 	if detail_description:
-		if recipes.is_empty():
+		if combination != null:
+			detail_description.text = combination.description if cell_unlocked else "该有向复合药效尚未通过装瓶确认。"
+		elif recipes.is_empty():
 			detail_description.text = "该功能交汇点暂未记录任何药方。"
 		else:
 			detail_description.text = "此交汇点共包含 %d 个药方。已掌握 %d 个。" % [recipes.size(), unlocked_count]

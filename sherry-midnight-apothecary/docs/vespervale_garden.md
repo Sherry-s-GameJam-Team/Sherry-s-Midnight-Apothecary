@@ -38,7 +38,8 @@
 
 - 仅当 `DayRuntime.day == 5`、且 `vespervale_day_five_first_path_complete` 尚未记录时，从 `default` 或 `from_home` 入口启动。
 - `IssueDay5` 先把雪莉放到 `walkstart`，锁定玩家输入并播放向 `walkend` 的自动步行动画；远方呼唤结束后，水平输入临时收窄为仅可向右。
-- 接近桥前的塞蕾娜幻影后播放 `vespervale_day_five_intro.dialogue` 的 `bridge` 段。塞蕾娜的世界形象与对话立绘都使用 `res://characters/Serena/standee.png`；卢卡拉回雪莉、幻影重影与消散由对白事件驱动。
+- 接近桥前的塞蕾娜幻影后播放 `vespervale_day_five_intro.dialogue` 的 `bridge` 段。塞蕾娜的对话立绘使用 `res://characters/Serena/standee.png`；卢卡拉回雪莉、幻影重影与消散由对白事件驱动。
+- 场景中的卢卡直接实例化 `characters/luca/luca_player.tscn`，使用 `luca_sprite_frames.tres` 的 idle/run 精灵帧。救援前隐藏，救援时出现；剧情完成后由 `VespervaleLucaFollow` 按 sewer 同款停止距离、启动距离与远距离加速规则跟随雪莉，完成后重进 Day 5 花园也会恢复跟随。
 - 完成剧情会恢复双向移动与传送门，写入完成标记，并把 Day 5 当前任务设为 `vespervale_first_path`（“跟随卢卡寻找真实道路，调查维斯佩尔眠谷的异常。”）。
 
 ---
@@ -68,6 +69,8 @@ Garden (VespervaleGardenLevel: DayLevelEnvironment)
 ├─ EntryPoints (default, from_home, garden, church)
 ├─ Player (雪莉玩家角色)
 ├─ IssueDay5 (Day 5 自动步行、单向探索与桥前幻觉剧情)
+├─ Luca (精灵帧动画角色，剧情结束后跟随)
+├─ LucaFollow (sewer 风格的距离防抖跟随控制器)
 ├─ DebugUI (CanvasLayer: DeveloperConsole)
 ├─ GlobalUI (CanvasLayer: TopHintUI)
 └─ PauseMenuLayer (CanvasLayer: PauseMenu)

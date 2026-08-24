@@ -89,6 +89,9 @@ func _ensure_player_battle_potions() -> void:
 		pdata.potions[&"purification_potion"] = pure_instances
 		pdata.potions[&"cyan_potion"] = cyan_instances
 		pdata.potions[&"red_potion"] = red_instances
+		pdata.unlock_throwable_potion(&"purification_potion")
+		pdata.unlock_throwable_potion(&"cyan_potion")
+		pdata.unlock_throwable_potion(&"red_potion")
 		pdata.equip_potion(0, &"purification_potion")
 		pdata.equip_potion(1, &"cyan_potion")
 		pdata.equip_potion(2, &"red_potion")

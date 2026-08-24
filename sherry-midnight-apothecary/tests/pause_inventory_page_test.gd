@@ -11,11 +11,12 @@ static func run(test: TestSupport) -> void:
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(page)
 	var player := PlayerData.new()
-	player.inventory = {&"red_berry": 3}
+	player.inventory = {&"herdsmans_loaf_bush": 3}
 	player.potions = {
 		&"red_potion": [{"instance_uid": "red-one", "remaining_dose": 1.0, "quality": 1.0}],
 		&"black_potion": [{"instance_uid": "failed-one", "remaining_dose": 1.0, "quality": 0.5}],
 	}
+	player.unlock_throwable_potion(&"red_potion")
 	player.add_story_item(&"sealed_letter")
 	page.bind_player_data(player)
 
@@ -30,6 +31,7 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(player.equipped_potion_ids, [&"", &"", &"red_potion"], "Loading an equipped potion into another slot moves it.")
 
 	player.potions[&"purification_potion"] = [{"instance_uid": "tutorial-purification", "remaining_dose": 1.0, "quality": 1.0}]
+	player.unlock_throwable_potion(&"purification_potion")
 	page.refresh()
 	var selected := {"id": StringName()}
 	var equipped := {"slot": -1, "id": StringName()}

@@ -42,3 +42,8 @@ func snapshot() -> Array[Dictionary]:
 	for powder: PowderInstanceData in items:
 		result.append(powder.to_dict())
 	return result
+
+
+func list_powders() -> Array[PowderInstanceData]:
+	return items.duplicate()
+

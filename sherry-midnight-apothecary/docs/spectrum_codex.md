@@ -18,6 +18,8 @@
      - Two-dimensional grid representing Primary Functions (Rows) $\times$ Secondary Functions (Columns).
      - Dynamically generated headers and cells based on catalog data.
      - Cell states: Empty (no recipe), Undiscovered, Partially Discovered, Fully Mastered.
+     - Both axes use the same seven canonical pharmacological effects. `PotionEffectMatrix` owns all 49 directed combinations; reversing row and column produces a different stable effect ID and display name.
+     - A bottled pure-color potion unlocks its diagonal cell. A retained secondary color unlocks the exact ordered cell. High-purity purification remains a special recipe attached to the blue diagonal instead of becoming an eighth color.
 
 2. **Strict Data-Driven Architecture**:
    - UI scripts do not hardcode band names, function branches, recipe names, or matrix coordinates.
@@ -25,8 +27,8 @@
      - `PotionSpectrumCatalog`: Master collection resource containing bands, functions, recipes, and matrix headers.
      - `PotionSpectrumBand`: Spectral band definition (id, color, order, spectrum_min, spectrum_max, primary_effect_name, description).
      - `PotionFunctionDefinition`: Function branch under a band (id, band_id, display_name, description, primary_tag, secondary_tag, sort_index, spectrum_position, matrix_row, matrix_col).
-     - `PotionRecipeDefinition`: Special/standard recipe definition (id, function_id, display_name, description, primary_tag, secondary_tag, matrix_row, matrix_col, is_special, unlock_hint, icon).
-     - `PotionSpectrumUnlockState`: Player unlock progress tracker (unlocked_function_ids, unlocked_recipe_ids, unlocked_matrix_cells).
+     - `PotionRecipeDefinition`: Special/standard recipe definition. Craftable entries additionally declare `produced_potion_id`, `unlock_on_brew`, and `registers_for_throwing`.
+     - `PotionSpectrumUnlockState`: UI-facing tracker synchronized with the persistent codex arrays in `PlayerData`.
 
 3. **Detail Inspector Panel**:
    - Displays real-time details when selecting any Band, Function Branch, Recipe Node, or Matrix Cell.
@@ -45,7 +47,12 @@
    - **`SpectrumFrame` (加工界面)**: Shows the current powder's spectral effect based on unlock progress.
      - If unlocked: Displays the band's primary effect (e.g. `当前色值 0.050 · 功效：止血、循环`).
      - If not yet unlocked: Displays `当前色值 0.050 · 未知功效`.
-   - Dynamic synchronization: When a new potion is bottled and unlocked via `_unlock_codex_for_brew`, `PotionSpectrumUnlockState.state_changed` immediately updates both analyzer and production frame labels.
+   - Dynamic synchronization: successful bottling resolves the one recipe whose `produced_potion_id` exactly matches the result. It unlocks that recipe, its function and matrix cell, then immediately refreshes both analyzer and production labels. Spectrum proximity never unlocks a different recipe, and black/burned results unlock nothing.
+
+6. **Craftable combat recipes and persistence**:
+   - The catalog retains its original 15 advanced entries and adds one craftable entry for each of the seven colours plus high-purity purification.
+   - `PlayerData` persists codex function, recipe and matrix progress together with `throwable_potion_ids`. A newly bottled combat recipe becomes a backpack loadout candidate but is never auto-equipped.
+   - Springburst is recorded as `recipe_cyan_springburst` when the commission enters the story inventory. Its throwable registration remains locked until `springburst_throwable_unlocked` is set after the Tide Eye battle.
 
 ## Public API
 

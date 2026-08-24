@@ -7,11 +7,12 @@
 script = ExtResource("1")
 id = &"blue_potion"
 numeric_id = 6
-display_name = "湛蓝魔力药水"
+display_name = "湛蓝净化药水"
 color_name = "蓝"
 color_family = &"blue"
 display_color = Color(0.17, 0.37, 0.9, 1)
 main_effect_id = &"mana"
+combat_effect_ids = Array[StringName]([&"purify", &"mana"])
 effect_tags = Array[StringName]([&"purify", &"detox", &"curse_remove", &"magic_cleanse"])
 legacy_aliases = Array[StringName]([&"mana", &"magic_restore", &"legacy_freeze"])
 spectrum_center_x = 0.75

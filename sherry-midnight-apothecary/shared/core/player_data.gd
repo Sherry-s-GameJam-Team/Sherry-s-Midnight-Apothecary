@@ -4,10 +4,23 @@ extends Resource
 signal health_changed(current_health: int, maximum_health: int)
 signal health_depleted
 
-const SAVE_VERSION := 11
+const SAVE_VERSION := 13
 const DEFAULT_POTION_SLOT_COUNT := 3
 const MAX_POTION_SLOT_COUNT := 8
 const DEFAULT_EQUIPPED_POTIONS: Array[StringName] = [&"", &"", &""]
+const DEFAULT_CODEX_FUNCTION_IDS: Array[StringName] = [&"func_hemostasis", &"func_tissue_repair", &"func_cooling"]
+const DEFAULT_CODEX_RECIPE_IDS: Array[StringName] = [&"recipe_blood_stop_paste", &"recipe_moss_balm"]
+const DEFAULT_CODEX_MATRIX_CELLS: Array[Vector2i] = [Vector2i(0, 0), Vector2i(3, 0)]
+const BASE_RECIPE_BY_POTION: Dictionary = {
+	&"red_potion": &"recipe_red_pressure_pulse",
+	&"orange_potion": &"recipe_orange_activation_draft",
+	&"yellow_potion": &"recipe_yellow_impact_buffer",
+	&"green_potion": &"recipe_green_regrowth_tonic",
+	&"cyan_potion": &"recipe_cyan_springburst",
+	&"blue_potion": &"recipe_blue_cleanse",
+	&"purple_potion": &"recipe_purple_calm_mist",
+	&"purification_potion": &"recipe_purification_dew",
+}
 
 var max_health := 100
 var health := 100
@@ -21,6 +34,10 @@ var potion_slot_count := DEFAULT_POTION_SLOT_COUNT
 var equipped_potion_ids: Array[StringName] = DEFAULT_EQUIPPED_POTIONS.duplicate()
 var selected_potion_slot := 0
 var potion_throw_orders: Dictionary = {}
+var codex_unlocked_function_ids: Array[StringName] = DEFAULT_CODEX_FUNCTION_IDS.duplicate()
+var codex_unlocked_recipe_ids: Array[StringName] = DEFAULT_CODEX_RECIPE_IDS.duplicate()
+var codex_unlocked_matrix_cells: Array[Vector2i] = DEFAULT_CODEX_MATRIX_CELLS.duplicate()
+var throwable_potion_ids: Array[StringName] = []
 var upgrades: Array[StringName] = []
 var unlocked_levels: Array[StringName] = [&"market", &"grassland"]
 ## The destination selected at Home's Transformer. The exterior door consumes it.
@@ -47,6 +64,10 @@ func reset() -> void:
 	equipped_potion_ids = DEFAULT_EQUIPPED_POTIONS.duplicate()
 	selected_potion_slot = 0
 	potion_throw_orders = {}
+	codex_unlocked_function_ids = DEFAULT_CODEX_FUNCTION_IDS.duplicate()
+	codex_unlocked_recipe_ids = DEFAULT_CODEX_RECIPE_IDS.duplicate()
+	codex_unlocked_matrix_cells = DEFAULT_CODEX_MATRIX_CELLS.duplicate()
+	throwable_potion_ids = []
 	upgrades = []
 	unlocked_levels = [&"market", &"grassland"]
 	active_home_destination_id = &"market"
@@ -120,6 +141,10 @@ func restore_from_save_data(data: Dictionary) -> void:
 	equipped_potion_ids = restored.equipped_potion_ids.duplicate()
 	selected_potion_slot = restored.selected_potion_slot
 	potion_throw_orders = restored.potion_throw_orders.duplicate(true)
+	codex_unlocked_function_ids = restored.codex_unlocked_function_ids.duplicate()
+	codex_unlocked_recipe_ids = restored.codex_unlocked_recipe_ids.duplicate()
+	codex_unlocked_matrix_cells = restored.codex_unlocked_matrix_cells.duplicate()
+	throwable_potion_ids = restored.throwable_potion_ids.duplicate()
 	upgrades = restored.upgrades.duplicate()
 	unlocked_levels = restored.unlocked_levels.duplicate()
 	active_home_destination_id = restored.active_home_destination_id
@@ -195,6 +220,8 @@ func apply_night_result(result: NightResult) -> void:
 	store_reputation = clampi(store_reputation + result.reputation_delta, 0, 100)
 	_subtract_counts(inventory, result.spent_ingredients)
 	_append_potions(potions, result.produced_potions)
+	for potion_key: Variant in result.produced_potions:
+		_register_brewed_potion_type(StringName(str(potion_key)))
 	_remove_potions(potions, result.sold_potions)
 	_cleanup_potion_configuration()
 
@@ -211,6 +238,7 @@ func add_brewed_potion(instance: Dictionary) -> void:
 		existing.append(normalized)
 	potions[potion_id] = existing
 	_rebuild_default_throw_order(potion_id)
+	_register_brewed_potion_type(potion_id)
 
 
 func to_save_data() -> Dictionary:
@@ -228,6 +256,10 @@ func to_save_data() -> Dictionary:
 		"equipped_potion_ids": equipped_potion_ids.map(func(value: StringName) -> String: return str(value)),
 		"selected_potion_slot": selected_potion_slot,
 		"potion_throw_orders": _serialize_throw_orders(potion_throw_orders),
+		"codex_unlocked_function_ids": codex_unlocked_function_ids.map(func(value: StringName) -> String: return str(value)),
+		"codex_unlocked_recipe_ids": codex_unlocked_recipe_ids.map(func(value: StringName) -> String: return str(value)),
+		"codex_unlocked_matrix_cells": codex_unlocked_matrix_cells.map(func(value: Vector2i) -> Array: return [value.x, value.y]),
+		"throwable_potion_ids": throwable_potion_ids.map(func(value: StringName) -> String: return str(value)),
 		"upgrades": upgrades.map(func(value: StringName) -> String: return str(value)),
 		"unlocked_levels": unlocked_levels.map(func(value: StringName) -> String: return str(value)),
 		"active_home_destination_id": str(active_home_destination_id),
@@ -253,6 +285,10 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.equipped_potion_ids = _string_name_array(data.get("equipped_potion_ids", DEFAULT_EQUIPPED_POTIONS))
 	result.selected_potion_slot = clampi(int(data.get("selected_potion_slot", 0)), 0, result.potion_slot_count - 1)
 	result.potion_throw_orders = _normalize_throw_orders(data.get("potion_throw_orders", {}))
+	result.codex_unlocked_function_ids = _string_name_array(data.get("codex_unlocked_function_ids", DEFAULT_CODEX_FUNCTION_IDS))
+	result.codex_unlocked_recipe_ids = _string_name_array(data.get("codex_unlocked_recipe_ids", DEFAULT_CODEX_RECIPE_IDS))
+	result.codex_unlocked_matrix_cells = _vector2i_array(data.get("codex_unlocked_matrix_cells", DEFAULT_CODEX_MATRIX_CELLS))
+	result.throwable_potion_ids = _string_name_array(data.get("throwable_potion_ids", []))
 	result.upgrades = _string_name_array(data.get("upgrades", []))
 	result.unlocked_levels = _string_name_array(data.get("unlocked_levels", [&"market", &"grassland"]))
 	if result.unlocked_levels.is_empty():
@@ -265,6 +301,8 @@ static func from_save_data(data: Dictionary) -> PlayerData:
 	result.customer_states = _customer_state_dictionary(data.get("customer_states", {}))
 	result.event_flags = _bool_dictionary(data.get("event_flags", {}))
 	result.active_daily_task = _daily_task_dictionary(data.get("active_daily_task", {}))
+	if saved_version < SAVE_VERSION:
+		result._migrate_legacy_potion_unlocks()
 	result._cleanup_potion_configuration()
 	return result
 
@@ -276,7 +314,7 @@ func unlock_potion_slot(amount: int = 1) -> void:
 
 
 func equip_potion(slot_index: int, potion_id: StringName) -> bool:
-	if slot_index < 0 or slot_index >= potion_slot_count or potion_id == &"" or potion_id == &"black_potion":
+	if slot_index < 0 or slot_index >= potion_slot_count or potion_id == &"" or potion_id == &"black_potion" or not is_potion_throwable_unlocked(potion_id):
 		return false
 	for index in range(equipped_potion_ids.size()):
 		if index != slot_index and equipped_potion_ids[index] == potion_id:
@@ -288,7 +326,7 @@ func equip_potion(slot_index: int, potion_id: StringName) -> bool:
 
 
 func move_equip_potion(slot_index: int, potion_id: StringName) -> bool:
-	if slot_index < 0 or slot_index >= potion_slot_count or potion_id == &"" or potion_id == &"black_potion":
+	if slot_index < 0 or slot_index >= potion_slot_count or potion_id == &"" or potion_id == &"black_potion" or not is_potion_throwable_unlocked(potion_id):
 		return false
 	while equipped_potion_ids.size() < potion_slot_count:
 		equipped_potion_ids.append(&"")
@@ -307,6 +345,50 @@ func unequip_potion(slot_index: int) -> void:
 func select_potion_slot(slot_index: int) -> void:
 	if slot_index >= 0 and slot_index < potion_slot_count:
 		selected_potion_slot = slot_index
+
+
+func unlock_potion_recipe(recipe_id: StringName) -> bool:
+	if recipe_id == &"" or codex_unlocked_recipe_ids.has(recipe_id):
+		return false
+	codex_unlocked_recipe_ids.append(recipe_id)
+	return true
+
+
+func unlock_codex_function(function_id: StringName) -> bool:
+	if function_id == &"" or codex_unlocked_function_ids.has(function_id):
+		return false
+	codex_unlocked_function_ids.append(function_id)
+	return true
+
+
+func unlock_codex_matrix_cell(cell: Vector2i) -> bool:
+	if codex_unlocked_matrix_cells.has(cell):
+		return false
+	codex_unlocked_matrix_cells.append(cell)
+	return true
+
+
+func unlock_throwable_potion(potion_id: StringName) -> bool:
+	if potion_id == &"" or potion_id == &"black_potion" or throwable_potion_ids.has(potion_id):
+		return false
+	throwable_potion_ids.append(potion_id)
+	return true
+
+
+func is_potion_recipe_unlocked(recipe_id: StringName) -> bool:
+	return recipe_id != &"" and codex_unlocked_recipe_ids.has(recipe_id)
+
+
+func is_potion_throwable_unlocked(potion_id: StringName) -> bool:
+	return potion_id != &"" and throwable_potion_ids.has(potion_id)
+
+
+func _register_brewed_potion_type(potion_id: StringName) -> void:
+	var recipe_id: StringName = BASE_RECIPE_BY_POTION.get(potion_id, &"")
+	if recipe_id != &"":
+		unlock_potion_recipe(recipe_id)
+	if potion_id != &"cyan_potion" or has_event_flag(&"springburst_throwable_unlocked"):
+		unlock_throwable_potion(potion_id)
 
 
 ## Dialogue Manager game-state query: number of non-empty bottles owned.
@@ -558,6 +640,8 @@ func _cleanup_potion_configuration() -> void:
 	for index in range(equipped_potion_ids.size()):
 		if equipped_potion_ids[index] == &"black_potion":
 			equipped_potion_ids[index] = &""
+		elif equipped_potion_ids[index] != &"" and not is_potion_throwable_unlocked(equipped_potion_ids[index]):
+			equipped_potion_ids[index] = &""
 		elif equipped_potion_ids[index] != &"":
 			if equipped_once.has(equipped_potion_ids[index]):
 				equipped_potion_ids[index] = &""
@@ -569,6 +653,21 @@ func _cleanup_potion_configuration() -> void:
 			potion_throw_orders.erase(ordered_potion_key)
 	for potion_key: Variant in potions:
 		_rebuild_default_throw_order(StringName(str(potion_key)))
+
+
+func _migrate_legacy_potion_unlocks() -> void:
+	var legacy_ids: Array[StringName] = []
+	for potion_key: Variant in potions:
+		legacy_ids.append(StringName(str(potion_key)))
+	for potion_id: StringName in equipped_potion_ids:
+		if potion_id != &"" and not legacy_ids.has(potion_id):
+			legacy_ids.append(potion_id)
+	for potion_id: StringName in legacy_ids:
+		var recipe_id: StringName = BASE_RECIPE_BY_POTION.get(potion_id, &"")
+		if recipe_id != &"":
+			unlock_potion_recipe(recipe_id)
+		if potion_id != &"cyan_potion" or has_event_flag(&"springburst_throwable_unlocked"):
+			unlock_throwable_potion(potion_id)
 
 
 func _rebuild_default_throw_order(potion_id: StringName) -> void:
@@ -602,6 +701,22 @@ static func _string_name_array(value: Variant) -> Array[StringName]:
 	if value is Array:
 		for item: Variant in value:
 			result.append(StringName(str(item)))
+	return result
+
+
+static func _vector2i_array(value: Variant) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+	if value is Array:
+		for entry: Variant in value:
+			var cell := Vector2i.ZERO
+			if entry is Vector2i:
+				cell = entry
+			elif entry is Array and (entry as Array).size() >= 2:
+				cell = Vector2i(int((entry as Array)[0]), int((entry as Array)[1]))
+			else:
+				continue
+			if not result.has(cell):
+				result.append(cell)
 	return result
 
 

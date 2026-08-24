@@ -503,8 +503,11 @@ func play_hazard_hit(knockback: Vector2) -> void:
 	_is_rolling = false
 	if knockback.y < 0.0:
 		_is_airborne = true
-	velocity = knockback
-	_horizontal_velocity = knockback.x
+	var adjusted_knockback := knockback
+	if Time.get_ticks_msec() <= int(get_meta("potion_buffer_until_ms", 0)):
+		adjusted_knockback *= 1.0 - clampf(float(get_meta("potion_buffer_knockback_reduction", 0.0)), 0.0, 1.0)
+	velocity = adjusted_knockback
+	_horizontal_velocity = adjusted_knockback.x
 	_transition_target = "idle"
 	_play("hit")
 
@@ -574,10 +577,24 @@ func apply_potion_effect(effect_id: StringName, context: Dictionary) -> void:
 			set_meta("potion_shield", float(get_meta("potion_shield", 0.0)) + amount)
 			set_meta("potion_shield_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))
 		&"mana": set_meta("potion_mana", float(get_meta("potion_mana", 0.0)) + amount)
+		&"buffer":
+			set_meta("potion_buffer_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))
+			set_meta("potion_buffer_damage_reduction", float(context.get("damage_reduction", 0.35)))
+			set_meta("potion_buffer_knockback_reduction", float(context.get("knockback_reduction", 0.60)))
 		&"concealment": set_meta("potion_concealed_until_ms", Time.get_ticks_msec() + roundi(float(context.get("duration", 0.0)) * 1000.0))
 		&"purify":
 			remove_meta("corrupted")
 			remove_meta("negative_statuses")
+
+
+func modify_incoming_potion_damage(amount: int) -> int:
+	var remaining := float(maxi(amount, 0))
+	if Time.get_ticks_msec() <= int(get_meta("potion_buffer_until_ms", 0)):
+		remaining *= 1.0 - clampf(float(get_meta("potion_buffer_damage_reduction", 0.0)), 0.0, 1.0)
+	var shield := _active_shield()
+	var absorbed := minf(shield, remaining)
+	set_meta("potion_shield", shield - absorbed)
+	return maxi(roundi(remaining - absorbed), 0)
 
 
 func _active_speed_multiplier() -> float:

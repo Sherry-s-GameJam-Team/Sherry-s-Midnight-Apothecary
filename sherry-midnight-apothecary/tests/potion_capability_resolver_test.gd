@@ -1,8 +1,12 @@
 extends RefCounted
 
 const RED := preload("res://shared/definitions/data/potions/red_potion.tres")
+const ORANGE := preload("res://shared/definitions/data/potions/orange_potion.tres")
+const YELLOW := preload("res://shared/definitions/data/potions/yellow_potion.tres")
+const GREEN := preload("res://shared/definitions/data/potions/green_potion.tres")
 const BLUE := preload("res://shared/definitions/data/potions/blue_potion.tres")
 const CYAN := preload("res://shared/definitions/data/potions/cyan_potion.tres")
+const PURPLE := preload("res://shared/definitions/data/potions/purple_potion.tres")
 const PURIFICATION := preload("res://shared/definitions/data/potions/purification_potion.tres")
 
 
@@ -17,3 +21,10 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(PURIFICATION.numeric_id, 8, "High-purity purification preserves numeric ID 8.")
 	test.expect(not PotionCapabilityResolver.has_capability(BLUE, &"purify_strong"), "Ordinary blue purification cannot satisfy strong-purification gates.")
 	test.expect(PotionCapabilityResolver.hit_has_capability({"potion_id": &"blue_ice_potion"}, &"freeze"), "Legacy ID-only direct-hit callers remain compatible.")
+	test.expect_equal(RED.combat_effect_ids, [&"attack"], "Red dispatches pressure-impact combat damage.")
+	test.expect_equal(ORANGE.combat_effect_ids, [&"speed"], "Orange dispatches activation speed.")
+	test.expect_equal(YELLOW.combat_effect_ids, [&"buffer", &"lightning_meteor"], "Yellow applies lore buffer while retaining legacy impact discharge.")
+	test.expect_equal(GREEN.combat_effect_ids, [&"healing"], "Green dispatches restorative healing.")
+	test.expect_equal(CYAN.combat_effect_ids, [&"shield"], "Cyan dispatches its stability shield.")
+	test.expect_equal(BLUE.combat_effect_ids, [&"purify", &"mana"], "Blue purifies while retaining derived mana restoration.")
+	test.expect_equal(PURPLE.combat_effect_ids, [&"calm", &"concealment"], "Purple calms hostiles and lowers friendly perceptibility.")

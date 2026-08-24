@@ -8,6 +8,7 @@ extends Resource
 @export_range(0.0, 500.0, 1.0) var healing_amount := 28.0
 @export_range(0.0, 500.0, 1.0) var shield_amount := 32.0
 @export_range(0.0, 500.0, 1.0) var mana_amount := 25.0
+@export_range(0.0, 1.0, 0.05) var buffer_damage_reduction := 0.35
+@export_range(0.0, 1.0, 0.05) var buffer_knockback_reduction := 0.60
 @export_range(0.1, 30.0, 0.1) var base_status_duration := 4.0
 @export_flags_2d_physics var effect_collision_mask := 0xffffffff
-

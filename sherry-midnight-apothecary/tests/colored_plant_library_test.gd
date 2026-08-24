@@ -66,5 +66,23 @@ static func run(test: TestSupport) -> void:
 				test.expect(piece.spectrum_x >= 0.8571 and piece.spectrum_x <= 1.0, "%s stays inside the purple band." % piece.id)
 	for ingredient_id: StringName in EXPECTED_COLORS:
 		test.expect(seen_ids.has(ingredient_id), "Colored plant is registered in AlchemyRuntime: %s" % ingredient_id)
+		var herb_scene_path := "res://day/interactables/herb/herbs/%s/%s_herb.tscn" % [ingredient_id, ingredient_id]
+		test.expect(ResourceLoader.exists(herb_scene_path), "Colored plant has an independently instantiable field scene: %s" % ingredient_id)
 	test.expect_equal(total_piece_count, 58, "All supplied colored plant parts are registered for production.")
+	var level_ingredient_expectations := {
+		"res://day/levels/golden_cliff/golden_cliff_level.tres": [&"drop_cliff_whistle_leaf", &"eyrie_nest_seed_ball", &"wind_cutter_rye", &"egg_climbers_honey_pot"],
+		"res://day/levels/lake_bottom/lake_bottom_level.tres": [&"returning_tide_thorn_fern", &"tideplate_lotus", &"tide_lantern_flower"],
+		"res://day/levels/Crimson Vale/crimson_vale_level.tres": [&"maple_heart_dark_vein", &"maple_marrow_star_crystal", &"waystation_lantern_fruit"],
+		"res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres": [&"sun_etched_flower", &"hanging_lantern_bell_cap", &"morning_wheel_crystal_crown"],
+		"res://day/levels/Vespervale/vespervale_garden_level.tres": [&"dusk_water_opuntia", &"vesper_blue_thicket"],
+		"res://day/levels/Vespervale/vespervale_inner_level.tres": [&"stagnant_breeze_bell_vine", &"slumber_marrow_geode"],
+		"res://day/levels/cliff/cliff_level.tres": [&"tundra_snow_whisk"],
+		"res://day/levels/lake/lake_cliff_underwater_level.tres": [&"chalice_ice_spire"],
+	}
+	for level_path: String in level_ingredient_expectations:
+		var level := load(level_path) as LevelData
+		test.expect(level != null, "Plant-bearing level definition loads: %s" % level_path)
+		if level != null:
+			for ingredient_id: StringName in level_ingredient_expectations[level_path]:
+				test.expect(level.native_ingredient_ids.has(ingredient_id), "Level advertises its fixed native plant: %s" % ingredient_id)
 	runtime.free()

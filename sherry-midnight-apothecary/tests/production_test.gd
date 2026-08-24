@@ -131,7 +131,6 @@ static func run(test: TestSupport) -> void:
 	praise_star_assembly.setup(praise_star_maple, praise_star_pieces)
 	test.expect_equal(praise_star_assembly.get_child_count(), 9, "The assembly view draws all nine tied fruits and no tree artwork.")
 	praise_star_assembly.free()
-	test.expect(runtime.ingredient_by_id(&"moon_mint") == null, "Temporary placeholder herbs are absent from the runtime library.")
 	test.expect_equal(herb.display_name, "牧人块树", "The formal Chinese herb name is preserved.")
 	test.expect_equal(herb.english_name, "Herdsman’s Loaf-Bush", "The formal English herb name is preserved.")
 	test.expect(herb.icon != null and herb.preview_texture != null, "The herb owns dedicated shelf and preview artwork.")

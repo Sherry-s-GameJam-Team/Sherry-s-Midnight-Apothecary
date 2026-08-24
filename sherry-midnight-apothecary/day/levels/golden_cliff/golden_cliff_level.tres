@@ -14,4 +14,4 @@ scene_description = "校准三座失控衡石机关，穿过崩塌与浮岩区�
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
 show_title_card = true
-native_ingredient_ids = Array[StringName]([])
+native_ingredient_ids = Array[StringName]([&"drop_cliff_whistle_leaf", &"eyrie_nest_seed_ball", &"wind_cutter_rye", &"egg_climbers_honey_pot"])

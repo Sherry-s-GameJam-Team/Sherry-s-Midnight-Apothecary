@@ -7,11 +7,12 @@
 script = ExtResource("1")
 id = &"yellow_potion"
 numeric_id = 3
-display_name = "雷击与星陨之药"
+display_name = "炽黄缓冲药水"
 color_name = "黄"
 color_family = &"yellow"
 display_color = Color(0.95, 0.79, 0.12, 1)
 main_effect_id = &"lightning_meteor"
+combat_effect_ids = Array[StringName]([&"buffer", &"lightning_meteor"])
 effect_tags = Array[StringName]([&"buffer", &"pain_relief", &"impact_resist", &"stagger_resist"])
 legacy_aliases = Array[StringName]([&"lightning_meteor", &"impact_discharge"])
 spectrum_center_x = 0.3

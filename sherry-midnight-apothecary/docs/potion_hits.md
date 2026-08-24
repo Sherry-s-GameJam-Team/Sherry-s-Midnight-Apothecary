@@ -25,4 +25,6 @@ func receive_potion_hit(hit: Dictionary) -> void:
 
 Direct collision is distinct from the splash effect: the existing `PotionEffectExecutor` still performs its circular `effect_radius` query and calls `apply_potion_effect(effect_id, context)` for compatible targets. An enemy that needs both direct impact and area effects can implement both methods.
 
+The splash executor dispatches every entry in `PotionData.combat_effect_ids` and includes the source `potion` plus its formal `capabilities` in the effect context. Friendly-only effects are filtered from hostile receivers, while purple `calm` targets hostiles. The loadout UI and `PotionThrower` both require `PlayerData.is_potion_throwable_unlocked(potion_id)`; owned but unregistered bottles remain visible in the backpack with “配方尚未登记，无法装填”.
+
 For an enemy to receive direct hits, ensure its physics body's collision layer overlaps `PotionThrowTuning.projectile_collision_mask` (currently layer 1 by default). The projectile itself has collision layer 0, so it does not act as an obstacle for other bodies.

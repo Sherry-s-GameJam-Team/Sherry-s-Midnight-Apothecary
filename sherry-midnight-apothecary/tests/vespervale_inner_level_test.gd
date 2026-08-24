@@ -28,6 +28,22 @@ static func run(test: TestSupport) -> void:
 
 	test.expect(level is DayLevelEnvironment, "Inner root inherits from DayLevelEnvironment.")
 	test.expect(level is VespervaleInnerLevel, "Inner root is VespervaleInnerLevel.")
+	var inner_level := level as VespervaleInnerLevel
+	test.expect(inner_level.entry_dialogue != null, "Inner has its from-garden entry dialogue resource.")
+	if inner_level.entry_dialogue != null:
+		test.expect_equal(inner_level.entry_dialogue.resource_path, "res://day/levels/Vespervale/vespervale_inner_entry.dialogue", "Inner uses the authored hospital entry dialogue.")
+	test.expect(VespervaleInnerLevel.should_play_entry_dialogue(&"from_garden", null), "Entering through ChurchPortal offers the hospital dialogue.")
+	test.expect(not VespervaleInnerLevel.should_play_entry_dialogue(&"default", null), "Other entry points do not play the ChurchPortal dialogue.")
+	var completed_entry_data := PlayerData.new()
+	completed_entry_data.set_event_flag(VespervaleInnerLevel.ENTRY_DIALOGUE_COMPLETE_FLAG)
+	test.expect(not VespervaleInnerLevel.should_play_entry_dialogue(&"from_garden", completed_entry_data), "The hospital entry dialogue does not repeat after completion.")
+
+	var entry_dialogue_source := FileAccess.get_file_as_string("res://day/levels/Vespervale/vespervale_inner_entry.dialogue")
+	test.expect(entry_dialogue_source.contains("卢卡？你听得到吗？"), "Entry dialogue begins with Sherry calling Luca.")
+	test.expect(entry_dialogue_source.contains("一楼和二楼仍然上下对应"), "Entry dialogue explains the separated hospital floors.")
+	test.expect(entry_dialogue_source.contains("病床之间的帘子可以藏身"), "Entry dialogue teaches Luca's curtain hiding rule.")
+	test.expect(entry_dialogue_source.contains("这里的问题恐怕不是门锁，而是空间本身"), "Entry dialogue ends with the spatial mystery objective.")
+	test.expect(entry_dialogue_source.contains("# [远处传来提灯轻轻碰撞的声音。]"), "The lantern cue remains a stage direction instead of spoken text.")
 
 	var player: CharacterBody2D = level.get_node_or_null("Player") as CharacterBody2D
 	test.expect(player != null, "Vespervale Inner contains Player (Sherry).")

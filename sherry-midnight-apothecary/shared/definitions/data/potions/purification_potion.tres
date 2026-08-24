@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="PotionData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://bgmnsf3kecdoc"]
 
-[ext_resource type="Script" path="res://shared/definitions/potion_data.gd" id="1"]
+[ext_resource type="Script" uid="uid://hqa1qlsr7gos" path="res://shared/definitions/potion_data.gd" id="1"]
 [ext_resource type="Resource" path="res://night/alchemy/heat/profiles/dew_purification.tres" id="2"]
 
 [resource]
@@ -12,8 +12,8 @@ color_name = "露蓝"
 color_family = &"blue"
 display_color = Color(0.18, 0.65, 0.93, 1)
 main_effect_id = &"purify"
+combat_effect_ids = Array[StringName]([&"purify"])
 effect_tags = Array[StringName]([&"purify", &"purify_strong", &"anti_corruption", &"black_magic_break"])
 spectrum_center_x = 0.72
-effect_ranges = Array[Vector2]([])
 base_price = 25
 heat_profile = ExtResource("2")

@@ -243,8 +243,16 @@ func get_waste_detection_rect() -> Rect2:
 	return _expanded_rect(get_global_control_rect(waste_zone), waste_detection_margin)
 
 
+func get_waste_rect() -> Rect2:
+	return get_waste_detection_rect()
+
+
 func get_grind_detection_rect() -> Rect2:
 	return _expanded_rect(get_global_control_rect(grind_zone), grind_detection_margin)
+
+
+func get_grind_rect() -> Rect2:
+	return get_grind_detection_rect()
 
 
 func get_movement_rect() -> Rect2:

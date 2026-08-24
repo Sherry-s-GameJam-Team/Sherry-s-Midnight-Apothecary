@@ -13,3 +13,4 @@ corrupted_description = "群晶失序，共鸣化作撕裂山脊的震波。"
 scene_description = "让三座失控共鸣晶柱归静，并在断崖尽头稳定鸣晶核心。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
+native_ingredient_ids = Array[StringName]([&"tundra_snow_whisk"])

@@ -77,7 +77,7 @@ func open_for(source_potion: PotionData, source_instance: Dictionary) -> void:
 	if quality_label:
 		quality_label.text = "❖ 品质评级：%s (%.2f)" % [_quality_name(quality_val), quality_val]
 
-	var main_desc := PotionEffectText.describe(potion.main_effect_id) if potion else "无稳定药效"
+	var main_desc := PotionEffectText.describe_potion(potion)
 	if main_effect_label:
 		main_effect_label.text = "❖ 主效果：%s" % main_desc
 

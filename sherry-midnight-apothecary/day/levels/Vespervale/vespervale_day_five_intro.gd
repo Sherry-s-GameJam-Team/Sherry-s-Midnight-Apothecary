@@ -29,7 +29,8 @@ enum Stage {
 @onready var _walk_start := get_node_or_null("walkstart") as Marker2D
 @onready var _walk_end := get_node_or_null("walkend") as Marker2D
 @onready var _serena := get_node_or_null("SerenaIllusion") as Sprite2D
-@onready var _luca_proxy := get_node_or_null("LucaProxy") as Sprite2D
+@onready var _luca := get_node_or_null("../Luca") as LucaPlayer
+@onready var _luca_follow := get_node_or_null("../LucaFollow") as VespervaleLucaFollow
 
 var _stage := Stage.INACTIVE
 var _bridge_trigger_x := 0.0
@@ -44,9 +45,14 @@ func _ready() -> void:
 		DialoguePortraitDatabase.register_portrait("Serena", "default", serena_portrait)
 	if _serena != null:
 		_serena.visible = false
-	if _luca_proxy != null:
-		_luca_proxy.visible = false
 	var active := should_present(_current_day(), _player_data())
+	var follow_after_completed := should_follow(_current_day(), _player_data())
+	if _luca != null:
+		_luca.visible = follow_after_completed
+		_luca.input_enabled = false
+		_luca.stop_moving()
+	if _luca_follow != null:
+		_luca_follow.set_follow_enabled(follow_after_completed)
 	visible = active
 	_stage = Stage.READY if active else Stage.INACTIVE
 	set_physics_process(active)
@@ -155,9 +161,10 @@ func _show_serena_illusion() -> void:
 func _play_luca_pull() -> void:
 	if _player == null:
 		return
-	if _luca_proxy != null:
-		_luca_proxy.visible = true
-		_luca_proxy.global_position = _player.global_position + Vector2(-75.0, 18.0)
+	if _luca != null:
+		_luca.visible = true
+		_luca.global_position = _player.global_position + Vector2(-75.0, 18.0)
+		_luca.stop_moving()
 	var pull_target := _player.global_position.x - 65.0
 	create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).tween_property(_player, "global_position:x", pull_target, 0.28)
 	_distort_serena_illusion()
@@ -190,6 +197,11 @@ func _finish_event() -> void:
 		_player.call("set_horizontal_input_bounds", -1.0, 1.0)
 		_player.call("set_dialogue_locked", false)
 		_player.call("set_potion_action_locked", false)
+	if _luca != null:
+		_luca.visible = true
+		_luca.stop_moving()
+	if _luca_follow != null:
+		_luca_follow.set_follow_enabled(true)
 	_set_portals_enabled(true)
 	var data := _player_data()
 	if data != null:
@@ -238,3 +250,7 @@ func _find_top_hint() -> TopHintUI:
 
 static func should_present(current_day: int, player_data: PlayerData) -> bool:
 	return current_day == REQUIRED_DAY and (player_data == null or not player_data.has_event_flag(COMPLETE_FLAG))
+
+
+static func should_follow(current_day: int, player_data: PlayerData) -> bool:
+	return current_day == REQUIRED_DAY and player_data != null and player_data.has_event_flag(COMPLETE_FLAG)

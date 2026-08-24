@@ -26,6 +26,7 @@
 [ext_resource type="Resource" path="res://night/alchemy/heat/profiles/default_heat_profile.tres" id="34_default_heat"]
 [ext_resource type="PackedScene" path="res://night/alchemy/bottling_panel.tscn" id="35_bottling"]
 [ext_resource type="PackedScene" path="res://night/ui/spectrum_codex/scenes/spectrum_codex_panel.tscn" id="36_codex"]
+[ext_resource type="PackedScene" path="res://night/alchemy/tutorial/alchemy_tutorial_guide.tscn" id="37_guide"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/chalice_ice_spire.tres" id="40_chalice"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tundra_snow_whisk.tres" id="41_tundra"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/vesper_blue_thicket.tres" id="42_vesper"]
@@ -117,3 +118,9 @@ layout_mode = 1
 anchors_preset = 15
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AlchemyTutorialGuide" parent="." instance=ExtResource("37_guide")]
+unique_name_in_owner = true
+z_index = 150
+layout_mode = 1
+

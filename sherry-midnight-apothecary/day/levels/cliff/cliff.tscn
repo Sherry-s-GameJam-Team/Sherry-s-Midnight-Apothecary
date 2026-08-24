@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://cw72e6p7lgeja"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/tundra_snow_whisk/tundra_snow_whisk_herb.tscn" id="herb_0"]
+
 [ext_resource type="Script" uid="uid://d1wnb76k3t35p" path="res://day/levels/cliff/scripts/cliff_level.gd" id="1_level"]
 [ext_resource type="Texture2D" uid="uid://be6l7o6d037ky" path="res://day/levels/cliff/art/background/cliff_bg_sky_01.png" id="2_sky"]
 [ext_resource type="Texture2D" uid="uid://cugrogsm6xi6f" path="res://day/levels/cliff/art/background/cliff_bg_cloud_far_01.png" id="3_cloud"]
@@ -498,3 +502,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(920, 480)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

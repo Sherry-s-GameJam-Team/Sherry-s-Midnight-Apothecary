@@ -268,6 +268,10 @@ func _reload_purification_potion() -> void:
 
 
 func _add_tutorial_potion_instance() -> void:
+	_player_data.unlock_potion_recipe(&"recipe_purification_dew")
+	_player_data.unlock_codex_function(&"func_dispel")
+	_player_data.unlock_codex_matrix_cell(Vector2i(5, 6))
+	_player_data.unlock_throwable_potion(TARGET_POTION_ID)
 	var instance := PotionInstanceData.new()
 	instance.potion_id = TARGET_POTION_ID
 	instance.instance_uid = "tutorial-purification-%d" % Time.get_ticks_usec()

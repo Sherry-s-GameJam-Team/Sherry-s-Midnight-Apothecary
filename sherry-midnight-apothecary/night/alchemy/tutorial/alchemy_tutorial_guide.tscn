@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://c6v2n7y4x8m9p"]
+
+[ext_resource type="Script" path="res://night/alchemy/tutorial/alchemy_tutorial_guide.gd" id="1_guide"]
+[ext_resource type="Script" path="res://night/alchemy/tutorial/guide_arrow_visual.gd" id="2_arrow"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.12, 0.10, 0.08, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.72, 0.32, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[node name="AlchemyTutorialGuide" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_guide")
+
+[node name="BannerBox" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 42.0
+offset_right = 300.0
+offset_bottom = 118.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="MarginContainer" type="MarginContainer" parent="BannerBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BannerBox/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="StepTitleLabel" type="Label" parent="BannerBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 15
+text = "第一步：查阅光谱图鉴"
+
+[node name="StepDescLabel" type="RichTextLabel" parent="BannerBox/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.95, 0.93, 0.88, 1)
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "点击[color=#ffd700]上方光谱把手[/color]，查阅【湛蓝净化药水】配方与光谱波段特性。"
+fit_content = true
+scroll_active = false
+
+[node name="ArrowIndicator" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("2_arrow")

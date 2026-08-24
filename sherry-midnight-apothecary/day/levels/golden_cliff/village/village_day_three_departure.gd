@@ -88,7 +88,11 @@ func _set_day_three_world_state() -> void:
 			issues.call("_hide_delivery_hint")
 		if issues.has_method("_hide_rope_hint"):
 			issues.call("_hide_rope_hint")
-	var mew := village.get_node_or_null("issues/issue_Mews") as MewNPC
+	var mew := village.get_node_or_null("CS/issue_Mews") as MewNPC
+	if mew == null:
+		mew = village.get_node_or_null("issues/issue_Mews") as MewNPC
+	if mew == null and village != null:
+		mew = village.find_child("issue_Mews", true, false) as MewNPC
 	if mew != null:
 		mew.set_interaction_enabled(false)
 	var ropes := village.get_node_or_null("CS/rope") as CanvasItem

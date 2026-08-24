@@ -12,3 +12,8 @@ extends Resource
 @export var icon: Texture2D
 @export var is_special: bool = false
 @export var unlock_hint: String = ""
+## Exact bottled result represented by this recipe. Empty IDs are reserved for
+## the existing advanced/flavour recipes that are not craftable yet.
+@export var produced_potion_id: StringName = &""
+@export var unlock_on_brew := false
+@export var registers_for_throwing := false

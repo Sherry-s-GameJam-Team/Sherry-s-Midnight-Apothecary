@@ -14,10 +14,10 @@ const ROPE_REQUIRED := 5
 const ROPE_PICKUP_RANGE := 180.0
 const ROPE_HINT := "按[E]收集纤绳"
 
-@onready var mew: MewNPC = $issue_Mews
-@onready var idle_loop: AnimatedSprite2D = get_node_or_null("../CS/saved/IdleLoop") as AnimatedSprite2D
-@onready var down_marker: Marker2D = $down
-@onready var rope_root: Node2D = get_node_or_null("../CS/rope") as Node2D
+@onready var mew: MewNPC = _resolve_mew()
+@onready var idle_loop: AnimatedSprite2D = _resolve_idle_loop()
+@onready var down_marker: Marker2D = _resolve_down_marker()
+@onready var rope_root: Node2D = _resolve_rope_root()
 
 var _runtime: DayRuntime
 var _player: CharacterBody2D
@@ -28,14 +28,26 @@ var _nearby_rope: Sprite2D
 
 
 func _ready() -> void:
+	if mew == null:
+		mew = _resolve_mew()
+	if idle_loop == null:
+		idle_loop = _resolve_idle_loop()
+	if down_marker == null:
+		down_marker = _resolve_down_marker()
+	if rope_root == null:
+		rope_root = _resolve_rope_root()
+
 	_runtime = _find_runtime()
 	_player = get_tree().get_first_node_in_group("dialogue_lockable") as CharacterBody2D
 	if _player == null:
 		_player = get_tree().root.find_child("Player", true, false) as CharacterBody2D
 	if _runtime == null:
-		visible = false
-		set_process(false)
-		set_process_input(false)
+		visible = true
+		_setup_ropes()
+		if _player != null:
+			_previous_player_x = _player.global_position.x
+		set_process(true)
+		set_process_input(true)
 		return
 	if _runtime.day != REQUIRED_DAY:
 		_deactivate_for_later_day()
@@ -60,21 +72,32 @@ func _deactivate_for_later_day() -> void:
 	set_process_input(false)
 	_hide_delivery_hint()
 	_hide_rope_hint()
+	if mew == null:
+		mew = _resolve_mew()
 	if mew != null:
 		mew.set_interaction_enabled(false)
 
 
 func _process(_delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
-		return
+		_player = get_tree().get_first_node_in_group("dialogue_lockable") as CharacterBody2D
+		if _player == null and is_inside_tree() and get_tree().root != null:
+			_player = get_tree().root.find_child("Player", true, false) as CharacterBody2D
+		if _player == null:
+			return
 	_update_nearby_rope()
-	var current_x := _player.global_position.x
-	if _previous_player_x <= down_marker.global_position.x and current_x > down_marker.global_position.x:
-		_on_crossed_down_from_left()
-	_previous_player_x = current_x
+	if down_marker == null:
+		down_marker = _resolve_down_marker()
+	if down_marker != null:
+		var current_x := _player.global_position.x
+		if _previous_player_x <= down_marker.global_position.x and current_x > down_marker.global_position.x:
+			_on_crossed_down_from_left()
+		_previous_player_x = current_x
 
 
 func _on_crossed_down_from_left() -> void:
+	if down_marker == null:
+		down_marker = _resolve_down_marker()
 	if _has_completed_event():
 		_set_idle_loop_visible(true)
 		_hide_delivery_hint()
@@ -106,8 +129,11 @@ func _has_completed_event() -> bool:
 
 func _setup_ropes() -> void:
 	if rope_root == null:
+		rope_root = _resolve_rope_root()
+	if rope_root == null:
 		push_warning("VillageDayTwoIssue could not resolve CS/rope; rope collection is unavailable in this scene instance.")
 		return
+	_rope_sprites.clear()
 	for child in rope_root.get_children():
 		var rope := child as Sprite2D
 		if rope == null:
@@ -117,6 +143,8 @@ func _setup_ropes() -> void:
 
 
 func _set_idle_loop_visible(visible: bool) -> void:
+	if idle_loop == null:
+		idle_loop = _resolve_idle_loop()
 	if idle_loop != null:
 		idle_loop.visible = visible
 
@@ -246,4 +274,59 @@ func _find_runtime() -> DayRuntime:
 		if current is DayRuntime:
 			return current
 		current = current.get_parent()
+	return null
+
+
+func _resolve_mew() -> MewNPC:
+	if has_node("issue_Mews"):
+		return get_node("issue_Mews") as MewNPC
+	if has_node("Mew"):
+		return get_node("Mew") as MewNPC
+	var scene_root := owner if owner != null else (get_tree().current_scene if is_inside_tree() else get_parent())
+	if scene_root != null:
+		var found := scene_root.find_child("issue_Mews", true, false) as MewNPC
+		if found != null:
+			return found
+		found = scene_root.find_child("Mew", true, false) as MewNPC
+		if found != null:
+			return found
+	return null
+
+
+func _resolve_idle_loop() -> AnimatedSprite2D:
+	if has_node("IdleLoop"):
+		return get_node("IdleLoop") as AnimatedSprite2D
+	var scene_root := owner if owner != null else (get_tree().current_scene if is_inside_tree() else get_parent())
+	if scene_root != null:
+		var found := scene_root.find_child("IdleLoop", true, false) as AnimatedSprite2D
+		if found != null:
+			return found
+	return null
+
+
+func _resolve_down_marker() -> Marker2D:
+	if has_node("down"):
+		return get_node("down") as Marker2D
+	var scene_root := owner if owner != null else (get_tree().current_scene if is_inside_tree() else get_parent())
+	if scene_root != null:
+		var found := scene_root.find_child("down", true, false) as Marker2D
+		if found != null:
+			return found
+	return null
+
+
+func _resolve_rope_root() -> Node2D:
+	if has_node("rope"):
+		return get_node("rope") as Node2D
+	var parent := get_parent()
+	if parent != null:
+		if parent.has_node("CS/rope"):
+			return parent.get_node("CS/rope") as Node2D
+		if parent.has_node("rope"):
+			return parent.get_node("rope") as Node2D
+	var scene_root := owner if owner != null else (get_tree().current_scene if is_inside_tree() else parent)
+	if scene_root != null:
+		var found := scene_root.find_child("rope", true, false) as Node2D
+		if found != null:
+			return found
 	return null

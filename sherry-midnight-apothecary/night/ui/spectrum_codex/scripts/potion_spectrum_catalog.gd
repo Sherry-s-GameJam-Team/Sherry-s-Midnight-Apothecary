@@ -4,6 +4,7 @@ extends Resource
 @export var bands: Array[PotionSpectrumBand] = []
 @export var functions: Array[PotionFunctionDefinition] = []
 @export var recipes: Array[PotionRecipeDefinition] = []
+@export var effect_matrix: PotionEffectMatrix
 @export var matrix_row_labels: Array[String] = []
 @export var matrix_col_labels: Array[String] = []
 
@@ -27,6 +28,25 @@ func get_recipe(recipe_id: StringName) -> PotionRecipeDefinition:
 		if r != null and r.id == recipe_id:
 			return r
 	return null
+
+
+func get_brew_unlock_recipe(potion_id: StringName) -> PotionRecipeDefinition:
+	for recipe in recipes:
+		if recipe != null and recipe.unlock_on_brew and recipe.produced_potion_id == potion_id:
+			return recipe
+	return null
+
+
+func get_effect_combination(primary_effect_id: StringName, secondary_effect_id: StringName = &"") -> PotionEffectCombination:
+	return effect_matrix.get_combination(primary_effect_id, secondary_effect_id) if effect_matrix != null else null
+
+
+func get_effect_combination_at(row: int, col: int) -> PotionEffectCombination:
+	return effect_matrix.get_combination_at(row, col) if effect_matrix != null else null
+
+
+func effect_matrix_coordinate(primary_effect_id: StringName, secondary_effect_id: StringName = &"") -> Vector2i:
+	return effect_matrix.coordinate_for(primary_effect_id, secondary_effect_id) if effect_matrix != null else Vector2i(-1, -1)
 
 
 func get_functions_for_band(band_id: StringName) -> Array[PotionFunctionDefinition]:

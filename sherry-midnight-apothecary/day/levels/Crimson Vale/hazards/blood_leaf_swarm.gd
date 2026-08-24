@@ -154,7 +154,7 @@ func is_target_sheltered() -> bool:
 		return true
 	if target.is_in_group("sheltered"):
 		return true
-	if Time.get_ticks_msec() <= int(target.get_meta("potion_concealed_until_ms", 0)):
+	if Time.get_ticks_msec() <= int(target.get_meta("potion_concealed_until_ms", 0)) or Time.get_ticks_msec() <= int(get_meta("potion_calmed_until_ms", 0)):
 		return true
 	return false
 

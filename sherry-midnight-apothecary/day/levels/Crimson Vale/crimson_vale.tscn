@@ -1,5 +1,11 @@
 [gd_scene format=3 uid="uid://drjpfgw4o8cmi"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/maple_heart_dark_vein/maple_heart_dark_vein_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/maple_marrow_star_crystal/maple_marrow_star_crystal_herb.tscn" id="herb_1"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/waystation_lantern_fruit/waystation_lantern_fruit_herb.tscn" id="herb_2"]
+
 [ext_resource type="Script" uid="uid://b01iels0sgwe0" path="res://day/levels/Crimson Vale/crimson_vale.gd" id="1_env"]
 [ext_resource type="Texture2D" uid="uid://3rjx2d3ycyns" path="res://day/levels/Crimson Vale/FS.png" id="2_fs"]
 [ext_resource type="Texture2D" uid="uid://tsi42khh5bo" path="res://day/levels/Crimson Vale/MS.png" id="3_ms"]
@@ -478,3 +484,23 @@ layer = 200
 script = ExtResource("25_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=452275820 instance=ExtResource("26_pause_menu")]
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(2450, 600)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="P02" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(5200, 600)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_1")
+
+[node name="P03" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(7600, 600)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_2")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

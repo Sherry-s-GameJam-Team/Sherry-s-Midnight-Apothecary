@@ -116,7 +116,7 @@ func _build_matrix() -> void:
 			var cell := MATRIX_CELL_SCENE.instantiate() as MatrixCellItem
 			grid_container.add_child(cell)
 			var recipes_in_cell: Array[PotionRecipeDefinition] = catalog_ref.get_recipes_for_matrix_cell(row_idx, col_idx)
-			cell.setup(coord, recipes_in_cell, unlock_state_ref)
+			cell.setup(coord, recipes_in_cell, unlock_state_ref, catalog_ref.get_effect_combination_at(row_idx, col_idx))
 			cell.cell_clicked.connect(_on_cell_clicked)
 			cell_items[coord] = cell
 

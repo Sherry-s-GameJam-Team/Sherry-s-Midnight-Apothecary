@@ -9,11 +9,16 @@ extends DayLevelEnvironment
 signal objective_updated(text: String, hint: String)
 signal level_completed
 
+const ENTRY_DIALOGUE_COMPLETE_FLAG: StringName = &"vespervale_inner_entry_dialogue_complete"
+const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
+
 @export var is_ward_cleansed: bool = false
 @export var default_spawn_position: Vector2 = Vector2(250, 520)
 @export var luca_spawn_position: Vector2 = Vector2(300, 290)
+@export var entry_dialogue: DialogueResource
 
 var _is_respawning: bool = false
+var _entry_dialogue_open := false
 
 @onready var dream_shift_manager: DreamShiftManager = get_node_or_null("DreamShiftManager")
 @onready var party_controller: InnerPartyController = get_node_or_null("InnerPartyController")
@@ -54,6 +59,45 @@ func _ready() -> void:
 		"深入梦疗院·无尽回廊。",
 		"回廊受神秘空间折叠笼罩：除非激活破界信号，否则向右前进将无尽折返！"
 	)
+
+
+func on_level_entered(entry_id: StringName) -> void:
+	if not should_play_entry_dialogue(entry_id, get_player_data()):
+		return
+	call_deferred("_play_entry_dialogue")
+
+
+func _play_entry_dialogue() -> void:
+	if _entry_dialogue_open or entry_dialogue == null:
+		return
+	var dialogue_manager := get_node_or_null("/root/DialogueManager") as Node
+	if dialogue_manager == null or not dialogue_manager.has_method("show_dialogue_balloon_scene"):
+		push_error("VespervaleInnerLevel requires the DialogueManager autoload for its entry dialogue.")
+		return
+
+	_entry_dialogue_open = true
+	_set_entry_dialogue_controls_locked(true)
+	var balloon := dialogue_manager.show_dialogue_balloon_scene(BALLOON_SCENE, entry_dialogue, &"start") as Node
+	if balloon != null:
+		await balloon.tree_exited
+	var data := get_player_data()
+	if data != null:
+		data.set_event_flag(ENTRY_DIALOGUE_COMPLETE_FLAG)
+	_set_entry_dialogue_controls_locked(false)
+	_entry_dialogue_open = false
+
+
+func _set_entry_dialogue_controls_locked(locked: bool) -> void:
+	if party_controller != null:
+		party_controller.enable_switching(not locked)
+	var sherry := get_node_or_null("Player")
+	var luca := get_node_or_null("Luca")
+	if sherry != null and sherry.has_method("set_dialogue_locked"):
+		sherry.call("set_dialogue_locked", locked)
+	if luca != null and luca.has_method("set_control_enabled"):
+		luca.call("set_control_enabled", false)
+	if not locked and party_controller != null:
+		party_controller.restore_sherry_control()
 
 
 func _on_corridor_loop_triggered(_body: Node2D, total_loops: int) -> void:
@@ -127,3 +171,7 @@ func _find_top_hint() -> Node:
 	if hint == null:
 		hint = cur.get_node_or_null("TopHintUI")
 	return hint
+
+
+static func should_play_entry_dialogue(entry_id: StringName, player_data: PlayerData) -> bool:
+	return entry_id == &"from_garden" and (player_data == null or not player_data.has_event_flag(ENTRY_DIALOGUE_COMPLETE_FLAG))

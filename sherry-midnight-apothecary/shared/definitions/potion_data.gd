@@ -14,6 +14,9 @@ extends Resource
 ## The existing battle executor key. Keep this stable while world interaction
 ## moves to effect_tags.
 @export var main_effect_id: StringName
+## Data-driven effects dispatched by a thrown bottle. Empty arrays fall back
+## to main_effect_id for legacy resources.
+@export var combat_effect_ids: Array[StringName] = []
 ## Semantic world-interaction capabilities. New levels must use these instead
 ## of inspecting resource IDs, colour names, or legacy effect strings.
 @export var effect_tags: Array[StringName] = []

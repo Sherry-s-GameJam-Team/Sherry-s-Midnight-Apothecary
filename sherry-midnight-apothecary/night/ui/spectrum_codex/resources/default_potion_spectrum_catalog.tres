@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dqv2ylhv5gaku" path="res://night/ui/spectrum_codex/scripts/potion_function_definition.gd" id="2_func"]
 [ext_resource type="Script" uid="uid://dkthqpbd410y7" path="res://night/ui/spectrum_codex/scripts/potion_recipe_definition.gd" id="3_rec"]
 [ext_resource type="Script" uid="uid://dgebd70h7pwpo" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_catalog.gd" id="4_cat"]
+[ext_resource type="Resource" path="res://night/ui/spectrum_codex/resources/default_potion_effect_matrix.tres" id="5_matrix"]
 
 [sub_resource type="Resource" id="Band_Red"]
 script = ExtResource("1_band")
@@ -430,10 +431,130 @@ matrix_col = 6
 is_special = true
 unlock_hint = "紫水晶粉末与高纯度驱邪溶液共振"
 
+[sub_resource type="Resource" id="Rec_RedPressurePulse"]
+script = ExtResource("3_rec")
+id = &"recipe_red_pressure_pulse"
+function_id = &"func_circulation"
+display_name = "赤红脉冲药水"
+description = "瞬间提高生命与魔力压力，破瓶后形成可震散目标的高压冲击。"
+primary_tag = &"循环"
+secondary_tag = &"压力"
+matrix_col = 1
+unlock_hint = "成功装瓶赤红光谱基础药水"
+produced_potion_id = &"red_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_OrangeActivationDraft"]
+script = ExtResource("3_rec")
+id = &"recipe_orange_activation_draft"
+function_id = &"func_vigor_boost"
+display_name = "橙风活化药水"
+description = "活化身体与机械结构，短时间提高行动和装置运转效率。"
+primary_tag = &"活化"
+secondary_tag = &"供能"
+matrix_row = 1
+matrix_col = 2
+unlock_hint = "成功装瓶橙色光谱基础药水"
+produced_potion_id = &"orange_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_YellowImpactBuffer"]
+script = ExtResource("3_rec")
+id = &"recipe_yellow_impact_buffer"
+function_id = &"func_analgesia"
+display_name = "炽黄缓冲药水"
+description = "形成吸收冲击的药力缓冲层，降低伤害、击退与环境震荡。"
+primary_tag = &"缓冲"
+secondary_tag = &"镇痛"
+matrix_row = 2
+unlock_hint = "成功装瓶黄色光谱基础药水"
+produced_potion_id = &"yellow_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_GreenRegrowthTonic"]
+script = ExtResource("3_rec")
+id = &"recipe_green_regrowth_tonic"
+function_id = &"func_tissue_repair"
+display_name = "翠绿修复药水"
+description = "修复伤势并促进植物、组织与自然结构重新生长。"
+primary_tag = &"修复"
+secondary_tag = &"再生"
+matrix_row = 3
+matrix_col = 4
+unlock_hint = "成功装瓶绿色光谱基础药水"
+produced_potion_id = &"green_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_CyanSpringburst"]
+script = ExtResource("3_rec")
+id = &"recipe_cyan_springburst"
+function_id = &"func_flux_stabilize"
+display_name = "青色·涌水药水"
+description = "调衡温度、水流和魔力状态，并将水分与魔力汇聚为强烈涌水。"
+primary_tag = &"调衡"
+secondary_tag = &"稳流"
+matrix_row = 4
+matrix_col = 5
+unlock_hint = "完成涌水委托调配或成功装瓶青色药水"
+produced_potion_id = &"cyan_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_BlueCleanse"]
+script = ExtResource("3_rec")
+id = &"recipe_blue_cleanse"
+function_id = &"func_detox"
+display_name = "湛蓝净化药水"
+description = "清除毒素、诅咒与普通魔力污染，并疏通受阻的魔力循环。"
+primary_tag = &"净化"
+secondary_tag = &"解毒"
+matrix_row = 5
+matrix_col = 3
+unlock_hint = "成功装瓶蓝色光谱基础药水"
+produced_potion_id = &"blue_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_PurpleCalmMist"]
+script = ExtResource("3_rec")
+id = &"recipe_purple_calm_mist"
+function_id = &"func_mind_calm"
+display_name = "幽紫镇静药水"
+description = "安抚精神、抑制幻觉与敌意，并降低目标对使用者的感知。"
+primary_tag = &"镇静"
+secondary_tag = &"精神防护"
+matrix_row = 6
+matrix_col = 2
+unlock_hint = "成功装瓶紫色光谱基础药水"
+produced_potion_id = &"purple_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
+[sub_resource type="Resource" id="Rec_PurificationDew"]
+script = ExtResource("3_rec")
+id = &"recipe_purification_dew"
+function_id = &"func_dispel"
+display_name = "清露净化药水"
+description = "蓝色系高纯特殊配方，可破除重度污染、诅咒核心与黑魔法结构。"
+primary_tag = &"强净化"
+secondary_tag = &"破邪"
+matrix_row = 5
+matrix_col = 6
+is_special = true
+unlock_hint = "以纯净蓝露完成无污染蒸馏"
+produced_potion_id = &"purification_potion"
+unlock_on_brew = true
+registers_for_throwing = true
+
 [resource]
 script = ExtResource("4_cat")
 bands = Array[ExtResource("1_band")]([SubResource("Band_Red"), SubResource("Band_Orange"), SubResource("Band_Yellow"), SubResource("Band_Green"), SubResource("Band_Cyan"), SubResource("Band_Blue"), SubResource("Band_Purple")])
 functions = Array[ExtResource("2_func")]([SubResource("Func_Hemostasis"), SubResource("Func_Circulation"), SubResource("Func_VigorBoost"), SubResource("Func_MuscleActive"), SubResource("Func_Analgesia"), SubResource("Func_AntiInflam"), SubResource("Func_TissueRepair"), SubResource("Func_CellRegrowth"), SubResource("Func_Cooling"), SubResource("Func_FluxStabilize"), SubResource("Func_Detox"), SubResource("Func_Dispel"), SubResource("Func_MindCalm"), SubResource("Func_SpiritFocus")])
-recipes = Array[ExtResource("3_rec")]([SubResource("Rec_BloodPaste"), SubResource("Rec_DeepClot"), SubResource("Rec_WarmPulse"), SubResource("Rec_VitalityDraft"), SubResource("Rec_TigerEssence"), SubResource("Rec_NumbDrop"), SubResource("Rec_GoldenSalve"), SubResource("Rec_MossBalm"), SubResource("Rec_EmeraldDew"), SubResource("Rec_FrostMist"), SubResource("Rec_TranquilCrystal"), SubResource("Rec_PureDrop"), SubResource("Rec_HolyTide"), SubResource("Rec_DreamNectar"), SubResource("Rec_AstralClarity")])
-matrix_row_labels = Array[String](["止血 (Red)", "活化 (Orange)", "镇痛 (Yellow)", "修复 (Green)", "降温 (Cyan)", "净化 (Blue)", "镇静 (Purple)"])
-matrix_col_labels = Array[String](["止血", "循环", "体力", "抗炎", "再生", "稳定", "驱邪"])
+recipes = Array[ExtResource("3_rec")]([SubResource("Rec_BloodPaste"), SubResource("Rec_DeepClot"), SubResource("Rec_WarmPulse"), SubResource("Rec_VitalityDraft"), SubResource("Rec_TigerEssence"), SubResource("Rec_NumbDrop"), SubResource("Rec_GoldenSalve"), SubResource("Rec_MossBalm"), SubResource("Rec_EmeraldDew"), SubResource("Rec_FrostMist"), SubResource("Rec_TranquilCrystal"), SubResource("Rec_PureDrop"), SubResource("Rec_HolyTide"), SubResource("Rec_DreamNectar"), SubResource("Rec_AstralClarity"), SubResource("Rec_RedPressurePulse"), SubResource("Rec_OrangeActivationDraft"), SubResource("Rec_YellowImpactBuffer"), SubResource("Rec_GreenRegrowthTonic"), SubResource("Rec_CyanSpringburst"), SubResource("Rec_BlueCleanse"), SubResource("Rec_PurpleCalmMist"), SubResource("Rec_PurificationDew")])
+effect_matrix = ExtResource("5_matrix")
+matrix_row_labels = Array[String](["红·循环", "橙·活化", "黄·镇痛", "绿·再生", "青·稳定", "蓝·净化", "紫·镇静"])
+matrix_col_labels = Array[String](["红·循环", "橙·活化", "黄·镇痛", "绿·再生", "青·稳定", "蓝·净化", "紫·镇静"])

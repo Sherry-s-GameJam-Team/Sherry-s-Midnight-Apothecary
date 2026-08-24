@@ -9,3 +9,5 @@ Grassland's fixed assignments are `P01/P07` Herdsman's Loaf-Bush, `P02/P08` Star
 The six formal Grassland plants each have a reusable plant scene under `res://day/interactables/herb/herbs/<ingredient_id>/`. A new authored point should use one of these scenes (or another scene rooted in `HerbInteractable`) rather than assigning an ID through code.
 
 The director removes all field pickups whenever Grassland is corrupted. They respawn only after the environment becomes normal. The system is reusable: another normal/corrupted `DayLevelEnvironment` can add authored `HerbSpawnPoint` children under `HerbSpawns` and a `HerbSpawnDirector` to use the same collection-persistence rules.
+
+Colored plants now use the same fixed-point contract in story regions: yellow plants in Golden Cliff, cyan plants in Lake Bottom, red plants in Crimson Vale, orange plants in Aurem Clockyard, purple plants plus Vesper Blue-Thicket in Vespervale, Tundra Snow-Whisk in Cliff, and Chalice Ice-Spire in Lake Cliff Underwater. Every one of the twenty-five production ingredients has an independently instantiable field scene; no point rolls a replacement species.

@@ -35,6 +35,7 @@ static func run(test: TestSupport) -> void:
 	partial_service.commit_reservation(partial_reservation)
 	test.expect_float_close(float(partial_service.get_instances(&"blue_potion")[0]["remaining_dose"]), 0.75, 0.001, "A single instance supports partial consumption.")
 	partial_player.unlock_potion_slot(2)
+	partial_player.unlock_throwable_potion(&"purple_potion")
 	test.expect(partial_player.equip_potion(3, &"purple_potion"), "An unlocked slot accepts an equippable potion type.")
 	partial_player.select_potion_slot(3)
 	var restored := PlayerData.from_save_data(partial_player.to_save_data())

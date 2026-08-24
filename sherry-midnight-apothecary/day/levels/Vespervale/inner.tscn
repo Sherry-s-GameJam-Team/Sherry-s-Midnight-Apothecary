@@ -1,5 +1,10 @@
 [gd_scene format=3 uid="uid://cwrb7287ak5kh"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/stagnant_breeze_bell_vine/stagnant_breeze_bell_vine_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/slumber_marrow_geode/slumber_marrow_geode_herb.tscn" id="herb_1"]
+
 [ext_resource type="Script" uid="uid://biictkq04rqkk" path="res://day/levels/Vespervale/inner.gd" id="1_inner"]
 [ext_resource type="Script" uid="uid://dbjkmfa4jxlr1" path="res://day/levels/Vespervale/inner_systems/dream_shift_manager.gd" id="2_shift_mgr"]
 [ext_resource type="Script" uid="uid://cth5jw48cofiq" path="res://day/levels/Vespervale/inner_systems/dream_audio_synth.gd" id="3_audio"]
@@ -35,6 +40,8 @@
 [ext_resource type="PackedScene" uid="uid://c8vtusdwhohs" path="res://day/levels/Vespervale/inner_systems/letter_viewer_dialog.tscn" id="52_letter_dialog"]
 [ext_resource type="Script" uid="uid://bneqb74w0a0c1" path="res://day/levels/Vespervale/inner_systems/wall_dial_lock_interactor.gd" id="53_wall_interactor"]
 [ext_resource type="PackedScene" uid="uid://bdb7xr2tnk1vf" path="res://day/levels/Vespervale/inner_systems/dial_lock_puzzle_dialog.tscn" id="54_dial_lock_dialog"]
+[ext_resource type="Resource" uid="uid://p0md47du7iuv" path="res://day/levels/Vespervale/vespervale_inner_entry.dialogue" id="55_entry_dialogue"]
+[ext_resource type="Script" path="res://day/levels/Vespervale/inner_systems/wall2_reality_phasing.gd" id="56_wall2_phasing"]
 
 [sub_resource type="RectangleShape2D" id="Rect_loop_trigger"]
 size = Vector2(60, 800)
@@ -67,6 +74,7 @@ size = Vector2(160, 240)
 texture_filter = 1
 script = ExtResource("1_inner")
 debug_scene_id = "vespervale_inner"
+entry_dialogue = ExtResource("55_entry_dialogue")
 
 [node name="DreamShiftManager" type="Node2D" parent="." unique_id=2000001]
 script = ExtResource("2_shift_mgr")
@@ -234,6 +242,9 @@ polygon = PackedVector2Array(-37, -137, -36, 175, 48, 173, 50, -144)
 position = Vector2(2590, 513)
 texture = ExtResource("11_0o6is")
 
+[node name="Wall2RealityPhasing" type="Node2D" parent="World/Architecture/wall/wall2" unique_id=2000840]
+script = ExtResource("56_wall2_phasing")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="World/Architecture/wall/wall2" unique_id=1296110338]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Architecture/wall/wall2/StaticBody2D" unique_id=511338304]
@@ -267,6 +278,7 @@ text = "按 E 查看信件"
 horizontal_alignment = 1
 
 [node name="Cabinet2" type="Sprite2D" parent="World/Props" unique_id=2000062]
+z_index = 14
 position = Vector2(750, 253)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("19_cabinet")
@@ -466,3 +478,18 @@ script = ExtResource("33_pause_host")
 [node name="LetterViewerDialog" parent="." unique_id=2000700 instance=ExtResource("52_letter_dialog")]
 
 [node name="DialLockPuzzleDialog" parent="." unique_id=2000800 instance=ExtResource("54_dial_lock_dialog")]
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1050, 610)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="P02" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(2600, 610)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_1")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

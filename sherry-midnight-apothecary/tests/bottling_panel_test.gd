@@ -13,6 +13,7 @@ static func run(test: TestSupport) -> void:
 
 	var mock_potion := POTION_DATA_SCENE.duplicate() as PotionData
 	mock_potion.main_effect_id = &"healing"
+	mock_potion.combat_effect_ids = [&"healing"]
 	mock_potion.display_name = "红色药水"
 
 	var instance_data := {
@@ -29,7 +30,7 @@ static func run(test: TestSupport) -> void:
 	test.expect(panel.visible, "Panel is visible after open_for.")
 	test.expect_equal(panel.style_id, &"health", "Initial style defaults to health.")
 	test.expect(panel.name_input.text.contains("药水") or panel.name_input.text.contains("药剂"), "Default potion name is automatically populated.")
-	test.expect(panel.main_effect_label.text.contains("恢复生命"), "Main effect description is displayed.")
+	test.expect(panel.main_effect_label.text.contains("修复伤势"), "Main effect description is displayed.")
 	test.expect(panel.secondary_effect_label.text.contains("提升行动速度"), "Secondary effect description is displayed.")
 	test.expect(panel.quality_label.text.contains("卓越"), "Quality label shows appropriate tier name.")
 

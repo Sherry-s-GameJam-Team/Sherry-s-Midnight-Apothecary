@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://dj41d5naqt5ru"]
 
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
+[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/chalice_ice_spire/chalice_ice_spire_herb.tscn" id="herb_0"]
+
 [ext_resource type="Script" uid="uid://bhoev2a006145" path="res://day/levels/lake/lake_cliff_underwater.gd" id="1_main"]
 [ext_resource type="Script" uid="uid://v4cl6udwg3aj" path="res://day/levels/lake/scripts/lake_elevator.gd" id="2_elevator"]
 [ext_resource type="Texture2D" uid="uid://dfh8am6be8ckp" path="res://day/art/lake/FS/wall.png" id="2_evsck"]
@@ -463,3 +467,13 @@ bus = &"SFX"
 layer = 200
 
 [node name="DeveloperConsole" parent="DebugUI" unique_id=374150109 instance=ExtResource("18_console")]
+
+[node name="HerbSpawns" type="Node2D" parent="."]
+
+[node name="P01" type="Marker2D" parent="HerbSpawns"]
+position = Vector2(1500, 810)
+script = ExtResource("herb_point")
+herb_scene = ExtResource("herb_0")
+
+[node name="HerbSpawnDirector" type="Node2D" parent="."]
+script = ExtResource("herb_director")

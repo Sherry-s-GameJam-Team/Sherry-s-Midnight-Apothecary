@@ -84,7 +84,12 @@ func get_player_data() -> PlayerData:
 func apply_player_damage(amount: int, source: StringName = &"") -> bool:
 	if _death_requested or amount <= 0:
 		return _death_requested
-	get_player_data().apply_damage(amount)
+	var final_amount := amount
+	if current_level_instance != null:
+		var player := current_level_instance.get_node_or_null("Player")
+		if player != null and player.has_method("modify_incoming_potion_damage"):
+			final_amount = int(player.call("modify_incoming_potion_damage", amount))
+	get_player_data().apply_damage(final_amount)
 	if get_player_data().health <= 0:
 		_request_player_death(source)
 	return _death_requested

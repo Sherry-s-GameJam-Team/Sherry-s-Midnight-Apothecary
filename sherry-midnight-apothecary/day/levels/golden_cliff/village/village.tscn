@@ -529,24 +529,6 @@ debug_scene_id = "golden_cliff_village"
 [node name="issues" type="Node2D" parent="." unique_id=744196671]
 script = ExtResource("50_day_two_issue")
 
-[node name="issue_Mews" type="Area2D" parent="issues" unique_id=361027674]
-position = Vector2(-681, -415)
-rotation = -3.1415925
-scale = Vector2(0.21337947, -0.21402825)
-script = ExtResource("19_mew_npc")
-dialogue_resource = ExtResource("20_mew_dialogue")
-
-[node name="FishingLoop" type="AnimatedSprite2D" parent="issues/issue_Mews" unique_id=361027675]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_npax6")
-animation = &"fishing"
-frame = 31
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="issues/issue_Mews" unique_id=361027676]
-position = Vector2(-431.8838, -60.739624)
-scale = Vector2(0.99999994, 1)
-shape = SubResource("RectangleShape2D_mew_interaction")
-
 [node name="down" type="Marker2D" parent="issues" unique_id=1915977869]
 position = Vector2(6816, -162)
 
@@ -587,6 +569,24 @@ centered = false
 z_index = -5
 scroll_scale = Vector2(0.9, 0.9)
 scroll_offset = Vector2(468, 37)
+
+[node name="issue_Mews" type="Area2D" parent="CS" unique_id=361027674]
+position = Vector2(-1149, -452)
+rotation = -3.1415925
+scale = Vector2(0.21337947, -0.21402825)
+script = ExtResource("19_mew_npc")
+dialogue_resource = ExtResource("20_mew_dialogue")
+
+[node name="FishingLoop" type="AnimatedSprite2D" parent="CS/issue_Mews" unique_id=361027675]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_npax6")
+animation = &"fishing"
+frame = 31
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CS/issue_Mews" unique_id=361027676]
+position = Vector2(-431.8838, -60.739624)
+scale = Vector2(0.99999994, 1)
+shape = SubResource("RectangleShape2D_mew_interaction")
 
 [node name="saved" type="Node2D" parent="CS" unique_id=1101318370]
 

@@ -9,12 +9,18 @@ const STORY_ITEM_ID: StringName = &"springburst_potion_commission"
 const POTION_ID: StringName = &"cyan_potion"
 const THROWABLE_UNLOCKED_FLAG: StringName = &"springburst_throwable_unlocked"
 const REMOTE_SUPPLY_UNLOCKED_FLAG: StringName = &"enzo_remote_supply_unlocked"
+const RECIPE_ID: StringName = &"recipe_cyan_springburst"
+const FUNCTION_ID: StringName = &"func_flux_stabilize"
+const MATRIX_CELL := Vector2i(4, 5)
 
 
 static func grant_story_bottles(player_data: PlayerData, amount: int = 4) -> void:
 	if player_data == null or amount <= 0:
 		return
 	player_data.add_story_item(STORY_ITEM_ID, amount)
+	player_data.unlock_potion_recipe(RECIPE_ID)
+	player_data.unlock_codex_function(FUNCTION_ID)
+	player_data.unlock_codex_matrix_cell(MATRIX_CELL)
 
 
 static func enforce_story_item_phase(player_data: PlayerData) -> int:
@@ -40,6 +46,7 @@ static func unlock_throwable_after_boss(player_data: PlayerData) -> int:
 		# Backfill remote supply for saves that received the throwable reward
 		# before the replenishment system was introduced.
 		player_data.set_event_flag(REMOTE_SUPPLY_UNLOCKED_FLAG)
+		player_data.unlock_throwable_potion(POTION_ID)
 		return 0
 	var bottle_count := int(player_data.story_items.get(STORY_ITEM_ID, 0))
 	if bottle_count <= 0:
@@ -58,17 +65,8 @@ static func unlock_throwable_after_boss(player_data: PlayerData) -> int:
 		})
 	player_data.set_event_flag(THROWABLE_UNLOCKED_FLAG)
 	player_data.set_event_flag(REMOTE_SUPPLY_UNLOCKED_FLAG)
-	_equip_if_possible(player_data)
+	player_data.unlock_potion_recipe(RECIPE_ID)
+	player_data.unlock_codex_function(FUNCTION_ID)
+	player_data.unlock_codex_matrix_cell(MATRIX_CELL)
+	player_data.unlock_throwable_potion(POTION_ID)
 	return bottle_count
-
-
-static func _equip_if_possible(player_data: PlayerData) -> void:
-	if player_data.equipped_potion_ids.has(POTION_ID):
-		return
-	for slot in range(player_data.potion_slot_count):
-		if player_data.equipped_potion_ids[slot] == &"":
-			player_data.equip_potion(slot, POTION_ID)
-			player_data.select_potion_slot(slot)
-			return
-	player_data.equip_potion(0, POTION_ID)
-	player_data.select_potion_slot(0)

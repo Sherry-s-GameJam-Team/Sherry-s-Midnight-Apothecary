@@ -20,7 +20,7 @@
 
 3. **Primary & Secondary Effect Breakdown**:
    - **Quality**: Formatted tier name (粗劣 / 普通 / 良好 / 卓越 / 完美) and numerical quality multiplier.
-   - **Primary Effect (主效果)**: Description of the main active effect (e.g. `恢复生命与伤势`, `强化攻击`, `生成防护屏障`).
+   - **Primary Effect (主效果)**: Lore-facing descriptions are generated from all `combat_effect_ids`, so compatibility keys such as `mana` or `lightning_meteor` no longer replace the potion's formal pharmacology in player-visible text.
    - **Secondary Effect (副效果)**: Description and multiplier when secondary effects are preserved during heating (e.g. `提升行动速度 (×1.25)`), or graceful fallback when no secondary effect is present.
 
 4. **Medieval Parchment Aesthetic**:
@@ -32,3 +32,5 @@
 - `open_for(source_potion: PotionData, source_instance: Dictionary) -> void`
 - `show_auto_stored(source_potion: PotionData, source_instance: Dictionary) -> void`
 - Signal: `confirmed(style_id: StringName, custom_name: String)`
+
+Confirming a successful bottle is also the progression commit boundary. The exact produced potion ID unlocks its craftable codex recipe and throwable registration. Closing before confirmation does not unlock it, failed black bottles never unlock recipes, and registration does not alter the current quick slots.

@@ -16,7 +16,28 @@ static func run(test: TestSupport) -> void:
 	test.expect(catalog_res != null, "Default potion spectrum catalog loads successfully.")
 	test.expect(catalog_res.bands.size() == 7, "Default catalog has 7 color bands.")
 	test.expect(catalog_res.functions.size() >= 14, "Default catalog has at least 14 function branches.")
-	test.expect(catalog_res.recipes.size() >= 14, "Default catalog has at least 14 recipes.")
+	test.expect(catalog_res.recipes.size() >= 23, "Default catalog retains 15 advanced recipes and adds 8 craftable products.")
+	test.expect(catalog_res.effect_matrix != null and catalog_res.effect_matrix.is_complete(), "Default catalog provides all 49 directed effect combinations.")
+	var red_blue := catalog_res.get_effect_combination(&"circulation", &"purification")
+	var blue_red := catalog_res.get_effect_combination(&"purification", &"circulation")
+	test.expect(red_blue != null and red_blue.display_name == "净血排污", "Red-primary blue-secondary resolves to 净血排污.")
+	test.expect(blue_red != null and blue_red.display_name == "血液净化", "Blue-primary red-secondary resolves independently to 血液净化.")
+	test.expect(red_blue.id != blue_red.id, "Reversed matrix directions retain distinct stable IDs.")
+	var pure_green := catalog_res.get_effect_combination(&"regeneration")
+	test.expect(pure_green != null and pure_green.matrix_row == 3 and pure_green.matrix_col == 3, "A missing secondary effect resolves to the matching diagonal cell.")
+	var expected_products := {
+		&"red_potion": &"recipe_red_pressure_pulse",
+		&"orange_potion": &"recipe_orange_activation_draft",
+		&"yellow_potion": &"recipe_yellow_impact_buffer",
+		&"green_potion": &"recipe_green_regrowth_tonic",
+		&"cyan_potion": &"recipe_cyan_springburst",
+		&"blue_potion": &"recipe_blue_cleanse",
+		&"purple_potion": &"recipe_purple_calm_mist",
+		&"purification_potion": &"recipe_purification_dew",
+	}
+	for potion_id: StringName in expected_products:
+		var craftable := catalog_res.get_brew_unlock_recipe(potion_id)
+		test.expect(craftable != null and craftable.id == expected_products[potion_id], "Craftable product maps to its exact codex recipe: %s" % potion_id)
 
 	var band_red := catalog_res.get_band(&"band_red")
 	test.expect(band_red != null and band_red.primary_effect_name.contains("止血"), "Red band primary effect is defined.")
@@ -120,7 +141,7 @@ static func run(test: TestSupport) -> void:
 	# 8. Matrix cell selection verification
 	panel.set_view_mode(&"matrix")
 	panel.matrix_view.select_cell(0, 0)
-	test.expect(panel.detail_title.text.contains("止血"), "Detail title reflects selected matrix cell.")
+	test.expect(panel.detail_title.text.contains("循环"), "Detail title reflects selected matrix cell.")
 
 	# 9. Custom Catalog data-driven extensibility test
 	var custom_catalog := PotionSpectrumCatalogScript.new() as PotionSpectrumCatalog
@@ -216,4 +237,3 @@ static func run(test: TestSupport) -> void:
 	if root != null and prod_panel.get_parent() == root:
 		root.remove_child(prod_panel)
 	prod_panel.free()
-

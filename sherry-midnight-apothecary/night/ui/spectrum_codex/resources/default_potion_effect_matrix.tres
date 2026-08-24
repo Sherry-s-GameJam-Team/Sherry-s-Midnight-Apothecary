@@ -1,0 +1,499 @@
+[gd_resource type="Resource" script_class="PotionEffectMatrix" load_steps=52 format=3]
+
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_effect_matrix.gd" id="1_matrix"]
+[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_effect_combination.gd" id="2_combo"]
+
+[sub_resource type="Resource" id="Combo_0_0"]
+script = ExtResource("2_combo")
+id = &"circulation__circulation"
+display_name = "高压循环"
+description = "以循环为主、循环为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"circulation"
+matrix_row = 0
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_0_1"]
+script = ExtResource("2_combo")
+id = &"circulation__activation"
+display_name = "热脉爆发"
+description = "以循环为主、活化为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"activation"
+matrix_row = 0
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_0_2"]
+script = ExtResource("2_combo")
+id = &"circulation__analgesia"
+display_name = "镇痛活血"
+description = "以循环为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"analgesia"
+matrix_row = 0
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_0_3"]
+script = ExtResource("2_combo")
+id = &"circulation__regeneration"
+display_name = "伤口灌流"
+description = "以循环为主、再生为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"regeneration"
+matrix_row = 0
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_0_4"]
+script = ExtResource("2_combo")
+id = &"circulation__stabilization"
+display_name = "稳压循环"
+description = "以循环为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"stabilization"
+matrix_row = 0
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_0_5"]
+script = ExtResource("2_combo")
+id = &"circulation__purification"
+display_name = "净血排污"
+description = "以循环为主、净化为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"purification"
+matrix_row = 0
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_0_6"]
+script = ExtResource("2_combo")
+id = &"circulation__sedation"
+display_name = "息脉隐踪"
+description = "以循环为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"circulation"
+secondary_effect_id = &"sedation"
+matrix_row = 0
+matrix_col = 6
+
+[sub_resource type="Resource" id="Combo_1_0"]
+script = ExtResource("2_combo")
+id = &"activation__circulation"
+display_name = "强心供能"
+description = "以活化为主、循环为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"circulation"
+matrix_row = 1
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_1_1"]
+script = ExtResource("2_combo")
+id = &"activation__activation"
+display_name = "过载供能"
+description = "以活化为主、活化为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"activation"
+matrix_row = 1
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_1_2"]
+script = ExtResource("2_combo")
+id = &"activation__analgesia"
+display_name = "无痛驱动"
+description = "以活化为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"analgesia"
+matrix_row = 1
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_1_3"]
+script = ExtResource("2_combo")
+id = &"activation__regeneration"
+display_name = "再生催化"
+description = "以活化为主、再生为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"regeneration"
+matrix_row = 1
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_1_4"]
+script = ExtResource("2_combo")
+id = &"activation__stabilization"
+display_name = "稳态供能"
+description = "以活化为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"stabilization"
+matrix_row = 1
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_1_5"]
+script = ExtResource("2_combo")
+id = &"activation__purification"
+display_name = "代谢净化"
+description = "以活化为主、净化为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"purification"
+matrix_row = 1
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_1_6"]
+script = ExtResource("2_combo")
+id = &"activation__sedation"
+display_name = "清醒安神"
+description = "以活化为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"activation"
+secondary_effect_id = &"sedation"
+matrix_row = 1
+matrix_col = 6
+
+[sub_resource type="Resource" id="Combo_2_0"]
+script = ExtResource("2_combo")
+id = &"analgesia__circulation"
+display_name = "缓冲血冲"
+description = "以镇痛为主、循环为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"circulation"
+matrix_row = 2
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_2_1"]
+script = ExtResource("2_combo")
+id = &"analgesia__activation"
+display_name = "机能镇痛"
+description = "以镇痛为主、活化为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"activation"
+matrix_row = 2
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_2_2"]
+script = ExtResource("2_combo")
+id = &"analgesia__analgesia"
+display_name = "深层镇痛"
+description = "以镇痛为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"analgesia"
+matrix_row = 2
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_2_3"]
+script = ExtResource("2_combo")
+id = &"analgesia__regeneration"
+display_name = "无痛愈合"
+description = "以镇痛为主、再生为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"regeneration"
+matrix_row = 2
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_2_4"]
+script = ExtResource("2_combo")
+id = &"analgesia__stabilization"
+display_name = "冷却止痛"
+description = "以镇痛为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"stabilization"
+matrix_row = 2
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_2_5"]
+script = ExtResource("2_combo")
+id = &"analgesia__purification"
+display_name = "清毒镇痛"
+description = "以镇痛为主、净化为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"purification"
+matrix_row = 2
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_2_6"]
+script = ExtResource("2_combo")
+id = &"analgesia__sedation"
+display_name = "安眠镇痛"
+description = "以镇痛为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"analgesia"
+secondary_effect_id = &"sedation"
+matrix_row = 2
+matrix_col = 6
+
+[sub_resource type="Resource" id="Combo_3_0"]
+script = ExtResource("2_combo")
+id = &"regeneration__circulation"
+display_name = "活血愈合"
+description = "以再生为主、循环为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"circulation"
+matrix_row = 3
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_3_1"]
+script = ExtResource("2_combo")
+id = &"regeneration__activation"
+display_name = "活化修复"
+description = "以再生为主、活化为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"activation"
+matrix_row = 3
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_3_2"]
+script = ExtResource("2_combo")
+id = &"regeneration__analgesia"
+display_name = "舒痛再生"
+description = "以再生为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"analgesia"
+matrix_row = 3
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_3_3"]
+script = ExtResource("2_combo")
+id = &"regeneration__regeneration"
+display_name = "深度再生"
+description = "以再生为主、再生为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"regeneration"
+matrix_row = 3
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_3_4"]
+script = ExtResource("2_combo")
+id = &"regeneration__stabilization"
+display_name = "定型修复"
+description = "以再生为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"stabilization"
+matrix_row = 3
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_3_5"]
+script = ExtResource("2_combo")
+id = &"regeneration__purification"
+display_name = "洁净再生"
+description = "以再生为主、净化为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"purification"
+matrix_row = 3
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_3_6"]
+script = ExtResource("2_combo")
+id = &"regeneration__sedation"
+display_name = "休眠修复"
+description = "以再生为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"regeneration"
+secondary_effect_id = &"sedation"
+matrix_row = 3
+matrix_col = 6
+
+[sub_resource type="Resource" id="Combo_4_0"]
+script = ExtResource("2_combo")
+id = &"stabilization__circulation"
+display_name = "循环稳压"
+description = "以稳定为主、循环为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"circulation"
+matrix_row = 4
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_4_1"]
+script = ExtResource("2_combo")
+id = &"stabilization__activation"
+display_name = "过载抑制"
+description = "以稳定为主、活化为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"activation"
+matrix_row = 4
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_4_2"]
+script = ExtResource("2_combo")
+id = &"stabilization__analgesia"
+display_name = "冷敷缓冲"
+description = "以稳定为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"analgesia"
+matrix_row = 4
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_4_3"]
+script = ExtResource("2_combo")
+id = &"stabilization__regeneration"
+display_name = "组织定型"
+description = "以稳定为主、再生为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"regeneration"
+matrix_row = 4
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_4_4"]
+script = ExtResource("2_combo")
+id = &"stabilization__stabilization"
+display_name = "恒温稳流"
+description = "以稳定为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"stabilization"
+matrix_row = 4
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_4_5"]
+script = ExtResource("2_combo")
+id = &"stabilization__purification"
+display_name = "净化稳流"
+description = "以稳定为主、净化为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"purification"
+matrix_row = 4
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_4_6"]
+script = ExtResource("2_combo")
+id = &"stabilization__sedation"
+display_name = "神经降温"
+description = "以稳定为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"stabilization"
+secondary_effect_id = &"sedation"
+matrix_row = 4
+matrix_col = 6
+
+[sub_resource type="Resource" id="Combo_5_0"]
+script = ExtResource("2_combo")
+id = &"purification__circulation"
+display_name = "血液净化"
+description = "以净化为主、循环为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"circulation"
+matrix_row = 5
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_5_1"]
+script = ExtResource("2_combo")
+id = &"purification__activation"
+display_name = "代谢排毒"
+description = "以净化为主、活化为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"activation"
+matrix_row = 5
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_5_2"]
+script = ExtResource("2_combo")
+id = &"purification__analgesia"
+display_name = "消炎祛毒"
+description = "以净化为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"analgesia"
+matrix_row = 5
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_5_3"]
+script = ExtResource("2_combo")
+id = &"purification__regeneration"
+display_name = "无菌修复"
+description = "以净化为主、再生为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"regeneration"
+matrix_row = 5
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_5_4"]
+script = ExtResource("2_combo")
+id = &"purification__stabilization"
+display_name = "冷凝除污"
+description = "以净化为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"stabilization"
+matrix_row = 5
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_5_5"]
+script = ExtResource("2_combo")
+id = &"purification__purification"
+display_name = "深层净化"
+description = "以净化为主、净化为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"purification"
+matrix_row = 5
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_5_6"]
+script = ExtResource("2_combo")
+id = &"purification__sedation"
+display_name = "精神祛秽"
+description = "以净化为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"purification"
+secondary_effect_id = &"sedation"
+matrix_row = 5
+matrix_col = 6
+
+[sub_resource type="Resource" id="Combo_6_0"]
+script = ExtResource("2_combo")
+id = &"sedation__circulation"
+display_name = "息心镇静"
+description = "以镇静为主、循环为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"circulation"
+matrix_row = 6
+matrix_col = 0
+
+[sub_resource type="Resource" id="Combo_6_1"]
+script = ExtResource("2_combo")
+id = &"sedation__activation"
+display_name = "清醒镇静"
+description = "以镇静为主、活化为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"activation"
+matrix_row = 6
+matrix_col = 1
+
+[sub_resource type="Resource" id="Combo_6_2"]
+script = ExtResource("2_combo")
+id = &"sedation__analgesia"
+display_name = "镇痛催眠"
+description = "以镇静为主、镇痛为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"analgesia"
+matrix_row = 6
+matrix_col = 2
+
+[sub_resource type="Resource" id="Combo_6_3"]
+script = ExtResource("2_combo")
+id = &"sedation__regeneration"
+display_name = "睡眠再生"
+description = "以镇静为主、再生为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"regeneration"
+matrix_row = 6
+matrix_col = 3
+
+[sub_resource type="Resource" id="Combo_6_4"]
+script = ExtResource("2_combo")
+id = &"sedation__stabilization"
+display_name = "低温安定"
+description = "以镇静为主、稳定为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"stabilization"
+matrix_row = 6
+matrix_col = 4
+
+[sub_resource type="Resource" id="Combo_6_5"]
+script = ExtResource("2_combo")
+id = &"sedation__purification"
+display_name = "净梦祛幻"
+description = "以镇静为主、净化为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"purification"
+matrix_row = 6
+matrix_col = 5
+
+[sub_resource type="Resource" id="Combo_6_6"]
+script = ExtResource("2_combo")
+id = &"sedation__sedation"
+display_name = "深度沉眠"
+description = "以镇静为主、镇静为辅的有向复合药效。"
+primary_effect_id = &"sedation"
+secondary_effect_id = &"sedation"
+matrix_row = 6
+matrix_col = 6
+
+[resource]
+script = ExtResource("1_matrix")
+combinations = Array[ExtResource("2_combo")]([SubResource("Combo_0_0"), SubResource("Combo_0_1"), SubResource("Combo_0_2"), SubResource("Combo_0_3"), SubResource("Combo_0_4"), SubResource("Combo_0_5"), SubResource("Combo_0_6"), SubResource("Combo_1_0"), SubResource("Combo_1_1"), SubResource("Combo_1_2"), SubResource("Combo_1_3"), SubResource("Combo_1_4"), SubResource("Combo_1_5"), SubResource("Combo_1_6"), SubResource("Combo_2_0"), SubResource("Combo_2_1"), SubResource("Combo_2_2"), SubResource("Combo_2_3"), SubResource("Combo_2_4"), SubResource("Combo_2_5"), SubResource("Combo_2_6"), SubResource("Combo_3_0"), SubResource("Combo_3_1"), SubResource("Combo_3_2"), SubResource("Combo_3_3"), SubResource("Combo_3_4"), SubResource("Combo_3_5"), SubResource("Combo_3_6"), SubResource("Combo_4_0"), SubResource("Combo_4_1"), SubResource("Combo_4_2"), SubResource("Combo_4_3"), SubResource("Combo_4_4"), SubResource("Combo_4_5"), SubResource("Combo_4_6"), SubResource("Combo_5_0"), SubResource("Combo_5_1"), SubResource("Combo_5_2"), SubResource("Combo_5_3"), SubResource("Combo_5_4"), SubResource("Combo_5_5"), SubResource("Combo_5_6"), SubResource("Combo_6_0"), SubResource("Combo_6_1"), SubResource("Combo_6_2"), SubResource("Combo_6_3"), SubResource("Combo_6_4"), SubResource("Combo_6_5"), SubResource("Combo_6_6")])
+
