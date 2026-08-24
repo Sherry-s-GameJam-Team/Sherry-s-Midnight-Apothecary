@@ -1,4 +1,4 @@
-﻿class_name HelionBossTest
+class_name HelionBossTest
 extends RefCounted
 
 const TestSupport = preload("res://tests/test_support.gd")
@@ -22,7 +22,7 @@ func run(test: RefCounted) -> void:
 		test.expect_equal(config.get("max_hp"), 2000, "Default max_hp is 2000.")
 		test.expect_equal(config.get("phase2_threshold"), 0.70, "Phase 2 threshold is 70%.")
 		test.expect_equal(config.get("phase3_threshold"), 0.35, "Phase 3 threshold is 35%.")
-		test.expect_equal(config.get("final_purify_required"), true, "Final purification is required.")
+		test.expect_equal(config.get("final_purify_required"), false, "Final purification is false (regular damage can defeat).")
 
 	# 2. Test Animation Cues Resource
 	var cues: Resource = load("res://day/levels/Aurem Clockyard/boss/helion/battle/helion_animation_cues.tres")
@@ -75,20 +75,16 @@ func run(test: RefCounted) -> void:
 			boss.call("_check_phase_transition")
 			test.expect_equal(int(boss.get("current_phase")), 3, "Boss enters Phase 3 transition when HP <= 35%.")
 
-			# Test HP does not drop below 1 with regular damage when final_purify_required == true
-			boss.set("current_hp", 1)
-			boss.call("receive_potion_hit", {"damage": 50, "potion_id": "bomb_potion"})
-			test.expect_equal(boss.get("current_hp"), 1, "Regular damage cannot reduce HP below 1 (requires purification).")
-			test.expect_equal(int(boss.get("current_phase")), 5, "Boss enters PURIFICATION_REQUIRED phase (index 5).")
-
-			# Test purification hit triggers defeat
+			# Test regular damage reduces HP to 0 and triggers defeat directly
 			var defeated_emitted: Array[bool] = [false]
 			boss.connect("boss_defeated", func(_id: StringName) -> void:
 				defeated_emitted[0] = true
 			)
-			boss.call("receive_potion_hit", {"damage": 10, "potion_id": "pure_purification_potion"})
-			test.expect_equal(int(boss.get("current_phase")), 6, "Purification potion triggers DEFEATED phase (index 6).")
-			test.expect(defeated_emitted[0], "boss_defeated signal emitted upon purification.")
+			boss.set("current_hp", 20)
+			boss.call("receive_potion_hit", {"damage": 50, "potion_id": "bomb_potion"})
+			test.expect_equal(boss.get("current_hp"), 0, "Regular damage can reduce HP to 0 and defeat Helion.")
+			test.expect_equal(int(boss.get("current_phase")), 6, "Boss directly enters DEFEATED phase (index 6) on 0 HP.")
+			test.expect(defeated_emitted[0], "boss_defeated signal emitted upon defeat.")
 			test.expect(not bool(boss.get("is_hostile")), "Boss hostile flag is false upon defeat.")
 
 			boss.free()

@@ -1,0 +1,29 @@
+{
+  "herb_id": "waystation_lantern_fruit",
+  "display_name_zh": "驿灯垂果",
+  "english_name": "Waystation Lantern Fruit",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "waystation_lantern_fruit_piece_01",
+      "source_rect": [
+        1377,
+        1227,
+        829,
+        753
+      ]
+    },
+    {
+      "id": "waystation_lantern_fruit_piece_02",
+      "source_rect": [
+        1443,
+        644,
+        1669,
+        3066
+      ]
+    }
+  ]
+}

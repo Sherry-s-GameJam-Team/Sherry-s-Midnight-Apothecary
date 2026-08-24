@@ -22,13 +22,13 @@ func on_level_entered(_entry_id: StringName) -> void:
 
 
 func on_dashiyu_dialogue_completed() -> void:
-	_set_objective("前往阿里特之泪湖床。", "涌水药水已加入背包；准备引出噬潮眼。")
+	_set_objective("前往阿里特之泪湖床。", "涌水药水仍作为委托剧情道具保管；准备迎战噬潮眼。")
 	var player_data := get_player_data()
 	if player_data != null:
 		player_data.set_active_daily_task(TIDE_EYE_TASK_ID, "引出噬潮眼", _current_day())
 	var hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 	if hint != null:
-		hint.push_text("涌水药水已作为攻击性药水加入到背包", "dashiyu_springburst_reward", 4.0)
+		hint.push_text("涌水药水仍在剧情道具栏中\n平息噬潮眼后将解锁投掷用途", "dashiyu_springburst_story_item", 4.0)
 
 
 func _register_day_two_task() -> void:

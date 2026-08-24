@@ -46,12 +46,44 @@ extends Control
 		pointer_tip_ratio = clampf(value, 0.0, 1.0)
 		queue_redraw()
 
+const DEFAULT_CATALOG_PATH := "res://night/ui/spectrum_codex/resources/default_potion_spectrum_catalog.tres"
+const DEFAULT_UNLOCK_STATE_PATH := "res://night/ui/spectrum_codex/resources/default_potion_spectrum_unlock_state.tres"
+
+@export var catalog: PotionSpectrumCatalog
+@export var unlock_state: PotionSpectrumUnlockState
+
 var prediction: Dictionary = {}
 @onready var title_label: Label = get_node_or_null(title_label_path)
 
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(480, 92)
+	if catalog == null and ResourceLoader.exists(DEFAULT_CATALOG_PATH):
+		catalog = load(DEFAULT_CATALOG_PATH) as PotionSpectrumCatalog
+	if unlock_state == null and ResourceLoader.exists(DEFAULT_UNLOCK_STATE_PATH):
+		unlock_state = load(DEFAULT_UNLOCK_STATE_PATH) as PotionSpectrumUnlockState
+	if unlock_state != null and not Engine.is_editor_hint():
+		if not unlock_state.state_changed.is_connected(_on_unlock_state_changed):
+			unlock_state.state_changed.connect(_on_unlock_state_changed)
+	if title_label != null:
+		title_label.visible = true
+	_update_title()
+	queue_redraw()
+
+
+func setup(cat: PotionSpectrumCatalog, state: PotionSpectrumUnlockState) -> void:
+	if unlock_state != null and unlock_state.state_changed.is_connected(_on_unlock_state_changed):
+		unlock_state.state_changed.disconnect(_on_unlock_state_changed)
+	catalog = cat
+	unlock_state = state
+	if unlock_state != null and not Engine.is_editor_hint():
+		if not unlock_state.state_changed.is_connected(_on_unlock_state_changed):
+			unlock_state.state_changed.connect(_on_unlock_state_changed)
+	_update_title()
+	queue_redraw()
+
+
+func _on_unlock_state_changed() -> void:
 	_update_title()
 	queue_redraw()
 
@@ -60,6 +92,48 @@ func set_prediction(value: Dictionary) -> void:
 	prediction = value
 	_update_title()
 	queue_redraw()
+
+
+func get_spectrum_band(mixed_x: float) -> PotionSpectrumBand:
+	if catalog == null or catalog.bands.is_empty():
+		return null
+	for band in catalog.bands:
+		if band != null and mixed_x >= band.spectrum_min and mixed_x <= band.spectrum_max:
+			return band
+	var min_dist := INF
+	var nearest_band: PotionSpectrumBand = null
+	for band in catalog.bands:
+		if band != null:
+			var dist := 0.0
+			if mixed_x < band.spectrum_min:
+				dist = band.spectrum_min - mixed_x
+			elif mixed_x > band.spectrum_max:
+				dist = mixed_x - band.spectrum_max
+			if dist < min_dist:
+				min_dist = dist
+				nearest_band = band
+	return nearest_band
+
+
+func get_spectrum_function(mixed_x: float) -> PotionFunctionDefinition:
+	var active_band := get_spectrum_band(mixed_x)
+	if active_band == null or catalog == null:
+		return null
+	var closest_func: PotionFunctionDefinition = null
+	var min_dist := INF
+	for func_def in catalog.functions:
+		if func_def != null and func_def.band_id == active_band.id:
+			var dist := absf(mixed_x - func_def.spectrum_position)
+			if dist < min_dist:
+				min_dist = dist
+				closest_func = func_def
+	return closest_func
+
+
+func is_function_unlocked(func_def: PotionFunctionDefinition) -> bool:
+	if func_def == null or unlock_state == null:
+		return false
+	return unlock_state.is_function_unlocked(func_def.id)
 
 
 func _update_title() -> void:
@@ -71,8 +145,16 @@ func _update_title() -> void:
 	if bool(prediction.get("failed", false)):
 		title_label.text = "药谱分析仪 · 配方失衡，可能生成失败药水"
 		return
-	var effect_id := StringName(str(prediction.get("main_effect_id", "")))
-	title_label.text = "药谱分析仪 · %s" % _effect_explanation(effect_id)
+	var mixed_x := clampf(float(prediction.get("mixed_x", 0.0)), 0.0, 1.0)
+	var func_def := get_spectrum_function(mixed_x)
+	if func_def != null:
+		if is_function_unlocked(func_def):
+			title_label.text = "药谱分析仪 · 主功能：%s　副功能：%s" % [func_def.primary_tag, func_def.secondary_tag]
+		else:
+			title_label.text = "药谱分析仪 · 装瓶后显示"
+	else:
+		var effect_id := StringName(str(prediction.get("main_effect_id", "")))
+		title_label.text = "药谱分析仪 · %s" % _effect_explanation(effect_id)
 
 
 func _effect_explanation(effect_id: StringName) -> String:
@@ -124,12 +206,28 @@ func _draw() -> void:
 
 	if show_detail_explanation:
 		var text_y := size.y * 0.82 if use_art_background else 70.0
-		var main_text := "失败药水" if bool(prediction.get("failed", false)) else str(prediction.get("main_effect_id", ""))
-		var secondary := str(prediction.get("secondary_effect_id", ""))
-		var text := "色值 %.3f　主效：%s　副效：%s　品质 %.2f" % [
-			mixed_x, main_text, secondary if not secondary.is_empty() else "无", float(prediction.get("quality", 0.0)),
-		]
-		draw_string(ThemeDB.fallback_font, Vector2(size.x * 0.08, text_y), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#4a301c"))
+		if bool(prediction.get("failed", false)):
+			var text := "色值 %.3f　失败药水　品质 %.2f" % [mixed_x, float(prediction.get("quality", 0.0))]
+			draw_string(ThemeDB.fallback_font, Vector2(size.x * 0.08, text_y), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#4a301c"))
+		else:
+			var func_def := get_spectrum_function(mixed_x)
+			var text := ""
+			if func_def != null:
+				if is_function_unlocked(func_def):
+					text = "色值 %.3f　主功能：%s　副功能：%s　品质 %.2f" % [
+						mixed_x, func_def.primary_tag, func_def.secondary_tag, float(prediction.get("quality", 0.0)),
+					]
+				else:
+					text = "色值 %.3f　主副功能：装瓶后显示　品质 %.2f" % [
+						mixed_x, float(prediction.get("quality", 0.0)),
+					]
+			else:
+				var main_text := str(prediction.get("main_effect_id", ""))
+				var secondary := str(prediction.get("secondary_effect_id", ""))
+				text = "色值 %.3f　主效：%s　副效：%s　品质 %.2f" % [
+					mixed_x, main_text, secondary if not secondary.is_empty() else "无", float(prediction.get("quality", 0.0)),
+				]
+			draw_string(ThemeDB.fallback_font, Vector2(size.x * 0.08, text_y), text, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color("#4a301c"))
 
 
 func _draw_alignment_guides(band: Rect2) -> void:

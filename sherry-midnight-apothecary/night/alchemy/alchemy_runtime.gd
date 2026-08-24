@@ -112,6 +112,11 @@ func _ready() -> void:
 		temperature_slider.set_value_no_signal(temperature)
 	unified_powder_shelf.setup(powder_shelf_state)
 	production_panel.setup(self, ingredients, powder_shelf_state)
+	if analyzer != null and spectrum_codex_panel != null:
+		analyzer.setup(spectrum_codex_panel.catalog, spectrum_codex_panel.unlock_state)
+	if production_panel != null and spectrum_codex_panel != null:
+		production_panel.catalog = spectrum_codex_panel.catalog
+		production_panel.unlock_state = spectrum_codex_panel.unlock_state
 	_update_navigation_arrows()
 	_snap_to_current_panel()
 	_refresh_ui()

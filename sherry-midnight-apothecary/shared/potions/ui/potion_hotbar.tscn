@@ -4,6 +4,22 @@
 [ext_resource type="PackedScene" path="res://shared/potions/ui/potion_order_panel.tscn" id="2_order_panel"]
 [ext_resource type="PackedScene" path="res://shared/potions/ui/potion_hotbar_slot.tscn" id="3_slot"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBox_charge"]
+bg_color = Color(0.075, 0.055, 0.11, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.61, 0.28, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 12.0
+content_margin_top = 9.0
+content_margin_right = 12.0
+content_margin_bottom = 9.0
+
 [node name="PotionHotbar" type="CanvasLayer" unique_id=1186992884]
 layer = 90
 script = ExtResource("1_hotbar")
@@ -60,6 +76,57 @@ layout_mode = 2
 [node name="Slot8" parent="UI/Slots" unique_id=106053203 instance=ExtResource("3_slot")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="ChargePanel" type="PanelContainer" parent="UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 108.0
+offset_top = -74.0
+offset_right = 380.0
+offset_bottom = 74.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_charge")
+
+[node name="VBox" type="VBoxContainer" parent="UI/ChargePanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="UI/ChargePanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.45, 1)
+theme_override_font_sizes/font_size = 16
+text = "药水蓄能"
+
+[node name="ChargeBar" type="ProgressBar" parent="UI/ChargePanel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(248, 16)
+layout_mode = 2
+max_value = 25.0
+value = 5.0
+show_percentage = false
+
+[node name="ChargeDoseLabel" type="Label" parent="UI/ChargePanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.94, 1, 1)
+text = "预计消耗  5%"
+
+[node name="ChargeEffectLabel" type="Label" parent="UI/ChargePanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.9, 1, 1)
+text = "效果叠加  ×1.00 / ×4"
+
+[node name="ChargeWarningLabel" type="Label" parent="UI/ChargePanel/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.35, 1)
+theme_override_font_sizes/font_size = 12
+text = "效果已达上限，继续蓄力只增加消耗"
 
 [node name="OrderPanel" parent="UI" unique_id=489319207 instance=ExtResource("2_order_panel")]
 unique_name_in_owner = true

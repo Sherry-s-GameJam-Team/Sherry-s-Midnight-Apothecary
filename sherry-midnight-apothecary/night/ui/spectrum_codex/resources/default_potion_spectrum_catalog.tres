@@ -1,17 +1,15 @@
-[gd_resource type="Resource" script_class="PotionSpectrumCatalog" load_steps=31 format=3 uid="uid://bcfcdxcat001"]
+[gd_resource type="Resource" script_class="PotionSpectrumCatalog" format=3 uid="uid://bcfcdxcat001"]
 
-[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_band.gd" id="1_band"]
-[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_function_definition.gd" id="2_func"]
-[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_recipe_definition.gd" id="3_rec"]
-[ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_catalog.gd" id="4_cat"]
+[ext_resource type="Script" uid="uid://fqm6wlt8n6cr" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_band.gd" id="1_band"]
+[ext_resource type="Script" uid="uid://dqv2ylhv5gaku" path="res://night/ui/spectrum_codex/scripts/potion_function_definition.gd" id="2_func"]
+[ext_resource type="Script" uid="uid://dkthqpbd410y7" path="res://night/ui/spectrum_codex/scripts/potion_recipe_definition.gd" id="3_rec"]
+[ext_resource type="Script" uid="uid://dgebd70h7pwpo" path="res://night/ui/spectrum_codex/scripts/potion_spectrum_catalog.gd" id="4_cat"]
 
 [sub_resource type="Resource" id="Band_Red"]
 script = ExtResource("1_band")
 id = &"band_red"
 display_name = "红光波段 · 赤绯"
 color = Color(0.85, 0.26, 0.21, 1)
-order = 0
-spectrum_min = 0.0
 spectrum_max = 0.1428
 primary_effect_name = "止血、循环"
 description = "红光波段主掌血液与脉络涌动。高浓度赤色药液能迅速收敛创口或加速体内微循环。"
@@ -78,7 +76,6 @@ display_name = "紫光波段 · 幻堇"
 color = Color(0.56, 0.27, 0.68, 1)
 order = 6
 spectrum_min = 0.8571
-spectrum_max = 1.0
 primary_effect_name = "镇静、精神"
 description = "紫光波段直达深层神识，能够抚平狂躁的思绪或激发不可思议的精神洞察。"
 
@@ -90,10 +87,7 @@ display_name = "快速凝血"
 description = "收敛血管创口，使血液迅速凝固成保护薄膜。"
 primary_tag = &"止血"
 secondary_tag = &"止血"
-sort_index = 0
 spectrum_position = 0.05
-matrix_row = 0
-matrix_col = 0
 
 [sub_resource type="Resource" id="Func_Circulation"]
 script = ExtResource("2_func")
@@ -104,8 +98,7 @@ description = "加速周身血液循环，使药力在体内迅速散布。"
 primary_tag = &"止血"
 secondary_tag = &"循环"
 sort_index = 1
-spectrum_position = 0.10
-matrix_row = 0
+spectrum_position = 0.1
 matrix_col = 1
 
 [sub_resource type="Resource" id="Func_VigorBoost"]
@@ -116,7 +109,6 @@ display_name = "体力激发"
 description = "刺激器官机能，恢复持续剧烈活动造成的体力亏空。"
 primary_tag = &"活化"
 secondary_tag = &"体力"
-sort_index = 0
 spectrum_position = 0.19
 matrix_row = 1
 matrix_col = 2
@@ -142,10 +134,8 @@ display_name = "神经镇痛"
 description = "阻断痛觉中枢传递，防止因剧痛休克。"
 primary_tag = &"镇痛"
 secondary_tag = &"止血"
-sort_index = 0
 spectrum_position = 0.33
 matrix_row = 2
-matrix_col = 0
 
 [sub_resource type="Resource" id="Func_AntiInflam"]
 script = ExtResource("2_func")
@@ -168,10 +158,8 @@ display_name = "组织修复"
 description = "填补表皮与真皮创损，平滑缝合创痕。"
 primary_tag = &"修复"
 secondary_tag = &"止血"
-sort_index = 0
 spectrum_position = 0.47
 matrix_row = 3
-matrix_col = 0
 
 [sub_resource type="Resource" id="Func_CellRegrowth"]
 script = ExtResource("2_func")
@@ -194,7 +182,6 @@ display_name = "寒霜降温"
 description = "迅速降低局部组织过高温度，平复烈火与灼伤。"
 primary_tag = &"降温"
 secondary_tag = &"稳定"
-sort_index = 0
 spectrum_position = 0.62
 matrix_row = 4
 matrix_col = 5
@@ -220,7 +207,6 @@ display_name = "毒素分解"
 description = "瓦解进入体内的植物或魔物毒素分子链。"
 primary_tag = &"净化"
 secondary_tag = &"抗炎"
-sort_index = 0
 spectrum_position = 0.76
 matrix_row = 5
 matrix_col = 3
@@ -246,8 +232,7 @@ display_name = "意识安抚"
 description = "引导过度紧绷的精神进入恬静深沉的沉眠状态。"
 primary_tag = &"镇静"
 secondary_tag = &"体力"
-sort_index = 0
-spectrum_position = 0.90
+spectrum_position = 0.9
 matrix_row = 6
 matrix_col = 2
 
@@ -272,9 +257,6 @@ display_name = "凝血软膏"
 description = "采用赤红草本初温萃取的经典外敷药膏，能立刻封堵表层渗血。"
 primary_tag = &"止血"
 secondary_tag = &"止血"
-matrix_row = 0
-matrix_col = 0
-is_special = false
 unlock_hint = "使用红色草药进行常温研磨萃取"
 
 [sub_resource type="Resource" id="Rec_DeepClot"]
@@ -285,7 +267,6 @@ display_name = "深创封堵灵剂"
 description = "高纯度浓缩的深红晶液，可在数秒内形成强韧胶体封堵重度创伤。"
 primary_tag = &"止血"
 secondary_tag = &"循环"
-matrix_row = 0
 matrix_col = 1
 is_special = true
 unlock_hint = "赤色精粹与循环辅料在高温下浓缩反应"
@@ -298,9 +279,7 @@ display_name = "暖脉灵药"
 description = "温润的赤橙药液，驱散体内严寒并使虚弱的脉搏重新平稳有力。"
 primary_tag = &"止血"
 secondary_tag = &"循环"
-matrix_row = 0
 matrix_col = 1
-is_special = false
 unlock_hint = "红橙双色交界处稳定慢速搅拌"
 
 [sub_resource type="Resource" id="Rec_VitalityDraft"]
@@ -313,7 +292,6 @@ primary_tag = &"活化"
 secondary_tag = &"体力"
 matrix_row = 1
 matrix_col = 2
-is_special = false
 unlock_hint = "橙色根茎切片于中温浸泡"
 
 [sub_resource type="Resource" id="Rec_TigerEssence"]
@@ -338,8 +316,6 @@ description = "金黄色的清亮滴剂，几滴即可让灼痛或撕裂感显�
 primary_tag = &"镇痛"
 secondary_tag = &"止血"
 matrix_row = 2
-matrix_col = 0
-is_special = false
 unlock_hint = "黄花精油滴入冷凝管过滤"
 
 [sub_resource type="Resource" id="Rec_GoldenSalve"]
@@ -364,8 +340,6 @@ description = "采集林间翠绿地衣制成，能迅速促使擦伤与割伤�
 primary_tag = &"修复"
 secondary_tag = &"止血"
 matrix_row = 3
-matrix_col = 0
-is_special = false
 unlock_hint = "翠绿苔藓经过低温研磨蒸馏"
 
 [sub_resource type="Resource" id="Rec_EmeraldDew"]
@@ -391,7 +365,6 @@ primary_tag = &"降温"
 secondary_tag = &"稳定"
 matrix_row = 4
 matrix_col = 5
-is_special = false
 unlock_hint = "悬崖冰晶融水低火搅拌"
 
 [sub_resource type="Resource" id="Rec_TranquilCrystal"]
@@ -417,7 +390,6 @@ primary_tag = &"净化"
 secondary_tag = &"抗炎"
 matrix_row = 5
 matrix_col = 3
-is_special = false
 unlock_hint = "深蓝浆果于蒸馏器中反复净化"
 
 [sub_resource type="Resource" id="Rec_HolyTide"]
@@ -443,7 +415,6 @@ primary_tag = &"镇静"
 secondary_tag = &"体力"
 matrix_row = 6
 matrix_col = 2
-is_special = false
 unlock_hint = "紫罗兰夜露以微火轻摇调匀"
 
 [sub_resource type="Resource" id="Rec_AstralClarity"]

@@ -55,7 +55,7 @@ extends Resource
 
 # ─── Purification ───
 @export_group("Purification")
-@export var final_purify_required: bool = true
+@export var final_purify_required: bool = false
 
 # ─── Clock Birds ───
 @export_group("Clock Birds")

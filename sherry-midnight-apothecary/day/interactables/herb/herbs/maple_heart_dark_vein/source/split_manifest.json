@@ -1,0 +1,38 @@
+{
+  "herb_id": "maple_heart_dark_vein",
+  "display_name_zh": "枫心乌脉",
+  "english_name": "Mapleheart Dark Vein",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "maple_heart_dark_vein_piece_01",
+      "source_rect": [
+        744,
+        1046,
+        2082,
+        2909
+      ]
+    },
+    {
+      "id": "maple_heart_dark_vein_piece_02",
+      "source_rect": [
+        222,
+        728,
+        1990,
+        3118
+      ]
+    },
+    {
+      "id": "maple_heart_dark_vein_piece_03",
+      "source_rect": [
+        2011,
+        793,
+        1879,
+        3225
+      ]
+    }
+  ]
+}

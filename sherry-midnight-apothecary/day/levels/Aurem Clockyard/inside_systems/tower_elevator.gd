@@ -36,6 +36,9 @@ func unlock_and_activate() -> void:
 	is_unlocked = true
 	visible = true
 	position = start_position
+	if ride_area != null:
+		ride_area.monitoring = true
+		ride_area.monitorable = true
 	if glow_sprite != null:
 		glow_sprite.visible = true
 		var tween := create_tween()
@@ -46,6 +49,17 @@ func unlock_and_activate() -> void:
 		var audio: Node = get_tree().get_first_node_in_group("clocktower_audio")
 		if audio != null and audio.has_method("play_gear_clack"):
 			audio.call("play_gear_clack")
+
+
+func hide_for_boss_battle() -> void:
+	visible = false
+	_player_on_elevator = false
+	if ride_area != null:
+		ride_area.monitoring = false
+		ride_area.monitorable = false
+	var top_hint := _find_top_hint()
+	if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+		top_hint.call("hide_interaction_hint", "elevator_hint")
 
 
 func _unhandled_input(event: InputEvent) -> void:

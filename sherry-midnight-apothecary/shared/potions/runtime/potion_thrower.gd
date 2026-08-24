@@ -8,7 +8,7 @@ const PROJECTILE_SCENE := preload("res://shared/potions/runtime/potion_projectil
 @export var throw_tuning: PotionThrowTuning
 @export var effect_tuning: PotionEffectTuning
 @export var tutorial_hint_id := "tutorial_throw_potion"
-@export_multiline var tutorial_hint_text := "按住鼠标左键瞄准，松开即可投掷药水。"
+@export_multiline var tutorial_hint_text := "按住鼠标左键瞄准并蓄能；25%剂量达到4倍效果，继续蓄力只会增加消耗。"
 @export var default_definitions: Array[PotionData] = []
 @export var potion_definitions: Array[PotionData] = []
 
@@ -29,6 +29,10 @@ var _original_time_scale := 1.0
 var _active_projectile: PotionProjectile
 var _mechanism_mode := false
 var _mechanism_potion_id: StringName = &"purification_potion"
+var _aim_started_at_msec := 0
+var _pending_aim_seconds := 0.0
+var _pending_dose := 0.05
+var _pending_effect_multiplier := 1.0
 
 
 func _ready() -> void:
@@ -44,6 +48,7 @@ func _process(_delta: float) -> void:
 	if inventory_service == null:
 		_connect_player_data()
 	if _aiming:
+		_refresh_aim_charge()
 		_update_aim_preview()
 
 
@@ -100,6 +105,9 @@ func on_cast_release() -> void:
 		projectile.queue_free()
 		_abort_cast()
 		return
+	payload["aim_duration_seconds"] = _pending_aim_seconds
+	payload["consumed_dose"] = 0.0 if _mechanism_mode else _pending_dose
+	payload["effect_stack_multiplier"] = 1.0 if _mechanism_mode else _pending_effect_multiplier
 	projectile.configure(_pending_velocity, payload, potion, throw_tuning, effect_tuning)
 	_active_projectile = projectile
 	projectile_spawned.emit(projectile)
@@ -127,6 +135,9 @@ func cancel_aim() -> void:
 	_casting = false
 	trajectory_preview.hide_preview()
 	magic_circle.hide_circle()
+	if hotbar != null:
+		hotbar.hide_charge_preview()
+	_reset_aim_charge()
 	_restore_time()
 
 
@@ -164,12 +175,17 @@ func _begin_aim() -> bool:
 	_original_time_scale = 1.0
 	Engine.time_scale = throw_tuning.aim_time_scale
 	_aiming = true
+	_aim_started_at_msec = Time.get_ticks_msec()
+	_pending_aim_seconds = 0.0
+	_pending_dose = throw_tuning.dose_per_throw
+	_pending_effect_multiplier = 1.0
 	_show_throw_tutorial_once()
 	_drag_start_mouse = get_global_mouse_position()
 	_update_origin()
 	var potion: PotionData = _definition_by_id[potion_id]
 	var next := inventory_service.get_next_instance(potion_id) if inventory_service != null else {}
 	magic_circle.show_circle(PotionColorResolver.resolve(potion, next))
+	_refresh_aim_charge()
 	return true
 
 
@@ -178,9 +194,20 @@ func _finish_aim() -> void:
 	if drag.length() < throw_tuning.minimum_valid_drag_distance:
 		cancel_aim()
 		return
+	_refresh_aim_charge()
+	if not _mechanism_mode:
+		# Replace the minimum reservation with the actual charged dose only once
+		# the player has committed to a valid throw.
+		inventory_service.cancel_reservation(_reservation)
+		_reservation = inventory_service.reserve_dose(selected_potion_id(), _pending_dose)
+		if _reservation == null:
+			cancel_aim()
+			return
 	_pending_velocity = _velocity_from_drag(drag)
 	_aiming = false
 	trajectory_preview.hide_preview()
+	if hotbar != null:
+		hotbar.hide_charge_preview()
 	if get_parent().has_method("play_potion_cast"):
 		get_parent().call("play_potion_cast")
 	else:
@@ -194,6 +221,47 @@ func _update_aim_preview() -> void:
 		get_parent().call("set_potion_aim_facing", launch_velocity.x > 0.0)
 	_update_origin()
 	trajectory_preview.update_preview(aim_origin.global_position, launch_velocity, throw_tuning, [get_parent().get_rid()])
+
+
+func _refresh_aim_charge() -> void:
+	if not _aiming or throw_tuning == null:
+		return
+	_pending_aim_seconds = maxf(float(Time.get_ticks_msec() - _aim_started_at_msec) / 1000.0, 0.0)
+	if _mechanism_mode:
+		_pending_dose = 0.0
+		_pending_effect_multiplier = 1.0
+		if hotbar != null:
+			hotbar.hide_charge_preview()
+		return
+	var desired_dose := calculate_dose_for_aim_time(_pending_aim_seconds, throw_tuning)
+	var available_dose := inventory_service.get_total_dose(selected_potion_id()) if inventory_service != null else 0.0
+	_pending_dose = minf(desired_dose, available_dose)
+	_pending_effect_multiplier = calculate_effect_multiplier(_pending_dose, throw_tuning)
+	if hotbar != null:
+		hotbar.show_charge_preview(
+			_pending_dose,
+			_pending_effect_multiplier,
+			throw_tuning.effect_stack_dose_threshold,
+			throw_tuning.maximum_effect_multiplier
+		)
+
+
+static func calculate_dose_for_aim_time(aim_seconds: float, tuning: PotionThrowTuning) -> float:
+	if tuning == null:
+		return 0.05
+	var minimum := clampf(tuning.dose_per_throw, 0.01, 1.0)
+	var maximum := clampf(tuning.maximum_dose_per_throw, minimum, 1.0)
+	var charged := minimum + maxf(aim_seconds, 0.0) * maxf(tuning.dose_charge_per_second, 0.0)
+	return clampf(snappedf(charged, 0.01), minimum, maximum)
+
+
+static func calculate_effect_multiplier(dose: float, tuning: PotionThrowTuning) -> float:
+	if tuning == null:
+		return 1.0
+	var minimum := clampf(tuning.dose_per_throw, 0.01, 1.0)
+	var threshold := maxf(tuning.effect_stack_dose_threshold, minimum)
+	var progress := clampf(inverse_lerp(minimum, threshold, maxf(dose, minimum)), 0.0, 1.0) if threshold > minimum else 1.0
+	return lerpf(1.0, maxf(tuning.maximum_effect_multiplier, 1.0), progress)
 
 
 func _velocity_from_drag(drag: Vector2) -> Vector2:
@@ -280,7 +348,17 @@ func _abort_cast() -> void:
 			inventory_service.cancel_reservation(_reservation)
 		_reservation = null
 	magic_circle.hide_circle()
+	if hotbar != null:
+		hotbar.hide_charge_preview()
+	_reset_aim_charge()
 	_restore_time()
+
+
+func _reset_aim_charge() -> void:
+	_aim_started_at_msec = 0
+	_pending_aim_seconds = 0.0
+	_pending_dose = throw_tuning.dose_per_throw if throw_tuning != null else 0.05
+	_pending_effect_multiplier = 1.0
 
 
 func _should_block_for_console(event: InputEvent) -> bool:

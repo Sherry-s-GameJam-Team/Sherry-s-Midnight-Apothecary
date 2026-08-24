@@ -1,12 +1,12 @@
-﻿class_name HelionBoss
+class_name HelionBoss
 extends Node2D
-## 鍗佷簩鍒诲畧鏈涜€吢疯但鍒╂槀  /  Helion, Warden of the Twelve
+## 十二刻守望者·赫利昂  /  Helion, Warden of the Twelve
 ##
 ## Main boss controller with dual state machine (Phase + AttackState),
-## animation-cue-driven gameplay, and data-driven configuration.
-## Does NOT: switch scenes, modify DayRuntime, control player, save game.
+## active bullet hell/barrage attack execution, smooth floating hover effect,
+## and potion-responsive core vulnerability mechanics.
 
-# 鈹€鈹€鈹€ Signals 鈹€鈹€鈹€
+# ─── Signals ───
 signal health_changed(current_hp: int, max_hp: int)
 signal phase_changed(new_phase: int)
 signal core_exposed(is_exposed: bool)
@@ -14,7 +14,7 @@ signal boss_defeated(boss_id: StringName)
 signal boss_started
 signal attack_state_changed(new_state: int)
 
-# 鈹€鈹€鈹€ Enums 鈹€鈹€鈹€
+# ─── Enums ───
 enum Phase {
 	INTRO,
 	PHASE_1,
@@ -35,11 +35,11 @@ enum AttackState {
 	RECOVERY,
 }
 
-# 鈹€鈹€鈹€ Config 鈹€鈹€鈹€
+# ─── Config ───
 @export var config: HelionBossConfig
 @export var cues_resource: HelionAnimationCues
 
-# 鈹€鈹€鈹€ State 鈹€鈹€鈹€
+# ─── State ───
 var current_phase: Phase = Phase.INTRO
 var current_attack: AttackState = AttackState.IDLE
 var current_hp: int = 2000
@@ -47,13 +47,20 @@ var is_core_exposed: bool = false
 var is_hostile: bool = true
 var is_battle_active: bool = false
 
+const HelionBarrageControllerScript = preload("res://day/levels/Aurem Clockyard/boss/helion/battle/helion_barrage_controller.gd")
+
 var _last_attacks: Array[AttackState] = []
 var _phase3_transform_played: bool = false
 var _final_sequence_started: bool = false
 var _purify_hit_received: bool = false
 var _hit_count_since_sweep: int = 0
 
-# 鈹€鈹€鈹€ Node References 鈹€鈹€鈹€
+# Floating / Bobbing motion
+var _float_time: float = 0.0
+var _base_visual_pos: Vector2 = Vector2.ZERO
+var _barrage_ctrl: Node2D = null
+
+# ─── Node References ───
 @onready var visual_root: Node2D = $VisualRoot
 @onready var sprite: AnimatedSprite2D = $VisualRoot/AnimatedSprite2D
 @onready var core_glow: CanvasItem = $VisualRoot/CoreGlow
@@ -74,8 +81,23 @@ var _arena: Node2D = null
 
 
 func _ready() -> void:
+	add_to_group("potion_target")
+	add_to_group("boss")
+
 	if config != null:
 		current_hp = config.max_hp
+
+	if visual_root != null:
+		_base_visual_pos = visual_root.position
+
+	# Initialize Barrage Controller
+	_barrage_ctrl = HelionBarrageControllerScript.new()
+	_barrage_ctrl.name = "BarrageController"
+	_barrage_ctrl.call("setup", self)
+	if projectile_root != null:
+		projectile_root.add_child(_barrage_ctrl)
+	else:
+		add_child(_barrage_ctrl)
 
 	# Connect sprite frame changes for cue dispatch
 	if sprite != null:
@@ -87,8 +109,17 @@ func _ready() -> void:
 		attack_timer.one_shot = true
 		attack_timer.timeout.connect(_on_attack_timer_timeout)
 
+	# Body hurtbox starts active on layer 4 for potion collisions
+	if body_hurtbox != null:
+		body_hurtbox.collision_layer = 4
+		body_hurtbox.collision_mask = 0
+		body_hurtbox.monitoring = true
+		body_hurtbox.monitorable = true
+
 	# Core hurtbox starts disabled
 	if core_hurtbox != null:
+		core_hurtbox.collision_layer = 4
+		core_hurtbox.collision_mask = 0
 		core_hurtbox.monitorable = false
 		core_hurtbox.monitoring = false
 
@@ -105,6 +136,19 @@ func _ready() -> void:
 				break
 
 
+func _process(delta: float) -> void:
+	# Floating / Bobbing hover motion
+	_float_time += delta * 2.2
+	if visual_root != null:
+		var bob_y := sin(_float_time) * 16.0
+		var sway_x := sin(_float_time * 0.7) * 5.0
+		visual_root.position = _base_visual_pos + Vector2(sway_x, bob_y)
+
+
+func set_arena(arena: Node2D) -> void:
+	_arena = arena
+
+
 func begin_battle() -> void:
 	is_battle_active = true
 	is_hostile = true
@@ -118,12 +162,11 @@ func begin_battle() -> void:
 		rewind_recorder.call("start_recording")
 
 
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  PHASE STATE MACHINE
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
+# ─── PHASE STATE MACHINE ───
+
 func _set_phase(new_phase: Phase) -> void:
 	if current_phase == new_phase:
 		return
-	var old := current_phase
 	current_phase = new_phase
 	phase_changed.emit(int(new_phase))
 
@@ -131,7 +174,6 @@ func _set_phase(new_phase: Phase) -> void:
 		Phase.PHASE_1:
 			pass
 		Phase.PHASE_2:
-			# Start recording player for rewind
 			if rewind_recorder != null and rewind_recorder.has_method("start_recording"):
 				rewind_recorder.call("start_recording")
 		Phase.PHASE_3_TRANSITION:
@@ -150,6 +192,13 @@ func _check_phase_transition() -> void:
 
 	var hp_ratio: float = float(current_hp) / float(config.max_hp)
 
+	if config.final_purify_required and current_hp <= 1:
+		_set_phase(Phase.PURIFICATION_REQUIRED)
+		return
+	elif not config.final_purify_required and current_hp <= 0:
+		_set_phase(Phase.DEFEATED)
+		return
+
 	match current_phase:
 		Phase.PHASE_1:
 			if hp_ratio <= config.phase2_threshold:
@@ -160,10 +209,6 @@ func _check_phase_transition() -> void:
 		Phase.PHASE_3_TRANSITION, Phase.PHASE_3:
 			if not _final_sequence_started and hp_ratio <= config.final_sequence_threshold:
 				_begin_final_sequence()
-			if config.final_purify_required and current_hp <= 1:
-				_set_phase(Phase.PURIFICATION_REQUIRED)
-			elif not config.final_purify_required and current_hp <= 0:
-				_set_phase(Phase.DEFEATED)
 
 
 func _begin_phase3_transition() -> void:
@@ -175,10 +220,13 @@ func _begin_phase3_transition() -> void:
 	_play_animation(HelionAnimationMap.PHASE3_TRANSFORM)
 	_emit_audio_cue(&"phase3_transform")
 
+	# Screen blast
+	if _barrage_ctrl != null:
+		_barrage_ctrl.spawn_celestial_dial_burst(global_position + Vector2(0, -60), 18)
+
 
 func _begin_final_sequence() -> void:
 	_final_sequence_started = true
-	# Pause normal attacks and run twelve tolls via floor controller
 	if attack_timer != null:
 		attack_timer.stop()
 
@@ -193,13 +241,14 @@ func _begin_final_sequence() -> void:
 
 
 func _on_final_tolls_finished() -> void:
-	# After final tolls, play time_ring_burst and fully expose core
 	_set_attack_state(AttackState.RING_BURST)
 	_play_animation(HelionAnimationMap.TIME_RING_BURST)
+	if _barrage_ctrl != null:
+		_barrage_ctrl.spawn_celestial_dial_burst(global_position, 20)
+		_barrage_ctrl.spawn_astrolabe_shockwave(global_position, 15)
 
 
 func _enter_purification_required() -> void:
-	# Stop most attacks, expose core permanently
 	if attack_timer != null:
 		attack_timer.stop()
 	_set_attack_state(AttackState.IDLE)
@@ -216,33 +265,26 @@ func _enter_defeated() -> void:
 	_set_attack_state(AttackState.RECOVERY)
 	_set_core_exposed(false)
 
-	# Disable all hurtboxes
 	if body_hurtbox != null:
 		body_hurtbox.monitorable = false
 	if core_hurtbox != null:
 		core_hurtbox.monitorable = false
 
-	# Stop rewind recorder
 	if rewind_recorder != null and rewind_recorder.has_method("stop_recording"):
 		rewind_recorder.call("stop_recording")
 
-	# Play recovery animation, then purified_idle
 	_play_animation(HelionAnimationMap.RECOVERY)
-	# animation_finished will transition to purified_idle
 
-	# Restore floor
 	var floor_ctrl: Node = _find_floor_controller()
 	if floor_ctrl != null and floor_ctrl.has_method("restore_all"):
 		floor_ctrl.call("restore_all")
 
 	_emit_audio_cue(&"boss_purified")
-
-	# Signal (delayed to allow recovery animation to start)
 	boss_defeated.emit(&"helion")
 
 
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  ATTACK STATE MACHINE
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
+# ─── ATTACK STATE MACHINE & BARRAGE EXECUTION ───
+
 func _set_attack_state(state: AttackState) -> void:
 	current_attack = state
 	attack_state_changed.emit(int(state))
@@ -251,23 +293,21 @@ func _set_attack_state(state: AttackState) -> void:
 func _schedule_next_attack() -> void:
 	if not is_battle_active or current_phase == Phase.DEFEATED:
 		return
-	if current_phase == Phase.PURIFICATION_REQUIRED:
-		return
-	if current_phase == Phase.PHASE_3_TRANSITION:
+	if current_phase == Phase.PURIFICATION_REQUIRED or current_phase == Phase.PHASE_3_TRANSITION:
 		return
 
-	if config == null:
-		return
-	var wait: float = randf_range(config.attack_interval_min, config.attack_interval_max)
+	var min_wait: float = config.attack_interval_min if config != null else 2.2
+	var max_wait: float = config.attack_interval_max if config != null else 3.8
+	var wait := randf_range(min_wait, max_wait)
+
 	if attack_timer != null:
 		attack_timer.start(wait)
 
 
 func _on_attack_timer_timeout() -> void:
-	if not is_battle_active:
+	if not is_battle_active or current_phase == Phase.DEFEATED:
 		return
 	if current_attack != AttackState.IDLE:
-		# Still in an attack, reschedule
 		_schedule_next_attack()
 		return
 
@@ -280,7 +320,6 @@ func _pick_next_attack() -> AttackState:
 	match current_phase:
 		Phase.PHASE_1:
 			pool = [AttackState.SWEEP, AttackState.CLOCK_DROP]
-			# Add clock bird spawning separately (not an attack state)
 		Phase.PHASE_2:
 			pool = [AttackState.SWEEP, AttackState.REWIND, AttackState.CLOCK_DROP]
 		Phase.PHASE_3:
@@ -289,11 +328,10 @@ func _pick_next_attack() -> AttackState:
 	if pool.is_empty():
 		return AttackState.IDLE
 
-	# Prevent 3 consecutive same attacks
-	var picked: AttackState = pool.pick_random()
+	var picked: AttackState = pool[randi() % pool.size()]
 	var attempts: int = 0
 	while _would_triple(picked) and attempts < 10:
-		picked = pool.pick_random()
+		picked = pool[randi() % pool.size()]
 		attempts += 1
 
 	return picked
@@ -321,47 +359,89 @@ func _execute_attack(attack: AttackState) -> void:
 			_execute_ring_burst()
 
 
+## Pattern A: Clock Drop Bombardment (Heavy Gear Clusters + Fan Bullets)
+func _execute_clock_drop() -> void:
+	_set_attack_state(AttackState.CLOCK_DROP)
+	_find_player()
+
+	if _barrage_ctrl != null:
+		var arena_rect := _get_arena_rect()
+		var floor_y := arena_rect.position.y + arena_rect.size.y
+		var count: int = 2 if current_phase == Phase.PHASE_1 else 3
+
+		# Drop 1 targeting near player, others random
+		if _player != null:
+			_barrage_ctrl.spawn_heavy_gear_drop(Vector2(_player.global_position.x, floor_y), 0.9, config.clock_mark_damage if config else 14)
+			_barrage_ctrl.spawn_aimed_gear_fan(global_position + Vector2(0, -60), _player.global_position, 3, 30.0, 320.0, 10)
+
+		for i in range(count - 1):
+			var rx := randf_range(arena_rect.position.x + 80.0, arena_rect.position.x + arena_rect.size.x - 80.0)
+			_barrage_ctrl.spawn_heavy_gear_drop(Vector2(rx, floor_y), 1.1 + float(i) * 0.25, config.clock_mark_damage if config else 14)
+
+	_finish_attack_after(2.0)
+
+
+## Pattern B: Minute Sweep & 12-Hour Burst (Exposes Core for Counter-attack)
 func _execute_sweep() -> void:
 	_set_attack_state(AttackState.SWEEP)
 	_play_animation(HelionAnimationMap.MINUTE_SWEEP)
+	_find_player()
+
+	if _barrage_ctrl != null:
+		if _player != null:
+			_barrage_ctrl.spawn_aimed_gear_fan(global_position + Vector2(0, -50), _player.global_position, 5, 50.0, 360.0, 12)
+		if current_phase != Phase.PHASE_1:
+			_barrage_ctrl.spawn_12_clock_burst(global_position + Vector2(0, -50), 300.0, 10)
+
+	# Expose core window after sweep
+	_set_core_exposed(true)
+	var tree := get_tree()
+	if tree != null:
+		await tree.create_timer(3.2).timeout
+	_set_core_exposed(false)
+	_on_attack_finished()
 
 
-func _execute_clock_drop() -> void:
-	_set_attack_state(AttackState.CLOCK_DROP)
-	# Keep idle animation, spawn drops via sector warning
-	var warning_node := projectile_root.get_node_or_null("ClockSectorWarning") as Node
-	if warning_node == null:
-		# Try finding it elsewhere
-		warning_node = get_node_or_null("AttackRoot/ProjectileRoot/ClockSectorWarning")
-
-	if warning_node != null and warning_node.has_method("execute_random_drops"):
-		var count: int = 2 if current_phase == Phase.PHASE_1 else 3
-		var arena_rect := _get_arena_rect()
-		var dmg: int = config.clock_mark_damage if config else 12
-		warning_node.call("execute_random_drops", count, arena_rect, dmg)
-		if warning_node.has_signal("drops_finished"):
-			if not warning_node.is_connected("drops_finished", _on_attack_finished):
-				warning_node.connect("drops_finished", _on_attack_finished, CONNECT_ONE_SHOT)
-	else:
-		# No warning node, just finish
-		_on_attack_finished()
-
-
+## Pattern C: Rewind & Spiral Storm
 func _execute_rewind() -> void:
 	_set_attack_state(AttackState.REWIND)
 	_play_animation(HelionAnimationMap.REWIND_CAST)
 	_emit_audio_cue(&"rewind_charge")
 
+	if _barrage_ctrl != null:
+		_barrage_ctrl.spawn_spiral_stream(global_position + Vector2(0, -50), 6, 0.09, 10)
 
+	_finish_attack_after(2.2)
+
+
+## Pattern D: Celestial Dial & Astrolabe Burst
 func _execute_ring_burst() -> void:
 	_set_attack_state(AttackState.RING_BURST)
 	_play_animation(HelionAnimationMap.TIME_RING_BURST)
 
+	if _barrage_ctrl != null:
+		_barrage_ctrl.spawn_celestial_dial_burst(global_position + Vector2(0, -60), config.ring_damage if config else 16)
+		_barrage_ctrl.spawn_astrolabe_shockwave(global_position + Vector2(0, -20), config.ring_damage - 3 if config else 13)
+		_barrage_ctrl.spawn_12_clock_burst(global_position + Vector2(0, -50), 340.0, 12, 15.0)
+
+	_set_core_exposed(true)
+	var tree := get_tree()
+	if tree != null:
+		await tree.create_timer(3.8).timeout
+	_set_core_exposed(false)
+	_on_attack_finished()
+
+
+func _finish_attack_after(delay_sec: float) -> void:
+	var tree := get_tree()
+	if tree != null:
+		await tree.create_timer(delay_sec).timeout
+	_on_attack_finished()
+
 
 func _on_attack_finished() -> void:
 	_set_attack_state(AttackState.IDLE)
-	if current_phase == Phase.PHASE_3 or current_phase == Phase.PHASE_2 or current_phase == Phase.PHASE_1:
-		_play_animation(_get_idle_animation())
+	_play_animation(_get_idle_animation())
 	_schedule_next_attack()
 
 
@@ -373,218 +453,66 @@ func _get_idle_animation() -> StringName:
 			return HelionAnimationMap.IDLE
 
 
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  ANIMATION CUE DISPATCH
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
-func _on_sprite_frame_changed() -> void:
-	if cues_resource == null or sprite == null:
-		return
-	var anim_name: StringName = sprite.animation
-	var local_frame: int = sprite.frame
-	var active_cues: Array[StringName] = cues_resource.get_cues_at(anim_name, local_frame)
-	for cue_id: StringName in active_cues:
-		_dispatch_cue(cue_id)
+# ─── DAMAGE & POTION INTERACTION ───
+
+func deal_damage_to_player(amount: int, source_id: StringName = &"helion_attack") -> void:
+	if _arena != null and _arena.has_method("apply_damage_to_player"):
+		_arena.call("apply_damage_to_player", amount, source_id)
+	else:
+		var current: Node = self
+		while current != null:
+			if current.has_method("apply_player_damage"):
+				current.call("apply_player_damage", amount, source_id)
+				return
+			current = current.get_parent()
+		var runtime := get_node_or_null("/root/DayRuntime")
+		if runtime != null and runtime.has_method("apply_player_damage"):
+			runtime.call("apply_player_damage", amount, source_id)
 
 
-func _dispatch_cue(cue_id: StringName) -> void:
-	match cue_id:
-		# 鈹€鈹€ Sweep 鈹€鈹€
-		&"sweep_warning":
-			if sweep_root != null and sweep_root.has_method("show_warning"):
-				sweep_root.call("show_warning")
-			_emit_audio_cue(&"sweep_warning")
-
-		&"sweep_hitbox_on":
-			if sweep_root != null and sweep_root.has_method("activate_hitbox"):
-				var direction: int = 1 if randi() % 2 == 0 else -1
-				var dmg: int = config.sweep_damage if config else 15
-				sweep_root.call("begin_sweep", direction, dmg)
-				sweep_root.call("activate_hitbox")
-			_emit_audio_cue(&"sweep_release")
-
-		&"sweep_hitbox_off":
-			if sweep_root != null and sweep_root.has_method("deactivate_hitbox"):
-				sweep_root.call("deactivate_hitbox")
-
-		# 鈹€鈹€ Core Exposure 鈹€鈹€
-		&"core_expose":
-			_set_core_exposed(true)
-
-		&"core_close":
-			_set_core_exposed(false)
-			if current_attack == AttackState.SWEEP or current_attack == AttackState.REWIND:
-				_on_attack_finished()
-
-		# 鈹€鈹€ Rewind 鈹€鈹€
-		&"rewind_fx_begin":
-			if rewind_fx_root != null and rewind_fx_root.has_method("begin_distortion"):
-				rewind_fx_root.call("begin_distortion")
-
-		&"rewind_target_show":
-			_show_rewind_target()
-
-		&"rewind_commit":
-			_execute_rewind_commit()
-			_emit_audio_cue(&"rewind_commit")
-
-		&"rewind_end":
-			if rewind_fx_root != null and rewind_fx_root.has_method("end_distortion"):
-				rewind_fx_root.call("end_distortion")
-
-		# 鈹€鈹€ Phase 3 Transform 鈹€鈹€
-		&"clock_seals_begin":
-			_emit_audio_cue(&"phase3_transform")
-
-		&"phase3_arena_enable":
-			var floor_ctrl := _find_floor_controller()
-			if floor_ctrl != null and floor_ctrl.has_method("enable_sector_mode"):
-				floor_ctrl.call("enable_sector_mode")
-
-		&"phase3_ready":
-			_set_phase(Phase.PHASE_3)
-			_set_attack_state(AttackState.IDLE)
-			_play_animation(HelionAnimationMap.PHASE3_HOLD)
-			_schedule_next_attack()
-
-		# 鈹€鈹€ Ring Burst 鈹€鈹€
-		&"ring_warning":
-			_emit_audio_cue(&"time_ring_warning")
-
-		&"ring_spawn":
-			_spawn_time_ring()
-			_emit_audio_cue(&"time_ring_release")
-
-		&"ring_peak":
-			if ring_fx_root != null and ring_fx_root.has_method("ring_peak"):
-				ring_fx_root.call("ring_peak")
-
-		&"ring_damage_end":
-			pass  # Ring handles its own damage cutoff via time_ring_fx
-
-		&"ring_finished":
-			_set_core_exposed(true)
-			if current_attack == AttackState.RING_BURST:
-				# Brief exposure window, then close
-				if is_inside_tree():
-					var tree := get_tree()
-					if tree != null:
-						tree.create_timer(2.0).timeout.connect(func() -> void:
-							if current_phase != Phase.DEFEATED and current_phase != Phase.PURIFICATION_REQUIRED:
-								_set_core_exposed(false)
-								_on_attack_finished()
-						)
-
-
-func _on_animation_finished() -> void:
-	if sprite == null:
-		return
-	match sprite.animation:
-		HelionAnimationMap.MINUTE_SWEEP:
-			if current_attack == AttackState.SWEEP:
-				if sweep_root != null and sweep_root.has_method("finish"):
-					sweep_root.call("finish")
-		HelionAnimationMap.REWIND_CAST:
-			pass  # core_close cue handles transition
-		HelionAnimationMap.PHASE3_TRANSFORM:
-			pass  # phase3_ready cue handles transition
-		HelionAnimationMap.TIME_RING_BURST:
-			pass  # ring_finished cue handles transition
-		HelionAnimationMap.RECOVERY:
-			_play_animation(HelionAnimationMap.PURIFIED_IDLE)
-
-
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  REWIND MECHANIC
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
-func _show_rewind_target() -> void:
-	if rewind_recorder == null or not rewind_recorder.has_method("get_position_at"):
-		return
-	var seconds: float = config.rewind_seconds if config else 2.0
-	var target_pos: Vector2 = rewind_recorder.call("get_position_at", seconds)
-
-	if rewind_fx_root != null and rewind_fx_root.has_method("show_target"):
-		rewind_fx_root.call("show_target", target_pos)
-
-
-func _execute_rewind_commit() -> void:
-	if rewind_recorder == null or not rewind_recorder.has_method("execute_rewind"):
-		return
-	var seconds: float = config.rewind_seconds if config else 2.0
-	var arena_rect := _get_arena_rect()
-	var _result_pos: Vector2 = rewind_recorder.call("execute_rewind", seconds, arena_rect)
-
-	# Flash the afterimage
-	if rewind_fx_root != null and rewind_fx_root.has_method("highlight_and_commit"):
-		rewind_fx_root.call("highlight_and_commit")
-
-	# Brief rewind safety invulnerability
-	_apply_rewind_safety()
-
-
-func _apply_rewind_safety() -> void:
-	_find_player()
-	if _player == null:
-		return
-	# Use the player's existing invulnerability system if available
-	var safety_time: float = config.rewind_safety_time if config else 0.20
-	if _player.has_method("set_invulnerable"):
-		_player.call("set_invulnerable", safety_time)
-	elif _player.has_method("apply_iframes"):
-		_player.call("apply_iframes", safety_time)
-	# If player has no invulnerability API, the 0.2s is short enough to be safe
-
-
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  RING BURST
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
-func _spawn_time_ring() -> void:
-	if ring_fx_root == null or not ring_fx_root.has_method("spawn_ring"):
-		return
-	var dmg: int = config.ring_damage if config else 20
-	ring_fx_root.call("spawn_ring", global_position, dmg)
-
-
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  DAMAGE & POTION INTERFACE
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func receive_potion_hit(hit: Dictionary) -> void:
-	if current_phase == Phase.DEFEATED:
+	if not is_hostile or current_phase == Phase.DEFEATED:
 		return
 
-	var base_damage: float = float(hit.get("damage", 10))
+	if not is_battle_active:
+		begin_battle()
+		if _arena != null and _arena.has_method("trigger_boss_battle"):
+			_arena.call("trigger_boss_battle")
 
-	var is_purify := PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong")
-	var is_explosive := PotionCapabilityResolver.hit_has_capability(hit, &"impact")
+	var base_damage: float = float(hit.get("damage", 30))
+	var potion_name_str := str(hit.get("potion_id", "")).to_lower()
+	var is_purify := PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong") or PotionCapabilityResolver.hit_has_capability(hit, &"purify") or potion_name_str.contains("purif")
+	var is_explosive := PotionCapabilityResolver.hit_has_capability(hit, &"impact") or PotionCapabilityResolver.hit_has_capability(hit, &"fire")
+	var is_ice := PotionCapabilityResolver.hit_has_capability(hit, &"freeze")
 
-	# Calculate damage multiplier
-	var multiplier: float = 1.0
-	if config != null:
-		multiplier = config.exposed_damage_multiplier if is_core_exposed else config.normal_damage_multiplier
-		if is_explosive:
-			multiplier *= config.explosive_multiplier
-		if is_purify:
-			multiplier *= config.purify_multiplier
+	# Multipliers
+	var mult: float = 1.0
+	if is_core_exposed:
+		mult = 2.5
+	else:
+		mult = 0.5
 
-	var final_damage: int = maxi(1, roundi(base_damage * multiplier))
+	if is_explosive:
+		mult *= 1.4
+	if is_purify:
+		mult *= 1.8
 
-	# Handle purification requirement
-	if is_purify and (current_hp <= 1 or current_phase == Phase.PURIFICATION_REQUIRED):
+	if is_ice:
+		# Ice chills boss and pauses attack timer briefly
+		if attack_timer != null and not attack_timer.is_stopped():
+			attack_timer.start(attack_timer.time_left + 1.5)
+
+	var final_damage := maxi(5, roundi(base_damage * mult))
+
+	if is_purify and (current_hp <= 100 or current_phase == Phase.PURIFICATION_REQUIRED):
 		_purify_hit_received = true
 		_set_phase(Phase.DEFEATED)
 		return
-	elif current_phase == Phase.PURIFICATION_REQUIRED:
-		# Non-purify hits in purification phase do minimal chip damage
-		final_damage = 1
 
-	# Apply damage
 	_apply_boss_damage(final_damage)
 
-	# Hit feedback
 	if _hit_feedback != null and _hit_feedback.has_method("play_hit"):
-		if config != null:
-			_hit_feedback.call("play_hit",
-				config.hit_recoil_min_px,
-				config.hit_recoil_max_px,
-				config.hit_flash_duration,
-				config.hit_recoil_return_time)
-		else:
-			_hit_feedback.call("play_hit")
+		_hit_feedback.call("play_hit")
 
 	_emit_audio_cue(&"boss_hit")
 
@@ -609,7 +537,6 @@ func _set_core_exposed(exposed: bool) -> void:
 		core_hurtbox.monitorable = exposed
 		core_hurtbox.monitoring = exposed
 
-	# Visual feedback on core glow
 	if core_glow != null:
 		var target_alpha: float = 1.0 if exposed else 0.3
 		var tween := create_tween()
@@ -620,105 +547,80 @@ func _set_core_exposed(exposed: bool) -> void:
 		_emit_audio_cue(&"boss_break")
 
 
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  FLOOR SECTOR INTEGRATION (Phase 3)
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
-func _execute_floor_retract() -> void:
-	var floor_ctrl := _find_floor_controller()
-	if floor_ctrl == null:
-		return
+# ─── ANIMATION & CUE DISPATCH ───
 
-	# Cycle through round types
-	var round_methods: Array[String] = ["execute_round_1", "execute_round_2", "execute_round_3"]
-	var method: String = round_methods[_hit_count_since_sweep % round_methods.size()]
-	_hit_count_since_sweep += 1
-
-	var warn_time: float = config.sector_warning_time if config else 1.2
-	var retract_time: float = config.sector_retract_time if config else 1.4
-
-	if floor_ctrl.has_method(method):
-		floor_ctrl.call(method, warn_time, retract_time)
-
-
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?#  UTILITY
-# 鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺愨晲鈺?
 func _play_animation(anim_name: StringName) -> void:
 	if sprite != null and sprite.sprite_frames != null:
 		if sprite.sprite_frames.has_animation(anim_name):
 			sprite.play(anim_name)
 
 
+func _on_sprite_frame_changed() -> void:
+	if cues_resource == null or sprite == null:
+		return
+	var anim_name: StringName = sprite.animation
+	var local_frame: int = sprite.frame
+	var active_cues: Array[StringName] = cues_resource.get_cues_at(anim_name, local_frame)
+	for cue_id: StringName in active_cues:
+		_dispatch_cue(cue_id)
+
+
+func _dispatch_cue(cue_id: StringName) -> void:
+	match cue_id:
+		&"core_expose":
+			_set_core_exposed(true)
+		&"core_close":
+			_set_core_exposed(false)
+		&"boss_break":
+			_emit_audio_cue(&"boss_break")
+
+
+func _on_animation_finished() -> void:
+	if sprite == null:
+		return
+	var anim_name: StringName = sprite.animation
+	if anim_name == HelionAnimationMap.RECOVERY:
+		_play_animation(HelionAnimationMap.PURIFIED_IDLE)
+	elif anim_name == HelionAnimationMap.PHASE3_TRANSFORM:
+		_set_phase(Phase.PHASE_3)
+		_set_attack_state(AttackState.IDLE)
+		_play_animation(HelionAnimationMap.PHASE3_HOLD)
+		_schedule_next_attack()
+
+
 func _find_player() -> void:
 	if _player != null and is_instance_valid(_player):
 		return
-	if is_inside_tree():
-		var tree := get_tree()
-		if tree != null:
-			_player = tree.get_first_node_in_group("player") as Node2D
-	if _player == null:
-		# Fallback: try finding Player node in parent hierarchy
-		var p: Node = get_parent()
-		while p != null:
-			var found := p.get_node_or_null("Player")
-			if found is Node2D:
-				_player = found as Node2D
-				break
-			p = p.get_parent()
-
-
-func _find_floor_controller() -> Node:
-	if _arena != null:
-		var ctrl := _arena.get_node_or_null("ClockFloor")
-		if ctrl != null:
-			return ctrl
-	# Search upward
-	var p: Node = get_parent()
-	while p != null:
-		var ctrl := p.get_node_or_null("ClockFloor")
-		if ctrl != null:
-			return ctrl
-		p = p.get_parent()
-	return null
+	if is_inside_tree() and get_tree() != null:
+		_player = get_tree().get_first_node_in_group("player") as Node2D
+		if _player == null:
+			var inside := get_tree().get_first_node_in_group("clocktower_inside")
+			if inside != null:
+				_player = inside.get_node_or_null("Player") as Node2D
+		if _player == null and get_tree().current_scene != null:
+			_player = get_tree().current_scene.find_child("Player", true, false) as Node2D
 
 
 func _get_arena_rect() -> Rect2:
 	if _arena != null and _arena.has_method("get_arena_rect"):
-		return _arena.call("get_arena_rect") as Rect2
-	# Fallback
-	return Rect2(-600, -800, 1200, 800)
+		return _arena.call("get_arena_rect")
+	return Rect2(global_position.x - 600.0, global_position.y - 400.0, 1200.0, 500.0)
 
 
-func set_arena(arena_node: Node2D) -> void:
-	_arena = arena_node
+func _find_floor_controller() -> Node:
+	if _arena != null:
+		var fc := _arena.get_node_or_null("ClockFloor")
+		if fc != null:
+			return fc
+	return null
 
 
 func _emit_audio_cue(cue_name: StringName) -> void:
-	if audio_root == null:
+	if not is_inside_tree():
 		return
-	# Try calling a play method on audio root
-	var method_name: String = "play_" + String(cue_name)
-	if audio_root.has_method(method_name):
-		audio_root.call(method_name)
-	# Also try via group
-	if is_inside_tree():
-		var tree := get_tree()
-		if tree != null:
-			var audio: Node = tree.get_first_node_in_group("clocktower_audio")
-			if audio != null and audio.has_method(method_name):
-				audio.call(method_name)
-	# Silent if no audio found 鈥?no errors
-
-
-func _process(_delta: float) -> void:
-	# Update rewind target position display during rewind cast
-	if current_attack == AttackState.REWIND and rewind_fx_root != null:
-		if rewind_recorder != null and rewind_recorder.has_method("get_position_at"):
-			var seconds: float = config.rewind_seconds if config else 2.0
-			var pos: Vector2 = rewind_recorder.call("get_position_at", seconds)
-			if rewind_fx_root.has_method("update_target"):
-				rewind_fx_root.call("update_target", pos)
-
-	# Phase 3: periodically trigger floor retracts during phase3_hold
-	if current_phase == Phase.PHASE_3 and current_attack == AttackState.IDLE:
-		if not _final_sequence_started:
-			# Floor retract is handled by attack scheduler via CLOCK_DROP
-			pass
+	var tree := get_tree()
+	if tree == null:
+		return
+	var audio := tree.get_first_node_in_group("clocktower_audio")
+	if audio != null and audio.has_method("play_cue"):
+		audio.call("play_cue", cue_name)

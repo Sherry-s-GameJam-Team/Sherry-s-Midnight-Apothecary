@@ -1,4 +1,4 @@
-﻿class_name AuremClocktowerInsideLevel
+class_name AuremClocktowerInsideLevel
 extends DayLevelEnvironment
 
 signal objective_updated(text: String, hint: String)
@@ -65,6 +65,7 @@ func _ready() -> void:
 
 var _camera: Camera2D = null
 var _player: Node2D = null
+var _is_boss_active: bool = false
 
 
 func _process(delta: float) -> void:
@@ -76,9 +77,16 @@ func _process(delta: float) -> void:
 
 	if _camera != null and _player != null:
 		var player_y: float = _player.global_position.y
-		# 到第三层 (Y: -1850 ~ -3200) 摄像机上移 150px (offset.y = -150)，直到触发第四层
+		var in_boss_arena: bool = _is_boss_active or (current_floor_checkpoint >= 6) or (player_y <= -1950.0 and player_y >= -2600.0)
 		var in_floor3: bool = (player_y <= -1850.0 and player_y > -3200.0 and current_floor_checkpoint < 4)
-		var target_offset_y: float = -150.0 if in_floor3 else 0.0
+
+		var target_offset_y: float = 0.0
+		if in_boss_arena:
+			# 摄像机上移至 Boss 场景中心 (-180px)，将玩家、赫利昂与天顶弹幕完整居中呈现
+			target_offset_y = -180.0
+		elif in_floor3:
+			target_offset_y = -150.0
+
 		_camera.offset.y = move_toward(_camera.offset.y, target_offset_y, 400.0 * delta)
 
 
@@ -143,6 +151,15 @@ func _on_elevator_arrived(floor_index: int) -> void:
 
 func _on_helion_boss_started() -> void:
 	current_floor_checkpoint = 6
+	_is_boss_active = true
+
+	# Hide elevator during boss battle
+	var elevator := get_node_or_null("World/floor 5/TowerElevator")
+	if elevator != null and elevator.has_method("hide_for_boss_battle"):
+		elevator.call("hide_for_boss_battle")
+	elif elevator != null:
+		elevator.set("visible", false)
+
 	var data := get_player_data()
 	if data != null and data.tutorial_flags != null:
 		data.tutorial_flags["aurem_helion_preboss"] = true
@@ -150,13 +167,48 @@ func _on_helion_boss_started() -> void:
 
 
 func _on_helion_boss_defeated(_boss_id: StringName) -> void:
+	_is_boss_active = false
 	on_floor_6_reached()
+
 	var data := get_player_data()
 	if data != null and data.tutorial_flags != null:
 		data.tutorial_flags["aurem_helion_cleared"] = true
-	var exit_portal := get_node_or_null("World/Top/ExitPortal")
-	if exit_portal != null:
-		exit_portal.visible = true
+		data.tutorial_flags["aurem_clockyard_tower_synchronized"] = true
+		data.tutorial_flags["aurem_clockyard_farm_cleansed"] = true
+
+	# 1. 击败后全屏闪白特效 (Screen Flash White)
+	var flash_canvas := CanvasLayer.new()
+	flash_canvas.layer = 160
+	var flash_rect := ColorRect.new()
+	flash_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	flash_rect.color = Color(1.0, 1.0, 1.0, 0.0)
+	flash_canvas.add_child(flash_rect)
+	add_child(flash_canvas)
+
+	var tween := create_tween()
+	if tween != null:
+		tween.tween_property(flash_rect, "color:a", 1.0, 0.7).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_interval(0.35)
+		tween.finished.connect(func() -> void:
+			_teleport_to_exterior_tower_inner()
+		)
+	else:
+		_teleport_to_exterior_tower_inner()
+
+
+func _teleport_to_exterior_tower_inner() -> void:
+	var current: Node = self
+	while current != null:
+		if current.has_method("switch_to_level"):
+			current.call("switch_to_level", &"aurem_clockyard", &"tower_inner")
+			return
+		current = current.get_parent()
+
+	var runtime := get_node_or_null("/root/DayRuntime")
+	if runtime != null and runtime.has_method("switch_to_level"):
+		runtime.call("switch_to_level", &"aurem_clockyard", &"tower_inner")
+	elif is_inside_tree() and get_tree() != null:
+		get_tree().change_scene_to_file("res://day/levels/Aurem Clockyard/aurem_clockyard.tscn")
 
 
 func request_fall_respawn(player_body: Node2D, floor_id: int, damage: int) -> void:

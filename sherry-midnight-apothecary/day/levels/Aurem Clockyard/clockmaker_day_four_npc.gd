@@ -29,7 +29,7 @@ var _rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
-	var active := _is_day_four()
+	var active := _is_active()
 	visible = active
 	monitoring = active
 	monitorable = active
@@ -44,6 +44,16 @@ func _ready() -> void:
 		DialoguePortraitDatabase.register_portrait("夜巡清道机·柒号", "default", portrait_texture)
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+
+
+func set_active(active: bool) -> void:
+	visible = active
+	monitoring = active
+	monitorable = active
+	set_process(active)
+	set_process_input(active)
+	if not active:
+		_hide_hint()
 
 
 func _process(delta: float) -> void:
@@ -147,9 +157,39 @@ func _hide_hint() -> void:
 		hint.hide_interaction_hint(_hint_id())
 
 
+func _is_active() -> bool:
+	if not _is_day_four():
+		return false
+	var level := _find_level()
+	if level != null and level.has_method("is_corrupted"):
+		if not level.call("is_corrupted"):
+			return false
+	var data := _find_player_data()
+	if data != null and data.tutorial_flags != null:
+		if data.tutorial_flags.get("aurem_helion_cleared", false) or data.tutorial_flags.get("aurem_clockyard_tower_synchronized", false):
+			return false
+	return true
+
+
 func _is_day_four() -> bool:
 	var runtime := _find_runtime()
 	return runtime != null and runtime.day == REQUIRED_DAY
+
+
+func _find_level() -> Node:
+	var current: Node = get_parent()
+	while current != null:
+		if current is DayLevelEnvironment or current.has_method("is_corrupted"):
+			return current
+		current = current.get_parent()
+	return null
+
+
+func _find_player_data() -> PlayerData:
+	var runtime := _find_runtime()
+	if runtime != null:
+		return runtime.player_data
+	return null
 
 
 func _find_runtime() -> DayRuntime:
@@ -162,6 +202,8 @@ func _find_runtime() -> DayRuntime:
 
 
 func _find_top_hint() -> TopHintUI:
+	if not is_inside_tree() or get_tree() == null or get_tree().root == null:
+		return null
 	var hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
 	return hint
 

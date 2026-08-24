@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://3oak4h6xbo0v"]
+
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" uid="uid://dlrynfm10etc" path="res://day/interactables/herb/herbs/sun_etched_flower/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://cbt8ciasvrf0k" path="res://day/interactables/herb/herbs/sun_etched_flower/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://c22jyiadcvlkn" path="res://day/interactables/herb/herbs/sun_etched_flower/pieces/orange/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://ca85vi8ky400g" path="res://day/interactables/herb/herbs/sun_etched_flower/pieces/orange/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://bb7jk4enjuta5" path="res://day/interactables/herb/herbs/sun_etched_flower/pieces/orange/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece")
+id = &"sun_etched_flower_piece_01"
+display_name = "刻阳花·部位01"
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(197, 1486, 2326, 2496)
+area_ratio = 0.333333
+color_id = &"orange"
+spectrum_x = 0.165
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece")
+id = &"sun_etched_flower_piece_02"
+display_name = "刻阳花·部位02"
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(1458, 722, 1374, 3269)
+area_ratio = 0.333333
+color_id = &"orange"
+spectrum_x = 0.165
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece")
+id = &"sun_etched_flower_piece_03"
+display_name = "刻阳花·部位03"
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(2070, 1859, 1455, 2122)
+area_ratio = 0.333333
+color_id = &"orange"
+spectrum_x = 0.165
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer")
+id = &"sun_etched_flower_orange_layer"
+display_name = "橙色部位层"
+color_id = &"orange"
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+spectrum_x = 0.165
+pieces = Array[ExtResource("3_piece")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient")
+id = &"sun_etched_flower"
+display_name = "刻阳花"
+english_name = "Sun-Etched Flower"
+description = "一株带有橙色药性的珍稀植物。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer")]([SubResource("Layer_main")])
+base_value = 18
+spectrum_start = 0.15
+spectrum_end = 0.18
+base_quality = 1.1
+base_concentration = 1.05

@@ -604,22 +604,25 @@ static func run(test: TestSupport) -> void:
 
 	# The HerbInventoryArt texture contains exactly twelve painted slots. Extra
 	# definitions move to a new page instead of creating a fourth visual row.
-	test.expect_equal(panel.herb_page_count(), 2, "Sixteen registered ingredients are split across two herb-inventory pages.")
+	var expected_pages := ceili(float(runtime.ingredients.size()) / float(ProductionPanel.HERB_PAGE_SIZE))
+	test.expect_equal(panel.herb_page_count(), expected_pages, "Registered ingredients are split across multiple herb-inventory pages.")
 	test.expect_equal(panel.herb_page, 0, "The herb shelf begins on its first page.")
-	test.expect_equal(panel.herb_page_label.text, "1 / 2", "The artwork page indicator reports the first page.")
+	test.expect_equal(panel.herb_page_label.text, "1 / %d" % expected_pages, "The artwork page indicator reports the first page.")
 	test.expect(panel.herb_previous_button.visible and panel.herb_next_button.visible, "Page arrows are available when more than twelve herbs are registered.")
 	panel.show_next_herb_page()
 	test.expect_equal(panel.herb_page, 1, "The next arrow opens the second herb page.")
-	test.expect_equal(panel.herb_page_label.text, "2 / 2", "The artwork page indicator updates after paging.")
+	test.expect_equal(panel.herb_page_label.text, "2 / %d" % expected_pages, "The artwork page indicator updates after paging.")
 	test.expect_equal(panel.herb_grid.get_child_count(), ProductionPanel.HERB_PAGE_SIZE, "The second page preserves the fixed twelve-slot grid with blank slots.")
 	var second_page_cards: Array[Node] = panel.herb_grid.get_children().filter(func(child: Node) -> bool: return child is HerbCard)
-	test.expect_equal(second_page_cards.size(), 7, "The seven remaining registered herbs occupy the second page.")
+	var expected_second_page_cards := mini(ProductionPanel.HERB_PAGE_SIZE, runtime.ingredients.size() - ProductionPanel.HERB_PAGE_SIZE)
+	test.expect_equal(second_page_cards.size(), expected_second_page_cards, "The expected count of registered herbs occupy the second page.")
+	panel._set_herb_page(expected_pages - 1)
 	panel.show_next_herb_page()
 	test.expect_equal(panel.herb_page, 0, "The next arrow wraps from the final page to the first page.")
 	panel.show_previous_herb_page()
-	test.expect_equal(panel.herb_page, 1, "The previous arrow wraps from the first page to the final page.")
-	panel.show_previous_herb_page()
-	test.expect_equal(panel.herb_page, 0, "The previous arrow returns to the first page.")
+	test.expect_equal(panel.herb_page, expected_pages - 1, "The previous arrow wraps from the first page to the final page.")
+	panel.show_next_herb_page()
+	test.expect_equal(panel.herb_page, 0, "The next arrow returns to the first page.")
 	runtime.free()
 
 

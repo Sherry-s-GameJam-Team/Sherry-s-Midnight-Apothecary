@@ -1,0 +1,38 @@
+{
+  "herb_id": "hanging_lantern_bell_cap",
+  "display_name_zh": "垂灯钟伞",
+  "english_name": "Hanging Lantern Bell Cap",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "hanging_lantern_bell_cap_piece_01",
+      "source_rect": [
+        683,
+        865,
+        2464,
+        2358
+      ]
+    },
+    {
+      "id": "hanging_lantern_bell_cap_piece_02",
+      "source_rect": [
+        834,
+        1062,
+        2711,
+        1957
+      ]
+    },
+    {
+      "id": "hanging_lantern_bell_cap_piece_03",
+      "source_rect": [
+        634,
+        127,
+        2862,
+        3826
+      ]
+    }
+  ]
+}

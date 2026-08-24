@@ -60,6 +60,16 @@ static func run(test: TestSupport) -> void:
 
 	var luca_npc := home.get_node_or_null("LucaNightNPC") as LucaNightNPC
 	test.expect(luca_npc != null, "NightHome contains the LucaNightNPC interaction node.")
+	var enzuo_npc := home.get_node_or_null("issue/Day1/EnzuoNightNPC") as EnzuoNightNPC
+	test.expect(enzuo_npc != null, "NightHome Day1 issue contains the Enzuo interaction node.")
+	if luca_npc != null and enzuo_npc != null:
+		home.configure_for_day(1)
+		test.expect(not luca_npc.visible, "Luca's onboarding NPC is hidden after day zero.")
+		test.expect(enzuo_npc.visible and enzuo_npc.monitoring, "Enzuo is visible and interactive on day one night.")
+		home.configure_for_day(0)
+		test.expect(luca_npc.visible and luca_npc.monitoring, "Luca's onboarding NPC is active on day zero night.")
+		test.expect(not enzuo_npc.visible, "Enzuo's Day1 issue is hidden on day zero.")
+		home.configure_for_day(3)
 
 	home.business_requested.emit()
 	test.expect(not runtime.shop_slot.visible, "Opening business hides the explorable shop.")

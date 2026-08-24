@@ -82,17 +82,25 @@ func trigger_boss_battle(player_node: Node2D = null) -> void:
 
 	is_battle_active = true
 
+	# Hide elevator upon entering boss battle
+	var root_node: Node = get_parent()
+	while root_node != null:
+		var elev := root_node.get_node_or_null("World/floor 5/TowerElevator")
+		if elev != null:
+			if elev.has_method("hide_for_boss_battle"):
+				elev.call("hide_for_boss_battle")
+			else:
+				elev.set("visible", false)
+			break
+		root_node = root_node.get_parent()
+
 	# Seal arena bounds
 	if _arena_bounds_body != null:
 		_arena_bounds_body.set_collision_layer_value(1, true)
 
 	# Find player for recorder if not provided
 	if player_node == null and is_inside_tree():
-		var tree := get_tree()
-		if tree != null:
-			player_node = tree.get_first_node_in_group("player") as Node2D
-			if player_node == null:
-				player_node = get_parent().get_node_or_null("../Player") as Node2D
+		player_node = _find_player()
 
 	if _boss != null and player_node != null:
 		var recorder: Node = _boss.get_node_or_null("RewindRecorder")
@@ -175,7 +183,13 @@ func apply_damage_to_player(amount: int, source: StringName) -> void:
 # ─── Clock Bird Management ───
 
 func _process(delta: float) -> void:
-	if not is_battle_active or _boss == null:
+	if not is_battle_active:
+		var p := _find_player()
+		if p != null and p.global_position.distance_to(global_position + Vector2(0, -250)) < 680.0:
+			trigger_boss_battle(p)
+		return
+
+	if _boss == null:
 		return
 
 	# Clean up dead birds
@@ -223,3 +237,18 @@ func _despawn_all_clock_birds() -> void:
 			else:
 				bird.queue_free()
 	_active_clock_birds.clear()
+
+
+func _find_player() -> Node2D:
+	if not is_inside_tree() or get_tree() == null:
+		return null
+	var p := get_tree().get_first_node_in_group("player") as Node2D
+	if p != null:
+		return p
+	if get_parent() != null:
+		p = get_parent().get_node_or_null("../Player") as Node2D
+		if p != null:
+			return p
+	if get_tree().current_scene != null:
+		p = get_tree().current_scene.find_child("Player", true, false) as Node2D
+	return p

@@ -47,6 +47,9 @@ const DAILY_LEVELS: Array[LevelData] = [
 
 const SCENE_TITLE_SEEN_PREFIX := "scene_title_seen"
 const MIASMA_RETURN_PENDING_FLAG := "grassland_miasma_completion_return_pending"
+const REMOTE_SUPPLY_START_LEVEL_ID: StringName = &"golden_cliff"
+const REMOTE_SUPPLY_UNLOCK_FLAG: StringName = &"enzo_remote_supply_unlocked"
+const DAY_TWO_OPENING_COMPLETE_FLAG: StringName = &"day_two_opening_complete"
 
 var player_data: PlayerData
 var day := 1
@@ -59,6 +62,7 @@ var story_event_catalog: StoryEventCatalog
 @onready var developer_console: Node = $DeveloperConsoleLayer/DeveloperConsole
 @onready var level_transition_fade: ColorRect = $LevelTransition/Fade
 @onready var player_health_hud: PlayerHealthHUD = $UI/PlayerHealthHUD
+@onready var remote_potion_supply: RemotePotionSupply = $RemotePotionSupply
 
 var current_level: LevelData
 var current_level_instance: Node
@@ -115,6 +119,17 @@ func _bind_player_health_hud() -> void:
 		player_health_hud.bind_player_data(get_player_data())
 
 
+func _bind_remote_potion_supply() -> void:
+	if not is_node_ready() or not is_instance_valid(remote_potion_supply):
+		return
+	var data := get_player_data()
+	# Backfill saves made after the second-day opening but before supply moved
+	# from the lake-boss reward to the opening itself.
+	if day >= 2 and data.has_event_flag(DAY_TWO_OPENING_COMPLETE_FLAG):
+		data.set_event_flag(REMOTE_SUPPLY_UNLOCK_FLAG)
+	remote_potion_supply.setup(data)
+
+
 func configure(
 	shared_player_data: PlayerData,
 	current_day: int,
@@ -130,12 +145,14 @@ func configure(
 	_defer_initial_presentation = defer_initial_presentation
 	_defer_initial_title = defer_initial_title
 	_bind_player_health_hud()
+	_bind_remote_potion_supply()
 	_load_level()
 
 
 func _ready() -> void:
 	developer_console.setup_day(self)
 	_bind_player_health_hud()
+	_bind_remote_potion_supply()
 	_setup_story_events()
 	_load_level()
 	call_deferred("_dispatch_initial_story_events")
@@ -161,6 +178,7 @@ func _load_level() -> void:
 	current_level = _find_level(_initial_level_id)
 	if current_level == null:
 		current_level = DAILY_LEVELS[posmod(day, DAILY_LEVELS.size())]
+	_sync_remote_potion_supply_scope()
 	_sync_bgm_for_current_level()
 	_instantiate_current_level(&"default")
 	if not _defer_initial_title:
@@ -177,11 +195,30 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		for child in level_slot.get_children():
 			child.queue_free()
 		current_level = level_data
+		_sync_remote_potion_supply_scope()
 		_sync_bgm_for_current_level()
 		_instantiate_current_level(entry_id)
 		_play_scene_title_once()
 		_dispatch_level_story_events()
 		return true
+	return false
+
+
+func _sync_remote_potion_supply_scope() -> void:
+	if not is_node_ready() or not is_instance_valid(remote_potion_supply):
+		return
+	remote_potion_supply.set_level_scope_active(_is_remote_supply_level(current_level))
+
+
+func _is_remote_supply_level(level_data: LevelData) -> bool:
+	if level_data == null:
+		return false
+	var reached_supply_region := false
+	for registered_level: LevelData in LEVELS:
+		if registered_level.id == REMOTE_SUPPLY_START_LEVEL_ID:
+			reached_supply_region = true
+		if registered_level.id == level_data.id:
+			return reached_supply_region
 	return false
 
 
@@ -249,24 +286,33 @@ func _setup_story_events() -> void:
 
 
 func _dispatch_initial_story_events() -> void:
-	if _story_event_runner == null:
-		return
-	# The bedroom's day-one Luca presentation owns its own blackout, walk-in,
-	# and dialogue request. Other days retain the normal sleep-to-wake sequence.
+	# Story-specific bedroom openings own their blackout and dialogue request.
+	# Other days retain the normal sleep-to-wake sequence.
 	if current_level != null and current_level.id == &"bedroom" and current_level_instance != null:
 		var luca_opening := current_level_instance.get_node_or_null("DayOneLuca") as BedroomDayOneLuca
 		if luca_opening != null and luca_opening.is_opening_active():
 			await luca_opening.opening_completed
-			if not is_inside_tree() or _story_event_runner == null:
+			if not is_inside_tree():
 				return
-		elif luca_opening == null or not luca_opening.is_day_one():
-			var wake_executor := current_level_instance.get_node_or_null("SleepToWakeExecutor") as AnimationPresentationExecutor
-			if wake_executor != null and not wake_executor.is_completed():
-				await wake_executor.completed
-				if not is_inside_tree() or _story_event_runner == null:
-					return
-	_story_event_runner.dispatch(StoryEventTriggerSpec.Type.RUNTIME_ENTERED)
-	_dispatch_level_story_events()
+		else:
+			var day_two_opening := current_level_instance.get_node_or_null("DayTwoOpening") as DayTwoOpening
+			if day_two_opening != null and day_two_opening.is_opening_active():
+				day_two_opening.start()
+				await day_two_opening.opening_completed
+				# The opening hands off to Golden Cliff, whose level switch dispatches
+				# its own title and story events.
+				return
+			elif luca_opening == null or not luca_opening.is_day_one():
+				var wake_executor := current_level_instance.get_node_or_null("SleepToWakeExecutor") as AnimationPresentationExecutor
+				if wake_executor != null and not wake_executor.is_completed():
+					wake_executor.start()
+					if not wake_executor.is_completed():
+						await wake_executor.completed
+						if not is_inside_tree():
+							return
+	if _story_event_runner != null:
+		_story_event_runner.dispatch(StoryEventTriggerSpec.Type.RUNTIME_ENTERED)
+		_dispatch_level_story_events()
 
 
 func _dispatch_level_story_events() -> void:

@@ -29,7 +29,7 @@ ForestInterior
 │  └─ CentralStream (树干中央流层系统, 着色器流动特效, scroll_scale=(0.3, 0.45))
 │     ├─ BloodStream (Parallax2D, 腐化血流层 forest_interior_blood_stream.png)
 │     └─ ClearStream (Parallax2D, 净水流层 forest_interior_clear_stream.png)
-├─ HomeDoor (DoorPortal, 传送锚点，按 E 返回药水铺 home.tscn)
+├─ HomeDoor (DoorPortal, Day 1 树冠 Boss 净化后启动；按 E 返回药水铺 home.tscn)
 ├─ ForestReturnDoor (DoorPortal, 按 E 返回常霁云林 forest.tscn)
 ├─ EntryPoints (default, from_forest, from_home, from_crown)
 ├─ Player (Sherry, 初始位置 445, 618)
@@ -67,6 +67,10 @@ ForestInterior
 └─ PauseMenuLayer (PauseMenu)
 ```
 
+## 返回旅门与地图锚点
+
+`HomeDoor` 与地图中的“阿尔维斯母树”锚点均以 `tutorial_flags["forest_completed"]` 为开启条件。第一天树冠 Boss 净化前，HomeDoor 保持可见但提示“旅门尚未启动”且不会传送；MapSwitch 不会解锁 `forest_interior`，因此对应地图目的地维持未启动状态。Boss 净化完成时，树冠控制器立即解锁 `forest_interior` 锚点，HomeDoor 也可正常返回药水铺。
+
 ## 五阶段攀登流程
 
 1. **第一阶段：树心底层与初始升降梯（Y: 680 -> -280）**
@@ -89,4 +93,3 @@ ForestInterior
    - 在 `FinalGateConsole` 按 [E] 开启最终根门 `FinalGate`。
    - 沿树冠大阶梯 `StepCrown1..StepCrown8` 跃升至顶层大平台 `TopLanding` (Y: -4650)。
    - 在 `ExitToCrown` 处按 [E] 触发进入母树树冠场景（`forest_crown.tscn`），开启炽天使 Boss 战！
-

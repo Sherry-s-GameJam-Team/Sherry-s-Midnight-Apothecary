@@ -19,6 +19,12 @@ func run(runtime: Node) -> void:
 		_finish_failure("Bedroom intro requires an active DayRuntime level.")
 		return
 	await get_tree().create_timer(camera_settle_delay).timeout
+	var day_two_opening := day_runtime.current_level_instance.get_node_or_null("DayTwoOpening") as DayTwoOpening
+	if day_two_opening != null and day_two_opening.is_opening_active():
+		day_two_opening.start()
+		await day_two_opening.opening_completed
+		_finish_success()
+		return
 	var executor := _find_executor(day_runtime.current_level_instance)
 	if executor == null:
 		_finish_failure("Bedroom has no AnimationPresentationExecutor.")
@@ -32,6 +38,10 @@ func run(runtime: Node) -> void:
 		return
 	if not executor.is_completed():
 		await executor.completed
+	_finish_success()
+
+
+func _finish_success() -> void:
 	is_finished = true
 	succeeded = true
 	completed.emit()

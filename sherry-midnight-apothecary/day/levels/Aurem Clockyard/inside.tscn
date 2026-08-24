@@ -1029,10 +1029,12 @@ position = Vector2(361, -191)
 shape = SubResource("Rect_portal")
 
 [node name="TowerElevator" type="AnimatableBody2D" parent="World/floor 5" unique_id=5030]
+visible = false
 position = Vector2(516, -100)
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("60_elevator")
+is_unlocked = false
 
 [node name="Sprite2D" type="Sprite2D" parent="World/floor 5/TowerElevator" unique_id=5031]
 texture = ExtResource("19_plat_wide")

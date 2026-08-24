@@ -7,7 +7,7 @@
 script = ExtResource("1")
 id = &"cyan_potion"
 numeric_id = 5
-display_name = "青色护盾药水"
+display_name = "涌水药水"
 color_name = "青"
 color_family = &"cyan"
 display_color = Color(0.12, 0.78, 0.76, 1)

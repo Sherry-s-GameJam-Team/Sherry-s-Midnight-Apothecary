@@ -2,9 +2,17 @@
 
 The nighttime Home scene is configured by `night/levels/home/home.tscn` and managed by `NightRuntime`.
 
-## Luca NPC & First Night Onboarding Flow
+## Day-specific night NPCs
 
-On Day 1 night (or initial entry before completion), Luca is present in the shop (`night/levels/home/luca_night_npc.tscn`):
+Night Home calls `configure_for_day(day)` whenever the runtime is configured and whenever the player returns from the bedroom, so NPC visibility and interaction are rebuilt from the current internal day.
+
+- `day == 0`: only `LucaNightNPC` is active. Its existing onboarding and repeat dialogue remain the tutorial-night content described below.
+- `day == 1`: `LucaNightNPC` is hidden and `issue/Day1/EnzuoNightNPC` is active in the bedroom rest area. Enzuo loops the eight authored `characters/enzuo/idle/idle_00..07.png` frames; approaching him shows “按[E]与恩佐交谈”. The E-key dialogue uses `enzuo_day_one.dialogue`, retains the supplied question menu, and resolves Enzuo's dialogue portrait from `res://characters/enzuo/standee.png`.
+- Other days: both of these day-specific NPC nodes are hidden until their own content is authored.
+
+## Luca NPC & Day 0 Onboarding Flow
+
+On internal Day 0 night, Luca is present in the shop (`night/levels/home/luca_night_npc.tscn`):
 
 1. **Player Interaction**:
    - Player approaches Luca and presses `E` to interact.

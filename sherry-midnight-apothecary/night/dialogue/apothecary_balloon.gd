@@ -462,7 +462,7 @@ func _parse_inline_portrait_bbcode(text: String, speaker: String) -> void:
 
 func _ensure_primary_speaker_slot(speaker: String) -> void:
 	var normalized_speaker := speaker.strip_edges().to_lower()
-	if normalized_speaker not in ["sherry", "雪莉", "mew", "喵呜", "喵斯", "mews", "卡琳娜", "卡琳娜·喵斯", "炉边烤鱼的少女", "luca", "卢卡"]:
+	if normalized_speaker not in ["sherry", "雪莉", "mew", "喵呜", "喵斯", "mews", "卡琳娜", "卡琳娜·喵斯", "炉边烤鱼的少女", "luca", "卢卡", "enzuo", "enzo", "恩佐"]:
 		return
 
 	var target_slot_name := DialoguePortraitDatabase.get_default_slot_for_character(speaker)

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ch1ejpcsay6f4" path="res://day/levels/Aurem Clockyard/farm.png" id="5_farm"]
 [ext_resource type="Texture2D" uid="uid://p50vp4l3bnvd" path="res://day/levels/Aurem Clockyard/farm_corrupted.png" id="6_farm_corr"]
 [ext_resource type="Texture2D" uid="uid://cdqadm3f20sbf" path="res://day/levels/Aurem Clockyard/greattower.png" id="7_greattower"]
+[ext_resource type="Texture2D" uid="uid://bvmk3rdfh1s6g" path="res://day/levels/Aurem Clockyard/npcs.png" id="9_npcs"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="10_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="11_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="12_presentation"]
@@ -18,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="18_pause_menu"]
 [ext_resource type="Script" uid="uid://42wr4vxx7psn" path="res://day/levels/Aurem Clockyard/clockmaker_day_four_npc.gd" id="19_clockmaker_day_four"]
 [ext_resource type="Texture2D" uid="uid://dcoxselh66vso" path="res://day/levels/Aurem Clockyard/robot.png" id="21_clockmaker_robot"]
+[ext_resource type="Script" uid="uid://fn1h80mvlcj2" path="res://day/levels/Aurem Clockyard/aurem_daily_npc.gd" id="22_daily_npc"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(9000, 160)
@@ -273,6 +275,125 @@ texture = ExtResource("21_clockmaker_robot")
 position = Vector2(31, 167)
 shape = SubResource("Rect_npc")
 
+[node name="DailyNPCs" type="Node2D" parent="World/NPCs" unique_id=1412093815]
+
+[node name="NPC_Otto" type="Area2D" parent="World/NPCs/DailyNPCs" unique_id=172901831]
+position = Vector2(1794, 562)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("22_daily_npc")
+npc_name = "机枢工匠·奥托"
+movement_type = 1
+wander_radius = 180.0
+wander_speed = 60.0
+dialogue_title = "otto_start"
+interaction_hint_text = "按[E]与机枢工匠·奥托交谈"
+
+[node name="Presentation" type="Node2D" parent="World/NPCs/DailyNPCs/NPC_Otto" unique_id=1748678745]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/DailyNPCs/NPC_Otto/Presentation" unique_id=1676045519]
+position = Vector2(0, -65)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_npcs")
+region_enabled = true
+region_rect = Rect2(616.26794, 733.2339, 249.87311, 344.5515)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/DailyNPCs/NPC_Otto" unique_id=554872269]
+position = Vector2(0, -65)
+shape = SubResource("Rect_npc")
+
+[node name="NPC_Elena" type="Area2D" parent="World/NPCs/DailyNPCs" unique_id=892318471]
+position = Vector2(2600, 520)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("22_daily_npc")
+npc_name = "时轨学者·爱莲娜"
+dialogue_title = "elena_start"
+interaction_hint_text = "按[E]与时轨学者·爱莲娜交谈"
+
+[node name="Presentation" type="Node2D" parent="World/NPCs/DailyNPCs/NPC_Elena" unique_id=1825898770]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/DailyNPCs/NPC_Elena/Presentation" unique_id=1783390337]
+position = Vector2(-95.99999, 145.99998)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_npcs")
+region_enabled = true
+region_rect = Rect2(32.394897, 763.6021, 209.22864, 325.08246)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/DailyNPCs/NPC_Elena" unique_id=246274729]
+position = Vector2(0, -65)
+shape = SubResource("Rect_npc")
+
+[node name="NPC_Timmy" type="Area2D" parent="World/NPCs/DailyNPCs" unique_id=1284791023]
+position = Vector2(3500, 520)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("22_daily_npc")
+npc_name = "采收幼齿·提米"
+movement_type = 1
+wander_speed = 80.0
+dialogue_title = "timmy_start"
+interaction_hint_text = "按[E]与采收幼齿·提米交谈"
+
+[node name="Presentation" type="Node2D" parent="World/NPCs/DailyNPCs/NPC_Timmy" unique_id=911299974]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/DailyNPCs/NPC_Timmy/Presentation" unique_id=1371934963]
+position = Vector2(0, -55)
+scale = Vector2(0.32, 0.32)
+texture = ExtResource("9_npcs")
+region_enabled = true
+region_rect = Rect2(1000, 800, 220, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/DailyNPCs/NPC_Timmy" unique_id=939142272]
+position = Vector2(0, -55)
+shape = SubResource("Rect_npc")
+
+[node name="NPC_Fiona" type="Area2D" parent="World/NPCs/DailyNPCs" unique_id=1982736154]
+position = Vector2(4880, 567)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("22_daily_npc")
+npc_name = "祈时司·菲奥娜"
+dialogue_title = "fiona_start"
+interaction_hint_text = "按[E]与祈时司·菲奥娜交谈"
+
+[node name="Presentation" type="Node2D" parent="World/NPCs/DailyNPCs/NPC_Fiona" unique_id=1360885141]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/DailyNPCs/NPC_Fiona/Presentation" unique_id=1932147698]
+position = Vector2(-2, -59)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_npcs")
+region_enabled = true
+region_rect = Rect2(1200.7003, 766.0676, 257.2307, 315.82227)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/DailyNPCs/NPC_Fiona" unique_id=945454427]
+position = Vector2(0, -65)
+shape = SubResource("Rect_npc")
+
+[node name="NPC_Bard" type="Area2D" parent="World/NPCs/DailyNPCs" unique_id=1498273610]
+position = Vector2(6835, 740)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("22_daily_npc")
+npc_name = "谐振信使·巴德"
+movement_type = 1
+wander_radius = 160.0
+dialogue_title = "bard_start"
+interaction_hint_text = "按[E]与谐振信使·巴德交谈"
+
+[node name="Presentation" type="Node2D" parent="World/NPCs/DailyNPCs/NPC_Bard" unique_id=315248050]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/DailyNPCs/NPC_Bard/Presentation" unique_id=700932542]
+position = Vector2(0, -65)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_npcs")
+region_enabled = true
+region_rect = Rect2(753.7242, 150.62138, 249.34076, 254.66475)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/DailyNPCs/NPC_Bard" unique_id=928373017]
+position = Vector2(0, -65)
+shape = SubResource("Rect_npc")
+
 [node name="AbyssHazard" type="Area2D" parent="World" unique_id=2124796520]
 position = Vector2(4000, 1000)
 collision_layer = 0
@@ -292,10 +413,10 @@ position = Vector2(300, 520)
 position = Vector2(2000, 520)
 
 [node name="tower" type="Marker2D" parent="EntryPoints" unique_id=40190017]
-position = Vector2(4900, 520)
+position = Vector2(6516, 567)
 
 [node name="tower_inner" type="Marker2D" parent="EntryPoints" unique_id=19669248]
-position = Vector2(6700, 520)
+position = Vector2(6514, 674)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=846311864]
 z_index = 10

@@ -6,6 +6,7 @@ const CROWN_COMPLETED_FLAG := "forest_crown_completed"
 const BOSS_PURIFIED_FLAG := "forest_boss_purified"
 const FOREST_LEVEL_ID := &"forest"
 const FOREST_ENTRY_ID := &"from_crown"
+const FOREST_INTERIOR_LEVEL_ID := &"forest_interior"
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 
 @export var fall_damage := 10
@@ -120,6 +121,11 @@ func _on_boss_purified_completed() -> void:
 	_set_flag(FOREST_COMPLETED_FLAG, true)
 	_set_flag(CROWN_COMPLETED_FLAG, true)
 	_set_flag(BOSS_PURIFIED_FLAG, true)
+	# The interior return door and its Home map anchor become available together
+	# only after this Day 1 boss completion.
+	var runtime := _get_day_runtime()
+	if runtime != null and runtime.has_method("activate_travel_anchor"):
+		runtime.call("activate_travel_anchor", FOREST_INTERIOR_LEVEL_ID)
 	await _play_post_purification_sequence()
 	_apply_restored_state()
 

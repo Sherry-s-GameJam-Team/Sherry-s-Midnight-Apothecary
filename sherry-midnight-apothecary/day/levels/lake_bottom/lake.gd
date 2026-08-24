@@ -1,6 +1,8 @@
 class_name LakeLevel
 extends DayLevelEnvironment
 
+const SpringburstProgression := preload("res://day/levels/lake_bottom/scripts/springburst_potion_progression.gd")
+
 signal objective_completed(event_id: StringName, payload: Dictionary)
 signal level_completed(exit_id: StringName)
 
@@ -10,6 +12,11 @@ var activated_valves := 0
 var gate_unlocked := false
 var boss_defeated := false
 var boss_phase_active := false
+var _boss_phase_generation := 0
+var _auto_open_pending := false
+
+@export var auto_eye_open_position := Vector2(7460.0, 890.0)
+@export_range(0.2, 5.0, 0.1) var auto_eye_open_delay := 1.6
 
 @onready var objective_label: Label = get_node_or_null("LocalHUD/Panel/VBox/Objective")
 @onready var hint_label: Label = get_node_or_null("LocalHUD/Panel/VBox/Hint")
@@ -25,8 +32,14 @@ var boss_phase_active := false
 func _ready() -> void:
 	super._ready()
 	var runtime := _find_day_runtime()
-	if runtime != null and runtime.get_player_data().has_event_flag(&"lake_bottom_tide_eye_defeated"):
-		boss_defeated = true
+	if runtime != null:
+		var player_data: PlayerData = runtime.get_player_data()
+		if player_data.has_event_flag(&"lake_bottom_tide_eye_defeated"):
+			boss_defeated = true
+			SpringburstProgression.enforce_story_item_phase(player_data)
+			SpringburstProgression.unlock_throwable_after_boss(player_data)
+		else:
+			SpringburstProgression.enforce_story_item_phase(player_data)
 	if get_node_or_null("LocalHUD"):
 		$LocalHUD.visible = local_hud_enabled
 	_setup_health_hud(runtime)
@@ -35,9 +48,7 @@ func _ready() -> void:
 	if tide_eye != null:
 		tide_eye.hit_landed.connect(_on_tide_eye_hit_landed)
 		tide_eye.defeated.connect(on_tide_eye_defeated)
-	var potion_thrower := get_node_or_null("Player/PotionThrower")
-	if potion_thrower != null and potion_thrower.has_signal("projectile_spawned"):
-		potion_thrower.connect(&"projectile_spawned", _on_boss_projectile_spawned)
+		tide_eye.exposed_changed.connect(_on_tide_eye_exposed_changed)
 	_set_boss_phase_visible(false)
 	_set_objective("解除沉泪门的三重封印。", "启动散布在湖床上的三座古代泉脉阀。")
 
@@ -46,7 +57,7 @@ func _ready() -> void:
 func on_level_entered(entry_id: StringName) -> void:
 	if entry_id == &"tide_eye_arena":
 		_set_boss_phase_visible(true)
-		_set_objective("引出噬潮眼。", "投掷涌水药水定点引洞；推入焖鱼箱或投净化药水伤害它，别被吞入。")
+		_set_objective("等待噬潮眼现身。", "泉脉会让它周期性张开；趁机推入焖鱼箱或投净化药水，别被吞入。")
 		return
 	_set_boss_phase_visible(false)
 	if gate_unlocked:
@@ -97,6 +108,8 @@ func _set_hint(text: String) -> void:
 
 
 func _set_boss_phase_visible(active: bool) -> void:
+	_boss_phase_generation += 1
+	_auto_open_pending = false
 	if dashiyu_boss_sprite:
 		dashiyu_boss_sprite.visible = active and not boss_defeated
 	if boss_defeated:
@@ -107,6 +120,7 @@ func _set_boss_phase_visible(active: bool) -> void:
 	if tide_eye:
 		if active:
 			tide_eye.activate()
+			_schedule_auto_eye_open(_boss_phase_generation)
 		else:
 			tide_eye.deactivate()
 	if box_generator:
@@ -121,7 +135,23 @@ func _set_boss_phase_visible(active: bool) -> void:
 
 
 func _on_tide_eye_hit_landed(hit_count: int) -> void:
-	_set_objective("噬潮眼受创 %d / 3。" % hit_count, "再次投涌水药水引它张口；焖鱼箱或净化药水都能造成伤害。")
+	_set_objective("噬潮眼受创 %d / 3。" % hit_count, "等待它再次现身；焖鱼箱或净化药水都能造成伤害。")
+
+
+func _on_tide_eye_exposed_changed(is_exposed: bool) -> void:
+	if not is_exposed and boss_phase_active and not boss_defeated:
+		_schedule_auto_eye_open(_boss_phase_generation)
+
+
+func _schedule_auto_eye_open(generation: int) -> void:
+	if _auto_open_pending or not boss_phase_active or boss_defeated or tide_eye == null:
+		return
+	_auto_open_pending = true
+	await get_tree().create_timer(auto_eye_open_delay).timeout
+	_auto_open_pending = false
+	if generation != _boss_phase_generation or not boss_phase_active or boss_defeated or tide_eye == null:
+		return
+	tide_eye.bait_with_water(auto_eye_open_position)
 
 
 func on_tide_eye_defeated() -> void:
@@ -138,8 +168,12 @@ func on_tide_eye_defeated() -> void:
 		var player_data: PlayerData = runtime.get_player_data() as PlayerData
 		if player_data != null:
 			player_data.set_event_flag(&"lake_bottom_tide_eye_defeated")
+			var unlocked_count := SpringburstProgression.unlock_throwable_after_boss(player_data)
+			var hint := get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
+			if hint != null and unlocked_count > 0:
+				hint.push_text("涌水药水已解锁为投掷药水\n共 %d 瓶" % unlocked_count, "springburst_throwable_unlocked", 5.0)
 		runtime.activate_travel_anchor(&"gate_chamber")
-	_set_objective("湖水正在回涌。", "和大司鱼一起离开湖底。")
+	_set_objective("湖水正在回涌。", "涌水药水已解锁投掷用途；和大司鱼一起离开湖底。")
 	if task_complete_ui != null:
 		task_complete_ui.present(
 			"任务完成：平息噬潮眼",
@@ -149,19 +183,6 @@ func on_tide_eye_defeated() -> void:
 		await task_complete_ui.dismissed
 	if epilogue != null:
 		epilogue.play()
-
-
-func _on_boss_projectile_spawned(projectile: PotionProjectile) -> void:
-	projectile.broken.connect(_on_boss_potion_broken.bind(projectile), CONNECT_ONE_SHOT)
-
-
-func _on_boss_potion_broken(impact_point: Vector2, impact_normal: Vector2, projectile: PotionProjectile) -> void:
-	if not boss_phase_active or tide_eye == null or projectile.potion == null:
-		return
-	# A floor collision has an upward-facing normal. This intentionally ignores
-	# bottles that strike a target or pass through the arena before landing.
-	if projectile.potion.id == &"cyan_potion" and impact_normal.y < -0.55:
-		tide_eye.bait_with_water(impact_point)
 
 
 func _setup_health_hud(runtime: Node) -> void:

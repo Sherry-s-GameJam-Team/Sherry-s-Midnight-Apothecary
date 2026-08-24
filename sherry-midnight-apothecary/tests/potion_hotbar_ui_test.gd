@@ -38,6 +38,14 @@ static func run(test: TestSupport) -> void:
 	test.expect(not empty_slot.is_equipped, "Unequipped potion slot uses its empty state.")
 	test.expect(empty_slot.bottle_texture != null, "Unequipped slot still displays a darkened glass bottle.")
 	test.expect_equal(empty_slot.dose_label.text, "空", "Unequipped slot is labelled as empty.")
+	hotbar.show_charge_preview(0.25, 4.0, 0.25, 4.0)
+	test.expect(hotbar._charge_panel.visible, "Aiming displays the dose and effect charge panel.")
+	test.expect_equal(hotbar._charge_dose_label.text, "预计消耗  25%", "Charge UI reports the projected dose.")
+	test.expect(not hotbar._charge_warning_label.visible, "The effect threshold itself is not treated as wasteful overcharge.")
+	hotbar.show_charge_preview(0.4, 4.0, 0.25, 4.0)
+	test.expect(hotbar._charge_warning_label.visible, "Dose beyond 25% warns that only consumption is increasing.")
+	hotbar.hide_charge_preview()
+	test.expect(not hotbar._charge_panel.visible, "Charge UI hides when aiming ends.")
 
 	player.potions[&"red_potion"][0]["remaining_dose"] = 0.18
 	hotbar._refresh_slots()

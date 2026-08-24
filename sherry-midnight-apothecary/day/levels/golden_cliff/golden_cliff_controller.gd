@@ -31,6 +31,7 @@ func _ready() -> void:
 	# This controller is an earlier sibling, so synchronize after all scene
 	# children have finished their own initialization.
 	call_deferred("_sync_initial_west_balance_state")
+	call_deferred("_sync_initial_middle_balance_state")
 	if level_root != null and level_root.has_signal("environment_state_changed"):
 		if not level_root.environment_state_changed.is_connected(_on_environment_state_changed):
 			level_root.environment_state_changed.connect(_on_environment_state_changed)
@@ -86,13 +87,25 @@ func _sync_initial_west_balance_state() -> void:
 	if west_balance != null:
 		_sync_west_balance_boulders(west_balance)
 
+func _sync_initial_middle_balance_state() -> void:
+	_ensure_references()
+	if mechanisms == null:
+		return
+	var middle_balance := mechanisms.get_node_or_null("BalanceB")
+	if middle_balance != null:
+		_sync_middle_balance_ground(middle_balance, bool(middle_balance.get("is_stabilized")))
+
 func _on_mechanism_weight_changed(_side: StringName, _new_weight: int, mechanism: Node) -> void:
 	if mechanism.get("mechanism_id") == &"west_balance":
 		_sync_west_balance_boulders(mechanism)
+	elif mechanism.get("mechanism_id") == &"middle_balance":
+		_sync_middle_balance_ground(mechanism, bool(mechanism.get("is_stabilized")))
 
 func _on_mechanism_balance_reset(mechanism: Node) -> void:
 	if mechanism.get("mechanism_id") == &"west_balance":
 		_sync_west_balance_boulders(mechanism)
+	elif mechanism.get("mechanism_id") == &"middle_balance":
+		_sync_middle_balance_ground(mechanism, bool(mechanism.get("is_stabilized")))
 
 func _sync_west_balance_boulders(mechanism: Node) -> void:
 	var is_stabilized := bool(mechanism.get("is_stabilized"))
@@ -122,6 +135,24 @@ func _sync_west_balance_start_ground(mechanism: Node, is_stabilized: bool) -> vo
 	var ground_tween := start_ground.create_tween()
 	ground_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	ground_tween.tween_property(start_ground, "rotation", target_rotation, 0.45)
+
+func _sync_middle_balance_ground(mechanism: Node, is_stabilized: bool) -> void:
+	if static_platforms == null:
+		return
+	var ground_b := static_platforms.get_node_or_null("GroundB") as StaticBody2D
+	if ground_b == null:
+		return
+	var left_weight := int(mechanism.get("left_weight"))
+	var right_weight := int(mechanism.get("right_weight"))
+	var target_left := int(mechanism.get("target_left_weight"))
+	var target_right := int(mechanism.get("target_right_weight"))
+	var left_diff := target_left - left_weight
+	var right_diff := target_right - right_weight
+	var error_diff := right_diff - left_diff
+	var target_rotation := 0.0 if is_stabilized else deg_to_rad(clampf(float(error_diff) * 15.0, -45.0, 45.0))
+	var ground_tween := ground_b.create_tween()
+	ground_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	ground_tween.tween_property(ground_b, "rotation", target_rotation, 0.45)
 
 func _on_mechanism_stabilized(mechanism_id: StringName) -> void:
 	balance_states[mechanism_id] = true
@@ -169,10 +200,14 @@ func _apply_mechanism_terrain_effect(mechanism_id: StringName) -> void:
 		
 		&"middle_balance":
 			# Restore the middle bridge and its sloped landing to horizontal.
+			if mechanisms != null:
+				var middle_balance := mechanisms.get_node_or_null("BalanceB")
+				if middle_balance != null:
+					_sync_middle_balance_ground(middle_balance, true)
 			if static_platforms != null:
 				for platform_name in [&"SlopeA", &"GroundB"]:
 					var platform := static_platforms.get_node_or_null(NodePath(platform_name)) as StaticBody2D
-					if platform != null:
+					if platform != null and not is_zero_approx(platform.rotation):
 						var bridge_tween := platform.create_tween()
 						bridge_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 						bridge_tween.tween_property(platform, "rotation", 0.0, 1.2)

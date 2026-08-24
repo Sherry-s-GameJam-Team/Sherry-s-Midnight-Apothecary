@@ -1,64 +1,53 @@
 class_name ForestEnzuoSavedInteraction
 extends Node2D
 
-## The post-Boss Enzuo scene is intentionally player initiated.  Returning to
-## Forest only reveals Enzuo; the event is dispatched after an E interaction.
+## Boss completion reveals Enzuo and immediately starts the resolution event.
+## The event callback owns the final fade into the night runtime.
 
-const ACTIVE_DAY := 2
+const ACTIVE_DAY := 1
 const FOREST_COMPLETED_FLAG: StringName = &"forest_completed"
 const SOLVED_FLAG: StringName = &"save_enzuo_solved"
-const EVENT_ID: StringName = &"day_two_forest_enzuo_saved"
-const INTERACTION_KEY: StringName = &"day_two_forest_enzuo_saved"
+const EVENT_ID: StringName = &"day_one_forest_enzuo_saved"
+const INTERACTION_KEY: StringName = &"day_one_forest_enzuo_saved"
 
 @export_node_path("CharacterBody2D") var player_path: NodePath
 @export_node_path("Node2D") var enzuo_path: NodePath
-@export var interaction_radius := 150.0
+@export_node_path("ColorRect") var fade_overlay_path: NodePath
 
 var _player: CharacterBody2D
 var _enzuo: Node2D
+var _fade_overlay: ColorRect
 var _runtime: Node
-var _hint: TopHintUI
-var _hint_id := "forest_enzuo_fall"
 var _starting := false
 
 
 func _ready() -> void:
 	_player = get_node_or_null(player_path) as CharacterBody2D
 	_enzuo = get_node_or_null(enzuo_path) as Node2D
+	_fade_overlay = get_node_or_null(fade_overlay_path) as ColorRect
 	_resolve_runtime()
 	visible = should_show(_current_day(), _player_data())
 	if _runtime != null:
 		_runtime.connect(&"story_event_completed", _on_story_event_completed)
-
-
-func _exit_tree() -> void:
-	_hide_hint()
+	if visible:
+		call_deferred("_start_resolution")
 
 
 func _process(_delta: float) -> void:
 	if not should_show(_current_day(), _player_data()):
 		visible = false
-		_hide_hint()
 		return
 	visible = true
-	if _starting or _player == null or _enzuo == null:
-		return
-	if _player.global_position.distance_to(_enzuo.global_position) <= interaction_radius:
-		_show_hint()
-	else:
-		_hide_hint()
+	if not _starting:
+		_start_resolution()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if _starting or _player == null or _enzuo == null or not event.is_action_pressed("interact"):
-		return
-	if _player.global_position.distance_to(_enzuo.global_position) > interaction_radius:
+func _start_resolution() -> void:
+	if _starting or not should_show(_current_day(), _player_data()):
 		return
 	if _runtime == null or not bool(_runtime.call("dispatch_story_event_interaction", INTERACTION_KEY)):
 		return
 	_starting = true
-	_hide_hint()
-	get_viewport().set_input_as_handled()
 
 
 static func should_show(day: int, player_data: PlayerData) -> bool:
@@ -70,19 +59,31 @@ static func should_show(day: int, player_data: PlayerData) -> bool:
 func _on_story_event_completed(event_id: StringName) -> void:
 	if event_id == EVENT_ID:
 		visible = false
-		_hide_hint()
+		await _fade_to_black()
+		_finish_day()
 
 
-func _show_hint() -> void:
-	if _hint == null:
-		_hint = get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
-	if _hint != null:
-		_hint.show_interaction_hint(_hint_id, "按 E 查看恩佐")
+func _fade_to_black() -> void:
+	if _fade_overlay == null:
+		return
+	get_tree().set_meta("day_modal_input_locked", true)
+	_fade_overlay.visible = true
+	_fade_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	_fade_overlay.color.a = 0.0
+	var tween := create_tween()
+	tween.tween_property(_fade_overlay, "color:a", 1.0, 0.35)
+	await tween.finished
 
 
-func _hide_hint() -> void:
-	if _hint != null:
-		_hint.hide_interaction_hint(_hint_id)
+func _finish_day() -> void:
+	if _runtime == null or not _runtime.has_method("finish_day"):
+		return
+	var result := DayResult.new()
+	result.completed = true
+	var data := _player_data()
+	if data != null:
+		result.remaining_health = data.health
+	_runtime.call("finish_day", result)
 
 
 func _current_day() -> int:

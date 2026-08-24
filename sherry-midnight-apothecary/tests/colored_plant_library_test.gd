@@ -3,6 +3,12 @@ extends RefCounted
 const ALCHEMY_SCENE := preload("res://night/alchemy/alchemy_runtime.tscn")
 
 const EXPECTED_COLORS := {
+	&"maple_heart_dark_vein": &"red",
+	&"maple_marrow_star_crystal": &"red",
+	&"waystation_lantern_fruit": &"red",
+	&"sun_etched_flower": &"orange",
+	&"hanging_lantern_bell_cap": &"orange",
+	&"morning_wheel_crystal_crown": &"orange",
 	&"chalice_ice_spire": &"blue",
 	&"tundra_snow_whisk": &"blue",
 	&"vesper_blue_thicket": &"blue",
@@ -48,6 +54,10 @@ static func run(test: TestSupport) -> void:
 			test.expect_equal(piece.color_id, expected_color, "%s inherits the plant color ID." % piece.id)
 			if expected_color == &"yellow":
 				test.expect(piece.spectrum_x >= 0.2857 and piece.spectrum_x <= 0.4285, "%s stays inside the yellow band." % piece.id)
+			elif expected_color == &"red":
+				test.expect(piece.spectrum_x >= 0.0 and piece.spectrum_x <= 0.1428, "%s stays inside the red band." % piece.id)
+			elif expected_color == &"orange":
+				test.expect(piece.spectrum_x >= 0.1428 and piece.spectrum_x <= 0.2857, "%s stays inside the orange band." % piece.id)
 			elif expected_color == &"blue":
 				test.expect(piece.spectrum_x >= 0.7142 and piece.spectrum_x <= 0.8571, "%s stays inside the blue band." % piece.id)
 			elif expected_color == &"cyan":
@@ -56,5 +66,5 @@ static func run(test: TestSupport) -> void:
 				test.expect(piece.spectrum_x >= 0.8571 and piece.spectrum_x <= 1.0, "%s stays inside the purple band." % piece.id)
 	for ingredient_id: StringName in EXPECTED_COLORS:
 		test.expect(seen_ids.has(ingredient_id), "Colored plant is registered in AlchemyRuntime: %s" % ingredient_id)
-	test.expect_equal(total_piece_count, 41, "All supplied colored plant parts are registered for production.")
+	test.expect_equal(total_piece_count, 58, "All supplied colored plant parts are registered for production.")
 	runtime.free()

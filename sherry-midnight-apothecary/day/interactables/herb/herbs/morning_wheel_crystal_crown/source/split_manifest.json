@@ -1,0 +1,38 @@
+{
+  "herb_id": "morning_wheel_crystal_crown",
+  "display_name_zh": "晨轮晶冠",
+  "english_name": "Morning-Wheel Crystal Crown",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "morning_wheel_crystal_crown_piece_01",
+      "source_rect": [
+        315,
+        2681,
+        3462,
+        992
+      ]
+    },
+    {
+      "id": "morning_wheel_crystal_crown_piece_02",
+      "source_rect": [
+        1279,
+        497,
+        1996,
+        2846
+      ]
+    },
+    {
+      "id": "morning_wheel_crystal_crown_piece_03",
+      "source_rect": [
+        414,
+        1008,
+        3117,
+        2419
+      ]
+    }
+  ]
+}

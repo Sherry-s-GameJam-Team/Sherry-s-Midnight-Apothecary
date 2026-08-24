@@ -420,7 +420,6 @@ title_label_path = NodePath("../SpectrumAnalyzerTitle")
 pointer_texture = ExtResource("20_spectrum_pointer")
 
 [node name="SpectrumAnalyzerTitle" type="Label" parent="ArtBoard" unique_id=114709384]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.36

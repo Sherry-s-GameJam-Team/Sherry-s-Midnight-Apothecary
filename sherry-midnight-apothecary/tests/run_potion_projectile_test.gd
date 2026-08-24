@@ -42,7 +42,7 @@ func _run() -> void:
 	world.add_child(projectile)
 	projectile.global_position = Vector2.ZERO
 	var potion: PotionData = load("res://shared/definitions/data/potions/red_potion.tres")
-	var payload := {"potion_id": "red_potion", "quality": 1.0, "potency": 1.0, "duration": 1.0, "mixed_x": 0.05, "secondary_effect_id": "healing", "secondary_effect_multiplier": 0.5}
+	var payload := {"potion_id": "red_potion", "quality": 1.0, "potency": 1.0, "duration": 1.0, "mixed_x": 0.05, "secondary_effect_id": "healing", "secondary_effect_multiplier": 0.5, "consumed_dose": 0.25, "effect_stack_multiplier": 4.0}
 	projectile.configure(launch_velocity, payload, potion, throw_tuning, effect_tuning)
 	projectile.broken.connect(_on_broken)
 	for _frame in range(240):
@@ -54,10 +54,13 @@ func _run() -> void:
 	_expect(receiver.received_effects.has(&"attack"), "Projectile delegates the red potion effect to the receiver.")
 	_expect(receiver.received_effects.has(&"healing"), "A retained secondary effect executes at the same impact point.")
 	_expect(float(receiver.last_context.get("amount", 0.0)) > 0.0, "Effect strength comes from tuning and potion attributes.")
+	_expect(is_equal_approx(float(receiver.last_context.get("multiplier", 0.0)), 2.0), "Four-times charge also scales the half-strength secondary effect.")
 	_expect(receiver.direct_hits.size() == 1, "A direct collision notifies the receiver exactly once.")
 	if not receiver.direct_hits.is_empty():
 		var direct_hit := receiver.direct_hits[0]
 		_expect(direct_hit.get("potion_id") == &"red_potion", "Direct hit context identifies the thrown potion.")
+		_expect(is_equal_approx(float(direct_hit.get("effect_multiplier", 0.0)), 4.0), "Direct hit context exposes the charged effect multiplier.")
+		_expect(is_equal_approx(float(direct_hit.get("consumed_dose", 0.0)), 0.25), "Direct hit context exposes the committed dose.")
 		_expect((direct_hit.get("impact_point", Vector2.ZERO) as Vector2).distance_to(impact_point) < 0.01, "Direct hit context uses the physical collision point.")
 	var texture := PotionSvgRenderer.get_bottle_texture(Color(0.2, 0.8, 0.45), 64, 0.5, 1.0)
 	_expect(texture != null and texture.get_width() > 0, "SVG bottle template renders to a reusable texture.")

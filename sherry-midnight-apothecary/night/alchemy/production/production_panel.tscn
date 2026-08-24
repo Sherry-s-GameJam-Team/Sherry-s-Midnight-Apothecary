@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://ct8c1cxs7yh3w" path="res://night/art/ui/production/flour_button.png" id="13_pack"]
 [ext_resource type="Texture2D" uid="uid://c40c6ef5wma3b" path="res://night/art/ui/production/redo_button.png" id="14_redo"]
 [ext_resource type="Script" uid="uid://c6l8thi6u5sm7" path="res://night/alchemy/production/herb_magnet_controller.gd" id="15_magnet"]
-[ext_resource type="Script" path="res://night/alchemy/production/process_board_drop_surface.gd" id="16_drop_surface"]
+[ext_resource type="Script" uid="uid://cp8ggdgdl08pp" path="res://night/alchemy/production/process_board_drop_surface.gd" id="16_drop_surface"]
 
 [sub_resource type="StyleBoxFlat" id="Style_status"]
 content_margin_left = 10.0
@@ -193,7 +193,7 @@ theme_override_constants/h_separation = 13
 theme_override_constants/v_separation = 9
 columns = 4
 
-[node name="HerbPageMask" type="ColorRect" parent="HerbInventoryArt"]
+[node name="HerbPageMask" type="ColorRect" parent="HerbInventoryArt" unique_id=1078495058]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.33
@@ -205,7 +205,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.902, 0.765, 0.545, 1)
 
-[node name="HerbPageLabel" type="Label" parent="HerbInventoryArt/HerbPageMask"]
+[node name="HerbPageLabel" type="Label" parent="HerbInventoryArt/HerbPageMask" unique_id=531781836]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -213,14 +213,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_colors/font_color = Color(0.22, 0.12, 0.05, 1)
 theme_override_font_sizes/font_size = 18
 text = "1 / 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HerbPreviousButton" type="Button" parent="HerbInventoryArt"]
+[node name="HerbPreviousButton" type="Button" parent="HerbInventoryArt" unique_id=951887454]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -234,7 +233,7 @@ tooltip_text = "上一页药草"
 focus_mode = 0
 flat = true
 
-[node name="HerbNextButton" type="Button" parent="HerbInventoryArt"]
+[node name="HerbNextButton" type="Button" parent="HerbInventoryArt" unique_id=2012875551]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -349,13 +348,10 @@ mouse_filter = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.22600001
-anchor_top = 0.0
 anchor_right = 0.75600004
 anchor_bottom = 1.0
 offset_left = 0.34799194
-offset_top = 0.0
 offset_right = 18.287964
-offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -590,11 +586,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="HerbDropSurface" type="Control" parent="."]
+[node name="HerbDropSurface" type="Control" parent="." unique_id=1794255010]
 unique_name_in_owner = true
 z_index = 9
-layout_mode = 0
-mouse_filter = 0
+anchors_preset = 0
 script = ExtResource("16_drop_surface")
 process_board_path = NodePath("../ProcessBoard")
 follow_control_path = NodePath("../ProcessBoard/Sprite2D/Zones/BoardZone")

@@ -2,6 +2,7 @@ class_name DashiyuNPC
 extends Area2D
 
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
+const SpringburstProgression := preload("res://day/levels/lake_bottom/scripts/springburst_potion_progression.gd")
 const COMPLETED_FLAG := &"lake_bottom_dashiyu_dialogue_completed"
 const DAY_TWO := 2
 
@@ -102,7 +103,9 @@ func _complete_and_return_to_lake() -> void:
 	var player_data := _find_player_data()
 	if player_data != null:
 		player_data.set_event_flag(COMPLETED_FLAG)
-		_grant_springburst_potions(player_data)
+		SpringburstProgression.enforce_story_item_phase(player_data)
+		if int(player_data.story_items.get(SpringburstProgression.STORY_ITEM_ID, 0)) <= 0:
+			SpringburstProgression.grant_story_bottles(player_data, 4)
 	var level := _find_level()
 	if level != null and level.has_method("on_dashiyu_dialogue_completed"):
 		level.call("on_dashiyu_dialogue_completed")
@@ -112,25 +115,6 @@ func _complete_and_return_to_lake() -> void:
 	var runtime := _find_day_runtime()
 	if runtime != null and runtime.has_method("transition_to_level_with_blackout"):
 		await runtime.transition_to_level_with_blackout("lake_bottom", &"tide_eye_arena", true)
-
-
-func _grant_springburst_potions(player_data: PlayerData) -> void:
-	for index in range(3):
-		player_data.add_brewed_potion({
-			"potion_id": "cyan_potion",
-			"instance_uid": "dashiyu_springburst_%d_%d" % [Time.get_ticks_msec(), index],
-			"remaining_dose": 1.0,
-			"quality": 1.0,
-			"potency": 1.0,
-		})
-	if not player_data.equipped_potion_ids.has(&"cyan_potion"):
-		for slot in range(player_data.potion_slot_count):
-			if player_data.equipped_potion_ids[slot] == &"":
-				player_data.equip_potion(slot, &"cyan_potion")
-				player_data.select_potion_slot(slot)
-				return
-		player_data.equip_potion(0, &"cyan_potion")
-		player_data.select_potion_slot(0)
 
 
 func _shake_camera() -> void:

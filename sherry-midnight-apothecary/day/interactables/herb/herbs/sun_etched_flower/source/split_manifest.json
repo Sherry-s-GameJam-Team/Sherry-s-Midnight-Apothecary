@@ -1,0 +1,38 @@
+{
+  "herb_id": "sun_etched_flower",
+  "display_name_zh": "刻阳花",
+  "english_name": "Sun-Etched Flower",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "sun_etched_flower_piece_01",
+      "source_rect": [
+        197,
+        1486,
+        2326,
+        2496
+      ]
+    },
+    {
+      "id": "sun_etched_flower_piece_02",
+      "source_rect": [
+        1458,
+        722,
+        1374,
+        3269
+      ]
+    },
+    {
+      "id": "sun_etched_flower_piece_03",
+      "source_rect": [
+        2070,
+        1859,
+        1455,
+        2122
+      ]
+    }
+  ]
+}

@@ -10,7 +10,12 @@ const HERB_ART_NATIVE_SIZE := Vector2(1792.0, 2272.0)
 const HERB_SLOT_HORIZONTAL_GAP := 44.0
 const HERB_SLOT_VERTICAL_GAP := 41.0
 
+const DEFAULT_CATALOG_PATH := "res://night/ui/spectrum_codex/resources/default_potion_spectrum_catalog.tres"
+const DEFAULT_UNLOCK_STATE_PATH := "res://night/ui/spectrum_codex/resources/default_potion_spectrum_unlock_state.tres"
+
 @export var pack_delay_seconds := 3.0
+@export var catalog: PotionSpectrumCatalog
+@export var unlock_state: PotionSpectrumUnlockState
 
 var alchemy_runtime: Node
 var ingredient_definitions: Array[IngredientData] = []
@@ -46,6 +51,13 @@ var herb_page := 0
 
 func _ready() -> void:
 	drag_button = grab_mode_button # Backwards-compatible script API for callers.
+	if catalog == null and ResourceLoader.exists(DEFAULT_CATALOG_PATH):
+		catalog = load(DEFAULT_CATALOG_PATH) as PotionSpectrumCatalog
+	if unlock_state == null and ResourceLoader.exists(DEFAULT_UNLOCK_STATE_PATH):
+		unlock_state = load(DEFAULT_UNLOCK_STATE_PATH) as PotionSpectrumUnlockState
+	if unlock_state != null and not Engine.is_editor_hint():
+		if not unlock_state.state_changed.is_connected(_on_unlock_state_changed):
+			unlock_state.state_changed.connect(_on_unlock_state_changed)
 	process_board.herb_dropped.connect(_on_herb_dropped)
 	process_board.piece_moved.connect(_on_piece_moved)
 	grab_mode_button.pressed.connect(toggle_grab_mode)
@@ -65,7 +77,19 @@ func setup(runtime: Node, definitions: Array[IngredientData], state: PowderShelf
 	alchemy_runtime = runtime
 	ingredient_definitions = definitions
 	shelf_state = state
+	if alchemy_runtime != null and "spectrum_codex_panel" in alchemy_runtime and alchemy_runtime.spectrum_codex_panel != null:
+		if unlock_state != null and unlock_state.state_changed.is_connected(_on_unlock_state_changed):
+			unlock_state.state_changed.disconnect(_on_unlock_state_changed)
+		catalog = alchemy_runtime.spectrum_codex_panel.catalog
+		unlock_state = alchemy_runtime.spectrum_codex_panel.unlock_state
+		if unlock_state != null and not Engine.is_editor_hint():
+			if not unlock_state.state_changed.is_connected(_on_unlock_state_changed):
+				unlock_state.state_changed.connect(_on_unlock_state_changed)
 	_refresh_all()
+
+
+func _on_unlock_state_changed() -> void:
+	_refresh_color()
 
 
 func set_drag_mode() -> void:
@@ -427,6 +451,41 @@ func _refresh_board() -> void:
 		process_board.show_state(current_herb, pieces)
 
 
+func _get_band_for_spectrum(x: float) -> PotionSpectrumBand:
+	if catalog == null or catalog.bands.is_empty():
+		return null
+	for band in catalog.bands:
+		if band != null and x >= band.spectrum_min and x <= band.spectrum_max:
+			return band
+	var min_dist := INF
+	var nearest_band: PotionSpectrumBand = null
+	for band in catalog.bands:
+		if band != null:
+			var dist := 0.0
+			if x < band.spectrum_min:
+				dist = band.spectrum_min - x
+			elif x > band.spectrum_max:
+				dist = x - band.spectrum_max
+			if dist < min_dist:
+				min_dist = dist
+				nearest_band = band
+	return nearest_band
+
+
+func _get_closest_function(band: PotionSpectrumBand, x: float) -> PotionFunctionDefinition:
+	if catalog == null or band == null:
+		return null
+	var closest: PotionFunctionDefinition = null
+	var min_dist := INF
+	for f in catalog.functions:
+		if f != null and f.band_id == band.id:
+			var dist := absf(x - f.spectrum_position)
+			if dist < min_dist:
+				min_dist = dist
+				closest = f
+	return closest
+
+
 func _refresh_color() -> void:
 	var mixed_x := -1.0
 	if ground_powder != null:
@@ -436,4 +495,13 @@ func _refresh_color() -> void:
 		spectrum_label.text = "等待加工结果"
 	else:
 		spectrum_preview.color = ProductionRuntimeTypes.spectrum_color(mixed_x)
-		spectrum_label.text = "当前色值 %.3f" % mixed_x
+		var band := _get_band_for_spectrum(mixed_x)
+		var func_def := _get_closest_function(band, mixed_x)
+		var is_unlocked := false
+		if func_def != null and unlock_state != null:
+			is_unlocked = unlock_state.is_function_unlocked(func_def.id)
+
+		if is_unlocked and band != null and not band.primary_effect_name.is_empty():
+			spectrum_label.text = "当前色值 %.3f · 功效：%s" % [mixed_x, band.primary_effect_name]
+		else:
+			spectrum_label.text = "当前色值 %.3f · 未知功效" % mixed_x

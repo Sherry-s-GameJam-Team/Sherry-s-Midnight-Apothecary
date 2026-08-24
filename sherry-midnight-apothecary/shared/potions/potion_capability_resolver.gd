@@ -13,6 +13,7 @@ const LEGACY_CAPABILITIES: Dictionary = {
 	&"blue_potion": [&"purify", &"detox", &"curse_remove", &"magic_cleanse", &"magic_restore", &"legacy_freeze"],
 	&"purple_potion": [&"calm", &"mental_guard", &"sleep", &"concealment", &"dream_resist"],
 	&"purification_potion": [&"purify", &"purify_strong", &"anti_corruption", &"black_magic_break"],
+	&"pure_purification_potion": [&"purify", &"purify_strong", &"anti_corruption", &"black_magic_break"],
 	&"blue_ice_potion": [&"freeze"],
 }
 

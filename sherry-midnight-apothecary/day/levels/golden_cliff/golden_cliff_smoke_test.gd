@@ -22,7 +22,6 @@ func _initialize() -> void:
 		"Player/PotionThrower",
 		"WorldBounds",
 		"Gameplay/BalanceMechanisms",
-		"Gameplay/EntrancePortal",
 		"Gameplay/VillagePortal",
 		"Gameplay/ExitPortal",
 		"LevelController"
@@ -34,6 +33,11 @@ func _initialize() -> void:
 			level.queue_free()
 			quit(1)
 			return
+	if level.get_node_or_null("Gameplay/EntrancePortal") != null:
+		push_error("golden_cliff: left-side Home return interaction must remain removed")
+		level.queue_free()
+		quit(1)
+		return
 	var village_portal := level.get_node_or_null("Gameplay/VillagePortal") as DoorPortal
 	if village_portal == null or village_portal.destination_level != &"golden_cliff_village" or village_portal.destination_entry_id != &"from_cliff":
 		push_error("golden_cliff: VillagePortal must return to the village from_cliff entry point")
@@ -162,8 +166,34 @@ func _initialize() -> void:
 		quit(1)
 		return
 	
-	controller._connect_mechanisms()
+	# Test weight addition and reset on middle_balance
+	var middle_mech = mechanism_ids[&"middle_balance"]
+	middle_mech.add_weight(&"right")
+	await create_timer(0.55).timeout
+	if middle_mech.right_weight != 1:
+		push_error("golden_cliff: add_weight('right') on middle_balance failed")
+		level.queue_free()
+		quit(1)
+		return
+	if not is_equal_approx(ground_b.rotation, deg_to_rad(15.0)):
+		push_error("golden_cliff: GroundB must move from 30 to 15 degrees after adding 1 right weight to middle balance (got %f)" % rad_to_deg(ground_b.rotation))
+		level.queue_free()
+		quit(1)
+		return
 	
+	middle_mech.reset_balance()
+	await create_timer(0.55).timeout
+	if middle_mech.left_weight != 0 or middle_mech.right_weight != 0:
+		push_error("golden_cliff: middle_balance reset_balance failed to restore weights")
+		level.queue_free()
+		quit(1)
+		return
+	if not is_equal_approx(ground_b.rotation, deg_to_rad(30.0)):
+		push_error("golden_cliff: GroundB must return to 30 degrees after middle_balance reset")
+		level.queue_free()
+		quit(1)
+		return
+
 	# West alone stabilized
 	west_mech._stabilize()
 	if controller.balance_states.get(&"west_balance") != true:
@@ -185,7 +215,6 @@ func _initialize() -> void:
 		return
 	
 	# Stabilize middle and east
-	var middle_mech = mechanism_ids[&"middle_balance"]
 	var east_mech = mechanism_ids[&"east_balance"]
 	middle_mech._stabilize()
 	await create_timer(1.3).timeout

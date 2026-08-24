@@ -188,6 +188,8 @@ fallback_scene_path = "res://day/levels/home/home.tscn"
 visual_path = NodePath("Visual")
 interaction_hint_enabled = true
 interaction_hint_text = "按[E]返回药水铺"
+required_tutorial_flag = &"forest_completed"
+locked_hint_text = "旅门尚未启动"
 
 [node name="Visual" type="Sprite2D" parent="HomeDoor" unique_id=1917169918]
 material = SubResource("ShaderMaterial_gate_outline")

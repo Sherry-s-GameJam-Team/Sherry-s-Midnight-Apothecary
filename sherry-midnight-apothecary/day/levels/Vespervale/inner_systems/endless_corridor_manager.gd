@@ -10,9 +10,10 @@ signal signal_activated
 signal loop_unlocked
 
 @export var is_loop_unlocked: bool = false
-@export var loop_trigger_x: float = 2400.0
+@export var loop_trigger_x: float = 4600.0
 @export var loop_return_x: float = 400.0
 @export var trigger_hint_text: String = "回廊空间发生了折叠……似乎在无尽循环。"
+@export var right_barrier_path: NodePath = NodePath("../WorldBounds/RightBarrier")
 
 var total_loops: int = 0
 var _is_transitioning: bool = false
@@ -23,9 +24,27 @@ var _is_transitioning: bool = false
 
 
 func _ready() -> void:
+	_align_with_right_barrier()
 	if trigger_area != null:
 		trigger_area.body_entered.connect(_on_trigger_body_entered)
 	_update_exit_state()
+
+
+func _align_with_right_barrier() -> void:
+	var root := get_tree().current_scene
+	var right_barrier: Node2D = get_node_or_null(right_barrier_path) as Node2D
+	if right_barrier == null and root != null:
+		right_barrier = root.find_child("RightBarrier", true, false) as Node2D
+
+	if right_barrier != null:
+		var target_x := right_barrier.global_position.x - 70.0
+		loop_trigger_x = target_x
+		if trigger_area != null:
+			trigger_area.global_position = Vector2(target_x, 300.0)
+		if exit_blocker != null:
+			exit_blocker.global_position = Vector2(target_x + 40.0, 300.0)
+		if exit_fog != null:
+			(exit_fog as Node2D).global_position = Vector2(target_x, 300.0)
 
 
 func _physics_process(_delta: float) -> void:

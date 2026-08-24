@@ -39,16 +39,16 @@ scale = Vector2(0.3, 0.3)
 [node name="Hurtboxes" type="Node2D" parent="." unique_id=809930713]
 
 [node name="BodyHurtbox" type="Area2D" parent="Hurtboxes" unique_id=1885125248]
-collision_layer = 0
-collision_mask = 4
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtboxes/BodyHurtbox" unique_id=110481785]
 position = Vector2(0, -100)
 shape = SubResource("body_hurtbox_shape")
 
 [node name="CoreHurtbox" type="Area2D" parent="Hurtboxes" unique_id=922661250]
-collision_layer = 0
-collision_mask = 4
+collision_layer = 4
+collision_mask = 0
 monitoring = false
 monitorable = false
 

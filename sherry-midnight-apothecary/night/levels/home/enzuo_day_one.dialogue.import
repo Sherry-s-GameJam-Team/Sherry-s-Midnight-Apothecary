@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bd6rac3ofrrji"
+path="res://.godot/imported/enzuo_day_one.dialogue-a9a9d96b4698ace118ced4d3d2258c29.tres"
+
+[deps]
+
+source_file="res://night/levels/home/enzuo_day_one.dialogue"
+dest_files=["res://.godot/imported/enzuo_day_one.dialogue-a9a9d96b4698ace118ced4d3d2258c29.tres"]
+
+[params]
+
+defaults=true

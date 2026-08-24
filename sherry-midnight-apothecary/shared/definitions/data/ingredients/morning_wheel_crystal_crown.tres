@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://dkaqxv1v2vu07"]
+
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" uid="uid://bln6nymvpss2e" path="res://day/interactables/herb/herbs/morning_wheel_crystal_crown/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://cgaoa4oxr3sxr" path="res://day/interactables/herb/herbs/morning_wheel_crystal_crown/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://xgiscp37lq0n" path="res://day/interactables/herb/herbs/morning_wheel_crystal_crown/pieces/orange/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://cfq61hbwrnton" path="res://day/interactables/herb/herbs/morning_wheel_crystal_crown/pieces/orange/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://dfy13ogeuoq40" path="res://day/interactables/herb/herbs/morning_wheel_crystal_crown/pieces/orange/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece")
+id = &"morning_wheel_crystal_crown_piece_01"
+display_name = "晨轮晶冠·部位01"
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(315, 2681, 3462, 992)
+area_ratio = 0.333333
+color_id = &"orange"
+spectrum_x = 0.265
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece")
+id = &"morning_wheel_crystal_crown_piece_02"
+display_name = "晨轮晶冠·部位02"
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(1279, 497, 1996, 2846)
+area_ratio = 0.333333
+color_id = &"orange"
+spectrum_x = 0.265
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece")
+id = &"morning_wheel_crystal_crown_piece_03"
+display_name = "晨轮晶冠·部位03"
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(414, 1008, 3117, 2419)
+area_ratio = 0.333333
+color_id = &"orange"
+spectrum_x = 0.265
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer")
+id = &"morning_wheel_crystal_crown_orange_layer"
+display_name = "橙色部位层"
+color_id = &"orange"
+display_color = Color(0.9254902, 0.5058824, 0.172549, 1)
+spectrum_x = 0.265
+pieces = Array[ExtResource("3_piece")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient")
+id = &"morning_wheel_crystal_crown"
+display_name = "晨轮晶冠"
+english_name = "Morning-Wheel Crystal Crown"
+description = "一株带有橙色药性的珍稀植物。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer")]([SubResource("Layer_main")])
+base_value = 18
+spectrum_start = 0.25
+spectrum_end = 0.28
+base_quality = 1.1
+base_concentration = 1.05

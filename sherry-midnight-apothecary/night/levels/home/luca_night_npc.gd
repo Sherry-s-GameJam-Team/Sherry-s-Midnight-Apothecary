@@ -10,6 +10,7 @@ signal guidance_completed
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 const TARGET_HERB_ID := &"dew_flask_herb"
 const REWARD_AMOUNT := 2
+const ACTIVE_DAY := 0
 const INTRO_COMPLETED_FLAG := "night_luca_intro_completed"
 const REWARD_GRANTED_FLAG := "night_luca_dew_flask_given"
 
@@ -34,12 +35,25 @@ var _alchemy_station: Area2D
 
 
 func _ready() -> void:
-	monitoring = true
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	if visual != null:
 		visual.play(&"idle")
+	configure_for_day(-1)
 	call_deferred("_connect_alchemy_station")
+
+
+func configure_for_day(current_day: int) -> void:
+	_interaction_enabled = current_day == ACTIVE_DAY
+	visible = _interaction_enabled
+	monitoring = _interaction_enabled
+	monitorable = _interaction_enabled
+	var collision := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if collision != null:
+		collision.set_deferred("disabled", not _interaction_enabled)
+	if not _interaction_enabled:
+		_player_inside = false
+		_hide_interaction_hint()
 
 
 func _connect_alchemy_station() -> void:

@@ -9,12 +9,13 @@ func execute(potion: PotionData, payload: Dictionary, impact_point: Vector2, imp
 		return
 	var secondary_id := StringName(str(payload.get("secondary_effect_id", "")))
 	var secondary_multiplier := clampf(float(payload.get("secondary_effect_multiplier", 0.0)), 0.0, 1.0)
+	var charge_multiplier := clampf(float(payload.get("effect_stack_multiplier", 1.0)), 1.0, 4.0)
 	if secondary_id == potion.main_effect_id:
-		_apply_effect(potion.main_effect_id, 1.0 + secondary_multiplier, payload, impact_point, impact_normal, source)
+		_apply_effect(potion.main_effect_id, (1.0 + secondary_multiplier) * charge_multiplier, payload, impact_point, impact_normal, source)
 	else:
-		_apply_effect(potion.main_effect_id, 1.0, payload, impact_point, impact_normal, source)
+		_apply_effect(potion.main_effect_id, charge_multiplier, payload, impact_point, impact_normal, source)
 		if secondary_id != &"" and secondary_multiplier > 0.0:
-			_apply_effect(secondary_id, secondary_multiplier, payload, impact_point, impact_normal, source)
+			_apply_effect(secondary_id, secondary_multiplier * charge_multiplier, payload, impact_point, impact_normal, source)
 
 
 func _apply_effect(effect_id: StringName, effect_multiplier: float, payload: Dictionary, point: Vector2, normal: Vector2, source: Node) -> void:

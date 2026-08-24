@@ -11,6 +11,11 @@ extends Area2D
 @export_node_path("Sprite2D") var visual_path: NodePath
 @export var interaction_hint_enabled := false
 @export var interaction_hint_text := "按[E]出门"
+## When set, the portal stays visible but cannot be used until this PlayerData
+## tutorial flag has been written.  This keeps conditional return doors from
+## prematurely opening while still giving the player a clear interaction hint.
+@export var required_tutorial_flag: StringName = &""
+@export var locked_hint_text := "传送尚未启动"
 @export var trigger_on_touch := false
 
 var visual: Sprite2D
@@ -34,10 +39,16 @@ func _input(event: InputEvent) -> void:
 	var viewport := get_viewport()
 	if viewport != null:
 		viewport.set_input_as_handled()
+	if not is_portal_unlocked():
+		_show_interaction_hint()
+		return
 	_execute_transition()
 
 
 func _execute_transition() -> void:
+	if not is_portal_unlocked():
+		_show_interaction_hint()
+		return
 	var sound_manager := get_node_or_null("/root/SoundManager")
 	if sound_manager != null and sound_manager.has_method("play_door_transition"):
 		sound_manager.call("play_door_transition")
@@ -60,7 +71,7 @@ func _on_body_entered(body: Node2D) -> void:
 		_player_is_inside = true
 		_set_active(true)
 		_show_interaction_hint()
-		if trigger_on_touch:
+		if trigger_on_touch and is_portal_unlocked():
 			_execute_transition()
 
 
@@ -99,7 +110,18 @@ func _show_interaction_hint() -> void:
 		return
 	var top_hint := _find_top_hint()
 	if top_hint != null:
-		top_hint.show_interaction_hint(_hint_id(), interaction_hint_text)
+		var hint_text := interaction_hint_text if is_portal_unlocked() else locked_hint_text
+		top_hint.show_interaction_hint(_hint_id(), hint_text)
+
+
+func is_portal_unlocked() -> bool:
+	if required_tutorial_flag == &"":
+		return true
+	var runtime := _find_day_runtime()
+	if runtime == null or not runtime.has_method("get_player_data"):
+		return false
+	var player_data := runtime.call("get_player_data") as PlayerData
+	return player_data != null and bool(player_data.tutorial_flags.get(str(required_tutorial_flag), false))
 
 
 func _hide_interaction_hint() -> void:

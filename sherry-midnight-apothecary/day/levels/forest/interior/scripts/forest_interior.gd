@@ -2,6 +2,7 @@ class_name ForestInteriorLevel
 extends DayLevelEnvironment
 
 const COMPLETED_FLAG := "forest_interior_completed"
+const FOREST_COMPLETED_FLAG := "forest_completed"
 const DIRECT_LIFT_FLAG := "forest_interior_direct_lift_unlocked"
 const FINAL_GATE_FLAG := "forest_interior_final_gate_open"
 const CROWN_LEVEL_ID := &"forest_crown"
@@ -49,11 +50,20 @@ func _ready() -> void:
 
 
 func _activate_travel_anchor() -> void:
+	# The home map must not advertise the tree interior until the Day 1 crown
+	# boss has been purified.  Before then its anchor remains in MapSwitch's
+	# normal inactive / \"未启动\" state.
+	if not is_home_route_unlocked(_get_flag(FOREST_COMPLETED_FLAG)):
+		return
 	var runtime := _get_day_runtime()
 	if runtime != null and runtime.has_method("activate_travel_anchor"):
 		runtime.call("activate_travel_anchor", &"forest_interior")
 	elif get_player_data() != null:
 		get_player_data().unlock_level(&"forest_interior")
+
+
+static func is_home_route_unlocked(forest_completed: bool) -> bool:
+	return forest_completed
 
 
 func set_corrupted(corrupted: bool) -> void:

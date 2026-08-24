@@ -98,12 +98,11 @@ script = ExtResource("40_party_controller")
 script = ExtResource("41_switch_ui")
 
 [node name="EndlessCorridorManager" type="Node2D" parent="." unique_id=2000500]
-position = Vector2(2312, -83)
 script = ExtResource("48_endless_mgr")
-loop_trigger_x = 2300.0
+loop_trigger_x = 4600.0
 
 [node name="LoopTriggerArea" type="Area2D" parent="EndlessCorridorManager" unique_id=2000501]
-position = Vector2(2300, 400)
+position = Vector2(4600, 300)
 collision_layer = 0
 collision_mask = 3
 
@@ -111,7 +110,7 @@ collision_mask = 3
 shape = SubResource("Rect_loop_trigger")
 
 [node name="ExitBlocker" type="StaticBody2D" parent="EndlessCorridorManager" unique_id=2000503]
-position = Vector2(2340, 400)
+position = Vector2(4640, 300)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndlessCorridorManager/ExitBlocker" unique_id=2000504]
@@ -119,7 +118,7 @@ shape = SubResource("Rect_loop_trigger")
 
 [node name="LoopFog" type="Sprite2D" parent="EndlessCorridorManager" unique_id=2000505]
 modulate = Color(0.6, 0.2, 0.8, 0.45)
-position = Vector2(2320, 360)
+position = Vector2(4600, 300)
 scale = Vector2(0.8, 2.5)
 texture = ExtResource("15_61j61")
 
@@ -452,14 +451,12 @@ scale = Vector2(0.61, 0.61)
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=2000190]
 layer = 120
-visible = false
 
 [node name="DeveloperConsole" parent="DebugUI" unique_id=2000191 instance=ExtResource("32_console")]
 
 [node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2000192]
 process_mode = 3
 layer = 100
-visible = false
 script = ExtResource("33_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=2000193 instance=ExtResource("34_pause_menu")]
@@ -467,7 +464,5 @@ script = ExtResource("33_pause_host")
 [node name="TopHintUI" parent="PauseMenuLayer" unique_id=2000194 instance=ExtResource("35_top_hint")]
 
 [node name="LetterViewerDialog" parent="." unique_id=2000700 instance=ExtResource("52_letter_dialog")]
-visible = false
 
 [node name="DialLockPuzzleDialog" parent="." unique_id=2000800 instance=ExtResource("54_dial_lock_dialog")]
-visible = false

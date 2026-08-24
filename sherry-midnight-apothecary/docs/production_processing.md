@@ -8,4 +8,12 @@ When more than twelve definitions are registered, the transparent hit areas over
 
 Refreshing inventory counts does not reset the selected page. If the current page's card identities are unchanged, the existing card controls are updated in place so an active shelf layout remains stable.
 
-Automated coverage lives in `res://tests/production_test.gd` and verifies the 4 × 3 cap, page indicator, arrow wrap behavior, and empty slots on a partial final page.
+## Spectrum Preview & Effect Display (光谱色值与功效显示)
+
+`ProductionPanel` features a top `SpectrumFrame` (`SpectrumPreview` + `SpectrumLabel`):
+- Before grinding: Displays `等待加工结果`.
+- Upon grinding: Previews the blended `mixed_x` color and queries `PotionSpectrumCatalog` / `PotionSpectrumUnlockState`.
+  - Unlocked: Displays `当前色值 <x> · 功效：<主功效>` (e.g. `当前色值 0.050 · 功效：止血、循环`).
+  - Locked: Displays `当前色值 <x> · 未知功效`.
+
+Automated coverage lives in `res://tests/production_test.gd` and `res://tests/spectrum_codex_test.gd`.

@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://night/levels/home/enzuo_night_npc.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_00.png" id="2_idle_00"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_01.png" id="3_idle_01"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_02.png" id="4_idle_02"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_03.png" id="5_idle_03"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_04.png" id="6_idle_04"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_05.png" id="7_idle_05"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_06.png" id="8_idle_06"]
+[ext_resource type="Texture2D" path="res://characters/enzuo/idle/idle_07.png" id="9_idle_07"]
+[ext_resource type="Resource" path="res://night/levels/home/enzuo_day_one.dialogue" id="10_dialogue"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_enzuo_idle"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("2_idle_00")}, {"duration": 1.0, "texture": ExtResource("3_idle_01")}, {"duration": 1.0, "texture": ExtResource("4_idle_02")}, {"duration": 1.0, "texture": ExtResource("5_idle_03")}, {"duration": 1.0, "texture": ExtResource("6_idle_04")}, {"duration": 1.0, "texture": ExtResource("7_idle_05")}, {"duration": 1.0, "texture": ExtResource("8_idle_06")}, {"duration": 1.0, "texture": ExtResource("9_idle_07")}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(190, 210)
+
+[node name="EnzuoNightNPC" type="Area2D"]
+z_index = 8
+script = ExtResource("1_script")
+dialogue_resource = ExtResource("10_dialogue")
+
+[node name="Visual" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -94)
+scale = Vector2(0.22, 0.22)
+sprite_frames = SubResource("SpriteFrames_enzuo_idle")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -92)
+shape = SubResource("RectangleShape2D_interaction")

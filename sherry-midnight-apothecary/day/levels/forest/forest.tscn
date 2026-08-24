@@ -406,6 +406,7 @@ visible = false
 script = ExtResource("45_enzuo_saved")
 player_path = NodePath("../Player")
 enzuo_path = NodePath("Enzuofall")
+fade_overlay_path = NodePath("../UI/ForestDayOneFade")
 
 [node name="Enzuofall" type="Node2D" parent="issue_saved" unique_id=61728994]
 position = Vector2(390, 616)

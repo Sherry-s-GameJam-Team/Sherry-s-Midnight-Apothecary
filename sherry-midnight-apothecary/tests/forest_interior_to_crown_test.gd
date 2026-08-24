@@ -8,6 +8,10 @@ func _init() -> void:
 func _run() -> void:
 	if ForestCrownLevel.completion_return_level_id() != &"forest":
 		_fail("Forest Crown completion must return to Forest/from_crown for the Enzuo resolution sequence")
+	if ForestInteriorLevel.is_home_route_unlocked(false):
+		_fail("Forest Interior home route must remain inactive before the crown boss is purified")
+	if not ForestInteriorLevel.is_home_route_unlocked(true):
+		_fail("Forest Interior home route must unlock after the crown boss is purified")
 
 	# 1. Verify forest_interior has DeveloperConsole, PauseMenu, and ExitToCrown
 	var interior_packed := load("res://day/levels/forest/interior/forest_interior.tscn") as PackedScene
@@ -25,6 +29,11 @@ func _run() -> void:
 		_fail("forest_interior missing DebugUI/DeveloperConsole")
 	if interior.get_node_or_null("PauseMenuLayer/PauseMenu") == null:
 		_fail("forest_interior missing PauseMenuLayer/PauseMenu")
+	var home_door := interior.get_node_or_null("HomeDoor") as DoorPortal
+	if home_door == null:
+		_fail("forest_interior missing HomeDoor")
+	elif home_door.required_tutorial_flag != &"forest_completed":
+		_fail("HomeDoor must require forest_completed before it can return home")
 
 	var exit := interior.get_node_or_null("ExitToCrown") as Area2D
 	if exit == null:

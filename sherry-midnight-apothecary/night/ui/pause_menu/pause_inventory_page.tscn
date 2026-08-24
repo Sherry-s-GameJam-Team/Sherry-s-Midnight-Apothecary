@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3]
+[gd_scene load_steps=49 format=3]
 
 [ext_resource type="Script" path="res://night/ui/pause_menu/pause_inventory_page.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://night/ui/pause_menu/potion_loadout_slot.tscn" id="2_slot"]
@@ -41,11 +41,19 @@
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/returning_tide_thorn_fern.tres" id="50_returning_tide"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tideplate_lotus.tres" id="51_tideplate"]
 [ext_resource type="Resource" path="res://shared/definitions/data/ingredients/tide_lantern_flower.tres" id="52_tide_lantern"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/maple_heart_dark_vein.tres" id="53_maple_heart"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/maple_marrow_star_crystal.tres" id="54_maple_marrow"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/waystation_lantern_fruit.tres" id="55_waystation"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/sun_etched_flower.tres" id="56_sun_etched"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/hanging_lantern_bell_cap.tres" id="57_hanging_lantern"]
+[ext_resource type="Resource" path="res://shared/definitions/data/ingredients/morning_wheel_crystal_crown.tres" id="58_morning_wheel"]
+[ext_resource type="Resource" path="res://shared/definitions/data/story_items/springburst_potion_commission.tres" id="60_springburst_story"]
 
 [node name="PauseInventoryPage" type="Control"]
 script = ExtResource("1_script")
 potion_definitions = Array[PotionData]([ExtResource("10_red"), ExtResource("11_orange"), ExtResource("12_yellow"), ExtResource("13_green"), ExtResource("14_cyan"), ExtResource("15_blue"), ExtResource("16_purple"), ExtResource("18_purification"), ExtResource("17_black")])
-ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey"), ExtResource("50_returning_tide"), ExtResource("51_tideplate"), ExtResource("52_tide_lantern")])
+ingredient_definitions = Array[IngredientData]([ExtResource("20_amber"), ExtResource("21_blue_bell"), ExtResource("22_dew"), ExtResource("23_grail"), ExtResource("24_loaf"), ExtResource("25_mist"), ExtResource("26_mint"), ExtResource("27_noose"), ExtResource("28_maple"), ExtResource("29_berry"), ExtResource("30_lion"), ExtResource("31_lavender"), ExtResource("32_daisy"), ExtResource("33_thistle"), ExtResource("40_chalice"), ExtResource("41_tundra"), ExtResource("42_vesper"), ExtResource("43_dusk"), ExtResource("44_stagnant"), ExtResource("45_slumber"), ExtResource("46_whistle"), ExtResource("47_eyrie"), ExtResource("48_rye"), ExtResource("49_honey"), ExtResource("50_returning_tide"), ExtResource("51_tideplate"), ExtResource("52_tide_lantern"), ExtResource("53_maple_heart"), ExtResource("54_maple_marrow"), ExtResource("55_waystation"), ExtResource("56_sun_etched"), ExtResource("57_hanging_lantern"), ExtResource("58_morning_wheel")])
+story_item_definitions = Array[StoryItemData]([ExtResource("60_springburst_story")])
 lock_icon = ExtResource("3_lock")
 empty_slot_icon = ExtResource("4_empty")
 story_item_placeholder = ExtResource("5_story")

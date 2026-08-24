@@ -181,11 +181,16 @@ static func run(test: TestSupport) -> void:
 		floor5.call("receive_potion_hit", {"potion_id": "blue_potion"})
 		test.expect(bool(floor5.get("is_synchronized")), "Floor 5 synchronizes upon ring alignment.")
 
-		# Test Elevator activation:
+		# Test Elevator activation on sync:
 		var elevator: ClocktowerElevator = floor5.get_node_or_null("TowerElevator") as ClocktowerElevator
-		test.expect(elevator != null and elevator.is_unlocked, "Elevator is deployed and unlocked upon Floor 5 completion.")
+		test.expect(elevator != null and elevator.is_unlocked and elevator.visible, "Floor 5 elevator unlocks and becomes visible upon grand synchronization.")
 		if elevator != null:
 			test.expect(elevator.target_position.y <= -2070.0, "Elevator target_position aligns level with Floor 6.")
+
+		# Test Elevator hides when boss battle begins:
+		level.call("_on_helion_boss_started")
+		if elevator != null:
+			test.expect(not elevator.visible, "Floor 5 elevator is hidden during Boss battle.")
 
 	# Test Floor 6 Pinnacle & Portals
 	var floor6: Node = level.get_node_or_null("World/Top")

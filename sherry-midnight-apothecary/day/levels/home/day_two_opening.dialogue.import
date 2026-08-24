@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bxpictp0xuat4"
+path="res://.godot/imported/day_two_opening.dialogue-5df313b3172f9a603ef3ed7f915e41cb.tres"
+
+[deps]
+
+source_file="res://day/levels/home/day_two_opening.dialogue"
+dest_files=["res://.godot/imported/day_two_opening.dialogue-5df313b3172f9a603ef3ed7f915e41cb.tres"]
+
+[params]
+
+defaults=true

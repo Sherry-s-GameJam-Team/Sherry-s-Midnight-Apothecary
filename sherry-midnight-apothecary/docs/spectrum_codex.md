@@ -38,6 +38,15 @@
    - Supports interactive dragging and click-toggling to slide the panel up/down.
    - Restricts focus and keyboard input (`ESC` / `ui_cancel`) when open, sliding closed safely instead of exiting the entire alchemy screen.
 
+5. **Brewing & Production UI Dynamic Integration (炼药与加工界面动态联动)**:
+   - **`SpectrumAnalyzer` (炼药界面)**: Dynamically maps the cauldron's predicted `mixed_x` to the corresponding spectrum band and function branch.
+     - If unlocked: Displays primary and secondary functions (e.g. `主功能：止血　副功能：止血`).
+     - If not yet unlocked on the spectrum: Displays `装瓶后显示`.
+   - **`SpectrumFrame` (加工界面)**: Shows the current powder's spectral effect based on unlock progress.
+     - If unlocked: Displays the band's primary effect (e.g. `当前色值 0.050 · 功效：止血、循环`).
+     - If not yet unlocked: Displays `当前色值 0.050 · 未知功效`.
+   - Dynamic synchronization: When a new potion is bottled and unlocked via `_unlock_codex_for_brew`, `PotionSpectrumUnlockState.state_changed` immediately updates both analyzer and production frame labels.
+
 ## Public API
 
 `SpectrumCodexPanel` provides decoupled external integration endpoints:

@@ -138,6 +138,8 @@ func _notify_direct_hit(collider: Object, point: Vector2, normal: Vector2) -> vo
 		"potion": potion,
 		"potion_id": potion.id if potion != null else &"",
 		"payload": payload.duplicate(true),
+		"effect_multiplier": float(payload.get("effect_stack_multiplier", 1.0)),
+		"consumed_dose": float(payload.get("consumed_dose", 0.0)),
 		"impact_point": point,
 		"impact_normal": normal,
 		"projectile": self,

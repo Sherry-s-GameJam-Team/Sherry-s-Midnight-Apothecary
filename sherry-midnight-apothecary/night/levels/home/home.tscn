@@ -23,8 +23,8 @@
 [ext_resource type="AudioStream" uid="uid://bb3ufqrijdk5f" path="res://night/levels/home/people_voice.wav" id="20_people_voice"]
 [ext_resource type="Script" uid="uid://lowx026ww67k" path="res://night/levels/home/night_home_ambience.gd" id="21_ambience"]
 [ext_resource type="PackedScene" uid="uid://b087o5e1f0e4h" path="res://night/levels/home/luca_night_npc.tscn" id="22_luca_npc"]
-[ext_resource type="Script" path="res://night/levels/home/night_bedroom_barrier.gd" id="23_barrier_script"]
-[ext_resource type="Resource" path="res://night/levels/home/night_bedroom_barrier.dialogue" id="24_barrier_dialogue"]
+[ext_resource type="Script" uid="uid://dbcawfogypgk4" path="res://night/levels/home/night_bedroom_barrier.gd" id="23_barrier_script"]
+[ext_resource type="PackedScene" path="res://night/levels/home/enzuo_night_npc.tscn" id="24_enzuo_npc"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -259,18 +259,18 @@ texture = ExtResource("8_table")
 position = Vector2(0, -12)
 shape = SubResource("TableShape")
 
-[node name="Transsformer" type="Area2D" parent="."]
+[node name="Transsformer" type="Area2D" parent="." unique_id=598348703]
 process_mode = 4
 position = Vector2(2217, 526)
 monitoring = false
 monitorable = false
 
-[node name="Visual" type="Sprite2D" parent="Transsformer"]
+[node name="Visual" type="Sprite2D" parent="Transsformer" unique_id=1840183748]
 material = SubResource("TransformerOutline")
 scale = Vector2(0.8276242, 0.82674414)
 texture = ExtResource("10_transformer")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Transsformer"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transsformer" unique_id=75095841]
 position = Vector2(2.5, 8.5)
 shape = SubResource("TransformerShape")
 disabled = true
@@ -347,4 +347,10 @@ shape = SubResource("BedroomDoorShape")
 [node name="NightBedroomBarrier" type="Node" parent="." unique_id=1849203810]
 script = ExtResource("23_barrier_script")
 camera_director_path = NodePath("../HomeCameraDirector")
-dialogue_resource = ExtResource("24_barrier_dialogue")
+
+[node name="issue" type="Node2D" parent="." unique_id=2141197330]
+
+[node name="Day1" type="Node2D" parent="issue" unique_id=725786140]
+
+[node name="EnzuoNightNPC" parent="issue/Day1" instance=ExtResource("24_enzuo_npc")]
+position = Vector2(-1315, 790)

@@ -7,6 +7,7 @@ static func run(test: TestSupport) -> void:
 	if scene == null:
 		return
 	var page := scene.instantiate() as PauseInventoryPage
+	test.expect(page.story_item_definitions.any(func(item: StoryItemData) -> bool: return item != null and item.id == &"springburst_potion_commission"), "Backpack registers the Springburst commission story item definition.")
 	var tree := Engine.get_main_loop() as SceneTree
 	tree.root.add_child(page)
 	var player := PlayerData.new()

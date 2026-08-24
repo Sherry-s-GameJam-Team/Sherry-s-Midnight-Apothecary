@@ -12,6 +12,11 @@ var _slot_buttons: Array[Button] = []
 var _slot_views: Array[PotionHotbarSlot] = []
 @onready var _slots: VBoxContainer = %Slots
 @onready var _order_panel: PotionOrderPanel = %OrderPanel
+@onready var _charge_panel: PanelContainer = %ChargePanel
+@onready var _charge_bar: ProgressBar = %ChargeBar
+@onready var _charge_dose_label: Label = %ChargeDoseLabel
+@onready var _charge_effect_label: Label = %ChargeEffectLabel
+@onready var _charge_warning_label: Label = %ChargeWarningLabel
 var _refresh_accumulator := 0.0
 
 
@@ -25,6 +30,7 @@ func _ready() -> void:
 		slot_view.set_slot_number(slot_index + 1)
 		slot_view.button.pressed.connect(_on_slot_pressed.bind(slot_index))
 	_order_panel.hide()
+	_charge_panel.hide()
 
 
 func setup(service: PotionInventoryService, definitions: Dictionary, configured_dose_per_throw: float) -> void:
@@ -41,6 +47,24 @@ func is_detail_open() -> bool:
 func close_detail() -> void:
 	if _order_panel != null:
 		_order_panel.hide()
+
+
+func show_charge_preview(dose: float, effect_multiplier: float, effect_threshold: float, maximum_multiplier: float) -> void:
+	if _charge_panel == null:
+		return
+	var safe_threshold := maxf(effect_threshold, 0.01)
+	_charge_bar.max_value = safe_threshold * 100.0
+	_charge_bar.value = minf(dose, safe_threshold) * 100.0
+	_charge_dose_label.text = "预计消耗  %d%%" % roundi(dose * 100.0)
+	_charge_effect_label.text = "效果叠加  ×%.2f / ×%.0f" % [effect_multiplier, maximum_multiplier]
+	_charge_warning_label.visible = dose > safe_threshold + PotionInventoryService.DOSE_EPSILON
+	_charge_warning_label.text = "效果已达上限，继续蓄力只增加消耗"
+	_charge_panel.show()
+
+
+func hide_charge_preview() -> void:
+	if _charge_panel != null:
+		_charge_panel.hide()
 
 
 func _process(delta: float) -> void:

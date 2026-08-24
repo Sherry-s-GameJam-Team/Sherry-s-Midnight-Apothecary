@@ -75,9 +75,7 @@ static func run(test: TestSupport) -> void:
 	if cliff_scene != null:
 		var cliff := cliff_scene.instantiate()
 		test.expect(cliff.get_node_or_null("EntryPoints/from_home") is Marker2D, "Golden Cliff has a Home-door arrival point.")
-		var entrance_portal := cliff.get_node_or_null("Gameplay/EntrancePortal") as DoorPortal
-		test.expect(entrance_portal != null, "Golden Cliff has an EntrancePortal under Gameplay.")
-		test.expect(entrance_portal != null and entrance_portal.destination_level == &"home" and entrance_portal.destination_entry_id == &"from_cliff", "EntrancePortal routes back to Home.")
+		test.expect(cliff.get_node_or_null("Gameplay/EntrancePortal") == null, "Golden Cliff omits the left-side E-key return-to-Home interaction.")
 		cliff.free()
 	if forest_scene != null:
 		var forest := forest_scene.instantiate()

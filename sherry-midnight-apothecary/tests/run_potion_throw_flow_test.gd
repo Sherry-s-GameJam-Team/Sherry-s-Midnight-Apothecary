@@ -47,7 +47,7 @@ func _run() -> void:
 	_expect(thrower._casting, "Valid release enters the cast animation state.")
 	_expect(is_equal_approx(thrower.inventory_service.get_total_dose(&"red_potion"), 1.0), "Dose remains reserved until the animation release frame.")
 	thrower.on_cast_release()
-	_expect(is_equal_approx(thrower.inventory_service.get_total_dose(&"red_potion"), 0.75), "Successful projectile spawn commits configured dose.")
+	_expect(is_equal_approx(thrower.inventory_service.get_total_dose(&"red_potion"), 0.95), "An immediate valid throw commits the five-percent minimum dose.")
 	_expect(thrower._active_projectile != null, "Animation release spawns the SVG potion projectile at AimOrigin.")
 	if thrower._active_projectile != null:
 		thrower._active_projectile._break(thrower._active_projectile.global_position, Vector2.UP)
@@ -59,7 +59,7 @@ func _run() -> void:
 	thrower._drag_start_mouse = thrower.get_global_mouse_position() - Vector2(-120, 80)
 	thrower._finish_aim()
 	thrower.on_cast_release()
-	_expect(is_equal_approx(thrower.inventory_service.get_total_dose(&"red_potion"), 0.5), "A second successful launch commits one additional dose.")
+	_expect(is_equal_approx(thrower.inventory_service.get_total_dose(&"red_potion"), 0.9), "A second immediate launch commits one additional minimum dose.")
 	_expect(runtime.switch_to_level("forest"), "Scene switching remains available during projectile flight.")
 	for _frame in range(8):
 		await physics_frame

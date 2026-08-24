@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cxbtlpanel01"]
 
-[ext_resource type="Script" path="res://night/alchemy/bottling_panel.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dttd1v5lf188h" path="res://night/alchemy/bottling_panel.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://shared/potions/ui/potion_bottle_visual.tscn" id="2_bottle"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
@@ -53,6 +53,22 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_btn_pressed"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(0.85, 0.78, 0.65, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.35, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_btn_hover"]
 content_margin_left = 8.0
 content_margin_top = 6.0
@@ -70,22 +86,6 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 shadow_color = Color(0.3, 0.2, 0.1, 0.15)
 shadow_size = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_btn_pressed"]
-content_margin_left = 8.0
-content_margin_top = 6.0
-content_margin_right = 8.0
-content_margin_bottom = 6.0
-bg_color = Color(0.85, 0.78, 0.65, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.48, 0.35, 0.2, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info_card"]
 content_margin_left = 12.0
@@ -137,6 +137,22 @@ corner_radius_bottom_left = 5
 shadow_color = Color(0.35, 0.15, 0.08, 0.3)
 shadow_size = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_confirm_pressed"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.66, 0.22, 0.14, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.14, 0.08, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_confirm_hover"]
 content_margin_left = 14.0
 content_margin_top = 8.0
@@ -155,23 +171,7 @@ corner_radius_bottom_left = 5
 shadow_color = Color(0.35, 0.15, 0.08, 0.4)
 shadow_size = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_confirm_pressed"]
-content_margin_left = 14.0
-content_margin_top = 8.0
-content_margin_right = 14.0
-content_margin_bottom = 8.0
-bg_color = Color(0.66, 0.22, 0.14, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.45, 0.14, 0.08, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[node name="BottlingPanel" type="PanelContainer"]
+[node name="BottlingPanel" type="PanelContainer" unique_id=113819612]
 visible = false
 z_index = 20
 custom_minimum_size = Vector2(460, 520)
@@ -189,42 +189,42 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 script = ExtResource("1_script")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="." unique_id=2029844320]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="HeaderVBox" type="VBoxContainer" parent="VBox"]
+[node name="HeaderVBox" type="VBoxContainer" parent="VBox" unique_id=794551062]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Title" type="Label" parent="VBox/HeaderVBox"]
+[node name="Title" type="Label" parent="VBox/HeaderVBox" unique_id=489789810]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.32, 0.18, 0.08, 1)
 theme_override_font_sizes/font_size = 18
 text = "✦ 药剂分装与命名 ✦"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="VBox/HeaderVBox"]
+[node name="Subtitle" type="Label" parent="VBox/HeaderVBox" unique_id=162480337]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.55, 0.42, 0.28, 0.95)
 theme_override_font_sizes/font_size = 11
 text = "挑选适宜的魔瓶器皿并题写药水名称"
 horizontal_alignment = 1
 
-[node name="HSeparator1" type="HSeparator" parent="VBox"]
+[node name="HSeparator1" type="HSeparator" parent="VBox" unique_id=222577153]
 layout_mode = 2
 
-[node name="PreviewPedestal" type="PanelContainer" parent="VBox"]
+[node name="PreviewPedestal" type="PanelContainer" parent="VBox" unique_id=1071670916]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pedestal")
 
-[node name="StyleSwitcherRow" type="HBoxContainer" parent="VBox/PreviewPedestal"]
+[node name="StyleSwitcherRow" type="HBoxContainer" parent="VBox/PreviewPedestal" unique_id=317804819]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 14
 alignment = 1
 
-[node name="PrevStyleButton" type="Button" parent="VBox/PreviewPedestal/StyleSwitcherRow"]
+[node name="PrevStyleButton" type="Button" parent="VBox/PreviewPedestal/StyleSwitcherRow" unique_id=1079857525]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
@@ -233,23 +233,23 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.35, 0.2, 0.08, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_btn_hover")
 text = "◀"
 
-[node name="BottleCenterVBox" type="VBoxContainer" parent="VBox/PreviewPedestal/StyleSwitcherRow"]
+[node name="BottleCenterVBox" type="VBoxContainer" parent="VBox/PreviewPedestal/StyleSwitcherRow" unique_id=1583875567]
 layout_mode = 2
 theme_override_constants/separation = 4
 alignment = 1
 
-[node name="Preview" parent="VBox/PreviewPedestal/StyleSwitcherRow/BottleCenterVBox" instance=ExtResource("2_bottle")]
+[node name="Preview" parent="VBox/PreviewPedestal/StyleSwitcherRow/BottleCenterVBox" unique_id=1954610162 instance=ExtResource("2_bottle")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 140)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="StyleNameLabel" type="Label" parent="VBox/PreviewPedestal/StyleSwitcherRow/BottleCenterVBox"]
+[node name="StyleNameLabel" type="Label" parent="VBox/PreviewPedestal/StyleSwitcherRow/BottleCenterVBox" unique_id=1678917335]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.3, 0.15, 1)
@@ -257,7 +257,7 @@ theme_override_font_sizes/font_size = 12
 text = "瓶型：经典圆瓶 (1/5)"
 horizontal_alignment = 1
 
-[node name="NextStyleButton" type="Button" parent="VBox/PreviewPedestal/StyleSwitcherRow"]
+[node name="NextStyleButton" type="Button" parent="VBox/PreviewPedestal/StyleSwitcherRow" unique_id=880676385]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
@@ -266,51 +266,51 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.35, 0.2, 0.08, 1)
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_btn_hover")
 text = "▶"
 
-[node name="InfoCard" type="PanelContainer" parent="VBox"]
+[node name="InfoCard" type="PanelContainer" parent="VBox" unique_id=1339135824]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_info_card")
 
-[node name="InfoVBox" type="VBoxContainer" parent="VBox/InfoCard"]
+[node name="InfoVBox" type="VBoxContainer" parent="VBox/InfoCard" unique_id=881667087]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="QualityLabel" type="Label" parent="VBox/InfoCard/InfoVBox"]
+[node name="QualityLabel" type="Label" parent="VBox/InfoCard/InfoVBox" unique_id=1648146153]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.55, 0.35, 0.15, 1)
 theme_override_font_sizes/font_size = 12
 text = "❖ 品质评级：良好 (1.00)"
 
-[node name="MainEffectLabel" type="Label" parent="VBox/InfoCard/InfoVBox"]
+[node name="MainEffectLabel" type="Label" parent="VBox/InfoCard/InfoVBox" unique_id=254104025]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.18, 0.42, 0.22, 1)
 theme_override_font_sizes/font_size = 12
 text = "❖ 主效果：恢复生命与伤势"
 
-[node name="SecondaryEffectLabel" type="Label" parent="VBox/InfoCard/InfoVBox"]
+[node name="SecondaryEffectLabel" type="Label" parent="VBox/InfoCard/InfoVBox" unique_id=342464064]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.24, 0.38, 0.58, 1)
 theme_override_font_sizes/font_size = 12
 text = "✦ 副效果：无额外副效果"
 
-[node name="NameRow" type="VBoxContainer" parent="VBox"]
+[node name="NameRow" type="VBoxContainer" parent="VBox" unique_id=2008012068]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="NameHeadingLabel" type="Label" parent="VBox/NameRow"]
+[node name="NameHeadingLabel" type="Label" parent="VBox/NameRow" unique_id=605595386]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.32, 0.18, 1)
 theme_override_font_sizes/font_size = 12
 text = "药剂题名："
 
-[node name="NameInput" type="LineEdit" parent="VBox/NameRow"]
+[node name="NameInput" type="LineEdit" parent="VBox/NameRow" unique_id=1303819670]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -318,14 +318,14 @@ theme_override_colors/font_color = Color(0.24, 0.16, 0.08, 1)
 theme_override_colors/font_placeholder_color = Color(0.6, 0.5, 0.4, 0.7)
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_lineedit")
-max_length = 16
 placeholder_text = "输入自定义名称（可保留默认）"
+max_length = 16
 
-[node name="Spacer" type="Control" parent="VBox"]
+[node name="Spacer" type="Control" parent="VBox" unique_id=286126682]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ConfirmButton" type="Button" parent="VBox"]
+[node name="ConfirmButton" type="Button" parent="VBox" unique_id=757291829]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
@@ -333,6 +333,6 @@ mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0.99, 0.96, 0.9, 1)
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_confirm_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_confirm_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_confirm_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_confirm_hover")
 text = "✦ 确认装瓶并入库 ✦"

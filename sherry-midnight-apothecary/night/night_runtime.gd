@@ -67,6 +67,8 @@ func configure(shared_player_data: PlayerData, current_day: int, shared_story_ev
 	if night_home == null:
 		push_error("NightRuntime is missing its NightHome scene.")
 		return
+	if night_home.has_method("configure_for_day"):
+		night_home.call("configure_for_day", day)
 	_place_player_at_default()
 	_show_shop()
 	var alchemy := get_node_or_null("AlchemySlot/AlchemyRuntime")
@@ -153,6 +155,8 @@ func switch_room(room_id: StringName, entry_id: StringName = &"default") -> bool
 		return false
 	shop_slot.add_child(room)
 	_connect_room(room)
+	if room.has_method("configure_for_day"):
+		room.call("configure_for_day", day)
 	_place_room_player(room, entry_id)
 	room.propagate_call(&"on_level_entered", [entry_id], true)
 	_resolve_scene_nodes()

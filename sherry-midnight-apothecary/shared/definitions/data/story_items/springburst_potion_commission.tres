@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StoryItemData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/story_item_data.gd" id="1_story_item"]
+[ext_resource type="Texture2D" path="res://night/art/ui/pause_menu/inventory/story_item.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_story_item")
+id = &"springburst_potion_commission"
+display_name = "涌水药水（委托品）"
+description = "为涟汀村委托调制的青色药水。目前作为剧情道具保管，平息噬潮眼后才会解锁为可装备、可投掷药水。"
+icon = ExtResource("2_icon")
+sort_order = 20

@@ -12,7 +12,14 @@ extends Resource
 @export_range(0.01, 0.2, 0.01) var trajectory_step := 0.04
 @export_range(0.2, 8.0, 0.1) var trajectory_max_time := 3.0
 @export_range(4, 200, 1) var trajectory_max_points := 80
-@export_range(0.01, 1.0, 0.01) var dose_per_throw := 0.25
+## A tap always spends at least 5% of a bottle. Holding aim adds 10% per
+## real-time second; effect strength reaches its cap at 25%, while dose can
+## continue climbing to a full bottle without further effect gain.
+@export_range(0.01, 1.0, 0.01) var dose_per_throw := 0.05
+@export_range(0.01, 1.0, 0.01) var dose_charge_per_second := 0.10
+@export_range(0.05, 1.0, 0.01) var maximum_dose_per_throw := 1.0
+@export_range(0.05, 1.0, 0.01) var effect_stack_dose_threshold := 0.25
+@export_range(1.0, 4.0, 0.25) var maximum_effect_multiplier := 4.0
 @export_range(0.2, 8.0, 0.1) var camera_follow_max_time := 5.0
 @export_range(0.5, 3.0, 0.05) var camera_zoom_multiplier := 1.35
 @export_range(0.05, 1.0, 0.05) var camera_transition_duration := 0.22

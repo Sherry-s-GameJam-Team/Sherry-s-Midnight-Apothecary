@@ -76,11 +76,19 @@ static func run(test: TestSupport) -> void:
 
 	var entrance_portal: Node = level.get_node_or_null("World/Portals/EntrancePortal")
 	var tower_portal: Node = level.get_node_or_null("World/Portals/TowerPortal")
-	var tower_exit: Node = level.get_node_or_null("World/Portals/TowerExitPortal")
-	test.expect(entrance_portal != null and tower_portal != null and tower_exit != null, "Door portals are deployed.")
+	test.expect(entrance_portal != null and tower_portal != null, "Door portals are deployed.")
 
 	var npc: Node = level.get_node_or_null("World/NPCs/Clockmaker")
 	test.expect(npc != null, "Clockmaker NPC is deployed.")
+
+	var daily_npcs: Node = level.get_node_or_null("World/NPCs/DailyNPCs")
+	test.expect(daily_npcs != null, "DailyNPCs container is deployed.")
+	if daily_npcs != null:
+		test.expect(daily_npcs.has_node("NPC_Otto"), "NPC_Otto exists.")
+		test.expect(daily_npcs.has_node("NPC_Elena"), "NPC_Elena exists.")
+		test.expect(daily_npcs.has_node("NPC_Timmy"), "NPC_Timmy exists.")
+		test.expect(daily_npcs.has_node("NPC_Fiona"), "NPC_Fiona exists.")
+		test.expect(daily_npcs.has_node("NPC_Bard"), "NPC_Bard exists.")
 
 	var ground_node: StaticBody2D = level.get_node_or_null("WorldBounds/Ground") as StaticBody2D
 	test.expect(ground_node != null, "WorldBounds/Ground exists.")
@@ -91,9 +99,17 @@ static func run(test: TestSupport) -> void:
 	level.call("set_corrupted", true)
 	test.expect(farm_corrupted.visible, "Farm corrupted sprite is visible in corrupted state.")
 	test.expect(not farm_normal.visible, "Farm normal sprite is hidden in corrupted state.")
+	if daily_npcs != null:
+		test.expect(not daily_npcs.visible, "Daily NPCs are hidden in corrupted state.")
+	if npc != null:
+		test.expect(npc.visible, "Clockmaker is visible in corrupted state.")
 
 	level.call("set_farm_cleansed", true)
 	test.expect(farm_normal.visible, "Farm normal sprite is visible after cleansing.")
 	test.expect(not farm_corrupted.visible, "Farm corrupted sprite is hidden after cleansing.")
+	if daily_npcs != null:
+		test.expect(daily_npcs.visible, "Daily NPCs are visible in normal/cleansed state.")
+	if npc != null:
+		test.expect(not npc.visible, "Clockmaker disappears in normal/cleansed state.")
 
 	level.free()

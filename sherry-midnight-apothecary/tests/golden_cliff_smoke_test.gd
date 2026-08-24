@@ -56,13 +56,10 @@ func _run() -> void:
 	if _failed:
 		return
 
-	# --- EntrancePortal & Map Switch Anchor 3 deployment --------------------
+	# --- One-way Map Switch arrival & Anchor 3 deployment -------------------
 	var from_home := scene.get_node_or_null("EntryPoints/from_home") as Marker2D
 	_assert(from_home != null, "EntryPoints/from_home is deployed for Map Switch arrivals")
-	var entrance_portal := scene.get_node_or_null("Gameplay/EntrancePortal") as Area2D
-	_assert(entrance_portal != null, "Gameplay/EntrancePortal is instanced in golden_cliff.tscn")
-	_assert(entrance_portal == null or entrance_portal.get("destination_level") == &"home", "EntrancePortal destination_level is home")
-	_assert(entrance_portal == null or entrance_portal.get("destination_entry_id") == &"from_cliff", "EntrancePortal destination_entry_id is from_cliff")
+	_assert(scene.get_node_or_null("Gameplay/EntrancePortal") == null, "Left-side EntrancePortal return interaction is removed")
 	var map_scene := load("res://day/interactables/map_switch/data/map.tscn") as PackedScene
 	_assert(map_scene != null, "map.tscn loads")
 	if map_scene != null:

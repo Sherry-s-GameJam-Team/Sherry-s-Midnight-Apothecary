@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://g7ew3wjvlvmb"
+path="res://.godot/imported/aurem_daily_npcs.dialogue-39d748d7a5df4fa3d632230b2c696d3c.tres"
+
+[deps]
+
+source_file="res://day/levels/Aurem Clockyard/aurem_daily_npcs.dialogue"
+dest_files=["res://.godot/imported/aurem_daily_npcs.dialogue-39d748d7a5df4fa3d632230b2c696d3c.tres"]
+
+[params]
+
+defaults=true

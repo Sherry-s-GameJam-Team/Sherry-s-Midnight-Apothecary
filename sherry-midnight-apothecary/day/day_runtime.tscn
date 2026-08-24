@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d1ijfb2ftskh8" path="res://day/ui/scene_title_card.tscn" id="2_title_card"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="3_console"]
 [ext_resource type="PackedScene" path="res://day/ui/player_health_hud.tscn" id="4_health_hud"]
+[ext_resource type="Script" path="res://day/systems/remote_potion_supply.gd" id="5_remote_supply"]
 
 [node name="DayRuntime" type="Node" unique_id=935191861]
 script = ExtResource("1_day")
@@ -13,6 +14,9 @@ script = ExtResource("1_day")
 [node name="PlayerSlot" type="Node" parent="." unique_id=740273180]
 
 [node name="CameraSlot" type="Node" parent="." unique_id=1913860685]
+
+[node name="RemotePotionSupply" type="Node" parent="."]
+script = ExtResource("5_remote_supply")
 
 [node name="SceneTitleCard" parent="." unique_id=1734013484 instance=ExtResource("2_title_card")]
 

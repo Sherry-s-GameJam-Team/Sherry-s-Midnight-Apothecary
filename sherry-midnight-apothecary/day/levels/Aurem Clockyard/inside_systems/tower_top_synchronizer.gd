@@ -9,6 +9,7 @@ extends Node2D
 signal synchronization_completed
 
 @export var is_synchronized: bool = false
+@export var activate_elevator: bool = true
 
 const HIT_WINDOW_DEG: float = 30.0
 
@@ -184,13 +185,15 @@ func _trigger_grand_synchronization() -> void:
 
 	_update_gear_visuals()
 
-	var elevator_node: Node = get_node_or_null("TowerElevator")
-	if elevator_node == null:
-		elevator_node = get_node_or_null("../TowerElevator")
-	if elevator_node == null and get_parent() != null:
-		elevator_node = get_parent().get_node_or_null("TowerElevator")
-	if elevator_node != null and elevator_node.has_method("unlock_and_activate"):
-		elevator_node.call("unlock_and_activate")
+	# Elevator is currently kept hidden / dormant
+	if activate_elevator:
+		var elevator_node: Node = get_node_or_null("TowerElevator")
+		if elevator_node == null:
+			elevator_node = get_node_or_null("../TowerElevator")
+		if elevator_node == null and get_parent() != null:
+			elevator_node = get_parent().get_node_or_null("TowerElevator")
+		if elevator_node != null and elevator_node.has_method("unlock_and_activate"):
+			elevator_node.call("unlock_and_activate")
 
 	synchronization_completed.emit()
 

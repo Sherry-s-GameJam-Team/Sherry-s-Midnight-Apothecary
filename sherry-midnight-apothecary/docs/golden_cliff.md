@@ -31,7 +31,7 @@ The global `PauseMenu` (`res://night/ui/pause_menu/pause_menu.tscn`) is embedded
 - id: `golden_cliff`, display name `烁金横崖`
 - disaster: `断衡之灾` (corrupted by default, `start_corrupted = true`)
 - default entry: `EntryPoints/default`; extra entries: `from_home`, `from_south`, `from_village`, `from_lake`
-- entrance portal: `Gameplay/EntrancePortal` via `DoorPortal` (`destination_level = &"home"`, `destination_entry_id = &"from_cliff"`, linked to Map Switch Anchor 3 / `golden_cliff`)
+- left-side entrance: retains `EntryPoints/from_home` for incoming map travel, but has no `EntrancePortal`, collision area, or E-key return-to-Home interaction
 - exit portal: `Gameplay/ExitPortal` via `DoorPortal` (`destination_level = &"home"`, unlocked after 3 balance mechanisms are stabilized)
 - map anchor linkage: `res://day/interactables/map_switch/data/map.tscn` Anchor03 (`destination_id = &"golden_cliff"`)
 - content scene: `golden_cliff.tscn`, root script `day_level_environment.gd`
@@ -74,7 +74,7 @@ All six fixed sections under `Gameplay/StaticPlatforms` (`StartGround`, `GroundA
    - **HintUI guidance**: Entering a balance stone's reset area shows a persistent `TopHintUI` prompt with the remaining left/right weights and its target. The text refreshes after each bottle hit or reset, and hides on exit or stabilization.
 2. **`middle_balance`** (`target_left_weight = 1`, `target_right_weight = 3`):
    - Asymmetrical balance puzzle (right pan naturally heavier, requiring pointer to match target notch).
-   - **Linkage**: The tilted sandstone bridge (`SlopeA`) and GroundB's initial clockwise 30° incline both smoothly tween to horizontal level (0.0°), bridging the chasm.
+   - **Linkage**: `GroundB` continuously follows the middle balance's calibration error in real time. Starting with an initial $+30^\circ$ clockwise tilt at 0:0 weights, adding right weights smoothly decreases the incline ($+15^\circ$ at 0:1, $0^\circ$ at target calibration 1:3), bridging the chasm. Resetting restores the initial incline, and mechanism stabilization locks the platform and any remaining slope to level ($0.0^\circ$).
 3. **`east_balance`** (`target_left_weight = 3`, `target_right_weight = 2`):
    - Complex asymmetrical calibration puzzle (left pan heavier).
    - **Linkage**: Eastern floating boulders (`BoulderC`, `BoulderD`, `ExitPlatform`) transition to stable state and lower to reachable jumping height before the exit portal.

@@ -154,3 +154,66 @@ static func run(test: TestSupport) -> void:
 		demo._on_focus_sample()
 		root.remove_child(demo)
 	demo.free()
+
+	# 11. SpectrumAnalyzer main/secondary function and unlock state integration
+	var analyzer := SpectrumAnalyzer.new()
+	var analyzer_title_label := Label.new()
+	analyzer.add_child(analyzer_title_label)
+	if root != null:
+		root.add_child(analyzer)
+	analyzer.title_label = analyzer_title_label
+	analyzer.setup(catalog_res, unlock_state_res)
+
+	# Empty prediction
+	analyzer.set_prediction({})
+	test.expect(analyzer_title_label.text.contains("加入材料"), "Empty prediction shows initial guidance.")
+
+	# Unlocked function (func_hemostasis at 0.05)
+	analyzer.set_prediction({"mixed_x": 0.05, "failed": false})
+	test.expect(analyzer_title_label.text.contains("主功能：止血") and analyzer_title_label.text.contains("副功能：止血"), "Unlocked function displays primary and secondary tags.")
+
+	# Locked function (func_vigor_boost at 0.19)
+	analyzer.set_prediction({"mixed_x": 0.19, "failed": false})
+	test.expect(analyzer_title_label.text.contains("装瓶后显示"), "Locked function shows '装瓶后显示' before bottling.")
+
+	# Unlock the function and verify dynamic refresh
+	unlock_state_res.unlock_function(&"func_vigor_boost")
+	test.expect(analyzer_title_label.text.contains("主功能：活化") and analyzer_title_label.text.contains("副功能：体力"), "Unlocking function dynamically refreshes analyzer title.")
+
+	if root != null and analyzer.get_parent() == root:
+		root.remove_child(analyzer)
+	analyzer.free()
+
+	# 12. ProductionPanel SpectrumFrame effect display and unlock state integration
+	var prod_panel_scene := load("res://night/alchemy/production/production_panel.tscn") as PackedScene
+	var prod_panel := prod_panel_scene.instantiate() as ProductionPanel
+	if root != null:
+		root.add_child(prod_panel)
+	prod_panel.catalog = catalog_res
+	prod_panel.unlock_state = unlock_state_res
+
+	# Initially empty
+	test.expect_equal(prod_panel.spectrum_label.text, "等待加工结果", "SpectrumFrame shows waiting state when empty.")
+
+	# Simulate ground powder with unlocked spectrum (0.05)
+	var powder_unlocked := PowderInstanceData.new()
+	powder_unlocked.spectrum_x = 0.05
+	prod_panel.ground_powder = powder_unlocked
+	prod_panel._refresh_color()
+	test.expect(prod_panel.spectrum_label.text.contains("功效：止血、循环"), "Unlocked spectrum shows primary effect name in SpectrumFrame.")
+
+	# Simulate ground powder with locked spectrum (0.81, func_dispel is locked)
+	var powder_locked := PowderInstanceData.new()
+	powder_locked.spectrum_x = 0.81
+	prod_panel.ground_powder = powder_locked
+	prod_panel._refresh_color()
+	test.expect(prod_panel.spectrum_label.text.contains("未知功效"), "Locked spectrum shows '未知功效' in SpectrumFrame.")
+
+	# Unlock func_dispel and verify refresh
+	unlock_state_res.unlock_function(&"func_dispel")
+	test.expect(prod_panel.spectrum_label.text.contains("功效：净化、驱邪"), "Unlocking function updates SpectrumFrame to show unlocked effect.")
+
+	if root != null and prod_panel.get_parent() == root:
+		root.remove_child(prod_panel)
+	prod_panel.free()
+

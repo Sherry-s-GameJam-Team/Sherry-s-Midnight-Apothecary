@@ -29,15 +29,15 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 
 视差层包括：FarCanopy、MidHangingLotus、Gameplay Ground。上方雨幕与王莲冠层来自现有美术；外部水车动画只使用源 MOV 中的清水画面。红水没有部署到外部水车，红水视觉只在 Interior 关卡的中央 `BloodStream` 中出现。
 
-### 第二天森林：恩佐救援线索
+### 第一天森林：恩佐救援线索
 
-`issue_save_enzuo/HangingFrameNpc` 是 23 帧、6 FPS 的正倒循环角色动态精灵。第二天、树冠 Boss 尚未净化且 `save_enzuo_solved` 未设置时，`ForestDayOneEnzuoIntro` 在黑屏对话后淡显场景，让 Sherry 从左侧步入 `sherry` 标记；卢卡的逻辑走位保留，但该段不显示其移动动画。角色揭示分两段将悬挂精灵从 `(385, -90)` 移至 `(385, -22)`，随后移至 `(385, 118)`。
+`issue_save_enzuo/HangingFrameNpc` 是 23 帧、6 FPS 的正倒循环角色动态精灵。第 1 天从下水道出口进入 `forest/from_sewer` 时，会播放一次森林开场对话与 Sherry 入场演出；此后它作为悬挂恩佐的环境节点显示。Boss 前不会播放恩佐收束对话，也不会在打开树心门时触发该对白。
 
-过场写入标准剧情完成标记 `story_event_completed:day_one_forest_enzuo_intro`，但会在当天保留悬挂角色。Boss 完成后，`issue_save_enzuo` 自动隐藏，并激活 `issue_saved/Enzuofall`；其他日期或 `save_enzuo_solved` 为真时，两个节点都隐藏。
+Boss 完成后，`issue_save_enzuo` 自动隐藏，并激活 `issue_saved/Enzuofall`；其他日期或 `save_enzuo_solved` 为真时，两个节点都隐藏。
 
 初见对话结束后不再有药水投掷或副藤切割环节，玩家立即恢复操作并直接开始四座水车的主线解密。恩佐会一直被母树藤蔓保护，直到树冠 Boss 被净化。
 
-Boss 完成后返回森林不会自动播放恩佐对话或结束当天。玩家靠近地面的 `Enzuofall` 时，HintUI 显示“按 E 查看恩佐”；按 E 后才派发 `day_two_forest_enzuo_saved` 对话事件。对话完成设置 `save_enzuo_solved` 并隐藏该节点，不改变水车或树门进度。
+Boss 完成后返回森林，`issue_saved` 自动派发 `day_one_forest_enzuo_saved` 对话事件。对话完成设置 `save_enzuo_solved`，快速黑场并调用 `DayRuntime.finish_day()`，进入夜晚经营场景；不改变水车或树门进度。
 
 ### Lotus
 

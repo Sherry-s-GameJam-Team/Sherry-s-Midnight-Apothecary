@@ -1,0 +1,38 @@
+{
+  "herb_id": "maple_marrow_star_crystal",
+  "display_name_zh": "枫髓辰晶",
+  "english_name": "Maple-Marrow Star Crystal",
+  "canvas_size": [
+    4096,
+    4096
+  ],
+  "pieces": [
+    {
+      "id": "maple_marrow_star_crystal_piece_01",
+      "source_rect": [
+        989,
+        2122,
+        2189,
+        1359
+      ]
+    },
+    {
+      "id": "maple_marrow_star_crystal_piece_02",
+      "source_rect": [
+        1030,
+        1800,
+        2087,
+        1502
+      ]
+    },
+    {
+      "id": "maple_marrow_star_crystal_piece_03",
+      "source_rect": [
+        1637,
+        747,
+        1214,
+        2386
+      ]
+    }
+  ]
+}

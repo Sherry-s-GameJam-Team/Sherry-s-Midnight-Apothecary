@@ -25,6 +25,13 @@ static func run(test: TestSupport) -> void:
 		"res://characters/luca/stand.png",
 		"Luca's dialogue portrait uses the authored stand texture."
 	)
+	var enzuo_tex := DialoguePortraitDatabase.get_portrait_texture("恩佐", "default")
+	test.expect(enzuo_tex != null, "Database resolves Enzuo's dialogue portrait.")
+	test.expect_equal(
+		enzuo_tex.resource_path,
+		"res://characters/enzuo/standee.png",
+		"Enzuo's portrait uses the authored standee texture."
+	)
 	var dashiyu_tex := DialoguePortraitDatabase.get_portrait_texture("大司鱼", "default")
 	test.expect(dashiyu_tex != null, "Database resolves Dashiyu's lake-return dialogue portrait.")
 	test.expect_equal(

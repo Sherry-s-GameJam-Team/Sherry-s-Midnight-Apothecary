@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://1m1d2hik3klp"]
+
+[ext_resource type="Script" uid="uid://c0vs60u1318ia" path="res://shared/definitions/ingredient_data.gd" id="1_ingredient"]
+[ext_resource type="Script" uid="uid://ebklui5fe55k" path="res://shared/definitions/herb_color_layer_data.gd" id="2_layer"]
+[ext_resource type="Script" uid="uid://b0mk10smoclqb" path="res://shared/definitions/herb_piece_data.gd" id="3_piece"]
+[ext_resource type="Texture2D" uid="uid://7oku3dh0yga8" path="res://day/interactables/herb/herbs/maple_heart_dark_vein/preview/herb_slot_thumb.png" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://6im533cwn75i" path="res://day/interactables/herb/herbs/maple_heart_dark_vein/preview/herb_preview.png" id="5_preview"]
+[ext_resource type="Texture2D" uid="uid://jey8bgdjssiy" path="res://day/interactables/herb/herbs/maple_heart_dark_vein/pieces/red/piece_01.png" id="6_piece_01"]
+[ext_resource type="Texture2D" uid="uid://cap0mv1tb4q7l" path="res://day/interactables/herb/herbs/maple_heart_dark_vein/pieces/red/piece_02.png" id="7_piece_02"]
+[ext_resource type="Texture2D" uid="uid://dbl6w8qyhkjju" path="res://day/interactables/herb/herbs/maple_heart_dark_vein/pieces/red/piece_03.png" id="8_piece_03"]
+
+[sub_resource type="Resource" id="Piece_01"]
+script = ExtResource("3_piece")
+id = &"maple_heart_dark_vein_piece_01"
+display_name = "枫心乌脉·部位01"
+texture = ExtResource("6_piece_01")
+source_rect = Rect2i(744, 1046, 2082, 2909)
+area_ratio = 0.333333
+color_id = &"red"
+spectrum_x = 0.04
+display_color = Color(0.7882353, 0.2235294, 0.2392157, 1)
+z_order = 1
+
+[sub_resource type="Resource" id="Piece_02"]
+script = ExtResource("3_piece")
+id = &"maple_heart_dark_vein_piece_02"
+display_name = "枫心乌脉·部位02"
+texture = ExtResource("7_piece_02")
+source_rect = Rect2i(222, 728, 1990, 3118)
+area_ratio = 0.333333
+color_id = &"red"
+spectrum_x = 0.04
+display_color = Color(0.7882353, 0.2235294, 0.2392157, 1)
+z_order = 2
+
+[sub_resource type="Resource" id="Piece_03"]
+script = ExtResource("3_piece")
+id = &"maple_heart_dark_vein_piece_03"
+display_name = "枫心乌脉·部位03"
+texture = ExtResource("8_piece_03")
+source_rect = Rect2i(2011, 793, 1879, 3225)
+area_ratio = 0.333333
+color_id = &"red"
+spectrum_x = 0.04
+display_color = Color(0.7882353, 0.2235294, 0.2392157, 1)
+z_order = 3
+
+[sub_resource type="Resource" id="Layer_main"]
+script = ExtResource("2_layer")
+id = &"maple_heart_dark_vein_red_layer"
+display_name = "红色部位层"
+color_id = &"red"
+display_color = Color(0.7882353, 0.2235294, 0.2392157, 1)
+spectrum_x = 0.04
+pieces = Array[ExtResource("3_piece")]([SubResource("Piece_01"), SubResource("Piece_02"), SubResource("Piece_03")])
+
+[resource]
+script = ExtResource("1_ingredient")
+id = &"maple_heart_dark_vein"
+display_name = "枫心乌脉"
+english_name = "Mapleheart Dark Vein"
+description = "一株带有红色药性的珍稀植物。"
+icon = ExtResource("4_icon")
+preview_texture = ExtResource("5_preview")
+reference_canvas_size = Vector2i(4096, 4096)
+production_layers = Array[ExtResource("2_layer")]([SubResource("Layer_main")])
+base_value = 18
+spectrum_start = 0.025
+spectrum_end = 0.055
+base_quality = 1.1
+base_concentration = 1.05

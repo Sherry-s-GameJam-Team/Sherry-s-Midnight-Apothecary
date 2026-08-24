@@ -32,6 +32,15 @@ func get_completed_customer_count() -> int:
 	return 0
 
 
+func configure_for_day(current_day: int) -> void:
+	var luca := get_node_or_null("LucaNightNPC")
+	if luca != null and luca.has_method("configure_for_day"):
+		luca.call("configure_for_day", current_day)
+	var enzuo := get_node_or_null("issue/Day1/EnzuoNightNPC")
+	if enzuo != null and enzuo.has_method("configure_for_day"):
+		enzuo.call("configure_for_day", current_day)
+
+
 func has_operated() -> bool:
 	var runtime := _find_night_runtime()
 	if runtime != null and runtime.has_method("has_operated"):

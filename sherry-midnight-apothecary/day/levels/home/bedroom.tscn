@@ -42,6 +42,8 @@
 [ext_resource type="Resource" uid="uid://cfg1yj88r43eb" path="res://day/levels/home/bedroom_stick.dialogue" id="40_stick_dialogue"]
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="41_luca"]
 [ext_resource type="Script" uid="uid://b1pm8drpbvdmv" path="res://day/levels/home/bedroom_day_one_luca.gd" id="42_luca_visibility"]
+[ext_resource type="Script" path="res://day/levels/home/day_two_opening.gd" id="43_day_two_opening"]
+[ext_resource type="Resource" path="res://day/levels/home/day_two_opening.dialogue" id="44_day_two_dialogue"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sleep_to_wake"]
 animations = [{
@@ -269,3 +271,8 @@ script = ExtResource("42_luca_visibility")
 position = Vector2(1961, 672)
 scale = Vector2(1.8062818, 1.8062818)
 input_enabled = false
+
+[node name="DayTwoOpening" type="CanvasLayer" parent="."]
+layer = 38
+script = ExtResource("43_day_two_opening")
+dialogue_resource = ExtResource("44_day_two_dialogue")

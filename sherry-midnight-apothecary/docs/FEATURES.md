@@ -10,7 +10,7 @@
 
 - [Herb harvesting](herb_harvesting.md): normal-state daily field pickup refreshes for alchemy ingredients.
 
-- [Colored plant library](colored_plant_library.md): thirteen yellow, cyan, blue, and purple production plants with alpha-trimmed detachable artwork and explicit spectrum assignments.
+- [Colored plant library](colored_plant_library.md): nineteen red, orange, yellow, cyan, blue, and purple production plants with alpha-trimmed detachable artwork and explicit spectrum assignments.
 
 - [Magic Map Switch](../day/interactables/map_switch/README.md): Home Transformer route-anchor alignment and first-use navigation tutorial.
 
@@ -44,6 +44,7 @@
 
 - [Night production herb inventory](production_processing.md): artwork-aligned 4 × 3 herb shelf with responsive slot spacing and paged navigation.
 - [Dialogue Character Portraits](dialogue_portrait.md): 3-slot (left, center, right) character portrait presentation, Dialogue Manager tag/command syntax integration, expression cross-fading, focus dimming, and entrance/reaction animations.
+- [Day-two opening](day_two_opening.md): second-morning bedroom-to-apothecary cinematic, Mew's letter close-up, Golden-Cliff-onward Enzuo backpack replenishment, cyan potion mixing presentation, and Golden Cliff handoff for internal `day == 2`.
 - [Multi-day story events](story_events.md): Inspector-authored resources for day/night, level-entry, and interaction dialogue events with persistent conditions and rewards, including the day-one Town blood-fountain presentation toggle driven by the Luca intro event.
 - [Crimson Vale](crimson_vale.md): daytime Crimson Vale level — 3-layer parallax background, village buildings and maple resin props, Danxin Gate restoration state machine, player controller integration, and LevelData registration.
 - [Blood Leaf Swarm](blood_leaf_swarm.md): reusable delayed-tracking maple leaf swarm hazard, GPUParticles2D particle shader with 3D fluttering & swirling, and wind/explosion/purification potion interactions.

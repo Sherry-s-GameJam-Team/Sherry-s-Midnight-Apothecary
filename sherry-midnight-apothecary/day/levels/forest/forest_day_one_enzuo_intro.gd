@@ -5,7 +5,7 @@ extends Node2D
 ## completion remains owned by StoryEventRunner; this node only coordinates
 ## local camera, character, fade, and staged dialogue presentation.
 
-const ACTIVE_DAY := 2
+const ACTIVE_DAY := 1
 const EVENT_ID: StringName = &"day_one_forest_enzuo_intro"
 const INTERACTION_KEY: StringName = &"day_one_forest_enzuo_intro"
 const SOLVED_FLAG: StringName = &"save_enzuo_solved"
@@ -37,6 +37,7 @@ var _luca_physics_was_enabled := true
 var _camera_top_level_was_enabled := false
 var _modal_lock_was_set := false
 var _running := false
+var _entered_from_sewer := false
 
 
 func _ready() -> void:
@@ -47,9 +48,17 @@ func _ready() -> void:
 	if _fade_overlay != null:
 		_fade_overlay.visible = false
 		_fade_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if should_play_intro():
-		visible = false
-		call_deferred("_start_intro")
+
+
+func on_level_entered(entry_id: StringName) -> void:
+	if entry_id != &"from_sewer":
+		return
+	var data := _player_data()
+	if data == null or not should_trigger_from_sewer(_current_day(), _has_completed_intro(), _forest_is_restored(), data.has_event_flag(SOLVED_FLAG)):
+		return
+	_entered_from_sewer = true
+	visible = false
+	call_deferred("_start_intro")
 
 
 func _exit_tree() -> void:
@@ -63,12 +72,16 @@ static func should_show(day: int, player_data: PlayerData) -> bool:
 		and not bool(player_data.tutorial_flags.get(FOREST_COMPLETED_FLAG, false))
 
 
+static func should_trigger_from_sewer(day: int, intro_completed: bool, forest_completed: bool, solved: bool) -> bool:
+	return day == ACTIVE_DAY and not intro_completed and not forest_completed and not solved
+
+
 func should_play_intro() -> bool:
-	return should_show(_current_day(), _player_data()) and not _has_completed_intro()
+	return _entered_from_sewer and should_show(_current_day(), _player_data()) and not _has_completed_intro()
 
 
 func _start_intro() -> void:
-	if not should_play_intro() or not _nodes_are_valid():
+	if _running or not should_play_intro() or not _nodes_are_valid():
 		return
 	_running = true
 	_lock_presentation()
@@ -195,6 +208,7 @@ func _cleanup() -> void:
 		_fade_overlay.visible = false
 		_fade_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_fade_overlay.color.a = 0.0
+	visible = should_show(_current_day(), _player_data())
 
 
 func _play_sherry_animation(animation_name: StringName) -> void:
@@ -212,6 +226,11 @@ func _play_luca_animation(animation_name: StringName, face_right: bool) -> void:
 
 func _has_completed_intro() -> bool:
 	return _runtime != null and bool(_runtime.call("has_completed_story_event", EVENT_ID))
+
+
+func _forest_is_restored() -> bool:
+	var data := _player_data()
+	return data != null and bool(data.tutorial_flags.get(FOREST_COMPLETED_FLAG, false))
 
 
 func _current_day() -> int:

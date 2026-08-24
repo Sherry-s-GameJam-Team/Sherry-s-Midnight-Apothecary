@@ -40,8 +40,8 @@ func activate() -> void:
 	visible = true
 	scale = Vector2.ONE
 	modulate = Color.WHITE
-	# Keep the inactive eye out of potion raycasts; only the landed cyan bottle
-	# may schedule its appearance.
+	# Keep the inactive eye out of potion raycasts. LakeLevel schedules its
+	# appearances from the restored spring-pulse rhythm during this encounter.
 	suction_area.collision_layer = 0
 	suction_area.monitoring = true
 	suction_area.monitorable = true

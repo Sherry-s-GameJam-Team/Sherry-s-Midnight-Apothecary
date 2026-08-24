@@ -25,7 +25,7 @@ enum Stage {
 @export var auto_walk_speed := 145.0
 @export var bridge_trigger_offset := 215.0
 
-@onready var _player := get_node_or_null("../../Player") as CharacterBody2D
+@onready var _player := get_node_or_null("../Player") as CharacterBody2D
 @onready var _walk_start := get_node_or_null("walkstart") as Marker2D
 @onready var _walk_end := get_node_or_null("walkend") as Marker2D
 @onready var _serena := get_node_or_null("SerenaIllusion") as Sprite2D
@@ -201,7 +201,7 @@ func _finish_event() -> void:
 
 
 func _set_portals_enabled(enabled: bool) -> void:
-	var portals := get_node_or_null("../../World/Portals")
+	var portals := get_node_or_null("../World/Portals")
 	if portals == null:
 		return
 	for child in portals.get_children():
@@ -238,4 +238,3 @@ func _find_top_hint() -> TopHintUI:
 
 static func should_present(current_day: int, player_data: PlayerData) -> bool:
 	return current_day == REQUIRED_DAY and (player_data == null or not player_data.has_event_flag(COMPLETE_FLAG))
-
