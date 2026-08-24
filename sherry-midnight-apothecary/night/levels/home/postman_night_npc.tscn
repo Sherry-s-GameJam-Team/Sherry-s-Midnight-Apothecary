@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://night/levels/home/postman_night_npc.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://characters/postman/stand.png" id="2_stand"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_postman"]
+size = Vector2(180, 200)
+
+[node name="PostmanNightNPC" type="Area2D"]
+z_index = 8
+script = ExtResource("1_script")
+
+[node name="Visual" type="Sprite2D" parent="."]
+position = Vector2(0, -90)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_stand")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -90)
+shape = SubResource("RectangleShape2D_postman")

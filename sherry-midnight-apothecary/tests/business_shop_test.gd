@@ -8,6 +8,21 @@ static func run(test: TestSupport) -> void:
 		return
 	for day in range(8):
 		test.expect_equal(CustomerEventCatalog.customer_cap_for_day(day), mini(day + 2, 8), "Customer capacity grows on day %d." % day)
+	var voiced_cases := CustomerEventCatalog.eligible_for_day(5, {}, {})
+	var unique_requests: Dictionary = {}
+	var unique_perfect_lines: Dictionary = {}
+	for voiced_case: Dictionary in voiced_cases:
+		var feedback_lines: Array = voiced_case.get("feedback_lines", [])
+		test.expect(str(voiced_case.get("request", "")).contains("诊疗需求："), "Every voiced request keeps an explicit mechanical requirement line.")
+		test.expect_equal(feedback_lines.size(), 6, "Every NPC supplies all six treatment outcome lines.")
+		test.expect(not str(voiced_case.get("refusal_line", "")).is_empty(), "Every NPC has a personalized refusal line.")
+		test.expect(not str(voiced_case.get("permanent_departure_line", "")).is_empty(), "Every NPC has a personalized permanent-departure line.")
+		unique_requests[str(voiced_case.get("request", ""))] = true
+		unique_perfect_lines[str(feedback_lines[0])] = true
+	test.expect_equal(unique_requests.size(), 8, "All eight NPCs have distinct case dialogue.")
+	test.expect_equal(unique_perfect_lines.size(), 8, "All eight NPCs react to perfect treatment in their own voice.")
+	var worsened_milo: Dictionary = CustomerEventCatalog.eligible_for_day(3, {}, {"young_villager":{"visit_count":1, "case_stage":1, "case_branch":"worsened", "next_visit_day":0}}).filter(func(item: Dictionary) -> bool: return item.npc_id == &"young_villager").front()
+	test.expect(str(worsened_milo.request).contains("更难受"), "A worsened follow-up uses the NPC-specific deterioration line.")
 
 	var shop := scene.instantiate() as ShopRuntime
 	var tree := Engine.get_main_loop() as SceneTree

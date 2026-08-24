@@ -343,9 +343,9 @@ func _flash_rejection_feedback(customer: Dictionary, reputation_penalty: int, pe
 		return
 	var customer_name := str(customer.get("name", "顾客"))
 	if permanently_lost:
-		feedback.flash("%s 耐心耗尽，已永久离开药水铺！店铺声誉 -%d。" % [customer_name, reputation_penalty], false)
+		feedback.flash("「%s」\n%s 耐心耗尽，已永久离开药水铺！店铺声誉 -%d。" % [str(customer.get("permanent_departure_line", "我不会再来了。")), customer_name, reputation_penalty], false)
 	else:
-		feedback.flash("%s 离开了药水铺，耐心 -25%%（剩余 %.0f%%），店铺声誉 -%d。" % [customer_name, float(customer.get("patience", 0.0)), reputation_penalty], false)
+		feedback.flash("「%s」\n%s 离开了药水铺，耐心 -25%%（剩余 %.0f%%），店铺声誉 -%d。" % [str(customer.get("refusal_line", "我会在两天后再来。")), customer_name, float(customer.get("patience", 0.0)), reputation_penalty], false)
 
 
 func _flash_sale_feedback(value: int, satisfaction: float, reputation_gain: int, text: String, patience_recovered: float = 0.0, current_patience: float = 100.0) -> void:

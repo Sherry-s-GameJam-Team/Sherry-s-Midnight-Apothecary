@@ -14,6 +14,8 @@ signal clocktower_synchronized
 @onready var tower_portal: DoorPortal = get_node_or_null("World/Portals/TowerPortal")
 @onready var tower_exit_portal: DoorPortal = get_node_or_null("World/Portals/TowerExitPortal")
 @onready var abyss_hazard: Area2D = get_node_or_null("World/AbyssHazard")
+@onready var herb_director: HerbSpawnDirector = get_node_or_null("HerbSpawnDirector")
+@onready var post_boss_sequence: AuremPostBossSequence = get_node_or_null("PostBossSequence")
 
 const TASK_COMPLETE_UI_SCENE := preload("res://day/ui/task_complete/task_complete_ui.tscn")
 
@@ -25,6 +27,7 @@ var _victory_presented: bool = false
 func _ready() -> void:
 	super._ready()
 	_check_victory_state()
+	_configure_post_boss_herbs()
 	_update_visual_states()
 	_setup_abyss_hazard()
 
@@ -61,6 +64,17 @@ func on_level_entered(entry_id: StringName) -> void:
 		_:
 			_last_checkpoint_pos = Vector2(300, 520)
 			objective_updated.emit("踏入奥勒姆钟庭。", "沿着齿轮石道向东探索金穗农庄与巨钟塔。")
+	if post_boss_sequence != null:
+		post_boss_sequence.begin_for_entry(entry_id)
+
+
+func _configure_post_boss_herbs() -> void:
+	if herb_director == null:
+		return
+	var data := get_player_data()
+	var boss_cleared := data != null and data.has_event_flag(AuremPostBossSequence.BOSS_CLEARED_FLAG)
+	var harvest_complete := data != null and data.has_event_flag(AuremPostBossSequence.HARVEST_DIALOGUE_COMPLETE_FLAG)
+	herb_director.set_spawning_enabled(boss_cleared and not harvest_complete)
 
 
 func _present_victory_ui() -> void:

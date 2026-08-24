@@ -1,6 +1,6 @@
 # Day global health and recovery
 
-Day mode uses the shared `PlayerData.health` and `PlayerData.max_health` values. `DayRuntime` displays them through the top-right `PlayerHealthHUD` (featuring the ornate `res://day/ui/blood.png` frame, ruby red primary health bar, and yellow delayed smooth drop animation on damage) and owns the public damage entry point:
+Day mode uses the shared `PlayerData.health` and `PlayerData.max_health` values. `DayRuntime` displays them through the top-right `PlayerHealthHUD` (featuring the ornate `res://day/ui/blood.png` frame, ruby red primary health bar, and yellow delayed smooth drop animation on damage) and owns the public damage entry point. The health HUD is automatically hidden in non-combat safe interiors (`home` and `bedroom` levels) during the day, and is not present in night mode.
 
 ```gdscript
 var died := day_runtime.apply_player_damage(amount, &"enemy_or_hazard_id")

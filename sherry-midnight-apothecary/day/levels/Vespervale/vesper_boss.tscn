@@ -1,9 +1,10 @@
-[gd_scene format=3 uid="uid://dm6k2qav7r1jh"]
+[gd_scene format=3 uid="uid://d4wu857lig3d"]
 
-[ext_resource type="Script" path="res://day/levels/Vespervale/boss/vesper_boss_arena.gd" id="1_arena_script"]
-[ext_resource type="Texture2D" uid="uid://dpsa4w9q1r8jh" path="res://day/levels/Vespervale/treegarden.png" id="2_bg_treegarden"]
-[ext_resource type="PackedScene" uid="uid://dm9k2p7x8jh10" path="res://day/levels/Vespervale/boss/vesper_director_boss.tscn" id="3_boss_scene"]
-[ext_resource type="PackedScene" uid="uid://dm4v8x2p7r9jh" path="res://day/levels/Vespervale/boss/vesper_boss_hud.tscn" id="4_hud_scene"]
+[ext_resource type="Script" uid="uid://codudpq2ytvlc" path="res://day/levels/Vespervale/boss/vesper_boss_arena.gd" id="1_arena_script"]
+[ext_resource type="Texture2D" uid="uid://dpdola5a2gm2t" path="res://day/levels/Vespervale/treegarden.png" id="2_bg_treegarden"]
+[ext_resource type="Texture2D" uid="uid://74yj2ss4ajo0" path="res://day/levels/Vespervale/src/stretcher.png" id="3_amwjv"]
+[ext_resource type="PackedScene" uid="uid://dnak2p7x8jh10" path="res://day/levels/Vespervale/boss/vesper_director_boss.tscn" id="3_boss_scene"]
+[ext_resource type="PackedScene" path="res://day/levels/Vespervale/boss/vesper_boss_hud.tscn" id="4_hud_scene"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="5_player_script"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="6_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="7_presentation"]
@@ -22,7 +23,7 @@ size = Vector2(2400, 140)
 size = Vector2(80, 1200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
-size = Vector2(220, 24)
+size = Vector2(68.462234, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
 size = Vector2(160, 240)
@@ -46,8 +47,8 @@ script = ExtResource("1_arena_script")
 z_index = -30
 
 [node name="TreegardenBG" type="Sprite2D" parent="Background" unique_id=2001202]
-position = Vector2(960, 320)
-scale = Vector2(0.95, 0.95)
+position = Vector2(960, 323.5)
+scale = Vector2(0.95, 1.0207182)
 texture = ExtResource("2_bg_treegarden")
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=2001203]
@@ -76,28 +77,27 @@ shape = SubResource("RectangleShape2D_barrier")
 [node name="Platforms" type="Node2D" parent="." unique_id=2001210]
 
 [node name="Platform1" type="StaticBody2D" parent="Platforms" unique_id=2001211]
-position = Vector2(560, 490)
-collision_layer = 3
+position = Vector2(428, 542)
+scale = Vector2(3.2982042, 0.96651495)
+collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1" unique_id=2001212]
-shape = SubResource("RectangleShape2D_platform")
+[node name="Stretcher" type="Sprite2D" parent="Platforms/Platform1" unique_id=185923403]
+position = Vector2(-38.202614, -67.25195)
+scale = Vector2(0.18494913, 0.6311336)
+texture = ExtResource("3_amwjv")
 
-[node name="PlatformVisual" type="Polygon2D" parent="Platforms/Platform1" unique_id=2001213]
-color = Color(0.35, 0.22, 0.45, 0.8)
-polygon = PackedVector2Array(-110, -12, 110, -12, 100, 12, -100, 12)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platforms/Platform1" unique_id=1440176491]
+polygon = PackedVector2Array(-63.974213, -77.59839, -53.05918, -75.52911, -12.734207, -37.247253, -11.824623, -23.796875)
 
 [node name="Platform2" type="StaticBody2D" parent="Platforms" unique_id=2001214]
-position = Vector2(1360, 490)
+position = Vector2(994.0002, 480)
+scale = Vector2(2.915029, 1.0558858)
 collision_layer = 3
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2" unique_id=2001215]
 shape = SubResource("RectangleShape2D_platform")
-
-[node name="PlatformVisual" type="Polygon2D" parent="Platforms/Platform2" unique_id=2001216]
-color = Color(0.35, 0.22, 0.45, 0.8)
-polygon = PackedVector2Array(-110, -12, 110, -12, 100, 12, -100, 12)
 
 [node name="BossRoot" type="Node2D" parent="." unique_id=2001220]
 

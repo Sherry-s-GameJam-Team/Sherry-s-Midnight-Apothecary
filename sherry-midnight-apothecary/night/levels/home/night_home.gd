@@ -39,6 +39,9 @@ func configure_for_day(current_day: int) -> void:
 	var enzuo := get_node_or_null("issue/Day1/EnzuoNightNPC")
 	if enzuo != null and enzuo.has_method("configure_for_day"):
 		enzuo.call("configure_for_day", current_day)
+	var postman := get_node_or_null("issue/Day3/PostmanNightNPC")
+	if postman != null and postman.has_method("configure_for_day"):
+		postman.call("configure_for_day", current_day)
 
 
 func has_operated() -> bool:

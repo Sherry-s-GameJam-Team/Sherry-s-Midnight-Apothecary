@@ -33,12 +33,15 @@ enum BossState {
 # Prefabs for projectiles and hazards
 const PREFAB_POTION := preload("res://day/levels/Vespervale/boss/tranquilizer_potion.tscn")
 const PREFAB_HANDS := preload("res://day/levels/Vespervale/boss/dream_hand_circle.tscn")
+const PREFAB_TRACKER := preload("res://day/levels/Vespervale/boss/boss_dream_grasp_tracker.tscn")
+const PREFAB_BEAM := preload("res://day/levels/Vespervale/boss/boss_beam_hazard.tscn")
 const PREFAB_BALL := preload("res://day/levels/Vespervale/boss/moon_orb_bullet.tscn")
 const PREFAB_SOUL_FIRE := preload("res://day/levels/Vespervale/boss/soul_fire_bullet.tscn")
 const PREFAB_CRESCENT := preload("res://day/levels/Vespervale/boss/crescent_wave_bullet.tscn")
 
-@export var max_hp: float = 180.0
-@export var current_hp: float = 180.0
+
+@export var max_hp: float = 300.0
+@export var current_hp: float = 300.0
 @export var move_speed: float = 125.0
 @export var min_patrol_x: float = 400.0
 @export var max_patrol_x: float = 1520.0
@@ -113,11 +116,19 @@ func _physics_process(delta: float) -> void:
 			_on_state_timer_timeout()
 
 
-func _find_player() -> void:
-	if _target_player == null or not is_instance_valid(_target_player):
+func _find_player() -> Node2D:
+	if _target_player != null and is_instance_valid(_target_player):
+		return _target_player
+	if is_inside_tree() and get_tree() != null:
+		var p := get_tree().get_first_node_in_group("player") as Node2D
+		if p != null:
+			_target_player = p
+			return _target_player
 		var root := get_tree().current_scene
 		if root != null:
-			_target_player = root.get_node_or_null("Player") as Node2D
+			_target_player = root.find_child("Player", true, false) as Node2D
+			return _target_player
+	return null
 
 
 func _update_facing() -> void:
@@ -273,26 +284,43 @@ func _execute_attack(attack: BossState) -> void:
 			_start_burst()
 
 
-# --- Attack 1: Lantern Sweep ---
+# --- Attack 1: Lantern Sweep (Full-Screen Judgment Line + Local Area) ---
 func _start_lantern_sweep() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("lantern_sweep")
 
-	# Telegraph sweep area
+	var container := get_parent().get_node_or_null("HazardLayer")
+	if container == null:
+		container = get_parent()
+
+	# Full-scene horizontal judgment line across ground level (Y = 575)
+	var beam: Node2D = PREFAB_BEAM.instantiate() as Node2D
+	if beam != null:
+		beam.setup_horizontal(575.0, 35.0, 0.6)
+		container.add_child(beam)
+
+	if current_phase >= Phase.PHASE3_TREATMENT_END:
+		# Additional mid-air judgment line (Y = 470) in Phase 3
+		var beam2: Node2D = PREFAB_BEAM.instantiate() as Node2D
+		if beam2 != null:
+			beam2.setup_horizontal(470.0, 30.0, 0.85)
+			container.add_child(beam2)
+
+	# Telegraph local melee sweep area
 	if lantern_sweep_area != null and sweep_visual != null:
 		sweep_visual.visible = true
 		sweep_visual.modulate.a = 0.2
 		var tw := create_tween()
-		tw.tween_property(sweep_visual, "modulate:a", 0.7, 0.45)
+		tw.tween_property(sweep_visual, "modulate:a", 0.8, 0.45)
 		tw.tween_callback(func() -> void:
 			if lantern_sweep_area != null:
 				lantern_sweep_area.monitoring = true
 				for b in lantern_sweep_area.get_overlapping_bodies():
 					if b.name == "Player" or (b.is_in_group("player") and b.name != "Luca"):
 						if b.has_method("apply_damage"):
-							b.call("apply_damage", 18.0, global_position)
+							b.call("apply_damage", 35.0, global_position)
 		)
-		tw.tween_interval(0.2)
+		tw.tween_interval(0.25)
 		tw.tween_callback(func() -> void:
 			if lantern_sweep_area != null:
 				lantern_sweep_area.monitoring = false
@@ -305,7 +333,7 @@ func _start_lantern_sweep() -> void:
 func _start_throw_potion() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("tranquilizer_throw")
-	var count := 3 if current_phase >= Phase.PHASE2_DEEP_DREAM else 2
+	var count := 4 if current_phase >= Phase.PHASE2_DEEP_DREAM else 3
 	_spawn_potions_staggered(count)
 
 
@@ -316,9 +344,9 @@ func _spawn_potions_staggered(count: int) -> void:
 			if is_dead:
 				return
 			var spawn_pos := cast_point.global_position if cast_point != null else global_position
-			var target_pos := global_position + Vector2(-300.0 + i * 140.0, 100.0)
+			var target_pos := global_position + Vector2(-350.0 + i * 160.0, 100.0)
 			if _target_player != null and is_instance_valid(_target_player):
-				target_pos = _target_player.global_position + Vector2((i - 1) * 80.0, 0.0)
+				target_pos = _target_player.global_position + Vector2((i - (count - 1) * 0.5) * 110.0, 0.0)
 
 			var pot: TranquilizerPotion = PREFAB_POTION.instantiate()
 			var container := get_parent().get_node_or_null("BulletLayer")
@@ -327,38 +355,40 @@ func _spawn_potions_staggered(count: int) -> void:
 			container.add_child(pot)
 			pot.launch(spawn_pos, target_pos)
 		)
-		tw.tween_interval(0.3)
+		tw.tween_interval(0.24)
 
 
-# --- Attack 3: Dream Hands Summon ---
+# --- Attack 3: Dream Hands Summon (Auto-Homing Tracking on Ground) ---
 func _start_summon_hands() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("dream_hands_summon")
 
-	var num_hands := 3 if current_phase >= Phase.PHASE3_TREATMENT_END else 2
-	var base_x := _target_player.global_position.x if _target_player != null else global_position.x - 200.0
+	var num_trackers := 2 if current_phase >= Phase.PHASE3_TREATMENT_END else 1
+	var cluster_per_tracker := 2 if current_phase >= Phase.PHASE3_TREATMENT_END else 1
+	var hand_damage := 32 if current_phase >= Phase.PHASE3_TREATMENT_END else 28
 
 	var container := get_parent().get_node_or_null("HazardLayer")
 	if container == null:
 		container = get_parent()
 
-	for i in range(num_hands):
-		var hand_pos := Vector2(base_x + (i - (num_hands - 1) * 0.5) * 160.0, 600.0)
-		var hand: DreamHandCircle = PREFAB_HANDS.instantiate()
-		hand.global_position = hand_pos
-		container.add_child(hand)
+	var target := _target_player if _target_player != null else _find_player()
+	var target_x := target.global_position.x if target != null else global_position.x
+
+	for t_idx in range(num_trackers):
+		var spawn_x := target_x + (t_idx - (num_trackers - 1) * 0.5) * 80.0
+		var tracker: Node2D = PREFAB_TRACKER.instantiate() as Node2D
+		if tracker != null:
+			tracker.setup(target, spawn_x, cluster_per_tracker, hand_damage)
+			container.add_child(tracker)
 
 
-# --- Attack 4: Moon Orb Bullets (Fan Spread) ---
+# --- Attack 4: Moon Orb Bullets (Full-Screen Multi-Wave Radial Barrage) ---
 func _start_cast_ball() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("idle_charge")
 
-	var bullet_count := 7 if current_phase >= Phase.PHASE3_TREATMENT_END else 5
-	var arc_spread := deg_to_rad(65.0)
-	var base_dir := Vector2.LEFT if anim_sprite == null or not anim_sprite.flip_h else Vector2.RIGHT
-	if _target_player != null and is_instance_valid(_target_player):
-		base_dir = (_target_player.global_position - global_position).normalized()
+	var waves := 2 if current_phase >= Phase.PHASE2_DEEP_DREAM else 1
+	var count_per_wave := 12 if current_phase >= Phase.PHASE3_TREATMENT_END else 8
 
 	var container := get_parent().get_node_or_null("BulletLayer")
 	if container == null:
@@ -366,17 +396,25 @@ func _start_cast_ball() -> void:
 
 	var start_pos := cast_point.global_position if cast_point != null else global_position
 
-	for i in range(bullet_count):
-		var angle_offset := -arc_spread * 0.5 + (arc_spread / (bullet_count - 1)) * i
-		var dir := base_dir.rotated(angle_offset)
-		var ball: MoonOrbBullet = PREFAB_BALL.instantiate()
-		container.add_child(ball)
-		ball.fire(start_pos, dir, 280.0)
+	var tw := create_tween()
+	for w in range(waves):
+		tw.tween_callback(func() -> void:
+			if is_dead:
+				return
+			var base_angle := float(w) * 0.25
+			for i in range(count_per_wave):
+				var angle := base_angle + (i * TAU / count_per_wave)
+				var dir := Vector2.RIGHT.rotated(angle)
+				var ball: MoonOrbBullet = PREFAB_BALL.instantiate()
+				container.add_child(ball)
+				ball.fire(start_pos, dir, 360.0 + w * 40.0)
+		)
+		tw.tween_interval(0.28)
 
-	_finish_cast(0.6)
+	_finish_cast(0.65)
 
 
-# --- Attack 5: Soul Fire Tracking ---
+# --- Attack 5: Soul Fire Tracking (Fast Multi-Homing Swarm) ---
 func _start_cast_soul_fire() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("idle_charge")
@@ -385,25 +423,27 @@ func _start_cast_soul_fire() -> void:
 	if container == null:
 		container = get_parent()
 
-	var count := 3 if current_phase >= Phase.PHASE3_TREATMENT_END else 2
+	var count := 5 if current_phase >= Phase.PHASE3_TREATMENT_END else 3
 	var start_pos := cast_point.global_position if cast_point != null else global_position
 
 	for i in range(count):
-		var init_dir := Vector2(-1.0, -0.6 + i * 0.6).normalized()
+		var init_dir := Vector2(-1.0 if anim_sprite == null or not anim_sprite.flip_h else 1.0, -0.8 + i * (1.6 / maxf(1.0, count - 1))).normalized()
 		var fire_orb: SoulFireBullet = PREFAB_SOUL_FIRE.instantiate()
 		container.add_child(fire_orb)
+		fire_orb.speed = 240.0
+		fire_orb.turn_speed = 3.6
 		fire_orb.fire(start_pos, init_dir, _target_player)
 
 	_finish_cast(0.6)
 
 
-# --- Attack 6: Crescent Wave Slash ---
+# --- Attack 6: Crescent Wave Slash (Screen-Wide Tri-Crescent Barrage) ---
 func _start_cast_crescent() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("lantern_sweep")
 
 	var tw := create_tween()
-	tw.tween_interval(0.35)
+	tw.tween_interval(0.32)
 	tw.tween_callback(func() -> void:
 		if is_dead:
 			return
@@ -414,36 +454,52 @@ func _start_cast_crescent() -> void:
 		var start_pos := cast_point.global_position if cast_point != null else global_position
 		var dir := Vector2.LEFT if anim_sprite == null or not anim_sprite.flip_h else Vector2.RIGHT
 
-		var crescent: CrescentWaveBullet = PREFAB_CRESCENT.instantiate()
-		container.add_child(crescent)
-		crescent.fire(start_pos, dir)
+		# Tri-crescent fan across the vertical screen space
+		for i in range(3):
+			var offset_y := (i - 1) * 75.0
+			var crescent: CrescentWaveBullet = PREFAB_CRESCENT.instantiate()
+			container.add_child(crescent)
+			crescent.speed = 580.0
+			crescent.fire(start_pos + Vector2(0, offset_y), dir.rotated((i - 1) * 0.1))
 	)
 
 
-# --- Attack 7: Deep Dream Burst (Phase 3 Ultimate) ---
+# --- Attack 7: Deep Dream Burst (Phase 3 Full-Screen Climax) ---
 func _start_burst() -> void:
 	if anim_sprite != null:
 		anim_sprite.play("deep_dream_burst")
 
-	# Screen shockwave & multi-hazard combo
+	var container_bullets := get_parent().get_node_or_null("BulletLayer")
+	if container_bullets == null:
+		container_bullets = get_parent()
+	var container_hazards := get_parent().get_node_or_null("HazardLayer")
+	if container_hazards == null:
+		container_hazards = get_parent()
+
+	# 1. Full-screen Judgment Line warning immediately
+	var beam1: Node2D = PREFAB_BEAM.instantiate() as Node2D
+	if beam1 != null:
+		beam1.setup_horizontal(580.0, 35.0, 0.7)
+		container_hazards.add_child(beam1)
+
+	var beam2: Node2D = PREFAB_BEAM.instantiate() as Node2D
+	if beam2 != null:
+		beam2.setup_horizontal(480.0, 30.0, 0.9)
+		container_hazards.add_child(beam2)
+
+	# 2. Burst 20-bullet radial ring and ground homing hands
 	var tw := create_tween()
 	tw.tween_interval(0.6)
 	tw.tween_callback(func() -> void:
 		if is_dead:
 			return
-		# Radial ball explosion
-		var container := get_parent().get_node_or_null("BulletLayer")
-		if container == null:
-			container = get_parent()
 		var start_pos := cast_point.global_position if cast_point != null else global_position
-
-		for i in range(12):
-			var dir := Vector2.RIGHT.rotated(i * TAU / 12.0)
+		for i in range(20):
+			var dir := Vector2.RIGHT.rotated(i * TAU / 20.0)
 			var ball: MoonOrbBullet = PREFAB_BALL.instantiate()
-			container.add_child(ball)
-			ball.fire(start_pos, dir, 220.0)
+			container_bullets.add_child(ball)
+			ball.fire(start_pos, dir, 320.0)
 
-		# Ground hands under player
 		_start_summon_hands()
 	)
 
@@ -466,11 +522,23 @@ func _enter_recovery() -> void:
 
 
 # --- Potion Interaction & Damage Processing ---
+func receive_potion_hit(hit: Dictionary) -> void:
+	if is_dead:
+		return
+	var potion: PotionData = hit.get("potion")
+	var effect_id: StringName = potion.main_effect_id if potion != null and potion.main_effect_id != &"" else &"attack"
+	apply_potion_effect(effect_id, hit)
+
+
 func apply_potion_effect(effect_id: StringName, context: Dictionary = {}) -> void:
 	if is_dead:
 		return
 
-	var base_dmg := 20.0
+	var mult := float(context.get("multiplier", 1.0))
+	var amount_val := float(context.get("amount", 24.0))
+	var base_dmg := amount_val * mult
+	if base_dmg <= 0.0:
+		base_dmg = 24.0
 
 	# Potion effect modifiers
 	match effect_id:
@@ -481,20 +549,18 @@ func apply_potion_effect(effect_id: StringName, context: Dictionary = {}) -> voi
 				if shield_sprite != null:
 					shield_sprite.visible = false
 				_start_lucid_window()
-				base_dmg = 30.0
+				base_dmg = maxf(base_dmg, 35.0)
 			else:
-				base_dmg = 25.0
-		&"explosion", &"attack":
-			base_dmg = 22.0
-		_:
-			base_dmg = 18.0
+				base_dmg = maxf(base_dmg, 28.0)
+		&"explosion", &"attack", &"lightning_meteor":
+			base_dmg = maxf(base_dmg, 25.0)
 
 	# Calculate damage based on dream tide / shield / lucid window
 	var final_dmg := base_dmg
 	if is_shield_active:
 		final_dmg *= 0.3 # 70% reduction
 	elif is_lucid_window:
-		final_dmg *= 1.3 # 30% bonus vulnerability
+		final_dmg *= 1.35 # 35% bonus vulnerability
 
 	take_damage(final_dmg)
 

@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_vespervale_transition.gd" id="1_level"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/transBG.png" id="2_background"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="4_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="5_presentation"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="6_luca"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_luca_follow.gd" id="7_follow"]
+
+[sub_resource type="RectangleShape2D" id="GroundShape"]
+size = Vector2(3258, 150)
+
+[sub_resource type="RectangleShape2D" id="BarrierShape"]
+size = Vector2(80, 1440)
+
+[node name="AuremVespervaleTransition" type="Node2D"]
+script = ExtResource("1_level")
+debug_scene_id = "aurem_vespervale_transition"
+start_corrupted = false
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -20
+scale = Vector2(1.5, 1)
+texture = ExtResource("2_background")
+centered = false
+
+[node name="WorldBounds" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds"]
+position = Vector2(1629, 682)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground"]
+shape = SubResource("GroundShape")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds"]
+position = Vector2(-40, 360)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier"]
+shape = SubResource("BarrierShape")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds"]
+position = Vector2(3298, 360)
+collision_layer = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier"]
+shape = SubResource("BarrierShape")
+
+[node name="EntryPoints" type="Node2D" parent="."]
+
+[node name="default" type="Marker2D" parent="EntryPoints"]
+position = Vector2(640, 600)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+z_index = 10
+position = Vector2(640, 600)
+collision_mask = 3
+script = ExtResource("3_player")
+walk_speed = 50.0
+run_speed = 50.0
+initial_facing_right = true
+
+[node name="SherryCollision" parent="Player" instance=ExtResource("4_collision")]
+
+[node name="SherryPresentation" parent="Player" instance=ExtResource("5_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(0, -240)
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+limit_left = 0
+limit_top = 0
+limit_right = 3258
+limit_bottom = 720
+
+[node name="Luca" parent="." instance=ExtResource("6_luca")]
+position = Vector2(490, 600)
+move_speed = 75.0
+
+[node name="LucaFollow" type="Node" parent="."]
+script = ExtResource("7_follow")
+player_path = NodePath("../Player")
+luca_path = NodePath("../Luca")
+stop_distance = 90.0
+follow_distance = 140.0
+catch_up_distance = 300.0
+follow_speed = 75.0
+catch_up_speed = 110.0
+
+[node name="VioletFade" type="CanvasLayer" parent="."]
+layer = 150
+
+[node name="ColorRect" type="ColorRect" parent="VioletFade"]
+mouse_filter = 2
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.35, 0.15, 0.58, 1)

@@ -422,6 +422,15 @@ func has_potion(potion_id: StringName, minimum_count: int = 1) -> bool:
 	return potion_count(potion_id) >= maxi(minimum_count, 0)
 
 
+## Consumes the specified number of potion bottles from inventory.
+func consume_potion(potion_id: StringName, amount: int = 1) -> bool:
+	if potion_count(potion_id) < amount:
+		return false
+	_remove_potions(potions, {potion_id: amount})
+	_cleanup_potion_configuration()
+	return true
+
+
 func add_story_item(item_id: StringName, amount: int = 1) -> void:
 	if item_id == &"" or amount <= 0:
 		return

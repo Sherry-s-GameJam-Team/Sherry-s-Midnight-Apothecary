@@ -5,7 +5,7 @@ extends Area2D
 ## Fast-moving horizontal slash released after lantern sweep or dream burst.
 
 @export var speed: float = 420.0
-@export var damage: float = 18.0
+@export var damage: float = 30.0
 @export var lifetime: float = 4.0
 
 var direction: Vector2 = Vector2.LEFT

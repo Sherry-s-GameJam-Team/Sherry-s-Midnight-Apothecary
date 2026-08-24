@@ -6,7 +6,7 @@ extends Area2D
 
 @export var speed: float = 165.0
 @export var turn_speed: float = 2.4
-@export var damage: float = 15.0
+@export var damage: float = 25.0
 @export var lifetime: float = 4.2
 @export var homing_duration: float = 3.0
 

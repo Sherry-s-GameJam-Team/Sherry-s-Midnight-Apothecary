@@ -6,7 +6,10 @@ extends Node2D
 
 const DAILY_COLLECTION_PREFIX := "daily_herb_collection"
 
+signal herb_collected(ingredient_id: StringName, amount: int, point_name: StringName)
+
 @export_node_path("Node2D") var spawn_points_path: NodePath = NodePath("../HerbSpawns")
+@export var spawning_enabled := true
 
 var _environment: DayLevelEnvironment
 var _spawned_herbs: Array[HerbInteractable] = []
@@ -29,7 +32,7 @@ func _on_environment_state_changed(_corrupted: bool) -> void:
 
 func _refresh_spawns() -> void:
 	_clear_spawns()
-	if _environment == null or _environment.is_corrupted():
+	if not spawning_enabled or _environment == null or _environment.is_corrupted():
 		return
 	var points: Array[HerbSpawnPoint] = _spawn_points()
 	for index: int in points.size():
@@ -68,10 +71,31 @@ func _spawn_points() -> Array[HerbSpawnPoint]:
 	return points
 
 
-func _on_herb_collected(_ingredient_id: StringName, _amount: int, point_name: StringName) -> void:
+func _on_herb_collected(ingredient_id: StringName, amount: int, point_name: StringName) -> void:
 	var data := _player_data()
 	if data != null:
 		data.tutorial_flags[_collection_key(point_name)] = true
+	herb_collected.emit(ingredient_id, amount, point_name)
+
+
+func set_spawning_enabled(enabled: bool) -> void:
+	if spawning_enabled == enabled:
+		return
+	spawning_enabled = enabled
+	if is_node_ready():
+		_refresh_spawns()
+
+
+func collected_point_count() -> int:
+	var collected := 0
+	for point: HerbSpawnPoint in _spawn_points():
+		if _was_collected_today(point.name):
+			collected += 1
+	return collected
+
+
+func spawn_point_count() -> int:
+	return _spawn_points().size()
 
 
 func _was_collected_today(point_name: StringName) -> bool:

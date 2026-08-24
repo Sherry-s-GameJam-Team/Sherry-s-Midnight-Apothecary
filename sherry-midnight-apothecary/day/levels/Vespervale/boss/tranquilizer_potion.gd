@@ -7,7 +7,7 @@ extends Area2D
 @export var speed: float = 380.0
 @export var arc_gravity: float = 620.0
 @export var mist_duration: float = 2.8
-@export var damage: float = 12.0
+@export var damage: float = 20.0
 
 var velocity: Vector2 = Vector2.ZERO
 var _exploded: bool = false

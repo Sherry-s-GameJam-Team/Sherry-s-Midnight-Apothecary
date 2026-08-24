@@ -2,12 +2,13 @@ class_name VesperBossHUD
 extends CanvasLayer
 
 ## Boss HUD for Vespervale Director.
-## Displays HP bar, boss title, and Dream Tide status indicator.
+## Displays enlarged HP bar, ghost delayed damage bar, numerical health text, boss title, and status indicator.
 
 @onready var boss_name_label: Label = $Root/BossNameLabel
 @onready var status_label: Label = $Root/StatusLabel
 @onready var health_bar: ProgressBar = $Root/HealthBar
 @onready var ghost_bar: ProgressBar = $Root/HealthBar/GhostBar
+@onready var health_label: Label = $Root/HealthBar/HealthLabel
 
 
 func _ready() -> void:
@@ -26,10 +27,12 @@ func setup(boss: VesperDirectorBoss) -> void:
 	boss.phase_changed.connect(_on_phase_changed)
 	boss.dream_tide_state_changed.connect(_on_tide_state_changed)
 	boss.boss_defeated.connect(_on_boss_defeated)
+	_on_health_changed(boss.current_hp, boss.max_hp)
 
 
 func _on_health_changed(current_hp: float, max_hp: float) -> void:
-	var percent := (current_hp / max_hp) * 100.0
+	var safe_max := maxf(1.0, max_hp)
+	var percent := (current_hp / safe_max) * 100.0
 	if health_bar != null:
 		health_bar.value = percent
 
@@ -37,6 +40,9 @@ func _on_health_changed(current_hp: float, max_hp: float) -> void:
 		var tw := create_tween()
 		tw.tween_interval(0.2)
 		tw.tween_property(ghost_bar, "value", percent, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	if health_label != null:
+		health_label.text = "HP %d / %d" % [roundi(current_hp), roundi(max_hp)]
 
 
 func _on_phase_changed(new_phase: int) -> void:

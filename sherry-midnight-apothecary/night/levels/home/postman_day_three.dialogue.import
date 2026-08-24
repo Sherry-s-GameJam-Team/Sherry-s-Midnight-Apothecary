@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dycxj2y44s8y8"
+path="res://.godot/imported/postman_day_three.dialogue-1e316039584a36b05a4f669e166c743d.tres"
+
+[deps]
+
+source_file="res://night/levels/home/postman_day_three.dialogue"
+dest_files=["res://.godot/imported/postman_day_three.dialogue-1e316039584a36b05a4f669e166c743d.tres"]
+
+[params]
+
+defaults=true

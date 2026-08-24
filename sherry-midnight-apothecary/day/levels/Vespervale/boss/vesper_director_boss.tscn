@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dnak2p7x8jh10"]
 
-[ext_resource type="Script" path="res://day/levels/Vespervale/boss/vesper_director_boss.gd" id="1_boss_script"]
-[ext_resource type="SpriteFrames" uid="uid://b7vy2q9x8k1m5" path="res://day/levels/Vespervale/boss/director_sprite_frames.tres" id="2_boss_frames"]
-[ext_resource type="Texture2D" uid="uid://ctk7r2m1950hp" path="res://day/levels/Vespervale/boss/月盾.png" id="3_shield_tex"]
+[ext_resource type="Script" uid="uid://cmqqdxgoqspl2" path="res://day/levels/Vespervale/boss/vesper_director_boss.gd" id="1_boss_script"]
+[ext_resource type="SpriteFrames" path="res://day/levels/Vespervale/boss/director_sprite_frames.tres" id="2_boss_frames"]
+[ext_resource type="Texture2D" uid="uid://fwdaoihpxdxo" path="res://day/levels/Vespervale/boss/月盾.png" id="3_shield_tex"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boss_body"]
 radius = 70.0
@@ -13,13 +13,14 @@ radius = 120.0
 
 [node name="VesperDirectorBoss" type="CharacterBody2D" unique_id=2001100]
 z_index = 10
-collision_layer = 0
+collision_layer = 7
 collision_mask = 1
 script = ExtResource("1_boss_script")
 
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2001101]
-position = Vector2(0, -170)
-scale = Vector2(0.48, 0.48)
+position = Vector2(2.9999998, -216.00002)
+scale = Vector2(-0.66, 0.66)
 sprite_frames = ExtResource("2_boss_frames")
 animation = &"idle_charge"
 autoplay = "idle_charge"
@@ -39,8 +40,9 @@ texture = ExtResource("3_shield_tex")
 position = Vector2(-150, -150)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=2001105]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
+
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=2001106]
 position = Vector2(0, -170)

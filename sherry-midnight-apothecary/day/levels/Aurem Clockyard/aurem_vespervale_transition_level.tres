@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_data"]
+[ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/aurem_vespervale_transition.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"aurem_vespervale_transition"
+display_name = "钟庭外缘·通往眠谷的旧路"
+disaster_name = "梦境入侵"
+normal_description = "橙色钟庭的黄昏渐渐被维斯佩尔的紫色长夜吞没。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"default"
+show_title_card = false

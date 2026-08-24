@@ -1,0 +1,122 @@
+~ special_orange_customer
+
+【门铃响起。】
+
+【一枚小型黄铜齿轮缓慢滚进药铺，胸前的琥珀核心忽明忽暗。】
+
+雪莉: ……齿轮？
+
+钟庭邮差: 纠正。奥雷姆钟庭，第七码段邮递员。
+
+钟庭邮差: 目前……工作效率百分之十七。
+
+雪莉: 你哪里不舒服？
+
+钟庭邮差: 齿轮完整，发条完整，时核也没有损坏。
+
+钟庭邮差: 但是——
+
+【它尝试向前滚动，转了半圈便停下来。】
+
+钟庭邮差: 动不起来。
+
+雪莉: 像是完全没有力气了？
+
+钟庭邮差: 准确。
+
+钟庭邮差: 需要一种能让停滞的身体重新活跃起来的药。
+
+雪莉: 恢复活力、促进运转……
+
+雪莉: 这种效果应该落在红色和黄色之间。
+
+【解锁调色提示】
+
+【红色 + 黄色 → 橙色】
+
+雪莉: 我可以试着给你调一瓶[color=#e99132]橙色活化药水[/color]。
+
+钟庭邮差: 请求确认。
+
+钟庭邮差: 服用后，可以继续工作？
+
+雪莉: 正常情况下，可以。
+
+钟庭邮差: 那就拜托你了。
+
+- 交付[color=#e99132]橙色活化药水[/color] [if potion_count("orange_potion") >= 1]
+	=> postman_deliver
+- 我现在去调配 [if potion_count("orange_potion") < 1]
+	=> postman_brew
+- 我稍后调配好再给你 [if potion_count("orange_potion") >= 1]
+	=> postman_brew
+
+
+~ postman_repeat
+
+if has_event_flag("special_orange_customer_completed")
+	=> postman_completed
+
+钟庭邮差: 动不起来……需要能让停滞的身体重新活跃的[color=#e99132]橙色活化药水[/color]。
+
+- 交付[color=#e99132]橙色活化药水[/color] [if potion_count("orange_potion") >= 1]
+	=> postman_deliver
+- 还在调配中…… [if potion_count("orange_potion") < 1]
+	=> postman_brew
+
+
+~ postman_deliver
+
+do emit_dialogue_event("postman_deliver_orange_potion")
+
+【交付正确的橙色药水】
+
+钟庭邮差: 检测……
+
+【胸前的琥珀核心重新亮起，齿轮开始稳定转动。】
+
+钟庭邮差: 动力恢复。
+
+雪莉: 看来成功了。
+
+钟庭邮差: 感谢。
+
+钟庭邮差: 不过很奇怪。
+
+雪莉: 什么？
+
+钟庭邮差: 钟庭最近有很多居民，都开始出现和我一样的症状。
+
+钟庭邮差: 明明没有损坏……
+
+钟庭邮差: 却越来越难按照正确的时刻行动。
+
+雪莉: 奥雷姆钟庭……
+
+钟庭邮差: 若您前往那里，请小心中央钟塔。
+
+钟庭邮差: 最近的钟声——
+
+钟庭邮差: 已经不太准了。
+
+【特殊订单完成】
+
+【首次登记：[color=#e99132]橙色活化药水[/color]】
+
+do show_hint("【药典新增：活化 / 体力恢复】", "postman_codex_hint", 4.0)
+
+=> END
+
+
+~ postman_completed
+
+钟庭邮差: 动力恢复完毕，感谢您的帮助。
+
+=> END
+
+
+~ postman_brew
+
+雪莉: 我去工作台看看。
+
+=> END

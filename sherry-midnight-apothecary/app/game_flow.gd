@@ -16,6 +16,7 @@ const FINAL_DAY := 30
 const INITIAL_DAY := 0
 const DAY_SCENE_PATH := "res://day/day_runtime.tscn"
 const NIGHT_SCENE_PATH := "res://night/night_runtime.tscn"
+const STORY_NIGHT_SKIPPED_FLAG: StringName = &"night_skipped_by_story"
 
 var current_day := INITIAL_DAY
 var current_mode := Mode.DAY
@@ -68,6 +69,22 @@ func complete_day(result: DayResult) -> bool:
 		return false
 	player_data.apply_day_result(result)
 	return _load_mode(Mode.NIGHT)
+
+
+func complete_day_skipping_night(result: DayResult, next_day_level_id: StringName) -> bool:
+	if current_mode != Mode.DAY or _switching or result == null or next_day_level_id == &"":
+		return false
+	player_data.apply_day_result(result)
+	player_data.set_event_flag(STORY_NIGHT_SKIPPED_FLAG)
+	var changed: bool
+	if current_day >= FINAL_DAY:
+		changed = _load_mode(Mode.ENDING)
+	else:
+		current_day += 1
+		changed = _load_mode(Mode.DAY, next_day_level_id, false, false, true)
+	if changed:
+		save_requested.emit(current_day, current_mode)
+	return changed
 
 
 func complete_night(result: NightResult) -> bool:
@@ -173,6 +190,7 @@ func _load_mode(
 			current_runtime.configure(player_data, current_day, story_event_catalog)
 		if mode == Mode.DAY:
 			current_runtime.finished.connect(complete_day)
+			current_runtime.story_night_skipped.connect(complete_day_skipping_night)
 			current_runtime.player_died.connect(_on_day_player_died)
 		else:
 			current_runtime.finished.connect(complete_night)

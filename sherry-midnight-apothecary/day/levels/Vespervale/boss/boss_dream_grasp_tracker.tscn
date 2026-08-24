@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b4x3w1y8h0m7q"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/boss_dream_grasp_tracker.gd" id="1_script"]
+
+[node name="BossDreamGraspTracker" type="Node2D" unique_id=2001350]
+script = ExtResource("1_script")
+
+[node name="ShadowVisual" type="Polygon2D" parent="." unique_id=2001351]
+modulate = Color(0.8, 0.35, 1, 0.75)
+polygon = PackedVector2Array(-50, 0, -35, -12, 0, -18, 35, -12, 50, 0, 35, 12, 0, 18, -35, 12)
+
+[node name="TelegraphRing" type="Node2D" parent="." unique_id=2001352]
+visible = false
+
+[node name="RingVisual" type="Polygon2D" parent="TelegraphRing" unique_id=2001353]
+color = Color(1, 0.45, 0.9, 0.85)
+polygon = PackedVector2Array(-60, 0, -42, -14, 0, -22, 42, -14, 60, 0, 42, 14, 0, 22, -42, 14)

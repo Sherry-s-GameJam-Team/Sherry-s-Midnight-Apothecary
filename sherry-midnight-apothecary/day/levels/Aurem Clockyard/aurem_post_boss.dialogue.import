@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://brhm16jbrta3g"
+path="res://.godot/imported/aurem_post_boss.dialogue-185ec545a198eb7b6ef191da8a7d7f71.tres"
+
+[deps]
+
+source_file="res://day/levels/Aurem Clockyard/aurem_post_boss.dialogue"
+dest_files=["res://.godot/imported/aurem_post_boss.dialogue-185ec545a198eb7b6ef191da8a7d7f71.tres"]
+
+[params]
+
+defaults=true

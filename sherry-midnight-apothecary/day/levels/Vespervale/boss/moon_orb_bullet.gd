@@ -4,7 +4,7 @@ extends Area2D
 ## Moon Orb Bullet (ball.png) shot in fan bursts.
 
 @export var speed: float = 260.0
-@export var damage: float = 14.0
+@export var damage: float = 22.0
 @export var lifetime: float = 6.0
 
 var direction: Vector2 = Vector2.LEFT

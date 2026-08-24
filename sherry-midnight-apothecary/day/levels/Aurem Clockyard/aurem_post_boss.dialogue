@@ -1,0 +1,134 @@
+~ harvest_complete
+
+雪莉 #portrait(char=雪莉,slot=right,expr=default,anim=fade_in): 这样应该够了。
+
+卢卡 #portrait(char=卢卡,slot=left,expr=default,anim=fade_in): 钟庭的节律也已经恢复。
+
+雪莉: 那就回去吧。再晚一点，店都要开门了。
+
+# [远处钟塔敲响整点钟。]
+do emit_dialogue_event("aurem_clockyard_normal_chimes")
+# [咚——]
+# [咚——]
+# [钟庭所有小钟依次回应，随后逐渐安静。]
+
+雪莉: ……
+
+# [几秒后，很远的右侧，又响起一声钟。]
+do emit_dialogue_event("aurem_distant_toll_1")
+# [当——]
+# [声音比钟庭的钟低沉得多，像从山谷深处传来。]
+
+雪莉: 刚才还有一座钟没校准？
+
+卢卡: 不是钟庭的钟。
+
+雪莉: 你这么确定？
+
+卢卡: 这里所有钟声方才已经重新同步。
+
+# [第二声响起。]
+do emit_dialogue_event("aurem_distant_toll_2")
+# [当——]
+do emit_dialogue_event("aurem_luca_face_right")
+# [卢卡转向场景右侧。]
+
+卢卡: 声音来自城外。
+
+雪莉: 这么远还能听见？
+
+卢卡: 这才是问题。
+
+do emit_dialogue_event("aurem_violet_lamp_on")
+# [右侧原本封闭的旧石道上，一盏废弃路灯自行亮起淡紫色光。]
+
+雪莉: 那条路通向哪里？
+
+卢卡: 维斯佩尔方向。
+
+雪莉: 眠谷？
+
+卢卡: 旧时梦疗院所在之地。
+
+雪莉: 那也得明天再去了吧。
+
+雪莉: 天已经快黑了。
+
+卢卡: 正应如此。
+
+雪莉: ……什么叫“正应如此”？
+
+# [卢卡看向天空。钟庭一侧是橙红黄昏，右侧却已是深紫色夜空与巨大月亮。]
+
+卢卡: 你看那边。
+
+雪莉: ……
+
+雪莉: 夜晚怎么会已经在那里？
+
+卢卡: 因为那里的时间，恐怕从来没有继续往前走。
+
+# [第三次钟声响起。]
+do emit_dialogue_event("aurem_distant_toll_3")
+# [当——]
+
+雪莉: ……
+
+卢卡: 雪莉？
+
+雪莉: 我好像听见……
+
+卢卡: 什么？
+
+雪莉: 师父的声音。
+
+do emit_dialogue_event("aurem_serena_glimpse")
+# [右侧道路尽头出现一个模糊人影，像塞蕾娜背对雪莉站在远处。]
+
+雪莉: 师父？
+
+卢卡: 雪莉，等等。
+
+# [雪莉已经向前走了一步。人影转过拐角消失。]
+do emit_dialogue_event("aurem_serena_hide")
+
+雪莉: 她在那里。
+
+卢卡: 那里没人。
+
+雪莉: 我看见了。
+
+卢卡: 而我什么都没看见。
+
+卢卡: 这不是她。
+
+雪莉: ……
+
+卢卡: 眠谷已经在影响这里了。
+
+do clear_portraits()
+=> END
+
+
+~ road_loop
+
+# [雪莉向钟庭走出十几步。画面轻微紫色闪烁，随后她竟重新出现在那盏紫色路灯旁。]
+
+雪莉 #portrait(char=雪莉,slot=right,expr=default,anim=fade_in): ……等等。
+
+雪莉: 我刚才明明是在往回走。
+
+卢卡 #portrait(char=卢卡,slot=left,expr=default,anim=fade_in): 路已经闭合了。
+
+雪莉: 所以我们回不去了？
+
+卢卡: 至少在这场梦结束以前。
+
+雪莉: 偏偏挑今晚……
+
+卢卡: 看来你的店得歇业一晚了。
+
+雪莉: 你说得倒轻松。
+
+do clear_portraits()
+=> END

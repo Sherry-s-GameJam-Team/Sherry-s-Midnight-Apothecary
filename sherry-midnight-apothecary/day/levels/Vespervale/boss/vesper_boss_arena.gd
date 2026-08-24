@@ -1,5 +1,5 @@
 class_name VesperBossArena
-extends Node2D
+extends DayLevelEnvironment
 
 ## Arena controller for Vespervale Hospital Director Boss battle.
 ## Background: treegarden.png.
@@ -10,7 +10,6 @@ signal boss_battle_ended(victory: bool)
 
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 
-@export var debug_scene_id: String = "vesper_boss"
 @export var intro_dialogue: DialogueResource = preload("res://day/levels/Vespervale/vesper_boss_intro.dialogue")
 
 var is_battle_active: bool = false
@@ -24,6 +23,8 @@ var is_victory: bool = false
 
 
 func _ready() -> void:
+	super._ready()
+
 	if exit_portal != null:
 		exit_portal.visible = false
 		exit_portal.monitoring = false

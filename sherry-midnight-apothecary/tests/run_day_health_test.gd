@@ -59,10 +59,8 @@ func _run() -> void:
 
 	hud.queue_free()
 
-
 	if failures == 0:
 		print("Day health and PlayerHealthHUD tests passed.")
 		quit(0)
 	else:
 		quit(1)
-

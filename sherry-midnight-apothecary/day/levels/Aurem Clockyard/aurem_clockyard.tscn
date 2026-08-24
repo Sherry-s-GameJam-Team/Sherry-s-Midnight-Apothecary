@@ -26,6 +26,14 @@
 [ext_resource type="Script" uid="uid://42wr4vxx7psn" path="res://day/levels/Aurem Clockyard/clockmaker_day_four_npc.gd" id="19_clockmaker_day_four"]
 [ext_resource type="Texture2D" uid="uid://dcoxselh66vso" path="res://day/levels/Aurem Clockyard/robot.png" id="21_clockmaker_robot"]
 [ext_resource type="Script" uid="uid://fn1h80mvlcj2" path="res://day/levels/Aurem Clockyard/aurem_daily_npc.gd" id="22_daily_npc"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="23_luca"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_luca_follow.gd" id="24_luca_follow"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_post_boss_sequence.gd" id="25_post_boss"]
+[ext_resource type="Resource" path="res://day/levels/Aurem Clockyard/aurem_post_boss.dialogue" id="26_post_boss_dialogue"]
+[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/clocktower_audio.gd" id="27_clock_audio"]
+[ext_resource type="Texture2D" uid="uid://bs6irw5heipq1" path="res://characters/Serena/standee.png" id="28_serena_portrait"]
+[ext_resource type="Texture2D" uid="uid://b7okyqonqqy62" path="res://characters/Serena/stand.png" id="29_serena_world"]
+[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/src/decorations/wall_lamp_tall.png" id="30_road_lamp"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(9000, 160)
@@ -450,6 +458,52 @@ right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=1488921579 instance=ExtResource("14_potions")]
 position = Vector2(48, 87)
+
+[node name="Luca" parent="." instance=ExtResource("23_luca")]
+visible = false
+position = Vector2(6300, 520)
+
+[node name="LucaFollow" type="Node" parent="."]
+script = ExtResource("24_luca_follow")
+player_path = NodePath("../Player")
+luca_path = NodePath("../Luca")
+
+[node name="ClocktowerAudio" type="Node" parent="."]
+script = ExtResource("27_clock_audio")
+
+[node name="PostBossSequence" type="Node2D" parent="."]
+script = ExtResource("25_post_boss")
+dialogue_resource = ExtResource("26_post_boss_dialogue")
+serena_portrait = ExtResource("28_serena_portrait")
+
+[node name="VioletRoadLamp" type="Node2D" parent="PostBossSequence"]
+position = Vector2(7800, 515)
+
+[node name="LampSprite" type="Sprite2D" parent="PostBossSequence/VioletRoadLamp"]
+position = Vector2(0, -120)
+scale = Vector2(0.62, 0.62)
+modulate = Color(0.72, 0.48, 1, 0.95)
+texture = ExtResource("30_road_lamp")
+
+[node name="PurpleGlow" type="PointLight2D" parent="PostBossSequence/VioletRoadLamp"]
+position = Vector2(0, -150)
+energy = 1.8
+color = Color(0.58, 0.31, 1, 1)
+texture_scale = 2.5
+
+[node name="SerenaGlimpse" type="Sprite2D" parent="PostBossSequence"]
+z_index = 9
+scale = Vector2(0.043, 0.043)
+texture = ExtResource("29_serena_world")
+
+[node name="VioletVeil" type="CanvasLayer" parent="PostBossSequence"]
+layer = 80
+
+[node name="ColorRect" type="ColorRect" parent="PostBossSequence/VioletVeil"]
+mouse_filter = 2
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.32, 0.12, 0.52, 0.55)
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=245175993]
 layer = 200

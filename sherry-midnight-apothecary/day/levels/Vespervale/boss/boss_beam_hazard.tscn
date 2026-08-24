@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cpn8v56n4qm6e"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/boss_beam_hazard.gd" id="1_beam_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beam"]
+size = Vector2(2400, 60)
+
+[node name="BossBeamHazard" type="Area2D" unique_id=2001400]
+z_index = 15
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_beam_script")
+
+[node name="TelegraphLine" type="Line2D" parent="." unique_id=2001401]
+points = PackedVector2Array(0, 0, 2400, 0)
+width = 3.0
+default_color = Color(1, 0.2, 0.4, 0.9)
+
+[node name="BeamLine" type="Line2D" parent="." unique_id=2001402]
+visible = false
+points = PackedVector2Array(0, 0, 2400, 0)
+width = 55.0
+default_color = Color(0.9, 0.4, 1, 0.95)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2001403]
+position = Vector2(1200, 0)
+shape = SubResource("RectangleShape2D_beam")

@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://b087o5e1f0e4h" path="res://night/levels/home/luca_night_npc.tscn" id="22_luca_npc"]
 [ext_resource type="Script" uid="uid://dbcawfogypgk4" path="res://night/levels/home/night_bedroom_barrier.gd" id="23_barrier_script"]
 [ext_resource type="PackedScene" path="res://night/levels/home/enzuo_night_npc.tscn" id="24_enzuo_npc"]
+[ext_resource type="PackedScene" path="res://night/levels/home/postman_night_npc.tscn" id="25_postman_npc"]
 
 [sub_resource type="Gradient" id="MoonLightGradient"]
 offsets = PackedFloat32Array(0, 0.7, 1)
@@ -354,3 +355,8 @@ camera_director_path = NodePath("../HomeCameraDirector")
 
 [node name="EnzuoNightNPC" parent="issue/Day1" instance=ExtResource("24_enzuo_npc")]
 position = Vector2(-1315, 790)
+
+[node name="Day3" type="Node2D" parent="issue" unique_id=725786141]
+
+[node name="PostmanNightNPC" parent="issue/Day3" instance=ExtResource("25_postman_npc")]
+position = Vector2(2100, 790)

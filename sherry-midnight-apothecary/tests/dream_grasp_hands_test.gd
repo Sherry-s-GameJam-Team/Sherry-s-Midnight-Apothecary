@@ -12,6 +12,8 @@ static func run(test: TestSupport) -> void:
 	test_hunt_tier_escalation(test)
 	test_floor_locking_and_smooth_follow(test)
 	test_wall_bounds_and_sofa_shelter(test)
+	test_boss_dream_grasp_tracker(test)
+
 
 
 static func test_bed_safe_zone_detection(test: TestSupport) -> void:
@@ -160,3 +162,29 @@ static func test_wall_bounds_and_sofa_shelter(test: TestSupport) -> void:
 	dummy_player.queue_free()
 	dummy_sofa.queue_free()
 	mgr.queue_free()
+
+
+static func test_boss_dream_grasp_tracker(test: TestSupport) -> void:
+	var tracker_scene := load("res://day/levels/Vespervale/boss/boss_dream_grasp_tracker.tscn") as PackedScene
+	test.expect(tracker_scene != null, "BossDreamGraspTracker scene loads.")
+	var tracker := tracker_scene.instantiate() as BossDreamGraspTracker
+	test.expect(tracker != null, "BossDreamGraspTracker instantiates.")
+
+	var dummy_player := CharacterBody2D.new()
+	dummy_player.name = "Player"
+	# Ground position (not on Platform1)
+	dummy_player.global_position = Vector2(900.0, 610.0)
+	tracker.setup(dummy_player, 1000.0, 1, 15)
+
+	test.expect(not tracker.is_target_on_platform1(), "Player on ground is not sheltered on Platform1.")
+
+	# Move player to Platform1 area: (428, 542), top surface ~530
+	dummy_player.global_position = Vector2(400.0, 530.0)
+	test.expect(tracker.is_target_on_platform1(), "Player on Platform1 is detected as sheltered from tracking.")
+
+	# Move player off Platform1 (air or other X)
+	dummy_player.global_position = Vector2(1200.0, 610.0)
+	test.expect(not tracker.is_target_on_platform1(), "Player back on floor is tracked again.")
+
+	dummy_player.queue_free()
+	tracker.queue_free()

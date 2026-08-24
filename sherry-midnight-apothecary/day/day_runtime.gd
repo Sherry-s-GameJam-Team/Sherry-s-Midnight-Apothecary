@@ -2,6 +2,7 @@ class_name DayRuntime
 extends Node
 
 signal finished(result: DayResult)
+signal story_night_skipped(result: DayResult, next_day_level_id: StringName)
 signal travel_anchor_activated(level_id: StringName)
 signal player_died(source: StringName)
 signal story_event_completed(event_id: StringName)
@@ -27,6 +28,7 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/Crimson Vale/alkeon_boss_level.tres"),
 	preload("res://day/levels/Aurem Clockyard/aurem_clockyard_level.tres"),
 	preload("res://day/levels/Aurem Clockyard/aurem_clockyard_inside_level.tres"),
+	preload("res://day/levels/Aurem Clockyard/aurem_vespervale_transition_level.tres"),
 	preload("res://day/levels/lake/lake_cliff_underwater_level.tres"),
 	preload("res://day/levels/cliff/cliff_level.tres"),
 	preload("res://day/levels/lakebed/lakebed_level.tres"),
@@ -109,8 +111,21 @@ func start_bedroom_revival() -> AnimationPresentationExecutor:
 
 
 func set_health_hud_visible(visible: bool) -> void:
-	if is_node_ready() and is_instance_valid(player_health_hud):
-		player_health_hud.visible = visible
+	if is_instance_valid(player_health_hud):
+		if visible and _is_health_hud_hidden_level(current_level):
+			player_health_hud.visible = false
+		else:
+			player_health_hud.visible = visible
+
+
+func _is_health_hud_hidden_level(level_data: LevelData) -> bool:
+	if level_data == null:
+		return false
+	return level_data.id in [&"home", &"bedroom"]
+
+
+func _sync_health_hud_visibility() -> void:
+	set_health_hud_visible(true)
 
 
 func _request_player_death(source: StringName) -> void:
@@ -122,8 +137,11 @@ func _request_player_death(source: StringName) -> void:
 
 
 func _bind_player_health_hud() -> void:
-	if is_node_ready() and is_instance_valid(player_health_hud):
+	if is_instance_valid(player_health_hud):
 		player_health_hud.bind_player_data(get_player_data())
+		_sync_health_hud_visibility()
+
+
 
 
 func _bind_remote_potion_supply() -> void:
@@ -175,6 +193,8 @@ func set_intro_locked(locked: bool) -> void:
 	if is_node_ready():
 		gameplay_ui.visible = not locked
 		developer_console_layer.visible = not locked
+		if not locked:
+			_sync_health_hud_visibility()
 
 
 func _load_level() -> void:
@@ -185,6 +205,7 @@ func _load_level() -> void:
 	current_level = _find_level(_initial_level_id)
 	if current_level == null:
 		current_level = DAILY_LEVELS[posmod(day, DAILY_LEVELS.size())]
+	_sync_health_hud_visibility()
 	_sync_remote_potion_supply_scope()
 	_sync_bgm_for_current_level()
 	_instantiate_current_level(&"default")
@@ -202,6 +223,7 @@ func switch_to_level(level_id: String, entry_id: StringName = &"default") -> boo
 		for child in level_slot.get_children():
 			child.queue_free()
 		current_level = level_data
+		_sync_health_hud_visibility()
 		_sync_remote_potion_supply_scope()
 		_sync_bgm_for_current_level()
 		_instantiate_current_level(entry_id)
@@ -418,3 +440,8 @@ static func scene_title_seen_key(day_number: int, level_id: StringName) -> Strin
 func finish_day(result: DayResult) -> void:
 	if result != null:
 		finished.emit(result)
+
+
+func finish_day_skipping_night(result: DayResult, next_day_level_id: StringName) -> void:
+	if result != null and next_day_level_id != &"":
+		story_night_skipped.emit(result, next_day_level_id)
