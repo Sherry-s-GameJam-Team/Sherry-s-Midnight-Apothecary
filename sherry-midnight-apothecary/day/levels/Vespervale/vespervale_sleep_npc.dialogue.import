@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bi3aqbiwvvbec"
+path="res://.godot/imported/vespervale_sleep_npc.dialogue-c8c50f29ed1fa0f8e965bb754c88cb44.tres"
+
+[deps]
+
+source_file="res://day/levels/Vespervale/vespervale_sleep_npc.dialogue"
+dest_files=["res://.godot/imported/vespervale_sleep_npc.dialogue-c8c50f29ed1fa0f8e965bb754c88cb44.tres"]
+
+[params]
+
+defaults=true

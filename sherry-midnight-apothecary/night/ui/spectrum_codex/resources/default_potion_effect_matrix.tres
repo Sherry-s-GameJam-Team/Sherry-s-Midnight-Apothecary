@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PotionEffectMatrix" load_steps=52 format=3]
+[gd_resource type="Resource" script_class="PotionEffectMatrix" format=3 uid="uid://dylouc84ijalo"]
 
 [ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_effect_matrix.gd" id="1_matrix"]
 [ext_resource type="Script" path="res://night/ui/spectrum_codex/scripts/potion_effect_combination.gd" id="2_combo"]
@@ -10,8 +10,6 @@ display_name = "高压循环"
 description = "以循环为主、循环为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"circulation"
-matrix_row = 0
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_0_1"]
 script = ExtResource("2_combo")
@@ -20,7 +18,6 @@ display_name = "热脉爆发"
 description = "以循环为主、活化为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"activation"
-matrix_row = 0
 matrix_col = 1
 
 [sub_resource type="Resource" id="Combo_0_2"]
@@ -30,7 +27,6 @@ display_name = "镇痛活血"
 description = "以循环为主、镇痛为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"analgesia"
-matrix_row = 0
 matrix_col = 2
 
 [sub_resource type="Resource" id="Combo_0_3"]
@@ -40,7 +36,6 @@ display_name = "伤口灌流"
 description = "以循环为主、再生为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"regeneration"
-matrix_row = 0
 matrix_col = 3
 
 [sub_resource type="Resource" id="Combo_0_4"]
@@ -50,7 +45,6 @@ display_name = "稳压循环"
 description = "以循环为主、稳定为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"stabilization"
-matrix_row = 0
 matrix_col = 4
 
 [sub_resource type="Resource" id="Combo_0_5"]
@@ -60,7 +54,6 @@ display_name = "净血排污"
 description = "以循环为主、净化为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"purification"
-matrix_row = 0
 matrix_col = 5
 
 [sub_resource type="Resource" id="Combo_0_6"]
@@ -70,7 +63,6 @@ display_name = "息脉隐踪"
 description = "以循环为主、镇静为辅的有向复合药效。"
 primary_effect_id = &"circulation"
 secondary_effect_id = &"sedation"
-matrix_row = 0
 matrix_col = 6
 
 [sub_resource type="Resource" id="Combo_1_0"]
@@ -81,7 +73,6 @@ description = "以活化为主、循环为辅的有向复合药效。"
 primary_effect_id = &"activation"
 secondary_effect_id = &"circulation"
 matrix_row = 1
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_1_1"]
 script = ExtResource("2_combo")
@@ -151,7 +142,6 @@ description = "以镇痛为主、循环为辅的有向复合药效。"
 primary_effect_id = &"analgesia"
 secondary_effect_id = &"circulation"
 matrix_row = 2
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_2_1"]
 script = ExtResource("2_combo")
@@ -221,7 +211,6 @@ description = "以再生为主、循环为辅的有向复合药效。"
 primary_effect_id = &"regeneration"
 secondary_effect_id = &"circulation"
 matrix_row = 3
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_3_1"]
 script = ExtResource("2_combo")
@@ -291,7 +280,6 @@ description = "以稳定为主、循环为辅的有向复合药效。"
 primary_effect_id = &"stabilization"
 secondary_effect_id = &"circulation"
 matrix_row = 4
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_4_1"]
 script = ExtResource("2_combo")
@@ -361,7 +349,6 @@ description = "以净化为主、循环为辅的有向复合药效。"
 primary_effect_id = &"purification"
 secondary_effect_id = &"circulation"
 matrix_row = 5
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_5_1"]
 script = ExtResource("2_combo")
@@ -431,7 +418,6 @@ description = "以镇静为主、循环为辅的有向复合药效。"
 primary_effect_id = &"sedation"
 secondary_effect_id = &"circulation"
 matrix_row = 6
-matrix_col = 0
 
 [sub_resource type="Resource" id="Combo_6_1"]
 script = ExtResource("2_combo")
@@ -496,4 +482,3 @@ matrix_col = 6
 [resource]
 script = ExtResource("1_matrix")
 combinations = Array[ExtResource("2_combo")]([SubResource("Combo_0_0"), SubResource("Combo_0_1"), SubResource("Combo_0_2"), SubResource("Combo_0_3"), SubResource("Combo_0_4"), SubResource("Combo_0_5"), SubResource("Combo_0_6"), SubResource("Combo_1_0"), SubResource("Combo_1_1"), SubResource("Combo_1_2"), SubResource("Combo_1_3"), SubResource("Combo_1_4"), SubResource("Combo_1_5"), SubResource("Combo_1_6"), SubResource("Combo_2_0"), SubResource("Combo_2_1"), SubResource("Combo_2_2"), SubResource("Combo_2_3"), SubResource("Combo_2_4"), SubResource("Combo_2_5"), SubResource("Combo_2_6"), SubResource("Combo_3_0"), SubResource("Combo_3_1"), SubResource("Combo_3_2"), SubResource("Combo_3_3"), SubResource("Combo_3_4"), SubResource("Combo_3_5"), SubResource("Combo_3_6"), SubResource("Combo_4_0"), SubResource("Combo_4_1"), SubResource("Combo_4_2"), SubResource("Combo_4_3"), SubResource("Combo_4_4"), SubResource("Combo_4_5"), SubResource("Combo_4_6"), SubResource("Combo_5_0"), SubResource("Combo_5_1"), SubResource("Combo_5_2"), SubResource("Combo_5_3"), SubResource("Combo_5_4"), SubResource("Combo_5_5"), SubResource("Combo_5_6"), SubResource("Combo_6_0"), SubResource("Combo_6_1"), SubResource("Combo_6_2"), SubResource("Combo_6_3"), SubResource("Combo_6_4"), SubResource("Combo_6_5"), SubResource("Combo_6_6")])
-

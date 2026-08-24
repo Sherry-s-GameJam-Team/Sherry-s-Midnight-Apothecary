@@ -1,10 +1,5 @@
 [gd_scene format=3 uid="uid://cwrb7287ak5kh"]
 
-[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
-[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
-[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/stagnant_breeze_bell_vine/stagnant_breeze_bell_vine_herb.tscn" id="herb_0"]
-[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/slumber_marrow_geode/slumber_marrow_geode_herb.tscn" id="herb_1"]
-
 [ext_resource type="Script" uid="uid://biictkq04rqkk" path="res://day/levels/Vespervale/inner.gd" id="1_inner"]
 [ext_resource type="Script" uid="uid://dbjkmfa4jxlr1" path="res://day/levels/Vespervale/inner_systems/dream_shift_manager.gd" id="2_shift_mgr"]
 [ext_resource type="Script" uid="uid://cth5jw48cofiq" path="res://day/levels/Vespervale/inner_systems/dream_audio_synth.gd" id="3_audio"]
@@ -41,13 +36,17 @@
 [ext_resource type="Script" uid="uid://bneqb74w0a0c1" path="res://day/levels/Vespervale/inner_systems/wall_dial_lock_interactor.gd" id="53_wall_interactor"]
 [ext_resource type="PackedScene" uid="uid://bdb7xr2tnk1vf" path="res://day/levels/Vespervale/inner_systems/dial_lock_puzzle_dialog.tscn" id="54_dial_lock_dialog"]
 [ext_resource type="Resource" uid="uid://p0md47du7iuv" path="res://day/levels/Vespervale/vespervale_inner_entry.dialogue" id="55_entry_dialogue"]
-[ext_resource type="Script" path="res://day/levels/Vespervale/inner_systems/wall2_reality_phasing.gd" id="56_wall2_phasing"]
+[ext_resource type="Script" uid="uid://c1o4rdy65xxpi" path="res://day/levels/Vespervale/inner_systems/wall2_reality_phasing.gd" id="56_wall2_phasing"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/stagnant_breeze_bell_vine/stagnant_breeze_bell_vine_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/slumber_marrow_geode/slumber_marrow_geode_herb.tscn" id="herb_1"]
+[ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="Script" uid="uid://j48yuwrhnne5" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
 
 [sub_resource type="RectangleShape2D" id="Rect_loop_trigger"]
 size = Vector2(60, 800)
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
-size = Vector2(3400, 120)
+size = Vector2(4886, 120)
 
 [sub_resource type="RectangleShape2D" id="Rect_barrier_left"]
 size = Vector2(100, 1600)
@@ -68,13 +67,16 @@ radius = 80.0
 size = Vector2(80, 80)
 
 [sub_resource type="RectangleShape2D" id="Rect_portal"]
-size = Vector2(160, 240)
+size = Vector2(160, 300)
+
+[sub_resource type="RectangleShape2D" id="Rect_boss_portal"]
+size = Vector2(160, 900)
 
 [node name="Inner" type="Node2D" unique_id=1759776936]
 texture_filter = 1
 script = ExtResource("1_inner")
-debug_scene_id = "vespervale_inner"
 entry_dialogue = ExtResource("55_entry_dialogue")
+debug_scene_id = "vespervale_inner"
 
 [node name="DreamShiftManager" type="Node2D" parent="." unique_id=2000001]
 script = ExtResource("2_shift_mgr")
@@ -107,7 +109,6 @@ script = ExtResource("41_switch_ui")
 
 [node name="EndlessCorridorManager" type="Node2D" parent="." unique_id=2000500]
 script = ExtResource("48_endless_mgr")
-loop_trigger_x = 4600.0
 
 [node name="LoopTriggerArea" type="Area2D" parent="EndlessCorridorManager" unique_id=2000501]
 position = Vector2(4600, 300)
@@ -177,7 +178,7 @@ position = Vector2(1400, 640)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=2000022]
-position = Vector2(0, 88)
+position = Vector2(743, 88)
 shape = SubResource("Rect_ground")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=2000023]
@@ -406,20 +407,18 @@ interaction_hint_text = "按 E 返回暮息庭院"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/EntrancePortal" unique_id=2000142]
 shape = SubResource("Rect_portal")
 
-[node name="ExitPortal" type="Area2D" parent="World/Portals" unique_id=2000143]
-visible = false
-position = Vector2(2750, 500)
+[node name="BossGardenPortal" type="Area2D" parent="World/Portals" unique_id=2001300]
+position = Vector2(4620, 380)
 collision_layer = 0
+collision_mask = 3
 script = ExtResource("31_portal")
-destination_level = &"vespervale_garden"
-destination_entry_id = &"church"
-fallback_scene_path = "res://day/levels/Vespervale/garden.tscn"
-interaction_hint_enabled = true
-interaction_hint_text = "按 E 离开梦疗院"
+destination_level = &"vesper_boss"
+destination_entry_id = &"from_hospital"
+fallback_scene_path = "res://day/levels/Vespervale/vesper_boss.tscn"
+trigger_on_touch = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ExitPortal" unique_id=2000144]
-position = Vector2(59, 33)
-shape = SubResource("Rect_portal")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/BossGardenPortal" unique_id=2001301]
+shape = SubResource("Rect_boss_portal")
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=2000170]
 
@@ -479,17 +478,17 @@ script = ExtResource("33_pause_host")
 
 [node name="DialLockPuzzleDialog" parent="." unique_id=2000800 instance=ExtResource("54_dial_lock_dialog")]
 
-[node name="HerbSpawns" type="Node2D" parent="."]
+[node name="HerbSpawns" type="Node2D" parent="." unique_id=270951809]
 
-[node name="P01" type="Marker2D" parent="HerbSpawns"]
-position = Vector2(1050, 610)
+[node name="P01" type="Marker2D" parent="HerbSpawns" unique_id=342869827]
+position = Vector2(475, 650)
 script = ExtResource("herb_point")
 herb_scene = ExtResource("herb_0")
 
-[node name="P02" type="Marker2D" parent="HerbSpawns"]
-position = Vector2(2600, 610)
+[node name="P02" type="Marker2D" parent="HerbSpawns" unique_id=467007128]
+position = Vector2(2225, 636)
 script = ExtResource("herb_point")
 herb_scene = ExtResource("herb_1")
 
-[node name="HerbSpawnDirector" type="Node2D" parent="."]
+[node name="HerbSpawnDirector" type="Node2D" parent="." unique_id=383554819]
 script = ExtResource("herb_director")

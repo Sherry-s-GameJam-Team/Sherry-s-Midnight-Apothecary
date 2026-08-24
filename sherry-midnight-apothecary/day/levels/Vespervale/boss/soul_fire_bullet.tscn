@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cx8k2p7qg4jh4"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/soul_fire_bullet.gd" id="1_fire_script"]
+[ext_resource type="Texture2D" uid="uid://b23i686k31o9l" path="res://day/levels/Vespervale/boss/魂火.png" id="2_fire_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fire"]
+radius = 16.0
+
+[node name="SoulFireBullet" type="Area2D" unique_id=2001030]
+z_index = 14
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_fire_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2001031]
+modulate = Color(1.3, 0.6, 1.5, 0.95)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_fire_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2001032]
+shape = SubResource("CircleShape2D_fire")

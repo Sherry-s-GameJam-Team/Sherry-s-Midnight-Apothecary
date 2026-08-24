@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dnak2p7x8jh10"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/vesper_director_boss.gd" id="1_boss_script"]
+[ext_resource type="SpriteFrames" uid="uid://b7vy2q9x8k1m5" path="res://day/levels/Vespervale/boss/director_sprite_frames.tres" id="2_boss_frames"]
+[ext_resource type="Texture2D" uid="uid://ctk7r2m1950hp" path="res://day/levels/Vespervale/boss/月盾.png" id="3_shield_tex"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boss_body"]
+radius = 70.0
+height = 340.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurtbox"]
+radius = 120.0
+
+[node name="VesperDirectorBoss" type="CharacterBody2D" unique_id=2001100]
+z_index = 10
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_boss_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2001101]
+position = Vector2(0, -170)
+scale = Vector2(0.48, 0.48)
+sprite_frames = ExtResource("2_boss_frames")
+animation = &"idle_charge"
+autoplay = "idle_charge"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2001102]
+position = Vector2(0, -170)
+shape = SubResource("CapsuleShape2D_boss_body")
+
+[node name="ShieldFX" type="Sprite2D" parent="." unique_id=2001103]
+visible = false
+modulate = Color(0.9, 0.7, 1.3, 0.85)
+position = Vector2(0, -170)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_shield_tex")
+
+[node name="CastPoint" type="Marker2D" parent="." unique_id=2001104]
+position = Vector2(-150, -150)
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=2001105]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=2001106]
+position = Vector2(0, -170)
+shape = SubResource("CircleShape2D_hurtbox")
+
+[node name="LanternSweepArea" type="Area2D" parent="." unique_id=2001107]
+position = Vector2(0, -170)
+collision_layer = 0
+collision_mask = 3
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LanternSweepArea" unique_id=2001108]
+polygon = PackedVector2Array(0, 40, -320, -120, -480, 0, -400, 160, 0, 80)
+
+[node name="SweepVisual" type="Polygon2D" parent="LanternSweepArea" unique_id=2001109]
+visible = false
+color = Color(0.8, 0.35, 1, 0.45)
+polygon = PackedVector2Array(0, 40, -320, -120, -480, 0, -400, 160, 0, 80)

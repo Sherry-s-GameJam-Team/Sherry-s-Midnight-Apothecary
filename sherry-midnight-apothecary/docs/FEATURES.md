@@ -59,3 +59,4 @@
 - [Developer Console](developer_console.md): in-game debug console with dynamic scene switching, numbered level indices (1-17), Chinese/English alias resolution, inventory/stat mutations, and boss test jump.
 - [Crownland](crownland.md): standalone 王畿 day level — normal/corrupted environment switching, three-layer parallax city presentation, standard Sherry player assembly, camera bounds, and LevelData registration.
 - [Crownland Boss](crownland_boss.md): three-phase King encounter, black-pillar shield mechanic, purification finale, and automatic boss-art injection.
+- [Vespervale Boss Encounter](vespervale_boss.md): 3-phase Hospital Director boss battle — purple tree garden arena (`treegarden.png`), 6-segment 24fps animations, Dream Tide moon shield and lucid vulnerability cycles, sedative mists, dream grasp circles, moon orbs, soul fire tracking, and crescent wave slashes.

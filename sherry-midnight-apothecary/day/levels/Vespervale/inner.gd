@@ -26,7 +26,7 @@ var _entry_dialogue_open := false
 @onready var signal_beacon: SignalBeacon = get_node_or_null("World/Mechanisms/SignalBeacon")
 @onready var marrow_node: DreamMarrowNode = get_node_or_null("World/Mechanisms/DreamMarrowNode")
 @onready var exit_door: WardExitDoor = get_node_or_null("World/Mechanisms/WardExitDoor")
-@onready var exit_portal: DoorPortal = get_node_or_null("World/Portals/ExitPortal")
+@onready var boss_portal: DoorPortal = get_node_or_null("World/Portals/BossGardenPortal")
 
 
 func _ready() -> void:

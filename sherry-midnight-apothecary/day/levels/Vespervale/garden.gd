@@ -8,8 +8,11 @@ signal objective_updated(text: String, hint: String)
 signal garden_cleansed
 signal dream_awakened
 
+const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
+
 @export var is_garden_purified := false
 @export var fall_damage: int = 1
+@export var sleep_npc_dialogue: DialogueResource = preload("res://day/levels/Vespervale/vespervale_sleep_npc.dialogue")
 
 @onready var real_garden: Sprite2D = get_node_or_null("Background/GardenAtmosphere/RealGarden")
 @onready var dream_garden: Sprite2D = get_node_or_null("Background/GardenAtmosphere/DreamGarden")
@@ -21,6 +24,8 @@ signal dream_awakened
 
 var _last_checkpoint_pos: Vector2 = Vector2(250, 520)
 var _is_respawning: bool = false
+var _player_in_npc_area: bool = false
+var _dialogue_active: bool = false
 
 
 func _ready() -> void:
@@ -29,11 +34,20 @@ func _ready() -> void:
 	_setup_abyss_hazard()
 	_setup_npc_interaction()
 
+	var top_hint := _find_top_hint()
+	if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+		top_hint.call("hide_interaction_hint", "vespervale_sleep_npc")
+
 
 func on_level_entered(entry_id: StringName) -> void:
+	_player_in_npc_area = false
+	var top_hint := _find_top_hint()
+	if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+		top_hint.call("hide_interaction_hint", "vespervale_sleep_npc")
+
 	match String(entry_id):
 		"church":
-			_last_checkpoint_pos = Vector2(4800, 520)
+			_last_checkpoint_pos = Vector2(3160, 520)
 			objective_updated.emit("抵达静语礼堂前庭。", "观察沉睡的旅人并寻找唤醒梦魇的调和药剂。")
 		"garden":
 			_last_checkpoint_pos = Vector2(2400, 520)
@@ -61,14 +75,11 @@ func set_garden_purified(purified: bool) -> void:
 
 
 func _update_visual_states() -> void:
-	var corrupted := is_corrupted() or (start_corrupted and not is_garden_purified)
-	var real_spr := real_garden if real_garden != null else get_node_or_null("Background/GardenAtmosphere/RealGarden") as Sprite2D
-	var dream_spr := dream_garden if dream_garden != null else get_node_or_null("Background/GardenAtmosphere/DreamGarden") as Sprite2D
-
-	if real_spr != null:
-		real_spr.visible = not corrupted
-	if dream_spr != null:
-		dream_spr.visible = corrupted
+	var corrupted := not is_garden_purified
+	if real_garden != null:
+		real_garden.visible = not corrupted
+	if dream_garden != null:
+		dream_garden.visible = corrupted
 
 
 func _setup_abyss_hazard() -> void:
@@ -84,8 +95,65 @@ func _setup_npc_interaction() -> void:
 			sleep_npcs.body_exited.connect(_on_npc_body_exited)
 
 
+func _input(event: InputEvent) -> void:
+	if _dialogue_active or not _player_in_npc_area:
+		return
+	if get_tree().has_meta("day_modal_input_locked"):
+		return
+
+	if _is_interact_event(event):
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_start_sleep_npc_dialogue()
+
+
+func _is_interact_event(event: InputEvent) -> bool:
+	if event.is_action_pressed("interact"):
+		return true
+	var key_event := event as InputEventKey
+	return key_event != null and key_event.pressed and not key_event.echo and (
+		key_event.keycode == KEY_E or key_event.physical_keycode == KEY_E or key_event.key_label == KEY_E
+	)
+
+
+func _start_sleep_npc_dialogue() -> void:
+	if sleep_npc_dialogue == null:
+		return
+	_dialogue_active = true
+
+	# Lock player during dialogue
+	var player := get_node_or_null("Player")
+	if player != null:
+		if player.has_method("set_dialogue_locked"):
+			player.call("set_dialogue_locked", true)
+		elif player.has_method("set_control_enabled"):
+			player.call("set_control_enabled", false)
+
+	var dialogue_manager := get_node_or_null("/root/DialogueManager")
+	if dialogue_manager != null and dialogue_manager.has_method("show_dialogue_balloon_scene"):
+		dialogue_manager.show_dialogue_balloon_scene(BALLOON_SCENE, sleep_npc_dialogue, &"start")
+		if dialogue_manager.has_signal("dialogue_ended"):
+			dialogue_manager.dialogue_ended.connect(_on_sleep_dialogue_ended, CONNECT_ONE_SHOT)
+		else:
+			_on_sleep_dialogue_ended()
+	else:
+		_on_sleep_dialogue_ended()
+
+
+func _on_sleep_dialogue_ended(_resource: Resource = null) -> void:
+	_dialogue_active = false
+	var player := get_node_or_null("Player")
+	if player != null:
+		if player.has_method("set_dialogue_locked"):
+			player.call("set_dialogue_locked", false)
+		elif player.has_method("set_control_enabled"):
+			player.call("set_control_enabled", true)
+
+
 func _on_npc_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and (body.name == "Player" or body.is_in_group("player")):
+		_player_in_npc_area = true
 		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("show_interaction_hint"):
 			top_hint.call("show_interaction_hint", "vespervale_sleep_npc", "按 E 观察沉睡的旅人")
@@ -93,6 +161,7 @@ func _on_npc_body_entered(body: Node2D) -> void:
 
 func _on_npc_body_exited(body: Node2D) -> void:
 	if body is CharacterBody2D and (body.name == "Player" or body.is_in_group("player")):
+		_player_in_npc_area = false
 		var top_hint := _find_top_hint()
 		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
 			top_hint.call("hide_interaction_hint", "vespervale_sleep_npc")

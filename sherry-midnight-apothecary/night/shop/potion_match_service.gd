@@ -5,7 +5,10 @@ static func calculate(event: Dictionary, potion: PotionData, instance: Dictionar
 	var result := PotionMatchResult.new()
 	if potion == null:
 		return result
-	var primary := effect_for(potion.main_effect_id)
+	# New bottles persist their canonical primary effect. Older saves safely fall
+	# back to the static potion definition that originally supplied it.
+	var stored_primary := StringName(str(instance.get("primary_effect_id", "")))
+	var primary := effect_for(stored_primary if stored_primary != &"" else potion.main_effect_id)
 	var secondary := effect_for(StringName(str(instance.get("secondary_effect_id", ""))))
 	var special_id := StringName(str(instance.get("special_potion_id", "")))
 	var wanted_primary := StringName(str(event.get("primary_need", "")))

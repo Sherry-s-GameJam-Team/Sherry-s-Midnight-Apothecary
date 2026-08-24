@@ -1,0 +1,24 @@
+~ start
+
+雪莉 #portrait(char=雪莉,slot=right,expr=default,anim=fade_in): 这里的人……全都睡着了？
+
+卢卡 #portrait(char=卢卡,slot=left,expr=default,anim=fade_in): 嗯。这里原本就是眠谷的疗养聚落。
+
+雪莉: 疗养聚落？
+
+卢卡: 过去战争留下太多无法安眠的人。梦疗院便在这里收治他们，村子也慢慢围着病院建了起来。
+
+雪莉: 可现在连普通村民也醒不过来了。
+
+卢卡: 恐怕梦疗院的梦已经漫出了病房。
+
+雪莉: 和刚才师父的幻象一样……
+
+卢卡: 只是这一次，被困住的是整个村子。
+
+雪莉: 那就去病院。
+
+卢卡: 源头多半在那里。
+
+do clear_portraits()
+=> END

@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dm2k5p7qhajh1"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/tranquilizer_potion.gd" id="1_potion_script"]
+[ext_resource type="Texture2D" uid="uid://cb5i8v2r1p4n" path="res://day/levels/Vespervale/boss/药水投掷.png" id="2_potion_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bottle"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mist"]
+radius = 70.0
+
+[sub_resource type="Gradient" id="Gradient_mist"]
+offsets = PackedFloat32Array(0, 0.4, 0.8, 1)
+colors = PackedColorArray(0.85, 0.45, 1, 0.8, 0.65, 0.25, 0.9, 0.6, 0.45, 0.15, 0.7, 0.3, 0.3, 0.1, 0.5, 0)
+
+[node name="TranquilizerPotion" type="Area2D" unique_id=2001001]
+z_index = 15
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_potion_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2001002]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_potion_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2001003]
+shape = SubResource("CircleShape2D_bottle")
+
+[node name="MistArea" type="Area2D" parent="." unique_id=2001004]
+collision_layer = 0
+collision_mask = 3
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MistArea" unique_id=2001005]
+shape = SubResource("CircleShape2D_mist")
+
+[node name="MistParticles" type="CPUParticles2D" parent="." unique_id=2001006]
+emitting = false
+amount = 28
+lifetime = 1.6
+preprocess = 0.2
+emission_shape = 1
+emission_sphere_radius = 55.0
+gravity = Vector2(0, -18)
+scale_amount_min = 4.0
+scale_amount_max = 9.0
+color_ramp = SubResource("Gradient_mist")

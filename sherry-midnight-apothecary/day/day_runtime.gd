@@ -34,6 +34,8 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/minigames/miasma_purifier/miasma_purifier_level.tres"),
 	preload("res://day/interactables/control_system/control_system_demo_level.tres"),
 	preload("res://day/levels/Vespervale/vespervale_garden_level.tres"),
+	preload("res://day/levels/Vespervale/vespervale_inner_level.tres"),
+	preload("res://day/levels/Vespervale/vesper_boss_level.tres"),
 	preload("res://day/levels/crownland/crownland_level.tres"),
 ]
 

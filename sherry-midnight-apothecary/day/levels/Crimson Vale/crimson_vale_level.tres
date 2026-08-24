@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bqsyeupbcxmq4"]
 
-[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
-[ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/crimson_vale.tscn" id="2_scene"]
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://drjpfgw4o8cmi" path="res://day/levels/Crimson Vale/crimson_vale.tscn" id="2_scene"]
 
 [resource]
 script = ExtResource("1_level_data")
@@ -13,5 +13,4 @@ corrupted_description = "枫脂失控，浊气侵染；丹心门崩裂，炽烈�
 scene_description = "探索赤染之谷，穿过枫脂干燥坊与村落，修复丹心门。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
-show_title_card = true
 native_ingredient_ids = Array[StringName]([&"maple_heart_dark_vein", &"maple_marrow_star_crystal", &"waystation_lantern_fruit"])

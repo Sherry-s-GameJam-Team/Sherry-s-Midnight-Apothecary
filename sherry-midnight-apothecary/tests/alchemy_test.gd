@@ -55,6 +55,9 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["bottle_style_id"], "moon", "Bottling stores the selected bottle style.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["custom_name"], "试验药", "Bottling stores the custom name.")
 	test.expect_equal(result.produced_potions[&"green_potion"][0]["potion_id"], "green_potion", "Bottling preserves the potion identifier.")
+	test.expect_equal(result.produced_potions[&"green_potion"][0]["primary_effect_id"], "regeneration", "Bottling persists the canonical primary effect.")
+	test.expect_equal(result.produced_potions[&"green_potion"][0]["secondary_effect_id"], "", "A pure-color potion persists without a secondary effect.")
+	test.expect(player.codex_unlocked_matrix_cells.has(Vector2i(3, 3)), "A pure green potion unlocks the regeneration diagonal cell.")
 	test.expect_equal(player.potions[&"green_potion"].size(), 1, "Confirmed bottling immediately adds the potion to the player inventory.")
 	test.expect(not result.produced_potions[&"green_potion"][0]["actual_color"].is_empty(), "Bottled potions persist their final alchemy liquid color.")
 
@@ -108,6 +111,7 @@ static func run(test: TestSupport) -> void:
 	runtime.cauldron_ingredients.assign([special_dew])
 	var purification_prediction := runtime.calculate_prediction()
 	test.expect_equal(purification_prediction.get("potion_id"), &"purification_potion", "Pure blue dew uses the dedicated purification recipe.")
+	test.expect_equal(purification_prediction.get("special_potion_id"), &"purification_potion", "Special prediction carries its stable recipe ID.")
 	test.expect(bool(purification_prediction.get("special_brew", false)), "Dedicated purification is marked as a special brew.")
 	var contaminant := ProcessedIngredient.from_ingredient(runtime.ingredients[0])
 	runtime.cauldron_ingredients.append(contaminant)
@@ -117,6 +121,8 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(brewed_purification.get("potion_id"), &"purification_potion", "Pure blue dew completes as the dedicated purification potion.")
 	runtime._on_bottling_confirmed(&"ice", "")
 	test.expect_equal(result.produced_potions[&"purification_potion"].size(), 1, "Dedicated purification is committed to nightly production.")
+	test.expect_equal(result.produced_potions[&"purification_potion"][0]["primary_effect_id"], "purification", "Special bottling persists its canonical primary effect.")
+	test.expect_equal(result.produced_potions[&"purification_potion"][0]["special_potion_id"], "purification_potion", "Special bottling persists its recipe ID.")
 
 	player.apply_night_result(result)
 	test.expect_equal(player.inventory[&"herdsmans_loaf_bush"], 1, "PlayerData changes only when NightResult is applied.")

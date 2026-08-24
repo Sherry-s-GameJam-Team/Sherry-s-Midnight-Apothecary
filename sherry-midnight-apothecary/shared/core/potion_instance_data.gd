@@ -2,6 +2,7 @@ class_name PotionInstanceData
 extends RefCounted
 
 var potion_id: StringName
+var primary_effect_id: StringName
 var instance_uid := ""
 var remaining_dose := 1.0
 var mixed_x := 0.0
@@ -25,6 +26,7 @@ var special_potion_id: StringName = &""
 func to_dict() -> Dictionary:
 	return {
 		"potion_id": str(potion_id),
+		"primary_effect_id": str(primary_effect_id),
 		"instance_uid": instance_uid,
 		"remaining_dose": clampf(remaining_dose, 0.0, 1.0),
 		"mixed_x": mixed_x,
@@ -49,6 +51,7 @@ func to_dict() -> Dictionary:
 static func from_dict(data: Dictionary) -> PotionInstanceData:
 	var result := PotionInstanceData.new()
 	result.potion_id = StringName(str(data.get("potion_id", "")))
+	result.primary_effect_id = StringName(str(data.get("primary_effect_id", "")))
 	result.instance_uid = str(data.get("instance_uid", ""))
 	result.remaining_dose = clampf(float(data.get("remaining_dose", 1.0)), 0.0, 1.0)
 	result.mixed_x = clampf(float(data.get("mixed_x", 0.0)), 0.0, 1.0)

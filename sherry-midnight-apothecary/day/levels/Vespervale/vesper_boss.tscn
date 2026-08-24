@@ -1,0 +1,239 @@
+[gd_scene format=3 uid="uid://dm6k2qav7r1jh"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/vesper_boss_arena.gd" id="1_arena_script"]
+[ext_resource type="Texture2D" uid="uid://dpsa4w9q1r8jh" path="res://day/levels/Vespervale/treegarden.png" id="2_bg_treegarden"]
+[ext_resource type="PackedScene" uid="uid://dm9k2p7x8jh10" path="res://day/levels/Vespervale/boss/vesper_director_boss.tscn" id="3_boss_scene"]
+[ext_resource type="PackedScene" uid="uid://dm4v8x2p7r9jh" path="res://day/levels/Vespervale/boss/vesper_boss_hud.tscn" id="4_hud_scene"]
+[ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="5_player_script"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="6_collision"]
+[ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="7_presentation"]
+[ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="8_camera"]
+[ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="9_potions"]
+[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="10_portal"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="11_console"]
+[ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="12_pause_host"]
+[ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="13_pause_menu"]
+[ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="14_top_hint"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(2400, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(80, 1200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(220, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
+size = Vector2(160, 240)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_banner"]
+bg_color = Color(0.12, 0.08, 0.22, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.65, 1, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="VesperBossArena" type="Node2D" unique_id=2001200]
+script = ExtResource("1_arena_script")
+
+[node name="Background" type="Node2D" parent="." unique_id=2001201]
+z_index = -30
+
+[node name="TreegardenBG" type="Sprite2D" parent="Background" unique_id=2001202]
+position = Vector2(960, 320)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("2_bg_treegarden")
+
+[node name="WorldBounds" type="Node2D" parent="." unique_id=2001203]
+
+[node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=2001204]
+position = Vector2(960, 680)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=2001205]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=2001206]
+position = Vector2(40, 300)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/LeftBarrier" unique_id=2001207]
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=2001208]
+position = Vector2(1880, 300)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=2001209]
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="Platforms" type="Node2D" parent="." unique_id=2001210]
+
+[node name="Platform1" type="StaticBody2D" parent="Platforms" unique_id=2001211]
+position = Vector2(560, 490)
+collision_layer = 3
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1" unique_id=2001212]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="PlatformVisual" type="Polygon2D" parent="Platforms/Platform1" unique_id=2001213]
+color = Color(0.35, 0.22, 0.45, 0.8)
+polygon = PackedVector2Array(-110, -12, 110, -12, 100, 12, -100, 12)
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms" unique_id=2001214]
+position = Vector2(1360, 490)
+collision_layer = 3
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2" unique_id=2001215]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="PlatformVisual" type="Polygon2D" parent="Platforms/Platform2" unique_id=2001216]
+color = Color(0.35, 0.22, 0.45, 0.8)
+polygon = PackedVector2Array(-110, -12, 110, -12, 100, 12, -100, 12)
+
+[node name="BossRoot" type="Node2D" parent="." unique_id=2001220]
+
+[node name="VesperDirectorBoss" parent="BossRoot" unique_id=2001221 instance=ExtResource("3_boss_scene")]
+position = Vector2(1200, 610)
+
+[node name="BulletLayer" type="Node2D" parent="." unique_id=2001230]
+
+[node name="HazardLayer" type="Node2D" parent="." unique_id=2001231]
+
+[node name="FXLayer" type="CanvasLayer" parent="." unique_id=2001232]
+layer = 100
+
+[node name="DreamTideVignette" type="ColorRect" parent="FXLayer" unique_id=2001233]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.35, 0.08, 0.45, 0.45)
+
+[node name="World" type="Node2D" parent="." unique_id=2001240]
+
+[node name="Portals" type="Node2D" parent="World" unique_id=2001241]
+
+[node name="ExitPortal" type="Area2D" parent="World/Portals" unique_id=2001242]
+position = Vector2(1750, 520)
+collision_layer = 0
+script = ExtResource("10_portal")
+destination_level = &"vespervale_garden"
+destination_entry_id = &"church"
+fallback_scene_path = "res://day/levels/Vespervale/garden.tscn"
+interaction_hint_enabled = true
+interaction_hint_text = "按 E 返回暮息庭院"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ExitPortal" unique_id=2001243]
+shape = SubResource("RectangleShape2D_portal")
+
+[node name="EntryPoints" type="Node2D" parent="." unique_id=2001250]
+
+[node name="default" type="Marker2D" parent="EntryPoints" unique_id=2001251]
+position = Vector2(240, 580)
+
+[node name="from_hospital" type="Marker2D" parent="EntryPoints" unique_id=2001252]
+position = Vector2(240, 580)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=2001260]
+z_index = 10
+position = Vector2(240, 607)
+scale = Vector2(0.61, 0.61)
+collision_mask = 3
+script = ExtResource("5_player_script")
+
+[node name="SherryCollision" parent="Player" unique_id=2001261 instance=ExtResource("6_collision")]
+
+[node name="SherryPresentation" parent="Player" unique_id=2001262 instance=ExtResource("7_presentation")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=2001263]
+position = Vector2(0, -80)
+process_callback = 0
+limit_left = 0
+limit_top = -150
+limit_right = 1920
+limit_bottom = 680
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+script = ExtResource("8_camera")
+left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
+right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
+
+[node name="PotionThrower" parent="Player" unique_id=2001264 instance=ExtResource("9_potions")]
+position = Vector2(-3.8146973e-06, -16.393433)
+
+[node name="UI" type="Node" parent="." unique_id=2001270]
+
+[node name="VesperBossHUD" parent="UI" unique_id=2001271 instance=ExtResource("4_hud_scene")]
+
+[node name="VictoryBanner" type="Control" parent="UI" unique_id=2001272]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -60.0
+offset_right = 220.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="UI/VictoryBanner" unique_id=2001273]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_banner")
+
+[node name="Title" type="Label" parent="UI/VictoryBanner" unique_id=2001274]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -24.0
+offset_right = 180.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 26
+text = "✦ 维斯佩尔梦疗院已被净化 ✦"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=2001280]
+layer = 120
+visible = false
+
+[node name="DeveloperConsole" parent="DebugUI" unique_id=2001281 instance=ExtResource("11_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2001282]
+process_mode = 3
+layer = 100
+visible = false
+script = ExtResource("12_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" unique_id=2001283 instance=ExtResource("13_pause_menu")]
+
+[node name="TopHintUI" parent="PauseMenuLayer" unique_id=2001284 instance=ExtResource("14_top_hint")]

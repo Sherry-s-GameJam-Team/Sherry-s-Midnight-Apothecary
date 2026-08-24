@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://dm6k2p9v7r1jh" path="res://day/levels/Vespervale/vesper_boss.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"vesper_boss"
+display_name = "梦疗院·深层病院花园"
+disaster_name = "梦疗院长之灾"
+normal_description = "紫色巨木守望的静谧花园，曾是疗愈梦境的圣所。"
+corrupted_description = "梦疗院长深陷疗愈偏执，梦潮与幽眠攫手封锁了整个庭院。"
+scene_description = "与维斯佩尔梦疗院院长决战，利用清醒窗口与净化药水解除月盾与梦潮。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"from_hospital"
+show_title_card = true
+native_ingredient_ids = Array[StringName]([])

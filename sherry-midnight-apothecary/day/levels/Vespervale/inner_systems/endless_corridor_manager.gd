@@ -9,7 +9,7 @@ signal loop_triggered(body: Node2D, total_loops: int)
 signal signal_activated
 signal loop_unlocked
 
-@export var is_loop_unlocked: bool = false
+@export var is_loop_unlocked: bool = true
 @export var loop_trigger_x: float = 4600.0
 @export var loop_return_x: float = 400.0
 @export var trigger_hint_text: String = "回廊空间发生了折叠……似乎在无尽循环。"

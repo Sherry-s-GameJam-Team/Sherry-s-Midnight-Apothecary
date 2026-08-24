@@ -8,7 +8,7 @@ radius = 24.0
 height = 140.0
 
 [sub_resource type="CircleShape2D" id="Circle_lantern_spot"]
-radius = 148.08444
+radius = 107.563934
 
 [sub_resource type="Gradient" id="Gradient_lantern_feather"]
 offsets = PackedFloat32Array(0, 0.25, 0.55, 0.82, 1)
@@ -31,7 +31,7 @@ spawn_x = 1800.0
 exit_x = 1900.0
 
 [node name="NurseSprite" type="AnimatedSprite2D" parent="." unique_id=2000601]
-position = Vector2(-14.320001, -95.98001)
+position = Vector2(-14, -62.00001)
 scale = Vector2(0.19203125, 0.17966145)
 sprite_frames = ExtResource("2_nurse_frames")
 animation = &"walk"
@@ -39,13 +39,14 @@ autoplay = "walk"
 frame_progress = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2000602]
-position = Vector2(-1, -94)
+position = Vector2(-14, -72)
 shape = SubResource("Capsule_nurse_body")
 
 [node name="LanternPivot" type="Node2D" parent="." unique_id=2000603]
 position = Vector2(85, -75)
 
 [node name="LanternSpotArea" type="Area2D" parent="LanternPivot" unique_id=2000604]
+position = Vector2(-45, 8)
 collision_layer = 0
 collision_mask = 3
 
@@ -56,8 +57,8 @@ shape = SubResource("Circle_lantern_spot")
 [node name="LanternLightVisual" type="Sprite2D" parent="LanternPivot" unique_id=2000606]
 z_index = 25
 z_as_relative = false
-position = Vector2(-73, -24)
-scale = Vector2(1.18, 1.18)
+position = Vector2(-72, 3.9999962)
+scale = Vector2(0.8126562, 0.8126562)
 texture = SubResource("GradientTexture2D_feather")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2000607]

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cx4lap2qg1jh5"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/crescent_wave_bullet.gd" id="1_wave_script"]
+[ext_resource type="Texture2D" uid="uid://be5m0q6k81x3l" path="res://day/levels/Vespervale/boss/剑气.png" id="2_wave_tex"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wave"]
+radius = 24.0
+height = 90.0
+
+[node name="CrescentWaveBullet" type="Area2D" unique_id=2001040]
+z_index = 13
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_wave_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2001041]
+modulate = Color(1.2, 0.8, 1.4, 0.95)
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("2_wave_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2001042]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wave")

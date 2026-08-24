@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://bgbrb3hjtjjas"]
 
-[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
-[ext_resource type="PackedScene" path="res://day/levels/golden_cliff/golden_cliff.tscn" id="2_scene"]
+[ext_resource type="Script" uid="uid://cwwhlqidtyuld" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" uid="uid://bdlo71kdnfix7" path="res://day/levels/golden_cliff/golden_cliff.tscn" id="2_scene"]
 
 [resource]
 script = ExtResource("1_level_data")
@@ -13,5 +13,4 @@ corrupted_description = "黄脉失衡，巨岩忽轻忽重；悬石升空，断�
 scene_description = "校准三座失控衡石机关，穿过崩塌与浮岩区，在横崖尽头重新稳定旅门。"
 content_scene = ExtResource("2_scene")
 default_entry_id = &"default"
-show_title_card = true
 native_ingredient_ids = Array[StringName]([&"drop_cliff_whistle_leaf", &"eyrie_nest_seed_ball", &"wind_cutter_rye", &"egg_climbers_honey_pot"])

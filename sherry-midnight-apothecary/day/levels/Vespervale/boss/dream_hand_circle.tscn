@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c6v8m2p4lajh2"]
+
+[ext_resource type="Script" path="res://day/levels/Vespervale/boss/dream_hand_circle.gd" id="1_hand_script"]
+[ext_resource type="Texture2D" uid="uid://dmh2q9v7k4m1p" path="res://day/levels/Vespervale/boss/鬼手召唤阵.png" id="2_circle_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hand_hit"]
+radius = 58.0
+
+[node name="DreamHandCircle" type="Area2D" unique_id=2001010]
+z_index = 8
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_hand_script")
+
+[node name="CircleSprite" type="Sprite2D" parent="." unique_id=2001011]
+modulate = Color(1.2, 0.4, 1.4, 0.9)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("2_circle_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2001012]
+shape = SubResource("CircleShape2D_hand_hit")
+
+[node name="ClawVisual" type="Polygon2D" parent="." unique_id=2001013]
+visible = false
+color = Color(0.75, 0.2, 0.9, 0.85)
+polygon = PackedVector2Array(-24, 0, -32, -40, -18, -90, -6, -45, 0, -105, 8, -45, 20, -90, 32, -40, 24, 0)

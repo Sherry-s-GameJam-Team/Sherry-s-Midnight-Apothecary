@@ -616,6 +616,7 @@ func _on_heat_finished(heat_result: HeatResult) -> void:
 		return
 	var instance := PotionInstanceData.new()
 	instance.potion_id = result_potion.id
+	instance.primary_effect_id = PotionEffectMatrix.canonical_effect_id(result_potion.main_effect_id)
 	instance.instance_uid = "brew-%s-%d-%d" % [result_potion.id, day, Time.get_ticks_usec()]
 	instance.remaining_dose = 1.0
 	instance.mixed_x = float(active_prediction.get("mixed_x", 0.0))

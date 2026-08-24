@@ -27,7 +27,7 @@
 - **界门传送 (DoorPortal)**：
   - `EntrancePortal`：通向药水铺工坊 (`home`)。
   - `ChurchPortal`：通向静语礼堂。
-- **NPC 交互**：沉睡的旅人 (`SleepNpcs`)，进入范围显示顶部交互提示 `按 E 观察沉睡的旅人`。
+- **NPC 交互**：沉睡的旅人 (`SleepNpcs`)，进入范围显示顶部交互提示 `按 E 观察沉睡的旅人`，按 `E` 触发雪莉与卢卡关于疗养聚落、战争遗留与梦疗院起源的对话剧情 (`vespervale_sleep_npc.dialogue`)。
 - **坠落保护**：底部部署 `AbyssHazard`，失足坠落后造成 1 点伤害并自动复位至最近检查点。
 - **UI 与交互提示系统**：
   - **控制台 (`DebugUI`)**：内嵌 `DeveloperConsole`，支持按 `~` 键快速唤出进行场景跳转、物品与状态修改。

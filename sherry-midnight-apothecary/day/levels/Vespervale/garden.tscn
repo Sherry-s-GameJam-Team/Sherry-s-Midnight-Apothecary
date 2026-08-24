@@ -1,10 +1,5 @@
 [gd_scene format=3 uid="uid://c44ilp2eve2ii"]
 
-[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
-[ext_resource type="Script" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
-[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dusk_water_opuntia/dusk_water_opuntia_herb.tscn" id="herb_0"]
-[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/vesper_blue_thicket/vesper_blue_thicket_herb.tscn" id="herb_1"]
-
 [ext_resource type="Script" uid="uid://b6mwfyrjvxyme" path="res://day/levels/Vespervale/garden.gd" id="1_env"]
 [ext_resource type="Texture2D" uid="uid://cwiqjfnyv0axl" path="res://day/levels/Vespervale/skybox.png" id="3_skybox"]
 [ext_resource type="Texture2D" uid="uid://c5x5frfgwpia3" path="res://day/levels/Vespervale/village.png" id="4_village"]
@@ -28,6 +23,10 @@
 [ext_resource type="Resource" uid="uid://c6kchle2udkc5" path="res://day/levels/Vespervale/vespervale_day_five_intro.dialogue" id="22_day_five_dialogue"]
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="23_luca_scene"]
 [ext_resource type="Script" path="res://day/levels/Vespervale/vespervale_luca_follow.gd" id="24_luca_follow"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dusk_water_opuntia/dusk_water_opuntia_herb.tscn" id="herb_0"]
+[ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/vesper_blue_thicket/vesper_blue_thicket_herb.tscn" id="herb_1"]
+[ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
+[ext_resource type="Script" uid="uid://j48yuwrhnne5" path="res://day/interactables/herb/herb_spawn_point.gd" id="herb_point"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(7500, 160)
@@ -39,7 +38,7 @@ size = Vector2(128, 2000)
 size = Vector2(180, 260)
 
 [sub_resource type="RectangleShape2D" id="Rect_npc"]
-size = Vector2(80, 70)
+size = Vector2(260, 160)
 
 [sub_resource type="RectangleShape2D" id="Rect_abyss"]
 size = Vector2(8500, 200)
@@ -150,17 +149,17 @@ interaction_hint_text = "按 E 返回雪莉药水铺"
 shape = SubResource("Rect_portal")
 
 [node name="ChurchPortal" type="Area2D" parent="World/Portals" unique_id=1174752081]
-position = Vector2(3870, 331)
-collision_layer = 0
+position = Vector2(3867, 328)
 script = ExtResource("17_portal")
 destination_level = &"vespervale_inner"
 destination_entry_id = &"from_garden"
 fallback_scene_path = "res://day/levels/Vespervale/inner.tscn"
 interaction_hint_enabled = true
 interaction_hint_text = "按 E 进入梦疗院病栋"
+trigger_on_touch = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ChurchPortal" unique_id=1946061749]
-position = Vector2(-710, 93)
+position = Vector2(-688, 89)
 shape = SubResource("Rect_portal")
 
 [node name="NPCs" type="Node2D" parent="World" unique_id=2041798612]
@@ -168,6 +167,7 @@ shape = SubResource("Rect_portal")
 [node name="SleepNpcs" type="Area2D" parent="World/NPCs" unique_id=1113290553]
 position = Vector2(1435, 498)
 collision_layer = 0
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=104213990]
 position = Vector2(298, 95)
@@ -177,7 +177,7 @@ region_enabled = true
 region_rect = Rect2(775.1333, 396.86667, 322.66663, 281.6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/SleepNpcs" unique_id=560193779]
-position = Vector2(291, 103)
+position = Vector2(298, 95)
 shape = SubResource("Rect_npc")
 
 [node name="Sprite2D2" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=429756400]
@@ -188,7 +188,7 @@ region_enabled = true
 region_rect = Rect2(878.03735, 85.42583, 352.97778, 310.1059)
 
 [node name="Sprite2D3" type="Sprite2D" parent="World/NPCs/SleepNpcs" unique_id=1136028980]
-position = Vector2(-1170, 105)
+position = Vector2(-750, 105)
 scale = Vector2(0.28, 0.28)
 texture = ExtResource("11_sleep_npcs")
 region_enabled = true
@@ -234,7 +234,7 @@ position = Vector2(250, 520)
 position = Vector2(2400, 520)
 
 [node name="church" type="Marker2D" parent="EntryPoints" unique_id=40190017]
-position = Vector2(4800, 520)
+position = Vector2(3160, 520)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=846311864]
 z_index = 10
@@ -309,17 +309,17 @@ script = ExtResource("24_luca_follow")
 player_path = NodePath("../Player")
 luca_path = NodePath("../Luca")
 
-[node name="HerbSpawns" type="Node2D" parent="."]
+[node name="HerbSpawns" type="Node2D" parent="." unique_id=2091813648]
 
-[node name="P01" type="Marker2D" parent="HerbSpawns"]
+[node name="P01" type="Marker2D" parent="HerbSpawns" unique_id=1459981154]
 position = Vector2(1050, 580)
 script = ExtResource("herb_point")
 herb_scene = ExtResource("herb_0")
 
-[node name="P02" type="Marker2D" parent="HerbSpawns"]
+[node name="P02" type="Marker2D" parent="HerbSpawns" unique_id=560489944]
 position = Vector2(2450, 580)
 script = ExtResource("herb_point")
 herb_scene = ExtResource("herb_1")
 
-[node name="HerbSpawnDirector" type="Node2D" parent="."]
+[node name="HerbSpawnDirector" type="Node2D" parent="." unique_id=783285778]
 script = ExtResource("herb_director")

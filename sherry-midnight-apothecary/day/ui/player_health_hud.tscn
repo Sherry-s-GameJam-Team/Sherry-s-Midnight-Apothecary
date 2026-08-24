@@ -1,28 +1,118 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://b00g45bvx8d2f"]
 
-[ext_resource type="Script" path="res://day/ui/player_health_hud.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://i78lfc7m751t" path="res://day/ui/player_health_hud.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b05gi0emn2bxm" path="res://day/ui/blood.png" id="2_frame"]
 
-[node name="PlayerHealthHUD" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.08, 0.04, 0.06, 0.85)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bar_bg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghost"]
+bg_color = Color(0.96, 0.78, 0.18, 0.95)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill"]
+bg_color = Color(0.86, 0.14, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="PlayerHealthHUD" type="Control" unique_id=211411453]
+custom_minimum_size = Vector2(380, 127)
 layout_mode = 3
-anchors_preset = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 244.0
-offset_bottom = 72.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -385.0
+offset_top = -9.0
+offset_right = -5.0
+offset_bottom = 118.0
+grow_horizontal = 0
 mouse_filter = 2
 script = ExtResource("1_script")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-layout_mode = 0
-offset_right = 220.0
-offset_bottom = 26.0
+[node name="BarSlot" type="Control" parent="." unique_id=787809617]
+anchors_preset = 0
+offset_left = 84.0
+offset_top = 49.0
+offset_right = 329.0
+offset_bottom = 73.0
+mouse_filter = 2
+
+[node name="SlotBackground" type="Panel" parent="BarSlot" unique_id=1333990158]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="DelayedHealthBar" type="ProgressBar" parent="BarSlot" unique_id=2147129707]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0550206, 0.99253094)
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ghost")
 value = 100.0
 show_percentage = false
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="BarSlot" unique_id=1714298312]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0550206, 0.99253094)
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Frame" type="TextureRect" parent="." unique_id=187666118]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HealthLabel" type="Label" parent="." unique_id=1446283906]
 layout_mode = 0
-offset_top = 28.0
-offset_right = 220.0
-offset_bottom = 48.0
+offset_left = 83.0
+offset_top = 49.0
+offset_right = 328.0
+offset_bottom = 73.0
+scale = Vector2(1.0370262, 1.0176189)
+theme_override_colors/font_color = Color(1, 1, 1, 0.95)
+theme_override_colors/font_outline_color = Color(0.1, 0.03, 0.05, 0.9)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 12
 text = "HP 100 / 100"
 horizontal_alignment = 1
+vertical_alignment = 1

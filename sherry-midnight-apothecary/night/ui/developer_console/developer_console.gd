@@ -50,6 +50,7 @@ const ALL_DAY_LEVEL_PATHS: Array[String] = [
 	"res://day/levels/Vespervale/vespervale_garden_level.tres",
 	"res://day/levels/Vespervale/vespervale_inner_level.tres",
 	"res://day/levels/Vespervale/vespervale_runner_level.tres",
+	"res://day/levels/Vespervale/vesper_boss_level.tres",
 	"res://day/levels/lake/lake_cliff_underwater_level.tres",
 	"res://day/levels/cliff/cliff_level.tres",
 	"res://day/levels/lakebed/lakebed_level.tres",
@@ -247,6 +248,12 @@ const SCENE_ALIASES: Dictionary = {
 	"疾驰": "vespervale_runner",
 	"疾驰回廊": "vespervale_runner",
 	"梦境疾驰": "vespervale_runner",
+
+	"vesper_boss": "vesper_boss",
+	"vespervale_boss": "vesper_boss",
+	"院长": "vesper_boss",
+	"梦疗院长": "vesper_boss",
+	"院长boss": "vesper_boss",
 }
 
 const FALLBACK_INGREDIENT_PATHS: Array[String] = [

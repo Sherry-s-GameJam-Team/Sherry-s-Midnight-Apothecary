@@ -12,6 +12,7 @@ static func run(test: TestSupport) -> void:
 		"res://night/ui/developer_console/developer_console.tscn",
 		"res://day/day_runtime.tscn",
 		"res://day/ui/scene_title_card.tscn",
+		"res://day/ui/player_health_hud.tscn",
 		"res://menu/menu.tscn",
 		"res://menu/ui/menu_ui.tscn",
 		"res://day/levels/market/town/town.tscn",
