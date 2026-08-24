@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_vespervale_transition.gd" id="1_level"]
-[ext_resource type="Texture2D" path="res://day/levels/Aurem Clockyard/transBG.png" id="2_background"]
+[ext_resource type="Texture2D" uid="uid://brdlyi1qbijra" path="res://day/levels/Aurem Clockyard/transBG.png" id="2_background"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="3_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="4_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="5_presentation"]

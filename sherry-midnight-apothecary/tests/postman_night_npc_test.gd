@@ -14,8 +14,10 @@ static func run(test: TestSupport) -> void:
 	if scene == null:
 		return
 
-	var npc := scene.instantiate() as PostmanNightNPC
-	test.expect(npc != null, "PostmanNightNPC instantiates as expected type.")
+	var postman_script := load("res://night/levels/home/postman_night_npc.gd") as Script
+	var npc := scene.instantiate() as Node
+	test.expect(npc != null, "PostmanNightNPC instantiates successfully.")
+	test.expect(npc.get_script() == postman_script, "PostmanNightNPC has correct script attached.")
 	if npc == null:
 		return
 

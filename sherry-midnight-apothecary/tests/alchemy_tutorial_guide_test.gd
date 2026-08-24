@@ -90,7 +90,7 @@ static func run(test: TestSupport) -> void:
 	# Drag powder to cauldron
 	var powders: Array[PowderInstanceData] = runtime.powder_shelf_state.list_powders()
 	test.expect(not powders.is_empty(), "Powder shelf contains the packed powder.")
-	var powder_id := powders[0].instance_id
+	var powder_id: StringName = powders[0].instance_id
 	test.expect(runtime.add_powder_to_cauldron(powder_id), "Adding powder to cauldron succeeds.")
 	guide._evaluate_step()
 	test.expect_equal(guide.current_step, AlchemyTutorialGuide.Step.START_BREW, "Powder in cauldron transitions to START_BREW.")

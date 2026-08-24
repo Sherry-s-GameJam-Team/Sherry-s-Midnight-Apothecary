@@ -46,7 +46,7 @@ func _ready() -> void:
 
 func begin_for_entry(_entry_id: StringName) -> void:
 	var data := _player_data()
-	var boss_cleared := data != null and data.has_event_flag(BOSS_CLEARED_FLAG)
+	var boss_cleared := is_helion_cleared(data)
 	var dialogue_complete := data != null and data.has_event_flag(HARVEST_DIALOGUE_COMPLETE_FLAG)
 	if _herb_director != null:
 		_herb_director.set_spawning_enabled(boss_cleared and not dialogue_complete)
@@ -244,7 +244,7 @@ func _set_luca_present(present: bool) -> void:
 	if _luca != null:
 		_luca.visible = present
 		_luca.input_enabled = false
-		if present and _player != null and _luca.global_position == Vector2.ZERO:
+		if present and _player != null and (_luca.global_position == Vector2.ZERO or _luca.global_position.distance_to(_player.global_position) > 1000.0):
 			_luca.global_position = _player.global_position + Vector2(-150.0, 0.0)
 	if _luca_follow != null:
 		_luca_follow.set_follow_enabled(present and not _dialogue_active)
@@ -284,3 +284,15 @@ func _find_runtime() -> DayRuntime:
 			return current as DayRuntime
 		current = current.get_parent()
 	return null
+
+
+static func is_helion_cleared(data: PlayerData) -> bool:
+	if data == null:
+		return false
+	# The shipped boss encounter stores this story milestone in tutorial_flags.
+	# Also accept the event flag so newer/debug saves using the common flag API work.
+	return bool(data.tutorial_flags.get(BOSS_CLEARED_FLAG, false)) or data.has_event_flag(BOSS_CLEARED_FLAG)
+
+
+static func should_spawn_post_boss_herbs(data: PlayerData) -> bool:
+	return is_helion_cleared(data) and not data.has_event_flag(HARVEST_DIALOGUE_COMPLETE_FLAG)

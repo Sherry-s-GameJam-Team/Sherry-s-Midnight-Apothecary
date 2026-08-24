@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="23_luca"]
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_luca_follow.gd" id="24_luca_follow"]
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/aurem_post_boss_sequence.gd" id="25_post_boss"]
-[ext_resource type="Resource" path="res://day/levels/Aurem Clockyard/aurem_post_boss.dialogue" id="26_post_boss_dialogue"]
+[ext_resource type="Resource" uid="uid://brhm16jbrta3g" path="res://day/levels/Aurem Clockyard/aurem_post_boss.dialogue" id="26_post_boss_dialogue"]
 [ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/clocktower_audio.gd" id="27_clock_audio"]
 [ext_resource type="Texture2D" uid="uid://bs6irw5heipq1" path="res://characters/Serena/standee.png" id="28_serena_portrait"]
 [ext_resource type="Texture2D" uid="uid://b7okyqonqqy62" path="res://characters/Serena/stand.png" id="29_serena_world"]

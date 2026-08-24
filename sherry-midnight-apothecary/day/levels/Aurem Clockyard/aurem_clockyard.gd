@@ -72,9 +72,7 @@ func _configure_post_boss_herbs() -> void:
 	if herb_director == null:
 		return
 	var data := get_player_data()
-	var boss_cleared := data != null and data.has_event_flag(AuremPostBossSequence.BOSS_CLEARED_FLAG)
-	var harvest_complete := data != null and data.has_event_flag(AuremPostBossSequence.HARVEST_DIALOGUE_COMPLETE_FLAG)
-	herb_director.set_spawning_enabled(boss_cleared and not harvest_complete)
+	herb_director.set_spawning_enabled(AuremPostBossSequence.should_spawn_post_boss_herbs(data))
 
 
 func _present_victory_ui() -> void:
