@@ -6,10 +6,13 @@
 [resource]
 script = ExtResource("1")
 id = &"green_potion"
+numeric_id = 4
 display_name = "翠绿治疗药水"
 color_name = "绿"
+color_family = &"green"
 display_color = Color(0.24, 0.72, 0.28, 1)
 main_effect_id = &"healing"
+effect_tags = Array[StringName]([&"healing", &"regeneration", &"plant_growth", &"repair"])
 spectrum_center_x = 0.49
 effect_ranges = Array[Vector2]([Vector2(0.38, 0.47), Vector2(0.5, 0.56)])
 base_price = 26

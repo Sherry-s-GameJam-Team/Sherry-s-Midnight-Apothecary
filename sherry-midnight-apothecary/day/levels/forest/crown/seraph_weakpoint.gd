@@ -79,10 +79,7 @@ func apply_potion_purify(_context: Dictionary = {}) -> void:
 func receive_potion_hit(hit: Dictionary) -> void:
 	if not _active:
 		return
-	var pid := StringName(str(hit.get("potion_id", "")))
-	var potion_obj: PotionData = hit.get("potion") as PotionData
-	var main_effect := potion_obj.main_effect_id if potion_obj != null else &""
-	if pid == &"purification_potion" or pid == &"purify" or main_effect == &"purify":
+	if PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong"):
 		purify()
 
 

@@ -57,15 +57,16 @@ func deactivate() -> void:
 	queue_redraw()
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id := StringName(str(hit.get("potion_id", "")))
 	var point := hit.get("impact_point", global_position) as Vector2
-	if potion_id == &"cyan_potion":
+	if PotionCapabilityResolver.hit_has_capability(hit, &"flow_control"):
 		bait_with_water(point)
-	elif potion_id == &"purification_potion":
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong"):
 		_damage_if_exposed()
 
-func apply_potion_effect(effect_id: StringName, context: Dictionary) -> void:
-	receive_potion_hit({"potion_id": effect_id, "impact_point": context.get("impact_point", global_position)})
+func apply_potion_effect(_effect_id: StringName, _context: Dictionary) -> void:
+	# Direct hits carry PotionData, so this boss intentionally reacts only to
+	# pharmacological capabilities rather than generic splash combat effects.
+	pass
 
 func bait_with_water(world_position: Vector2) -> void:
 	if defeated_flag or active:

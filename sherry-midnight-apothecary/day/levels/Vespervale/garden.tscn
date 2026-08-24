@@ -15,8 +15,13 @@
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="16_potions"]
 [ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="17_portal"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="18_console"]
+[ext_resource type="Texture2D" uid="uid://bs6irw5heipq1" path="res://characters/Serena/standee.png" id="18_dmywj"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="19_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="20_pause_menu"]
+[ext_resource type="Script" uid="uid://bk1skhp3msjp6" path="res://day/levels/Vespervale/vespervale_day_five_intro.gd" id="21_day_five_intro"]
+[ext_resource type="Texture2D" uid="uid://b7okyqonqqy62" path="res://characters/Serena/stand.png" id="21_uhsjn"]
+[ext_resource type="Resource" uid="uid://c6kchle2udkc5" path="res://day/levels/Vespervale/vespervale_day_five_intro.dialogue" id="22_day_five_dialogue"]
+[ext_resource type="Texture2D" uid="uid://caamnn2f8wss4" path="res://characters/luca/stand.png" id="23_luca_stand"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(7500, 160)
@@ -269,3 +274,24 @@ layer = 200
 script = ExtResource("19_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=1830075791 instance=ExtResource("20_pause_menu")]
+
+[node name="IssueDay5" type="Node2D" parent="." unique_id=581688581]
+script = ExtResource("21_day_five_intro")
+dialogue_resource = ExtResource("22_day_five_dialogue")
+serena_portrait = ExtResource("18_dmywj")
+
+[node name="SerenaIllusion" type="Sprite2D" parent="IssueDay5" unique_id=1451152161]
+position = Vector2(1251, 584)
+scale = Vector2(0.04275699, 0.04275699)
+texture = ExtResource("21_uhsjn")
+
+[node name="LucaProxy" type="Sprite2D" parent="IssueDay5" unique_id=761554477]
+z_index = 9
+scale = Vector2(0.046, 0.046)
+texture = ExtResource("23_luca_stand")
+
+[node name="walkstart" type="Marker2D" parent="IssueDay5" unique_id=173091173]
+position = Vector2(40, 634)
+
+[node name="walkend" type="Marker2D" parent="IssueDay5" unique_id=548882092]
+position = Vector2(843, 634)

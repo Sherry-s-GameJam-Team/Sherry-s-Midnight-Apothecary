@@ -5,16 +5,14 @@ extends Node2D
 ## completion remains owned by StoryEventRunner; this node only coordinates
 ## local camera, character, fade, and staged dialogue presentation.
 
-const ACTIVE_DAY := 1
+const ACTIVE_DAY := 2
 const EVENT_ID: StringName = &"day_one_forest_enzuo_intro"
 const INTERACTION_KEY: StringName = &"day_one_forest_enzuo_intro"
-const RESCUE_EVENT_ID: StringName = &"day_one_forest_enzuo_rescued"
 const SOLVED_FLAG: StringName = &"save_enzuo_solved"
 const FOREST_COMPLETED_FLAG: StringName = &"forest_completed"
 const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 
 @export var dialogue_resource: DialogueResource
-@export var post_boss_dialogue: DialogueResource
 @export_node_path("CharacterBody2D") var player_path: NodePath
 @export_node_path("LucaPlayer") var luca_path: NodePath
 @export_node_path("Camera2D") var camera_path: NodePath
@@ -39,7 +37,6 @@ var _luca_physics_was_enabled := true
 var _camera_top_level_was_enabled := false
 var _modal_lock_was_set := false
 var _running := false
-var _post_boss_running := false
 
 
 func _ready() -> void:
@@ -55,31 +52,19 @@ func _ready() -> void:
 		call_deferred("_start_intro")
 
 
-func on_level_entered(entry_id: StringName) -> void:
-	if entry_id == &"from_crown" and should_play_post_boss_sequence():
-		call_deferred("_start_post_boss_sequence")
-
-
 func _exit_tree() -> void:
 	if _running:
 		_cleanup()
 
 
 static func should_show(day: int, player_data: PlayerData) -> bool:
-	return day == ACTIVE_DAY and player_data != null and not player_data.has_event_flag(SOLVED_FLAG)
-
-
-static func should_trigger_post_boss(day: int, intro_completed: bool, forest_completed: bool, solved: bool) -> bool:
-	return day == ACTIVE_DAY and intro_completed and forest_completed and not solved
+	return day == ACTIVE_DAY and player_data != null \
+		and not player_data.has_event_flag(SOLVED_FLAG) \
+		and not bool(player_data.tutorial_flags.get(FOREST_COMPLETED_FLAG, false))
 
 
 func should_play_intro() -> bool:
-	return should_show(_current_day(), _player_data()) and not _has_completed_intro() and not _forest_is_restored()
-
-
-func should_play_post_boss_sequence() -> bool:
-	var data := _player_data()
-	return should_trigger_post_boss(_current_day(), _has_completed_intro(), _forest_is_restored(), data != null and data.has_event_flag(SOLVED_FLAG))
+	return should_show(_current_day(), _player_data()) and not _has_completed_intro()
 
 
 func _start_intro() -> void:
@@ -112,7 +97,9 @@ func _lock_presentation() -> void:
 	_luca.set_physics_process(false)
 	_player.set_dialogue_locked(true)
 	_luca.set_control_enabled(false)
-	_luca.visible = true
+	# Luca still follows the entrance timing off-screen, but this first-arrival
+	# presentation intentionally shows Sherry entering alone.
+	_luca.visible = false
 	_modal_lock_was_set = get_tree().has_meta("day_modal_input_locked")
 	get_tree().set_meta("day_modal_input_locked", true)
 	_camera_top_level_was_enabled = _camera.top_level
@@ -174,70 +161,6 @@ func _request_completion() -> void:
 	_runtime.connect(&"story_event_completed", _on_story_event_completed, CONNECT_ONE_SHOT)
 
 
-func _start_post_boss_sequence() -> void:
-	if _post_boss_running or not should_play_post_boss_sequence() or not _nodes_are_valid():
-		return
-	_post_boss_running = true
-	_lock_post_boss_presentation()
-	_hanging_npc.visible = true
-	_luca.visible = true
-	_luca.global_position = _player.global_position + Vector2(-112.0, 0.0)
-	_hanging_npc.global_position = _luca.global_position + Vector2(12.0, -36.0)
-	_hanging_npc.scale = Vector2(0.20, 0.20)
-	_play_luca_animation(&"idle", true)
-	await _play_dialogue_resource(post_boss_dialogue, &"start")
-	if not is_inside_tree():
-		return
-	_play_luca_animation(&"run_loop", true)
-	var departure := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	departure.set_parallel(true)
-	departure.tween_property(_luca, "global_position:x", _luca.global_position.x + 520.0, 0.9)
-	departure.tween_property(_hanging_npc, "global_position:x", _hanging_npc.global_position.x + 520.0, 0.9)
-	await departure.finished
-	await _fade_to(1.0)
-	_mark_enzuo_rescued()
-	_finish_day()
-
-
-func _lock_post_boss_presentation() -> void:
-	_player_physics_was_enabled = _player.is_physics_processing()
-	_luca_physics_was_enabled = _luca.is_physics_processing()
-	_player.velocity = Vector2.ZERO
-	_luca.velocity = Vector2.ZERO
-	_player.set_physics_process(false)
-	_luca.set_physics_process(false)
-	_player.set_dialogue_locked(true)
-	_luca.set_control_enabled(false)
-	_modal_lock_was_set = get_tree().has_meta("day_modal_input_locked")
-	get_tree().set_meta("day_modal_input_locked", true)
-	_camera_top_level_was_enabled = _camera.top_level
-	_camera.top_level = true
-	_camera.global_position = _player.global_position + Vector2(90.0, -110.0)
-	_camera.force_update_scroll()
-	_fade_overlay.visible = false
-	_fade_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_fade_overlay.color.a = 0.0
-
-
-func _mark_enzuo_rescued() -> void:
-	var data := _player_data()
-	if data == null:
-		return
-	data.set_event_flag(SOLVED_FLAG)
-	data.set_event_flag(StringName("story_event_completed:%s" % RESCUE_EVENT_ID))
-
-
-func _finish_day() -> void:
-	if _runtime == null or not _runtime.has_method("finish_day"):
-		return
-	var result := DayResult.new()
-	result.completed = true
-	var data := _player_data()
-	if data != null:
-		result.remaining_health = data.health
-	_runtime.call("finish_day", result)
-
-
 func _on_story_event_completed(event_id: StringName) -> void:
 	if event_id == EVENT_ID:
 		_cleanup()
@@ -289,11 +212,6 @@ func _play_luca_animation(animation_name: StringName, face_right: bool) -> void:
 
 func _has_completed_intro() -> bool:
 	return _runtime != null and bool(_runtime.call("has_completed_story_event", EVENT_ID))
-
-
-func _forest_is_restored() -> bool:
-	var data := _player_data()
-	return data != null and bool(data.tutorial_flags.get(FOREST_COMPLETED_FLAG, false))
 
 
 func _current_day() -> int:

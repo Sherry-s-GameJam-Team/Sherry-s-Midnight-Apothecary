@@ -20,12 +20,11 @@ func _ready() -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_frozen_timer = 4.0
 		if sprite != null:
 			sprite.modulate = Color(0.4, 0.8, 1.4)
-	elif "red" in potion_id or "bomb" in potion_id or "attack" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"impact"):
 		# Destroyed
 		queue_free()
 

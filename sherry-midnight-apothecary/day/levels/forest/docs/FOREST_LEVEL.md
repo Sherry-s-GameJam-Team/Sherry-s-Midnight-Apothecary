@@ -23,19 +23,21 @@ Forest 已在 `DayRuntime.LEVELS` 与 `DayRuntime.DAILY_LEVELS` 中显式注册�
 7. Interior 关卡内完成 Sherry / Luca 切换、控制室、水枪、升降根、闸门与直达梯流程，最后到达树冠出口。Interior 的玩法、节点契约与验收见 [FOREST_INTERIOR_LEVEL.md](FOREST_INTERIOR_LEVEL.md)。
 8. 独立 `forest_crown` 关卡从 Interior 的 `from_interior` 入口接入树冠 Boss；Interior 的 `ExitToCrown` 通过 DayRuntime 黑屏转场切换到正式 Boss 场景。
 
+树心门在 Forest 外部由交互状态而非实体墙限制流程：关门时仍不能触发 Interior 入口，但不使用随门整体缩放的旧 `Blocker` 碰撞，以免覆盖入口出生点并阻挡向右探索。
+
 ## Exterior
 
 视差层包括：FarCanopy、MidHangingLotus、Gameplay Ground。上方雨幕与王莲冠层来自现有美术；外部水车动画只使用源 MOV 中的清水画面。红水没有部署到外部水车，红水视觉只在 Interior 关卡的中央 `BloodStream` 中出现。
 
-### 第一天森林入场：恩佐救援线索
+### 第二天森林：恩佐救援线索
 
-`issue_save_enzuo/HangingFrameNpc` 是 23 帧、6 FPS 的正倒循环角色动态精灵。第一天、且 `save_enzuo_solved` 事件标记未设置时，`ForestDayOneEnzuoIntro` 在黑屏对话后淡显场景，让 Sherry 与 Luca 从左侧步入 `sherry` 与 `luca` 标记；角色揭示分两段将悬挂精灵从 `(385, -90)` 移至 `(385, -22)`，随后移至 `(385, 118)`。
+`issue_save_enzuo/HangingFrameNpc` 是 23 帧、6 FPS 的正倒循环角色动态精灵。第二天、树冠 Boss 尚未净化且 `save_enzuo_solved` 未设置时，`ForestDayOneEnzuoIntro` 在黑屏对话后淡显场景，让 Sherry 从左侧步入 `sherry` 标记；卢卡的逻辑走位保留，但该段不显示其移动动画。角色揭示分两段将悬挂精灵从 `(385, -90)` 移至 `(385, -22)`，随后移至 `(385, 118)`。
 
-过场写入标准剧情完成标记 `story_event_completed:day_one_forest_enzuo_intro`，但会在当天保留悬挂角色。其他日期或 `save_enzuo_solved` 为真时，整个 `issue_save_enzuo` 节点隐藏。
+过场写入标准剧情完成标记 `story_event_completed:day_one_forest_enzuo_intro`，但会在当天保留悬挂角色。Boss 完成后，`issue_save_enzuo` 自动隐藏，并激活 `issue_saved/Enzuofall`；其他日期或 `save_enzuo_solved` 为真时，两个节点都隐藏。
 
 初见对话结束后不再有药水投掷或副藤切割环节，玩家立即恢复操作并直接开始四座水车的主线解密。恩佐会一直被母树藤蔓保护，直到树冠 Boss 被净化。
 
-Boss 完成后，玩家由树冠出口返回森林的 `from_crown` 入口时，藤蔓会自然松开恩佐；卢卡背起少年并播放收束对话。演出结束以黑场调用 `DayRuntime.finish_day()`，直接切入夜晚场景；此时写入 `save_enzuo_solved` 与 `story_event_completed:day_one_forest_enzuo_rescued`，避免重复播放。
+Boss 完成后返回森林不会自动播放恩佐对话或结束当天。玩家靠近地面的 `Enzuofall` 时，HintUI 显示“按 E 查看恩佐”；按 E 后才派发 `day_two_forest_enzuo_saved` 对话事件。对话完成设置 `save_enzuo_solved` 并隐藏该节点，不改变水车或树门进度。
 
 ### Lotus
 

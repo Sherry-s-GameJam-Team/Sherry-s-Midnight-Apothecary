@@ -49,14 +49,14 @@
 [ext_resource type="Script" uid="uid://dd377ehg4yu1d" path="res://day/levels/Aurem Clockyard/inside_systems/hanging_platform.gd" id="54_hanging_plat"]
 [ext_resource type="Script" uid="uid://cu1vlairf3fkd" path="res://day/levels/Aurem Clockyard/inside_systems/chaotic_gear.gd" id="55_chaotic_gear"]
 [ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="56_top_hint"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/inside_systems/moving_platform.gd" id="57_moving_plat"]
+[ext_resource type="Script" uid="uid://ccwjqeqmvfea4" path="res://day/levels/Aurem Clockyard/inside_systems/moving_platform.gd" id="57_moving_plat"]
 [ext_resource type="PackedScene" uid="uid://bxbq2jkxol38g" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_hour.tscn" id="58_hour_scene"]
 [ext_resource type="PackedScene" uid="uid://cd876ia8dt2d8" path="res://day/levels/Aurem Clockyard/inside_systems/clock_hand_minute.tscn" id="59_min_scene"]
 [ext_resource type="Script" uid="uid://1papem0anamm" path="res://day/levels/Aurem Clockyard/inside_systems/tower_elevator.gd" id="60_elevator"]
 [ext_resource type="PackedScene" uid="uid://bttgfjajae8dd" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_arena.tscn" id="61_helion_arena"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
-size = Vector2(498, 100)
+size = Vector2(1507, 100)
 
 [sub_resource type="RectangleShape2D" id="Rect_barrier_vert"]
 size = Vector2(80, 7398.625)
@@ -119,7 +119,7 @@ position = Vector2(600, 560)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=160729638]
-position = Vector2(7, 128)
+position = Vector2(-92.5, 128)
 shape = SubResource("Rect_ground")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=1546655978]
@@ -388,6 +388,9 @@ one_way_collision = true
 [node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear1" unique_id=2011]
 collision_layer = 0
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear1/Hitbox" unique_id=20111]
+shape = SubResource("Circle_hazard_gear")
+
 [node name="Plat2_MidLeft" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2014]
 position = Vector2(255, -125)
 collision_layer = 2
@@ -447,6 +450,9 @@ one_way_collision = true
 [node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear2" unique_id=2024]
 collision_layer = 0
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear2/Hitbox" unique_id=20241]
+shape = SubResource("Circle_hazard_gear")
+
 [node name="Plat2_MidRight" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2026]
 position = Vector2(806, -293)
 collision_layer = 2
@@ -479,6 +485,9 @@ one_way_collision = true
 
 [node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear3" unique_id=2032]
 collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear3/Hitbox" unique_id=20321]
+shape = SubResource("Circle_hazard_gear")
 
 [node name="Plat2_HighLeft" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2034]
 position = Vector2(370, -452)
@@ -514,6 +523,9 @@ one_way_collision = true
 
 [node name="Hitbox" type="Area2D" parent="World/Floor2_GearWell/ChaoticGear4" unique_id=2040]
 collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor2_GearWell/ChaoticGear4/Hitbox" unique_id=20401]
+shape = SubResource("Circle_hazard_gear")
 
 [node name="PlatformNode2" type="StaticBody2D" parent="World/Floor2_GearWell" unique_id=2042]
 position = Vector2(674, -1245)
@@ -1045,15 +1057,17 @@ texture = ExtResource("11_gears")
 position = Vector2(0, -4350)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="World/Top" unique_id=1906057405]
+light_mask = 2
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Top/StaticBody2D" unique_id=1208407947]
-position = Vector2(516.13544, -2077)
+position = Vector2(552, -2093)
 scale = Vector2(8.572928, 1.1848819)
 shape = SubResource("RectangleShape2D_wpo60")
 one_way_collision = true
 
 [node name="HelionBossArena" parent="World/Top" unique_id=819246782 instance=ExtResource("61_helion_arena")]
-position = Vector2(516, -2077)
+position = Vector2(531, -2077)
 
 [node name="ExitPortal" type="Area2D" parent="World/Top" unique_id=5036]
 position = Vector2(516, -2180)

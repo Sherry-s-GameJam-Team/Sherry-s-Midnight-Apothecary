@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" path="res://day/levels/forest/art/npc/hanging_frame/hanging_frame.tscn" id="40_hanging_frame"]
 [ext_resource type="Script" uid="uid://d0vjwiqr5jcbr" path="res://day/levels/forest/forest_day_one_enzuo_intro.gd" id="41_enzuo_intro"]
 [ext_resource type="Resource" uid="uid://y2s1632xcryh" path="res://day/levels/forest/dialog/day_one_enzuo_intro.dialogue" id="42_enzuo_dialogue"]
-[ext_resource type="Resource" uid="uid://dh6ysp3y2yxot" path="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue" id="44_enzuo_rescue_dialogue"]
+[ext_resource type="Script" uid="uid://dww0gf0msmq8a" path="res://day/levels/forest/forest_enzuo_saved_interaction.gd" id="45_enzuo_saved"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qgp4"]
 size = Vector2(138, 167)
@@ -102,7 +102,8 @@ visible = false
 position = Vector2(7180, 380)
 
 [node name="LucaDialogueNpc" type="Node2D" parent="." unique_id=1826486977]
-position = Vector2(510, 358)
+position = Vector2(57, 593)
+scale = Vector2(-1, 1)
 
 [node name="LucaVisual" type="AnimatedSprite2D" parent="LucaDialogueNpc" unique_id=1797148628]
 z_index = 3
@@ -342,7 +343,7 @@ scale = Vector2(1.0423918, 1.1141663)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exterior/InteriorEntrance" unique_id=1694475243]
-position = Vector2(-205, 9)
+position = Vector2(-204.3373, -60.13462)
 shape = SubResource("EntranceShape")
 debug_color = Color(0, 0.64914376, 0.16705999, 0.41960785)
 
@@ -380,7 +381,6 @@ forest_path = NodePath("..")
 [node name="issue_save_enzuo" type="Node2D" parent="." unique_id=387401203]
 script = ExtResource("41_enzuo_intro")
 dialogue_resource = ExtResource("42_enzuo_dialogue")
-post_boss_dialogue = ExtResource("44_enzuo_rescue_dialogue")
 player_path = NodePath("../Player")
 luca_path = NodePath("../Luca")
 camera_path = NodePath("../Player/Camera2D")
@@ -400,6 +400,19 @@ position = Vector2(166, 602)
 [node name="luca" type="Marker2D" parent="issue_save_enzuo" unique_id=541770498]
 visible = false
 position = Vector2(411, 605)
+
+[node name="issue_saved" type="Node2D" parent="." unique_id=2032295975]
+visible = false
+script = ExtResource("45_enzuo_saved")
+player_path = NodePath("../Player")
+enzuo_path = NodePath("Enzuofall")
+
+[node name="Enzuofall" type="Node2D" parent="issue_saved" unique_id=61728994]
+position = Vector2(390, 616)
+scale = Vector2(0.2, 0.2)
+
+[node name="HangingFrameNpc" parent="issue_saved/Enzuofall" unique_id=708060748 instance=ExtResource("40_hanging_frame")]
+rotation = 1.5708
 
 [node name="Crown" parent="." unique_id=910945885 instance=ExtResource("34_crown")]
 

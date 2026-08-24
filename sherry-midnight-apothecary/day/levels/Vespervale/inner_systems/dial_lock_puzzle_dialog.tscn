@@ -1,0 +1,399 @@
+[gd_scene format=3 uid="uid://bdb7xr2tnk1vf"]
+
+[ext_resource type="Script" uid="uid://be1ydu6q4kxex" path="res://day/levels/Vespervale/inner_systems/dial_lock_puzzle_dialog.gd" id="1_lock_script"]
+[ext_resource type="Texture2D" uid="uid://cnigjwoy5lnig" path="res://day/levels/Vespervale/src/lock.png" id="2_lock_tex"]
+[ext_resource type="Texture2D" uid="uid://clk12txfltt8p" path="res://day/levels/Vespervale/src/key/bell.png" id="3_bell"]
+[ext_resource type="Texture2D" uid="uid://bnaa52xu2nj0y" path="res://day/levels/Vespervale/src/key/eye.png" id="4_eye"]
+[ext_resource type="Texture2D" uid="uid://bcunlefibv2os" path="res://day/levels/Vespervale/src/key/moon.png" id="5_moon"]
+[ext_resource type="Texture2D" uid="uid://e83xrakp4k0b" path="res://day/levels/Vespervale/src/key/feather.png" id="6_feather"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_btn"]
+bg_color = Color(0.18, 0.15, 0.25, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.75, 0.5, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arrow_hover"]
+bg_color = Color(0.4, 0.3, 0.55, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.9, 0.6, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_close_btn"]
+bg_color = Color(0.25, 0.15, 0.2, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.85, 0.45, 0.55, 0.8)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="DialLockPuzzleDialog" type="CanvasLayer" unique_id=2000800]
+layer = 125
+script = ExtResource("1_lock_script")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=2000801]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.03, 0.06, 0.78)
+
+[node name="CenterContainer" type="Control" parent="." unique_id=2000802]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -150.0
+offset_right = 360.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LockFrame" type="TextureRect" parent="CenterContainer" unique_id=2000803]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -120.0
+offset_right = 360.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lock_tex")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Dials" type="Control" parent="CenterContainer/LockFrame" unique_id=2000804]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 32.0
+offset_right = 2.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dial0" type="Control" parent="CenterContainer/LockFrame/Dials" unique_id=2000805]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -75.0
+offset_right = -130.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnUp" type="Button" parent="CenterContainer/LockFrame/Dials/Dial0" unique_id=2000806]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.0
+offset_top = -91.0
+offset_right = 22.0
+offset_bottom = -65.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▲"
+
+[node name="SymbolIcon" type="TextureRect" parent="CenterContainer/LockFrame/Dials/Dial0" unique_id=2000807]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -41.0
+offset_right = 31.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_eye")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnDown" type="Button" parent="CenterContainer/LockFrame/Dials/Dial0" unique_id=2000808]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -21.0
+offset_right = 22.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▼"
+
+[node name="Dial1" type="Control" parent="CenterContainer/LockFrame/Dials" unique_id=2000809]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -75.0
+offset_right = -28.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnUp" type="Button" parent="CenterContainer/LockFrame/Dials/Dial1" unique_id=2000810]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.0
+offset_top = -91.0
+offset_right = 22.0
+offset_bottom = -65.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▲"
+
+[node name="SymbolIcon" type="TextureRect" parent="CenterContainer/LockFrame/Dials/Dial1" unique_id=2000811]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -33.0
+offset_right = 35.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_moon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnDown" type="Button" parent="CenterContainer/LockFrame/Dials/Dial1" unique_id=2000812]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -21.0
+offset_right = 22.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▼"
+
+[node name="Dial2" type="Control" parent="CenterContainer/LockFrame/Dials" unique_id=2000813]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 28.0
+offset_top = -75.0
+offset_right = 96.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnUp" type="Button" parent="CenterContainer/LockFrame/Dials/Dial2" unique_id=2000814]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.0
+offset_top = -91.0
+offset_right = 22.0
+offset_bottom = -65.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▲"
+
+[node name="SymbolIcon" type="TextureRect" parent="CenterContainer/LockFrame/Dials/Dial2" unique_id=2000815]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -37.0
+offset_right = 23.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bell")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnDown" type="Button" parent="CenterContainer/LockFrame/Dials/Dial2" unique_id=2000816]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -21.0
+offset_right = 22.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▼"
+
+[node name="Dial3" type="Control" parent="CenterContainer/LockFrame/Dials" unique_id=2000817]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 130.0
+offset_top = -75.0
+offset_right = 198.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnUp" type="Button" parent="CenterContainer/LockFrame/Dials/Dial3" unique_id=2000818]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.0
+offset_top = -91.0
+offset_right = 22.0
+offset_bottom = -65.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▲"
+
+[node name="SymbolIcon" type="TextureRect" parent="CenterContainer/LockFrame/Dials/Dial3" unique_id=2000819]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -37.0
+offset_right = 27.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_feather")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BtnDown" type="Button" parent="CenterContainer/LockFrame/Dials/Dial3" unique_id=2000820]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -21.0
+offset_right = 22.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_arrow_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arrow_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_arrow_hover")
+text = "▼"
+
+[node name="FeedbackLabel" type="Label" parent="CenterContainer" unique_id=2000821]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -18.0
+offset_right = 200.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.9, 0.85, 1, 0.85)
+theme_override_font_sizes/font_size = 18
+text = "转动圆轮以解锁机关"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="." unique_id=2000822]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_top = 28.0
+offset_right = -26.0
+offset_bottom = 72.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_close_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_close_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_close_btn")
+text = "✕"

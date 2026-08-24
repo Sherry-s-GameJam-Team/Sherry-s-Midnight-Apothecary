@@ -1128,6 +1128,7 @@ shape = SubResource("RectLift")
 one_way_collision = true
 
 [node name="FinalGate" type="AnimatableBody2D" parent="RealityWorld" unique_id=973750661]
+visible = false
 position = Vector2(900, -4250)
 collision_layer = 3
 collision_mask = 0
@@ -1167,7 +1168,8 @@ action_id = &"root_lift_b"
 prompt_text = "[E] 升降根平台"
 
 [node name="FinalGateConsole" parent="RealityWorld" unique_id=28082042 instance=ExtResource("37_console")]
-position = Vector2(706, -4744)
+visible = false
+position = Vector2(729, -4438)
 action_id = &"final_gate"
 prompt_text = "[E] 开启最终根门"
 

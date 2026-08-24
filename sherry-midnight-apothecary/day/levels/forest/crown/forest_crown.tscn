@@ -22,6 +22,10 @@
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="20_pause_menu"]
 [ext_resource type="Resource" path="res://day/levels/forest/dialog/forest_crown_purification.dialogue" id="21_post_boss_dialogue"]
 [ext_resource type="PackedScene" uid="uid://cti4npw3yn4nr" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="22_task_complete"]
+[ext_resource type="Texture2D" uid="uid://ckotprvjuwki0" path="res://day/levels/forest/interior/art/forest_direct_lift.png" id="23_direct_lift_tex"]
+
+[sub_resource type="RectangleShape2D" id="Shape_direct_lift"]
+size = Vector2(240, 180)
 
 [sub_resource type="Shader" id="Shader_gloomy_mood"]
 code = "shader_type canvas_item;
@@ -388,28 +392,29 @@ position = Vector2(700, 560)
 position = Vector2(700, 560)
 
 [node name="ExitPortal" type="Area2D" parent="." unique_id=1234383299]
-position = Vector2(1550, 420)
+position = Vector2(1000, 560)
 collision_layer = 0
+collision_mask = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="ExitPortal" unique_id=11971094]
+position = Vector2(0, 45)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("23_direct_lift_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitPortal" unique_id=1270780444]
-position = Vector2(-567, 118)
-shape = SubResource("Shape_side_plat")
-
-[node name="PortalGlow" type="Polygon2D" parent="ExitPortal" unique_id=1342566313]
-position = Vector2(-568, 119)
-color = Color(0.35, 0.95, 0.8, 0.4)
-polygon = PackedVector2Array(0, -60, 40, -40, 60, 0, 40, 40, 0, 60, -40, 40, -60, 0, -40, -40)
+position = Vector2(0, 30)
+shape = SubResource("Shape_direct_lift")
 
 [node name="Prompt" type="Label" parent="ExitPortal" unique_id=11971093]
-offset_left = -669.0
-offset_top = 89.0
-offset_right = -469.0
-offset_bottom = 119.0
+offset_left = -100.0
+offset_top = -65.0
+offset_right = 100.0
+offset_bottom = -35.0
 theme_override_colors/font_color = Color(0.9, 1, 0.85, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-text = "[E] 返回树下"
+text = "[E] 乘直达升降梯"
 horizontal_alignment = 1
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1811822926]

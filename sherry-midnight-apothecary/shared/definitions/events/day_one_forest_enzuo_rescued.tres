@@ -4,15 +4,16 @@
 [ext_resource type="Script" uid="uid://dffkqmt2sr5wc" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
 [ext_resource type="Script" uid="uid://ck8qo5xjtqg71" path="res://shared/events/story_event_condition.gd" id="3_condition"]
 [ext_resource type="Script" uid="uid://c4fo4feo2piu8" path="res://shared/events/story_event_action.gd" id="4_action"]
+[ext_resource type="Resource" uid="uid://dh6ysp3y2yxot" path="res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue" id="5_dialogue"]
 
 [sub_resource type="Resource" id="SaveEnzuo"]
 script = ExtResource("4_action")
 key = &"save_enzuo_solved"
 
-[sub_resource type="Resource" id="FirstDay"]
+[sub_resource type="Resource" id="SecondDay"]
 script = ExtResource("3_condition")
-minimum_day = 1
-maximum_day = 1
+minimum_day = 2
+maximum_day = 2
 
 [sub_resource type="Resource" id="IntroCompleted"]
 script = ExtResource("3_condition")
@@ -28,12 +29,13 @@ key = &"save_enzuo_solved"
 script = ExtResource("2_trigger")
 type = 2
 runtime_mode = 1
-interaction_key = &"day_one_forest_enzuo_rescued"
+interaction_key = &"day_two_forest_enzuo_saved"
 
 [resource]
 script = ExtResource("1_definition")
-id = &"day_one_forest_enzuo_rescued"
+id = &"day_two_forest_enzuo_saved"
 priority = 101
 trigger = SubResource("Trigger")
-conditions = Array[ExtResource("3_condition")]([SubResource("FirstDay"), SubResource("IntroCompleted"), SubResource("EnzuoUnsolved")])
+conditions = Array[ExtResource("3_condition")]([SubResource("SecondDay"), SubResource("IntroCompleted"), SubResource("EnzuoUnsolved")])
+dialogue_resource = ExtResource("5_dialogue")
 actions = Array[ExtResource("4_action")]([SubResource("SaveEnzuo")])

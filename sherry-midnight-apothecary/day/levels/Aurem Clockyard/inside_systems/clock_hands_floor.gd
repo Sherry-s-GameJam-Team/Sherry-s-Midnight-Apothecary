@@ -108,16 +108,15 @@ func _advance_hour_hand_raw(steps: int) -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_frozen_timer = 6.0
 		if minute_hand_node != null:
 			minute_hand_node.modulate = Color(0.5, 0.8, 1.4)
 		if hour_hand_node != null:
 			hour_hand_node.modulate = Color(0.5, 0.8, 1.4)
-	elif "orange" in potion_id or "speed" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"machine_drive"):
 		turn_minute_hand(3)
-	elif "red" in potion_id or "bomb" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"impact"):
 		turn_hour_hand(1)
 
 

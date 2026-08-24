@@ -14,7 +14,6 @@ signal clocktower_synchronized
 @onready var tower_portal: DoorPortal = get_node_or_null("World/Portals/TowerPortal")
 @onready var tower_exit_portal: DoorPortal = get_node_or_null("World/Portals/TowerExitPortal")
 @onready var abyss_hazard: Area2D = get_node_or_null("World/AbyssHazard")
-@onready var clockmaker_npc: Area2D = get_node_or_null("World/NPCs/Clockmaker")
 
 var _last_checkpoint_pos: Vector2 = Vector2(300, 520)
 var _is_respawning: bool = false
@@ -24,7 +23,6 @@ func _ready() -> void:
 	super._ready()
 	_update_visual_states()
 	_setup_abyss_hazard()
-	_setup_npc()
 
 
 func on_level_entered(entry_id: StringName) -> void:
@@ -80,39 +78,6 @@ func _update_visual_states() -> void:
 func _setup_abyss_hazard() -> void:
 	if abyss_hazard != null and not abyss_hazard.body_entered.is_connected(_on_abyss_body_entered):
 		abyss_hazard.body_entered.connect(_on_abyss_body_entered)
-
-
-func _setup_npc() -> void:
-	if clockmaker_npc != null and not clockmaker_npc.body_entered.is_connected(_on_npc_body_entered):
-		clockmaker_npc.body_entered.connect(_on_npc_body_entered)
-	if clockmaker_npc != null and not clockmaker_npc.body_exited.is_connected(_on_npc_body_exited):
-		clockmaker_npc.body_exited.connect(_on_npc_body_exited)
-
-
-func _on_npc_body_entered(body: Node2D) -> void:
-	if body is CharacterBody2D and (body.name == "Player" or body.is_in_group("player")):
-		var top_hint := _find_top_hint()
-		if top_hint != null and top_hint.has_method("show_interaction_hint"):
-			top_hint.call("show_interaction_hint", "aurem_npc", "按 E 与钟庭工匠对话")
-
-
-func _on_npc_body_exited(body: Node2D) -> void:
-	if body is CharacterBody2D and (body.name == "Player" or body.is_in_group("player")):
-		var top_hint := _find_top_hint()
-		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
-			top_hint.call("hide_interaction_hint", "aurem_npc")
-
-
-func _find_top_hint() -> TopHintUI:
-	var current: Node = self
-	while current != null:
-		var top_hint := current.get_node_or_null("GlobalUI/TopHintUI") as TopHintUI
-		if top_hint != null:
-			return top_hint
-		current = current.get_parent()
-	if is_inside_tree() and get_tree() != null and get_tree().root != null:
-		return get_tree().root.find_child("TopHintUI", true, false) as TopHintUI
-	return null
 
 
 func _on_abyss_body_entered(body: Node2D) -> void:

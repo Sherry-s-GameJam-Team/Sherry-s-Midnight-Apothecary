@@ -76,6 +76,7 @@ static func run(test: TestSupport) -> void:
 		"res://shared/definitions/events/day_one_forest_enzuo_rescued.tres",
 		"res://day/levels/forest/dialog/day_one_enzuo_rescue.dialogue",
 		"res://day/levels/home/day_one_bedroom_luca.dialogue",
+		"res://day/levels/Vespervale/vespervale_day_five_intro.dialogue",
 		"res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn",
 	]:
 		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

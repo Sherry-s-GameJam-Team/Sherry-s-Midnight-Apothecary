@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://ccqbnecam03es"]
+
+[ext_resource type="Texture2D" uid="uid://cx3umdskbl7un" path="res://day/levels/Vespervale/src/cabinet.png" id="1_6nwox"]
+
+[node name="Cabinet" type="Node2D" unique_id=1937055201]
+
+[node name="Cabinet" type="Sprite2D" parent="." unique_id=656133757]
+position = Vector2(627, 349.00003)
+scale = Vector2(2.0929203, 2.0929203)
+texture = ExtResource("1_6nwox")
+region_enabled = true
+region_rect = Rect2(0, 0, 304.80725, 339)

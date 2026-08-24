@@ -32,12 +32,11 @@ func set_stabilized(val: bool) -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_frozen_timer = 3.5
 		if bob_platform != null:
 			bob_platform.modulate = Color(0.5, 0.8, 1.4)
-	elif "orange" in potion_id or "speed" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"machine_drive"):
 		_time += PI * 0.5
 
 

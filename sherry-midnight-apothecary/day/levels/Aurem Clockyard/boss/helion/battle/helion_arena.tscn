@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dmt27he25niyp" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss.tscn" id="2_boss"]
 [ext_resource type="Script" uid="uid://gvwegq1e36v1" path="res://day/levels/Aurem Clockyard/boss/helion/battle/clock_floor_controller.gd" id="3_floor"]
 [ext_resource type="PackedScene" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_boss_hud.tscn" id="4_hud"]
-[ext_resource type="Script" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_trigger_gear.gd" id="5_trigger_gear"]
+[ext_resource type="Script" uid="uid://dpdqo5pvk8rl5" path="res://day/levels/Aurem Clockyard/boss/helion/battle/helion_trigger_gear.gd" id="5_trigger_gear"]
 [ext_resource type="Texture2D" uid="uid://fwls47pg5mqr" path="res://day/levels/Aurem Clockyard/src/gear.png" id="6_gear_tex"]
 
 [sub_resource type="CircleShape2D" id="gear_trigger_shape"]
@@ -58,6 +58,7 @@ position = Vector2(-550, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector01" unique_id=516857417]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector01" unique_id=562503480]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -68,6 +69,7 @@ position = Vector2(-450, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector02" unique_id=1448101115]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector02" unique_id=1070636375]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -78,6 +80,7 @@ position = Vector2(-350, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector03" unique_id=2098487934]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector03" unique_id=389976850]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -88,6 +91,7 @@ position = Vector2(-250, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector04" unique_id=1281780186]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector04" unique_id=1999098511]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -98,6 +102,7 @@ position = Vector2(-150, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector05" unique_id=1656466180]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector05" unique_id=1271555501]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -108,6 +113,7 @@ position = Vector2(-50, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector06" unique_id=2020496400]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector06" unique_id=12051420]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -118,6 +124,7 @@ position = Vector2(50, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector07" unique_id=1183346977]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector07" unique_id=1911236469]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -128,6 +135,7 @@ position = Vector2(150, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector08" unique_id=879702303]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector08" unique_id=1869473135]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -138,6 +146,7 @@ position = Vector2(250, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector09" unique_id=494908362]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector09" unique_id=884453546]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -148,6 +157,7 @@ position = Vector2(350, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector10" unique_id=246682155]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector10" unique_id=1609402044]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -158,6 +168,7 @@ position = Vector2(450, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector11" unique_id=1577413712]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector11" unique_id=830889545]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -168,6 +179,7 @@ position = Vector2(550, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClockFloor/Sector12" unique_id=2033195526]
 shape = SubResource("sector_shape")
+one_way_collision = true
 
 [node name="Visual" type="Sprite2D" parent="ClockFloor/Sector12" unique_id=1384057207]
 modulate = Color(0.6, 0.5, 0.4, 1)
@@ -177,13 +189,17 @@ scale = Vector2(3.125, 0.9375)
 position = Vector2(-650, -100)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftSafetyPlatform" unique_id=804849367]
+position = Vector2(86, -1)
 shape = SubResource("safety_plat_shape")
+one_way_collision = true
 
 [node name="RightSafetyPlatform" type="StaticBody2D" parent="." unique_id=1991926967]
 position = Vector2(650, -100)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightSafetyPlatform" unique_id=786232846]
+position = Vector2(-84, 9)
 shape = SubResource("safety_plat_shape")
+one_way_collision = true
 
 [node name="ArenaBounds" type="StaticBody2D" parent="." unique_id=937693694]
 collision_layer = 0

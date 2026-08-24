@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://ch1ejpcsay6f4" path="res://day/levels/Aurem Clockyard/farm.png" id="5_farm"]
 [ext_resource type="Texture2D" uid="uid://p50vp4l3bnvd" path="res://day/levels/Aurem Clockyard/farm_corrupted.png" id="6_farm_corr"]
 [ext_resource type="Texture2D" uid="uid://cdqadm3f20sbf" path="res://day/levels/Aurem Clockyard/greattower.png" id="7_greattower"]
-[ext_resource type="Texture2D" uid="uid://bvmk3rdfh1s6g" path="res://day/levels/Aurem Clockyard/npcs.png" id="9_npcs"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="10_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="11_collision"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="12_presentation"]
@@ -17,6 +16,8 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="16_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="17_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="18_pause_menu"]
+[ext_resource type="Script" uid="uid://42wr4vxx7psn" path="res://day/levels/Aurem Clockyard/clockmaker_day_four_npc.gd" id="19_clockmaker_day_four"]
+[ext_resource type="Texture2D" uid="uid://dcoxselh66vso" path="res://day/levels/Aurem Clockyard/robot.png" id="21_clockmaker_robot"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(9000, 160)
@@ -130,9 +131,9 @@ position = Vector2(6514, -13)
 texture = ExtResource("7_greattower")
 
 [node name="TowerInner" type="Sprite2D" parent="Background/CS/Tower" unique_id=1669798340]
+visible = false
 position = Vector2(6514, -13)
 texture = ExtResource("7_greattower")
-visible = false
 
 [node name="WorldBounds" type="Node2D" parent="." unique_id=1999559790]
 
@@ -210,6 +211,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platforms/Platform5" unique_id=557634763]
+position = Vector2(244, 140)
 shape = SubResource("Rect_platform")
 one_way_collision = true
 
@@ -219,6 +221,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Platforms/Platform6" unique_id=1312482914]
+position = Vector2(143, 148)
 shape = SubResource("Rect_platform")
 one_way_collision = true
 
@@ -241,26 +244,14 @@ shape = SubResource("Rect_portal")
 position = Vector2(5600, 420)
 collision_layer = 0
 script = ExtResource("15_portal")
-destination_level = &"aurem_clockyard"
+destination_level = &"aurem_clockyard_inside"
 destination_entry_id = &"tower_inner"
 fallback_scene_path = "res://day/levels/Aurem Clockyard/inside.tscn"
 interaction_hint_enabled = true
 interaction_hint_text = "按 E 进入巨钟塔内部"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/TowerPortal" unique_id=1946061749]
-shape = SubResource("Rect_portal")
-
-[node name="TowerExitPortal" type="Area2D" parent="World/Portals" unique_id=624222211]
-position = Vector2(7800, 420)
-collision_layer = 0
-script = ExtResource("15_portal")
-destination_level = &"home"
-destination_entry_id = &"from_aurem"
-fallback_scene_path = "res://day/levels/home/home.tscn"
-interaction_hint_enabled = true
-interaction_hint_text = "按 E 激活时律界门返回"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/TowerExitPortal" unique_id=1617934430]
+position = Vector2(910, 167)
 shape = SubResource("Rect_portal")
 
 [node name="NPCs" type="Node2D" parent="World" unique_id=2041798612]
@@ -268,13 +259,15 @@ shape = SubResource("Rect_portal")
 [node name="Clockmaker" type="Area2D" parent="World/NPCs" unique_id=1113290553]
 position = Vector2(2313, 480)
 collision_layer = 0
+script = ExtResource("19_clockmaker_day_four")
+portrait_texture = ExtResource("21_clockmaker_robot")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/Clockmaker" unique_id=104213990]
+[node name="Presentation" type="Node2D" parent="World/NPCs/Clockmaker" unique_id=513153629]
+
+[node name="Sprite2D" type="Sprite2D" parent="World/NPCs/Clockmaker/Presentation" unique_id=104213990]
 position = Vector2(33.999996, 163.99998)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("9_npcs")
-region_enabled = true
-region_rect = Rect2(257.97766, 40, 227.93506, 377.5597)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("21_clockmaker_robot")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/NPCs/Clockmaker" unique_id=560193779]
 position = Vector2(31, 167)

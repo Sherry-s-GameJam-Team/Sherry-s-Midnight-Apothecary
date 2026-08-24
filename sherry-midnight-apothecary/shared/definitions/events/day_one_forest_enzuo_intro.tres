@@ -5,10 +5,10 @@
 [ext_resource type="Script" uid="uid://dffkqmt2sr5wc" path="res://shared/events/story_event_trigger_spec.gd" id="2_trigger"]
 [ext_resource type="Script" uid="uid://ck8qo5xjtqg71" path="res://shared/events/story_event_condition.gd" id="3_condition"]
 
-[sub_resource type="Resource" id="FirstDay"]
+[sub_resource type="Resource" id="SecondDay"]
 script = ExtResource("3_condition")
-minimum_day = 1
-maximum_day = 1
+minimum_day = 2
+maximum_day = 2
 
 [sub_resource type="Resource" id="EnzuoUnsolved"]
 script = ExtResource("3_condition")
@@ -26,4 +26,4 @@ script = ExtResource("1_definition")
 id = &"day_one_forest_enzuo_intro"
 priority = 100
 trigger = SubResource("Trigger")
-conditions = Array[ExtResource("3_condition")]([SubResource("FirstDay"), SubResource("EnzuoUnsolved")])
+conditions = Array[ExtResource("3_condition")]([SubResource("SecondDay"), SubResource("EnzuoUnsolved")])

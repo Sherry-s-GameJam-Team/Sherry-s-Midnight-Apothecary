@@ -218,6 +218,7 @@ func _test_danxin_gate_clock_transformation() -> void:
 	var gate_restored := arena.get_node_or_null("Background/CS/DanxinGate/GateRestored") if arena.get_node_or_null("Background/CS/DanxinGate/GateRestored") != null else arena.get_node_or_null("DanxinGate/GateRestored")
 
 	assert(portal != null, "Gate portal must exist")
+	assert(portal is AlkeonCompletionGate, "Restored Danxin Gate must use the night-return completion portal")
 	assert(gate_broken != null, "GateBroken must exist")
 	assert(gate_restored != null, "GateRestored must exist")
 
@@ -226,7 +227,7 @@ func _test_danxin_gate_clock_transformation() -> void:
 	assert(arena.get("is_battle_active") == false, "Battle should be inactive after purification")
 	assert(not gate_broken.visible, "GateBroken must be hidden after purification")
 	assert(gate_restored.visible, "GateRestored must be visible (restored to normal)")
-	assert(portal.destination_level == &"orem_clocktower", "Destination level must transition to orem_clocktower")
+	assert(portal.get("_night_return_enabled") == true, "Restored gate must be enabled for the night-home return")
 
 	_cleanup_root(root)
 

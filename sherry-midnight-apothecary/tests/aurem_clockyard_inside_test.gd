@@ -78,6 +78,9 @@ static func run(test: TestSupport) -> void:
 	test.expect(gear1 != null and gear2 != null and gear3 != null and gear4 != null, "All 4 Chaotic Hazard Gears exist on Floor 2.")
 
 	if gear1 != null:
+		var hitbox: Area2D = gear1.get_node_or_null("Hitbox") as Area2D
+		test.expect(hitbox != null and hitbox.has_node("CollisionShape2D"), "ChaoticGear1 has Hitbox Area2D with CollisionShape2D.")
+		test.expect(gear1.get("damage") > 0, "ChaoticGear1 has positive hazard damage.")
 		gear1.call("receive_potion_hit", {"potion_id": "blue_ice_potion"})
 		test.expect(bool(gear1.get("_is_frozen")), "Ice potion freezes chaotic gear into static platform.")
 
@@ -181,10 +184,17 @@ static func run(test: TestSupport) -> void:
 		# Test Elevator activation:
 		var elevator: ClocktowerElevator = floor5.get_node_or_null("TowerElevator") as ClocktowerElevator
 		test.expect(elevator != null and elevator.is_unlocked, "Elevator is deployed and unlocked upon Floor 5 completion.")
+		if elevator != null:
+			test.expect(elevator.target_position.y <= -2070.0, "Elevator target_position aligns level with Floor 6.")
 
 	# Test Floor 6 Pinnacle & Portals
 	var floor6: Node = level.get_node_or_null("World/Top")
 	test.expect(floor6 != null, "Floor 6 (Top Pinnacle) exists.")
+	var arena := level.get_node_or_null("World/Top/HelionBossArena")
+	if arena != null:
+		var sector6_col := arena.get_node_or_null("ClockFloor/Sector06/CollisionShape2D") as CollisionShape2D
+		test.expect(sector6_col != null and sector6_col.one_way_collision, "ClockFloor sectors have one_way_collision enabled for elevator passage.")
+
 	var entrance_portal := level.get_node_or_null("World/Portals/EntrancePortal")
 	var exit_portal_top := level.get_node_or_null("World/Top/ExitPortal")
 	test.expect(entrance_portal != null and exit_portal_top != null, "Entrance and Floor 6 Exit portals are deployed.")

@@ -64,11 +64,10 @@ func trigger_room_pulse() -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "orange" in potion_id or "speed" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"activation"):
 		# Supercharge next bounce
 		launch_force_y *= 1.4
-	elif "blue" in potion_id or "ice" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_on_cooldown = true
 		if spring_sprite != null:
 			spring_sprite.modulate = Color(0.4, 0.8, 1.4)

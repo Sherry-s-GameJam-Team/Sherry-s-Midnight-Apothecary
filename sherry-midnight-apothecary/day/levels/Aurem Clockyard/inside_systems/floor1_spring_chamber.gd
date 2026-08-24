@@ -33,11 +33,10 @@ func set_stabilized(val: bool) -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_is_frozen = true
 		_frozen_timer = 4.0
-	elif "orange" in potion_id or "speed" in potion_id or "red" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"machine_drive") or PotionCapabilityResolver.hit_has_capability(hit, &"impact"):
 		if winch_lift_1 != null and winch_lift_1.has_method("toggle_lift"):
 			winch_lift_1.call("toggle_lift")
 		if winch_lift_2 != null and winch_lift_2.has_method("toggle_lift"):

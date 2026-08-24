@@ -34,6 +34,13 @@
   - **提示系统 (`GlobalUI`)**：内嵌 `TopHintUI`，支持沉睡旅人 NPC 接近提示、传送门交互提示及全局状态通知。
   - **暂停菜单 (`PauseMenuLayer`)**：内嵌 `PauseMenu`，支持背包查看与系统设置。
 
+### 4. Day 5 初入事件：未醒之谷
+
+- 仅当 `DayRuntime.day == 5`、且 `vespervale_day_five_first_path_complete` 尚未记录时，从 `default` 或 `from_home` 入口启动。
+- `IssueDay5` 先把雪莉放到 `walkstart`，锁定玩家输入并播放向 `walkend` 的自动步行动画；远方呼唤结束后，水平输入临时收窄为仅可向右。
+- 接近桥前的塞蕾娜幻影后播放 `vespervale_day_five_intro.dialogue` 的 `bridge` 段。塞蕾娜的世界形象与对话立绘都使用 `res://characters/Serena/standee.png`；卢卡拉回雪莉、幻影重影与消散由对白事件驱动。
+- 完成剧情会恢复双向移动与传送门，写入完成标记，并把 Day 5 当前任务设为 `vespervale_first_path`（“跟随卢卡寻找真实道路，调查维斯佩尔眠谷的异常。”）。
+
 ---
 
 ## 场景层级结构
@@ -60,6 +67,7 @@ Garden (VespervaleGardenLevel: DayLevelEnvironment)
 │  └─ AbyssHazard (坠落深渊检测区)
 ├─ EntryPoints (default, from_home, garden, church)
 ├─ Player (雪莉玩家角色)
+├─ IssueDay5 (Day 5 自动步行、单向探索与桥前幻觉剧情)
 ├─ DebugUI (CanvasLayer: DeveloperConsole)
 ├─ GlobalUI (CanvasLayer: TopHintUI)
 └─ PauseMenuLayer (CanvasLayer: PauseMenu)

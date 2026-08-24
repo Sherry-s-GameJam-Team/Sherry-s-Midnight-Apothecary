@@ -4,7 +4,6 @@ extends StaticBody2D
 signal purified
 signal water_progress_changed(progress: float)
 
-@export var required_potion_id: StringName = &"purification_potion"
 var is_purified := false
 var water_progress := 0.0
 @export var water_required_seconds := 0.8
@@ -15,8 +14,7 @@ var water_progress := 0.0
 func receive_potion_hit(hit: Dictionary) -> void:
 	if is_purified:
 		return
-	var potion_id := StringName(hit.get("potion_id", &""))
-	if potion_id == required_potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong"):
 		purify()
 
 func purify() -> void:

@@ -24,6 +24,7 @@ signal boss_battle_completed
 @onready var player_node: CharacterBody2D = $Player
 @onready var victory_leaves: GPUParticles2D = $VictoryLeaves
 @onready var boss_health_bar: AlkeonBossHealthBarUI = get_node_or_null("BossHealthBar")
+@onready var task_complete_ui: TaskCompleteUI = get_node_or_null("TaskCompleteUI") as TaskCompleteUI
 
 var _bag_zones: Array[int] = []
 var _wave_count: int = 0
@@ -424,7 +425,7 @@ func _on_boss_purified() -> void:
 	is_battle_active = false
 	boss_battle_completed.emit()
 	_enable_player_precision_hitbox(false)
-	objective_updated.emit("【血叶猎王·阿尔凯昂】净化完成！", "红叶消散，大门已修复为常态，通往【奥雷姆钟庭】。")
+	objective_updated.emit("【血叶猎王·阿尔凯昂】净化完成！", "丹心门已恢复。靠近大门并按[E]返回药水铺，开始晚间营业。")
 
 	# Stop all surges and swarms
 	_clear_all_hazards()
@@ -442,8 +443,9 @@ func _on_boss_purified() -> void:
 		danxin_gate_restored.visible = true
 		danxin_gate_restored.modulate.a = 1.0
 
-	# Play Danxin Gate -> Orem Clocktower transformation
+	# Restore the gate, then let its dedicated completion portal end the day.
 	_trigger_gate_clock_transformation()
+	_present_completion_ui()
 
 
 func _trigger_gate_clock_transformation() -> void:
@@ -460,12 +462,18 @@ func _trigger_gate_clock_transformation() -> void:
 			_clock_active = true
 		)
 
-	if gate_portal != null:
-		gate_portal.destination_level = &"orem_clocktower"
-		gate_portal.fallback_scene_path = "res://day/levels/home/home.tscn"
-		gate_portal.interaction_hint_text = "前往【奥雷姆钟庭】"
-		gate_portal.monitoring = true
-		gate_portal.visible = true
+	if gate_portal is AlkeonCompletionGate:
+		gate_portal.set_night_return_enabled(true)
+
+
+func _present_completion_ui() -> void:
+	if task_complete_ui == null:
+		return
+	task_complete_ui.present(
+		"任务完成：净化血叶猎王",
+		"阿尔凯昂已从血叶灾祸中解脱，丹心门重新亮起归途。",
+		"关闭此提示后，前往丹心门按[E]返回药水铺"
+	)
 
 
 func _update_gate_visuals() -> void:

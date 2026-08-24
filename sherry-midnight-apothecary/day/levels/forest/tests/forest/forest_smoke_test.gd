@@ -33,7 +33,7 @@ func _run() -> void:
 		"WorldBounds", "BossInterface", "ForestController/LucaWorldController",
 		"ForestController/PartyController", "Exterior/ArvisTreeGate",
 		"Exterior/InteriorEntrance", "issue_save_enzuo/HangingFrameNpc",
-		"issue_save_enzuo/sherry", "issue_save_enzuo/luca", "UI/ForestDayOneFade", "UI"
+		"issue_save_enzuo/sherry", "issue_save_enzuo/luca", "issue_saved/Enzuofall", "UI/ForestDayOneFade", "UI"
 	]:
 		_check(forest.get_node_or_null(path) != null, "Missing required node: %s" % path)
 	_check(forest.get_node_or_null("Interior") == null, "Interior must not be embedded in the exterior scene anymore")
@@ -43,7 +43,9 @@ func _run() -> void:
 	_check(hanging_npc != null and hanging_npc.sprite_frames.get_frame_count(&"hang") == 23, "Hanging NPC animation is not configured")
 	var enzuo_intro := forest.get_node("issue_save_enzuo") as ForestDayOneEnzuoIntro
 	_check(enzuo_intro != null, "Forest Enzuo intro presentation is missing")
-	_check(enzuo_intro.post_boss_dialogue != null, "Forest Enzuo post-Boss return dialogue is missing")
+	var tree_gate := forest.get_node("Exterior/ArvisTreeGate") as ForestArvisTreeGate
+	_check(tree_gate != null and tree_gate.blocker.disabled, "The scaled exterior tree gate must not block the entry path physically")
+	_check(forest.get_node_or_null("issue_saved") is ForestEnzuoSavedInteraction, "Forest Enzuo saved interaction is missing")
 	_check(forest.get_node_or_null("issue_save_enzuo/ForestEnzuoRescueController") == null, "Enzuo no longer starts a potion-throwing side-vine minigame")
 	var unsolved_data := PlayerData.new()
 	_check(ForestDayOneEnzuoIntro.should_show(1, unsolved_data), "Enzuo presentation should be visible on day one before it is solved")

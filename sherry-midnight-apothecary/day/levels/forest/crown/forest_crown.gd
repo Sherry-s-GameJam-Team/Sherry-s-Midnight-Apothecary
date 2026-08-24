@@ -28,6 +28,10 @@ var _respawning := false
 var _player_in_portal := false
 
 
+static func completion_return_level_id() -> StringName:
+	return FOREST_LEVEL_ID
+
+
 func _ready() -> void:
 	super()
 	fade_rect.modulate.a = 0.0
@@ -52,13 +56,35 @@ func _ready() -> void:
 		_start_intro_sequence()
 
 
+func _input(event: InputEvent) -> void:
+	if not _player_in_portal or exit_portal == null or not exit_portal.visible:
+		return
+	if _is_interact_event(event):
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_exit_to_interior()
+
+
 func _unhandled_input(event: InputEvent) -> void:
-	if _player_in_portal and exit_portal != null and exit_portal.visible:
-		if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_E:
-			var vp := get_viewport()
-			if vp != null:
-				vp.set_input_as_handled()
-			_exit_to_forest()
+	if not _player_in_portal or exit_portal == null or not exit_portal.visible:
+		return
+	if _is_interact_event(event):
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
+		_exit_to_interior()
+
+
+func _is_interact_event(event: InputEvent) -> bool:
+	if event.is_echo():
+		return false
+	if InputMap.has_action(&"interact") and event.is_action_pressed(&"interact"):
+		return true
+	if event is InputEventKey and event.pressed:
+		var key_event := event as InputEventKey
+		return key_event.keycode == KEY_E or key_event.physical_keycode == KEY_E
+	return false
 
 
 func _start_intro_sequence() -> void:
@@ -199,14 +225,19 @@ func _on_portal_body_exited(body: Node2D) -> void:
 			exit_prompt.visible = false
 
 
-func _exit_to_forest() -> void:
+func _exit_to_interior() -> void:
+	if fade_rect != null:
+		var tw := create_tween()
+		tw.tween_property(fade_rect, "modulate:a", 1.0, 0.4)
+		await tw.finished
 	var runtime := _get_day_runtime()
-	if runtime != null and runtime.has_method("switch_to_level"):
-		runtime.call("switch_to_level", FOREST_LEVEL_ID, FOREST_ENTRY_ID)
-	elif runtime != null and runtime.has_method("transition_to_level_with_blackout"):
-		runtime.call("transition_to_level_with_blackout", "forest", &"from_crown", true)
+	if runtime != null:
+		if runtime.has_method("transition_to_level_with_blackout"):
+			runtime.call("transition_to_level_with_blackout", completion_return_level_id(), FOREST_ENTRY_ID, true)
+		elif runtime.has_method("switch_to_level"):
+			runtime.call("switch_to_level", completion_return_level_id(), FOREST_ENTRY_ID)
 	else:
-		push_warning("ForestCrown: switch_to_level not available; in F6 debug mode.")
+		get_tree().change_scene_to_file("res://day/levels/forest/forest.tscn")
 
 
 func _set_flag(key: String, value: bool) -> void:

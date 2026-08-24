@@ -547,13 +547,10 @@ func receive_potion_hit(hit: Dictionary) -> void:
 	if current_phase == Phase.DEFEATED:
 		return
 
-	var potion_id: String = String(hit.get("potion_id", ""))
 	var base_damage: float = float(hit.get("damage", 10))
 
-	# Determine effect tags from potion_id string
-	var is_purify: bool = "pure" in potion_id or "purification" in potion_id
-	var is_explosive: bool = "red" in potion_id or "bomb" in potion_id or "explo" in potion_id
-	var is_ice: bool = "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id
+	var is_purify := PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong")
+	var is_explosive := PotionCapabilityResolver.hit_has_capability(hit, &"impact")
 
 	# Calculate damage multiplier
 	var multiplier: float = 1.0

@@ -17,6 +17,7 @@ signal dream_awakened
 @onready var church_portal: DoorPortal = get_node_or_null("World/Portals/ChurchPortal")
 @onready var abyss_hazard: Area2D = get_node_or_null("World/AbyssHazard")
 @onready var sleep_npcs: Area2D = get_node_or_null("World/NPCs/SleepNpcs")
+@onready var day_five_intro: VespervaleDayFiveIntro = get_node_or_null("IssueDay5") as VespervaleDayFiveIntro
 
 var _last_checkpoint_pos: Vector2 = Vector2(250, 520)
 var _is_respawning: bool = false
@@ -40,6 +41,8 @@ func on_level_entered(entry_id: StringName) -> void:
 		_:
 			_last_checkpoint_pos = Vector2(250, 520)
 			objective_updated.emit("踏入暮息庭院。", "沿着暮光石径向东探索梦息花园与静语礼堂。")
+	if day_five_intro != null:
+		day_five_intro.begin_for_entry(entry_id)
 
 
 func set_corrupted(corrupted: bool) -> void:

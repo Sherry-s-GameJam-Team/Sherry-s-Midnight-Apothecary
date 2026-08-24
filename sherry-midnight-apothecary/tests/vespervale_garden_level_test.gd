@@ -83,4 +83,27 @@ static func run(test: TestSupport) -> void:
 	if pause_menu_layer != null:
 		test.expect(pause_menu_layer.has_node("PauseMenu"), "PauseMenu exists under PauseMenuLayer.")
 
+	var day_five_intro := level.get_node_or_null("IssueDay5") as VespervaleDayFiveIntro
+	test.expect(day_five_intro != null, "Garden contains the day-five first-arrival presentation.")
+	if day_five_intro != null:
+		test.expect(day_five_intro.has_node("walkstart"), "Day-five presentation has a left-side walk start marker.")
+		test.expect(day_five_intro.has_node("walkend"), "Day-five presentation keeps the authored walkend marker.")
+		test.expect(day_five_intro.has_node("SerenaIllusion"), "Day-five presentation has Serena's world illusion.")
+		test.expect(day_five_intro.has_node("LucaProxy"), "Day-five presentation has Luca's interruption proxy.")
+		test.expect(day_five_intro.dialogue_resource != null, "Day-five presentation has its dialogue resource.")
+		test.expect(day_five_intro.serena_portrait != null, "Day-five presentation has Serena's portrait.")
+		if day_five_intro.serena_portrait != null:
+			test.expect_equal(day_five_intro.serena_portrait.resource_path, "res://characters/Serena/standee.png", "Serena uses the requested standee portrait.")
+
+	test.expect(VespervaleDayFiveIntro.should_present(5, null), "The first-path presentation is eligible on day 5.")
+	test.expect(not VespervaleDayFiveIntro.should_present(4, null), "The first-path presentation is not eligible before day 5.")
+	var completed_data := PlayerData.new()
+	completed_data.set_event_flag(VespervaleDayFiveIntro.COMPLETE_FLAG)
+	test.expect(not VespervaleDayFiveIntro.should_present(5, completed_data), "The completed first-path presentation does not replay.")
+
+	var dialogue_source := FileAccess.get_file_as_string("res://day/levels/Vespervale/vespervale_day_five_intro.dialogue")
+	test.expect(dialogue_source.contains("~ start") and dialogue_source.contains("~ bridge"), "Day-five dialogue has staged start and bridge titles.")
+	test.expect(dialogue_source.contains("你没有必要看见吾") and dialogue_source.contains("主线任务：未醒之谷"), "Day-five dialogue contains the illusion reveal and task update.")
+	test.expect(dialogue_source.contains("vespervale_luca_pull") and dialogue_source.contains("vespervale_serena_dissolve"), "Day-five dialogue drives Luca's rescue and Serena's dissolve.")
+
 	level.free()

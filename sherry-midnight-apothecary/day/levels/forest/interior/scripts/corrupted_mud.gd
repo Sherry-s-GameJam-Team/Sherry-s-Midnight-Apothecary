@@ -30,7 +30,7 @@ func apply_potion_purify(_context: Dictionary = {}) -> void:
 func receive_potion_hit(hit: Dictionary) -> void:
 	if _purified:
 		return
-	if StringName(hit.get("potion_id", &"")) == &"purification_potion":
+	if PotionCapabilityResolver.hit_has_capability(hit, &"purify_strong"):
 		purify()
 
 

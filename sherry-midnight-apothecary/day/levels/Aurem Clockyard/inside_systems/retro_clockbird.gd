@@ -68,18 +68,17 @@ func _load_animation_frames() -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_state = State.FROZEN
 		_frozen_timer = 4.5
 		if sprite != null:
 			sprite.modulate = Color(0.4, 0.8, 1.4)
 		if solid_collision != null:
 			solid_collision.disabled = false
-	elif "red" in potion_id or "bomb" in potion_id or "attack" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"impact"):
 		_play_defeat_particles()
 		queue_free()
-	elif "orange" in potion_id or "speed" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"activation"):
 		_state = State.RECOVER
 		_state_timer = 1.0
 

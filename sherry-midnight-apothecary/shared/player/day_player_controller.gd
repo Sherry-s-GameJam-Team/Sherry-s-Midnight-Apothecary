@@ -68,6 +68,8 @@ var _potion_cast_active := false
 var _sprite_base_position := Vector2.ZERO
 var _footstep_timer := 0.0
 var _dialogue_locked := false
+var _horizontal_input_min := -1.0
+var _horizontal_input_max := 1.0
 var _drop_through_timer := 0.0
 var _default_floor_snap_length := 0.0
 
@@ -442,7 +444,7 @@ func _get_input_direction() -> float:
 	var dir := Input.get_axis("move_left", "move_right")
 	if is_zero_approx(dir):
 		dir = Input.get_axis("ui_left", "ui_right")
-	return dir
+	return clampf(dir, _horizontal_input_min, _horizontal_input_max)
 
 
 func _is_running() -> bool:
@@ -478,6 +480,20 @@ func set_dialogue_locked(locked: bool) -> void:
 	# advancing so an in-flight jump, roll, cast, or transition can finish and
 	# leave its state naturally while the balloon is open.
 	_dialogue_locked = locked
+
+
+## Scene-local story presentations can temporarily narrow horizontal input
+## without replacing the shared movement controller. Pass (-1, 1) to restore
+## the normal bidirectional range.
+func set_horizontal_input_bounds(minimum: float, maximum: float) -> void:
+	_horizontal_input_min = clampf(minf(minimum, maximum), -1.0, 1.0)
+	_horizontal_input_max = clampf(maxf(minimum, maximum), -1.0, 1.0)
+	if velocity.x < 0.0 and _horizontal_input_min >= 0.0:
+		velocity.x = 0.0
+		_horizontal_velocity = 0.0
+	elif velocity.x > 0.0 and _horizontal_input_max <= 0.0:
+		velocity.x = 0.0
+		_horizontal_velocity = 0.0
 
 
 ## Thin presentation bridge used by scene-local hazard controllers. Movement

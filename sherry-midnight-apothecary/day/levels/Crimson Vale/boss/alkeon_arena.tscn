@@ -17,13 +17,14 @@
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_presentation.tscn" id="15_presentation"]
 [ext_resource type="Script" uid="uid://ckdqjdgjle5j3" path="res://shared/player/camera_bounds.gd" id="16_camera"]
 [ext_resource type="PackedScene" path="res://day/potions/potion_player_system.tscn" id="17_potions"]
-[ext_resource type="Script" uid="uid://c7i6vinne6toa" path="res://day/systems/door_portal.gd" id="18_portal"]
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="19_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="20_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="21_pause_menu"]
 [ext_resource type="Texture2D" uid="uid://yd4s1af424ys" path="res://day/levels/Crimson Vale/maple.png" id="22_maple"]
 [ext_resource type="PackedScene" path="res://day/levels/Crimson Vale/boss/alkeon_boss_health_bar.tscn" id="23_boss_hud"]
 [ext_resource type="PackedScene" uid="uid://c8m2k5w9p4n7x" path="res://day/levels/Crimson Vale/boss/player_hitbox_core.tscn" id="24_hitbox_core"]
+[ext_resource type="Script" path="res://day/levels/Crimson Vale/boss/alkeon_completion_gate.gd" id="25_completion_gate"]
+[ext_resource type="PackedScene" uid="uid://cti4npw3yn4nr" path="res://shared/ui/task_complete/task_complete_ui.tscn" id="26_task_complete"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_portal"]
 size = Vector2(140, 220)
@@ -118,11 +119,9 @@ centered = false
 
 [node name="GatePortal" type="Area2D" parent="Background/CS/DanxinGate" unique_id=20737638]
 position = Vector2(601, 628)
-script = ExtResource("18_portal")
-destination_level = &"orem_clocktower"
-fallback_scene_path = "res://day/levels/home/home.tscn"
+script = ExtResource("25_completion_gate")
 interaction_hint_enabled = true
-interaction_hint_text = "前往【奥雷姆钟庭】"
+interaction_hint_text = "丹心门尚未恢复"
 
 [node name="Visual" type="Sprite2D" parent="Background/CS/DanxinGate/GatePortal" unique_id=2081739520]
 
@@ -308,3 +307,5 @@ script = ExtResource("20_pause_host")
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=452275820 instance=ExtResource("21_pause_menu")]
 
 [node name="BossHealthBar" parent="." unique_id=1215020213 instance=ExtResource("23_boss_hud")]
+
+[node name="TaskCompleteUI" parent="." unique_id=1215020214 instance=ExtResource("26_task_complete")]

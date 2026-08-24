@@ -26,9 +26,9 @@
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="25_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="26_pause_menu"]
 [ext_resource type="Resource" uid="uid://bo1q0cps0brlw" path="res://day/levels/Crimson Vale/crimson_vale_arrival.dialogue" id="27_village_arrival_dialogue"]
-[ext_resource type="Script" path="res://day/levels/Crimson Vale/crimson_vale_day_three_station.gd" id="28_day_three_station"]
-[ext_resource type="Resource" path="res://day/levels/Crimson Vale/crimson_vale_day_three_station.dialogue" id="29_day_three_station_dialogue"]
-[ext_resource type="Texture2D" path="res://characters/Fanen/chibi.png" id="30_fanen_chibi"]
+[ext_resource type="Script" uid="uid://cxeptymi8hphr" path="res://day/levels/Crimson Vale/crimson_vale_day_three_station.gd" id="28_day_three_station"]
+[ext_resource type="Resource" uid="uid://di4f3x3j3j6wc" path="res://day/levels/Crimson Vale/crimson_vale_day_three_station.dialogue" id="29_day_three_station_dialogue"]
+[ext_resource type="Texture2D" uid="uid://28lyutefwx3f" path="res://characters/Fanen/chibi.png" id="30_fanen_chibi"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground_main"]
 size = Vector2(4164, 190)
@@ -230,12 +230,11 @@ centered = false
 
 [node name="GatePortal" type="Area2D" parent="World/DanxinGate" unique_id=20737638]
 position = Vector2(-500, 440)
+monitoring = false
+monitorable = false
 script = ExtResource("23_portal")
 destination_level = &"home"
 fallback_scene_path = "res://day/levels/home/home.tscn"
-interaction_hint_enabled = false
-monitoring = false
-monitorable = false
 
 [node name="Visual" type="Sprite2D" parent="World/DanxinGate/GatePortal" unique_id=1200715905]
 
@@ -434,7 +433,8 @@ shape = SubResource("Rect_portal")
 [node name="Day3issue" type="Node2D" parent="." unique_id=1548397957]
 
 [node name="RosalineFanen" type="Area2D" parent="Day3issue" unique_id=1548397958]
-position = Vector2(846, 605)
+position = Vector2(1775.0001, 607)
+scale = Vector2(0.6332991, 0.6332991)
 script = ExtResource("28_day_three_station")
 dialogue_resource = ExtResource("29_day_three_station_dialogue")
 
@@ -447,7 +447,7 @@ shape = SubResource("Rect_day_three_station")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1086386805]
 z_index = 10
-position = Vector2(1784, 249)
+position = Vector2(550, 632)
 script = ExtResource("18_player")
 
 [node name="SherryCollision" parent="Player" unique_id=1058900186 instance=ExtResource("19_collision")]

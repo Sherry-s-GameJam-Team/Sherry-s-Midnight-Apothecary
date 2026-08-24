@@ -20,6 +20,8 @@
 
 - [Potion direct hits](potion_hits.md): collision-box impact receiver contract and splash-effect integration.
 
+- [Potion capabilities](potion_capabilities.md): pharmacological capability tags, legacy aliases, and the level-interaction resolver.
+
 - [Day health and recovery](day_health.md): global HP, healing effects, hazard damage, same-day rollback, and Bedroom revival.
 
 - [Day character switching](CHARACTER_SWITCHING.md): remote scene-assembly contract for Sherry/Luca node paths, controls, camera ownership, and validation.
@@ -48,6 +50,7 @@
 - [Crimson Vale Challenge](crimson_vale_challenge.md): horizontal platforming gauntlet with broken cliff jumps, village rooftop leaps, Blood Leaf Swarm hazards, and ForegroundShelter stealth mask mechanics.
 - [Alkeon Boss Encounter](alkeon_boss.md): 3-phase Blood Leaf Hunt King boss battle — 3-zone arena, wind chime acoustic/visual telegraphs, Blood Leaf Surge hazards, Wind Potion headwind counterplay, and Danxin Gate to Orem Clocktower transition.
 - [Aurem Clockyard](aurem_clockyard.md): daytime Aurem Clockyard level — 3-layer parallax background (FS, MS, CS), Golden Farm normal/corrupted state machine, Great Clocktower exterior and inner core chamber, one-way drop-through platforms, Clockmaker NPC interaction, and LevelData registration.
+- [Aurem Clockyard day 4](aurem_clockyard_day_four.md): Night Patrol Cleaner No. 7 dialogue, patrol, vibration, and robot portrait deployment.
 - [Vespervale Garden](vespervale_garden.md): daytime Vespervale Garden level — non-repeating layered background (FS, Mid, GardenAtmosphere), Real/Dream Garden state switching, sleeping NPC interactions, Sherry player controller, camera bounds, and LevelData registration.
 - [Vespervale Inner Ward Corridor](vespervale_inner.md): daytime Vespervale Inner Dream Hospital level — 2D dual-layer corridor platformer, 1-second chime/screen telegraphs, 6-10s rhythmic Dream Shift state machine, 5 progression zones, window/door bullet patterns, dream bridges, rolling stretchers, creeping mist wall, Dream Marrow Node activation, and LevelData registration.
 - [Vespervale Dream Grasp Hands](vespervale_dream_grasp.md): 5-state predictive enemy mechanic (`LURK` -> `TRACK` -> `LOCK` -> `ERUPT` -> `RETRACT`), 24-frame animation, bed safe zones with ward auras, 3-tier hunting escalation, character-switch baiting, and upper/lower platform detection.

@@ -7,6 +7,7 @@ script = ExtResource("1")
 id = &"black_potion"
 display_name = "黑药水"
 color_name = "黑"
+color_family = &"black"
 display_color = Color(0.08, 0.06, 0.1, 1)
 main_effect_id = &""
 spectrum_center_x = 0.5

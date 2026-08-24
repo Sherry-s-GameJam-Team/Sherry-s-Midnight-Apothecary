@@ -9,6 +9,11 @@ var _opening := false
 var _ready_to_open := false
 var _player_in_range := false
 
+## The exterior scene scales this gate for presentation. Its legacy blocker
+## therefore grows across the entry path, so progression is enforced by the
+## interaction state instead of a physical wall.
+@export var use_physical_blocker := false
+
 @onready var animation: AnimatedSprite2D = $Animation
 @onready var static_open: Sprite2D = $OpenStatic
 @onready var blocker: CollisionShape2D = $Blocker/CollisionShape2D
@@ -18,7 +23,7 @@ var _player_in_range := false
 func _ready() -> void:
 	animation.visible = not is_open
 	static_open.visible = is_open
-	blocker.disabled = is_open
+	blocker.disabled = is_open or not use_physical_blocker
 	interaction_zone.body_entered.connect(_on_body_entered)
 	interaction_zone.body_exited.connect(_on_body_exited)
 	if not is_open:

@@ -42,13 +42,12 @@ func set_synchronized(active: bool, duration: float = 6.0) -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		# Freeze gear in place for 4.0s
 		_frozen_timer = 4.0
 		if gear_sprite != null:
 			gear_sprite.modulate = Color(0.4, 0.8, 1.4)
-	elif "orange" in potion_id or "speed" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"machine_drive"):
 		# Temporarily speed up or align
 		set_synchronized(true, 4.0)
 

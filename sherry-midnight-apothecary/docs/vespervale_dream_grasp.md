@@ -1,71 +1,45 @@
-# Vespervale Dream Grasp Hands (幽眠攫手) Mechanic
+# Vespervale Dream Grasp Hands (幽邃敛手) Mechanic
 
 ## Overview
 
-The **Dream Grasp Hands (幽眠攫手)** system is a core hazard and environmental adversary in the **Vespervale Inner Ward Corridor** (`res://day/levels/Vespervale/inner.tscn`).
+The **Dream Grasp Hands (幽邃敛手)** system is a core hazard and environmental adversary in the **Vespervale Inner Ward Corridor** (`res://day/levels/Vespervale/inner.tscn`).
 
-The mechanic employs an unfairness-free, 5-state predictive hunting loop powered by 24 hand animation frames (`dream_grasp_00.png` to `dream_grasp_23.png`), bed safe zones with lunar ward auras, escalating threat tiers, dual-character switch baiting, **1st floor Y-axis locking**, **eerie breathing visual presence**, and **smooth lerp gliding movement**.
+The mechanic employs an unfairness-free, 5-state predictive hunting loop powered by 24 hand animation frames (`dream_grasp_00.png` to `dream_grasp_23.png`), bed safe zones with lunar ward auras, **sofa safe zone cancellation**, **wall1~wall2 corridor activity bounding**, escalating threat tiers, dual-character switch baiting, **1st floor Y-axis locking**, **eerie breathing visual presence**, and **smooth lerp gliding movement**.
 
 ---
 
 ## 1. 5-State Machine & Movement
 
 ```
-[ LURK (潜伏) ] ── (outside bed / dream active) ──> [ TRACK (跟踪) ] (1.2~1.8s)
-       ▲                                                    │
-       │                                                    ▼
-       │                                            [ LOCK (锁定) ] (0.45~0.6s)
-       │                                                    │
-       │ (in bed / reality)                                 ▼
-[ RETRACT (回收) ] (0.6~0.8s) <── [ ERUPT (爆发) ] (0.35~0.5s)
+[ LURK (潜伏) ] ── (outside bed & sofa / dream active / within wall1~wall2) ──> [ TRACK (追踪) ] (1.2~1.8s)
+       ▲                                                                            │
+       │                                                                            ▼
+       │                                                                    [ LOCK (锁定) ] (0.45~0.6s)
+       │                                                                            │
+       │(in bed / in sofa / out of bounds / reality)                                ▼
+[ RETRACT (回收) ] (0.6~0.8s) <────────────────────────────────────────────── [ ERUPT (爆发) ] (0.35~0.5s)
 ```
 
-1. **Floor Locking (第一层地板 Y 轴锁定)**:
-   - Enemy Y position is permanently locked to the 1st floor ground surface (`ground_floor_y = 600.0`).
-   - Even when players jump or Luca moves along the upper corridor, the shadow and hands glide along and erupt strictly from the main lower floorboards.
-2. **Smooth Gliding Movement (平滑移动)**:
-   - Rather than instantly snapping to the player's X coordinate, the shadow smoothly interpolates towards the target with smooth lerp tracking (`smooth_follow_speed = 3.6`).
-3. **Breathing Visual Presence (呼吸式经常显示)**:
-   - A multi-layered visual pool (outer shadow, glowing inner core, translucent finger hints) continuously breathes with a smooth sinusoidal rhythm (`sin(phase)`).
-   - In **Lurk**, it breathes gently at low opacity (`alpha: 0.20 ~ 0.45`), keeping the ominous entity present.
-   - In **Track**, the breathing intensifies (`alpha: 0.55 ~ 0.90`, scaling dynamically).
-4. **Lock (锁定)**:
-   - The shadow **freezes completely** at its current ground position.
-   - Distinct audio-visual telegraph:
-     - Expanding/contracting purple ground ripple ring.
-     - Deep, ominous low bell chime from `DreamAudioSynth.play_lock_bell()`.
-   - Lasts **0.45 ～ 0.6 seconds**, granting the player a clear window to dodge.
-5. **Erupt (爆发)**:
-   - 24-frame animation plays at 24 FPS:
-     - Frames 0–13: Ground telegraph (HitBox disabled).
-     - Frames 14–17: Hands surge upward (HitBox y-position ascends).
-     - Frames 18–22: Full grasp (HitBox active, delivers single-tick damage).
-     - Frame 23: Clench pause.
-6. **Retract (回收)**:
-   - Lasts **0.6 ～ 0.8 seconds**. Hands dissolve into purple mist, smoothly returning to Track or Lurk.
+1. **Activity Bounding (wall1 与 wall2 之间活动限制)**:
+   - 紫手的追踪阴影与爆发爪群被严格限制在 `wall1` 与 `wall2` 之间的走廊区域（`min_x_bound ~ max_x_bound`）。
+   - 当玩家处于 `wall1` 左侧或 `wall2` 右侧的边界外区域时，紫手立即取消追踪（若在 TRACK/LOCK 状态则回退到 LURK 状态），并重置危险累积计时。
+2. **Sofa1 庇护所 (靠近沙发取消跟随)**:
+   - 当玩家进入 `Sofa1`（沙发）的判定范围（`dx <= 140px, dy <= 120px`）时，系统视同进入庇护区。
+   - 紫手立即取消跟随与锁定，回到 `LURK` 低透明度待机状态，并重置猎杀计时与危险阶层。
+3. **Floor Locking (第一层地板 Y 轴锁定)**:
+   - 爪群与阴影的 Y 坐标严格锁定在第一层地面（`ground_floor_y = 600.0`）。
+   - 无论玩家跳跃还是在上方观察走廊，紫手均贴地游弋。
+4. **Smooth Gliding Movement (平滑跟随)**:
+   - 采用平滑插值追踪（`smooth_follow_speed = 3.6`），并在左右墙体边界内 Clamp。
+5. **Breathing Visual Presence (呼吸式显现)**:
+   - Lurk 模式下呈低透明度淡紫阴影，Track 模式下透明度上升并扩大，Lock 模式下定格并发出铃鸣警兆。
+6. **Lock (锁定)** & **Erupt (爆发)** & **Retract (回收)**:
+   - 锁定后定点播放警示环，随后播放 24 帧爆发动画并在判定帧产生单次伤害，回收后溶解消失。
 
 ---
 
-## 2. Bed Safe Zone (`DreamBedSafeZone`)
+## 2. Safe Zones (庇护区机制)
 
-- Placed around each dream hospital bed (`DreamThornBed`).
-- Extends 40-50px wider than the bed and 1.5 character heights upwards.
-- Emits a soft lunar-white/light-purple elliptical ward aura (`SafeZoneAura`).
-- **Rules**:
-  - Entering a safe zone immediately cancels ongoing tracking and resets the hunting tier.
-  - Attacks already in the "Locked" state outside the bed continue their burst but cannot harm players inside the bed sanctuary.
-  - Beds provide permanent shelter, but progressing through the level requires venturing out to activate switches, trigger dream bridges, and shatter light targets.
-
----
-
-## 3. Threat Tiers (Hunting Escalation)
-
-Continuously staying outside any bed safe zone escalates the hunting tier:
-
-| Tier | Continuous Time Away from Bed | Mechanics |
-| :--- | :--- | :--- |
-| **Tier 1 (一级梦猎)** | 0 ～ 8 秒 | Single hand grasp point at locked position. |
-| **Tier 2 (二级梦猎)** | 8 ～ 16 秒 | Triple cluster: Center locked point + Left (-75px) + Right (+75px) secondary grasps. |
-| **Tier 3 (三级梦猎)** | > 16 秒 | Double-wave assault: First wave erupts, followed 0.55s later by a second rapid lock/burst at player's new position. |
-
-*Entering any bed safe zone instantly resets the timer to 0 and tier to 1.*
+- **Hospital Beds (`DreamBedSafeZone`)**: 带有月辉护盾特效的病床庇护所。
+- **Sofa (`Sofa1`)**: 位于走廊中的沙发休憩点，玩家靠近时自动屏蔽紫手跟随与锁定。
+- **Boundary Immunity**: 离开 `wall1`~`wall2` 区域同样享有免疫脱战效果。

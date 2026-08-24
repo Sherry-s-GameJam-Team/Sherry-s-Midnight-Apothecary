@@ -27,7 +27,7 @@
 
 Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次隐藏。它在镜头 X 轴对齐 `CS/Fountain` 的血色喷泉画面、雪莉从左侧屏外走到 `sherryposition`、Luca 位于 `lucaposition` 后才开始对话。对话正常完成后，运行时使用黑场渐隐转场进入 `market/sewer` 的 `sewer.tscn`。Town 场景的 `CS/Fountain` 在第 1 天使用 `resources/blood_fountain/frames/` 中的血色喷泉；`Fountain.blood_fountain_enabled` 是保留在 Inspector 中的总开关，关闭它会维持普通喷泉且不清除事件或存档标记。
 
-`day_one_forest_enzuo_rescued.tres` 保留第一日恩佐救援的完成标记契约。初见对话后不再派发副藤投掷机关，玩家直接进入水车主线；树冠 Boss 净化后从 `forest/from_crown` 返回时，森林演出让藤蔓自然松开恩佐、由卢卡背少年回家，并写入 `save_enzuo_solved` 与该事件完成标记，随后黑场结束白天进入夜晚。它不授予物品，也不改变水车或树门进度。
+`day_one_forest_enzuo_rescued.tres` 定义 `day_two_forest_enzuo_saved` 的完成标记契约。第二天树冠 Boss 未净化时显示 `issue_save_enzuo`；Boss 完成后该节点隐藏并显示 `issue_saved/Enzuofall`。后者不会监听 Boss 返回入口，而是在玩家靠近并按 E 时显式派发事件，播放恩佐对话并写入 `save_enzuo_solved` 与完成标记。它不授予物品，也不改变水车或树门进度。
 
 `day_one_bedroom_luca_urgent.tres` 是卧室内的第一日 Luca 事件。第 1 天进入 Bedroom 时，`DayOneLuca` 演出节点会取代 `SleepToWake`：黑屏渐显出完整卧室，Luca 从右侧走到床前，再自动派发 `day_one_luca_urgent` 并播放对话。此节点没有 E 键交互范围，也不会拦截卧室出口；对话完成后记录事件完成标记并设置当天“调查流明街广场的红色喷泉”任务。该天后续进入直接显示卧室；其余日期仍使用通常的起床演出。
 

@@ -25,13 +25,12 @@ func _ready() -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_is_frozen = true
 		_frozen_timer = 4.5
 		if sprite != null:
 			sprite.modulate = Color(0.4, 0.8, 1.4)
-	elif "orange" in potion_id or "speed" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"machine_drive"):
 		_speed_multiplier = 1.8
 		var tween := create_tween()
 		if tween != null:

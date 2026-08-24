@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c6kchle2udkc5"
+path="res://.godot/imported/vespervale_day_five_intro.dialogue-cfd630d5e4efcf373959460b812a6242.tres"
+
+[deps]
+
+source_file="res://day/levels/Vespervale/vespervale_day_five_intro.dialogue"
+dest_files=["res://.godot/imported/vespervale_day_five_intro.dialogue-cfd630d5e4efcf373959460b812a6242.tres"]
+
+[params]
+
+defaults=true

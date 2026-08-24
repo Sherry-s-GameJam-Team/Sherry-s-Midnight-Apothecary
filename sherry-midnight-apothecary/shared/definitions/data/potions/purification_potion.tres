@@ -6,10 +6,13 @@
 [resource]
 script = ExtResource("1")
 id = &"purification_potion"
+numeric_id = 8
 display_name = "清露净化药水"
 color_name = "露蓝"
+color_family = &"blue"
 display_color = Color(0.18, 0.65, 0.93, 1)
 main_effect_id = &"purify"
+effect_tags = Array[StringName]([&"purify", &"purify_strong", &"anti_corruption", &"black_magic_break"])
 spectrum_center_x = 0.72
 effect_ranges = Array[Vector2]([])
 base_price = 25

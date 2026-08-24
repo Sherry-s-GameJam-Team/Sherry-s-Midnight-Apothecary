@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://5tegm8xf5iqx"
+path="res://.godot/imported/clockmaker_day_four.dialogue-f35c28f4ce3963331d96edbd0f8f87ff.tres"
+
+[deps]
+
+source_file="res://day/levels/Aurem Clockyard/clockmaker_day_four.dialogue"
+dest_files=["res://.godot/imported/clockmaker_day_four.dialogue-f35c28f4ce3963331d96edbd0f8f87ff.tres"]
+
+[params]
+
+defaults=true

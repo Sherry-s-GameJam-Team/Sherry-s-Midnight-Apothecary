@@ -1,0 +1,496 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://df6m2qar7x8lh"]
+
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_000.png" id="1_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_001.png" id="2_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_002.png" id="3_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_003.png" id="4_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_004.png" id="5_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_005.png" id="6_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_006.png" id="7_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_007.png" id="8_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_008.png" id="9_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_009.png" id="10_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_010.png" id="11_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_011.png" id="12_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_012.png" id="13_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_013.png" id="14_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_014.png" id="15_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_015.png" id="16_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_016.png" id="17_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_017.png" id="18_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_018.png" id="19_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_019.png" id="20_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_020.png" id="21_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_021.png" id="22_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_022.png" id="23_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_023.png" id="24_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_024.png" id="25_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_025.png" id="26_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_026.png" id="27_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_027.png" id="28_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_028.png" id="29_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_029.png" id="30_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_030.png" id="31_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_031.png" id="32_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_032.png" id="33_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_033.png" id="34_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_034.png" id="35_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_035.png" id="36_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_036.png" id="37_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_037.png" id="38_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_038.png" id="39_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_039.png" id="40_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_040.png" id="41_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_041.png" id="42_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_042.png" id="43_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_043.png" id="44_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_044.png" id="45_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_045.png" id="46_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_046.png" id="47_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_047.png" id="48_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_048.png" id="49_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_049.png" id="50_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_050.png" id="51_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_051.png" id="52_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_052.png" id="53_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_053.png" id="54_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_054.png" id="55_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_055.png" id="56_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_056.png" id="57_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_057.png" id="58_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_058.png" id="59_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_059.png" id="60_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_060.png" id="61_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_061.png" id="62_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_062.png" id="63_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_063.png" id="64_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_064.png" id="65_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_065.png" id="66_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_066.png" id="67_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_067.png" id="68_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_068.png" id="69_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_069.png" id="70_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_070.png" id="71_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_071.png" id="72_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_072.png" id="73_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_073.png" id="74_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_074.png" id="75_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_075.png" id="76_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_076.png" id="77_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_077.png" id="78_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_078.png" id="79_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_079.png" id="80_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_080.png" id="81_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_081.png" id="82_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_082.png" id="83_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_083.png" id="84_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_084.png" id="85_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_085.png" id="86_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_086.png" id="87_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_087.png" id="88_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_088.png" id="89_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_089.png" id="90_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_090.png" id="91_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_091.png" id="92_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_092.png" id="93_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_093.png" id="94_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_094.png" id="95_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_095.png" id="96_walk"]
+[ext_resource type="Texture2D" path="res://day/levels/Vespervale/src/all_frames_24fps/walk_096.png" id="97_walk"]
+
+[resource]
+animations = [{
+"frames": [
+{
+"duration": 1.0,
+"texture": ExtResource("1_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("2_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("3_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("4_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("5_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("6_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("7_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("8_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("9_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("10_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("11_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("12_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("13_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("14_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("15_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("16_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("17_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("18_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("19_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("20_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("21_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("22_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("23_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("24_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("25_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("26_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("27_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("28_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("29_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("30_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("31_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("32_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("33_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("34_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("35_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("36_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("37_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("38_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("39_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("40_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("41_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("42_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("43_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("44_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("45_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("46_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("47_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("48_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("49_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("50_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("51_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("52_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("53_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("54_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("55_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("56_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("57_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("58_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("59_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("60_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("61_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("62_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("63_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("64_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("65_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("66_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("67_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("68_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("69_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("70_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("71_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("72_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("73_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("74_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("75_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("76_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("77_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("78_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("79_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("80_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("81_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("82_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("83_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("84_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("85_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("86_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("87_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("88_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("89_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("90_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("91_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("92_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("93_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("94_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("95_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("96_walk")
+},
+{
+"duration": 1.0,
+"texture": ExtResource("97_walk")
+}
+],
+"loop": true,
+"name": &"walk",
+"speed": 24.0
+}]

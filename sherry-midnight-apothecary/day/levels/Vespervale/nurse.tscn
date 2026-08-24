@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bglomh4gqvrv3"]
+
+[ext_resource type="Script" uid="uid://de1mlhjs1vefg" path="res://day/levels/Vespervale/nurse.gd" id="1_nurse_script"]
+[ext_resource type="SpriteFrames" uid="uid://df6m2p9r7x8lh" path="res://day/levels/Vespervale/src/nurse_sprite_frames.tres" id="2_nurse_frames"]
+[ext_resource type="Texture2D" uid="uid://csvsakcf3h66" path="res://day/levels/Vespervale/src/light.png" id="3_light_tex"]
+
+[sub_resource type="CapsuleShape2D" id="Capsule_nurse_body"]
+radius = 24.0
+height = 140.0
+
+[sub_resource type="CircleShape2D" id="Circle_lantern_spot"]
+radius = 148.08444
+
+[sub_resource type="Gradient" id="Gradient_lantern_feather"]
+offsets = PackedFloat32Array(0, 0.25, 0.55, 0.82, 1)
+colors = PackedColorArray(1, 0.95, 1, 0.95, 0.92, 0.65, 1, 0.8, 0.78, 0.38, 0.98, 0.5, 0.65, 0.22, 0.9, 0.18, 0.65, 0.22, 0.9, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_feather"]
+gradient = SubResource("Gradient_lantern_feather")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Nurse" type="CharacterBody2D" unique_id=2000600]
+z_index = 20
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_nurse_script")
+spawn_x = 1800.0
+exit_x = 1900.0
+
+[node name="NurseSprite" type="AnimatedSprite2D" parent="." unique_id=2000601]
+position = Vector2(-14.320001, -95.98001)
+scale = Vector2(0.19203125, 0.17966145)
+sprite_frames = ExtResource("2_nurse_frames")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2000602]
+position = Vector2(-1, -94)
+shape = SubResource("Capsule_nurse_body")
+
+[node name="LanternPivot" type="Node2D" parent="." unique_id=2000603]
+position = Vector2(85, -75)
+
+[node name="LanternSpotArea" type="Area2D" parent="LanternPivot" unique_id=2000604]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LanternPivot/LanternSpotArea" unique_id=2000605]
+position = Vector2(-20, -32)
+shape = SubResource("Circle_lantern_spot")
+
+[node name="LanternLightVisual" type="Sprite2D" parent="LanternPivot" unique_id=2000606]
+z_index = 25
+z_as_relative = false
+position = Vector2(-20, -32)
+scale = Vector2(1.18, 1.18)
+texture = SubResource("GradientTexture2D_feather")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2000607]
+layer = 110
+
+[node name="FadeRect" type="ColorRect" parent="CanvasLayer" unique_id=2000608]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

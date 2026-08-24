@@ -11,6 +11,7 @@ static func run(test: TestSupport) -> void:
 	test_grasp_manager_state_machine(test)
 	test_hunt_tier_escalation(test)
 	test_floor_locking_and_smooth_follow(test)
+	test_wall_bounds_and_sofa_shelter(test)
 
 
 static func test_bed_safe_zone_detection(test: TestSupport) -> void:
@@ -105,10 +106,10 @@ static func test_floor_locking_and_smooth_follow(test: TestSupport) -> void:
 	var mgr := GRASP_MGR_SCENE.instantiate() as DreamGraspManager
 	test.expect_equal(mgr.ground_floor_y, 600.0, "Enemy Y is locked to 1st floor (600.0).")
 
-	mgr._current_x = 100.0
+	mgr._current_x = 1500.0
 	# Smooth follow moves towards target_x without instant snap
-	mgr._smooth_follow_target(300.0, 0.1)
-	test.expect(mgr._current_x > 100.0 and mgr._current_x < 300.0, "Tracking smoothly interpolates towards target X.")
+	mgr._smooth_follow_target(1800.0, 0.1)
+	test.expect(mgr._current_x > 1500.0 and mgr._current_x < 1800.0, "Tracking smoothly interpolates towards target X.")
 	test.expect_equal(mgr._tracking_position.y, 600.0, "Tracking position Y is locked to ground floor.")
 
 	# Breathing visual updates
@@ -116,4 +117,46 @@ static func test_floor_locking_and_smooth_follow(test: TestSupport) -> void:
 	if mgr.tracking_shadow != null:
 		test.expect(mgr.tracking_shadow.visible, "Tracking shadow is visible during breathing updates.")
 
+	mgr.queue_free()
+
+
+static func test_wall_bounds_and_sofa_shelter(test: TestSupport) -> void:
+	var mgr := GRASP_MGR_SCENE.instantiate() as DreamGraspManager
+	mgr.min_x_bound = 1155.0
+	mgr.max_x_bound = 2590.0
+
+	# 1. Bounds verification
+	test.expect(not mgr._is_within_bounds(500.0), "X < 1155 is outside wall bounds.")
+	test.expect(mgr._is_within_bounds(1500.0), "X in [1155, 2590] is inside wall bounds.")
+	test.expect(not mgr._is_within_bounds(3000.0), "X > 2590 is outside wall bounds.")
+
+	# Clamp testing on follow
+	mgr._current_x = 1200.0
+	mgr._smooth_follow_target(500.0, 1.0)
+	test.expect_equal(mgr._current_x, 1155.0, "Follow target X is clamped to min_x_bound (wall1).")
+
+	mgr._current_x = 2500.0
+	mgr._smooth_follow_target(3500.0, 1.0)
+	test.expect_equal(mgr._current_x, 2590.0, "Follow target X is clamped to max_x_bound (wall2).")
+
+	# 2. Sofa1 Shelter verification
+	var dummy_sofa := Node2D.new()
+	dummy_sofa.name = "Sofa1"
+	dummy_sofa.global_position = Vector2(1992.0, 597.0)
+	mgr.add_child(dummy_sofa)
+	mgr._sofas.append(dummy_sofa)
+
+	var dummy_player := CharacterBody2D.new()
+	dummy_player.name = "Player"
+	dummy_player.global_position = Vector2(1995.0, 590.0)
+	mgr.add_child(dummy_player)
+
+	test.expect(mgr._is_body_at_sofa(dummy_player), "Player at Sofa1 position is detected as in sofa shelter.")
+
+	# When player is far from sofa
+	dummy_player.global_position = Vector2(1500.0, 590.0)
+	test.expect(not mgr._is_body_at_sofa(dummy_player), "Player away from Sofa1 is not sheltered by sofa.")
+
+	dummy_player.queue_free()
+	dummy_sofa.queue_free()
 	mgr.queue_free()

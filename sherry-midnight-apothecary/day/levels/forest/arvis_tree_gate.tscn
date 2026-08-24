@@ -116,7 +116,7 @@ animations = [{
 size = Vector2(180, 316)
 
 [sub_resource type="RectangleShape2D" id="GateInteractionShape"]
-size = Vector2(249, 360)
+size = Vector2(143, 253)
 
 [node name="ArvisTreeGate" type="Node2D" unique_id=2112541590]
 script = ExtResource("1")
@@ -146,7 +146,7 @@ position = Vector2(-110, 20)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=1254329421]
-position = Vector2(113.5, 5)
+position = Vector2(107.5, -23.5)
 shape = SubResource("GateInteractionShape")
 one_way_collision = true
 

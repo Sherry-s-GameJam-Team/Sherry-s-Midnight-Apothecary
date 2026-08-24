@@ -7,7 +7,7 @@ extends AnimatableBody2D
 signal elevator_arrived(floor_index: int)
 
 @export var start_position: Vector2 = Vector2(516, -100)
-@export var target_position: Vector2 = Vector2(516, -2050)
+@export var target_position: Vector2 = Vector2(516, -2075)
 @export var is_unlocked: bool = false
 @export var is_moving: bool = false
 @export var travel_duration: float = 5.0

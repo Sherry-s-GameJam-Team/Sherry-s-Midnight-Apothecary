@@ -27,6 +27,7 @@ var _time_elapsed: float = 0.0
 var _is_frozen: bool = false
 var _frozen_timer: float = 0.0
 var _slowdown_timer: float = 0.0
+var _damage_cooldown_timer: float = 0.0
 
 @onready var gear_sprite: Sprite2D = get_node_or_null("GearSprite")
 @onready var hitbox: Area2D = get_node_or_null("Hitbox")
@@ -53,20 +54,22 @@ func set_slowdown(duration: float = 6.0) -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		_is_frozen = true
 		_frozen_timer = 4.5
 		if gear_sprite != null:
 			gear_sprite.modulate = Color(0.4, 0.8, 1.4)
-	elif "red" in potion_id or "bomb" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"impact"):
 		_velocity = -_velocity * 1.5
 		_slowdown_timer = 2.5
-	elif "orange" in potion_id or "speed" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"activation"):
 		_slowdown_timer = 5.0
 
 
 func _physics_process(delta: float) -> void:
+	if _damage_cooldown_timer > 0.0:
+		_damage_cooldown_timer -= delta
+
 	if _is_frozen:
 		_frozen_timer -= delta
 		if _frozen_timer <= 0.0:
@@ -127,19 +130,51 @@ func _physics_process(delta: float) -> void:
 			var surge_x := sin(_time_elapsed * 0.7) * 40.0
 			position = _center_pos + Vector2(surge_x, surge_y)
 
+	# Active overlap damage check
+	if _damage_cooldown_timer <= 0.0 and hitbox != null and not is_stabilized:
+		for overlapping in hitbox.get_overlapping_bodies():
+			if overlapping.is_in_group("player") or overlapping.name == "Player":
+				_try_damage_player(overlapping)
+				break
+
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	if is_stabilized or _is_frozen:
+	_try_damage_player(body)
+
+
+func _try_damage_player(body: Node2D) -> void:
+	if is_stabilized or _is_frozen or _damage_cooldown_timer > 0.0:
 		return
 
 	if body.is_in_group("player") or body.name == "Player":
-		if is_inside_tree():
-			var tree := get_tree()
-			if tree != null:
-				var audio: Node = tree.get_first_node_in_group("clocktower_audio")
-				if audio != null and audio.has_method("play_gear_grind_warning"):
-					audio.call("play_gear_grind_warning")
+		_damage_cooldown_timer = 0.8
+		_apply_damage_to_player()
 
-				var env := tree.get_first_node_in_group("clocktower_inside")
-				if env != null and env.has_method("apply_fall_or_hazard_damage"):
-					env.call("apply_fall_or_hazard_damage", damage, "chaotic_gear_collision")
+
+func _apply_damage_to_player() -> void:
+	if not is_inside_tree():
+		return
+	var tree := get_tree()
+	if tree != null:
+		var audio: Node = tree.get_first_node_in_group("clocktower_audio")
+		if audio != null and audio.has_method("play_gear_grind_warning"):
+			audio.call("play_gear_grind_warning")
+
+		var env := tree.get_first_node_in_group("clocktower_inside")
+		if env != null and env.has_method("apply_fall_or_hazard_damage"):
+			env.call("apply_fall_or_hazard_damage", damage, "chaotic_gear_collision")
+		elif env != null and env.has_method("apply_player_damage"):
+			env.call("apply_player_damage", damage, &"chaotic_gear_collision")
+		else:
+			var current: Node = self
+			var damage_applied := false
+			while current != null:
+				if current.has_method("apply_player_damage"):
+					current.call("apply_player_damage", damage, &"chaotic_gear_collision")
+					damage_applied = true
+					break
+				current = current.get_parent()
+			if not damage_applied:
+				var runtime := get_node_or_null("/root/DayRuntime")
+				if runtime != null and runtime.has_method("apply_player_damage"):
+					runtime.call("apply_player_damage", damage, &"chaotic_gear_collision")

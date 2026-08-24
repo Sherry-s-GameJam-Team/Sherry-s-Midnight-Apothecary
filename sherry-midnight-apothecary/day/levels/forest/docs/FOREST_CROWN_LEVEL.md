@@ -97,7 +97,7 @@ ForestCrown
   - 黑色颗粒从炽天使身上剥落并消散。
   - `SeraphSprite`（侵蚀）平滑淡出，`SeraphNormal`（圣洁）平滑淡入。
   - 天空背景转为晴朗金绿，雨滴停止。
-  - 右侧高台开启 `ExitPortal`传送门（按 E 返回树下）。
+  - 中央主平台生成 `ExitPortal`（直达升降梯 `DirectLift`，贴图 `forest_direct_lift.png`），按 [E] 触发黑色渐隐平滑切换至外部森林的 `forest/from_crown`。该入口会触发第一日恩佐救援收束对话。
   - 自动设置教程与探索完成标记：`forest_completed = true`、`forest_crown_completed = true`。
   - 演出结束后先显示“常霁云林·血泉异变”任务完成 UI；玩家关闭该 UI 后，播放炽天使苏醒对白 `forest_crown_purification.dialogue` 的 `start` 段。
   - 对白中的镜头/环境叙述使用注释；任务更新、快速旅行解锁等系统通知通过 `TopHintUI` 的 `show_hint(...)` 指令显示。

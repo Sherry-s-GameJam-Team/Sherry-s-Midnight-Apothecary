@@ -114,8 +114,7 @@ func toggle_ring_lock(ring_id: String) -> void:
 
 
 func receive_potion_hit(hit: Dictionary) -> void:
-	var potion_id: String = String(hit.get("potion_id", ""))
-	if "blue" in potion_id or "ice" in potion_id or "cyan" in potion_id:
+	if PotionCapabilityResolver.hit_has_capability(hit, &"freeze"):
 		# 冰药水直接三环归正并全部锁定
 		_outer_angle = 0.0
 		_middle_angle = 0.0
@@ -125,7 +124,7 @@ func receive_potion_hit(hit: Dictionary) -> void:
 		_inner_locked = true
 		_update_gear_visuals()
 		_trigger_grand_synchronization()
-	elif "orange" in potion_id or "red" in potion_id:
+	elif PotionCapabilityResolver.hit_has_capability(hit, &"machine_drive") or PotionCapabilityResolver.hit_has_capability(hit, &"impact"):
 		attempt_lock_at_12()
 
 

@@ -3,24 +3,16 @@
 [ext_resource type="Script" uid="uid://biictkq04rqkk" path="res://day/levels/Vespervale/inner.gd" id="1_inner"]
 [ext_resource type="Script" uid="uid://dbjkmfa4jxlr1" path="res://day/levels/Vespervale/inner_systems/dream_shift_manager.gd" id="2_shift_mgr"]
 [ext_resource type="Script" uid="uid://cth5jw48cofiq" path="res://day/levels/Vespervale/inner_systems/dream_audio_synth.gd" id="3_audio"]
-[ext_resource type="Script" uid="uid://ce57xhwvas2mk" path="res://day/levels/Vespervale/inner_systems/ward_bullet_launcher.gd" id="4_launcher"]
-[ext_resource type="Script" uid="uid://cey46gelcgoe3" path="res://day/levels/Vespervale/inner_systems/dream_bridge.gd" id="5_bridge"]
-[ext_resource type="Script" uid="uid://t8lv43iit7k3" path="res://day/levels/Vespervale/inner_systems/dream_thorn_bed.gd" id="6_thorn_bed"]
-[ext_resource type="Script" uid="uid://j0q5rp07gr3w" path="res://day/levels/Vespervale/inner_systems/rolling_stretcher.gd" id="7_stretcher"]
-[ext_resource type="Script" uid="uid://cxg5rucdv1be0" path="res://day/levels/Vespervale/inner_systems/vine_falling_thorn.gd" id="8_vine"]
-[ext_resource type="Script" uid="uid://b6fqmb3d44s8y" path="res://day/levels/Vespervale/inner_systems/dream_marrow_node.gd" id="11_marrow"]
-[ext_resource type="Script" uid="uid://dnguh1d70m2y7" path="res://day/levels/Vespervale/inner_systems/ward_exit_door.gd" id="12_exit_door"]
+[ext_resource type="Texture2D" uid="uid://tcqcoihxia21" path="res://day/levels/Vespervale/structure/柱子.png" id="11_0o6is"]
 [ext_resource type="Texture2D" uid="uid://cwiqjfnyv0axl" path="res://day/levels/Vespervale/skybox.png" id="13_skybox"]
 [ext_resource type="Texture2D" uid="uid://d0isnghicnki2" path="res://day/levels/Vespervale/src/wall.png" id="15_61j61"]
 [ext_resource type="Texture2D" uid="uid://c3wcbwbg5bjkq" path="res://day/levels/Vespervale/inside church.png" id="15_inside_church"]
-[ext_resource type="Texture2D" uid="uid://c1ifb20md5ani" path="res://day/levels/Vespervale/src/bed.png" id="17_bed"]
-[ext_resource type="Texture2D" uid="uid://74yj2ss4ajo0" path="res://day/levels/Vespervale/src/stretcher.png" id="18_stretcher_tex"]
+[ext_resource type="Texture2D" uid="uid://5ywam5rgb20u" path="res://day/levels/Vespervale/src/cover.png" id="16_x0d1m"]
 [ext_resource type="Texture2D" uid="uid://cx3umdskbl7un" path="res://day/levels/Vespervale/src/cabinet.png" id="19_cabinet"]
 [ext_resource type="Texture2D" uid="uid://dw1rx2pgi7l04" path="res://day/levels/Vespervale/src/curtain.png" id="20_curtain"]
 [ext_resource type="Texture2D" uid="uid://csvsakcf3h66" path="res://day/levels/Vespervale/src/light.png" id="21_light"]
 [ext_resource type="Texture2D" uid="uid://cqak8qqrdfci4" path="res://day/levels/Vespervale/src/light_broken.png" id="22_light_broken"]
 [ext_resource type="Texture2D" uid="uid://b7jipmbgq7k8n" path="res://day/levels/Vespervale/src/sofa.png" id="23_sofa"]
-[ext_resource type="Texture2D" uid="uid://doc5206l4l58q" path="res://day/levels/Vespervale/src/vase.png" id="24_vase"]
 [ext_resource type="Texture2D" uid="uid://dqbtvbvuvo3pp" path="res://day/levels/Vespervale/src/broad.png" id="25_broad"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="26_player"]
 [ext_resource type="PackedScene" path="res://characters/sherry/sherry_outdoor_collision.tscn" id="27_collision"]
@@ -31,19 +23,24 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="32_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="33_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="34_pause_menu"]
-[ext_resource type="Texture2D" uid="uid://f6simgiirltp" path="res://day/levels/Vespervale/HOLL.png" id="35_envbn"]
 [ext_resource type="PackedScene" uid="uid://qruougt04u04" path="res://night/ui/top_hint/top_hint_ui.tscn" id="35_top_hint"]
-[ext_resource type="Script" uid="uid://bxlwxi60wf8s4" path="res://day/levels/Vespervale/inner_systems/interactive_switch.gd" id="36_switch"]
-[ext_resource type="Script" uid="uid://b7g2cojyxw27d" path="res://day/levels/Vespervale/inner_systems/light_target.gd" id="37_target"]
-[ext_resource type="Script" uid="uid://cb1jg6onuufdr" path="res://day/levels/Vespervale/inner_systems/curtain_gate.gd" id="38_curtain_gate"]
-[ext_resource type="Script" uid="uid://ndw7y3rk2ise" path="res://day/levels/Vespervale/inner_systems/iron_grate_door.gd" id="39_iron_grate"]
 [ext_resource type="Script" uid="uid://dxo7a88sqw1w" path="res://day/levels/Vespervale/inner_systems/inner_party_controller.gd" id="40_party_controller"]
 [ext_resource type="Script" uid="uid://b0eh0d7fmhi65" path="res://day/levels/Vespervale/inner_systems/inner_party_switch_ui.gd" id="41_switch_ui"]
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="42_luca_scene"]
-[ext_resource type="Script" uid="uid://c7t8r2m81u91p" path="res://day/levels/Vespervale/inner_systems/dream_grasp_manager.gd" id="43_grasp_mgr"]
+[ext_resource type="Script" uid="uid://qi4pbrg7at6w" path="res://day/levels/Vespervale/inner_systems/dream_grasp_manager.gd" id="43_grasp_mgr"]
+[ext_resource type="Script" uid="uid://dbw4urtqvwy0g" path="res://day/levels/Vespervale/inner_systems/endless_corridor_manager.gd" id="48_endless_mgr"]
+[ext_resource type="Script" uid="uid://xsb38js7vbhf" path="res://day/levels/Vespervale/inner_systems/signal_beacon.gd" id="49_signal_beacon"]
+[ext_resource type="PackedScene" uid="uid://bglomh4gqvrv3" path="res://day/levels/Vespervale/nurse.tscn" id="50_nurse"]
+[ext_resource type="Script" uid="uid://bixmql1gnpegs" path="res://day/levels/Vespervale/inner_systems/cabinet_letter_interactor.gd" id="51_interactor"]
+[ext_resource type="PackedScene" uid="uid://c8vtusdwhohs" path="res://day/levels/Vespervale/inner_systems/letter_viewer_dialog.tscn" id="52_letter_dialog"]
+[ext_resource type="Script" uid="uid://bneqb74w0a0c1" path="res://day/levels/Vespervale/inner_systems/wall_dial_lock_interactor.gd" id="53_wall_interactor"]
+[ext_resource type="PackedScene" uid="uid://bdb7xr2tnk1vf" path="res://day/levels/Vespervale/inner_systems/dial_lock_puzzle_dialog.tscn" id="54_dial_lock_dialog"]
+
+[sub_resource type="RectangleShape2D" id="Rect_loop_trigger"]
+size = Vector2(60, 800)
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
-size = Vector2(5600, 120)
+size = Vector2(3400, 120)
 
 [sub_resource type="RectangleShape2D" id="Rect_barrier_left"]
 size = Vector2(100, 1600)
@@ -51,40 +48,17 @@ size = Vector2(100, 1600)
 [sub_resource type="RectangleShape2D" id="Rect_barrier_right"]
 size = Vector2(100, 1600)
 
-[sub_resource type="RectangleShape2D" id="Rect_upper_plat_1"]
-size = Vector2(5193, 24)
+[sub_resource type="RectangleShape2D" id="Rect_upper_plat"]
+size = Vector2(4660, 42)
 
-[sub_resource type="RectangleShape2D" id="Rect_curtain_col"]
-size = Vector2(30, 240)
+[sub_resource type="CircleShape2D" id="Circle_wall_lock_interact"]
+radius = 95.34149
 
-[sub_resource type="RectangleShape2D" id="Rect_switch_area"]
-size = Vector2(90, 90)
+[sub_resource type="CircleShape2D" id="Circle_cabinet_interact"]
+radius = 80.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwuwt"]
-
-[sub_resource type="RectangleShape2D" id="Rect_bed_solid"]
-size = Vector2(140, 50)
-
-[sub_resource type="RectangleShape2D" id="Rect_grate_col"]
-size = Vector2(24, 150)
-
-[sub_resource type="CircleShape2D" id="Circle_light_target"]
-radius = 32.0
-
-[sub_resource type="RectangleShape2D" id="Rect_stretcher_solid"]
-size = Vector2(120, 40)
-
-[sub_resource type="RectangleShape2D" id="Rect_stretcher_hazard"]
-size = Vector2(110, 36)
-
-[sub_resource type="CircleShape2D" id="Circle_marrow"]
-radius = 48.0
-
-[sub_resource type="RectangleShape2D" id="Rect_marrow_barrier"]
-size = Vector2(48, 80)
-
-[sub_resource type="RectangleShape2D" id="Rect_door_col"]
-size = Vector2(40, 260)
+[sub_resource type="RectangleShape2D" id="Rect_signal_beacon"]
+size = Vector2(80, 80)
 
 [sub_resource type="RectangleShape2D" id="Rect_portal"]
 size = Vector2(160, 240)
@@ -123,6 +97,32 @@ script = ExtResource("40_party_controller")
 [node name="InnerPartySwitchUI" type="CanvasLayer" parent="." unique_id=2000009]
 script = ExtResource("41_switch_ui")
 
+[node name="EndlessCorridorManager" type="Node2D" parent="." unique_id=2000500]
+position = Vector2(2312, -83)
+script = ExtResource("48_endless_mgr")
+loop_trigger_x = 2300.0
+
+[node name="LoopTriggerArea" type="Area2D" parent="EndlessCorridorManager" unique_id=2000501]
+position = Vector2(2300, 400)
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndlessCorridorManager/LoopTriggerArea" unique_id=2000502]
+shape = SubResource("Rect_loop_trigger")
+
+[node name="ExitBlocker" type="StaticBody2D" parent="EndlessCorridorManager" unique_id=2000503]
+position = Vector2(2340, 400)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndlessCorridorManager/ExitBlocker" unique_id=2000504]
+shape = SubResource("Rect_loop_trigger")
+
+[node name="LoopFog" type="Sprite2D" parent="EndlessCorridorManager" unique_id=2000505]
+modulate = Color(0.6, 0.2, 0.8, 0.45)
+position = Vector2(2320, 360)
+scale = Vector2(0.8, 2.5)
+texture = ExtResource("15_61j61")
+
 [node name="DreamGraspManager" type="Node2D" parent="." unique_id=2000550]
 script = ExtResource("43_grasp_mgr")
 
@@ -147,7 +147,7 @@ scroll_scale = Vector2(0.12, 0.05)
 
 [node name="Skybox" type="Sprite2D" parent="Background/FS" unique_id=2000014]
 position = Vector2(-17, -90)
-scale = Vector2(1.2734807, 1.25)
+scale = Vector2(1.3149171, 1.25)
 texture = ExtResource("13_skybox")
 centered = false
 
@@ -158,7 +158,7 @@ texture = ExtResource("15_inside_church")
 centered = false
 
 [node name="CorridorWall2" type="Sprite2D" parent="Background" unique_id=2000013]
-position = Vector2(2600, -50)
+position = Vector2(2594, -50)
 scale = Vector2(1.2, 1.0690608)
 texture = ExtResource("15_inside_church")
 centered = false
@@ -166,11 +166,11 @@ centered = false
 [node name="WorldBounds" type="Node2D" parent="." unique_id=2000020]
 
 [node name="Ground" type="StaticBody2D" parent="WorldBounds" unique_id=2000021]
-position = Vector2(2500, 640)
+position = Vector2(1400, 640)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/Ground" unique_id=2000022]
-position = Vector2(12, 88)
+position = Vector2(0, 88)
 shape = SubResource("Rect_ground")
 
 [node name="LeftBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=2000023]
@@ -181,592 +181,204 @@ collision_mask = 0
 shape = SubResource("Rect_barrier_left")
 
 [node name="RightBarrier" type="StaticBody2D" parent="WorldBounds" unique_id=2000025]
-position = Vector2(5120, 300)
+position = Vector2(4690, 304)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds/RightBarrier" unique_id=2000026]
+position = Vector2(-46, -30)
 shape = SubResource("Rect_barrier_right")
 
 [node name="World" type="Node2D" parent="." unique_id=2000030]
 
 [node name="Architecture" type="Node2D" parent="World" unique_id=2000031]
 
-[node name="UpperPlatZone1" type="StaticBody2D" parent="World/Architecture" unique_id=2000032]
-position = Vector2(620, 360)
+[node name="UpperFloorPlat" type="StaticBody2D" parent="World/Architecture" unique_id=2000032]
+position = Vector2(1300, 360)
 collision_layer = 3
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Architecture/UpperPlatZone1" unique_id=2000033]
-position = Vector2(1981, -15)
-shape = SubResource("Rect_upper_plat_1")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Architecture/UpperFloorPlat" unique_id=2000033]
+position = Vector2(980, -9)
+shape = SubResource("Rect_upper_plat")
+
+[node name="wall" type="Node2D" parent="World/Architecture" unique_id=1505018186]
+
+[node name="wall1" type="Sprite2D" parent="World/Architecture/wall" unique_id=397243478]
+position = Vector2(1155, 501)
+texture = ExtResource("11_0o6is")
+
+[node name="WallLockInteractor" type="Area2D" parent="World/Architecture/wall/wall1" unique_id=2000830]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("53_wall_interactor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Architecture/wall/wall1/WallLockInteractor" unique_id=2000831]
+position = Vector2(-9, 64)
+shape = SubResource("Circle_wall_lock_interact")
+
+[node name="PromptLabel" type="Label" parent="World/Architecture/wall/wall1/WallLockInteractor" unique_id=2000832]
+offset_left = -90.0
+offset_top = -140.0
+offset_right = 90.0
+offset_bottom = -115.0
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "按 E 解锁"
+horizontal_alignment = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Architecture/wall/wall1" unique_id=1243265015]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Architecture/wall/wall1/StaticBody2D" unique_id=523277020]
+polygon = PackedVector2Array(-37, -137, -36, 175, 48, 173, 50, -144)
+
+[node name="wall2" type="Sprite2D" parent="World/Architecture/wall" unique_id=1805082946]
+position = Vector2(2590, 513)
+texture = ExtResource("11_0o6is")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Architecture/wall/wall2" unique_id=1296110338]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Architecture/wall/wall2/StaticBody2D" unique_id=511338304]
+polygon = PackedVector2Array(-37, -137, -36, 175, 48, 173, 50, -144)
 
 [node name="Props" type="Node2D" parent="World" unique_id=2000060]
 
 [node name="Cabinet1" type="Sprite2D" parent="World/Props" unique_id=2000061]
-position = Vector2(930, 587)
-scale = Vector2(0.45, 0.45)
+position = Vector2(842, 573)
+scale = Vector2(0.5522182, 0.5437917)
 texture = ExtResource("19_cabinet")
+
+[node name="LetterInteractor" type="Area2D" parent="World/Props/Cabinet1" unique_id=2000720]
+scale = Vector2(1.81, 1.84)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("51_interactor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Props/Cabinet1/LetterInteractor" unique_id=2000721]
+shape = SubResource("Circle_cabinet_interact")
+
+[node name="PromptLabel" type="Label" parent="World/Props/Cabinet1/LetterInteractor" unique_id=2000722]
+visible = false
+offset_left = -90.0
+offset_top = -95.0
+offset_right = 90.0
+offset_bottom = -70.0
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "按 E 查看信件"
+horizontal_alignment = 1
 
 [node name="Cabinet2" type="Sprite2D" parent="World/Props" unique_id=2000062]
-position = Vector2(737, 253)
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("19_cabinet")
-
-[node name="Cabinet3" type="Sprite2D" parent="World/Props" unique_id=2000063]
-position = Vector2(1787, 592)
+position = Vector2(750, 253)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("19_cabinet")
 
 [node name="Sofa1" type="Sprite2D" parent="World/Props" unique_id=2000064]
-position = Vector2(2472, 619)
-scale = Vector2(0.5, 0.5)
+position = Vector2(1992.5562, 597.375)
+scale = Vector2(0.7312834, 0.7312834)
 texture = ExtResource("23_sofa")
 
-[node name="Sofa2" type="Sprite2D" parent="World/Props" unique_id=2000065]
-position = Vector2(3809, 282)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("23_sofa")
+[node name="StaticBody2D" type="StaticBody2D" parent="World/Props/Sofa1" unique_id=1393194261]
 
-[node name="Curtain1" type="Sprite2D" parent="World/Props" unique_id=2000066]
-position = Vector2(1032, 243)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("20_curtain")
-
-[node name="Curtain2" type="Sprite2D" parent="World/Props" unique_id=2000067]
-position = Vector2(3103, 242)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("20_curtain")
-
-[node name="Curtain3" type="Sprite2D" parent="World/Props" unique_id=2000068]
-position = Vector2(3974, 243)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("20_curtain")
-
-[node name="Broad1" type="Sprite2D" parent="World/Props" unique_id=2000069]
-position = Vector2(421, 476)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="World/Props/Sofa1/StaticBody2D" unique_id=2088278858]
+polygon = PackedVector2Array(-167.59058, 18.631592, -167.59058, 84.26959, -156.65088, 81.53473, -156.65088, 47.348206, 157.86475, 41.878418, 160.59961, 84.26959, 170.17188, 85.637085, 171.5393, 15.8966675)
 
 [node name="LightBroken1" type="Sprite2D" parent="World/Props" unique_id=2000070]
-position = Vector2(1030, 435)
-scale = Vector2(0.45, 0.45)
+position = Vector2(1025.2626, 426.467)
+scale = Vector2(0.394591, 0.394591)
 texture = ExtResource("22_light_broken")
 
-[node name="LightBroken2" type="Sprite2D" parent="World/Props" unique_id=2000071]
-position = Vector2(2412, 430)
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("22_light_broken")
+[node name="curtain" type="Node2D" parent="World/Props" unique_id=2141958098]
 
-[node name="Vase1" type="Sprite2D" parent="World/Props" unique_id=2000072]
-position = Vector2(1700, 540)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("24_vase")
+[node name="Curtain1" type="Sprite2D" parent="World/Props/curtain" unique_id=2000066]
+z_index = 12
+position = Vector2(175, 242)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("20_curtain")
+
+[node name="Cover" type="Sprite2D" parent="World/Props/curtain/Curtain1" unique_id=2122569652]
+z_index = 12
+position = Vector2(-88, 14)
+scale = Vector2(0.15946206, 0.15809646)
+texture = ExtResource("16_x0d1m")
+region_enabled = true
+region_rect = Rect2(15.578552, 25.910889, 712.91736, 590.38477)
+
+[node name="Curtain2" type="Sprite2D" parent="World/Props/curtain" unique_id=187472804]
+z_index = 14
+position = Vector2(492.00006, 240.00002)
+rotation = 3.1415927
+scale = Vector2(0.3789448, -0.48781398)
+texture = ExtResource("20_curtain")
+
+[node name="Cover" type="Sprite2D" parent="World/Props/curtain/Curtain2" unique_id=2141470740]
+z_index = 12
+position = Vector2(-84.44479, 4.099901)
+scale = Vector2(0.24473058, 0.16700199)
+texture = ExtResource("16_x0d1m")
+region_enabled = true
+region_rect = Rect2(716.1146, -0.9801636, 506.83972, 671.14484)
+
+[node name="Curtain3" type="Sprite2D" parent="World/Props/curtain" unique_id=332881735]
+z_index = 14
+position = Vector2(1012, 246)
+scale = Vector2(0.35557365, 0.47773746)
+texture = ExtResource("20_curtain")
+
+[node name="Cover" type="Sprite2D" parent="World/Props/curtain/Curtain3" unique_id=1231948404]
+z_index = 12
+position = Vector2(-92.80771, 33.491196)
+scale = Vector2(0.24473058, 0.16700199)
+texture = ExtResource("16_x0d1m")
+region_enabled = true
+region_rect = Rect2(22.691162, 619.5475, 651.651, 626.5875)
+
+[node name="Curtain4" type="Sprite2D" parent="World/Props/curtain" unique_id=1081334076]
+z_index = 14
+position = Vector2(1372, 253)
+rotation = -3.1415925
+scale = Vector2(0.3452495, -0.45695275)
+texture = ExtResource("20_curtain")
+
+[node name="Cover" type="Sprite2D" parent="World/Props/curtain/Curtain4" unique_id=815094881]
+z_index = 12
+position = Vector2(-86.89363, 17.507286)
+scale = Vector2(0.24473058, 0.16700199)
+texture = ExtResource("16_x0d1m")
+region_enabled = true
+region_rect = Rect2(691.05115, 666.88965, 531.9032, 548.61206)
 
 [node name="Mechanisms" type="Node2D" parent="World" unique_id=2000080]
 
-[node name="Zone0_CurtainGate_A" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000201]
-z_index = 1
-position = Vector2(719, 556)
-collision_mask = 0
-script = ExtResource("38_curtain_gate")
-
-[node name="CurtainSprite" type="Sprite2D" parent="World/Mechanisms/Zone0_CurtainGate_A" unique_id=2000202]
-position = Vector2(62, -8)
-scale = Vector2(0.55, 0.65)
-texture = ExtResource("15_61j61")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone0_CurtainGate_A" unique_id=2000203]
-position = Vector2(13, -2)
-shape = SubResource("Rect_curtain_col")
-
-[node name="Zone0_Broad1" type="Area2D" parent="World/Mechanisms" unique_id=2000204]
-position = Vector2(340, 276)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 查看治疗记录并开启前厅门帘"
-target_nodes = Array[NodePath]([NodePath("../Zone0_CurtainGate_A")])
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone0_Broad1" unique_id=2000205]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="World/Mechanisms/Zone0_Broad1" unique_id=978200574]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone0_Broad1/StaticBody2D" unique_id=2000206]
-shape = SubResource("Rect_switch_area")
-one_way_collision = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone0_Broad1" unique_id=1787938922]
-position = Vector2(299, 415)
-shape = SubResource("RectangleShape2D_iwuwt")
-
-[node name="Zone0_WindowLauncher" type="Node2D" parent="World/Mechanisms" unique_id=2000207]
-position = Vector2(476, 52)
-script = ExtResource("4_launcher")
-fire_interval = 2.5
-bullet_speed = 180.0
-
-[node name="Indicator" type="Sprite2D" parent="World/Mechanisms/Zone0_WindowLauncher" unique_id=2000208]
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("21_light")
-
-[node name="Zone1_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000081]
-position = Vector2(655, 600)
-collision_mask = 0
-script = ExtResource("6_thorn_bed")
-
-[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone1_Bed1" unique_id=2000082]
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("17_bed")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone1_Bed1" unique_id=2000083]
-position = Vector2(0, 10)
-shape = SubResource("Rect_bed_solid")
-
-[node name="Zone1_Bed2" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000086]
-position = Vector2(1412, 607)
-collision_mask = 0
-script = ExtResource("6_thorn_bed")
-
-[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone1_Bed2" unique_id=2000087]
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("17_bed")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone1_Bed2" unique_id=2000088]
-position = Vector2(0, 10)
-shape = SubResource("Rect_bed_solid")
-
-[node name="Zone2_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000581]
-position = Vector2(1950, 600)
-collision_mask = 0
-script = ExtResource("6_thorn_bed")
-
-[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone2_Bed1" unique_id=2000582]
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("17_bed")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone2_Bed1" unique_id=2000583]
-position = Vector2(0, 10)
-shape = SubResource("Rect_bed_solid")
-
-[node name="Zone3_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000586]
-position = Vector2(3100, 600)
-collision_mask = 0
-script = ExtResource("6_thorn_bed")
-
-[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone3_Bed1" unique_id=2000587]
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("17_bed")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_Bed1" unique_id=2000588]
-position = Vector2(0, 10)
-shape = SubResource("Rect_bed_solid")
-
-[node name="Zone4_Bed1" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000591]
-position = Vector2(4150, 600)
-collision_mask = 0
-script = ExtResource("6_thorn_bed")
-
-[node name="BedSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_Bed1" unique_id=2000592]
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("17_bed")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone4_Bed1" unique_id=2000593]
-position = Vector2(0, 10)
-shape = SubResource("Rect_bed_solid")
-
-[node name="Zone1_SlowLauncher" type="Node2D" parent="World/Mechanisms" unique_id=2000091]
-position = Vector2(880, 260)
-script = ExtResource("4_launcher")
-fire_interval = 2.8
-bullet_speed = 170.0
-
-[node name="Indicator" type="Sprite2D" parent="World/Mechanisms/Zone1_SlowLauncher" unique_id=2000092]
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("21_light")
-
-[node name="Zone1_ControlBroad_A" type="Area2D" parent="World/Mechanisms" unique_id=2000210]
-position = Vector2(916, 281)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 开启病房铁栅并抑制高窗发射口"
-target_nodes = Array[NodePath]([NodePath("../Zone1_IronGrate"), NodePath("../Zone2_WindowLauncher1")])
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone1_ControlBroad_A" unique_id=2000211]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone1_ControlBroad_A" unique_id=2000212]
-shape = SubResource("Rect_switch_area")
-
-[node name="Zone1_IronGrate" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000213]
-position = Vector2(1050, 270)
-collision_mask = 0
-script = ExtResource("39_iron_grate")
-
-[node name="GrateSprite" type="Sprite2D" parent="World/Mechanisms/Zone1_IronGrate" unique_id=2000214]
-position = Vector2(17, -27)
-scale = Vector2(0.4, 0.5)
-texture = ExtResource("19_cabinet")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone1_IronGrate" unique_id=2000215]
-shape = SubResource("Rect_grate_col")
-
-[node name="Zone1_LightTarget_A" type="Area2D" parent="World/Mechanisms" unique_id=2000216]
-position = Vector2(1175, 423)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("37_target")
-target_nodes = Array[NodePath]([NodePath("../Zone4_Vine2")])
-
-[node name="LampSprite" type="Sprite2D" parent="World/Mechanisms/Zone1_LightTarget_A" unique_id=2000217]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone1_LightTarget_A" unique_id=2000218]
-shape = SubResource("Circle_light_target")
-
-[node name="Zone2_WindowLauncher1" type="Node2D" parent="World/Mechanisms" unique_id=2000097]
-position = Vector2(1161, 109)
-script = ExtResource("4_launcher")
-fire_interval = 1.8
-bullet_speed = 220.0
-
-[node name="Indicator" type="Sprite2D" parent="World/Mechanisms/Zone2_WindowLauncher1" unique_id=2000098]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="Zone2_WindowLauncher2" type="Node2D" parent="World/Mechanisms" unique_id=2000099]
-position = Vector2(1568, 108)
-script = ExtResource("4_launcher")
-fire_interval = 1.8
-initial_delay = 0.8
-bullet_speed = 220.0
-
-[node name="Indicator" type="Sprite2D" parent="World/Mechanisms/Zone2_WindowLauncher2" unique_id=2000100]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="Zone2_DoorLauncher" type="Node2D" parent="World/Mechanisms" unique_id=2000101]
-position = Vector2(1820, 520)
-script = ExtResource("4_launcher")
-fire_interval = 2.2
-bullet_speed = 240.0
-
-[node name="Zone2_CabinetSwitch_A" type="Area2D" parent="World/Mechanisms" unique_id=2000220]
-position = Vector2(2250, 250)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 操作病房柜锁并减缓地面担架"
-target_nodes = Array[NodePath]([NodePath("../Zone3_Stretcher1"), NodePath("../Zone3_Stretcher2")])
-target_method_on_activate = "set_slowed"
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone2_CabinetSwitch_A" unique_id=2000221]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("19_cabinet")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone2_CabinetSwitch_A" unique_id=2000222]
-shape = SubResource("Rect_switch_area")
-
-[node name="Zone2_LightTarget_B" type="Area2D" parent="World/Mechanisms" unique_id=2000223]
-position = Vector2(2210, 418)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("37_target")
-disable_duration = 4.0
-target_nodes = Array[NodePath]([NodePath("../Zone2_DoorLauncher")])
-target_method_on_hit = "disable_temporary"
-
-[node name="LampSprite" type="Sprite2D" parent="World/Mechanisms/Zone2_LightTarget_B" unique_id=2000224]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone2_LightTarget_B" unique_id=2000225]
-shape = SubResource("Circle_light_target")
-
-[node name="Zone3_DreamBridge" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000102]
-position = Vector2(2475, 360)
-script = ExtResource("5_bridge")
-bridge_width = 250.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_DreamBridge" unique_id=2000103]
-
-[node name="Zone3_Stretcher1" type="CharacterBody2D" parent="World/Mechanisms" unique_id=2000104]
-position = Vector2(2201, 625)
-script = ExtResource("7_stretcher")
-move_speed = 70.0
-patrol_distance = 130.0
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone3_Stretcher1" unique_id=2000105]
-position = Vector2(0, -22)
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("18_stretcher_tex")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_Stretcher1" unique_id=2000106]
-position = Vector2(0, 10)
-shape = SubResource("Rect_stretcher_solid")
-
-[node name="HurtArea" type="Area2D" parent="World/Mechanisms/Zone3_Stretcher1" unique_id=2000107]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_Stretcher1/HurtArea" unique_id=2000108]
-position = Vector2(0, -10)
-shape = SubResource("Rect_stretcher_hazard")
-
-[node name="Zone3_Stretcher2" type="CharacterBody2D" parent="World/Mechanisms" unique_id=2000109]
-position = Vector2(2702, 629)
-script = ExtResource("7_stretcher")
-move_speed = 85.0
-patrol_distance = 140.0
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone3_Stretcher2" unique_id=2000110]
-position = Vector2(-2, -26)
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("18_stretcher_tex")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_Stretcher2" unique_id=2000111]
-position = Vector2(0, 10)
-shape = SubResource("Rect_stretcher_solid")
-
-[node name="HurtArea" type="Area2D" parent="World/Mechanisms/Zone3_Stretcher2" unique_id=2000112]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_Stretcher2/HurtArea" unique_id=2000113]
-position = Vector2(0, -10)
-shape = SubResource("Rect_stretcher_hazard")
-
-[node name="Zone3_CurtainGate_B" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000230]
-position = Vector2(2950, 500)
-collision_mask = 0
-script = ExtResource("38_curtain_gate")
-
-[node name="CurtainSprite" type="Sprite2D" parent="World/Mechanisms/Zone3_CurtainGate_B" unique_id=2000231]
-scale = Vector2(0.55, 0.65)
-texture = ExtResource("20_curtain")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_CurtainGate_B" unique_id=2000232]
-shape = SubResource("Rect_curtain_col")
-
-[node name="Zone3_BroadSwitch_B" type="Area2D" parent="World/Mechanisms" unique_id=2000233]
-position = Vector2(3447, 279)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 操作观察廊连桥机关开启下层门帘"
-target_nodes = Array[NodePath]([NodePath("../Zone3_CurtainGate_B")])
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone3_BroadSwitch_B" unique_id=2000234]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_BroadSwitch_B" unique_id=2000235]
-shape = SubResource("Rect_switch_area")
-
-[node name="Zone3_LightTarget_C" type="Area2D" parent="World/Mechanisms" unique_id=2000236]
-position = Vector2(3150, 480)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("37_target")
-target_nodes = Array[NodePath]([NodePath("../Zone4_Vine1")])
-
-[node name="LampSprite" type="Sprite2D" parent="World/Mechanisms/Zone3_LightTarget_C" unique_id=2000237]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone3_LightTarget_C" unique_id=2000238]
-shape = SubResource("Circle_light_target")
-
-[node name="Zone4_Vine1" type="Node2D" parent="World/Mechanisms" unique_id=2000116]
-position = Vector2(3255, 9)
-script = ExtResource("8_vine")
-drop_interval = 2.2
-
-[node name="VineSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_Vine1" unique_id=2000117]
-position = Vector2(0, 25)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="Zone4_Vine2" type="Node2D" parent="World/Mechanisms" unique_id=2000118]
-position = Vector2(2801, 2)
-script = ExtResource("8_vine")
-drop_interval = 2.0
-initial_delay = 1.0
-
-[node name="VineSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_Vine2" unique_id=2000119]
-position = Vector2(0, 25)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="Zone4_Vine3" type="Node2D" parent="World/Mechanisms" unique_id=2000120]
-position = Vector2(3755, 9)
-script = ExtResource("8_vine")
-
-[node name="VineSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_Vine3" unique_id=2000121]
-position = Vector2(0, 25)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="Zone4_FanLauncher1" type="Node2D" parent="World/Mechanisms" unique_id=2000122]
-position = Vector2(3380, 530)
-script = ExtResource("4_launcher")
-launch_mode = 1
-fire_interval = 2.6
-bullet_speed = 210.0
-fan_spread_angle_deg = 25.0
-
-[node name="Zone4_FanLauncher2" type="Node2D" parent="World/Mechanisms" unique_id=2000123]
-position = Vector2(3680, 530)
-script = ExtResource("4_launcher")
-launch_mode = 1
-fire_interval = 2.6
-initial_delay = 1.3
-bullet_speed = 210.0
-fan_spread_angle_deg = 25.0
-
-[node name="Zone4_IronGrate" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000240]
-position = Vector2(4110, 252)
-collision_mask = 0
-script = ExtResource("39_iron_grate")
-
-[node name="GrateSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_IronGrate" unique_id=2000241]
-scale = Vector2(0.4, 0.5)
-texture = ExtResource("19_cabinet")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone4_IronGrate" unique_id=2000242]
-shape = SubResource("Rect_grate_col")
-
-[node name="Zone4_WardControl_A" type="Area2D" parent="World/Mechanisms" unique_id=2000243]
-position = Vector2(3812, 275)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 操作病栋核心控制台削弱散射弹幕"
-target_nodes = Array[NodePath]([NodePath("../Zone4_FanLauncher2")])
-target_method_on_activate = "disable_temporary"
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone4_WardControl_A" unique_id=2000244]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone4_WardControl_A" unique_id=2000245]
-position = Vector2(2, 4)
-shape = SubResource("Rect_switch_area")
-
-[node name="Zone4_LightTarget_D" type="Area2D" parent="World/Mechanisms" unique_id=2000246]
-position = Vector2(3970, 424)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("37_target")
-disable_duration = 6.0
-target_nodes = Array[NodePath]([NodePath("../Zone4_IronGrate")])
-target_method_on_hit = "open"
-
-[node name="LampSprite" type="Sprite2D" parent="World/Mechanisms/Zone4_LightTarget_D" unique_id=2000247]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("21_light")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone4_LightTarget_D" unique_id=2000248]
-shape = SubResource("Circle_light_target")
-
-[node name="DreamMarrowNode" type="Area2D" parent="World/Mechanisms" unique_id=2000124]
-position = Vector2(4523, 505)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("11_marrow")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/DreamMarrowNode" unique_id=2000125]
-shape = SubResource("Circle_marrow")
-
-[node name="BarrierCollider" type="StaticBody2D" parent="World/Mechanisms/DreamMarrowNode" unique_id=2000126]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/DreamMarrowNode/BarrierCollider" unique_id=2000127]
-shape = SubResource("Rect_marrow_barrier")
-
-[node name="PromptLabel" type="Label" parent="World/Mechanisms/DreamMarrowNode" unique_id=2000128]
+[node name="SignalBeacon" type="Area2D" parent="World/Mechanisms" unique_id=2000301]
 visible = false
-offset_left = -80.0
-offset_top = -65.0
-offset_right = 80.0
-offset_bottom = -40.0
-text = "按 E 激活梦髓"
+position = Vector2(1350, 560)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("49_signal_beacon")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/SignalBeacon" unique_id=2000302]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("25_broad")
+
+[node name="Light" type="Sprite2D" parent="World/Mechanisms/SignalBeacon" unique_id=2000303]
+position = Vector2(0, -25)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("21_light")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/SignalBeacon" unique_id=2000304]
+shape = SubResource("Rect_signal_beacon")
+
+[node name="PromptLabel" type="Label" parent="World/Mechanisms/SignalBeacon" unique_id=2000305]
+visible = false
+offset_left = -90.0
+offset_top = -60.0
+offset_right = 90.0
+offset_bottom = -35.0
+text = "按 E 激活破界信号"
 horizontal_alignment = 1
 
-[node name="Zone5_BroadSwitch_C1" type="Area2D" parent="World/Mechanisms" unique_id=2000250]
-position = Vector2(4300, 250)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 抑制梦髓左侧交叉火线 (6秒)"
-is_one_shot = false
-active_duration = 6.0
-target_nodes = Array[NodePath]([NodePath("../Zone5_CrossEmitter1")])
-target_method_on_activate = "disable_temporary"
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone5_BroadSwitch_C1" unique_id=2000251]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone5_BroadSwitch_C1" unique_id=2000252]
-shape = SubResource("Rect_switch_area")
-
-[node name="Zone5_BroadSwitch_C2" type="Area2D" parent="World/Mechanisms" unique_id=2000253]
-position = Vector2(4800, 250)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("36_switch")
-prompt_text = "按 E 抑制梦髓右侧交叉火线 (6秒)"
-is_one_shot = false
-active_duration = 6.0
-target_nodes = Array[NodePath]([NodePath("../Zone5_CrossEmitter2")])
-target_method_on_activate = "disable_temporary"
-
-[node name="Sprite2D" type="Sprite2D" parent="World/Mechanisms/Zone5_BroadSwitch_C2" unique_id=2000254]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("25_broad")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/Zone5_BroadSwitch_C2" unique_id=2000255]
-shape = SubResource("Rect_switch_area")
-
-[node name="Zone5_CrossEmitter1" type="Node2D" parent="World/Mechanisms" unique_id=2000129]
-position = Vector2(4280, 500)
-script = ExtResource("4_launcher")
-fire_direction = Vector2(1, 0)
-fire_interval = 2.0
-bullet_speed = 200.0
-
-[node name="Zone5_CrossEmitter2" type="Node2D" parent="World/Mechanisms" unique_id=2000130]
-position = Vector2(4780, 500)
-script = ExtResource("4_launcher")
-fire_interval = 2.0
-initial_delay = 1.0
-bullet_speed = 200.0
-
-[node name="Zone5_CrossEmitter3" type="Node2D" parent="World/Mechanisms" unique_id=2000131]
-position = Vector2(4530, 240)
-script = ExtResource("4_launcher")
-launch_mode = 2
-fire_interval = 2.2
-bullet_speed = 220.0
-
-[node name="WardExitDoor" type="StaticBody2D" parent="World/Mechanisms" unique_id=2000132]
-position = Vector2(4920, 480)
-collision_mask = 0
-script = ExtResource("12_exit_door")
-
-[node name="DoorSprite" type="Sprite2D" parent="World/Mechanisms/WardExitDoor" unique_id=2000133]
-position = Vector2(104, 72)
-scale = Vector2(0.6, 0.75)
-texture = ExtResource("19_cabinet")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Mechanisms/WardExitDoor" unique_id=2000134]
-position = Vector2(261, 57)
-shape = SubResource("Rect_door_col")
+[node name="Nurse" parent="World" unique_id=2000600 instance=ExtResource("50_nurse")]
+position = Vector2(2539, 285)
 
 [node name="Portals" type="Node2D" parent="World" unique_id=2000140]
 
@@ -784,7 +396,8 @@ interaction_hint_text = "按 E 返回暮息庭院"
 shape = SubResource("Rect_portal")
 
 [node name="ExitPortal" type="Area2D" parent="World/Portals" unique_id=2000143]
-position = Vector2(5050, 500)
+visible = false
+position = Vector2(2750, 500)
 collision_layer = 0
 script = ExtResource("31_portal")
 destination_level = &"vespervale_garden"
@@ -794,20 +407,20 @@ interaction_hint_enabled = true
 interaction_hint_text = "按 E 离开梦疗院"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/ExitPortal" unique_id=2000144]
-position = Vector2(-5, 35)
+position = Vector2(59, 33)
 shape = SubResource("Rect_portal")
 
 [node name="EntryPoints" type="Node2D" parent="." unique_id=2000170]
 
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=2000171]
-position = Vector2(250, 520)
+position = Vector2(200, 580)
 
 [node name="from_garden" type="Marker2D" parent="EntryPoints" unique_id=2000172]
-position = Vector2(250, 520)
+position = Vector2(200, 580)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=2000180]
 z_index = 10
-position = Vector2(259, 607)
+position = Vector2(200, 607)
 scale = Vector2(0.61, 0.61)
 collision_mask = 3
 script = ExtResource("26_player")
@@ -820,8 +433,8 @@ script = ExtResource("26_player")
 position = Vector2(0, -80)
 process_callback = 0
 limit_left = 0
-limit_top = -200
-limit_right = 5100
+limit_top = -150
+limit_right = 2880
 limit_bottom = 680
 limit_smoothed = true
 position_smoothing_enabled = true
@@ -831,15 +444,10 @@ left_barrier_path = NodePath("../../WorldBounds/LeftBarrier/CollisionShape2D")
 right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=2000184 instance=ExtResource("30_potions")]
-position = Vector2(-29.508198, -119.67212)
-
-[node name="Holl" type="Sprite2D" parent="Player" unique_id=1580990898]
-position = Vector2(2416.3933, -427.86884)
-scale = Vector2(1.5088282, 1.5088282)
-texture = ExtResource("35_envbn")
+position = Vector2(9.8360615, -8.196712)
 
 [node name="Luca" parent="." unique_id=2000185 instance=ExtResource("42_luca_scene")]
-position = Vector2(280, 300)
+position = Vector2(200, 310)
 scale = Vector2(0.61, 0.61)
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=2000190]
@@ -857,3 +465,9 @@ script = ExtResource("33_pause_host")
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=2000193 instance=ExtResource("34_pause_menu")]
 
 [node name="TopHintUI" parent="PauseMenuLayer" unique_id=2000194 instance=ExtResource("35_top_hint")]
+
+[node name="LetterViewerDialog" parent="." unique_id=2000700 instance=ExtResource("52_letter_dialog")]
+visible = false
+
+[node name="DialLockPuzzleDialog" parent="." unique_id=2000800 instance=ExtResource("54_dial_lock_dialog")]
+visible = false
