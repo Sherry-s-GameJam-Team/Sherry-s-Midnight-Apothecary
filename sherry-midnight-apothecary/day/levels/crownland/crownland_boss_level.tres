@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://shared/definitions/level_data.gd" id="1_level_data"]
+[ext_resource type="PackedScene" path="res://day/levels/crownland/boss.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_level_data")
+id = &"crownland_boss"
+display_name = "王庭·王座之间"
+disaster_name = "黑冠之厄"
+normal_description = "冠冕之下，王国诸路汇聚于此。"
+corrupted_description = "黑魔法缠绕王座，王冠的残影在殿中苏醒。"
+scene_description = "进入王宫核心的王座之间。"
+content_scene = ExtResource("2_scene")
+default_entry_id = &"from_home"
+native_ingredient_ids = Array[StringName]([])

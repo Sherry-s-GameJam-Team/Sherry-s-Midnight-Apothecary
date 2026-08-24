@@ -279,9 +279,12 @@ func _confirm_selected_destination() -> void:
 	if _selected_index < 0:
 		return
 	var data: Dictionary = destinations[_selected_index]
-	if not can_lock_destination(data, _find_player_data()):
+	var player_data := _find_player_data()
+	if not can_lock_destination(data, player_data):
 		confirm_button.disabled = true
 		return
+	if player_data != null and bool(data.get("scheduled_unlock", false)):
+		player_data.unlock_level(StringName(str(data.get("id", ""))))
 	_set_status_text("ROUTE CONFIRMED: %s" % str(data.get("name", "Unknown")))
 	lever_hint.text = "SIGNAL SENT"
 	lever.set_enabled(false)
@@ -377,7 +380,33 @@ func can_lock_destination(destination_data: Dictionary, player_data: PlayerData)
 	# Standalone map previews do not have shared PlayerData and keep all anchors usable.
 	if player_data == null:
 		return true
+	if bool(destination_data.get("scheduled_unlock", false)):
+		return _meets_scheduled_unlock(destination_data, player_data, _find_current_day())
 	return player_data.has_unlocked_level(StringName(str(destination_data.get("id", ""))))
+
+
+func _meets_scheduled_unlock(destination_data: Dictionary, player_data: PlayerData, current_day: int) -> bool:
+	if current_day < 0 or current_day < int(destination_data.get("unlock_day", 0)):
+		return false
+	var required_flag := StringName(str(destination_data.get("unlock_flag", "")))
+	if required_flag == &"":
+		return true
+	if str(destination_data.get("unlock_flag_source", "event")) == "tutorial":
+		return bool(player_data.tutorial_flags.get(str(required_flag), false))
+	return player_data.has_event_flag(required_flag)
+
+
+func _find_current_day() -> int:
+	var current: Node = self
+	while current != null:
+		if current is DayRuntime:
+			return (current as DayRuntime).day
+		current = current.get_parent()
+	if is_inside_tree():
+		for candidate: Node in get_tree().root.find_children("*", "", true, false):
+			if candidate is DayRuntime:
+				return (candidate as DayRuntime).day
+	return -1
 
 
 func _show_alignment_tutorial_if_needed() -> void:

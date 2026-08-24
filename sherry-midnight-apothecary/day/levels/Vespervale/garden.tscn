@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dj6fdff0dvuy" path="res://day/levels/Vespervale/cover1.png" id="5_1iu5j"]
 [ext_resource type="Texture2D" uid="uid://sg467q6k33ar" path="res://day/levels/Vespervale/real_garden.png" id="6_real_garden"]
 [ext_resource type="Texture2D" uid="uid://wx1yvtrpukbh" path="res://day/levels/Vespervale/dream_garden.png" id="7_dream_garden"]
+[ext_resource type="Texture2D" uid="uid://bgep4fghcf6u3" path="res://day/levels/Vespervale/ghostroom.png" id="8_y3atu"]
 [ext_resource type="Texture2D" uid="uid://cjw6jnubdfngh" path="res://day/levels/Vespervale/church.png" id="10_church"]
 [ext_resource type="Texture2D" uid="uid://ch5a2ypwbpotw" path="res://day/levels/Vespervale/sleep_npcs.png" id="11_sleep_npcs"]
 [ext_resource type="Script" uid="uid://n85j8ceq2c2y" path="res://shared/player/day_player_controller.gd" id="12_player"]
@@ -23,6 +24,7 @@
 [ext_resource type="Resource" uid="uid://c6kchle2udkc5" path="res://day/levels/Vespervale/vespervale_day_five_intro.dialogue" id="22_day_five_dialogue"]
 [ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="23_luca_scene"]
 [ext_resource type="Script" path="res://day/levels/Vespervale/vespervale_luca_follow.gd" id="24_luca_follow"]
+[ext_resource type="Script" uid="uid://bmyu82vebf524" path="res://day/levels/Vespervale/vespervale_night_portal.gd" id="25_night_portal"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/dusk_water_opuntia/dusk_water_opuntia_herb.tscn" id="herb_0"]
 [ext_resource type="PackedScene" path="res://day/interactables/herb/herbs/vesper_blue_thicket/vesper_blue_thicket_herb.tscn" id="herb_1"]
 [ext_resource type="Script" uid="uid://dbnn32ij56vj1" path="res://day/interactables/herb/herb_spawn_director.gd" id="herb_director"]
@@ -136,16 +138,22 @@ polygon = PackedVector2Array(2866, 201, 3827, 208, 3829, 28, 4605, 23, 4472, -21
 [node name="Portals" type="Node2D" parent="World" unique_id=901072933]
 
 [node name="EntrancePortal" type="Area2D" parent="World/Portals" unique_id=1265216675]
-position = Vector2(91, 496)
+position = Vector2(222, 423)
 collision_layer = 0
-script = ExtResource("17_portal")
+script = ExtResource("25_night_portal")
 destination_level = &"home"
 destination_entry_id = &"from_vespervale"
 fallback_scene_path = "res://day/levels/home/home.tscn"
 interaction_hint_enabled = true
 interaction_hint_text = "按 E 返回雪莉药水铺"
 
+[node name="PortalVisual" type="Sprite2D" parent="World/Portals/EntrancePortal" unique_id=1265216676]
+position = Vector2(25, 19)
+scale = Vector2(-0.52, 0.52)
+texture = ExtResource("8_y3atu")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Portals/EntrancePortal" unique_id=1395027487]
+position = Vector2(149, 107)
 shape = SubResource("Rect_portal")
 
 [node name="ChurchPortal" type="Area2D" parent="World/Portals" unique_id=1174752081]

@@ -39,6 +39,7 @@ const LEVELS: Array[LevelData] = [
 	preload("res://day/levels/Vespervale/vespervale_inner_level.tres"),
 	preload("res://day/levels/Vespervale/vesper_boss_level.tres"),
 	preload("res://day/levels/crownland/crownland_level.tres"),
+	preload("res://day/levels/crownland/crownland_boss_level.tres"),
 ]
 
 # Home is available through its door, but does not consume a day in the normal

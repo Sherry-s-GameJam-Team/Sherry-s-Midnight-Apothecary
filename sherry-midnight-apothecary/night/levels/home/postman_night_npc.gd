@@ -50,7 +50,10 @@ func on_level_entered(_entry_id: StringName = &"default") -> void:
 
 
 func trigger_auto_intro() -> void:
-	if not _interaction_enabled or _dialogue_open:
+	if not is_inside_tree() or not _interaction_enabled or _dialogue_open:
+		return
+	var dialogue_manager := get_node_or_null("/root/DialogueManager")
+	if dialogue_manager == null:
 		return
 	var player_data := _find_player_data()
 	if player_data != null and (player_data.has_event_flag(INTRO_FLAG) or player_data.has_event_flag(COMPLETED_FLAG)):
@@ -142,6 +145,9 @@ func _deliver_orange_potion() -> void:
 	player_data.set_event_flag(COMPLETED_FLAG)
 	player_data.set_event_flag(&"story_event_completed:special_orange_customer")
 	player_data.set_event_flag(&"orange_potion_unlocked")
+	player_data.set_event_flag(&"aurem_clockyard_portal_unlocked")
+	player_data.set_event_flag(&"aurem_portal_key_calibrated")
+	player_data.unlock_level(&"aurem_clockyard")
 	player_data.unlock_potion_recipe(&"recipe_orange_activation_draft")
 	player_data.unlock_codex_function(&"func_vigor_boost")
 	player_data.unlock_codex_function(&"func_muscle_active")
@@ -169,12 +175,13 @@ func _finish_dialogue() -> void:
 
 
 func _acquire_modal_lock() -> void:
-	_modal_lock_was_set = get_tree().has_meta("day_modal_input_locked")
-	get_tree().set_meta("day_modal_input_locked", true)
+	if get_tree() != null:
+		_modal_lock_was_set = get_tree().has_meta("day_modal_input_locked")
+		get_tree().set_meta("day_modal_input_locked", true)
 
 
 func _release_modal_lock() -> void:
-	if get_tree() != null and not _modal_lock_was_set:
+	if get_tree() != null and not _modal_lock_was_set and get_tree().has_meta("day_modal_input_locked"):
 		get_tree().remove_meta("day_modal_input_locked")
 
 

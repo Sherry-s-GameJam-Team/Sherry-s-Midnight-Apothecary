@@ -222,16 +222,25 @@ text = "✦ 维斯佩尔梦疗院已被净化 ✦"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TransitionFade" type="ColorRect" parent="UI" unique_id=2001275]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=2001280]
 layer = 120
-visible = false
 
 [node name="DeveloperConsole" parent="DebugUI" unique_id=2001281 instance=ExtResource("11_console")]
 
 [node name="PauseMenuLayer" type="CanvasLayer" parent="." unique_id=2001282]
 process_mode = 3
 layer = 100
-visible = false
 script = ExtResource("12_pause_host")
 
 [node name="PauseMenu" parent="PauseMenuLayer" unique_id=2001283 instance=ExtResource("13_pause_menu")]

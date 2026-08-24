@@ -155,6 +155,9 @@ shape = SubResource("Rect_barrier")
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=1809526136]
 position = Vector2(360, 560)
 
+[node name="from_home" type="Marker2D" parent="EntryPoints"]
+position = Vector2(360, 560)
+
 [node name="from_town" type="Marker2D" parent="EntryPoints" unique_id=1352652808]
 position = Vector2(360, 560)
 

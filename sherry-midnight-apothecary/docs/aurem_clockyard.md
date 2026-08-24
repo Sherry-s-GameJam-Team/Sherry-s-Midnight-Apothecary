@@ -63,6 +63,14 @@ Inside (AuremClocktowerInsideLevel)
 
 ---
 
+## 战后采集与维斯佩尔衔接
+
+赫利昂清除后返回外庭，机械大棚才会生成三个固定采集点并显示 `TopHintUI` 进度。第三株触发远钟、紫色路灯与塞蕾娜幻影剧情，随后关闭普通返家/返塔传送门并开放右侧旧石道；向左的空间闭环是可选的一次性事件。
+
+旧石道进入内部关卡 `aurem_vespervale_transition`。玩家控制雪莉与实体跟随的卢卡连续向右步行约 39 秒，终点跳过本晚经营，将 Day 4 直接推进到 Day 5 的 `vespervale_garden/default`。详细状态标记和流程接口见 [奥勒姆钟庭战后采集与维斯佩尔过渡](aurem_vespervale_transition.md)。
+
+---
+
 ## 楠岃瘉
 杩愯鐙珛鑷姩鍖栨祴璇曪細
 ```powershell

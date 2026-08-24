@@ -59,6 +59,7 @@ static func run(test: TestSupport) -> void:
 		"res://day/levels/Vespervale/boss/vesper_director_boss.tscn",
 		"res://day/levels/Vespervale/boss/boss_dream_grasp_tracker.tscn",
 		"res://day/levels/Vespervale/boss/boss_beam_hazard.tscn",
+		"res://day/levels/Aurem Clockyard/aurem_vespervale_transition.tscn",
 	]:
 
 		var scene := load(scene_path) as PackedScene
@@ -83,6 +84,8 @@ static func run(test: TestSupport) -> void:
 		"res://day/levels/home/day_one_bedroom_luca.dialogue",
 		"res://day/levels/Vespervale/vespervale_day_five_intro.dialogue",
 		"res://day/levels/Vespervale/vespervale_inner_entry.dialogue",
+		"res://day/levels/Aurem Clockyard/aurem_vespervale_transition_level.tres",
+		"res://day/levels/Aurem Clockyard/aurem_post_boss.dialogue",
 		"res://minigames/minigames/miasma_purifier/scenes/miasma_purifier_osu_minigame.tscn",
 	]:
 		test.expect(load(resource_path) != null, "%s can be loaded." % resource_path)

@@ -33,6 +33,7 @@ func _ready() -> void:
 	_update_visual_states()
 	_setup_abyss_hazard()
 	_setup_npc_interaction()
+	_sync_cleared_state()
 
 	var top_hint := _find_top_hint()
 	if top_hint != null and top_hint.has_method("hide_interaction_hint"):
@@ -45,18 +46,55 @@ func on_level_entered(entry_id: StringName) -> void:
 	if top_hint != null and top_hint.has_method("hide_interaction_hint"):
 		top_hint.call("hide_interaction_hint", "vespervale_sleep_npc")
 
-	match String(entry_id):
-		"church":
-			_last_checkpoint_pos = Vector2(3160, 520)
-			objective_updated.emit("抵达静语礼堂前庭。", "观察沉睡的旅人并寻找唤醒梦魇的调和药剂。")
-		"garden":
-			_last_checkpoint_pos = Vector2(2400, 520)
-			objective_updated.emit("漫步于暮息庭院。", "调查梦境侵蚀的花架与沉睡植株。")
-		_:
-			_last_checkpoint_pos = Vector2(250, 520)
-			objective_updated.emit("踏入暮息庭院。", "沿着暮光石径向东探索梦息花园与静语礼堂。")
+	_sync_cleared_state()
+
+	var data := get_player_data()
+	var boss_cleared := false
+	if data != null and data.tutorial_flags != null:
+		boss_cleared = bool(data.tutorial_flags.get("vespervale_boss_cleared", false)) or bool(data.tutorial_flags.get("vespervale_garden_cleansed", false))
+
+	if boss_cleared:
+		_last_checkpoint_pos = Vector2(3160, 520)
+		objective_updated.emit("维斯佩尔梦疗院已净化！", "梦境消散，沉睡者已苏醒。前往左侧传送门返回药水铺开启晚间营业。")
+	else:
+		match String(entry_id):
+			"church":
+				_last_checkpoint_pos = Vector2(3160, 520)
+				objective_updated.emit("抵达静语礼堂前庭。", "观察沉睡的旅人并寻找唤醒梦魇的调和药剂。")
+			"garden":
+				_last_checkpoint_pos = Vector2(2400, 520)
+				objective_updated.emit("漫步于暮息庭院。", "调查梦境侵蚀的花架与沉睡植株。")
+			_:
+				_last_checkpoint_pos = Vector2(250, 520)
+				objective_updated.emit("踏入暮息庭院。", "沿着暮光石径向东探索梦息花园与静语礼堂。")
 	if day_five_intro != null:
 		day_five_intro.begin_for_entry(entry_id)
+
+
+func _sync_cleared_state() -> void:
+	var data := get_player_data()
+	var boss_cleared := false
+	if data != null and data.tutorial_flags != null:
+		boss_cleared = bool(data.tutorial_flags.get("vespervale_boss_cleared", false)) or bool(data.tutorial_flags.get("vespervale_garden_cleansed", false))
+
+	if boss_cleared:
+		is_garden_purified = true
+		_update_visual_states()
+		# Hide all NPCs in garden
+		var npcs_node := get_node_or_null("World/NPCs")
+		if npcs_node != null:
+			npcs_node.visible = false
+			for child in npcs_node.get_children():
+				if child is Area2D:
+					child.monitoring = false
+					child.collision_mask = 0
+		_player_in_npc_area = false
+		var top_hint := _find_top_hint()
+		if top_hint != null and top_hint.has_method("hide_interaction_hint"):
+			top_hint.call("hide_interaction_hint", "vespervale_sleep_npc")
+
+	if entrance_portal != null and entrance_portal.has_method("update_portal_state"):
+		entrance_portal.call("update_portal_state")
 
 
 func set_corrupted(corrupted: bool) -> void:

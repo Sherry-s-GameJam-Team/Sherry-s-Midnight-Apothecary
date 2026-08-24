@@ -427,6 +427,9 @@ func _enable_player_precision_hitbox(enabled: bool) -> void:
 func _on_boss_purified() -> void:
 	is_battle_active = false
 	boss_battle_completed.emit()
+	var player_data := get_player_data()
+	if player_data != null:
+		player_data.tutorial_flags["crimson_vale_gate_restored"] = true
 	_enable_player_precision_hitbox(false)
 	objective_updated.emit("【血叶猎王·阿尔凯昂】净化完成！", "丹心门已恢复。靠近大门并按[E]返回药水铺，开始晚间营业。")
 

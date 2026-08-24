@@ -32,3 +32,13 @@ Town 的 `issueDay1` 在非剧情期不可见，且会在剧情完成后再次�
 `day_one_bedroom_luca_urgent.tres` 是卧室内的第一日 Luca 事件。第 1 天进入 Bedroom 时，`DayOneLuca` 演出节点会取代 `SleepToWake`：黑屏渐显出完整卧室，Luca 从右侧走到床前，再自动派发 `day_one_luca_urgent` 并播放对话。此节点没有 E 键交互范围，也不会拦截卧室出口；对话完成后记录事件完成标记并设置当天“调查流明街广场的红色喷泉”任务。该天后续进入直接显示卧室；其余日期仍使用通常的起床演出。
 
 `village_day_two_down.tres` 是涟汀村的第二日交互事件。它要求 `mew_order_delivered` 已由喵斯订单对话写入，以及库存中至少有 5 个 `village_rope_spool`；`issues` 本地控制器只会在该日显示，并在玩家自左向右越过 `issues/down` 时派发事件。`CS/rope` 下的 6 个贴图可在靠近时高光并按 E 收集，且每盘只会被持久收集一次。未完成订单时，它优先通过共享 `TopHintUI` 显示“请先交付订单给顾客”；订单已完成但纤绳不足时显示“目前还差 N 盘纤绳”。事件播放 `res://characters/mew/mew.dialogue` 的 `question_menu` 标题，并在派发后显示 `CS/saved/IdleLoop`。
+
+## 第三日夜晚钟庭邮差事件（橙色活化药水）
+
+`night/levels/home/postman_night_npc.gd` 与 `postman_day_three.dialogue` 定义第三日夜晚药铺主厅的特殊顾客事件：
+1. **触发时机**：`day == 3` 处于夜晚大厅（`home`）时自动触发 `special_orange_customer` 开场剧情。奥雷姆钟庭第七码段邮递员（`res://characters/postman/stand.png`）进店求取让停滞身体恢复运转的药剂，引导调色提示（红 + 黄 → 橙）。
+2. **炼药与交付流程**：
+   - 首次开场对话结束后，邮差驻留在药铺大厅中等待。
+   - 玩家可前往工作台配制橙色活化药水；持有药水时靠近按 `[E]` 交谈选择交付选项。
+   - 交付成功触发恢复剧情，扣除 1 瓶橙色药水，记录完成标记 `special_orange_customer_completed`，解锁配方 `recipe_orange_activation_draft`、药典功能（`func_vigor_boost`、`func_muscle_active`）及投掷药水解锁，并通过顶部/横幅提示显示 `【药典新增：活化 / 体力恢复】`。
+   - **钟庭旅门密钥校准**：对话末尾邮差使用携带的紧急维护实体校准密钥接入药铺旅门终端，写入奥雷姆钟塔门认证与坐标，激活奥雷姆钟庭传送门（设置 `aurem_clockyard_portal_unlocked` / `aurem_portal_key_calibrated`，解锁 `aurem_clockyard` 地图节点）。

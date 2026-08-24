@@ -55,7 +55,9 @@ static func run(test: TestSupport) -> void:
 	npc.call("_deliver_orange_potion")
 
 	test.expect_equal(player_data.potion_count(&"orange_potion"), 0, "Delivering orange potion consumes 1 bottle.")
-	test.expect(player_data.has_event_flag(&"special_orange_customer_completed"), "Special order completion flag is set.")
+	test.expect(player_data.has_event_flag(&"aurem_clockyard_portal_unlocked"), "Aurem Clockyard portal flag is set.")
+	test.expect(player_data.has_event_flag(&"aurem_portal_key_calibrated"), "Portal key calibrated flag is set.")
+	test.expect(player_data.has_unlocked_level(&"aurem_clockyard"), "Aurem Clockyard level is unlocked.")
 	test.expect(player_data.is_potion_recipe_unlocked(&"recipe_orange_activation_draft"), "Orange potion recipe is unlocked.")
 	test.expect(player_data.codex_unlocked_function_ids.has(&"func_vigor_boost"), "Codex function func_vigor_boost is unlocked.")
 	test.expect(player_data.codex_unlocked_function_ids.has(&"func_muscle_active"), "Codex function func_muscle_active is unlocked.")

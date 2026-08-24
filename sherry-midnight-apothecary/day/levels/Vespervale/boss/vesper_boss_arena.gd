@@ -100,7 +100,16 @@ func _on_dream_tide_state_changed(is_tide: bool) -> void:
 func _on_boss_defeated() -> void:
 	is_victory = true
 	is_battle_active = false
+	var player_data := get_player_data()
+	if player_data != null:
+		player_data.set_event_flag(&"vespervale_boss_defeated")
+		if player_data.tutorial_flags != null:
+			player_data.tutorial_flags["vespervale_boss_cleared"] = true
+			player_data.tutorial_flags["vespervale_garden_cleansed"] = true
 	boss_battle_ended.emit(true)
+
+	# Lock player controls during victory transition
+	_set_player_control(false)
 
 	# Clear active bullets and hazards
 	var bullet_layer := get_node_or_null("BulletLayer")
@@ -113,19 +122,48 @@ func _on_boss_defeated() -> void:
 		for child in hazard_layer.get_children():
 			child.queue_free()
 
-	# Show victory banner
+	# Show victory banner & automatically fade to black
+	var tw := create_tween()
 	if victory_banner != null:
 		victory_banner.visible = true
 		victory_banner.modulate.a = 0.0
-		var tw := create_tween()
 		tw.tween_property(victory_banner, "modulate:a", 1.0, 0.6)
-		tw.tween_interval(2.5)
-		tw.tween_property(victory_banner, "modulate:a", 0.0, 0.8)
+		tw.tween_interval(2.0)
+	else:
+		tw.tween_interval(1.5)
 
-	# Unlock exit portal
-	if exit_portal != null:
-		exit_portal.visible = true
-		exit_portal.monitoring = true
-		exit_portal.modulate.a = 0.0
-		var tw2 := create_tween()
-		tw2.tween_property(exit_portal, "modulate:a", 1.0, 0.6)
+	var fade_rect: ColorRect = get_node_or_null("UI/TransitionFade") as ColorRect
+	if fade_rect != null:
+		fade_rect.visible = true
+		fade_rect.modulate.a = 0.0
+		tw.tween_property(fade_rect, "modulate:a", 1.0, 0.8)
+	else:
+		tw.tween_interval(0.8)
+
+	tw.finished.connect(_transition_back_to_garden)
+
+
+func _transition_back_to_garden() -> void:
+	var runtime := _find_day_runtime()
+	if runtime != null:
+		if runtime.has_method("transition_to_level_with_blackout"):
+			runtime.call("transition_to_level_with_blackout", "vespervale_garden", &"church", true)
+		else:
+			runtime.switch_to_level("vespervale_garden", &"church")
+		return
+
+	# Standalone fallback:
+	get_tree().set_meta("pending_entry_id", &"church")
+	get_tree().change_scene_to_file("res://day/levels/Vespervale/garden.tscn")
+
+
+func _find_day_runtime() -> Node:
+	var current: Node = get_parent()
+	while current != null:
+		if current.has_method("switch_to_level") or current.has_method("finish_day"):
+			return current
+		current = current.get_parent()
+	var root := get_tree().root if get_tree() != null else null
+	if root != null:
+		return root.find_child("DayRuntime", true, false)
+	return null

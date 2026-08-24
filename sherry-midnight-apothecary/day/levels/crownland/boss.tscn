@@ -92,6 +92,9 @@ shape = SubResource("wall_shape")
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=1517923074]
 position = Vector2(-470, 570)
 
+[node name="from_home" type="Marker2D" parent="EntryPoints"]
+position = Vector2(-470, 570)
+
 [node name="from_palace" type="Marker2D" parent="EntryPoints" unique_id=502835095]
 position = Vector2(-470, 570)
 

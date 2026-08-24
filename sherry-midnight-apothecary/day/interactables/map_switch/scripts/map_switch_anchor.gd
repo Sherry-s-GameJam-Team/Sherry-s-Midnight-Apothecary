@@ -10,6 +10,9 @@ extends Node2D
 @export var distance_text := "--"
 @export var environment := ""
 @export_multiline var description := ""
+@export_range(0, 30, 1) var unlock_day := 0
+@export var unlock_flag: StringName = &""
+@export_enum("event", "tutorial") var unlock_flag_source := "event"
 
 var _candidate_strength := 0.0
 var _selected := false
@@ -29,7 +32,7 @@ func set_visual_state(candidate_strength: float, selected: bool) -> void:
 	queue_redraw()
 
 func to_destination(fallback: Dictionary = {}) -> Dictionary:
-	return {"id": destination_id if destination_id != &"" else fallback.get("id", StringName(name.to_snake_case())), "name": display_name if not display_name.is_empty() else fallback.get("name", name), "subtitle": subtitle if not subtitle.is_empty() else fallback.get("subtitle", ""), "pos": position, "danger": danger if not danger.is_empty() else fallback.get("danger", "UNKNOWN"), "distance": distance_text if not distance_text.is_empty() else fallback.get("distance", "--"), "environment": environment if not environment.is_empty() else fallback.get("environment", ""), "description": description if not description.is_empty() else fallback.get("description", "")}
+	return {"id": destination_id if destination_id != &"" else fallback.get("id", StringName(name.to_snake_case())), "name": display_name if not display_name.is_empty() else fallback.get("name", name), "subtitle": subtitle if not subtitle.is_empty() else fallback.get("subtitle", ""), "pos": position, "danger": danger if not danger.is_empty() else fallback.get("danger", "UNKNOWN"), "distance": distance_text if not distance_text.is_empty() else fallback.get("distance", "--"), "environment": environment if not environment.is_empty() else fallback.get("environment", ""), "description": description if not description.is_empty() else fallback.get("description", ""), "unlock_day": unlock_day, "unlock_flag": unlock_flag, "unlock_flag_source": unlock_flag_source, "scheduled_unlock": true}
 
 func _draw() -> void:
 	var pulse := 0.5 + 0.5 * sin(_pulse_time * 4.0)

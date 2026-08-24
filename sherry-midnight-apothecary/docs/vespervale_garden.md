@@ -24,10 +24,12 @@
 ### 3. 标准关卡交互与系统集成
 - **角色控制**：内置 `Player` (雪莉白天控制器 `DayPlayerController`、碰撞箱 `SherryCollision`、外表表现 `SherryPresentation` 与药水投掷系统 `PotionThrower`)。
 - **相机边界**：`Camera2D` 搭载 `CameraBounds`，平滑绑定左右世界边界 (`LeftBarrier`, `RightBarrier`)。
-- **界门传送 (DoorPortal)**：
-  - `EntrancePortal`：通向药水铺工坊 (`home`)。
-  - `ChurchPortal`：通向静语礼堂。
-- **NPC 交互**：沉睡的旅人 (`SleepNpcs`)，进入范围显示顶部交互提示 `按 E 观察沉睡的旅人`，按 `E` 触发雪莉与卢卡关于疗养聚落、战争遗留与梦疗院起源的对话剧情 (`vespervale_sleep_npc.dialogue`)。
+- **界门传送与晚间结算 (VespervaleNightPortal)**：
+  - `EntrancePortal`：Boss 战前传送门贴图处于隐藏状态（普通返回雪莉药水铺）。Boss 战胜利净化后，激活并显示发光界门贴图（`cliff_yellow_gate_wayportal_02.png` 悬浮光效），按 `E` 键弹出“结束探索”确认框，确认后调用 `DayRuntime.finish_day()` 结算白天探索并平滑进入**晚间经营/夜晚状态 (Night Home)**。
+  - `ChurchPortal`：通向梦疗院病栋回廊 (`inner.tscn`)。
+- **NPC 交互与战后沉睡者苏醒**：
+  - 战前：沉睡的旅人 (`SleepNpcs`) 倒在路旁，进入范围显示顶部交互提示 `按 E 观察沉睡的旅人`，按 `E` 触发关于疗养聚落起源的对话剧情 (`vespervale_sleep_npc.dialogue`)。
+  - 战后：随着梦疗院核心被净化，所有沉睡 NPC 自动全部隐藏并解除碰撞检测（代表村民摆脱梦境困缚已苏醒离去）。
 - **坠落保护**：底部部署 `AbyssHazard`，失足坠落后造成 1 点伤害并自动复位至最近检查点。
 - **UI 与交互提示系统**：
   - **控制台 (`DebugUI`)**：内嵌 `DeveloperConsole`，支持按 `~` 键快速唤出进行场景跳转、物品与状态修改。
@@ -36,6 +38,7 @@
 
 ### 4. Day 5 初入事件：未醒之谷
 
+- 正常主线从 `aurem_vespervale_transition` 终点以故事跳夜进入：Day 4 直接推进到 Day 5，载入 `vespervale_garden/default`，不会启动当晚的 `NightRuntime`。过渡关只负责上游钟庭至眠谷的连续步行，本场景继续独立拥有下述开场剧情。
 - 仅当 `DayRuntime.day == 5`、且 `vespervale_day_five_first_path_complete` 尚未记录时，从 `default` 或 `from_home` 入口启动。
 - `IssueDay5` 先把雪莉放到 `walkstart`，锁定玩家输入并播放向 `walkend` 的自动步行动画；远方呼唤结束后，水平输入临时收窄为仅可向右。
 - 接近桥前的塞蕾娜幻影后播放 `vespervale_day_five_intro.dialogue` 的 `bridge` 段。塞蕾娜的对话立绘使用 `res://characters/Serena/standee.png`；卢卡拉回雪莉、幻影重影与消散由对白事件驱动。

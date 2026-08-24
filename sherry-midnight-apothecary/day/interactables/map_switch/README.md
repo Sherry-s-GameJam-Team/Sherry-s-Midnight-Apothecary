@@ -4,7 +4,9 @@ Reusable day-mode modal interaction. It renders `MagicMapCanvas` to a 512x512 `S
 
 The authored scene exposes `DimBackground`, `DeviceStage` (`InstrumentSprite`, `CircularDisplay`, `MagicOverlay`, `FixedSelectionCursor`), `MapViewport/MagicMapCanvas`, `DestinationPanel`, and `TravelConfirmLever` directly in the editor. Adjust layout and presentation there; the controller no longer creates these nodes at runtime.
 
-The live map is the authored `data/map.tscn` scene. Its `Map/AnchorPoints/Anchor01` through `Anchor10` nodes are `MapSwitchAnchor` nodes: drag them in the 2D editor to position destinations, then edit each node's `destination_id`, `display_name`, subtitle, danger, distance (shown to players as **盛产作物**), environment, and description in the Inspector.
+The live map is the authored `data/map.tscn` scene. Its ten zero-based `Map/AnchorPoints/Anchor00` through `Anchor09` nodes are `MapSwitchAnchor` nodes: drag them in the 2D editor to position destinations, then edit each node's `destination_id`, `display_name`, subtitle, danger, distance (shown to players as **盛产作物**), environment, description, `unlock_day`, and optional completion flag in the Inspector. Crop text mirrors the destination LevelData/scene's authored harvestables; scenes without harvest points show **无可采作物**.
+
+The authored activation schedule is Day 0 流明街/翡翠原, Day 1 阿尔维斯母树, Day 2 归潮门 plus the post-Tide-Eye 潜息门, Day 3 post-Alkeon 丹心门, Day 4 morning 钟塔门, Day 5 post-Director 眠村, and Day 6 王畿/王座之间. A scheduled anchor becomes confirmable only when the current internal day and its optional `event_flags`/`tutorial_flags` requirement both pass. Confirming it records the destination in `PlayerData.unlocked_levels` before the existing Home route-lock signal is emitted.
 
 The authored map starts at 2x zoom. Once activated, use the mouse wheel inside the circular display to zoom (0.5x–4x) and WASD to pan the map; these controls affect only the modal map.
 
@@ -18,11 +20,11 @@ Before a route is locked, the destination panel shows only the two-line **未锚
 
 ## Home travel routing
 
-`Anchor00` is the Town destination (`market`); `Anchor01` is Grassland (`grassland`). Confirming an unlocked anchor emits `destination_locked`, writes `PlayerData.active_home_destination_id`, and closes the Transformer—it does not change levels immediately. The Home exterior door calls `DayRuntime.travel_from_home()`, which enters the locked level at `EntryPoints/from_home`.
+`Anchor00` is the Town destination (`market`); `Anchor01` is Grassland (`grassland`). Confirming an available anchor emits `destination_locked`, writes `PlayerData.active_home_destination_id`, and closes the Transformer—it does not change levels immediately. The Home exterior door calls `DayRuntime.travel_from_home()`, which enters the locked level at `EntryPoints/from_home`.
 
 Grassland's `HomeDoor` wraps the existing `Door` sprite and returns through Home's `EntryPoints/from_grass` marker.
 
-`PlayerData.unlocked_levels` is the persistent anchor-unlock list; Town and Grassland are unlocked by default. Future objective completion should call `DayRuntime.activate_travel_anchor(level_id)` (or set `DayResult.unlocked_level_id` before `finish_day`) to unlock the next destination. Inactive anchors still show their details, but the **确认锁定** button is disabled and grey. Selecting an unlocked anchor enables it; pressing it emits `destination_locked`, after which the Home door travels to that destination.
+`PlayerData.unlocked_levels` remains the persistent route list; Town and Grassland are unlocked by default. Authored map anchors additionally enforce their day/completion schedule and persist themselves when first confirmed. Other objective-driven routes can still call `DayRuntime.activate_travel_anchor(level_id)` (or set `DayResult.unlocked_level_id` before `finish_day`). Inactive anchors still show their details, but the **确认锁定** button is disabled and grey.
 
 Open `res://day/interactables/map_switch/map_switch_demo.tscn` by itself for visual interaction testing. In normal play, call `AppRoot/GlobalUI/MapSwitchInteraction.open()` from the future world-device interaction.
 

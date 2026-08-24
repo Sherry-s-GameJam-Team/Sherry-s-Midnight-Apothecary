@@ -17,23 +17,22 @@ position = Vector2(496, 654)
 script = ExtResource("2_anchor")
 destination_id = &"market"
 display_name = "流明街"
-subtitle = "圣泉之上的乌托邦"
-danger = "无"
-distance_text = "1 次中继"
-environment = "草原集市"
-description = "埃瑟利亚边陲的自由商镇，因旧旅门贸易兴起，远离两国战火，以夜市、药材与异乡商旅闻名。
-是旅者与怀揣希望之人的归巢。"
+subtitle = "旅者与怀揣希望之人的归巢"
+danger = "★☆☆☆☆"
+distance_text = "无可采作物"
+environment = "边陲商镇"
+description = "埃瑟利亚边陲的自由商镇，因旧旅门贸易兴起，远离两国战火，以夜市、药材与异乡商旅闻名。"
 
 [node name="Anchor01" type="Node2D" parent="AnchorPoints" unique_id=31535025]
 position = Vector2(476, 609)
 script = ExtResource("2_anchor")
 destination_id = &"grassland"
-display_name = "翡翠原·药水铺原址"
-subtitle = "这片原野下所有的离乡者"
-danger = "低"
-distance_text = "1 次中继"
-environment = "草原 / 药草地"
-description = "流明街以北的广阔草原，终年长风不息，是所有离乡者曾经回头瞭望的地方。灵泉衰弱后，草海深处逐渐出现异变。"
+display_name = "翡翠原"
+subtitle = "风与远行者共同经过的原野"
+danger = "★★☆☆☆"
+distance_text = "牧人块树、星屑蒲公英、圣杯百合、露水水囊草、绞索老汉、礼赞五角槭"
+environment = "广阔草原"
+description = "流明街外绵延辽阔的翠色原野，长风终年吹拂草海。旧商道与零散旅门遗迹隐没其中，是东西往来的天然通路。"
 
 [node name="Anchor02" type="Node2D" parent="AnchorPoints" unique_id=1067454492]
 position = Vector2(537, 545)
@@ -41,63 +40,96 @@ script = ExtResource("2_anchor")
 destination_id = &"forest_interior"
 display_name = "阿尔维斯母树"
 subtitle = "万千根脉托起云林之心"
-danger = "中等"
-environment = "云林"
-description = "常霁云林中最古老的巨木，也是整片森林水脉与根系的汇聚之处。只要母树仍有清泉流过，常霁云林便不会真正枯死。"
+danger = "★★★☆☆"
+distance_text = "无可采作物"
+environment = "巨木云林"
+description = "常霁云林中最古老的巨木，庞大树冠与群木相接，根系贯通地下泉脉。林外长雨不息，林下却常有雨霁之景。"
+unlock_day = 1
 
 [node name="Anchor03" type="Node2D" parent="AnchorPoints" unique_id=752553803]
 position = Vector2(513, 403)
 script = ExtResource("2_anchor")
 destination_id = &"golden_cliff"
 display_name = "涟汀村·归潮门"
-subtitle = "湖边浅汀之村"
-danger = "中"
-distance_text = "2 次中继"
-environment = "横崖 / 悬石"
-description = "涟汀村靠近阿里特之泪的下层崖台，过去承担渔获转运、旅人通行与湖岸邮路中转。需穿过重力紊乱的烁金横崖方可抵达。"
+subtitle = "潮来潮往，归舟停泊之处"
+danger = "★★★☆☆"
+distance_text = "坠鸟哨叶、崖巢抱籽草、索道截风麦、采卵人的蜜壶掌"
+environment = "烁金高崖 / 渔村"
+description = "坐落于烁金断崖北缘的古老渔村，房屋沿崖层层而建。以捕鱼、修船与湖上贸易为生，是阿里特之泪的重要港口。"
+unlock_day = 2
 
 [node name="Anchor04" type="Node2D" parent="AnchorPoints" unique_id=155104425]
 position = Vector2(613, 372)
 script = ExtResource("2_anchor")
 destination_id = &"gate_chamber"
-display_name = "潜息门"
-subtitle = "沉默于泪水中的鱼形装置"
-danger = "中等"
-environment = "水下"
-description = "潜息门位于阿里特之泪最深处的旧湖床，原是维阿利亚旅门社为水下航路设置的特殊门站。门体周围设有能够隔绝湖水、维持空气的古老避水装置，供守门人与维修人员长期驻留。"
+display_name = "阿里特之泪·潜息门"
+subtitle = "沉于泪底，为远行者留下一息"
+danger = "★★★★☆"
+distance_text = "无可采作物"
+environment = "构造湖 / 湖底遗迹"
+description = "镶嵌于群崖之间的巨大构造湖，湖水澄青幽深。湖底分布古老水道、沉没遗迹与维阿利亚留下的水下门站。"
+unlock_day = 2
+unlock_flag = &"lake_bottom_tide_eye_defeated"
 
 [node name="Anchor05" type="Node2D" parent="AnchorPoints" unique_id=78806156]
 position = Vector2(659, 314)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_05"
-display_name = "Anchor 05"
+destination_id = &"crimson_vale"
+display_name = "绯红绝谷·丹心门"
+subtitle = "万叶如火，而谷风长鸣之地"
+danger = "★★★★☆"
+distance_text = "枫心乌脉、枫髓辰晶、驿灯垂果"
+environment = "枫叶峡谷"
+description = "夹在赤色山崖间的狭长谷地，以大片绯红古枫闻名。谷中盛产枫脂、药材与染料，强劲山风终年穿行其间。"
+unlock_day = 3
+unlock_flag = &"crimson_vale_gate_restored"
+unlock_flag_source = "tutorial"
 
 [node name="Anchor06" type="Node2D" parent="AnchorPoints" unique_id=1469521683]
 position = Vector2(616, 216)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_06"
-display_name = "Anchor 06"
+destination_id = &"aurem_clockyard"
+display_name = "奥雷姆钟庭·钟塔门"
+subtitle = "所有时刻都在此被丈量"
+danger = "★★★★☆"
+distance_text = "刻阳花、垂灯钟伞、晨轮晶冠"
+environment = "魔法机械城"
+description = "围绕巨型中央钟塔建立的古老工艺聚落。黄铜机械、钟桥与琥珀温室遍布街区，全城依统一发条节律运转。"
+unlock_day = 4
 
 [node name="Anchor07" type="Node2D" parent="AnchorPoints" unique_id=989418085]
 position = Vector2(706, 195)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_07"
-display_name = "Anchor 07"
+destination_id = &"vespervale_garden"
+display_name = "维斯佩尔眠谷·眠村"
+subtitle = "所有未醒之梦汇入的山谷"
+danger = "★★★★☆"
+distance_text = "昏光水囊掌、晚祷蓝荆"
+environment = "暮色山谷 / 疗养村"
+description = "深藏山岭间的静谧疗养谷，以紫色灵脉、梦疗术与安神药草闻名。村落、疗养院与暮祷建筑散布于长久暮色中。"
+unlock_day = 5
+unlock_flag = &"vespervale_boss_defeated"
 
 [node name="Anchor08" type="Node2D" parent="AnchorPoints" unique_id=598385129]
-position = Vector2(451, 255)
+position = Vector2(797, 190)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_08"
-display_name = "Anchor 08"
+destination_id = &"crownland"
+display_name = "王畿·空与流光之屋原址"
+subtitle = "旧日流光曾照亮万千远路"
+danger = "★★★★★"
+distance_text = "无可采作物"
+environment = "王都外环 / 古旅门遗址"
+description = "位于阿斯特里昂王畿的古老旅门据点遗址，曾是王都重要的旅人与邮路集散地，如今仍留有昔日门阵与白石建筑痕迹。"
+unlock_day = 6
 
 [node name="Anchor09" type="Node2D" parent="AnchorPoints" unique_id=1087916940]
-position = Vector2(805, 133)
+position = Vector2(852, 190)
 script = ExtResource("2_anchor")
-destination_id = &"anchor_09"
-display_name = "Anchor 09"
-
-[node name="Anchor10" type="Node2D" parent="AnchorPoints" unique_id=661926372]
-position = Vector2(845, 174)
-script = ExtResource("2_anchor")
-destination_id = &"anchor_10"
-display_name = "Anchor 10"
+destination_id = &"crownland_boss"
+display_name = "王庭·王座之间"
+subtitle = "冠冕之下，王国诸路汇聚之处"
+danger = "★★★★★"
+distance_text = "无可采作物"
+environment = "王宫核心"
+description = "阿斯特里昂王宫最深处的仪典空间，以白色大理石、旧金装饰与高耸柱廊著称，是王权礼制最庄严的象征之地。"
+unlock_day = 6

@@ -34,6 +34,21 @@ static func run(test: TestSupport) -> void:
 	test.expect_equal(flow.current_day, 0, "Same-mode resume restores the requested day.")
 	test.expect(flow.current_runtime.player_data == player, "A rebuilt runtime still receives shared PlayerData.")
 
+	player.potions[&"yellow_potion"] = [{"instance_uid": "story-skip-potion", "remaining_dose": 0.75}]
+	var skip_result := DayResult.new()
+	skip_result.remaining_health = 73
+	skip_result.remaining_potions = player.potions.duplicate(true)
+	test.expect(flow.resume_game(4, GameFlow.Mode.DAY, &"aurem_vespervale_transition"), "The Day 4 transition level can be resumed.")
+	(flow.current_runtime as DayRuntime).finish_day_skipping_night(skip_result, &"vespervale_garden")
+	test.expect_equal(flow.current_day, 5, "Story night skip advances Day 4 directly to Day 5.")
+	test.expect_equal(flow.current_mode, GameFlow.Mode.DAY, "Story night skip never creates NightRuntime.")
+	test.expect(flow.current_runtime is DayRuntime, "Story night skip rebuilds DayRuntime.")
+	test.expect_equal((flow.current_runtime as DayRuntime).current_level.id, &"vespervale_garden", "Story night skip loads the Vespervale Garden opening.")
+	test.expect(player.has_event_flag(&"night_skipped_by_story"), "Story night skip persists its event marker.")
+	test.expect_equal(player.health, 73, "Story night skip preserves the DayResult health.")
+	test.expect(player.potions.has(&"yellow_potion"), "Story night skip preserves remaining potions.")
+	test.expect(flow.resume_game(0, GameFlow.Mode.DAY), "Normal flow can continue after the isolated story-skip test.")
+
 	var day_result := DayResult.new()
 	day_result.remaining_health = 80
 	day_result.collected_items = {&"herdsmans_loaf_bush": 3}
