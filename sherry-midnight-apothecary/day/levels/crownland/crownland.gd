@@ -10,6 +10,7 @@ extends DayLevelEnvironment
 @onready var corrupted_sky: CanvasItem = $Background/FS/CorruptedSky
 @onready var normal_city: CanvasItem = $Background/CS/City
 @onready var corrupted_garden: CanvasItem = $Background/CS/CorruptedGarden
+@onready var day_six_escort: DaySixCrownlandEscort = get_node_or_null("DaySixCrownlandEscort") as DaySixCrownlandEscort
 
 
 func _ready() -> void:
@@ -20,6 +21,11 @@ func _ready() -> void:
 func set_corrupted(corrupted: bool) -> void:
 	super.set_corrupted(corrupted)
 	_update_visual_state()
+
+
+func on_level_entered(entry_id: StringName) -> void:
+	if day_six_escort != null:
+		day_six_escort.begin_for_entry(entry_id)
 
 
 func _update_visual_state() -> void:

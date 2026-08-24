@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bl1aboaeee4c0"
+path="res://.godot/imported/day_six_opening.dialogue-f64b6652cc5784708f06890af74e9ed3.tres"
+
+[deps]
+
+source_file="res://day/levels/home/day_six_opening.dialogue"
+dest_files=["res://.godot/imported/day_six_opening.dialogue-f64b6652cc5784708f06890af74e9ed3.tres"]
+
+[params]
+
+defaults=true

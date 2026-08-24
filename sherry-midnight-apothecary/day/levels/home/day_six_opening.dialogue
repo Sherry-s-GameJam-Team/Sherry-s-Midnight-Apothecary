@@ -1,0 +1,78 @@
+~ start
+
+do emit_dialogue_event("day6_resonance")
+旁白: 安静的清晨里，许多玻璃瓶同时发出极轻的共鸣。
+旁白: ——嗡。
+do emit_dialogue_event("day6_apothecary_reveal")
+雪莉 #portrait(char=雪莉,slot=right,expr=default,anim=fade_in): ……什么声音？
+雪莉: 我没碰它们吧？
+do emit_dialogue_event("day6_gate_reveal")
+旁白: 旅门中央浮起近乎透明的白光，边缘折射出极淡的七色。
+雪莉: 旅门？
+雪莉: ……空与流光之馆？
+雪莉: “王畿旧门……最初的魔女药剂交易所之一……”
+雪莉: 后面的字看不清了。
+卢卡 #portrait(char=卢卡,slot=left,expr=default,anim=fade_in): 不必看了。
+雪莉: 你知道？
+卢卡: 知道这个名字。只是没有料到，它竟还能回应。
+恩佐 #portrait(char=恩佐,slot=center,expr=default,anim=fade_in): 那里是什么地方？
+卢卡: 很久以前，王畿尚未禁止民间旅门时，那里曾是王都最重要的药师门站之一。
+卢卡: 从各地运来的药草、信件与病患，皆曾从那座门经过。
+雪莉: 所以它和我们这里一样？
+卢卡: 比这里更早。
+雪莉: ……最初的魔女药水铺。
+恩佐: 为什么现在突然开启？
+卢卡: 也许不是“突然”。
+do emit_dialogue_event("day6_leyline_colors")
+卢卡: 翡翠原、常霁云林、烁金断崖、阿里特之泪、绯红绝谷、奥雷姆钟庭、维斯佩尔眠谷。
+旁白: 每念出一个地方，门缘便闪过一种对应的颜色。
+卢卡: 七处灵脉重新稳定。分散多年的旧门网，或许终于重新组成了完整回路。
+恩佐: 所以王畿的门也被唤醒了？
+卢卡: 此为一种可能。
+雪莉: 还有另一种？
+卢卡: 嗯。
+雪莉: 门本身没有坏，坐标也很稳定。
+卢卡: 雪莉，莫靠太近。
+雪莉: 我只是看看。又不是第一次碰旅门。
+恩佐: 雪莉……
+do emit_dialogue_event("day6_gate_pull")
+旁白: 七色光骤然熄灭，门中央化为极深的白色。巨大的拉力猛然出现。
+雪莉: 等等——！
+卢卡: 雪莉！
+恩佐: 抓住我！
+雪莉: 我在抓！
+恩佐: 你正在往里面滑！
+雪莉: 我知道！
+卢卡: 退！此门被人——
+旁白: 拉力再度增强，三人一同被卷进白光。
+do clear_portraits()
+do emit_dialogue_event("day6_arrival")
+旁白: 短暂无声后，一粒碎石落在古老的白石地板上。
+雪莉 #portrait(char=雪莉,slot=right,expr=default,anim=fade_in): ……疼。
+恩佐 #portrait(char=恩佐,slot=center,expr=default,anim=fade_in): 你压到我了……
+雪莉: 啊，抱歉。都没事？
+卢卡 #portrait(char=卢卡,slot=left,expr=default,anim=fade_in): 无碍。
+雪莉: 这里就是王畿。
+恩佐: ……我来过这里。
+do emit_dialogue_event("day6_guard_steps")
+旁白: 遗址外传来整齐脚步声。两队王城卫兵停在入口，却没有拔剑。
+王庭卫兵: 请勿紧张。
+王庭卫队长 #portrait(char=王庭卫队长,slot=left,expr=default,anim=fade_in): 雪莉小姐。
+雪莉: ……你认识我？
+王庭卫队长: 王庭已经等候诸位多时。陛下希望亲自见您。
+雪莉: 国王？
+王庭卫队长: 王都已经收到许多消息。听闻各地异变皆因您而得以平息，陛下对此十分感激。
+雪莉: 所以派你们在这里等我？
+王庭卫队长: 正是。请吧，马车已经备好。王宫不会怠慢远道而来的客人。
+雪莉: ……比我想象中和气。
+卢卡: 正因如此，更须谨慎。
+雪莉: 恩佐，你怎么了？
+恩佐: 他刚才行的礼。我知道是什么意思。
+恩佐: 是王庭接待受召贵客的礼节。我以前……看过很多次。
+雪莉: 你想起来了？
+恩佐: 一点。
+do emit_dialogue_event("day6_invited_task")
+旁白: [color=#ede7ce]主线任务：受邀者[/color]
+旁白: 跟随王庭卫兵前往王宫。
+do clear_portraits()
+=> END

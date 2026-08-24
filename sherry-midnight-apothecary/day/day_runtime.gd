@@ -325,8 +325,13 @@ func _dispatch_initial_story_events() -> void:
 			if not is_inside_tree():
 				return
 		else:
+			var day_six_opening := current_level_instance.get_node_or_null("DaySixOpening") as DaySixOpening
 			var day_two_opening := current_level_instance.get_node_or_null("DayTwoOpening") as DayTwoOpening
-			if day_two_opening != null and day_two_opening.is_opening_active():
+			if day_six_opening != null and day_six_opening.is_opening_active():
+				day_six_opening.start()
+				await day_six_opening.opening_completed
+				return
+			elif day_two_opening != null and day_two_opening.is_opening_active():
 				day_two_opening.start()
 				await day_two_opening.opening_completed
 				# The opening hands off to Golden Cliff, whose level switch dispatches

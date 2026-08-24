@@ -59,5 +59,6 @@
 - [Vespervale Runner](vespervale_runner.md): 2-minute dual-character parkour auto-runner — Sherry on lower track (Space key jump), Luca on upper track (W key jump), constant rightward camera scroll, phased obstacle track, finish line deceleration, and E-key exit portal.
 - [Developer Console](developer_console.md): in-game debug console with dynamic scene switching, numbered level indices (1-17), Chinese/English alias resolution, inventory/stat mutations, and boss test jump.
 - [Crownland](crownland.md): standalone 王畿 day level — normal/corrupted environment switching, three-layer parallax city presentation, standard Sherry player assembly, camera bounds, and LevelData registration.
+- [Day 6 Opening](day_six_opening.md): 药典屋七色旅门、王畿旧门遗址落地，以及带雪莉/恩佐/卢卡场景实例的圣堂自动行进演出。
 - [Crownland Boss](crownland_boss.md): three-phase King encounter, black-pillar shield mechanic, purification finale, and automatic boss-art injection.
 - [Vespervale Boss Encounter](vespervale_boss.md): 3-phase Hospital Director boss battle — purple tree garden arena (`treegarden.png`), 6-segment 24fps animations, Dream Tide moon shield and lucid vulnerability cycles, sedative mists, dream grasp circles, moon orbs, soul fire tracking, and crescent wave slashes.

@@ -18,6 +18,10 @@
 [ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="16_console"]
 [ext_resource type="Script" uid="uid://cl2n5s264sin2" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="17_pause_host"]
 [ext_resource type="PackedScene" uid="uid://cjjrmkffyyu24" path="res://night/ui/pause_menu/pause_menu.tscn" id="18_pause_menu"]
+[ext_resource type="Script" path="res://day/levels/crownland/day_six_crownland_escort.gd" id="19_day_six_escort"]
+[ext_resource type="Resource" path="res://day/levels/crownland/day_six_crownland_escort.dialogue" id="20_day_six_dialogue"]
+[ext_resource type="PackedScene" uid="uid://ctghfk6t71vq8" path="res://characters/luca/luca_player.tscn" id="21_luca"]
+[ext_resource type="SpriteFrames" path="res://characters/enzuo/enzuo_sprite_frames.tres" id="22_enzuo_frames"]
 
 [sub_resource type="RectangleShape2D" id="Rect_ground"]
 size = Vector2(4360, 160)
@@ -155,7 +159,7 @@ shape = SubResource("Rect_barrier")
 [node name="default" type="Marker2D" parent="EntryPoints" unique_id=1809526136]
 position = Vector2(360, 560)
 
-[node name="from_home" type="Marker2D" parent="EntryPoints"]
+[node name="from_home" type="Marker2D" parent="EntryPoints" unique_id=470992347]
 position = Vector2(360, 560)
 
 [node name="from_town" type="Marker2D" parent="EntryPoints" unique_id=1352652808]
@@ -165,10 +169,10 @@ position = Vector2(360, 560)
 position = Vector2(2900, 560)
 
 [node name="cathedral" type="Marker2D" parent="EntryPoints" unique_id=1209166521]
-position = Vector2(5000, 560)
+position = Vector2(3175, 698)
 
 [node name="palace" type="Marker2D" parent="EntryPoints" unique_id=1161099360]
-position = Vector2(7200, 560)
+position = Vector2(7057, 685)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=339001426]
 z_index = 10
@@ -193,6 +197,27 @@ right_barrier_path = NodePath("../../WorldBounds/RightBarrier/CollisionShape2D")
 
 [node name="PotionThrower" parent="Player" unique_id=155084128 instance=ExtResource("15_potions")]
 position = Vector2(48, 87)
+
+[node name="DaySixParty" type="Node2D" parent="."]
+
+[node name="Enzuo" type="AnimatedSprite2D" parent="DaySixParty"]
+visible = false
+z_index = 9
+position = Vector2(278, 560)
+scale = Vector2(0.2, 0.2)
+sprite_frames = ExtResource("22_enzuo_frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Luca" parent="DaySixParty" instance=ExtResource("21_luca")]
+visible = false
+position = Vector2(185, 566)
+input_enabled = false
+
+[node name="DaySixCrownlandEscort" type="CanvasLayer" parent="."]
+layer = 38
+script = ExtResource("19_day_six_escort")
+dialogue_resource = ExtResource("20_day_six_dialogue")
 
 [node name="DebugUI" type="CanvasLayer" parent="." unique_id=647180140]
 layer = 200

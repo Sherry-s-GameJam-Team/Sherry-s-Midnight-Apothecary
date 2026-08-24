@@ -44,6 +44,8 @@
 [ext_resource type="Script" uid="uid://b1pm8drpbvdmv" path="res://day/levels/home/bedroom_day_one_luca.gd" id="42_luca_visibility"]
 [ext_resource type="Script" path="res://day/levels/home/day_two_opening.gd" id="43_day_two_opening"]
 [ext_resource type="Resource" path="res://day/levels/home/day_two_opening.dialogue" id="44_day_two_dialogue"]
+[ext_resource type="Script" path="res://day/levels/home/day_six_opening.gd" id="45_day_six_opening"]
+[ext_resource type="Resource" path="res://day/levels/home/day_six_opening.dialogue" id="46_day_six_dialogue"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sleep_to_wake"]
 animations = [{
@@ -276,3 +278,8 @@ input_enabled = false
 layer = 38
 script = ExtResource("43_day_two_opening")
 dialogue_resource = ExtResource("44_day_two_dialogue")
+
+[node name="DaySixOpening" type="CanvasLayer" parent="."]
+layer = 38
+script = ExtResource("45_day_six_opening")
+dialogue_resource = ExtResource("46_day_six_dialogue")

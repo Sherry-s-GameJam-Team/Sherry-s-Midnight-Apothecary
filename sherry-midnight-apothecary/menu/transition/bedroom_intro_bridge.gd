@@ -19,6 +19,12 @@ func run(runtime: Node) -> void:
 		_finish_failure("Bedroom intro requires an active DayRuntime level.")
 		return
 	await get_tree().create_timer(camera_settle_delay).timeout
+	var day_six_opening := day_runtime.current_level_instance.get_node_or_null("DaySixOpening") as DaySixOpening
+	if day_six_opening != null and day_six_opening.is_opening_active():
+		day_six_opening.start()
+		await day_six_opening.opening_completed
+		_finish_success()
+		return
 	var day_two_opening := day_runtime.current_level_instance.get_node_or_null("DayTwoOpening") as DayTwoOpening
 	if day_two_opening != null and day_two_opening.is_opening_active():
 		day_two_opening.start()

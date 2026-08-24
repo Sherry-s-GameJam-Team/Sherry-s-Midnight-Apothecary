@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://rory281vk86p"
+path="res://.godot/imported/day_six_crownland_escort.dialogue-b8548535791acd59f59c0585c8c4bee8.tres"
+
+[deps]
+
+source_file="res://day/levels/crownland/day_six_crownland_escort.dialogue"
+dest_files=["res://.godot/imported/day_six_crownland_escort.dialogue-b8548535791acd59f59c0585c8c4bee8.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bw8rwg4op48cp"]
+
+[ext_resource type="Texture2D" uid="uid://dhbfkfg2d1pj" path="res://day/levels/crownland/home.png" id="1_cv6cx"]
+
+[node name="CrownlandOldGateSite" type="Control" unique_id=835097755]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=1306115466]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_cv6cx")
+expand_mode = 1
+stretch_mode = 6
+mouse_filter = 2
+
+[node name="OldGateLight" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.92, 0.9, 0.78, 0.055)
+
+[node name="LocationCaption" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 34.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.92549, 0.905882, 0.807843, 0.88)
+theme_override_font_sizes/font_size = 22
+text = "王畿 · 空与流光之馆原址"
+horizontal_alignment = 1
