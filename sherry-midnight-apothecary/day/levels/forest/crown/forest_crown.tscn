@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c0hm5cchinakn"]
+[gd_scene format=3 uid="uid://c0hm5cchinak0"]
 
 [ext_resource type="Script" uid="uid://bgc8y5bm30c2g" path="res://day/levels/forest/crown/forest_crown.gd" id="1_level"]
 [ext_resource type="Texture2D" uid="uid://dkioiavewfxmu" path="res://day/levels/forest/art/environments/forest/crown/forest_crown_bg_corrupted.png" id="2_bg"]
@@ -145,6 +145,7 @@ scale_amount_max = 3.8
 color = Color(0.7, 0.82, 0.95, 0.55)
 
 [node name="LightningOverlay" type="ColorRect" parent="Background" unique_id=313279356]
+modulate = Color(1, 1, 1, 0)
 offset_left = -97.0
 offset_top = -221.0
 offset_right = 2103.0

@@ -1,8 +1,8 @@
 class_name DaySixCrownlandEscort
 extends CanvasLayer
 
-## Camera-led Day 6 escort. The actual Player stays hidden while its camera is
-## moved to the cathedral marker; no party or guard world sprites are spawned.
+## Camera-led Day 6 escort. Party scene instances walk horizontally along the
+## authored Ground collision until their formation reaches the cathedral.
 
 signal escort_completed
 
@@ -20,6 +20,7 @@ const BALLOON_SCENE := preload("res://night/dialogue/apothecary_balloon.tscn")
 @onready var _cathedral := get_node_or_null("../EntryPoints/cathedral") as Marker2D
 @onready var _enzuo := get_node_or_null("../DaySixParty/Enzuo") as AnimatedSprite2D
 @onready var _luca := get_node_or_null("../DaySixParty/Luca") as LucaPlayer
+@onready var _ground_collision := get_node_or_null("../WorldBounds/Ground/CollisionShape2D") as CollisionShape2D
 
 var _root: Control
 var _letterbox_top: ColorRect
@@ -58,7 +59,7 @@ static func should_present(current_day: int, player_data: PlayerData) -> bool:
 
 
 func _begin_sequence() -> void:
-	if _running or _completed or _player == null or _cathedral == null:
+	if _running or _completed or _player == null or _cathedral == null or _enzuo == null or _luca == null:
 		return
 	_running = true
 	visible = true
@@ -71,15 +72,16 @@ func _begin_sequence() -> void:
 		_player.call("set_dialogue_locked", true)
 	if _player.has_method("set_potion_action_locked"):
 		_player.call("set_potion_action_locked", true)
+	_place_party_on_ground(_player.global_position.x)
 	_player.call("_update_facing", 1.0)
 	_player.call("_play", "walk")
 	_enzuo.visible = true
-	_enzuo.global_position = _player.global_position + Vector2(-82.0, 0.0)
 	_enzuo.play(&"walk")
 	_luca.visible = true
-	_luca.global_position = _player.global_position + Vector2(-175.0, 6.0)
 	_luca.set_physics_process(false)
-	_luca.set_movement_direction(1.0)
+	if _luca.animated_sprite != null:
+		_luca.animated_sprite.flip_h = true
+		_luca.animated_sprite.play(&"run_loop")
 	_start_camera_march()
 	await _play_dialogue()
 	if _running:
@@ -91,9 +93,9 @@ func _start_camera_march() -> void:
 	_caption.modulate.a = 0.0
 	create_tween().tween_property(_caption, "modulate:a", 0.72, 0.5)
 	_movement_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_movement_tween.tween_property(_player, "global_position", _cathedral.global_position, camera_travel_seconds)
-	_movement_tween.tween_property(_enzuo, "global_position", _cathedral.global_position + Vector2(-82.0, 0.0), camera_travel_seconds)
-	_movement_tween.tween_property(_luca, "global_position", _cathedral.global_position + Vector2(-175.0, 6.0), camera_travel_seconds)
+	_movement_tween.tween_property(_player, "global_position:x", _cathedral.global_position.x, camera_travel_seconds)
+	_movement_tween.tween_property(_enzuo, "global_position:x", _cathedral.global_position.x - 82.0, camera_travel_seconds)
+	_movement_tween.tween_property(_luca, "global_position:x", _cathedral.global_position.x - 175.0, camera_travel_seconds)
 
 
 func _play_dialogue() -> void:
@@ -125,11 +127,9 @@ func _on_dialogue_event(event_name: StringName, _payload: Variant) -> void:
 func _freeze_at_cathedral() -> void:
 	if _movement_tween != null and _movement_tween.is_valid():
 		_movement_tween.kill()
-	_player.global_position = _cathedral.global_position
+	_place_party_on_ground(_cathedral.global_position.x)
 	_player.call("_play", "idle")
-	_enzuo.global_position = _cathedral.global_position + Vector2(-82.0, 0.0)
 	_enzuo.play(&"idle")
-	_luca.global_position = _cathedral.global_position + Vector2(-175.0, 6.0)
 	_luca.stop_moving()
 	_caption.text = "圣堂前 · 地下风道"
 	var flash := ColorRect.new()
@@ -141,6 +141,32 @@ func _freeze_at_cathedral() -> void:
 	tween.tween_property(flash, "color:a", 0.32, 0.12)
 	tween.tween_property(flash, "color:a", 0.0, 0.35)
 	tween.tween_callback(flash.queue_free)
+
+
+func _place_party_on_ground(sherry_x: float) -> void:
+	var surface_y := _ground_surface_y()
+	_player.global_position = Vector2(sherry_x, surface_y - _collision_bottom_offset(_player.get_node_or_null("SherryCollision") as CollisionShape2D))
+	# Enzuo's AnimatedSprite offset is authored with its feet at the node origin.
+	_enzuo.global_position = Vector2(sherry_x - 82.0, surface_y)
+	_luca.global_position = Vector2(sherry_x - 175.0, surface_y - _collision_bottom_offset(_luca.get_node_or_null("CollisionShape2D") as CollisionShape2D))
+
+
+func _ground_surface_y() -> float:
+	if _ground_collision == null:
+		return _cathedral.global_position.y
+	var rectangle := _ground_collision.shape as RectangleShape2D
+	if rectangle == null:
+		return _ground_collision.global_position.y
+	return _ground_collision.global_position.y - rectangle.size.y * 0.5
+
+
+func _collision_bottom_offset(collision: CollisionShape2D) -> float:
+	if collision == null:
+		return 0.0
+	var rectangle := collision.shape as RectangleShape2D
+	if rectangle == null:
+		return collision.position.y
+	return collision.position.y + rectangle.size.y * 0.5
 
 
 func _memory_flash(text: String) -> void:

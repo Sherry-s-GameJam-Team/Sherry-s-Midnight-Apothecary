@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://emic1w4asdu7"
+path="res://.godot/imported/garden.dialogue-029729c2bc606deff73d9a08bb49e133.tres"
+
+[deps]
+
+source_file="res://day/levels/crownland/garden.dialogue"
+dest_files=["res://.godot/imported/garden.dialogue-029729c2bc606deff73d9a08bb49e133.tres"]
+
+[params]
+
+defaults=true

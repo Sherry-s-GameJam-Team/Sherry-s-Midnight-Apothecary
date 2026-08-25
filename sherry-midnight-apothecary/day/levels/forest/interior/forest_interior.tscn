@@ -1273,20 +1273,19 @@ script = ExtResource("13_fall")
 shape = SubResource("RectFall")
 
 [node name="ExitToCrown" type="Area2D" parent="." unique_id=1379723706]
-position = Vector2(900, -4720)
+position = Vector2(903, -4747)
 collision_layer = 3
 script = ExtResource("15_exit")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToCrown" unique_id=1593782687]
-position = Vector2(3, -27)
 shape = SubResource("RectExit")
 one_way_collision = true
 
 [node name="Prompt" type="Label" parent="ExitToCrown" unique_id=149547768]
 offset_left = -125.0
-offset_top = -165.0
+offset_top = -140.0
 offset_right = 125.0
-offset_bottom = -125.0
+offset_bottom = -100.0
 theme_override_colors/font_color = Color(0.9, 1, 0.85, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
 theme_override_constants/shadow_offset_x = 2

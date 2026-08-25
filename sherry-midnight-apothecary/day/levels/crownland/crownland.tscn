@@ -203,15 +203,16 @@ position = Vector2(48, 87)
 [node name="Enzuo" type="AnimatedSprite2D" parent="DaySixParty"]
 visible = false
 z_index = 9
-position = Vector2(278, 560)
+position = Vector2(278, 702)
 scale = Vector2(0.2, 0.2)
 sprite_frames = ExtResource("22_enzuo_frames")
 animation = &"idle"
 autoplay = "idle"
+offset = Vector2(0, -404)
 
 [node name="Luca" parent="DaySixParty" instance=ExtResource("21_luca")]
 visible = false
-position = Vector2(185, 566)
+position = Vector2(185, 697)
 input_enabled = false
 
 [node name="DaySixCrownlandEscort" type="CanvasLayer" parent="."]

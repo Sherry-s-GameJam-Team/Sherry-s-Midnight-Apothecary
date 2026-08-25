@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var prompt: Label = $Prompt
 var _player_inside := false
+var _triggered := false
 
 
 func _ready() -> void:
@@ -11,6 +12,9 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if _triggered:
+		prompt.visible = false
+		return
 	var inside := false
 	for body in get_overlapping_bodies():
 		if body.name == "Player" or body.name == "Luca" or body.is_in_group("player") or body.is_in_group("forest_luca_runtime"):
@@ -21,26 +25,30 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not _player_inside:
+	if not _player_inside or _triggered:
 		return
 	var is_e: bool = event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and not event.echo and (event.physical_keycode == KEY_E or event.keycode == KEY_E))
 	if is_e:
 		var vp := get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
+		_triggered = true
+		prompt.visible = false
 		var level := _get_level()
 		if level != null and level.has_method("request_exit_to_crown"):
 			level.call("request_exit_to_crown")
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _player_inside:
+	if not _player_inside or _triggered:
 		return
 	var is_e: bool = event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and not event.echo and (event.physical_keycode == KEY_E or event.keycode == KEY_E))
 	if is_e:
 		var vp := get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
+		_triggered = true
+		prompt.visible = false
 		var level := _get_level()
 		if level != null and level.has_method("request_exit_to_crown"):
 			level.call("request_exit_to_crown")

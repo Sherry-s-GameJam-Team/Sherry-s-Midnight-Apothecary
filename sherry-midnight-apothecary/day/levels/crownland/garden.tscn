@@ -1,3 +1,186 @@
 [gd_scene format=3 uid="uid://dv1kc0yg7336r"]
 
+[ext_resource type="Script" path="res://day/levels/crownland/garden.gd" id="1_garden"]
+[ext_resource type="Texture2D" uid="uid://b415qxn8p1uh8" path="res://day/levels/crownland/skybox_normal.png" id="2_sky_normal"]
+[ext_resource type="Texture2D" uid="uid://cins1qpdq411b" path="res://day/levels/crownland/skybox_corrupted.png" id="3_sky_corrupted"]
+[ext_resource type="Texture2D" uid="uid://db2d7j8t37luq" path="res://day/levels/crownland/garden_normal.png" id="4_garden_normal"]
+[ext_resource type="Texture2D" uid="uid://3msnxpuybfsa" path="res://day/levels/crownland/garden_corrupted.png" id="5_garden_corrupted"]
+[ext_resource type="Texture2D" uid="uid://bq21prpw2t2ub" path="res://day/levels/crownland/pillar.png" id="6_pillar"]
+[ext_resource type="PackedScene" path="res://night/ui/developer_console/developer_console.tscn" id="7_console"]
+[ext_resource type="Script" path="res://day/levels/golden_cliff/pause_menu_host.gd" id="8_pause_host"]
+[ext_resource type="PackedScene" path="res://night/ui/pause_menu/pause_menu.tscn" id="9_pause_menu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08, 0.05, 0.12, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.79, 0.72, 0.65, 0.85)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [node name="Garden" type="Node2D" unique_id=670404480]
+script = ExtResource("1_garden")
+debug_scene_id = "crownland_garden"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="Backdrop" type="CanvasLayer" parent="."]
+layer = -20
+
+[node name="FS" type="Control" parent="Backdrop"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NormalSky" type="TextureRect" parent="Backdrop/FS"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_sky_normal")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CorruptedSky" type="TextureRect" parent="Backdrop/FS"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_sky_corrupted")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CS" type="Control" parent="Backdrop"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NormalGarden" type="TextureRect" parent="Backdrop/CS"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_garden_normal")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CorruptedGarden" type="TextureRect" parent="Backdrop/CS"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_garden_corrupted")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Pillars" type="Node2D" parent="Backdrop"]
+
+[node name="PillarLeft" type="Sprite2D" parent="Backdrop/Pillars"]
+position = Vector2(240, 480)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("6_pillar")
+
+[node name="PillarCenter" type="Sprite2D" parent="Backdrop/Pillars"]
+position = Vector2(640, 430)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("6_pillar")
+
+[node name="PillarRight" type="Sprite2D" parent="Backdrop/Pillars"]
+position = Vector2(1040, 480)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("6_pillar")
+
+[node name="ExitBarrier" type="ColorRect" parent="Backdrop"]
+visible = false
+offset_right = 140.0
+offset_bottom = 720.0
+mouse_filter = 2
+color = Color(0.24, 0.02, 0.06, 0.6)
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+layer = 15
+
+[node name="PulseVeil" type="ColorRect" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.12, 0.02, 0.05, 0)
+
+[node name="FlashOverlay" type="ColorRect" parent="Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="TaskPanel" type="PanelContainer" parent="Overlay"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 28.0
+offset_right = 220.0
+offset_bottom = 98.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task")
+
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/TaskPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TaskLabel" type="RichTextLabel" parent="Overlay/TaskPanel/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center][color=#c9b7a5]主线任务：最后的邀请[/color]
+跟随国王前往王座之间。[/center]"
+fit_content = true
+
+[node name="DebugUI" type="CanvasLayer" parent="."]
+layer = 200
+
+[node name="DeveloperConsole" parent="DebugUI" instance=ExtResource("7_console")]
+
+[node name="PauseMenuLayer" type="CanvasLayer" parent="."]
+layer = 200
+script = ExtResource("8_pause_host")
+
+[node name="PauseMenu" parent="PauseMenuLayer" instance=ExtResource("9_pause_menu")]

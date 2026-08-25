@@ -173,6 +173,8 @@ static func _resolve_main_character_texture(character_name: String, expression: 
 	elif c in ["rosaline fanen", "罗莎琳·凡恩", "罗莎琳"]:
 		var fanen_path := str(FANEN_EXPRESSION_PATHS.get(expression.to_lower(), FANEN_EXPRESSION_PATHS["normal"]))
 		return _load_texture(fanen_path)
+	elif c in ["king", "国王"]:
+		return _load_texture("res://characters/king/stand.png")
 	elif c in ["postman", "邮差", "钟庭邮差"]:
 		return _load_texture("res://characters/postman/stand.png")
 	return null

@@ -25,6 +25,7 @@ const CROWN_ENTRY_ID := &"from_interior"
 @onready var final_gate: Node = get_node_or_null("RealityWorld/FinalGate")
 
 var _respawning := false
+var _transitioning_to_crown := false
 var _activated_consoles: Dictionary = {}
 var _lift_power_nodes := {
 	&"lift_root": false,
@@ -39,6 +40,7 @@ func _ready() -> void:
 	add_to_group("forest_interior_level")
 	if fade_rect != null:
 		fade_rect.modulate.a = 0.0
+		fade_rect.visible = true
 	if pressure_panel != null:
 		pressure_panel.visible = false
 	var bottom_marker := get_node_or_null("RespawnPoints/Bottom") as Marker2D
@@ -221,8 +223,12 @@ func _set_character_control(body: Node, enabled: bool) -> void:
 
 
 func request_exit_to_crown() -> void:
+	if _transitioning_to_crown:
+		return
+	_transitioning_to_crown = true
 	_set_flag(COMPLETED_FLAG, true)
 	if fade_rect != null:
+		fade_rect.visible = true
 		var tw := create_tween()
 		tw.tween_property(fade_rect, "modulate:a", 1.0, 0.35)
 		await tw.finished
